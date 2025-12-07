@@ -1,0 +1,211 @@
+{
+    "projectName": "CSCosmos",
+    "description": "A central hub website that links to 126 upcoming Computer Science microsites. Each topic appears as a placeholder card with a 'Coming Soon' badge. The website is built using React + Vite + TailwindCSS/shadcn, includes light/dark theme, routing, search, and seven domain pages.",
+    "techStack": {
+      "framework": "React",
+      "bundler": "Vite",
+      "styling": "TailwindCSS with optional shadcn/ui components",
+      "routing": "react-router-dom",
+      "theme": {
+        "supportsDarkMode": true,
+        "persistInLocalStorage": true
+      }
+    },
+    "pages": {
+      "home": {
+        "path": "/",
+        "sections": ["hero", "domainGrid", "searchBar", "featuredTopics"],
+        "hero": {
+          "title": "CSCosmos — Explore the Entire Universe of Computer Science",
+          "subtitle": "A hub of 126 interactive visual learning microsites across Full-Stack, DSA, Web3, AI, Core CS, DevOps, and Advanced Engineering.",
+          "primaryButton": "Explore Topics",
+          "secondaryButton": "About CSCosmos"
+        }
+      },
+      "domains": [
+        { "name": "Full Stack Development", "path": "/fullstack", "domainKey": "fullstack" },
+        { "name": "Data Structures & Algorithms", "path": "/dsa", "domainKey": "dsa" },
+        { "name": "Web3 & Blockchain", "path": "/web3", "domainKey": "web3" },
+        { "name": "Artificial Intelligence", "path": "/ai", "domainKey": "ai" },
+        { "name": "Core Computer Science", "path": "/corecs", "domainKey": "corecs" },
+        { "name": "DevOps / Cloud / Engineering", "path": "/devops", "domainKey": "devops" },
+        { "name": "Advanced Engineering & Systems", "path": "/advanced", "domainKey": "advanced" }
+      ],
+      "about": {
+        "path": "/about",
+        "contentBlocks": ["mission", "roadmap", "contributing", "contact"]
+      },
+      "comingSoon": {
+        "path": "/coming-soon",
+        "dynamicTopicSupport": true
+      }
+    },
+    "components": {
+      "Navbar": ["navLinks", "themeToggle"],
+      "Footer": ["copyright", "githubLink"],
+      "DomainCard": ["title", "description", "link"],
+      "TopicCard": ["name", "domain", "statusBadge", "onClick"],
+      "SearchBar": ["query", "onChange"],
+      "ThemeToggle": ["lightMode", "darkMode"]
+    },
+    "dataModel": {
+      "topicObject": {
+        "id": "number",
+        "name": "string",
+        "domain": "fullstack | dsa | web3 | ai | corecs | devops | advanced",
+        "shortDescription": "string",
+        "status": "coming-soon"
+      }
+    },
+    "globalFeatures": {
+      "search": true,
+      "filterByDomain": true,
+      "responsiveDesign": true,
+      "keyboardNavigation": true,
+      "ariaLabels": true,
+      "animations": "subtle"
+    },
+    "topics": {
+      "fullstack": [
+        "HTML & Accessibility Visualizer",
+        "CSS Visualizer (Flexbox/Grid/Box Model)",
+        "JavaScript Deep Visualizer",
+        "TypeScript Deep Dive + Compiler Visualizer",
+        "DOM & Browser Internals Website",
+        "Responsive Design & Layout System Visualizer",
+        "React Visual Learning Website",
+        "Next.js Architecture + Rendering Visualizer",
+        "Vue Visual Explainer",
+        "Svelte/SvelteKit Visual Learning",
+        "TailwindCSS Visual Playground",
+        "Node.js Internals + Event Loop Visualizer",
+        "Express/Fastify Backend Playground",
+        "Golang Backend + Memory/Goroutine Visualizer",
+        "Rust Backend + Ownership/Borrow Checker Visualizer",
+        "Python FastAPI Backend Learning Site",
+        "GraphQL API Designer + Schema Visualizer",
+        "REST API Architecture Website",
+        "SQL Visualizer",
+        "NoSQL Playground (MongoDB)",
+        "Redis Visual Internals + Caching Website",
+        "Microservices Visualizer",
+        "Message Queue Visualizer",
+        "Complete System Design Visual Learning Website"
+      ],
+      "dsa": [
+        "Arrays & Strings Visualizer",
+        "Stacks Visualizer",
+        "Queues Visualizer",
+        "Linked List Pointer Visualizer",
+        "Binary Tree Traversal Visualizer",
+        "Binary Search Tree Visualizer",
+        "AVL / Red-Black Tree Visualizer",
+        "Heap & Priority Queue Visualizer",
+        "Segment Tree Visualizer",
+        "Fenwick Tree (BIT) Visualizer",
+        "Graph Explorer (BFS/DFS)",
+        "Shortest Path Visualizer",
+        "All-Pairs Path Visualizer (Floyd-Warshall)",
+        "MST Visualizer",
+        "SCC Visualizer",
+        "DP Visualizer",
+        "Knapsack Family Visualizer",
+        "String DP Visualizer",
+        "Number Theory Playground",
+        "Matrix Exponentiation Visualizer"
+      ],
+      "web3": [
+        "Solidity Visual Learning Site",
+        "Rust (Solana) Smart Contract Learning Site",
+        "EVM Storage Layout Visualizer",
+        "EVM Instruction Stepper & Debugger",
+        "Transaction Lifecycle Visualizer",
+        "Gas & Opcode Cost Visualizer",
+        "Blockchain Block Explorer Simulator",
+        "Merkle Tree / Patricia Trie Visualizer",
+        "Proof-of-Work Simulator",
+        "Proof-of-Stake Simulator",
+        "Layer-2 Rollups Visualizer",
+        "Smart Contract Security Playground",
+        "Attack Simulation Website",
+        "Hashing & Digital Signature Visualizer",
+        "Cryptography Fundamentals Visualizer"
+      ],
+      "ai": [
+        "Linear Algebra Visualizer",
+        "Probability & Statistics Visualizer",
+        "Optimization Algorithms Visualizer",
+        "ML Basics Website",
+        "Decision Trees + Random Forest Visualizer",
+        "SVM Visualizer",
+        "Feedforward Neural Network Visualizer",
+        "Backpropagation Visualizer",
+        "Activation Functions Playground",
+        "CNN Visualizer",
+        "RNN/LSTM/GRU Visualizer",
+        "GAN Visualizer",
+        "Self-Attention Visualizer",
+        "Multi-Head Attention Playground",
+        "Positional Encoding Visualizer",
+        "Transformer Encoder/Decoder Visualizer",
+        "Tokenizer Visualizer",
+        "LLM Training Process Visualizer",
+        "RAG Visualizer",
+        "Vector Database Visualizer",
+        "Reinforcement Learning Playground",
+        "Convolution Visualizer",
+        "Object Detection / YOLO Visualizer",
+        "End-to-end ML Pipeline Visualizer",
+        "Model Deployment & Monitoring Playground",
+        "Diffusion Models Visualizer"
+      ],
+      "corecs": [
+        "Process & Thread Visualizer",
+        "Scheduling Algorithms Visualizer",
+        "Virtual Memory & Paging Visualizer",
+        "Deadlock & Synchronization Visualizer",
+        "TCP Handshake Visualizer",
+        "DNS Lookup Visualizer",
+        "HTTP Lifecycle Visualizer",
+        "SSL/TLS Handshake Visualizer",
+        "Indexes & B+ Trees Visualizer",
+        "Query Execution Planner Visualizer",
+        "ACID & Isolation Levels Simulator",
+        "Lexer/Parser → AST Visualizer",
+        "Bytecode/IR Optimization Visualizer",
+        "Replication & Sharding Visualizer",
+        "Consensus Algorithm Visualizer",
+        "Garbage Collector Internals Visualizer",
+        "Memory Allocation & Heap Manager Visualizer",
+        "Filesystem Internals Visualizer",
+        "OS Security & Isolation Visualizer",
+        "Network Routing & Packet Flow Visualizer"
+      ],
+      "devops": [
+        "Git Commit/Branch/Rebase Visualizer",
+        "Docker Internals Visualizer",
+        "Kubernetes Visualizer",
+        "AWS Architecture Playground",
+        "Serverless Architecture Visualizer",
+        "Linux Internals Visualizer",
+        "Shell Commands Sandbox",
+        "CI/CD Pipeline Visualizer",
+        "Packaging & Build Tools Visualizer",
+        "API Documentation / OpenAPI Visualizer"
+      ],
+      "advanced": [
+        "Reverse Engineering & Assembly Playground",
+        "Cybersecurity Fundamentals Visualizer",
+        "Testing & QA Automation Visualizer",
+        "Software Architecture Patterns Visualizer",
+        "Domain-Driven Design Visualizer",
+        "API Authentication & Authorization Visualizer",
+        "Realtime Systems & WebSocket Visualizer",
+        "Event Sourcing & CQRS Visualizer",
+        "Observability Playground",
+        "Performance Engineering Visualizer",
+        "Formal Verification & Symbolic Execution Visualizer"
+      ]
+    }
+  }
+  

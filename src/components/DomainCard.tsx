@@ -11,12 +11,13 @@ export function DomainCard({ domain }: DomainCardProps) {
     return (
         <Link
             to={domain.path}
-            className="group relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/50"
+            className="group relative overflow-hidden rounded-2xl glass-card p-6 card-hover border border-white/5 dark:border-white/8 shadow-[0_12px_40px_-18px_rgba(0,0,0,0.65)]"
         >
-            <div className={cn("absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity", domain.color)} />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent group-hover:from-primary/10 transition-all" />
+            <div className={cn("absolute -top-16 -right-24 h-40 w-40 rounded-full blur-3xl opacity-40", domain.color)} />
 
             <div className="relative z-10 flex flex-col h-full">
-                <div className={cn("mb-4 h-12 w-12 rounded-lg flex items-center justify-center text-white shadow-md", domain.color)}>
+                <div className={cn("mb-4 h-12 w-12 rounded-xl flex items-center justify-center text-white shadow-md", domain.color)}>
                     <span className="text-lg font-bold">{domain.name.substring(0, 2)}</span>
                 </div>
 

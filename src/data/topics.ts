@@ -5,15 +5,25 @@ export interface Topic {
     name: string;
     domain: DomainKey;
     shortDescription: string;
+    slug: string;
     status: 'coming-soon' | 'active'; // Future proofing
 }
 
 let idCounter = 1;
 
+const slugify = (name: string) =>
+    name
+        .toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
 const createTopic = (name: string, domain: DomainKey): Topic => ({
     id: idCounter++,
     name,
     domain,
+    slug: slugify(name),
     shortDescription: `Interactive visualization and learning module for ${name}.`,
     status: 'coming-soon'
 });

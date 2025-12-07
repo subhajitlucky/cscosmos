@@ -1,5 +1,6 @@
 import type { Topic } from "../data/topics"
 import { Lock } from "lucide-react"
+import { Link } from "react-router-dom"
 
 interface TopicCardProps {
     topic: Topic;
@@ -7,23 +8,37 @@ interface TopicCardProps {
 }
 
 export function TopicCard({ topic, onClick }: TopicCardProps) {
-    return (
+    const CardContent = (
         <div
-            onClick={onClick}
-            className="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-border bg-card/50 p-5 hover:bg-card hover:shadow-md transition-all cursor-pointer"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-white/70 dark:bg-white/5 p-5 card-hover backdrop-blur min-h-[180px]"
+            role={onClick ? "button" : "article"}
+            tabIndex={onClick ? 0 : -1}
+            aria-label={topic.name}
+            onKeyDown={(e) => {
+                if (!onClick) return;
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onClick();
+                }
+            }}
         >
-            <div className="flex justify-between items-start mb-3">
-                <h4 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors pr-4">
-                    {topic.name}
-                </h4>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+            <div className="relative z-10 flex justify-between items-start mb-3">
+                <div>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{topic.domain}</p>
+                    <h4 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors pr-4 line-clamp-2 min-h-[48px]">
+                        {topic.name}
+                    </h4>
+                </div>
                 {topic.status === 'coming-soon' && (
-                    <span className="inline-flex items-center rounded-full border border-yellow-200 bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 dark:border-yellow-900 dark:bg-yellow-900/30 dark:text-yellow-500">
+                    <span className="pill-badge border border-indigo-200 bg-indigo-100 text-indigo-900 dark:border-indigo-500/40 dark:bg-indigo-500/15 dark:text-indigo-100">
                         Coming Soon
                     </span>
                 )}
             </div>
 
-            <p className="text-sm text-muted-foreground line-clamp-2">
+            <p className="relative z-10 text-sm text-muted-foreground line-clamp-2 min-h-[40px]">
                 {topic.shortDescription}
             </p>
 
@@ -35,5 +50,19 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
                 </div>
             )}
         </div>
+    )
+
+    if (onClick) {
+        return (
+            <div onClick={onClick} className="cursor-pointer">
+                {CardContent}
+            </div>
+        )
+    }
+
+    return (
+        <Link to={`/${topic.domain}/${topic.slug}`} className="block focus-ring rounded-2xl h-full">
+            {CardContent}
+        </Link>
     )
 }

@@ -67,6 +67,7 @@ function combineTheme(theme: Theme | null): Theme | null {
     return null;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => {
     const context = useContext(ThemeProviderContext)
 
