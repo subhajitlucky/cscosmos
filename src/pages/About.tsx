@@ -2,8 +2,12 @@ import { Navbar } from "../components/Navbar"
 import { Footer } from "../components/Footer"
 import { Button } from "../components/ui/button"
 import { Link } from "react-router-dom"
+import { topics } from "../data/topics"
 
 export function About() {
+    const totalTopics = topics.length;
+    const liveTopics = topics.filter(t => t.status === 'active').length;
+
     return (
         <div className="min-h-screen flex flex-col bg-background font-sans">
             <Navbar />
@@ -11,7 +15,7 @@ export function About() {
                 <div className="page-container max-w-5xl space-y-12">
                     <section className="space-y-6 text-center">
                         <div className="inline-flex items-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-sm font-semibold text-primary shadow-sm">
-                            Building 126 interactive CS microsites
+                            Building {totalTopics} interactive CS microsites ({liveTopics} live)
                         </div>
                         <div className="space-y-4">
                             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">About CSCosmos</h1>
@@ -23,7 +27,7 @@ export function About() {
                             <Link to="/topics">
                                 <Button size="md" className="gap-2">Browse topics</Button>
                             </Link>
-                            <a href="https://github.com" target="_blank" rel="noreferrer">
+                            <a href="https://github.com/subhajitlucky/cscosmos" target="_blank" rel="noreferrer">
                                 <Button variant="outline" size="md" className="gap-2">Contribute on GitHub</Button>
                             </a>
                         </div>
@@ -32,7 +36,7 @@ export function About() {
                     <section className="grid md:grid-cols-3 gap-4">
                         <div className="glass-card rounded-2xl p-5 space-y-2">
                             <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Scope</p>
-                            <p className="text-3xl font-bold">126</p>
+                            <p className="text-3xl font-bold">{totalTopics}</p>
                             <p className="text-muted-foreground text-sm">Microsites spanning 7 domains.</p>
                         </div>
                         <div className="glass-card rounded-2xl p-5 space-y-2">
@@ -83,7 +87,7 @@ export function About() {
                                 Designers, engineers, educators, and technical writers are welcome. Start with an issue, propose a microsite, or improve UX and accessibility.
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                <a href="https://github.com" target="_blank" rel="noreferrer" className="text-primary hover:underline font-medium">
+                                <a href="https://github.com/subhajitlucky/cscosmos" target="_blank" rel="noreferrer" className="text-primary hover:underline font-medium">
                                     View the repo →
                                 </a>
                                 <Link to="/topics" className="text-muted-foreground hover:text-foreground font-medium">

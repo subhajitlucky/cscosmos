@@ -31,7 +31,7 @@ export function AllTopics() {
                         <div className="flex flex-col gap-3">
                             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">All Topics</h1>
                             <p className="text-muted-foreground max-w-2xl">
-                                Browse the full catalog of 126 interactive modules. Filter by domain and search to
+                                Browse the full catalog of {topics.length} interactive modules. Filter by domain and search to
                                 jump straight to what you need.
                             </p>
                         </div>

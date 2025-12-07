@@ -7,6 +7,7 @@ export interface Topic {
     shortDescription: string;
     slug: string;
     status: 'coming-soon' | 'active'; // Future proofing
+    url?: string;
 }
 
 let idCounter = 1;
@@ -19,21 +20,27 @@ const slugify = (name: string) =>
         .trim()
         .replace(/\s+/g, "-");
 
-const createTopic = (name: string, domain: DomainKey): Topic => ({
+type TopicOptions = {
+    status?: Topic['status'];
+    url?: string;
+}
+
+const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): Topic => ({
     id: idCounter++,
     name,
     domain,
     slug: slugify(name),
     shortDescription: `Interactive visualization and learning module for ${name}.`,
-    status: 'coming-soon'
+    status: options?.status ?? 'coming-soon',
+    url: options?.url,
 });
 
 export const topics: Topic[] = [
     // Full Stack Development
-    createTopic("HTML & Accessibility Visualizer", "fullstack"),
+    createTopic("HTML & Accessibility Visualizer", "fullstack", { status: 'active', url: "https://htmlviz.vercel.app" }),
     createTopic("CSS Visualizer (Flexbox/Grid/Box Model)", "fullstack"),
-    createTopic("JavaScript Deep Visualizer", "fullstack"),
-    createTopic("TypeScript Deep Dive + Compiler Visualizer", "fullstack"),
+    createTopic("JavaScript Deep Visualizer", "fullstack", { status: 'active', url: "https://jsviz.vercel.app/" }),
+    createTopic("TypeScript Deep Dive + Compiler Visualizer", "fullstack", { status: 'active', url: "https://tsviz.vercel.app/" }),
     createTopic("DOM & Browser Internals Website", "fullstack"),
     createTopic("Responsive Design & Layout System Visualizer", "fullstack"),
     createTopic("React Visual Learning Website", "fullstack"),
@@ -43,7 +50,7 @@ export const topics: Topic[] = [
     createTopic("TailwindCSS Visual Playground", "fullstack"),
     createTopic("Node.js Internals + Event Loop Visualizer", "fullstack"),
     createTopic("Express/Fastify Backend Playground", "fullstack"),
-    createTopic("Golang Backend + Memory/Goroutine Visualizer", "fullstack"),
+    createTopic("Golang Backend + Memory/Goroutine Visualizer", "fullstack", { status: 'active', url: "https://golangviz.vercel.app" }),
     createTopic("Rust Backend + Ownership/Borrow Checker Visualizer", "fullstack"),
     createTopic("Python FastAPI Backend Learning Site", "fullstack"),
     createTopic("GraphQL API Designer + Schema Visualizer", "fullstack"),
@@ -56,7 +63,7 @@ export const topics: Topic[] = [
     createTopic("Complete System Design Visual Learning Website", "fullstack"),
 
     // Data Structures & Algorithms
-    createTopic("Arrays & Strings Visualizer", "dsa"),
+    createTopic("Arrays & Strings Visualizer", "dsa", { status: 'active', url: "https://arrayviz.vercel.app/" }),
     createTopic("Stacks Visualizer", "dsa"),
     createTopic("Queues Visualizer", "dsa"),
     createTopic("Linked List Pointer Visualizer", "dsa"),
@@ -93,6 +100,7 @@ export const topics: Topic[] = [
     createTopic("Attack Simulation Website", "web3"),
     createTopic("Hashing & Digital Signature Visualizer", "web3"),
     createTopic("Cryptography Fundamentals Visualizer", "web3"),
+    createTopic("Zero-Knowledge Proofs Visualizer", "web3"),
 
     // Artificial Intelligence
     createTopic("Linear Algebra Visualizer", "ai"),

@@ -27,7 +27,7 @@ export function Navbar() {
                     <NavLink to="/about" className={navLinkClass}>
                         About
                     </NavLink>
-                    <a href="https://github.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                    <a href="https://github.com/subhajitlucky/cscosmos" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                         <Github className="h-5 w-5" />
                         <span className="sr-only">GitHub</span>
                     </a>

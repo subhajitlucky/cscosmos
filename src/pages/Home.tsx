@@ -12,6 +12,8 @@ import { ArrowRight, Sparkles } from "lucide-react"
 
 export function Home() {
     const [searchQuery, setSearchQuery] = useState("");
+    const totalTopics = topics.length;
+    const liveTopics = topics.filter(t => t.status === 'active').length;
 
     const filteredTopics = useMemo(() => {
         if (!searchQuery) return [];
@@ -33,17 +35,17 @@ export function Home() {
                 </div>
                 <div className="page-container text-center relative z-10 space-y-8">
                     <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary shadow-sm">
-                        <Sparkles className="mr-2 h-3.5 w-3.5" /> 126 Interactive Learning Modules
+                        <Sparkles className="mr-2 h-3.5 w-3.5" /> {totalTopics} Interactive Learning Modules · {liveTopics} live
                     </div>
 
                     <div className="space-y-4">
                         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl leading-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/85 to-primary/90">
                             Explore the Universe of Computer Science
                         </h1>
-                        <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
-                            A curated hub of 126 interactive visual learning microsites across Full-Stack, DSA, Web3,
-                            AI, Core CS, DevOps, and Advanced Engineering.
-                        </p>
+                    <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
+                        A curated hub of {totalTopics} interactive visual learning microsites across Full-Stack, DSA, Web3,
+                        AI, Core CS, DevOps, and Advanced Engineering.
+                    </p>
                     </div>
 
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -105,7 +107,7 @@ export function Home() {
                                         <h2 className="text-3xl font-bold tracking-tight">Browse by Domain</h2>
                                         <p className="text-muted-foreground mt-2">Explore our 7 major galaxies of knowledge.</p>
                                     </div>
-                                    <span className="text-sm text-muted-foreground hidden sm:block">126 topics total</span>
+                                    <span className="text-sm text-muted-foreground hidden sm:block">{totalTopics} topics total</span>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                     {domains.map(domain => (

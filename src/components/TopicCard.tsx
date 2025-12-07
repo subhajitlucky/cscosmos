@@ -8,12 +8,15 @@ interface TopicCardProps {
 }
 
 export function TopicCard({ topic, onClick }: TopicCardProps) {
+    const isLive = topic.status === 'active';
+    const cardAriaLabel = `${topic.name}${isLive ? " (Live)" : " (Coming soon)"}`;
+
     const CardContent = (
         <div
             className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-white/70 dark:bg-white/5 p-5 card-hover backdrop-blur min-h-[180px]"
             role={onClick ? "button" : "article"}
             tabIndex={onClick ? 0 : -1}
-            aria-label={topic.name}
+            aria-label={cardAriaLabel}
             onKeyDown={(e) => {
                 if (!onClick) return;
                 if (e.key === "Enter" || e.key === " ") {
@@ -31,7 +34,11 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
                         {topic.name}
                     </h4>
                 </div>
-                {topic.status === 'coming-soon' && (
+                {isLive ? (
+                    <span className="pill-badge border border-emerald-300 bg-emerald-100 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-500/15 dark:text-emerald-100">
+                        Live
+                    </span>
+                ) : (
                     <span className="pill-badge border border-indigo-200 bg-indigo-100 text-indigo-900 dark:border-indigo-500/40 dark:bg-indigo-500/15 dark:text-indigo-100">
                         Coming Soon
                     </span>
@@ -42,7 +49,7 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
                 {topic.shortDescription}
             </p>
 
-            {topic.status === 'coming-soon' && (
+            {!isLive && (
                 <div className="absolute inset-0 bg-background/5 backdrop-blur-[1px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
                     <div className="bg-background text-foreground px-4 py-2 rounded-full shadow-lg border border-border flex items-center text-sm font-medium">
                         <Lock className="w-3 h-3 mr-2" /> Coming Soon
@@ -60,8 +67,22 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
         )
     }
 
+    if (topic.url) {
+        return (
+            <a
+                href={topic.url}
+                target="_blank"
+                rel="noreferrer"
+                className="block focus-ring rounded-2xl h-full"
+                aria-label={cardAriaLabel}
+            >
+                {CardContent}
+            </a>
+        )
+    }
+
     return (
-        <Link to={`/${topic.domain}/${topic.slug}`} className="block focus-ring rounded-2xl h-full">
+        <Link to={`/${topic.domain}/${topic.slug}`} className="block focus-ring rounded-2xl h-full" aria-label={cardAriaLabel}>
             {CardContent}
         </Link>
     )
