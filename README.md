@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+# CSCosmos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A curated hub of 180+ computer science microsites across Full-Stack, DSA, Web3, AI, Core CS, DevOps, and Advanced Engineering. Built with React + TypeScript + Vite + Tailwind, using React Router, and deployed on Vercel.
 
-Currently, two official plugins are available:
+- Live: https://cscosmos.vercel.app  
+- Repo: https://github.com/subhajitlucky/cscosmos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live microsites
+The authoritative list (including which topics are live) is defined in `src/data/topics.ts`.  
+To mark a topic live, set `status: 'active'` and provide its `url`. The UI and counts will pick this up automatically.
 
-## React Compiler
+## Features
+- Domain browsing and search across all topics
+- Per-domain filtering and topic detail pages
+- Light/dark theme toggle
+- “Coming Soon” vs “Live” badges with external links for live microsites
+- SPA routing with Vercel rewrites for deep links
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
+- React + TypeScript + Vite
+- TailwindCSS + clsx + tailwind-merge
+- React Router v7
+- Deployed on Vercel (`vercel.json` SPA rewrite)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting started
+```bash
+npm install
+npm run dev
 ```
+Visit http://localhost:5173
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
+- `npm run dev` — start Vite dev server
+- `npm run build` — type-check then build
+- `npm run preview` — preview production build
+- `npm run lint` — eslint
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Routing / deployment
+Client routes are handled by React Router. `vercel.json` rewrites all paths to `/` so refreshes on deep links (e.g., `/topics`, `/:domain/:topicSlug`) work on Vercel.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Project structure
+- `src/data/` — domains and topics (status + external URLs)
+- `src/pages/` — Home, About, AllTopics, DomainPage, TopicDetail, ComingSoon
+- `src/components/` — Navbar, Footer, Topic/Domain cards, SearchBar, ThemeToggle, UI primitives
+
+## Contributing
+PRs/issues welcome at https://github.com/subhajitlucky/cscosmos.  
+To add or update a microsite:
+- Edit `src/data/topics.ts`
+- Set `status: 'active'` and provide `url` for live items; leave as `'coming-soon'` otherwise
+- UI counts, badges, and links will update automatically
