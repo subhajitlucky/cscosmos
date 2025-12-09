@@ -41,7 +41,7 @@ export const topics: Topic[] = [
     createTopic("CSS Visualizer (Flexbox/Grid/Box Model)", "fullstack", { status: 'active', url: "https://cssviz.vercel.app" }),
     createTopic("JavaScript Deep Visualizer", "fullstack", { status: 'active', url: "https://jsviz.vercel.app/" }),
     createTopic("TypeScript Deep Dive + Compiler Visualizer", "fullstack", { status: 'active', url: "https://tsviz.vercel.app/" }),
-    createTopic("DOM & Browser Internals Website", "fullstack"),
+    createTopic("DOM & Browser Internals Website", "fullstack", { status: 'active', url: "https://browseruniverse.vercel.app/" }),
     createTopic("Responsive Design & Layout System Visualizer", "fullstack"),
     createTopic("React Visual Learning Website", "fullstack"),
     createTopic("Next.js Architecture + Rendering Visualizer", "fullstack"),

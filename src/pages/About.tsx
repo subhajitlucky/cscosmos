@@ -18,7 +18,7 @@ export function About() {
                             Building {totalTopics} interactive CS microsites ({liveTopics} live)
                         </div>
                         <div className="space-y-4">
-                            <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">About CSCosmos</h1>
+                        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">About CSCosmos</h1>
                             <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                                 CSCosmos is mapping the universe of Computer Science into approachable, visual, and interactive microsites—covering everything from browser internals to distributed consensus.
                             </p>

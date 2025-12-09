@@ -46,29 +46,29 @@ export function DomainPage() {
             <main className="flex-grow pb-16">
                 <div className="page-container space-y-8">
                     <div className="glass-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row justify-between md:items-center gap-4">
-                        <div className="text-muted-foreground">
-                            Showing {domainTopics.length} topics
-                        </div>
-                        <div className="w-full md:w-96">
-                            <SearchBar
-                                placeholder={`Search in ${domain.name}...`}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                        </div>
+                    <div className="text-muted-foreground">
+                        Showing {domainTopics.length} topics
                     </div>
+                    <div className="w-full md:w-96">
+                        <SearchBar
+                            placeholder={`Search in ${domain.name}...`}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
+                </div>
 
-                    {domainTopics.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {domainTopics.map(topic => (
-                                <TopicCard key={topic.id} topic={topic} />
-                            ))}
-                        </div>
-                    ) : (
+                {domainTopics.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {domainTopics.map(topic => (
+                            <TopicCard key={topic.id} topic={topic} />
+                        ))}
+                    </div>
+                ) : (
                         <div className="glass-card rounded-2xl p-10 text-center text-muted-foreground">
-                            No topics found matching your search.
-                        </div>
-                    )}
+                        No topics found matching your search.
+                    </div>
+                )}
                 </div>
             </main>
             <Footer />

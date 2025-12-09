@@ -1,24 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react"
-
-export type Theme = "dark" | "light" | "system"
+import { useEffect, useState } from "react"
+import { ThemeProviderContext, combineTheme, type Theme } from "./theme-context"
 
 type ThemeProviderProps = {
     children: React.ReactNode
     defaultTheme?: Theme
     storageKey?: string
 }
-
-type ThemeProviderState = {
-    theme: Theme
-    setTheme: (theme: Theme) => void
-}
-
-const initialState: ThemeProviderState = {
-    theme: "system",
-    setTheme: () => null,
-}
-
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
 export function ThemeProvider({
     children,
@@ -49,9 +36,9 @@ export function ThemeProvider({
 
     const value = {
         theme,
-        setTheme: (theme: Theme) => {
-            localStorage.setItem(storageKey, theme)
-            setTheme(theme)
+        setTheme: (nextTheme: Theme) => {
+            localStorage.setItem(storageKey, nextTheme)
+            setTheme(nextTheme)
         },
     }
 
@@ -60,19 +47,4 @@ export function ThemeProvider({
             {children}
         </ThemeProviderContext.Provider>
     )
-}
-
-function combineTheme(theme: Theme | null): Theme | null {
-    if (theme === 'dark' || theme === 'light' || theme === 'system') return theme;
-    return null;
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const useTheme = () => {
-    const context = useContext(ThemeProviderContext)
-
-    if (context === undefined)
-        throw new Error("useTheme must be used within a ThemeProvider")
-
-    return context
 }

@@ -41,7 +41,7 @@ export function Home() {
                     <div className="space-y-4">
                         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl leading-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/85 to-primary/90">
                             Explore the Universe of Computer Science
-                        </h1>
+                    </h1>
                     <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
                         A curated hub of {totalTopics} interactive visual learning microsites across Full-Stack, DSA, Web3,
                         AI, Core CS, DevOps, and Advanced Engineering.
@@ -75,8 +75,8 @@ export function Home() {
 
             <main className="flex-grow space-y-16 pb-16">
                 <div className="page-container space-y-16">
-                    {/* Search Results or Domain Grid */}
-                    {searchQuery ? (
+                {/* Search Results or Domain Grid */}
+                {searchQuery ? (
                         <section className="space-y-6">
                             <div className="flex items-center justify-between">
                                 <div>
@@ -87,52 +87,52 @@ export function Home() {
                                     View all topics →
                                 </Link>
                             </div>
-                            {filteredTopics.length > 0 ? (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {filteredTopics.map(topic => (
-                                        <TopicCard key={topic.id} topic={topic} />
-                                    ))}
-                                </div>
-                            ) : (
+                        {filteredTopics.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {filteredTopics.map(topic => (
+                                    <TopicCard key={topic.id} topic={topic} />
+                                ))}
+                            </div>
+                        ) : (
                                 <div className="glass-card rounded-2xl p-10 text-center text-muted-foreground">
                                     No topics found for "{searchQuery}". Try a different term.
-                                </div>
-                            )}
-                        </section>
-                    ) : (
-                        <>
+                            </div>
+                        )}
+                    </section>
+                ) : (
+                    <>
                             <section className="space-y-6">
                                 <div className="flex justify-between items-end">
-                                    <div>
-                                        <h2 className="text-3xl font-bold tracking-tight">Browse by Domain</h2>
-                                        <p className="text-muted-foreground mt-2">Explore our 7 major galaxies of knowledge.</p>
-                                    </div>
+                                <div>
+                                    <h2 className="text-3xl font-bold tracking-tight">Browse by Domain</h2>
+                                    <p className="text-muted-foreground mt-2">Explore our 7 major galaxies of knowledge.</p>
+                                </div>
                                     <span className="text-sm text-muted-foreground hidden sm:block">{totalTopics} topics total</span>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                    {domains.map(domain => (
-                                        <DomainCard key={domain.domainKey} domain={domain} />
-                                    ))}
-                                </div>
-                            </section>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {domains.map(domain => (
+                                    <DomainCard key={domain.domainKey} domain={domain} />
+                                ))}
+                            </div>
+                        </section>
 
                             <section className="space-y-6">
                                 <div className="flex justify-between items-center">
-                                    <h2 className="text-3xl font-bold tracking-tight">Featured Topics</h2>
+                                <h2 className="text-3xl font-bold tracking-tight">Featured Topics</h2>
                                     <Link to="/topics">
-                                        <Button variant="ghost" className="text-primary hover:text-primary/80">
-                                            View All <ArrowRight className="ml-2 h-4 w-4" />
-                                        </Button>
+                                <Button variant="ghost" className="text-primary hover:text-primary/80">
+                                    View All <ArrowRight className="ml-2 h-4 w-4" />
+                                </Button>
                                     </Link>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {featuredTopics.map(topic => (
-                                        <TopicCard key={topic.id} topic={topic} />
-                                    ))}
-                                </div>
-                            </section>
-                        </>
-                    )}
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {featuredTopics.map(topic => (
+                                    <TopicCard key={topic.id} topic={topic} />
+                                ))}
+                            </div>
+                        </section>
+                    </>
+                )}
                 </div>
             </main>
             <Footer />

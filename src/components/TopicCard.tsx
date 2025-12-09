@@ -31,8 +31,8 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
                 <div>
                     <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{topic.domain}</p>
                     <h4 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors pr-4 line-clamp-2 min-h-[48px]">
-                        {topic.name}
-                    </h4>
+                    {topic.name}
+                </h4>
                 </div>
                 {isLive ? (
                     <span className="pill-badge border border-emerald-300 bg-emerald-100 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-500/15 dark:text-emerald-100">
