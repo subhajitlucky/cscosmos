@@ -38,7 +38,7 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
 export const topics: Topic[] = [
     // Full Stack Development
     createTopic("HTML & Accessibility Visualizer", "fullstack", { status: 'active', url: "https://htmlviz.vercel.app" }),
-    createTopic("CSS Visualizer (Flexbox/Grid/Box Model)", "fullstack"),
+    createTopic("CSS Visualizer (Flexbox/Grid/Box Model)", "fullstack", { status: 'active', url: "https://cssviz.vercel.app" }),
     createTopic("JavaScript Deep Visualizer", "fullstack", { status: 'active', url: "https://jsviz.vercel.app/" }),
     createTopic("TypeScript Deep Dive + Compiler Visualizer", "fullstack", { status: 'active', url: "https://tsviz.vercel.app/" }),
     createTopic("DOM & Browser Internals Website", "fullstack"),
