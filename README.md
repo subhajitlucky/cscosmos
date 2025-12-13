@@ -1,6 +1,6 @@
 # CSCosmos
 
-A curated hub of 180+ computer science microsites across Full-Stack, DSA, Web3, AI, Core CS, DevOps, and Advanced Engineering. Built with React + TypeScript + Vite + Tailwind, using React Router, and deployed on Vercel.
+A curated hub of computer science microsites across Full-Stack, DSA, Web3, AI, Core CS, DevOps, and Advanced Engineering. Built with React + TypeScript + Vite + Tailwind, using React Router, and deployed on Vercel.
 
 - Live: https://cscosmos.vercel.app  
 - Repo: https://github.com/subhajitlucky/cscosmos
