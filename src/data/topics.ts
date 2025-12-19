@@ -58,7 +58,7 @@ export const topics: Topic[] = [
     createTopic("Python FastAPI Backend (Async, Dependency Injection)", "fullstack"),
     createTopic("SQL Visualizer (Queries, Indexes)", "fullstack"),
     createTopic("MongoDB Visualizer (Documents, Aggregation)", "fullstack"),
-    createTopic("Redis Visualizer (Caching, Data Structures)", "fullstack"),
+    createTopic("Redis Visualizer (Caching, Data Structures)", "fullstack", { status: 'active', url: "https://redisviz.vercel.app" }),
     createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack"),
     createTopic("Microservices Architecture (Services, Failures)", "fullstack"),
     createTopic("System Design & Scalability (Caching, Sharding)", "fullstack"),
