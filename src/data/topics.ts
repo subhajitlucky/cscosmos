@@ -37,7 +37,7 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
 
 export const topics: Topic[] = [
     // Full Stack Development
-    createTopic("How Programs Execute (CPU, Memory, I/O)", "fullstack"),
+    createTopic("How Programs Execute (CPU, Memory, I/O)", "fullstack", { status: 'active', url: "https://programviz.vercel.app" }),
     createTopic("HTML & Accessibility (Semantics, ARIA)", "fullstack", { status: 'active', url: "https://htmlviz.vercel.app" }),
     createTopic("CSS Visualizer (Box Model, Flexbox, Grid)", "fullstack", { status: 'active', url: "https://cssviz.vercel.app" }),
     createTopic("JavaScript Visualizer (Execution, Async, Memory)", "fullstack", { status: 'active', url: "https://jsviz.vercel.app/" }),
