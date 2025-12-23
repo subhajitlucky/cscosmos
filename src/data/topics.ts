@@ -46,7 +46,7 @@ export const topics: Topic[] = [
     createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', url: "https://websecureviz.vercel.app" }),
     createTopic("HTTP & Web Protocols (Headers, Caching)", "fullstack", { status: 'active', url: "https://webprotocols.vercel.app" }),
     createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', url: "https://apiviz.vercel.app" }),
-    createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack"),
+    createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', url: "https://authviz.vercel.app" }),
     createTopic("React Visualizer (Hooks, Reconciliation)", "fullstack"),
     createTopic("Next.js Visualizer (Routing, SSR, RSC)", "fullstack"),
     createTopic("Vue Visualizer (Reactivity, Templates)", "fullstack"),
@@ -101,8 +101,8 @@ export const topics: Topic[] = [
     createTopic("NP-Completeness (Reductions)", "dsa"),
 
     // Web3 & Blockchain
-    createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3"),
-    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3"),
+    createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3" , { status: 'active', url: "https://blockchainviz.vercel.app" }),
+    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3" , { status: 'active', url: "https://cryptviz.vercel.app" }),
     createTopic("Merkle Tree Visualizer (Integrity)", "web3"),
     createTopic("Patricia Trie Visualizer (State Storage)", "web3"),
     createTopic("Blockchain Consensus (PoW, PoS)", "web3"),
