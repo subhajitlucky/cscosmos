@@ -45,7 +45,7 @@ export const topics: Topic[] = [
     createTopic("Browser Internals (DOM, Rendering, Storage)", "fullstack", { status: 'active', url: "https://browseruniverse.vercel.app/" }),
     createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', url: "https://websecureviz.vercel.app" }),
     createTopic("HTTP & Web Protocols (Headers, Caching)", "fullstack", { status: 'active', url: "https://webprotocols.vercel.app" }),
-    createTopic("API Design (REST, GraphQL)", "fullstack"),
+    createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', url: "https://apiviz.vercel.app" }),
     createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack"),
     createTopic("React Visualizer (Hooks, Reconciliation)", "fullstack"),
     createTopic("Next.js Visualizer (Routing, SSR, RSC)", "fullstack"),
