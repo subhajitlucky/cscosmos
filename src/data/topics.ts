@@ -103,8 +103,8 @@ export const topics: Topic[] = [
     // Web3 & Blockchain
     createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3" , { status: 'active', url: "https://blockchainviz.vercel.app" }),
     createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3" , { status: 'active', url: "https://cryptviz.vercel.app" }),
-    createTopic("Merkle Tree Visualizer (Integrity)", "web3"),
-    createTopic("Patricia Trie Visualizer (State Storage)", "web3"),
+    createTopic("Merkle Tree Visualizer (Integrity)", "web3" , { status: 'active', url: "https://merkletreeviz.vercel.app" }),
+    createTopic("Patricia Trie Visualizer (State Storage)", "web3" , { status: 'active', url: "https://patriciatrie.vercel.app" }),
     createTopic("Blockchain Consensus (PoW, PoS)", "web3"),
     createTopic("Blockchain P2P Networking (Gossip)", "web3"),
     createTopic("EVM Internals (Storage, Execution)", "web3"),
