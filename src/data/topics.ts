@@ -54,7 +54,7 @@ export const topics: Topic[] = [
     createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack"),
     createTopic("Node.js Runtime (Event Loop, libuv)", "fullstack" , { status: 'active', url: "https://nodecosmos.vercel.app" }),
     createTopic("Go Backend Internals (Goroutines, Memory)", "fullstack", { status: 'active', url: "https://golangviz.vercel.app" }),
-    createTopic("Rust Backend Internals (Ownership, Concurrency)", "fullstack"),
+    createTopic("Rust Backend Internals (Ownership, Concurrency)", "fullstack" , { status: 'active', url: "https://rustviz.vercel.app" }),
     createTopic("Python FastAPI Backend (Async, Dependency Injection)", "fullstack"),
     createTopic("SQL Visualizer (Queries, Indexes)", "fullstack"),
     createTopic("MongoDB Visualizer (Documents, Aggregation)", "fullstack"),
