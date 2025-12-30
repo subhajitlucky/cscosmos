@@ -144,7 +144,7 @@ export const topics: Topic[] = [
     createTopic("Compilers & Runtime Internals (AST, Bytecode)", "corecs"),
 
     // DevOps / Cloud / Engineering
-    createTopic("Git & Version Control (Commits, Branches)", "devops"),
+    createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', url: "https://gitcosmos.vercel.app" }),
     createTopic("Docker & Containers (Isolation)", "devops"),
     createTopic("Kubernetes & Orchestration (Scheduling)", "devops"),
     createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops"),
