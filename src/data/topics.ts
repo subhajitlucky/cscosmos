@@ -146,7 +146,7 @@ export const topics: Topic[] = [
     // DevOps / Cloud / Engineering
     createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', url: "https://gitcosmos.vercel.app" }),
     createTopic("Docker & Containers (Isolation)", "devops" , { status: 'active', url: "https://dockercosmos.vercel.app" }),
-    createTopic("Kubernetes & Orchestration (Scheduling)", "devops"),
+    createTopic("Kubernetes & Orchestration (Scheduling)", "devops" , { status: 'active', url: "https://k8scosmos.vercel.app" }),
     createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops"),
     createTopic("CI/CD Pipeline Visualizer (Build, Deploy)", "devops"),
     createTopic("Infrastructure as Code (Terraform)", "devops"),
