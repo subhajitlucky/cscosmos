@@ -120,7 +120,7 @@ export const topics: Topic[] = [
     createTopic("DAOs & Tokenomics (Governance)", "web3"),
 
     // Artificial Intelligence
-    createTopic("Math for Machine Learning (Linear Algebra, Probability)", "ai"),
+    createTopic("Math for Machine Learning (Linear Algebra, Probability)", "ai" , { status: 'active', url: "https://aimathviz.vercel.app" }),
     createTopic("Optimization Algorithms (Gradient Descent)", "ai"),
     createTopic("Machine Learning Fundamentals (Bias-Variance)", "ai"),
     createTopic("Decision Trees (Splits)", "ai"),
@@ -150,7 +150,7 @@ export const topics: Topic[] = [
     createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops" , { status: 'active', url: "https://cloudcosmos.vercel.app" }),
     createTopic("CI/CD Pipeline Visualizer (Build, Deploy)", "devops"),
     createTopic("Infrastructure as Code (Terraform)", "devops"),
-    createTopic("Load Balancing (Traffic Distribution)", "devops"),
+    createTopic("Load Balancing (Traffic Distribution)", "devops" , { status: 'active', url: "https://loadbalancing.vercel.app" }),
     createTopic("Rate Limiting (Throttling)", "devops"),
     createTopic("Observability Systems (Logs, Metrics)", "devops"),
     createTopic("Site Reliability Engineering (SLIs, SLOs)", "devops"),
