@@ -48,7 +48,7 @@ export const topics: Topic[] = [
     createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', url: "https://apiviz.vercel.app" }),
     createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', url: "https://authviz.vercel.app" }),
     createTopic("React Visualizer (Hooks, Reconciliation)", "fullstack" , { status: 'active', url: "https://reactcosmos.vercel.app/" }),
-    createTopic("Next.js Visualizer (Routing, SSR, RSC)", "fullstack"),
+    createTopic("Next.js Visualizer (Routing, SSR, RSC)", "fullstack" , { status: 'active', url: "https://nextjscosmos.vercel.app/" }),
     createTopic("Vue Visualizer (Reactivity, Templates)", "fullstack"),
     createTopic("Svelte / SvelteKit Visualizer (Compiler, Reactivity)", "fullstack"),
     createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack"),
