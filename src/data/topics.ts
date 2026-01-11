@@ -148,6 +148,7 @@ export const topics: Topic[] = [
     // Cybersecurity & Ethical Hacking
     createTopic("Cryptography Fundamentals (Hashing, Signatures)", "security" , { status: 'active', url: "https://cryptviz.vercel.app" }),
     createTopic("Network Defense & Traffic Analysis (Wireshark, Firewalls)", "security"),
+    createTopic("Software Defined Radio (SDR) & Signal Hacking", "security"),
     createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security"),
     createTopic("Digital Forensics & Incident Response (DFIR)", "security"),
     createTopic("Malware Analysis & Sandbox Internals", "security"),
@@ -176,8 +177,10 @@ export const topics: Topic[] = [
     createTopic("Mojo & Python Internals (High-Performance AI Code)", "ai"),
     createTopic("World Models & Embodied AI (Sora, Tesla Bot, Robotics)", "ai"),
     createTopic("Mechanistic Interpretability (Opening the Black Box)", "ai"),
+    createTopic("Adversarial Machine Learning (Fooling AI Vision)", "ai"),
     createTopic("Neuro-Symbolic AI (LLMs + Logic Engines)", "ai"),
     createTopic("Neuromorphic Computing & Spiking Neural Networks", "ai"),
+    createTopic("Neural Implants & BCI (Neuralink, Decoding, High-Bandwidth)", "ai"),
 
     // Core Computer Science
     createTopic("Operating Systems Internals (Processes, Memory)", "corecs"),
@@ -192,6 +195,7 @@ export const topics: Topic[] = [
     createTopic("Theory of Computation (Automata, Languages, Complexity)", "corecs"),
     createTopic("Quantum Computing Internals (Qubits, Gates, Circuits)", "corecs"),
     createTopic("DNA Storage & Molecular Computing", "corecs"),
+    createTopic("Computational Biology & Bioinformatics (CRISPR, AlphaFold)", "corecs"),
     createTopic("GPU Architecture & Parallelism (CUDA, SIMD, Shaders)", "corecs"),
     createTopic("RISC-V & Custom Silicon (Open Hardware)", "corecs"),
     createTopic("Formal Methods & TLA+ (The Math of Correctness)", "corecs"),

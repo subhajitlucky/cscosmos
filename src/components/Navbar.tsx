@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom"
 import { ThemeToggle } from "./ThemeToggle"
 import { Code2, Github } from "lucide-react"
 import { cn } from "../lib/utils"
+import { siteConfig } from "../config/site"
 
 export function Navbar() {
     const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -16,7 +17,7 @@ export function Navbar() {
                 <div className="flex items-center gap-2">
                     <Link to="/" className="flex items-center space-x-2">
                         <Code2 className="h-6 w-6 text-primary" />
-                        <span className="font-bold text-xl tracking-tight hidden sm:inline-block">CSCosmos</span>
+                        <span className="font-bold text-xl tracking-tight hidden sm:inline-block">{siteConfig.name}</span>
                     </Link>
                 </div>
 
@@ -27,7 +28,7 @@ export function Navbar() {
                     <NavLink to="/about" className={navLinkClass}>
                         About
                     </NavLink>
-                    <a href="https://github.com/subhajitlucky/cscosmos" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                    <a href={siteConfig.links.github} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                         <Github className="h-5 w-5" />
                         <span className="sr-only">GitHub</span>
                     </a>

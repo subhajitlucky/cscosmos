@@ -27,25 +27,25 @@
   }
 
   .dark {
-    --background: 229 23% 9%;
-    --foreground: 210 35% 96%;
-    --card: 230 20% 11%;
-    --card-foreground: 210 35% 96%;
-    --popover: 230 20% 11%;
-    --popover-foreground: 210 35% 96%;
-    --primary: 262 78% 68%;
-    --primary-foreground: 229 61% 10%;
-    --secondary: 225 18% 16%;
-    --secondary-foreground: 210 35% 96%;
-    --muted: 225 14% 18%;
-    --muted-foreground: 216 18% 76%;
-    --accent: 235 32% 18%;
-    --accent-foreground: 210 35% 96%;
-    --destructive: 0 72% 51%;
+    --background: 240 10% 4%; /* Near Void Black */
+    --foreground: 210 35% 98%;
+    --card: 240 10% 6%;
+    --card-foreground: 210 35% 98%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 210 35% 98%;
+    --primary: 262 80% 65%; /* Slightly brighter purple */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 240 6% 12%;
+    --secondary-foreground: 210 35% 98%;
+    --muted: 240 6% 12%;
+    --muted-foreground: 216 10% 70%;
+    --accent: 262 50% 15%;
+    --accent-foreground: 210 35% 98%;
+    --destructive: 0 62% 30%;
     --destructive-foreground: 210 40% 98%;
-    --border: 225 14% 23%;
-    --input: 225 14% 23%;
-    --ring: 262 78% 68%;
+    --border: 240 6% 14%;
+    --input: 240 6% 14%;
+    --ring: 262 80% 65%;
   }
 }
 
@@ -62,9 +62,13 @@
   }
   .dark body {
     background-image:
-      radial-gradient(1400px 800px at 18% 0%, rgba(140, 108, 255, 0.14), transparent),
-      radial-gradient(1200px 720px at 82% 12%, rgba(82, 152, 255, 0.12), transparent),
-      radial-gradient(900px 540px at 50% 80%, rgba(25, 20, 50, 0.55), transparent);
+      radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
+      radial-gradient(1px 1px at 20% 20%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
+      radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
+      radial-gradient(1px 1px at 40% 40%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
+      radial-gradient(1200px 800px at 50% 0%, rgba(82, 50, 200, 0.15), transparent),
+      radial-gradient(1000px 800px at 100% 100%, rgba(50, 100, 200, 0.1), transparent);
+    background-size: 500px 500px, 400px 400px, 300px 300px, 200px 200px, 100% 100%, 100% 100%;
   }
   h1, h2, h3, h4 {
     font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

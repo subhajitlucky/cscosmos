@@ -54,9 +54,17 @@ export function TopicDetail() {
                                     View all topics
                                 </Button>
                             </Link>
-                            <Button variant="primary" className="gap-2" disabled>
-                                <ExternalLink className="h-4 w-4" /> Microsite link (soon)
-                            </Button>
+                            {topic.status === 'active' && topic.url ? (
+                                <a href={topic.url} target="_blank" rel="noopener noreferrer">
+                                    <Button className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
+                                        <ExternalLink className="h-4 w-4" /> Launch Microsite
+                                    </Button>
+                                </a>
+                            ) : (
+                                <Button variant="secondary" className="gap-2 opacity-50 cursor-not-allowed" disabled>
+                                    <Sparkles className="h-4 w-4" /> Coming Soon
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </section>

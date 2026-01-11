@@ -1,4 +1,5 @@
 import { Code2, Github, Heart } from "lucide-react"
+import { siteConfig } from "../config/site"
 
 export function Footer() {
     return (
@@ -7,7 +8,10 @@ export function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-center gap-2">
                         <Code2 className="h-5 w-5 text-primary" />
-                        <span className="font-semibold">CSCosmos</span>
+                        <span className="font-semibold">{siteConfig.name}</span>
+                        <span className="hidden md:inline text-xs text-muted-foreground ml-2 border-l border-border/50 pl-2">
+                            Understanding the Machine
+                        </span>
                     </div>
 
                     <p className="text-sm text-muted-foreground flex items-center text-center md:text-left">
@@ -15,7 +19,7 @@ export function Footer() {
                     </p>
 
                     <div className="flex items-center gap-4">
-                        <a href="https://github.com/subhajitlucky/cscosmos" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                        <a href={siteConfig.links.github} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                             <Github className="h-5 w-5" />
                         </a>
                     </div>

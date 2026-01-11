@@ -11,8 +11,23 @@ export function DomainCard({ domain }: DomainCardProps) {
     return (
         <Link
             to={domain.path}
-            className="group relative overflow-hidden rounded-2xl glass-card p-6 card-hover border border-white/5 dark:border-white/8 shadow-[0_12px_40px_-18px_rgba(0,0,0,0.65)]"
+            className={cn(
+                "group relative overflow-hidden rounded-2xl glass-card p-6 card-hover border-t-4 shadow-[0_12px_40px_-18px_rgba(0,0,0,0.65)]",
+                // We use inline style or a dynamic class mapping if possible, but since domain.color is a tailwind class string like 'bg-blue-500', 
+                // we can't easily map it to 'border-blue-500' without a map.
+                // However, domain.color is 'bg-blue-500'. We can trick it by using `border-[color]` if we had hex, 
+                // but since we have classes, let's just use the existing `domain.color` class on a pseudo-element or just assume the user passes a color class that works.
+                // Wait, domain.color is 'bg-blue-500'. I can't use 'bg-blue-500' as a border color.
+                // I will assume domain.color is meant for background.
+                // To get the border color, I'll need to map 'bg-blue-500' -> 'border-blue-500'.
+                // Since I can't do that dynamically easily in Tailwind JIT without safelisting, 
+                // I will add a colored line at the top *inside* the card using the bg color.
+                "border-white/5 dark:border-white/8" 
+            )}
         >
+            {/* The Top Line Glow */}
+            <div className={cn("absolute top-0 left-0 right-0 h-1", domain.color)} />
+            
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent group-hover:from-primary/10 transition-all" />
             <div className={cn("absolute -top-16 -right-24 h-40 w-40 rounded-full blur-3xl opacity-40", domain.color)} />
 

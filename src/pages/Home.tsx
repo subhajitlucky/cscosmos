@@ -20,8 +20,15 @@ export function Home() {
         return topics.filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }, [searchQuery]);
 
-    // Sample featured topics if no search
-    const featuredTopics = topics.slice(0, 6);
+    // Hand-picked "Greatest Hits" for the home page
+    const featuredTopics = topics.filter(t => [
+        "World Models & Embodied AI (Sora, Tesla Bot, Robotics)",
+        "Quantum Computing Internals (Qubits, Gates, Circuits)",
+        "Zero-Knowledge Proofs & ZKML (Verifiable Compute)",
+        "WebAssembly Internals (Wasm & Linear Memory)",
+        "eBPF & Low-Level Observability (Kernel Hooks, Sandboxing)",
+        "Neural Implants & BCI (Neuralink, Decoding, High-Bandwidth)"
+    ].includes(t.name));
 
     return (
         <div className="min-h-screen flex flex-col bg-background font-sans transition-colors duration-300">
@@ -43,8 +50,11 @@ export function Home() {
                             Explore the Universe of Computer Science
                     </h1>
                     <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
-                        A curated hub of {totalTopics} interactive visual learning microsites across Full-Stack, DSA, Web3,
-                        AI, Core CS, DevOps, and Advanced Engineering.
+                        Deconstructing the digital universe. {totalTopics} visual deep-dives into the core of computing,
+                        designed for those who refuse to just use tools and choose to master them.
+                    </p>
+                    <p className="text-sm md:text-base font-mono text-primary/80 italic animate-pulse">
+                        "Only the people who understand the machine can control the machine."
                     </p>
                     </div>
 
@@ -105,7 +115,7 @@ export function Home() {
                                 <div className="flex justify-between items-end">
                                 <div>
                                     <h2 className="text-3xl font-bold tracking-tight">Browse by Domain</h2>
-                                    <p className="text-muted-foreground mt-2">Explore our 7 major galaxies of knowledge.</p>
+                                    <p className="text-muted-foreground mt-2">Explore our {domains.length} major galaxies of knowledge.</p>
                                 </div>
                                     <span className="text-sm text-muted-foreground hidden sm:block">{totalTopics} topics total</span>
                             </div>
