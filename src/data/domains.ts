@@ -1,4 +1,4 @@
-export type DomainKey = 'fullstack' | 'dsa' | 'web3' | 'ai' | 'corecs' | 'devops' | 'advanced';
+export type DomainKey = 'fullstack' | 'dsa' | 'web3' | 'ai' | 'corecs' | 'devops' | 'security' | 'advanced';
 
 export interface Domain {
     name: string;
@@ -29,6 +29,13 @@ export const domains: Domain[] = [
         domainKey: "web3",
         description: "Explore the decentralized world of smart contracts and cryptography.",
         color: "bg-purple-500"
+    },
+    {
+        name: "Cybersecurity & Ethical Hacking",
+        path: "/security",
+        domainKey: "security",
+        description: "Master the art of offense and defense: Cryptography, Pen Testing, and Forensics.",
+        color: "bg-rose-600"
     },
     {
         name: "Artificial Intelligence",
