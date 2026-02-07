@@ -66,7 +66,7 @@ export const topics: Topic[] = [
     createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', url: "https://authviz.vercel.app" }),
 
     // 4. Data & State
-    createTopic("SQL Visualizer (Queries, Indexes)", "fullstack"),
+    createTopic("SQL Visualizer (Queries, Indexes)", "fullstack", { status: 'active', url: "https://sqlcosomos.vercel.app" }),
     createTopic("MongoDB Visualizer (Documents, Aggregation)", "fullstack"),
     createTopic("Redis Visualizer (Caching, Data Structures)", "fullstack", { status: 'active', url: "https://redisviz.vercel.app" }),
     createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack"),
