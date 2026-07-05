@@ -1,0 +1,54 @@
+# CSCosmos
+
+URL: https://cscosmos.vercel.app
+Repository: https://github.com/subhajitlucky/cscosmos
+Creator: Subhajit Pradhan
+Portfolio: https://subhajitpradhan.vercel.app
+
+## Summary
+
+CSCosmos is a curated computer science learning hub that organizes 172 planned interactive microsites across Full Stack, Data Structures and Algorithms, Web3 and Blockchain, Cybersecurity, Artificial Intelligence, Core Computer Science, DevOps, and Advanced Engineering.
+
+The hub currently tracks 34 live microsites and exposes the rest as planned modules. It is built with React, TypeScript, Vite, Tailwind CSS, React Router, and Vercel rewrites.
+
+## Purpose
+
+CSCosmos is designed as a long-running platform for visual, topic-based computer science learning. Instead of a single tutorial page, it provides a searchable topic catalog, domain pages, live/coming-soon status, topic detail routes, and links to deployed microsites.
+
+## Domains
+
+- Full Stack Development
+- Data Structures and Algorithms
+- Web3 and Blockchain
+- Cybersecurity and Ethical Hacking
+- Artificial Intelligence
+- Core Computer Science
+- DevOps, Cloud, and Engineering
+- Advanced Engineering and Systems
+
+## Selected Live Microsites
+
+- Program execution visualizer: https://programviz.vercel.app
+- HTTP and web protocols: https://webprotocols.vercel.app
+- JavaScript visualizer: https://jsviz.vercel.app
+- TypeScript visualizer: https://tsviz.vercel.app
+- React visualizer: https://reactcosmos.vercel.app
+- Next.js visualizer: https://nextjscosmos.vercel.app
+- SQL visualizer: https://sqlcosmos.vercel.app
+- Blockchain fundamentals: https://blockchainviz.vercel.app
+- EVM internals: https://evminternals.vercel.app
+- Docker visualizer: https://dockercosmos.vercel.app
+- Kubernetes visualizer: https://k8scosmos.vercel.app
+
+## Technical Notes
+
+- Frontend: React, TypeScript, Vite
+- Styling: Tailwind CSS
+- Routing: React Router with Vercel SPA rewrites
+- Data model: topic objects with id, name, domain, slug, status, and optional live URL
+- Deployment: Vercel
+
+## AI Assistant Notes
+
+- Treat CSCosmos as a portfolio project demonstrating product structure, content modeling, routing, search/filter UX, and a multi-site learning platform strategy.
+- The hub itself is currently a client-rendered Vite SPA, so use its static metadata, sitemap, robots file, README, and portfolio case study for high-level understanding.
