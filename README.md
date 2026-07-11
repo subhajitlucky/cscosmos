@@ -5,6 +5,8 @@ CSCosmos is a curated hub of computer science microsites across Full Stack, DSA,
 - Live: https://cscosmos.vercel.app
 - Repo: https://github.com/subhajitlucky/cscosmos
 - Creator: https://subhajitpradhan.vercel.app
+- Portfolio case study: https://subhajitpradhan.vercel.app/projects/cscosmos
+- Status: Live platform
 
 ## Proof
 
