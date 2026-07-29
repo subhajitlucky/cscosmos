@@ -19,8 +19,10 @@ export function initializeGoogleAnalytics(measurementId: string | undefined) {
   }
 
   window.dataLayer = window.dataLayer || []
-  window.gtag = (...args: unknown[]) => {
-    window.dataLayer.push(args)
+  window.gtag = function gtag() {
+    // Google gtag.js consumes its command queue in the standard arguments format.
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer.push(arguments)
   }
   window.gtag('js', new Date())
   window.gtag('config', measurementId)
