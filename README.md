@@ -156,6 +156,12 @@ npm install
 npm run dev
 ```
 
+Copy `.env.example` to `.env.local` when you need local environment
+overrides. Google Analytics is opt-in and only initializes in production when
+`VITE_GA_MEASUREMENT_ID` contains a valid GA4 measurement ID. Configure each
+deployment with its own ID so local development and forks do not send analytics
+to the upstream project's property.
+
 Visit:
 
 ```text
