@@ -34,6 +34,17 @@
     --shadow-surface: 0 8px 24px -12px rgba(15, 23, 42, 0.22);
     --shadow-glow: 0 4px 10px -4px rgba(15, 23, 42, 0.08);
     --overlay-opacity: 0;
+
+    /* JSViz Light Theme Variables */
+    --bg-main: #ffffff;
+    --bg-surface: #f4f4f5;
+    --border-main: #e4e4e7;
+    --accent-main: #000000;
+    --accent-main-rgb: 0, 0, 0;
+    --accent-secondary: #2563eb;
+    --text-main: #09090b;
+    --text-muted: #71717a;
+    --text-inverse: #ffffff;
   }
 
   .dark {
@@ -66,6 +77,17 @@
     --shadow-surface: 0 10px 40px -10px rgba(0,0,0,0.5);
     --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.25);
     --overlay-opacity: 1;
+
+    /* JSViz Dark Theme Variables */
+    --bg-main: #09090b;
+    --bg-surface: #18181b;
+    --border-main: #27272a;
+    --accent-main: #ccff00;
+    --accent-main-rgb: 204, 255, 0;
+    --accent-secondary: #3b82f6;
+    --text-main: #e4e4e7;
+    --text-muted: #a1a1aa;
+    --text-inverse: #09090b;
   }
 }
 
@@ -155,6 +177,77 @@
   .neon-content {
     position: relative;
     z-index: 2;
+  }
+
+  /* JSViz Neo-Brutalist Classes */
+  .neo-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-main);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .neo-card:hover {
+    border-color: var(--accent-main);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px var(--accent-main);
+  }
+
+  .neo-btn {
+    background-color: var(--accent-main);
+    color: var(--text-inverse);
+    font-weight: 700;
+    border: 1px solid var(--accent-main);
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .neo-btn:hover {
+    background-color: var(--bg-main);
+    color: var(--accent-main);
+    border-color: var(--accent-main);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px var(--accent-main);
+  }
+
+  .neo-btn-secondary {
+    background-color: transparent;
+    color: var(--text-main);
+    font-weight: 700;
+    border: 1px solid var(--border-main);
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .neo-btn-secondary:hover {
+    border-color: var(--accent-main);
+    background-color: var(--bg-surface);
+    color: var(--accent-main);
+  }
+
+  .bg-brand-black {
+    background-color: var(--bg-main);
+  }
+
+  .bg-brand-zinc {
+    background-color: var(--bg-surface);
+  }
+
+  .border-brand-border {
+    border-color: var(--border-main);
+  }
+
+  .text-brand-lime {
+    color: var(--accent-main);
+  }
+
+  .text-brand-black {
+    color: var(--text-inverse);
+  }
+
+  .bg-brand-lime {
+    background-color: var(--accent-main);
   }
 }
 
