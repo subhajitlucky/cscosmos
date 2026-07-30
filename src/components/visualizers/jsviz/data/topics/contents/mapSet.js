@@ -1,4 +1,3 @@
-/* eslint-disable */
 const mapSet = {
     definition: "**Map** and **Set** (ES6) are specialized collection objects. **Map** stores key-value pairs (where keys can be any type), and **Set** stores unique values. They offer better performance and features than standard Objects and Arrays for specific tasks.",
 

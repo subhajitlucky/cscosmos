@@ -1,6 +1,5 @@
-/* eslint-disable */
 const microtasks = {
-    definition: "**Microtasks** are high-priority tasks that run immediately after the current script finishes and before the Event Loop moves to the next Macrotask (like \`setTimeout\`). They are primarily used by Promises.",
+    definition: "**Microtasks** are high-priority tasks that run immediately after the current script finishes and before the Event Loop moves to the next Macrotask (like `setTimeout`). They are primarily used by Promises.",
 
     syntax: `// 1. Creating a Microtask
 Promise.resolve().then(() => {

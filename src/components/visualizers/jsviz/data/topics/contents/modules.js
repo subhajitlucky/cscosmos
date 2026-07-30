@@ -1,4 +1,3 @@
-/* eslint-disable */
 const modules = {
     definition: "**ES Modules (ESM)** are the official standard for organizing and sharing JavaScript code. They allow you to break your application into smaller, reusable files and manage dependencies explicitly.",
 

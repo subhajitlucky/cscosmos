@@ -1,0 +1,15 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-useless-escape": "off",
+    "@typescript-eslint/no-explicit-any": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "rules": {
+        "no-useless-escape": "off"
+      }
+    }
+  ]
+}

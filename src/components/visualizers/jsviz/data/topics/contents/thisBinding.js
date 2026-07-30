@@ -1,6 +1,5 @@
-/* eslint-disable */
 const thisBinding = {
-    definition: "The **\`this\`** keyword is a reference to the **object** that is currently executing the function. Its value is not static; it depends entirely on **how** the function is called, not where it is defined.",
+    definition: "The **`this`** keyword is a reference to the **object** that is currently executing the function. Its value is not static; it depends entirely on **how** the function is called, not where it is defined.",
 
     syntax: `// 1. Global Context
 console.log(this); // window (in browsers)

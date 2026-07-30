@@ -1,21 +1,24 @@
 'use client';
 import React, { useEffect } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const ArrayVisualizer = ({ items }) => {
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // Slot entry
-        anime({
+        animeFn({
             targets: '.array-card',
             scale: [0.5, 1],
             rotateY: [90, 0],
             opacity: [0, 1],
-            delay: anime.stagger(100),
+            delay: (animeFn.stagger || anime.stagger)(100),
             easing: 'easeOutElastic(1, .8)'
         });
 
         // Scan pointer
-        anime({
+        animeFn({
             targets: '.scan-marker',
             translateX: [0, (items.length - 1) * 80],
             duration: 3000,

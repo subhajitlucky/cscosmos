@@ -1,4 +1,3 @@
-/* eslint-disable */
 const date = {
     definition: "The **Date** object represents a single moment in time in a platform-independent format. Dates are stored as the number of milliseconds since January 1, 1970, UTC (the Unix Epoch).",
 
@@ -11,7 +10,7 @@ const specific = new Date(2025, 11, 17, 10, 30); // Dec 17, 10:30
 
 // 3. Static Methods
 Date.now(); // Timestamp in ms
-Date.parse(\"2025-12-17\");
+Date.parse("2025-12-17");
 `,
 
     examples: [
@@ -29,15 +28,15 @@ console.log(dec.getFullYear()); // 2025`,
             code: `// 2. Formatting Dates
 const now = new Date();
 
-console.log(now.toDateString()); // \"Wed Dec 17 2025\"
-console.log(now.toISOString());  // \"2025-12-17T...\"
-console.log(now.toLocaleDateString('en-GB')); // \"17/12/2025\"`,
+console.log(now.toDateString()); // "Wed Dec 17 2025"
+console.log(now.toISOString());  // "2025-12-17T..."
+console.log(now.toLocaleDateString('en-GB')); // "17/12/2025"`,
             explanation: "JS provides several methods to format dates. `toISOString` is best for storage/APIs, while `toLocaleDateString` is best for displaying to users."
         },
         {
             code: `// 3. Calculating Time Difference
-const start = new Date(\"2025-01-01\");
-const end = new Date(\"2025-12-17\");
+const start = new Date("2025-01-01");
+const end = new Date("2025-12-17");
 
 const diffMs = end - start; // Auto-converts to ms
 const diffDays = diffMs / (1000 * 60 * 60 * 24);

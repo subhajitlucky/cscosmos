@@ -1,4 +1,3 @@
-/* eslint-disable */
 const variablesContent = {
     definition: "Variables are containers for storing data values in JavaScript. They act as named references to values in memory.",
 

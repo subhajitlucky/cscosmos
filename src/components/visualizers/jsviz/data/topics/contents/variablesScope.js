@@ -1,4 +1,3 @@
-/* eslint-disable */
 const variablesScope = {
     definition: "var, let, and const all declare variables, but they differ in scope (where the name is visible), hoisting/TDZ behavior, and reassignment rules. Choosing the right one avoids leaks, surprises, and accidental globals.",
 

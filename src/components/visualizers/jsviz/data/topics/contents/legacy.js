@@ -1,4 +1,3 @@
-/* eslint-disable */
 const legacy = {
     definition: "**Legacy & Edge Syntax** covers the 'dark corners' of JavaScript—features that are deprecated, rarely used, or considered bad practice, but still exist for backward compatibility.",
 
@@ -15,12 +14,12 @@ function test(a) { arguments[0] = 99; return a; }
     examples: [
         {
             code: `// 1. The 'with' confusion
-const user = { name: \"Alex\" };
-let name = \"Global\";
+const user = { name: "Alex" };
+let name = "Global";
 
 with (user) {
   // Is this user.name or local name?
-  console.log(name); // \"Alex\"
+  console.log(name); // "Alex"
 }`,
             explanation: "`with` adds an object to the top of the scope chain. It makes code impossible to read and impossible for the engine to optimize."
         },
@@ -38,7 +37,7 @@ topLoop: for (let i = 0; i < 3; i++) {
             code: `// 3. eval scope (Legacy)
 (function() {
   var x = 1;
-  eval(\"var x = 2\"); 
+  eval("var x = 2"); 
   console.log(x); // 2
 })();`,
             explanation: "Old-style `eval` can shadow variables and create new ones in the caller's scope, leading to 'spooky action at a distance' bugs."

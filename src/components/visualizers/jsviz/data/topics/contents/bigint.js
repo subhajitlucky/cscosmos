@@ -1,6 +1,5 @@
-/* eslint-disable */
 const bigint = {
-    definition: "**BigInt** (introduced in ES2020) is a numeric primitive that can represent integers with arbitrary precision. Unlike the \`Number\` type, BigInt doesn't lose precision at very high values (beyond \`2^53 - 1\`).",
+    definition: "**BigInt** (introduced in ES2020) is a numeric primitive that can represent integers with arbitrary precision. Unlike the `Number` type, BigInt doesn't lose precision at very high values (beyond `2^53 - 1`).",
 
     syntax: `// 1. Literal (n suffix)
 const large = 9007199254740991n;

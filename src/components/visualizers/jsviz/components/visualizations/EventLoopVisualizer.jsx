@@ -1,11 +1,14 @@
 'use client';
 import React, { useEffect } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const EventLoopVisualizer = ({ hasMicro, hasMacro }) => {
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // Gear rotation
-        anime({
+        animeFn({
             targets: '.gear-inner',
             rotate: '1turn',
             duration: 4000,
@@ -15,7 +18,7 @@ const EventLoopVisualizer = ({ hasMicro, hasMacro }) => {
 
         // Task entry animations
         if (hasMicro) {
-            anime({
+            animeFn({
                 targets: '.micro-node',
                 translateX: [150, 0],
                 rotate: [90, 0],
@@ -26,7 +29,7 @@ const EventLoopVisualizer = ({ hasMicro, hasMacro }) => {
         }
 
         if (hasMacro) {
-            anime({
+            animeFn({
                 targets: '.macro-node',
                 translateX: [150, 0],
                 rotate: [90, 0],

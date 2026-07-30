@@ -1,6 +1,5 @@
-/* eslint-disable */
 const iterationProtocols = {
-    definition: "JavaScript's **Iteration Protocols** allow any object to define or customize its iteration behavior. The **Iterable** protocol allows objects to be used in \`for...of\` loops, while the **Iterator** protocol defines how values are produced.",
+    definition: "JavaScript's **Iteration Protocols** allow any object to define or customize its iteration behavior. The **Iterable** protocol allows objects to be used in `for...of` loops, while the **Iterator** protocol defines how values are produced.",
 
     syntax: `// 1. The Iterator Protocol
 // An object with a next() method

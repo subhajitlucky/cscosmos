@@ -1,4 +1,3 @@
-/* eslint-disable */
 const generators = {
     definition: "**Generators** are functions that can be paused and resumed. They return an **Iterator** and allow you to produce a sequence of values over time, only calculating the next value when requested.",
 

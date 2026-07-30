@@ -1,4 +1,3 @@
-/* eslint-disable */
 const templateLiterals = {
     definition: "**Template Literals** (introduced in ES6) are string literals allowing embedded expressions. You can use multi-line strings and string interpolation features with them, providing a much cleaner alternative to old-style concatenation.",
 
@@ -28,7 +27,7 @@ const result = myTag\`I am \${25} years old\`;
 const user = { name: "Subhajit", role: "Admin" };
 
 const html = \`
-  <div class=\"user-card\">
+  <div class="user-card">
     <h2>\${user.name}</h2>
     <p>Role: \${user.role}</p>
   </div>
@@ -43,7 +42,7 @@ const price = 100;
 const tax = 0.15;
 
 const total = \`Total: $\${(price * (1 + tax)).toFixed(2)}\`;
-console.log(total); // \"Total: $115.00\"`,
+console.log(total); // "Total: $115.00"`,
             explanation: "You can put any valid JavaScript expression inside `${}`—not just variables, but function calls and math operations too."
         },
         {
@@ -56,7 +55,7 @@ function highlight(strings, ...values) {
 
 const name = "JSViz";
 const msg = highlight\`Welcome to \${name}!\`;
-console.log(msg); // \"Welcome to <strong>JSViz</strong>!\"`,
+console.log(msg); // "Welcome to <strong>JSViz</strong>!"`,
             explanation: "Tagged templates allow you to parse template literals with a function. This is how libraries like `styled-components` or `lit-html` work."
         }
     ],

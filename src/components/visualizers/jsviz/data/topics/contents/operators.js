@@ -1,4 +1,3 @@
-/* eslint-disable */
 const operators = {
     definition: "Operators are symbols that perform operations on values (operands). JavaScript provides arithmetic, logical, comparison, and several modern convenience operators like optional chaining and nullish coalescing.",
 

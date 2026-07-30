@@ -1,4 +1,3 @@
-/* eslint-disable */
 const typeCoercion = {
     definition: "**Coercion** is the automatic or implicit conversion of values from one data type to another. Understanding how JS converts types is critical for mastering equality checks (`==` vs `===`) and avoiding hidden bugs.",
 

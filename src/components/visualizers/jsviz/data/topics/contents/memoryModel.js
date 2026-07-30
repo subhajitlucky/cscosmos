@@ -1,4 +1,3 @@
-/* eslint-disable */
 const memoryModel = {
     definition: "The **Memory Model** defines how JS manages data in the **Stack** and **Heap**, and how the **Garbage Collector (GC)** reclaims unused memory. Mastering this is key to avoiding memory leaks and writing high-performance apps.",
 
@@ -20,7 +19,7 @@ registry.register(myObj, "metadata");
         {
             code: `// 1. Simple Memory Leak
 function leak() {
-  const bigData = new Array(1000000).fill(\"X\");
+  const bigData = new Array(1000000).fill("X");
   
   return function() {
     // Closure keeps bigData alive forever!

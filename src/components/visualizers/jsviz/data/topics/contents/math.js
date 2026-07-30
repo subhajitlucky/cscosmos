@@ -1,4 +1,3 @@
-/* eslint-disable */
 const math = {
     definition: "The **Math** object is a built-in static object that provides properties and methods for mathematical constants and functions. Unlike other objects, `Math` has no constructor; you use its methods directly.",
 

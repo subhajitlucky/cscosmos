@@ -1,4 +1,3 @@
-/* eslint-disable */
 const functionsContent = {
     definition: "Functions are reusable blocks of code that perform specific tasks. They are first-class citizens in JavaScript, meaning they can be assigned to variables, passed as arguments, and returned from other functions.",
 

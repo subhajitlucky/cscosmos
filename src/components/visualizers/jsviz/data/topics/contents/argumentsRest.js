@@ -1,6 +1,5 @@
-/* eslint-disable */
 const argumentsRest = {
-    definition: "JavaScript provides flexible ways to handle function arguments. You can use the legacy **\`arguments\`** object or the modern **Rest Parameters** to handle a variable number of inputs.",
+    definition: "JavaScript provides flexible ways to handle function arguments. You can use the legacy **`arguments`** object or the modern **Rest Parameters** to handle a variable number of inputs.",
 
     syntax: `// 1. Legacy: arguments object
 function oldStyle() {

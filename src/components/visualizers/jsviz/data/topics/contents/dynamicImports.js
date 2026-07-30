@@ -1,4 +1,3 @@
-/* eslint-disable */
 const dynamicImports = {
     definition: "**Dynamic Imports** (introduced in ES2020) allow you to load modules on-demand asynchronously. Unlike standard static imports, they can be used inside functions and conditional blocks, enabling significant performance optimizations like code-splitting.",
 
@@ -22,7 +21,7 @@ if (userIsAdmin) {
         {
             code: `// 1. Lazy Loading Features
 async function openEditor() {
-  console.log(\"Loading heavy editor logic...\");
+  console.log("Loading heavy editor logic...");
   const { initEditor } = await import('./heavyEditor.js');
   initEditor();
 }
@@ -45,7 +44,7 @@ async function safeLoad() {
   try {
     const mod = await import('./missing.js');
   } catch (err) {
-    console.log(\"Module failed to load (Network error?)\", err);
+    console.log("Module failed to load (Network error?)", err);
   }
 }`,
             explanation: "Because dynamic imports return a Promise, you can catch network failures or 404 errors using standard `try/catch`."

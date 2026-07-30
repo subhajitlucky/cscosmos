@@ -1,6 +1,5 @@
-/* eslint-disable */
 const literalsSyntax = {
-    definition: "**Literals** are the shorthand notation for creating values in JavaScript. Instead of using constructors (like \`new Object()\`), you use literals (like \`{}\`). **Syntax Rules** define how the engine parses and interprets your code, including strict mode and naming conventions.",
+    definition: "**Literals** are the shorthand notation for creating values in JavaScript. Instead of using constructors (like `new Object()`), you use literals (like `{}`). **Syntax Rules** define how the engine parses and interprets your code, including strict mode and naming conventions.",
 
     syntax: `// 1. Common Literals
 const obj = {};           // Object literal
@@ -48,7 +47,7 @@ function mistake() {
 const obj = {};
 Object.defineProperty(obj, "readOnly", { value: 1, writable: false });
 // obj.readOnly = 2;      // ❌ TypeError in Strict Mode`,
-            explanation: "\`\"use strict\"\` catches common coding mistakes and prevents the creation of accidental global variables, making your code more secure and optimized."
+            explanation: "`\"use strict\"` catches common coding mistakes and prevents the creation of accidental global variables, making your code more secure and optimized."
         },
         {
             code: `// 3. Numeric Literals

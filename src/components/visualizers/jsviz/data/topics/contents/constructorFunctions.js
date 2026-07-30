@@ -1,6 +1,5 @@
-/* eslint-disable */
 const constructorFunctions = {
-    definition: "**Constructor Functions** are regular functions used with the **\`new\`** keyword to create multiple instances of a similar object. They act as blueprints for building objects before the \`class\` syntax was introduced.",
+    definition: "**Constructor Functions** are regular functions used with the **`new`** keyword to create multiple instances of a similar object. They act as blueprints for building objects before the `class` syntax was introduced.",
 
     syntax: `// 1. Definition
 function User(name, age) {

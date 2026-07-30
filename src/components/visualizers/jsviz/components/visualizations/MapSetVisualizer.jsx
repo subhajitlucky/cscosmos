@@ -1,21 +1,24 @@
 'use client';
 import React, { useEffect } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const MapSetVisualizer = ({ code }) => {
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // Key-Value entry
-        anime({
+        animeFn({
             targets: '.hash-node',
             scale: [0, 1],
             rotate: [15, 0],
             opacity: [0, 1],
-            delay: anime.stagger(150),
+            delay: (animeFn.stagger || anime.stagger)(150),
             easing: 'easeOutElastic(1, .8)'
         });
 
         // Hashing effect (flicker)
-        anime({
+        animeFn({
             targets: '.hash-tag',
             opacity: [0.3, 1],
             duration: 500,

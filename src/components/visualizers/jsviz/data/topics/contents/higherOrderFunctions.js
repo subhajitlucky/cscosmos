@@ -1,4 +1,3 @@
-/* eslint-disable */
 const higherOrderFunctions = {
     definition: "A **Higher-Order Function (HOF)** is a function that does at least one of the following: 1) Takes one or more functions as arguments, or 2) Returns a function as its result. They allow for powerful abstractions like composition and currying.",
 

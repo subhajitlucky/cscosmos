@@ -1,4 +1,3 @@
-/* eslint-disable */
 const classes = {
     definition: "**Classes** (ES6) are 'syntactic sugar' over JS's existing prototypal inheritance. They provide a cleaner, more organized way to create blueprints, handle inheritance, and define methods.",
 

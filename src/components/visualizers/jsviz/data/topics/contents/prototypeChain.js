@@ -1,6 +1,5 @@
-/* eslint-disable */
 const prototypeChain = {
-    definition: "JavaScript uses **Prototypal Inheritance**. Every object has a hidden property (called **[[Prototype]]**) that points to another object. If a property isn't found on the current object, the engine looks up the 'chain' of prototypes until it finds it or reaches \`null\`.",
+    definition: "JavaScript uses **Prototypal Inheritance**. Every object has a hidden property (called **[[Prototype]]**) that points to another object. If a property isn't found on the current object, the engine looks up the 'chain' of prototypes until it finds it or reaches `null`.",
 
     syntax: `const parent = { greet: "Hello" };
 const child = Object.create(parent);

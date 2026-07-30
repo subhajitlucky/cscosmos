@@ -1,4 +1,3 @@
-/* eslint-disable */
 const closures = {
     definition: "A **Closure** is the combination of a function and the **Lexical Environment** within which that function was declared. In simpler terms: a function 'remembers' its outer variables even after the outer function has finished executing.",
 

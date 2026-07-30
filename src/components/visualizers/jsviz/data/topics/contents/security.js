@@ -1,4 +1,3 @@
-/* eslint-disable */
 const security = {
     definition: "**Language-Level Security** in JS involves protecting your application from attacks that exploit language features, such as **Prototype Pollution**, **XSS**, and **Insecure Deserialization**.",
 
@@ -10,13 +9,13 @@ Object.preventExtensions(obj);
 const safe = Object.create(null); // No prototype!
 
 // 3. Strict Mode
-\"use strict\";
+"use strict";
 `,
 
     examples: [
         {
             code: `// 1. Prototype Pollution
-const maliciousPayload = JSON.parse('{\"__proto__\": {\"isAdmin\": true}}');
+const maliciousPayload = JSON.parse('{"__proto__": {"isAdmin": true}}');
 const target = {};
 
 Object.assign(target, maliciousPayload);
@@ -30,16 +29,16 @@ const db = Object.create(null);
 
 // Now 'db' has no __proto__. 
 // Pollution cannot reach it.
-db.user = \"Subhajit\";`,
+db.user = "Subhajit";`,
             explanation: "Objects created with `Object.create(null)` don't inherit from `Object.prototype`. They are 'Pure Map' objects and are safe from prototype-based attacks."
         },
         {
             code: `// 3. Object Hardening
-const CONFIG = { apiKey: \"123\" };
+const CONFIG = { apiKey: "123" };
 Object.freeze(CONFIG);
 
-CONFIG.apiKey = \"HACKED\"; // No effect
-console.log(CONFIG.apiKey); // \"123\"`,
+CONFIG.apiKey = "HACKED"; // No effect
+console.log(CONFIG.apiKey); // "123"`,
             explanation: "`Object.freeze()` prevents any modification to an object. This is essential for protecting shared configuration or constants."
         }
     ],

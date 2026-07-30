@@ -1,4 +1,3 @@
-/* eslint-disable */
 const errors = {
     definition: "JavaScript provides a built-in **Error** object and the **try...catch...finally** block to handle runtime exceptions gracefully without crashing the entire application.",
 

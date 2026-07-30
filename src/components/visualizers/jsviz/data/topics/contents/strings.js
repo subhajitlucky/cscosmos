@@ -1,4 +1,3 @@
-/* eslint-disable */
 const strings = {
     definition: "Strings are sequences of characters used to represent text. In JavaScript, strings are **primitives**, meaning they are immutable, but they have access to a rich set of methods through a wrapper object.",
 

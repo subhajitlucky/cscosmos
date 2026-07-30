@@ -1,28 +1,31 @@
 'use client';
 import React, { useEffect } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const PrototypeVisualizer = ({ chain }) => {
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // Node entry
-        anime({
+        animeFn({
             targets: '.proto-node',
             translateY: [50, 0],
             opacity: [0, 1],
             scale: [0.9, 1],
-            delay: anime.stagger(200),
+            delay: (animeFn.stagger || anime.stagger)(200),
             easing: 'easeOutElastic(1, .8)'
         });
 
         // Connector pulse
-        anime({
+        animeFn({
             targets: '.proto-line',
             opacity: [0.2, 1],
             duration: 1000,
             loop: true,
             direction: 'alternate',
             easing: 'easeInOutQuad',
-            delay: anime.stagger(200)
+            delay: (animeFn.stagger || anime.stagger)(200)
         });
     }, [chain]);
 

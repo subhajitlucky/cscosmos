@@ -1,4 +1,3 @@
-/* eslint-disable */
 const metaprogramming = {
     definition: "**Metaprogramming** is code that acts on other code. JavaScript provides the **Proxy** and **Reflect** APIs to intercept and redefine fundamental operations (like property lookup or assignment) on objects.",
 
@@ -41,7 +40,7 @@ const data = { x: 10, y: 20 };
 
 const tracer = new Proxy(data, {
   get(target, prop) {
-    console.log(\"Accessed:\", prop);
+    console.log("Accessed:", prop);
     return target[prop];
   }
 });

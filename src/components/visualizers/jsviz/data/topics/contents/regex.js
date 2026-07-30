@@ -1,4 +1,3 @@
-/* eslint-disable */
 const regex = {
     definition: "**Regular Expressions (Regex)** are patterns used to match character combinations in strings. In JavaScript, they are objects that provide a powerful way to search, extract, and replace text data.",
 
@@ -44,7 +43,7 @@ if (match) {
 const text = "JS is fun. JS is fast.";
 const clean = text.replace(/JS/g, "JavaScript");
 
-console.log(clean); // \"JavaScript is fun. JavaScript is fast.\"`,
+console.log(clean); // "JavaScript is fun. JavaScript is fast."`,
             explanation: "The global flag `/g` ensures that all occurrences are replaced, not just the first one. Regular strings in `.replace()` only replace the first match."
         }
     ],

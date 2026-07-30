@@ -1,6 +1,5 @@
-/* eslint-disable */
 const functionMethods = {
-    definition: "JavaScript provides three powerful methods—**call**, **apply**, and **bind**—that allow you to explicitly set the value of \`this\` for a function, regardless of how or where it is invoked.",
+    definition: "JavaScript provides three powerful methods—**call**, **apply**, and **bind**—that allow you to explicitly set the value of `this` for a function, regardless of how or where it is invoked.",
 
     syntax: `const obj = { name: "Alice" };
 function greet(city, country) { ... }

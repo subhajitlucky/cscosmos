@@ -1,11 +1,14 @@
 'use client';
 import React, { useEffect } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const GeneratorVisualizer = ({ code }) => {
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // State bubble pulse
-        anime({
+        animeFn({
             targets: '.state-core',
             scale: [0.95, 1.05],
             opacity: [0.8, 1],
@@ -16,7 +19,7 @@ const GeneratorVisualizer = ({ code }) => {
         });
 
         // Connector animation
-        anime({
+        animeFn({
             targets: '.gen-path',
             strokeDashoffset: [anime.setDashoffset, 0],
             easing: 'easeInOutSine',

@@ -1,4 +1,3 @@
-/* eslint-disable */
 const controlFlow = {
     definition: "Control flow determines the order in which code is executed. It allows you to branch logic (`if/else`, `switch`) or repeat actions (`loops`) based on conditions.",
 

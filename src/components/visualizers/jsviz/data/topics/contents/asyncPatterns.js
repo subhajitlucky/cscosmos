@@ -1,4 +1,3 @@
-/* eslint-disable */
 const asyncPatterns = {
     definition: "Beyond basic Promises and Async/Await, **Advanced Async Control Flow** involves patterns like debouncing, throttling, retries, and cancellation to manage complex timing and resource constraints.",
 

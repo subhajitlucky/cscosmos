@@ -1,6 +1,5 @@
-/* eslint-disable */
 const arrowFunctions = {
-    definition: "**Arrow Functions** (introduced in ES6) provide a more concise syntax for writing function expressions. Their most significant feature is that they **do not have their own \`this\`**, which makes them ideal for callbacks and preserving context.",
+    definition: "**Arrow Functions** (introduced in ES6) provide a more concise syntax for writing function expressions. Their most significant feature is that they **do not have their own `this`**, which makes them ideal for callbacks and preserving context.",
 
     syntax: `// 1. Basic Syntax
 const add = (a, b) => {

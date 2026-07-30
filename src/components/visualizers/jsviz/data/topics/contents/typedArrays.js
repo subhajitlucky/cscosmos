@@ -1,4 +1,3 @@
-/* eslint-disable */
 const typedArrays = {
     definition: "**Typed Arrays** (introduced in ES6) are array-like objects that provide a mechanism for reading and writing raw binary data in memory buffers. They are essential for high-performance tasks like processing image data, audio, or interacting with GPUs.",
 

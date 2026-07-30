@@ -1,4 +1,3 @@
-/* eslint-disable */
 const dataTypes = {
     definition: "JavaScript is a **dynamically typed** language, meaning variables don't have a fixed type, but the **values** they hold do. Types are split into two categories: **Primitives** (simple, immutable) and **Objects** (complex, mutable).",
 

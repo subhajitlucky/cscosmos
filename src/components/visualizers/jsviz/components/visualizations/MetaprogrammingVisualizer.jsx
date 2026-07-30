@@ -1,12 +1,15 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 import { Layers, ShieldCheck, Eye, Zap } from 'lucide-react';
 
 const MetaprogrammingVisualizer = ({ code }) => {
     const containerRef = useRef(null);
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         const tl = anime.timeline({
             easing: 'easeOutElastic(1, .8)',
             duration: 800
@@ -34,7 +37,7 @@ const MetaprogrammingVisualizer = ({ code }) => {
             delay: 500
         });
 
-        anime({
+        animeFn({
             targets: '.interception-ring',
             rotate: '1turn',
             duration: 10000,

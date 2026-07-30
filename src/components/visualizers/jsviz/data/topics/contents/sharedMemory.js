@@ -1,4 +1,3 @@
-/* eslint-disable */
 const sharedMemory = {
     definition: "**Shared Memory** allows multiple threads (Web Workers) to read and write the same data simultaneously. **Atomics** provide a way to perform operations on that memory in a thread-safe, non-interrupted way, preventing race conditions.",
 

@@ -1,6 +1,5 @@
-/* eslint-disable */
 const propertyDescriptors = {
-    definition: "**Property Descriptors** (or Attributes) are the internal configurations of an object's properties. They define whether a property can be changed, deleted, or enumerated. Using \`Object.defineProperty()\`, you can control the 'physics' of an object.",
+    definition: "**Property Descriptors** (or Attributes) are the internal configurations of an object's properties. They define whether a property can be changed, deleted, or enumerated. Using `Object.defineProperty()`, you can control the 'physics' of an object.",
 
     syntax: `// 1. Getting Descriptors
 Object.getOwnPropertyDescriptor(obj, 'prop');
@@ -76,7 +75,7 @@ obj.x = 20; // Fails`,
 - When you access the property, the **CPU** doesn't just read memory; it executes the pointed-to function.
 
 **3. V8 Performance:**
-- Frequently changing descriptors can break the engine's \"Hidden Classes\" optimization. 
+- Frequently changing descriptors can break the engine's "Hidden Classes" optimization. 
 - **Rule:** Define your descriptors once at creation time for maximum performance in the **RAM**.`,
 
     visualizationType: 'variables'

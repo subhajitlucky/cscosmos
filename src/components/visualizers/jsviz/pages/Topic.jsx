@@ -42,7 +42,7 @@ const Topic = ({ topicId: propTopicId }) => {
 
     useEffect(() => {
         if (topic && content) {
-            setCode(content.examples[0]?.code || '// No example code available');
+            setCode(content?.examples?.[0]?.code || content?.syntax || '// No example code available');
             setActiveTab('overview');
         }
     }, [topic, content]);

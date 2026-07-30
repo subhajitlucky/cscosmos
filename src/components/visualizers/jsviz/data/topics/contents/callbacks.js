@@ -1,4 +1,3 @@
-/* eslint-disable */
 const callbacks = {
     definition: "A **callback** is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action. They are the foundation of asynchronous programming in JavaScript.",
 

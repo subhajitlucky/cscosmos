@@ -1,4 +1,3 @@
-/* eslint-disable */
 const scopeChain = {
     definition: "The **Scope Chain** is the mechanism JavaScript uses to resolve variable names. When a variable is used, the engine looks at the current scope; if it doesn't find it, it looks at the outer scope, and so on, until it reaches the **Global Scope** or fails.",
 

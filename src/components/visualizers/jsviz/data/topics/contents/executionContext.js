@@ -1,4 +1,3 @@
-/* eslint-disable */
 const executionContext = {
     definition: "The **Execution Context** is an abstract environment created by the engine whenever code is evaluated and executed. Every line of code runs inside one of three types: **Global**, **Function**, or **Eval** contexts.",
 

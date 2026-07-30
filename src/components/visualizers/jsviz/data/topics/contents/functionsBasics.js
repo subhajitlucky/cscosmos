@@ -1,4 +1,3 @@
-/* eslint-disable */
 const functionBasics = {
     definition: "Functions are reusable blocks of code. In JavaScript, functions are **first-class citizens**, meaning they can be stored in variables, passed as arguments, and returned from other functions.",
 

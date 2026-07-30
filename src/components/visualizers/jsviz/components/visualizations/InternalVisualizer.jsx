@@ -1,12 +1,15 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 import { ShieldCheck, Zap, AlertTriangle } from 'lucide-react';
 
 const InternalVisualizer = ({ topicId, code }) => {
     const containerRef = useRef(null);
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         const tl = anime.timeline({
             easing: 'easeOutElastic(1, .8)',
             duration: 1000
@@ -22,12 +25,12 @@ const InternalVisualizer = ({ topicId, code }) => {
             targets: '.internal-node',
             translateY: [20, 0],
             opacity: [0, 1],
-            delay: anime.stagger(100)
+            delay: (animeFn.stagger || anime.stagger)(100)
         }, '-=500');
 
         // Pulse the "Shield" for security topic
         if (topicId === 'security') {
-            anime({
+            animeFn({
                 targets: '.security-shield',
                 scale: [1, 1.2, 1],
                 duration: 2000,

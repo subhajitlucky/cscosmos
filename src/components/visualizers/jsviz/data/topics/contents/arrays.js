@@ -1,4 +1,3 @@
-/* eslint-disable */
 const arrays = {
     definition: "Arrays are ordered lists of values. In JavaScript, arrays are **objects** with built-in methods for traversal, transformation, and manipulation. They can hold values of any type.",
 

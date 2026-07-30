@@ -1,4 +1,3 @@
-/* eslint-disable */
 const asyncAwait = {
     definition: "**Async/Await** is a special syntax (built on top of Promises) that makes asynchronous code look and behave like synchronous code. It significantly improves the readability of complex async flows.",
 

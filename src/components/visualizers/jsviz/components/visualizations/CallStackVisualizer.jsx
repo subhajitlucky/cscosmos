@@ -1,21 +1,24 @@
 'use client';
 import React, { useEffect } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const CallStackVisualizer = ({ frames }) => {
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // Frames dropping in
-        anime({
+        animeFn({
             targets: '.frame-card',
             translateY: [-100, 0],
             opacity: [0, 1],
             rotateX: [-45, 0],
-            delay: anime.stagger(100),
+            delay: (animeFn.stagger || anime.stagger)(100),
             easing: 'easeOutElastic(1, .8)'
         });
 
         // Current instruction pointer
-        anime({
+        animeFn({
             targets: '.active-pointer',
             translateX: [-5, 5],
             duration: 800,

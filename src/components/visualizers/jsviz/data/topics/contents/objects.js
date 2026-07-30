@@ -1,4 +1,3 @@
-/* eslint-disable */
 const objects = {
     definition: "Objects are collections of related data and functionality. They store data in **key-value pairs**, where keys (properties) are strings/symbols and values can be any type.",
 

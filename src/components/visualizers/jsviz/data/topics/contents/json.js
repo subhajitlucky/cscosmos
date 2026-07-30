@@ -1,4 +1,3 @@
-/* eslint-disable */
 const json = {
     definition: "**JSON** (JavaScript Object Notation) is a lightweight data-interchange format. It is a text-based, language-independent format that is easy for humans to read/write and easy for machines to parse/generate.",
 
@@ -15,24 +14,24 @@ JSON.stringify(obj, null, 2);
     examples: [
         {
             code: `// 1. Basic Parse & Stringify
-const user = { id: 1, name: \"Subhajit\" };
+const user = { id: 1, name: "Subhajit" };
 
 const jsonString = JSON.stringify(user);
-console.log(typeof jsonString); // \"string\"
+console.log(typeof jsonString); // "string"
 
 const backToObj = JSON.parse(jsonString);
-console.log(backToObj.name); // \"Subhajit\"`,
+console.log(backToObj.name); // "Subhajit"`,
             explanation: "`JSON.stringify` converts a JS object into a string for transport (like an API call). `JSON.parse` converts it back into a usable object."
         },
         {
             code: `// 2. The Replacer & Reviver
-const data = { date: new Date(), secret: \"password\" };
+const data = { date: new Date(), secret: "password" };
 
 const filtered = JSON.stringify(data, (key, value) => {
-  return key === \"secret\" ? undefined : value;
+  return key === "secret" ? undefined : value;
 });
 
-console.log(filtered); // \"{\\\"date\\\":\\\"2025-12-17T...\\\"}\"`,
+console.log(filtered); // "{\\"date\\":\\"2025-12-17T...\\"}"`,
             explanation: "You can pass a function to `stringify` to filter out properties (like passwords) or format data during serialization."
         },
         {

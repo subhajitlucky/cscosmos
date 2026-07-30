@@ -1,23 +1,26 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const VariableVisualizer = ({ variables }) => {
     const containerRef = useRef(null);
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // Entry animation for new items
-        anime({
+        animeFn({
             targets: '.variable-card',
             translateY: [30, 0],
             opacity: [0, 1],
             scale: [0.8, 1],
-            delay: anime.stagger(80),
+            delay: (animeFn.stagger || anime.stagger)(80),
             easing: 'easeOutElastic(1, .6)'
         });
 
         // Pulse the dot
-        anime({
+        animeFn({
             targets: '.pulse-dot',
             scale: [1, 1.5],
             opacity: [1, 0.5],

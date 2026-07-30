@@ -1,4 +1,3 @@
-/* eslint-disable */
 const specInternals = {
     definition: "**ECMAScript Internals** refers to the low-level abstract operations and data structures defined in the official JS specification. Understanding these (Realms, Agents, Slots) helps explain why certain edge cases behave the way they do.",
 

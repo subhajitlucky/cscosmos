@@ -1,4 +1,3 @@
-/* eslint-disable */
 const numbers = {
     definition: "In JavaScript, **Numbers** are 64-bit double-precision binary floating-point values (IEEE 754). This single type handles both integers and decimals, which leads to some unique behaviors like precision limits.",
 
@@ -13,8 +12,8 @@ Number.MIN_VALUE;
 Number.NaN;
 
 // 3. Methods
-(12.345).toFixed(2); // \"12.35\"
-Number.parseInt(\"10px\"); // 10
+(12.345).toFixed(2); // "12.35"
+Number.parseInt("10px"); // 10
 Number.isFinite(Infinity); // false
 `,
 
@@ -39,7 +38,7 @@ console.log(max + 2); // ❌ Same result as max+1 (Precision lost!)`,
 console.log(1 / 0);      // Infinity
 console.log(-1 / 0);     // -Infinity
 console.log(0 / 0);      // NaN (Not a Number)
-console.log(typeof NaN); // \"number\" (The ultimate irony)`,
+console.log(typeof NaN); // "number" (The ultimate irony)`,
             explanation: "Infinity and NaN are technically part of the Number type. NaN results from failed math operations like `Math.sqrt(-1)`."
         }
     ],

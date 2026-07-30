@@ -1,4 +1,3 @@
-/* eslint-disable */
 const eventLoop = {
     definition: "The **Event Loop** is the secret sauce that allows JavaScript to be non-blocking and 'concurrency-like' while remaining single-threaded. it coordinates the Call Stack, Web APIs, and Task Queues.",
 
@@ -62,10 +61,10 @@ button.addEventListener('click', () => {
 
 **3. Task Queue (The Waiting Room):**
 - Where callbacks wait after the Web API finishes.
-- The **Event Loop** constantly checks: \"Is the Stack empty? If yes, push the first task from the queue to the stack.\"
+- The **Event Loop** constantly checks: "Is the Stack empty? If yes, push the first task from the queue to the stack."
 
 **4. CPU Impact:**
-- A blocked Event Loop causes 100% **CPU usage** on a single core, making the entire browser tab unresponsive (the \"spinning wheel of death\").`,
+- A blocked Event Loop causes 100% **CPU usage** on a single core, making the entire browser tab unresponsive (the "spinning wheel of death").`,
 
     visualizationType: 'eventloop'
 };

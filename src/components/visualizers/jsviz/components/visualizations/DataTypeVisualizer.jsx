@@ -1,31 +1,34 @@
 'use client';
 import React, { useEffect } from 'react';
-import anime from 'animejs'; const _anime = anime.default || anime;
+import anime from 'animejs';
 
 const DataTypeVisualizer = ({ stack, heap }) => {
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const animeFn = (anime && anime.default) || anime;
+        if (typeof animeFn !== 'function') return;
         // Stack entries
-        anime({
+        animeFn({
             targets: '.stack-frame-box',
             translateX: [-100, 0],
             opacity: [0, 1],
             rotate: [10, 0],
-            delay: anime.stagger(150),
+            delay: (animeFn.stagger || anime.stagger)(150),
             easing: 'easeOutElastic(1, .8)'
         });
 
         // Heap blobs
-        anime({
+        animeFn({
             targets: '.heap-blob',
             scale: [0, 1],
             opacity: [0, 1],
             rotate: () => anime.random(-15, 15),
-            delay: anime.stagger(200),
+            delay: (animeFn.stagger || anime.stagger)(200),
             easing: 'easeOutElastic(1, .5)'
         });
 
         // Animation for reference lines (glow effect)
-        anime({
+        animeFn({
             targets: '.ref-glow',
             opacity: [0.2, 0.8],
             duration: 1500,

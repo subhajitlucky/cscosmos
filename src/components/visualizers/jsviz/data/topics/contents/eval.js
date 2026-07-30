@@ -1,21 +1,20 @@
-/* eslint-disable */
 const evalContent = {
-    definition: "**eval()** and related functions (like \`new Function()\`) allow you to execute JavaScript code from strings. While powerful, they are extremely dangerous and should almost always be avoided due to security and performance risks.",
+    definition: "**eval()** and related functions (like `new Function()`) allow you to execute JavaScript code from strings. While powerful, they are extremely dangerous and should almost always be avoided due to security and performance risks.",
 
     syntax: `// 1. eval (Sloppy scope)
-eval(\"console.log('hi')\");
+eval("console.log('hi')");
 
 // 2. new Function (Global scope)
 const add = new Function('a', 'b', 'return a + b');
 
 // 3. setTimeout with string
-setTimeout(\"doSomething()\", 1000); // ❌ Bad practice!
+setTimeout("doSomething()", 1000); // ❌ Bad practice!
 `,
 
     examples: [
         {
             code: `// 1. Dynamic Math Parsing
-const expression = \"2 + 2\";
+const expression = "2 + 2";
 const result = eval(expression);
 
 console.log(result); // 4`,
@@ -26,7 +25,7 @@ console.log(result); // 4`,
 let x = 10;
 function demo() {
   let x = 20;
-  eval(\"x = 30\"); // Which 'x' is changed?
+  eval("x = 30"); // Which 'x' is changed?
   console.log(x); // 30
 }
 
@@ -38,7 +37,7 @@ console.log(x); // 10`,
             code: `// 3. Global eval
 // Use indirect call to force global scope
 const globalEval = eval;
-globalEval(\"var globalLeak = 1\");`,
+globalEval("var globalLeak = 1");`,
             explanation: "Indirect eval (calling it via a variable) forces the code to run in the Global Realm, preventing it from touching local variables."
         }
     ],
