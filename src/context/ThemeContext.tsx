@@ -14,14 +14,13 @@ export function ThemeProvider({
     defaultTheme = "system",
     storageKey = "cscosmos-ui-theme",
 }: ThemeProviderProps) {
-    const [theme, setTheme] = useState<Theme>(defaultTheme)
-
-    useEffect(() => {
-        const stored = localStorage.getItem(storageKey) as Theme;
-        if (stored) {
-            setTheme(combineTheme(stored) || defaultTheme);
+    const [theme, setTheme] = useState<Theme>(() => {
+        if (typeof window !== "undefined") {
+            const stored = localStorage.getItem(storageKey) as Theme;
+            if (stored) return combineTheme(stored) || defaultTheme;
         }
-    }, [defaultTheme, storageKey]);
+        return defaultTheme;
+    });
 
     useEffect(() => {
         const root = window.document.documentElement
@@ -29,11 +28,7 @@ export function ThemeProvider({
         root.classList.remove("light", "dark")
 
         if (theme === "system") {
-            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-                .matches
-                ? "dark"
-                : "light"
-
+            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
             root.classList.add(systemTheme)
             return
         }
@@ -44,7 +39,9 @@ export function ThemeProvider({
     const value = {
         theme,
         setTheme: (nextTheme: Theme) => {
-            localStorage.setItem(storageKey, nextTheme)
+            if (typeof window !== "undefined") {
+                localStorage.setItem(storageKey, nextTheme)
+            }
             setTheme(nextTheme)
         },
     }
