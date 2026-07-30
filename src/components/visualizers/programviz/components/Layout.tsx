@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
-import { CheckCircle2, Circle, Menu, ArrowLeft } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme';
+import { CheckCircle2, Circle, Menu, ArrowLeft, Sun, Moon } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -17,23 +18,40 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const pathname = usePathname();
   const { isStepCompleted } = useProgress();
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex transition-colors duration-300 bg-background text-foreground">
+    <div className={cn(
+      "min-h-[calc(100vh-4rem)] flex transition-colors duration-300",
+      theme === 'dark' ? "bg-slate-950 text-slate-50" : "bg-slate-50 text-slate-900"
+    )}>
       {/* Sidebar for Desktop */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 bg-card border-border/80",
+        "fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0",
+        theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200",
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="h-full flex flex-col p-6">
           <div className="flex items-center justify-between mb-8">
-            <Link href="/program-cosmos" className="text-xl font-bold flex items-center gap-2 text-foreground">
+            <Link href="/program-cosmos" className="text-xl font-bold flex items-center gap-2">
               <span className="bg-blue-600 p-1 rounded text-white text-xs font-mono">PV</span>
               ProgramViz
             </Link>
-            <Link href="/topics" className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" /> CSCosmos
-            </Link>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={toggleTheme}
+                className={cn(
+                  "p-1.5 rounded-lg transition-colors",
+                  theme === 'dark' ? "hover:bg-slate-800 text-yellow-400" : "hover:bg-slate-100 text-blue-600"
+                )}
+                aria-label="Toggle Theme"
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+              <Link href="/topics" className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+                <ArrowLeft className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
           
           <nav className="flex-1 space-y-2 overflow-y-auto">
@@ -50,7 +68,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                     "flex items-center gap-3 p-3 rounded-lg transition-colors group",
                     isActive 
                       ? "bg-blue-600 text-white" 
-                      : "hover:bg-muted text-muted-foreground"
+                      : (theme === 'dark' ? "hover:bg-slate-800 text-slate-400" : "hover:bg-slate-100 text-slate-600")
                   )}
                 >
                   {isCompleted ? (
@@ -71,12 +89,17 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 border-b border-border/80 flex items-center justify-between px-6 lg:hidden bg-card">
+        <header className={cn(
+          "h-14 border-b flex items-center justify-between px-6 lg:hidden",
+          theme === 'dark' ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-white"
+        )}>
           <button onClick={() => setIsSidebarOpen(true)}>
             <Menu className="w-6 h-6" />
           </button>
           <span className="font-bold">ProgramViz</span>
-          <Link href="/topics" className="text-xs text-primary font-medium">CSCosmos</Link>
+          <button onClick={toggleTheme} className="p-2">
+            {theme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-blue-600" />}
+          </button>
         </header>
         
         <div className="flex-1 overflow-y-auto">
