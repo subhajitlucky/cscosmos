@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 import { Play, Trash2, Terminal, Code } from 'lucide-react';
-import useStore from '../store/useStore';
+import { useTheme } from '@/context/useTheme';
 
 const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
-    const { theme } = useStore();
+    const { theme } = useTheme();
     const [code, setCode] = useState(initialCode);
     const outputRef = React.useRef(null);
 
