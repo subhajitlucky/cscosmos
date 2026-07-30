@@ -71,21 +71,27 @@ const Home = () => {
             {/* Features Grid */}
             <div className="max-w-7xl mx-auto px-4 py-24">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <FeatureCard
-                        icon={<Layers size={32} />}
-                        title="Mental Models"
-                        description="Visual representations of abstract concepts. Stack, Heap, and Queue visualized in real-time."
-                    />
-                    <FeatureCard
-                        icon={<Cpu size={32} />}
-                        title="Execution Engine"
-                        description="Sandboxed runtime environment. Write code, execute, and inspect output instantly."
-                    />
-                    <FeatureCard
-                        icon={<Code size={32} />}
-                        title="Algorithmic Drill"
-                        description="Structured problem sets from basic syntax to complex functional programming patterns."
-                    />
+                    <Link href="/jsviz/learn" className="block">
+                        <FeatureCard
+                            icon={<Layers size={32} />}
+                            title="Mental Models"
+                            description="Visual representations of abstract concepts. Stack, Heap, and Queue visualized in real-time."
+                        />
+                    </Link>
+                    <Link href="/jsviz/playground" className="block">
+                        <FeatureCard
+                            icon={<Cpu size={32} />}
+                            title="Execution Engine"
+                            description="Sandboxed runtime environment. Write code, execute, and inspect output instantly."
+                        />
+                    </Link>
+                    <Link href="/jsviz/practice" className="block">
+                        <FeatureCard
+                            icon={<Code size={32} />}
+                            title="Algorithmic Drill"
+                            description="Structured problem sets from basic syntax to complex functional programming patterns."
+                        />
+                    </Link>
                 </div>
             </div>
         </div>
