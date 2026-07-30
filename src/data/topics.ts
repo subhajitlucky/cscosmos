@@ -47,7 +47,7 @@ export const topics: Topic[] = [
     createTopic("HTTP & Web Protocols (Headers, Caching)", "fullstack", { status: 'active', slug: 'webprotocols', url: '/webprotocols' }),
     createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', slug: 'websecurity', url: '/websecurity' }),
     createTopic("HTML & Accessibility (Semantics, ARIA)", "fullstack", { status: 'active', slug: 'html-cosmos', url: '/html-cosmos' }),
-    createTopic("CSS Visualizer (Box Model, Flexbox, Grid)", "fullstack", { status: 'active', url: "https://cssviz.vercel.app" }),
+    createTopic("CSS Visualizer (Box Model, Flexbox, Grid)", "fullstack", { status: 'active', slug: 'css-cosmos', url: '/css-cosmos' }),
     createTopic("JavaScript Visualizer (Execution, Async, Memory)", "fullstack", { status: 'active', url: "https://jsviz.vercel.app/" }),
     createTopic("TypeScript Visualizer (Types, Inference, Compiler)", "fullstack", { status: 'active', url: "https://tsviz.vercel.app/" }),
     createTopic("Browser Internals (DOM, Rendering, Storage)", "fullstack", { status: 'active', url: "https://browseruniverse.vercel.app/" }),
