@@ -8,13 +8,14 @@ import CompilerPage from '@/components/visualizers/htmlviz/features/compiler/Com
 import ProblemList from '@/components/visualizers/htmlviz/features/problems/ProblemList';
 import ProblemSolver from '@/components/visualizers/htmlviz/features/problems/ProblemSolver';
 import About from '@/components/visualizers/htmlviz/features/about/About';
+import { htmlTags } from '@/components/visualizers/htmlviz/data/html-tags';
 
 export function generateStaticParams() {
+    const learnParams = htmlTags.map(tag => ({ slug: ['learn', tag.id] }));
     return [
         { slug: [] },
         { slug: ['learn'] },
-        { slug: ['learn', 'html'] },
-        { slug: ['learn', 'box-model'] },
+        ...learnParams,
         { slug: ['playground'] },
         { slug: ['problems'] },
         { slug: ['problems', '1'] },
