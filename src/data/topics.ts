@@ -23,10 +23,11 @@ const slugify = (name: string) =>
 type TopicOptions = {
     status?: Topic['status'];
     url?: string;
+    slug?: string;
 }
 
 const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): Topic => {
-    const slug = slugify(name);
+    const slug = options?.slug ?? slugify(name);
     const status = options?.status ?? 'coming-soon';
     return {
         id: idCounter++,
@@ -35,14 +36,14 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
         slug,
         shortDescription: `Interactive visualization and learning module for ${name}.`,
         status,
-        url: status === 'active' ? `/learn/${slug}` : undefined,
+        url: status === 'active' ? (options?.url && options.url.startsWith('/') ? options.url : `/learn/${slug}`) : undefined,
     };
 };
 
 export const topics: Topic[] = [
     // Full Stack Development
     // 1. Foundations
-    createTopic("How Programs Execute (CPU, Memory, I/O)", "fullstack", { status: 'active', url: "https://programviz.vercel.app" }),
+    createTopic("How Programs Execute (CPU, Memory, I/O)", "fullstack", { status: 'active', slug: 'program-cosmos', url: '/program-cosmos' }),
     createTopic("HTTP & Web Protocols (Headers, Caching)", "fullstack", { status: 'active', url: "https://webprotocols.vercel.app" }),
     createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', url: "https://websecureviz.vercel.app" }),
     createTopic("HTML & Accessibility (Semantics, ARIA)", "fullstack", { status: 'active', url: "https://htmlviz.vercel.app" }),
