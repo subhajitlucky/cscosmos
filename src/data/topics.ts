@@ -45,7 +45,7 @@ export const topics: Topic[] = [
     // 1. Foundations
     createTopic("How Programs Execute (CPU, Memory, I/O)", "fullstack", { status: 'active', slug: 'program-cosmos', url: '/program-cosmos' }),
     createTopic("HTTP & Web Protocols (Headers, Caching)", "fullstack", { status: 'active', slug: 'webprotocols', url: '/webprotocols' }),
-    createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', url: "https://websecureviz.vercel.app" }),
+    createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', slug: 'websecurity', url: '/websecurity' }),
     createTopic("HTML & Accessibility (Semantics, ARIA)", "fullstack", { status: 'active', url: "https://htmlviz.vercel.app" }),
     createTopic("CSS Visualizer (Box Model, Flexbox, Grid)", "fullstack", { status: 'active', url: "https://cssviz.vercel.app" }),
     createTopic("JavaScript Visualizer (Execution, Async, Memory)", "fullstack", { status: 'active', url: "https://jsviz.vercel.app/" }),
