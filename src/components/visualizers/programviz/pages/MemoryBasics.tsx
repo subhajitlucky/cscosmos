@@ -17,11 +17,9 @@ export const MemoryBasics: React.FC = () => {
   // Simulated memory cells
   const cells = useMemo(() => Array.from({ length: 64 }, (_, i) => ({
     address: `0x${i.toString(16).padStart(2, '0').toUpperCase()}`,
-    // eslint-disable-next-line react-hooks/purity
     value: Math.floor(Math.random() * 256).toString(16).padStart(2, '0').toUpperCase()
   })), []);
 
-  // eslint-disable-next-line react-hooks/purity
   const bits = useMemo(() => Array.from({ length: 8 }, () => Math.round(Math.random())), []);
 
   return (
