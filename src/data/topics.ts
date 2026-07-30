@@ -25,15 +25,19 @@ type TopicOptions = {
     url?: string;
 }
 
-const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): Topic => ({
-    id: idCounter++,
-    name,
-    domain,
-    slug: slugify(name),
-    shortDescription: `Interactive visualization and learning module for ${name}.`,
-    status: options?.status ?? 'coming-soon',
-    url: options?.url,
-});
+const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): Topic => {
+    const slug = slugify(name);
+    const status = options?.status ?? 'coming-soon';
+    return {
+        id: idCounter++,
+        name,
+        domain,
+        slug,
+        shortDescription: `Interactive visualization and learning module for ${name}.`,
+        status,
+        url: status === 'active' ? `/learn/${slug}` : undefined,
+    };
+};
 
 export const topics: Topic[] = [
     // Full Stack Development

@@ -1,6 +1,8 @@
+'use client';
+
 import type { Topic } from "../data/topics"
 import { Lock } from "lucide-react"
-import { Link } from "react-router-dom"
+import Link from "next/link"
 
 interface TopicCardProps {
     topic: Topic;
@@ -10,6 +12,7 @@ interface TopicCardProps {
 export function TopicCard({ topic, onClick }: TopicCardProps) {
     const isLive = topic.status === 'active';
     const cardAriaLabel = `${topic.name}${isLive ? " (Live)" : " (Coming soon)"}`;
+    const targetUrl = topic.url || `/domain/${topic.domain}/${topic.slug}`;
 
     const CardContent = (
         <div
@@ -31,8 +34,8 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
                 <div>
                     <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{topic.domain}</p>
                     <h4 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors pr-4 line-clamp-2 min-h-[48px]">
-                    {topic.name}
-                </h4>
+                        {topic.name}
+                    </h4>
                 </div>
                 {isLive ? (
                     <span className="pill-badge border border-emerald-300 bg-emerald-100 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-500/15 dark:text-emerald-100">
@@ -67,10 +70,10 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
         )
     }
 
-    if (topic.url) {
+    if (targetUrl.startsWith('http')) {
         return (
             <a
-                href={topic.url}
+                href={targetUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="block focus-ring rounded-2xl h-full"
@@ -82,7 +85,7 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
     }
 
     return (
-        <Link to={`/${topic.domain}/${topic.slug}`} className="block focus-ring rounded-2xl h-full" aria-label={cardAriaLabel}>
+        <Link href={targetUrl} className="block focus-ring rounded-2xl h-full" aria-label={cardAriaLabel}>
             {CardContent}
         </Link>
     )

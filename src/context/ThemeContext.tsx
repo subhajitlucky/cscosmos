@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from "react"
 import { ThemeProviderContext, combineTheme, type Theme } from "./theme-context"
 
@@ -10,11 +12,16 @@ type ThemeProviderProps = {
 export function ThemeProvider({
     children,
     defaultTheme = "system",
-    storageKey = "vite-ui-theme",
+    storageKey = "cscosmos-ui-theme",
 }: ThemeProviderProps) {
-    const [theme, setTheme] = useState<Theme>(
-        () => (combineTheme(localStorage.getItem(storageKey) as Theme)) || defaultTheme
-    )
+    const [theme, setTheme] = useState<Theme>(defaultTheme)
+
+    useEffect(() => {
+        const stored = localStorage.getItem(storageKey) as Theme;
+        if (stored) {
+            setTheme(combineTheme(stored) || defaultTheme);
+        }
+    }, [defaultTheme, storageKey]);
 
     useEffect(() => {
         const root = window.document.documentElement
