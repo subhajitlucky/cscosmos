@@ -34,19 +34,19 @@ export default function Home() {
 
                         {/* Badge */}
                         <motion.div variants={item} className="mb-8 flex justify-center">
-                            <div className="relative rounded-full px-4 py-1.5 text-sm leading-6 text-lime-400 ring-1 ring-lime-400/30 bg-lime-400/10 transition-colors font-mono">
+                            <div className="relative rounded-full px-4 py-1.5 text-sm leading-6 text-lime-600 dark:text-lime-400 ring-1 ring-lime-500/30 bg-lime-500/10 transition-colors font-mono font-semibold">
                                 Interactive HTML & Accessibility Engine
                             </div>
                         </motion.div>
 
-                        <motion.h1 variants={item} className="text-5xl font-display font-bold tracking-tighter text-white sm:text-8xl mb-8">
+                        <motion.h1 variants={item} className="text-5xl font-display font-bold tracking-tighter text-slate-900 dark:text-white sm:text-8xl mb-8">
                             Master Modern <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-teal-400">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-500 via-emerald-500 to-teal-500 dark:from-lime-400 dark:via-emerald-400 dark:to-teal-400">
                                 HTML & ARIA
                             </span>
                         </motion.h1>
 
-                        <motion.p variants={item} className="mt-6 text-lg sm:text-xl leading-8 text-slate-400 font-sans max-w-2xl mx-auto">
+                        <motion.p variants={item} className="mt-6 text-lg sm:text-xl leading-8 text-slate-600 dark:text-slate-400 font-sans max-w-2xl mx-auto">
                             Step-by-step visual lessons, DOM structure playgrounds, and accessibility challenge problems for modern web developers.
                         </motion.p>
 
@@ -61,7 +61,7 @@ export default function Home() {
 
                             <Link
                                 href="/html-cosmos/playground"
-                                className="rounded-full px-8 py-4 text-base font-bold text-white border border-slate-800 hover:border-slate-700 bg-slate-900/50 hover:bg-slate-900 transition-all"
+                                className="rounded-full px-8 py-4 text-base font-bold text-slate-900 dark:text-white border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 bg-white dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all shadow-sm"
                             >
                                 Open Playground
                             </Link>
