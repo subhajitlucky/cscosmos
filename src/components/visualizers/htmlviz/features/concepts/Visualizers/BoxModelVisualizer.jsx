@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -7,69 +9,69 @@ export default function BoxModelVisualizer() {
     const [margin, setMargin] = useState(20);
 
     return (
-        <div className="bg-slate-900 rounded-xl p-8 border border-slate-800">
+        <div className="bg-white dark:bg-slate-900 rounded-xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex flex-col md:flex-row gap-12 items-center">
                 {/* Controls */}
                 <div className="w-full md:w-64 space-y-6">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-orange-400">Margin (px)</label>
+                        <label className="text-sm font-bold text-orange-600 dark:text-orange-400">Margin (px)</label>
                         <input
                             type="range" min="0" max="50" value={margin}
                             onChange={(e) => setMargin(Number(e.target.value))}
                             className="w-full accent-orange-500"
                         />
-                        <div className="text-right text-xs text-slate-400">{margin}px</div>
+                        <div className="text-right text-xs font-semibold text-slate-600 dark:text-slate-400">{margin}px</div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-yellow-400">Border (px)</label>
+                        <label className="text-sm font-bold text-amber-600 dark:text-yellow-400">Border (px)</label>
                         <input
                             type="range" min="0" max="20" value={border}
                             onChange={(e) => setBorder(Number(e.target.value))}
-                            className="w-full accent-yellow-500"
+                            className="w-full accent-amber-500"
                         />
-                        <div className="text-right text-xs text-slate-400">{border}px</div>
+                        <div className="text-right text-xs font-semibold text-slate-600 dark:text-slate-400">{border}px</div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-green-400">Padding (px)</label>
+                        <label className="text-sm font-bold text-emerald-600 dark:text-green-400">Padding (px)</label>
                         <input
                             type="range" min="0" max="50" value={padding}
                             onChange={(e) => setPadding(Number(e.target.value))}
-                            className="w-full accent-green-500"
+                            className="w-full accent-emerald-500"
                         />
-                        <div className="text-right text-xs text-slate-400">{padding}px</div>
+                        <div className="text-right text-xs font-semibold text-slate-600 dark:text-slate-400">{padding}px</div>
                     </div>
                 </div>
 
                 {/* Visualizer */}
-                <div className="flex-1 flex items-center justify-center min-h-[400px] w-full bg-slate-950/50 rounded-lg overflow-hidden relative">
+                <div className="flex-1 flex items-center justify-center min-h-[400px] w-full bg-slate-100 dark:bg-slate-950/50 rounded-lg overflow-hidden relative border border-slate-200 dark:border-slate-800">
 
                     {/* Margin Box */}
                     <motion.div
                         animate={{ padding: margin }}
-                        className="bg-orange-400/20 border border-orange-400/30 relative"
+                        className="bg-orange-400/20 border border-orange-400/40 relative"
                     >
-                        <div className="absolute top-1 left-2 text-[10px] text-orange-400 font-mono">MARGIN</div>
+                        <div className="absolute top-1 left-2 text-[10px] text-orange-600 dark:text-orange-400 font-mono font-bold">MARGIN</div>
 
                         {/* Border Box */}
                         <motion.div
                             animate={{ padding: border }}
-                            className="bg-yellow-400/20 border border-yellow-400/30 relative"
+                            className="bg-amber-400/20 border border-amber-400/40 relative"
                         >
-                            <div className="absolute top-1 left-2 text-[10px] text-yellow-400 font-mono">BORDER</div>
+                            <div className="absolute top-1 left-2 text-[10px] text-amber-600 dark:text-yellow-400 font-mono font-bold">BORDER</div>
 
                             {/* Padding Box */}
                             <motion.div
                                 animate={{ padding: padding }}
-                                className="bg-green-400/20 border border-green-400/30 relative"
+                                className="bg-emerald-400/20 border border-emerald-400/40 relative"
                             >
-                                <div className="absolute top-1 left-2 text-[10px] text-green-400 font-mono">PADDING</div>
+                                <div className="absolute top-1 left-2 text-[10px] text-emerald-600 dark:text-green-400 font-mono font-bold">PADDING</div>
 
                                 {/* Content Box */}
-                                <div className="w-32 h-20 bg-blue-500 flex items-center justify-center text-white font-bold shadow-lg relative z-10">
+                                <div className="w-32 h-20 bg-blue-600 flex items-center justify-center text-white font-bold shadow-lg relative z-10">
                                     CONTENT
-                                    <div className="absolute -bottom-6 text-[10px] text-blue-400 font-mono">128x80</div>
+                                    <div className="absolute -bottom-6 text-[10px] text-blue-600 dark:text-blue-400 font-mono font-bold">128x80</div>
                                 </div>
                             </motion.div>
                         </motion.div>
@@ -77,8 +79,8 @@ export default function BoxModelVisualizer() {
                 </div>
             </div>
 
-            <div className="mt-8 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-                <code className="text-sm font-mono text-slate-300">
+            <div className="mt-8 p-4 bg-slate-900 text-white rounded-lg border border-slate-800">
+                <code className="text-sm font-mono">
                     <span className="text-purple-400">.box</span> {'{'} <br />
                     &nbsp;&nbsp;<span className="text-blue-400">width</span>: 128px;<br />
                     &nbsp;&nbsp;<span className="text-blue-400">height</span>: 80px;<br />
