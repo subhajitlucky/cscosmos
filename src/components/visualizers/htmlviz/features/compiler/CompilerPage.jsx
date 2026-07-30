@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 import CodeEditor from './CodeEditor';
 import LivePreview from './LivePreview';
@@ -41,7 +42,7 @@ const DEFAULT_CODE = `<!DOCTYPE html>
 <body>
   <div class="card">
     <h1>Hello World!</h1>
-    <p>Welcome to HTMLViz Compiler.</p>
+    <p>Welcome to HTMLCosmos Playground.</p>
     <button>Click Me</button>
   </div>
 </body>
@@ -49,7 +50,7 @@ const DEFAULT_CODE = `<!DOCTYPE html>
 
 export default function CompilerPage() {
   const [code, setCode] = useState(DEFAULT_CODE);
-  const [key, setKey] = useState(0); // Force re-render of preview on reset
+  const [key, setKey] = useState(0);
 
   const handleReset = () => {
     setCode(DEFAULT_CODE);
@@ -57,18 +58,18 @@ export default function CompilerPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-6rem)] flex flex-col gap-4">
+    <div className="min-h-[calc(100vh-6rem)] flex flex-col gap-4 py-4">
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <h1 className="text-2xl font-bold text-white">Playground</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Playground</h1>
         <div className="flex gap-2 w-full sm:w-auto justify-end">
           <button
             onClick={handleReset}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             <RotateCcw size={16} />
             Reset
           </button>
-          <button className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary text-dark font-bold hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(204,255,0,0.3)] hover:shadow-[0_0_30px_rgba(204,255,0,0.5)] hover:scale-105">
+          <button className="flex items-center gap-2 px-6 py-2 rounded-lg bg-lime-400 text-slate-950 font-bold hover:bg-lime-300 transition-all shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:scale-105">
             <Play size={18} fill="currentColor" />
             Run Code
           </button>
@@ -76,10 +77,10 @@ export default function CompilerPage() {
       </div>
 
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 min-h-0 auto-rows-[minmax(340px,1fr)]">
-        <div className="min-h-[340px] md:min-h-0 md:h-full">
+        <div className="min-h-[340px] md:min-h-0 md:h-full border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
           <CodeEditor code={code} onChange={setCode} />
         </div>
-        <div className="min-h-[340px] md:min-h-0 md:h-full">
+        <div className="min-h-[340px] md:min-h-0 md:h-full border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
           <LivePreview key={key} code={code} />
         </div>
       </div>
