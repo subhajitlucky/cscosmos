@@ -1,15 +1,16 @@
 'use client';
-import { type ReactNode } from 'react'
-import Navbar from './Navbar'
-import Footer from './Footer'
+
+import { type ReactNode } from 'react';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 type RootLayoutProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <div className="relative min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-surface dark:text-slate-100">
+    <div className="relative min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-primary/25 blur-[100px]" />
         <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-secondary/30 blur-[110px]" />
@@ -24,8 +25,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
         <Footer />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RootLayout
-
+export default RootLayout;

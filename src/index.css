@@ -24,6 +24,16 @@
     --input: 220 15% 90%;
     --ring: 244 75% 60%;
     --radius: 1rem;
+
+    /* CSSViz Light Theme Variables */
+    --bg: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --card-bg: #ffffff;
+    --card-border: #cbd5e1;
+    --shadow-surface: 0 8px 24px -12px rgba(15, 23, 42, 0.22);
+    --shadow-glow: 0 4px 10px -4px rgba(15, 23, 42, 0.08);
+    --overlay-opacity: 0;
   }
 
   .dark {
@@ -46,6 +56,16 @@
     --border: 240 6% 14%;
     --input: 240 6% 14%;
     --ring: 262 80% 65%;
+
+    /* CSSViz Dark Theme Variables */
+    --bg: #020617;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --card-bg: rgba(15, 23, 42, 0.6);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --shadow-surface: 0 10px 40px -10px rgba(0,0,0,0.5);
+    --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.25);
+    --overlay-opacity: 1;
   }
 }
 
@@ -99,5 +119,47 @@
 
   .card-hover {
     @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .glass {
+    @apply border backdrop-blur-xl transition-colors duration-300;
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-surface);
+  }
+
+  .neon-border {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .neon-border::after {
+    content: '';
+    position: absolute;
+    inset: -120%;
+    background: conic-gradient(from 90deg, #6366f1, #06b6d4, #16a34a, #6366f1);
+    animation: gradient-spin 12s linear infinite;
+  }
+
+  .neon-border::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: inherit;
+    background: var(--bg);
+    backdrop-filter: blur(16px);
+    z-index: 1;
+  }
+
+  .neon-content {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@keyframes gradient-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
