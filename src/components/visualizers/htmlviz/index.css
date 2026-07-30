@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+:root {
+  /* Default Dark Mode Values */
+  --theme-primary: #ccff00;
+  --theme-secondary: #ffffff;
+  --theme-dark: #050505;
+  --theme-surface: #0a0a0a;
+  --theme-border: #1a1a1a;
+  
+  --color-scheme: dark;
+}
+
+.light {
+  /* Light Mode Overrides */
+  --theme-primary: #2563eb; /* Blue 600 */
+  --theme-secondary: #0f172a; /* Slate 900 */
+  --theme-dark: #ffffff;
+  --theme-surface: #f8fafc; /* Slate 50 */
+  --theme-border: #e2e8f0; /* Slate 200 */
+  
+  --color-scheme: light;
+}
+
+@theme {
+  --color-primary: var(--theme-primary);
+  --color-secondary: var(--theme-secondary);
+  --color-dark: var(--theme-dark);
+  --color-surface: var(--theme-surface);
+  --color-border: var(--theme-border);
+  
+  --font-sans: 'Manrope', sans-serif;
+  --font-display: 'Unbounded', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+:root {
+  color-scheme: var(--color-scheme);
+}
+
+body {
+  @apply bg-dark text-slate-300 antialiased font-sans transition-colors duration-300;
+  background-image: 
+    linear-gradient(to bottom, rgba(128,128,128,0.05) 1px, transparent 1px),
+    linear-gradient(to right, rgba(128,128,128,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Typography Utilities */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-display text-white tracking-tight;
+}
+
+/* Light Mode Utility Overrides */
+.light body {
+    @apply text-slate-600;
+}
+
+.light .text-white {
+    color: #0f172a !important; /* Slate 900 */
+}
+
+.light .hover\:text-white:hover {
+    color: #0f172a !important;
+}
+
+.light .text-slate-300 {
+    color: #475569 !important; /* Slate 600 */
+}
+
+.light .text-slate-400 {
+    color: #64748b !important; /* Slate 500 */
+}
+
+.light .bg-white\/5 {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Restore White Text on Colored Buttons (Chained Selectors) */
+.light .bg-primary.text-white,
+.light .bg-green-600.text-white,
+.light .bg-red-600.text-white,
+.light .hover\:bg-green-500:hover.text-white {
+    color: #ffffff !important;
+}
+
+/* Fix Icon Backgrounds (Washed out in Light Mode) */
+.light .bg-white\/5 {
+    background-color: #f1f5f9 !important; /* Slate 100 for better visibility */
+    color: #0f172a !important;
+}
+
+.light .group:hover .group-hover\:bg-primary {
+    background-color: #2563eb !important; /* Force Blue on Hover */
+    color: #ffffff !important; /* Ensure text is white */
+}
+
+.light .bg-white\/10 {
+    background-color: #e2e8f0 !important; /* Slate 200 */
+}
+
+/* Fix specific contrast issue in Dark Mode where text-white was used on bg-primary */
+html:not(.light) .bg-primary.text-white {
+    color: #050505 !important;
+}
+
+/* Restore Hover Effects for Navbar/Links in Light Mode */
+.light .hover\:border-primary:hover {
+    border-color: #2563eb !important; /* Blue 600 */
+}
+
+.light .hover\:text-primary:hover {
+    color: #2563eb !important; /* Blue 600 */
+}
+
+/* Fix Concept Card Icons (Visibility & Hover) */
+.light .text-slate-400 {
+    color: #64748b !important; /* Slate 500 base visibility */
+}
+
+.light .group:hover .group-hover\:text-dark {
+    color: #ffffff !important; /* Icons turn white on blue background hover */
+}
+
+.light .group:hover .group-hover\:text-primary {
+    color: #2563eb !important; /* Text turns blue on hover */
+}
+
+.light .border-white\/5 {
+    border-color: #e2e8f0 !important;
+}
+
+.light .border-white\/10 {
+    border-color: #cbd5e1 !important; /* Slate 300 */
+}
+
+/* Fix for Dark Panels in Light Mode */
+.light .bg-slate-900\/50 {
+    background-color: rgba(241, 245, 249, 0.8) !important; /* Slate 100/80% */
+}
+
+/* Fix Layout Hardcoded Classes */
+.light .bg-slate-950 {
+    background-color: #ffffff !important; /* Override Layout bg */
+}
+
+/* Light Mode - Slate Overrides (Cards, Filters, Panels) */
+.light .bg-slate-800\/30 {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important; /* Slate 200 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.light .bg-slate-800\/50 {
+    background-color: #f1f5f9 !important; /* Slate 100 */
+    color: #475569 !important; /* Slate 600 */
+}
+
+.light .border-slate-700,
+.light .border-slate-800 {
+    border-color: #cbd5e1 !important; /* Slate 300 */
+}
+
+/* Light Mode - Button Overrides (Reset Button) */
+.light .bg-slate-800 {
+    background-color: #e2e8f0 !important; /* Slate 200 */
+    color: #334155 !important; /* Slate 700 */
+}
+
+.light .hover\:bg-slate-700:hover {
+    background-color: #cbd5e1 !important; /* Slate 300 */
+    color: #0f172a !important; /* Slate 900 */
+}
+
+.light .bg-slate-800.text-slate-400 { /* Specific fix for Problem badges if needed */
+    background-color: #e2e8f0 !important;
+    color: #64748b !important;
+    border-color: #cbd5e1 !important;
+}
+
+.light .text-slate-500 {
+    color: #475569 !important; /* Slate 600 */
+}
+
+/* Light Mode - Difficulty Colors (Darker for readability) */
+.light .text-green-400 { color: #16a34a !important; } /* Green 600 */
+.light .bg-green-400\/10 { background-color: rgba(22, 163, 74, 0.1) !important; }
+.light .border-green-400\/20 { border-color: rgba(22, 163, 74, 0.2) !important; }
+
+.light .text-yellow-400 { color: #d97706 !important; } /* Amber 600 */
+.light .bg-yellow-400\/10 { background-color: rgba(217, 119, 6, 0.1) !important; }
+.light .border-yellow-400\/20 { border-color: rgba(217, 119, 6, 0.2) !important; }
+
+.light .text-red-400 { color: #dc2626 !important; } /* Red 600 */
+.light .bg-red-400\/10 { background-color: rgba(220, 38, 38, 0.1) !important; }
+.light .border-red-400\/20 { border-color: rgba(220, 38, 38, 0.2) !important; }
+
+/* Light Mode - Shadow Fixes (Green Glow -> Blue Glow) */
+.light .shadow-\[0_0_15px_rgba\(204\,255\,0\,0\.3\)\] {
+   box-shadow: 0 0 15px rgba(37, 99, 235, 0.3) !important;
+}
+
+.light .shadow-\[0_0_20px_rgba\(204\,255\,0\,0\.2\)\] {
+   box-shadow: 0 0 20px rgba(37, 99, 235, 0.2) !important;
+}
+
+.light .shadow-\[0_0_20px_rgba\(204\,255\,0\,0\.3\)\] {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.3) !important;
+}
+
+.light .group:hover .group-hover\:shadow-\[0_0_30px_rgba\(204\,255\,0\,0\.4\)\],
+.light .hover\:shadow-\[0_0_30px_rgba\(204\,255\,0\,0\.5\)\]:hover {
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.4) !important;
+}
+
+/* ============================================ */
+/* Light Mode - Live Example / Preview Fixes   */
+/* ============================================ */
+
+/* Fix window header (Preview section) background */
+.light .bg-dark {
+    background-color: #f8fafc !important; /* Slate 50 */
+}
+
+/* Fix code block background for better contrast */
+.light .bg-dark\/50 {
+    background-color: rgba(241, 245, 249, 0.9) !important; /* Slate 100 with high opacity */
+}
+
+/* Fix code syntax highlighting - make it darker for readability */
+.light .text-blue-300 {
+    color: #1e40af !important; /* Blue 800 for better contrast */
+}
+
+/* Fix ring effect for containers */
+.light .ring-white\/5 {
+    ring-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Fix window control dots - make them more visible */
+.light .bg-red-500\/20 {
+    background-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+.light .border-red-500\/50 {
+    border-color: rgba(239, 68, 68, 0.6) !important;
+}
+
+.light .bg-yellow-500\/20 {
+    background-color: rgba(234, 179, 8, 0.4) !important;
+}
+
+.light .border-yellow-500\/50 {
+    border-color: rgba(234, 179, 8, 0.6) !important;
+}
+
+.light .bg-green-500\/20 {
+    background-color: rgba(34, 197, 94, 0.4) !important;
+}
+
+.light .border-green-500\/50 {
+    border-color: rgba(34, 197, 94, 0.6) !important;
+}
+
+/* Fix "Open in Playground" button - better contrast */
+.light .bg-white\/5.hover\:bg-primary {
+    background-color: #e0e7ff !important; /* Indigo 100 for better visibility */
+    color: #2563eb !important; /* Blue 600 */
+    border: 1px solid #c7d2fe !important; /* Indigo 200 */
+}
+
+.light .bg-white\/5.hover\:bg-primary:hover {
+    background-color: #2563eb !important; /* Blue 600 on hover */
+    color: #ffffff !important; /* White text on hover */
+}
+
+/* Ensure hover text becomes dark properly */
+.light .hover\:text-dark:hover {
+    color: #0f172a !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-800 rounded-full;
+}
+
+.light ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-700;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+}
+
+/* Selection */
+::selection {
+  @apply bg-primary text-dark;
+}
