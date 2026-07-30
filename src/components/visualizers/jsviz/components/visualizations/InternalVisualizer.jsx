@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import anime from 'animejs';
-import { ShieldCheck, Zap, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, Zap, AlertTriangle, Cpu } from 'lucide-react';
 
 const InternalVisualizer = ({ topicId, code }) => {
     const containerRef = useRef(null);
@@ -10,23 +10,26 @@ const InternalVisualizer = ({ topicId, code }) => {
         if (typeof window === 'undefined') return;
         const animeFn = (anime && anime.default) || anime;
         if (typeof animeFn !== 'function') return;
-        const tl = anime.timeline({
-            easing: 'easeOutElastic(1, .8)',
-            duration: 1000
-        });
 
-        tl.add({
-            targets: '.engine-core',
-            scale: [0.8, 1],
-            opacity: [0, 1],
-            rotate: '1turn'
-        })
-        .add({
-            targets: '.internal-node',
-            translateY: [20, 0],
-            opacity: [0, 1],
-            delay: (animeFn.stagger || anime.stagger)(100)
-        }, '-=500');
+        if (animeFn.timeline) {
+            const tl = animeFn.timeline({
+                easing: 'easeOutElastic(1, .8)',
+                duration: 1000
+            });
+
+            tl.add({
+                targets: '.engine-core',
+                scale: [0.8, 1],
+                opacity: [0, 1],
+                rotate: '1turn'
+            })
+            .add({
+                targets: '.internal-node',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                delay: animeFn.stagger ? animeFn.stagger(100) : 100
+            }, '-=500');
+        }
 
         // Pulse the "Shield" for security topic
         if (topicId === 'security') {
@@ -124,4 +127,3 @@ const InternalVisualizer = ({ topicId, code }) => {
 };
 
 export default InternalVisualizer;
-
