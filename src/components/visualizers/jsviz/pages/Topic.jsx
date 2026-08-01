@@ -81,7 +81,7 @@ const Topic = ({ topicId: propTopicId }) => {
                 className="border-b px-4 py-3 sm:px-6 sticky top-16 z-20 backdrop-blur-md transition-colors duration-300"
                 style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-main)' }}
             >
-                <div className="max-w-[1700px] mx-auto flex flex-wrap justify-between items-center gap-3">
+                <div className="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-3">
                     <div className="flex items-center gap-3">
                         <Link 
                             href="/jsviz/learn" 
@@ -109,7 +109,7 @@ const Topic = ({ topicId: propTopicId }) => {
                                     Module {String(currentIndex + 1).padStart(2, '0')} // {topic.category || 'Core JavaScript'}
                                 </span>
                             </div>
-                            <h1 className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
+                            <h1 className="text-lg sm:text-2xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
                                 {topic.title}
                             </h1>
                         </div>
@@ -154,157 +154,146 @@ const Topic = ({ topicId: propTopicId }) => {
                 </div>
             )}
 
-            {/* Main Spacious Workbench Layout (Clean 2-Column Desktop View) */}
-            <div className="flex-1 flex flex-col xl:flex-row max-w-[1700px] w-full mx-auto min-h-0">
-                {/* Left Column: Concept Explanation & Practical Code Examples */}
-                <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-8 min-w-0">
-                    {/* Topic Overview Badge */}
-                    <div className="neo-card p-6 border-l-4" style={{ borderLeftColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
-                        <div className="flex items-center gap-2 mb-2">
-                            <BookOpen size={18} className="text-brand-lime" />
-                            <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>
-                                Module Objective
-                            </h2>
-                        </div>
-                        <p className="text-sm sm:text-base font-mono leading-relaxed" style={{ color: 'var(--text-main)' }}>
-                            {topic.description}
-                        </p>
+            {/* Single-Column Spacious Horizontal Flow Layout */}
+            <div className="max-w-5xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-10">
+                {/* 1. Topic Objective Banner */}
+                <div className="neo-card p-6 border-l-4" style={{ borderLeftColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                        <BookOpen size={18} className="text-brand-lime" />
+                        <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>
+                            Module Objective
+                        </h2>
+                    </div>
+                    <p className="text-sm sm:text-base font-mono leading-relaxed" style={{ color: 'var(--text-main)' }}>
+                        {topic.description}
+                    </p>
+                </div>
+
+                {/* 2. Interactive Mental Model Simulation Canvas (Full Width) */}
+                <div className="neo-card p-6 border-2 flex flex-col overflow-hidden shadow-xl" style={{ borderColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
+                    <div className="flex items-center justify-between pb-4 border-b mb-4" style={{ borderColor: 'var(--border-main)' }}>
+                        <h3 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
+                            <Layers size={18} className="text-brand-lime" /> Mental Model Realtime Simulation
+                        </h3>
+                        <span className="text-xs font-mono px-3 py-1 rounded bg-brand-lime/10 text-brand-lime font-bold">
+                            INTERACTIVE_CANVAS
+                        </span>
                     </div>
 
-                    {/* Detailed Concept Markdown Breakdown */}
-                    {content?.explanation && (
-                        <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
-                            <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                                <Lightbulb size={20} className="text-brand-lime" /> Concept Deep-Dive
-                            </h3>
-                            <div className="prose dark:prose-invert max-w-none font-mono text-sm leading-relaxed space-y-4" style={{ color: 'var(--text-main)' }}>
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                    {content.explanation}
-                                </ReactMarkdown>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Code Examples Section */}
-                    {content?.examples?.length > 0 && (
-                        <div className="space-y-4">
-                            <h3 className="text-lg font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                                <Code size={18} className="text-brand-lime" /> Practical Code Examples
-                            </h3>
-
-                            <div className="space-y-6">
-                                {content.examples.map((ex, index) => (
-                                    <div key={index} className="neo-card overflow-hidden" style={{ backgroundColor: 'var(--bg-surface)' }}>
-                                        <div 
-                                            className="px-4 py-2.5 border-b flex justify-between items-center"
-                                            style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-main)' }}
-                                        >
-                                            <span className="text-xs font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
-                                                // {ex.title || `Example ${index + 1}`}
-                                            </span>
-                                            <button
-                                                onClick={() => handleCopy(ex.code, index)}
-                                                className="text-xs font-mono font-bold text-brand-lime hover:opacity-80 flex items-center gap-1.5 transition-opacity bg-brand-lime/10 px-2.5 py-1 border border-brand-lime/30 rounded"
-                                            >
-                                                {copiedIndex === index ? <Check size={12} /> : <Copy size={12} />}
-                                                {copiedIndex === index ? 'COPIED & LOADED' : 'LOAD TO EDITOR'}
-                                            </button>
-                                        </div>
-                                        <div className="p-4 overflow-x-auto text-xs sm:text-sm bg-black/90">
-                                            <SyntaxHighlighter
-                                                language="javascript"
-                                                style={vscDarkPlus}
-                                                customStyle={{ margin: 0, padding: 0, background: 'transparent' }}
-                                            >
-                                                {ex.code}
-                                            </SyntaxHighlighter>
-                                        </div>
-                                        {ex.explanation && (
-                                            <div className="px-4 py-3 border-t text-xs font-mono leading-relaxed" style={{ borderColor: 'var(--border-main)', color: 'var(--text-muted)' }}>
-                                                💡 {ex.explanation}
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Memory Architecture & Engine Model */}
-                    {content?.memoryModel && (
-                        <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
-                            <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                                <Cpu size={20} className="text-brand-lime" /> Engine & Memory Architecture
-                            </h3>
-                            <div className="prose dark:prose-invert max-w-none font-mono text-sm leading-relaxed space-y-3" style={{ color: 'var(--text-muted)' }}>
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                    {content.memoryModel}
-                                </ReactMarkdown>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Bottom Topic Pagination */}
-                    <div className="pt-8 border-t flex justify-between items-center gap-4" style={{ borderColor: 'var(--border-main)' }}>
-                        {prevTopic ? (
-                            <Link
-                                href={`/jsviz/topic/${prevTopic.id}`}
-                                className="neo-card p-4 flex flex-col items-start group text-left max-w-[48%] transition-transform hover:-translate-y-1"
-                                style={{ backgroundColor: 'var(--bg-surface)' }}
-                            >
-                                <span className="text-[10px] font-mono text-gray-400 flex items-center gap-1 group-hover:text-brand-lime transition-colors">
-                                    <ArrowLeft size={10} /> PREVIOUS_MODULE
-                                </span>
-                                <span className="text-sm font-bold truncate w-full mt-1" style={{ color: 'var(--text-main)' }}>
-                                    {prevTopic.title}
-                                </span>
-                            </Link>
-                        ) : <div />}
-
-                        {nextTopic ? (
-                            <Link
-                                href={`/jsviz/topic/${nextTopic.id}`}
-                                className="neo-card p-4 flex flex-col items-end group text-right max-w-[48%] transition-transform hover:-translate-y-1"
-                                style={{ backgroundColor: 'var(--bg-surface)' }}
-                            >
-                                <span className="text-[10px] font-mono text-gray-400 flex items-center gap-1 group-hover:text-brand-lime transition-colors">
-                                    NEXT_MODULE <ArrowRight size={10} />
-                                </span>
-                                <span className="text-sm font-bold truncate w-full mt-1" style={{ color: 'var(--text-main)' }}>
-                                    {nextTopic.title}
-                                </span>
-                            </Link>
-                        ) : <div />}
+                    <div className="h-[340px] sm:h-[400px] w-full relative overflow-hidden rounded border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
+                        <VisualizerCanvas topicId={topic.id} code={code} isRunning={isRunning} />
                     </div>
                 </div>
 
-                {/* Right Column: Live Interactive Simulation & Code Workbench Panel */}
-                <div 
-                    className="w-full xl:w-[620px] 2xl:w-[700px] flex-shrink-0 border-t xl:border-t-0 xl:border-l flex flex-col space-y-4 p-4 sm:p-6"
-                    style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}
-                >
-                    {/* Live Mental Model Simulation Box */}
-                    <div className="neo-card p-4 border-2 flex flex-col overflow-hidden" style={{ borderColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
-                        <div className="flex items-center justify-between pb-3 border-b mb-3" style={{ borderColor: 'var(--border-main)' }}>
-                            <h3 className="text-xs font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                                <Layers size={16} className="text-brand-lime" /> Mental Model Simulation
-                            </h3>
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-lime/10 text-brand-lime font-bold">
-                                REALTIME_INSPECTOR
+                {/* 3. Sandboxed Interactive Code Execution Editor (Full Width) */}
+                <div className="neo-card p-0 flex flex-col min-h-[450px] overflow-hidden shadow-xl" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                    <CodeEditor initialCode={code} onRun={handleRun} />
+                </div>
+
+                {/* 4. Detailed Concept Markdown Breakdown */}
+                {content?.explanation && (
+                    <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                        <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
+                            <Lightbulb size={20} className="text-brand-lime" /> Concept Deep-Dive
+                        </h3>
+                        <div className="prose dark:prose-invert max-w-none font-mono text-sm sm:text-base leading-relaxed space-y-4" style={{ color: 'var(--text-main)' }}>
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {content.explanation}
+                            </ReactMarkdown>
+                        </div>
+                    </div>
+                )}
+
+                {/* 5. Practical Code Examples Section */}
+                {content?.examples?.length > 0 && (
+                    <div className="space-y-6">
+                        <h3 className="text-lg font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
+                            <Code size={20} className="text-brand-lime" /> Practical Code Examples
+                        </h3>
+
+                        <div className="space-y-6">
+                            {content.examples.map((ex, index) => (
+                                <div key={index} className="neo-card overflow-hidden" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                                    <div 
+                                        className="px-5 py-3 border-b flex justify-between items-center"
+                                        style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-main)' }}
+                                    >
+                                        <span className="text-xs font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
+                                            // {ex.title || `Example ${index + 1}`}
+                                        </span>
+                                        <button
+                                            onClick={() => handleCopy(ex.code, index)}
+                                            className="text-xs font-mono font-bold text-brand-lime hover:opacity-80 flex items-center gap-1.5 transition-opacity bg-brand-lime/10 px-3 py-1.5 border border-brand-lime/30 rounded"
+                                        >
+                                            {copiedIndex === index ? <Check size={14} /> : <Copy size={14} />}
+                                            {copiedIndex === index ? 'COPIED & LOADED' : 'LOAD TO EDITOR'}
+                                        </button>
+                                    </div>
+                                    <div className="p-5 overflow-x-auto text-xs sm:text-sm bg-black/90">
+                                        <SyntaxHighlighter
+                                            language="javascript"
+                                            style={vscDarkPlus}
+                                            customStyle={{ margin: 0, padding: 0, background: 'transparent' }}
+                                        >
+                                            {ex.code}
+                                        </SyntaxHighlighter>
+                                    </div>
+                                    {ex.explanation && (
+                                        <div className="px-5 py-3.5 border-t text-xs sm:text-sm font-mono leading-relaxed" style={{ borderColor: 'var(--border-main)', color: 'var(--text-muted)' }}>
+                                            💡 {ex.explanation}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* 6. Engine & Memory Architecture */}
+                {content?.memoryModel && (
+                    <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                        <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
+                            <Cpu size={20} className="text-brand-lime" /> Engine & Memory Architecture
+                        </h3>
+                        <div className="prose dark:prose-invert max-w-none font-mono text-sm leading-relaxed space-y-3" style={{ color: 'var(--text-muted)' }}>
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {content.memoryModel}
+                            </ReactMarkdown>
+                        </div>
+                    </div>
+                )}
+
+                {/* 7. Bottom Topic Pagination */}
+                <div className="pt-8 border-t flex justify-between items-center gap-4" style={{ borderColor: 'var(--border-main)' }}>
+                    {prevTopic ? (
+                        <Link
+                            href={`/jsviz/topic/${prevTopic.id}`}
+                            className="neo-card p-5 flex flex-col items-start group text-left max-w-[48%] transition-transform hover:-translate-y-1"
+                            style={{ backgroundColor: 'var(--bg-surface)' }}
+                        >
+                            <span className="text-xs font-mono text-gray-400 flex items-center gap-1 group-hover:text-brand-lime transition-colors">
+                                <ArrowLeft size={12} /> PREVIOUS_MODULE
                             </span>
-                        </div>
+                            <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5" style={{ color: 'var(--text-main)' }}>
+                                {prevTopic.title}
+                            </span>
+                        </Link>
+                    ) : <div />}
 
-                        <div className="h-[280px] sm:h-[320px] w-full relative overflow-hidden rounded border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
-                            <VisualizerCanvas topicId={topic.id} code={code} isRunning={isRunning} />
-                        </div>
-                    </div>
-
-                    {/* Interactive Sandboxed Code Execution Editor Box */}
-                    <div className="neo-card p-0 flex-1 flex flex-col min-h-[450px] overflow-hidden" style={{ backgroundColor: 'var(--bg-surface)' }}>
-                        <div className="flex-1 min-h-[400px]">
-                            <CodeEditor initialCode={code} onRun={handleRun} />
-                        </div>
-                    </div>
+                    {nextTopic ? (
+                        <Link
+                            href={`/jsviz/topic/${nextTopic.id}`}
+                            className="neo-card p-5 flex flex-col items-end group text-right max-w-[48%] transition-transform hover:-translate-y-1"
+                            style={{ backgroundColor: 'var(--bg-surface)' }}
+                        >
+                            <span className="text-xs font-mono text-gray-400 flex items-center gap-1 group-hover:text-brand-lime transition-colors">
+                                NEXT_MODULE <ArrowRight size={12} />
+                            </span>
+                            <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5" style={{ color: 'var(--text-main)' }}>
+                                {nextTopic.title}
+                            </span>
+                        </Link>
+                    ) : <div />}
                 </div>
             </div>
         </div>
