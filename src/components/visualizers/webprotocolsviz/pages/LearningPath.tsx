@@ -9,6 +9,14 @@ const LearningPath = () => {
   return (
     <div className="max-w-3xl mx-auto py-8">
       <div className="flex flex-col gap-2 mb-12">
+        <div className="flex items-center gap-3">
+          <Link href="/topics" className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground bg-card border border-border px-3 py-1 rounded-full transition-all hover:border-primary/50">
+            ← CSCosmos
+          </Link>
+          <Link href="/webprotocols" className="text-xs font-semibold text-primary hover:underline">
+            Web Protocols Home
+          </Link>
+        </div>
         <h1 className="text-4xl font-bold text-foreground">Your Learning Roadmap</h1>
         <p className="text-muted-foreground text-lg">Follow this guided path to master web protocols from scratch.</p>
       </div>

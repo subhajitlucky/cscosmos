@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@/context/ThemeContext';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
+import { LayoutWrapper } from '@/components/LayoutWrapper';
 import '@/index.css';
 
 export const metadata: Metadata = {
@@ -19,9 +18,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
         <ThemeProvider defaultTheme="dark" storageKey="cscosmos-ui-theme">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <LayoutWrapper>{children}</LayoutWrapper>
         </ThemeProvider>
         <Analytics />
       </body>

@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-react: #00d8ff;
+  
+  /* Precision Zinc Palette */
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #09090b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  --card: #ffffff;
+  
+  /* Prism Tokens - Light */
+  --token-comment: #71717a;
+  --token-keyword: #09090b;
+  --token-string: #059669;
+  --token-function: #2563eb;
+  --token-attr: #7c3aed;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #fafafa;
+  --muted: #09090b;
+  --muted-foreground: #71717a;
+  --border: #1b1b1f;
+  --card: #09090b;
+
+  /* Prism Tokens - Dark */
+  --token-comment: #52525b;
+  --token-keyword: #fafafa;
+  --token-string: #10b981;
+  --token-function: #60a5fa;
+  --token-attr: #a78bfa;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply font-sans antialiased transition-colors duration-500;
+    font-size: 14px;
+  }
+}
+
+@utility transition-premium {
+  transition: all 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@utility visualizer-node {
+  @apply bg-card border border-border rounded-lg shadow-sm transition-premium;
+}
+
+.dark .visualizer-node {
+  @apply shadow-[0_0_20px_rgba(0,0,0,0.5)] border-zinc-800/50;
+}
+
+/* 🚀 Adaptive Prism Highlighting */
+.token.comment, .token.prolog, .token.doctype, .token.cdata { color: var(--token-comment); font-style: italic; }
+.token.namespace { opacity: .7; }
+.token.string, .token.attr-value { color: var(--token-string); }
+.token.punctuation, .token.operator { color: var(--foreground); opacity: 0.6; }
+.token.entity, .token.url, .token.symbol, .token.number, .token.boolean, .token.variable, .token.constant, .token.property, .token.regex, .token.inserted { color: var(--token-attr); }
+.token.atrule, .token.keyword, .token.attr-name, .language-autolink .token.url { color: var(--token-keyword); font-weight: 600; }
+.token.function, .token.deleted, .token.tag { color: var(--token-function); }
+.token.important, .token.bold { font-weight: bold; }
+.token.italic { font-style: italic; }

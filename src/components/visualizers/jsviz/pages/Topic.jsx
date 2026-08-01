@@ -15,7 +15,7 @@ import Sidebar from '../components/Sidebar';
 import useStore from '../store/useStore';
 import { 
     CheckSquare, Code, Lightbulb, BookOpen, Cpu, Layers, Copy, 
-    Check, ArrowLeft, ArrowRight, Menu, X, Play, RotateCcw
+    Check, ArrowLeft, ArrowRight, Menu, X 
 } from 'lucide-react';
 
 const Topic = ({ topicId: propTopicId }) => {
@@ -29,7 +29,7 @@ const Topic = ({ topicId: propTopicId }) => {
     const [code, setCode] = useState('');
     const [isRunning, setIsRunning] = useState(false);
     const [copiedIndex, setCopiedIndex] = useState(null);
-    const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // Flatten all topics to find prev/next
     const allTopicsFlattened = useMemo(() => {
@@ -83,22 +83,25 @@ const Topic = ({ topicId: propTopicId }) => {
             >
                 <div className="max-w-[1700px] mx-auto flex flex-wrap justify-between items-center gap-3">
                     <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-                            className="lg:hidden p-2 rounded-lg border text-brand-lime transition-colors"
-                            style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}
-                            title="Toggle Curriculum Sidebar"
-                        >
-                            {mobileSidebarOpen ? <X size={18} /> : <Menu size={18} />}
-                        </button>
-
                         <Link 
                             href="/jsviz/learn" 
-                            className="p-2 rounded-lg border opacity-80 hover:opacity-100 transition-opacity"
+                            className="p-2 rounded-lg border opacity-80 hover:opacity-100 transition-opacity flex items-center gap-1.5 text-xs font-mono font-bold"
                             style={{ borderColor: 'var(--border-main)', color: 'var(--text-main)' }}
+                            title="Back to Curriculum"
                         >
-                            <ArrowLeft size={18} />
+                            <ArrowLeft size={16} />
+                            <span className="hidden sm:inline">Curriculum</span>
                         </Link>
+
+                        <button
+                            onClick={() => setSidebarOpen(!sidebarOpen)}
+                            className="p-2 rounded-lg border text-brand-lime hover:bg-brand-lime/10 transition-colors flex items-center gap-1.5 text-xs font-mono font-bold"
+                            style={{ borderColor: 'var(--border-main)' }}
+                            title="Toggle All Topics Menu"
+                        >
+                            {sidebarOpen ? <X size={16} /> : <Menu size={16} />}
+                            <span>All Topics</span>
+                        </button>
 
                         <div>
                             <div className="flex items-center gap-2">
@@ -128,25 +131,32 @@ const Topic = ({ topicId: propTopicId }) => {
                 </div>
             </header>
 
-            {/* Mobile Sidebar Overlay Drawer */}
-            {mobileSidebarOpen && (
-                <div className="lg:hidden fixed inset-0 z-30 pt-32 bg-black/60 backdrop-blur-sm" onClick={() => setMobileSidebarOpen(false)}>
+            {/* Slide-out Topic Index Drawer */}
+            {sidebarOpen && (
+                <div className="fixed inset-0 z-40 pt-32 bg-black/60 backdrop-blur-sm flex justify-start" onClick={() => setSidebarOpen(false)}>
                     <div 
-                        className="w-72 max-w-[85vw] h-full border-r overflow-y-auto p-4 shadow-2xl"
+                        className="w-80 max-w-[85vw] h-full border-r overflow-y-auto p-6 shadow-2xl animate-in slide-in-from-left duration-200"
                         style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-main)' }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <Sidebar topics={topics} />
+                        <div className="flex items-center justify-between pb-4 border-b mb-6" style={{ borderColor: 'var(--border-main)' }}>
+                            <span className="text-xs font-bold font-mono text-brand-lime uppercase tracking-widest">
+                                Topics Catalog
+                            </span>
+                            <button onClick={() => setSidebarOpen(false)} className="p-1 rounded text-gray-400 hover:text-white">
+                                <X size={18} />
+                            </button>
+                        </div>
+                        <div onClick={() => setSidebarOpen(false)}>
+                            <Sidebar topics={topics} />
+                        </div>
                     </div>
                 </div>
             )}
 
-            {/* Main Workbench Layout */}
-            <div className="flex-1 flex flex-col lg:flex-row max-w-[1700px] w-full mx-auto min-h-0">
-                {/* Desktop Sticky Curriculum Index */}
-                <Sidebar topics={topics} />
-
-                {/* Left Column: Concept Explanation & Curriculum Markdown */}
+            {/* Main Spacious Workbench Layout (Clean 2-Column Desktop View) */}
+            <div className="flex-1 flex flex-col xl:flex-row max-w-[1700px] w-full mx-auto min-h-0">
+                {/* Left Column: Concept Explanation & Practical Code Examples */}
                 <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-8 min-w-0">
                     {/* Topic Overview Badge */}
                     <div className="neo-card p-6 border-l-4" style={{ borderLeftColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
@@ -270,7 +280,7 @@ const Topic = ({ topicId: propTopicId }) => {
 
                 {/* Right Column: Live Interactive Simulation & Code Workbench Panel */}
                 <div 
-                    className="w-full lg:w-[580px] xl:w-[680px] flex-shrink-0 border-t lg:border-t-0 lg:border-l flex flex-col space-y-4 p-4 sm:p-6"
+                    className="w-full xl:w-[620px] 2xl:w-[700px] flex-shrink-0 border-t xl:border-t-0 xl:border-l flex flex-col space-y-4 p-4 sm:p-6"
                     style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}
                 >
                     {/* Live Mental Model Simulation Box */}

@@ -53,7 +53,7 @@ export const topics: Topic[] = [
     createTopic("Browser Internals (DOM, Rendering, Storage)", "fullstack", { status: 'active', url: "https://browseruniverse.vercel.app/" }),
 
     // 2. Frontend Engineering
-    createTopic("React Visualizer (Hooks, Reconciliation)", "fullstack" , { status: 'active', url: "https://reactcosmos.vercel.app/" }),
+    createTopic("React Visualizer (Hooks, Reconciliation)", "fullstack" , { status: 'active', url: "/reactcosmos" }),
     createTopic("Next.js Visualizer (Routing, SSR, RSC)", "fullstack" , { status: 'active', url: "https://nextjscosmos.vercel.app/" }),
     createTopic("Vue Visualizer (Reactivity, Templates)", "fullstack"),
     createTopic("Svelte / SvelteKit Visualizer (Compiler, Reactivity)", "fullstack"),

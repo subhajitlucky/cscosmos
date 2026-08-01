@@ -11,9 +11,17 @@ const Home = () => {
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase dark:bg-primary/20"
+          className="flex items-center gap-3"
         >
-          Master the Web Infrastructure
+          <Link
+            href="/topics"
+            className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold text-muted-foreground hover:text-foreground bg-card border border-border rounded-full transition-all hover:border-primary/50 shadow-sm"
+          >
+            ← CSCosmos
+          </Link>
+          <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase dark:bg-primary/20">
+            Master the Web Infrastructure
+          </span>
         </motion.div>
         <motion.h1 
           className="text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl text-foreground"
