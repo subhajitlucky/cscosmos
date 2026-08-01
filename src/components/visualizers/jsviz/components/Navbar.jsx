@@ -29,19 +29,30 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-black border-b border-brand-border h-16 transition-colors duration-300">
+    <nav 
+      className="fixed top-0 left-0 right-0 z-50 border-b h-16 transition-colors duration-300 backdrop-blur-md"
+      style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-main)' }}
+    >
       <div className="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
         {/* Logo & CSCosmos Catalog link */}
         <div className="flex items-center space-x-4">
-          <Link href="/topics" className="text-xs font-semibold text-gray-400 hover:text-white flex items-center gap-1.5 border border-brand-border px-3 py-1.5 rounded-md transition-colors">
+          <Link 
+            href="/topics" 
+            className="text-xs font-semibold flex items-center gap-1.5 border px-3 py-1.5 rounded-md transition-all opacity-80 hover:opacity-100"
+            style={{ borderColor: 'var(--border-main)', color: 'var(--text-main)', backgroundColor: 'var(--bg-main)' }}
+            title="Return to CSCosmos Catalog"
+          >
             <ArrowLeft size={14} />
             <span>CSCosmos</span>
           </Link>
           <Link href="/jsviz" className="flex items-center space-x-2 group">
-            <div className="bg-brand-lime text-brand-black p-1 rounded-sm">
+            <div className="bg-brand-lime text-black p-1 rounded-sm shadow-sm">
               <Terminal size={20} strokeWidth={3} />
             </div>
-            <span className="text-xl font-bold tracking-tighter text-white dark:text-white group-hover:text-brand-lime transition-colors">
+            <span 
+              className="text-xl font-bold tracking-tighter group-hover:text-brand-lime transition-colors"
+              style={{ color: 'var(--text-main)' }}
+            >
               JS_VIZ
             </span>
           </Link>
@@ -55,8 +66,9 @@ const Navbar = () => {
               href={link.path}
               className={`text-sm font-bold tracking-widest transition-colors relative py-1 ${isActive(link.path)
                   ? 'text-brand-lime font-black'
-                  : 'text-gray-400 hover:text-white'
+                  : 'hover:text-brand-lime'
                 }`}
+              style={{ color: isActive(link.path) ? undefined : 'var(--text-muted)' }}
             >
               {link.name}
               {isActive(link.path) && (
@@ -70,7 +82,8 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <button
             onClick={toggleTheme}
-            className="p-2 text-gray-400 hover:text-brand-lime transition-colors border border-brand-border rounded-sm"
+            className="p-2 transition-colors border rounded-sm hover:border-brand-lime"
+            style={{ borderColor: 'var(--border-main)', color: 'var(--text-main)', backgroundColor: 'var(--bg-main)' }}
             aria-label="Toggle Theme"
           >
             {effectiveTheme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
@@ -78,7 +91,8 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-400 hover:text-white"
+              className="p-2"
+              style={{ color: 'var(--text-main)' }}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -88,15 +102,18 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-brand-black border-b border-brand-border">
+        <div 
+          className="md:hidden absolute top-16 left-0 right-0 border-b shadow-xl"
+          style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-main)' }}
+        >
           <div className="flex flex-col p-4 space-y-4">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsMenuOpen(false)}
-                className={`text-lg font-bold tracking-widest ${isActive(link.path) ? 'text-brand-lime' : 'text-gray-400'
-                  }`}
+                className={`text-lg font-bold tracking-widest ${isActive(link.path) ? 'text-brand-lime' : ''}`}
+                style={{ color: isActive(link.path) ? undefined : 'var(--text-muted)' }}
               >
                 {link.name}
               </Link>
