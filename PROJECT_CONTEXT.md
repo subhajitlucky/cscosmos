@@ -54,12 +54,13 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 5: `websecureviz` -> `/websecurity`
 - ✅ Site 6: `jsviz` -> `/jsviz` (Completed: sticky sidebar layout, SSR safety, dark/light theme, Cpu icon bugfix)
 - ✅ Site 7: `reactcosmos` -> `/reactcosmos` (Completed: 35 pre-rendered React topics, Fiber visualizer, Hooks simulator, lab playground)
+- ✅ Site 8: `nextjscosmos` -> `/nextjscosmos` (Completed: 35 pre-rendered Next.js 15 App Router modules, RSC visualizer, SSG/SSR/ISR engine, Error debugger & Interactive lab)
 
 ### Planned Next Absorptions:
-- ⏳ Site 8: `tsviz` (TypeScript type checker & compiler visualizer)
-- ⏳ Site 9: `sqlcosmos` (SQL queries & Index visualizer)
-- ⏳ Site 10: `dockercosmos` (Docker container isolation visualizer)
-- ⏳ Site 11: `k8scosmos` (Kubernetes orchestration visualizer)
+- ⏳ Site 9: `tsviz` (TypeScript type checker & compiler visualizer)
+- ⏳ Site 10: `sqlcosmos` (SQL queries & Index visualizer)
+- ⏳ Site 11: `dockercosmos` (Docker container isolation visualizer)
+- ⏳ Site 12: `k8scosmos` (Kubernetes orchestration visualizer)
 - ⏳ Site 12: `blockchainviz` & `evminternals`
 
 ---

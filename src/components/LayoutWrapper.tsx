@@ -14,6 +14,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/webprotocols',
   '/websecurity',
   '/reactcosmos',
+  '/nextjscosmos',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -25,6 +26,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/webprotocols',
   '/websecurity',
   '/reactcosmos',
+  '/nextjscosmos',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
