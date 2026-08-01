@@ -81,7 +81,7 @@ const Topic = ({ topicId: propTopicId }) => {
                 className="border-b px-4 py-3 sm:px-6 sticky top-16 z-20 backdrop-blur-md transition-colors duration-300"
                 style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-main)' }}
             >
-                <div className="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-3">
+                <div className="max-w-[1700px] mx-auto flex flex-wrap justify-between items-center gap-3">
                     <div className="flex items-center gap-3">
                         <Link 
                             href="/jsviz/learn" 
@@ -155,7 +155,7 @@ const Topic = ({ topicId: propTopicId }) => {
             )}
 
             {/* Single-Column Spacious Horizontal Flow Layout */}
-            <div className="max-w-5xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-10">
+            <div className="max-w-[1700px] mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-10">
                 {/* 1. Topic Objective Banner */}
                 <div className="neo-card p-6 border-l-4" style={{ borderLeftColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
                     <div className="flex items-center gap-2 mb-2">
@@ -180,7 +180,7 @@ const Topic = ({ topicId: propTopicId }) => {
                         </span>
                     </div>
 
-                    <div className="h-[340px] sm:h-[400px] w-full relative overflow-hidden rounded border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
+                    <div className="h-[380px] sm:h-[480px] lg:h-[560px] w-full relative overflow-hidden rounded border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
                         <VisualizerCanvas topicId={topic.id} code={code} isRunning={isRunning} />
                     </div>
                 </div>

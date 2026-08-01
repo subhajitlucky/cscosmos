@@ -33,7 +33,7 @@ export default function TopicLesson({ topicId: propTopicId }: { topicId?: string
   const nextTopic = currentIndex < topics.length - 1 ? topics[currentIndex + 1] : null;
 
   return (
-    <div className="max-w-5xl mx-auto flex flex-col gap-8">
+    <div className="max-w-[1700px] mx-auto w-full flex flex-col gap-8">
       {/* Lesson Navigation Header */}
       <div className="flex items-center justify-between border-b border-border/80 pb-6">
         <Link href="/webprotocols/path" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 text-sm font-medium">

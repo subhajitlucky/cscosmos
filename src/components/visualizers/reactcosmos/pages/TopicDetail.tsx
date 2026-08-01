@@ -37,7 +37,7 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
   const categoryStyle = categoryColors[topic.category as Category] || categoryColors.fundamentals;
 
   return (
-    <div className="pt-24 pb-12 px-6 max-w-6xl mx-auto min-h-screen">
+    <div className="pt-24 pb-12 px-6 max-w-[1700px] mx-auto w-full min-h-screen">
       <Link href="/reactcosmos/learn" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-12 transition-colors text-[13px] font-medium">
         <ArrowLeft className="w-3.5 h-3.5" /> Back to Pathway
       </Link>
