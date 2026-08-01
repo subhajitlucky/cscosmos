@@ -4,6 +4,7 @@ import Home from '@/components/visualizers/webprotocolsviz/pages/Home';
 import LearningPath from '@/components/visualizers/webprotocolsviz/pages/LearningPath';
 import Playground from '@/components/visualizers/webprotocolsviz/pages/Playground';
 import TopicLesson from '@/components/visualizers/webprotocolsviz/pages/TopicLesson';
+import Navbar from '@/components/visualizers/webprotocolsviz/components/Navbar';
 import Footer from '@/components/visualizers/webprotocolsviz/components/Footer';
 
 export function generateStaticParams() {
@@ -46,8 +47,9 @@ export default async function WebProtocolsPage({ params }: { params: Promise<{ s
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors pt-6">
-            <div className="flex-1 px-4 sm:px-6 max-w-6xl mx-auto w-full">
+        <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
+            <Navbar />
+            <div className="flex-1 px-4 sm:px-6 max-w-6xl mx-auto w-full pt-6">
                 {content}
             </div>
             <Footer />

@@ -11,6 +11,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/html-cosmos',
   '/css-cosmos',
   '/program-cosmos',
+  '/webprotocols',
   '/websecurity',
   '/reactcosmos',
 ];
