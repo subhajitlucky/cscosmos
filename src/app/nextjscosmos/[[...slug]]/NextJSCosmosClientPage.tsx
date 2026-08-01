@@ -108,7 +108,7 @@ export default function NextJSCosmosClientPage({ slug }: { slug: string[] }) {
       if (!subRoute) {
         return <ErrorsCatalogPage />;
       }
-      return <ErrorDetailPage params={{ slug: subRoute }} />;
+      return <ErrorDetailPage params={Promise.resolve({ slug: subRoute })} />;
     }
 
     if (mainRoute === 'playground') {

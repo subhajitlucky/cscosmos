@@ -179,14 +179,14 @@ export function PlaygroundLab() {
               >
                 <TabsContent value="visualizer" className="m-0 h-full">
                   <div className="h-full overflow-y-auto custom-scrollbar p-6">
-                    {scenario === 'ssr' && <SSRVisualizer isExecuting={isExecuting} />}
-                    {scenario === 'ssg' && <SSGVisualizer isExecuting={isExecuting} />}
-                    {scenario === 'routing' && <RoutingVisualizer isExecuting={isExecuting} />}
-                    {scenario === 'streaming' && <StreamingVisualizer isExecuting={isExecuting} />}
-                    {scenario === 'rsc' && <RSCVisualizer mode="concept" isExecuting={isExecuting} />}
-                    {scenario === 'actions' && <ServerActionVisualizer isExecuting={isExecuting} />}
-                    {scenario === 'optimistic' && <OptimisticVisualizer isExecuting={isExecuting} />}
-                    {scenario === 'ppr' && <PPRVisualizer isExecuting={isExecuting} />}
+                    {scenario === 'ssr' && <SSRVisualizer />}
+                    {scenario === 'ssg' && <SSGVisualizer />}
+                    {scenario === 'routing' && <RoutingVisualizer />}
+                    {scenario === 'streaming' && <StreamingVisualizer />}
+                    {scenario === 'rsc' && <RSCVisualizer mode="concept" />}
+                    {scenario === 'actions' && <ServerActionVisualizer />}
+                    {scenario === 'optimistic' && <OptimisticVisualizer />}
+                    {scenario === 'ppr' && <PPRVisualizer />}
                   </div>
                 </TabsContent>
                 <TabsContent value="code" className="m-0 h-full p-4">

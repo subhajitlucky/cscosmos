@@ -29,7 +29,6 @@ export const commonErrors: ErrorItem[] = [
     slug: "unserializable-props",
     category: "RSC Boundary",
     description: "Trying to pass functions, classes, or private symbols through the Server-to-Client boundary.",
-    slug: "unserializable-props",
     solution: "Only pass plain JSON-serializable objects. Functions should be passed as Server Actions if appropriate.",
     simulationType: "serialization-error"
   },

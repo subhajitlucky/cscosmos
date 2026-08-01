@@ -2,21 +2,23 @@
 
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/visualizers/nextjscosmos/components/ui/button"
+import { useTheme as useCSCosmosTheme } from "@/context/useTheme"
+import { Button } from "./ui/button"
 
 export function ModeToggle() {
-  const { setTheme, resolvedTheme } = useTheme()
+  const { theme, setTheme } = useCSCosmosTheme()
+  const effectiveTheme = theme === 'system'
+    ? (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    : theme
 
   return (
     <Button
       variant="ghost"
       size="icon"
       className="rounded-full h-10 w-10 border border-border/50"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(effectiveTheme === "dark" ? "light" : "dark")}
     >
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      {effectiveTheme === "light" ? <Moon className="h-[1.2rem] w-[1.2rem]" /> : <Sun className="h-[1.2rem] w-[1.2rem]" />}
       <span className="sr-only">Toggle theme</span>
     </Button>
   )
