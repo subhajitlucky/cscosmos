@@ -1,17 +1,14 @@
 'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Play, Info } from 'lucide-react';
+import { ArrowLeft, Play, Info, AlertCircle, Sparkles } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { type Topic, type Category } from '../../data/topics';
 import HookVisualizer from '../../components/visualizers/HookVisualizer';
 import FiberVisualizer from '../../components/visualizers/FiberVisualizer';
-import Editor from 'react-simple-code-editor';
-// @ts-expect-error: prismjs types are incomplete
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-javascript';
-import { useState } from 'react';
+import ReactCodeEditor from '../../components/ReactCodeEditor';
 
 const categoryColors: Record<Category, string> = {
   fundamentals: 'text-blue-500 bg-blue-500/10 border-blue-500/20',
@@ -44,115 +41,134 @@ export const TopicWrapper = ({
     setTimeout(() => setIsExecuting(false), 2000);
   };
 
-  return (
-    <div className="pt-24 pb-12 px-6 max-w-6xl mx-auto min-h-screen">
-      <Link href="/reactcosmos/learn" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-12 transition-colors text-[13px] font-medium">
-        <ArrowLeft className="w-3.5 h-3.5" /> Back to Pathway
-      </Link>
+  const categoryStyle = categoryColors[topic.category] || categoryColors.fundamentals;
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
-          <div className="flex items-center gap-3 mb-6">
-             <span className={cn("px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border", categoryColors[topic.category])}>
+  return (
+    <div className="pt-20 pb-16 px-4 sm:px-6 lg:px-10 max-w-[1700px] mx-auto w-full min-h-screen space-y-10">
+      {/* Navigation & Topic Header */}
+      <div>
+        <Link 
+          href="/reactcosmos/learn" 
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors text-xs font-semibold uppercase tracking-wider"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to Pathway
+        </Link>
+
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+          <div className="flex items-center gap-3 mb-4">
+             <span className={cn("px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider border", categoryStyle)}>
                 {topic.category}
              </span>
-             <span className="text-muted-foreground text-xs font-medium uppercase tracking-widest">{topic.difficulty}</span>
+             <span className="text-muted-foreground text-xs font-semibold uppercase tracking-widest">{topic.difficulty}</span>
           </div>
-          <h1 className="text-4xl font-bold mb-6 tracking-tight">{topic.title}</h1>
-          <p className="text-[15px] text-muted-foreground mb-10 leading-relaxed">{topic.summary}</p>
-          <div className="bg-muted rounded-xl p-6 border border-border mb-10">
-            <h3 className="flex items-center gap-2 text-foreground font-bold mb-4 uppercase text-[10px] tracking-widest">
-              <Info className="w-3.5 h-3.5" /> Mental Model
-            </h3>
-            <p className="text-muted-foreground italic text-[14px]">"{topic.mentalModel}"</p>
-          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 tracking-tight text-foreground">{topic.title}</h1>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-4xl">{topic.summary}</p>
         </motion.div>
+      </div>
 
-        <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} className="space-y-8">
-          <div className="rounded-xl overflow-hidden border border-border bg-card shadow-xl transition-premium">
-            <div className="bg-muted px-4 py-2.5 border-b border-border flex justify-between items-center text-[11px] font-mono">
-              <span className="text-muted-foreground">component.jsx</span>
-              <button 
-                onClick={handleExecute}
-                className={cn(
-                  "flex items-center gap-1.5 transition-premium font-bold uppercase tracking-widest",
-                  isExecuting ? "text-emerald-500" : "text-react hover:opacity-80"
-                )}
-              >
-                <Play className={cn("w-3 h-3 fill-current", isExecuting && "animate-pulse")} /> 
-                {isExecuting ? 'Running...' : 'Execute'}
-              </button>
-            </div>
-            <div className="p-4 editor-container">
-               <Editor 
-                value={code} 
-                onValueChange={setCode} 
-                highlight={c => highlight(c, languages.js)} 
-                padding={10} 
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 13, backgroundColor: 'transparent' }} 
-              />
-            </div>
+      {/* Mental Model Callout Card */}
+      <div className="bg-muted/40 rounded-2xl p-6 sm:p-8 border border-border/80 shadow-sm">
+        <h3 className="flex items-center gap-2 text-foreground font-bold mb-3 uppercase text-xs tracking-widest">
+          <Info className="w-4 h-4 text-cyan-400" /> Mental Model
+        </h3>
+        <p className="text-foreground italic text-base leading-relaxed font-medium">
+          "{topic.mentalModel}"
+        </p>
+      </div>
+
+      {/* Full-Width Interactive Visualizer Canvas */}
+      <div className="bg-card rounded-2xl border border-border/80 p-6 shadow-xl space-y-4">
+        <div className="flex justify-between items-center pb-4 border-b border-border">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-cyan-400" />
+            <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
+              Interactive Engine Simulation
+            </h3>
           </div>
-          <div className="h-[400px]">
-            {visualizer ? visualizer(isExecuting) : (
-              <>
-                {topic.visualizerType === 'hooks' && (
-                  <HookVisualizer hooks={[
-                    { type: 'useState', memoizedState: isExecuting ? 'Updated' : 'Initial', next: true },
-                    { type: 'useEffect', memoizedState: isExecuting ? 'Syncing...' : 'Idle', next: false }
-                  ]} />
-                )}
-                {topic.visualizerType === 'fiber' && (
-                  <FiberVisualizer tree={{ 
-                    id: '1', 
-                    name: topic.title, 
-                    type: 'component', 
-                    status: isExecuting ? 'updating' : 'idle',
-                    children: [
-                      { id: '2', name: 'Child', type: 'component', status: isExecuting ? 'updating' : 'idle' }
-                    ]
-                  }} />
-                )}
-                {topic.visualizerType === 'render' && (
-                  <div className="p-10 bg-muted rounded-xl border border-border h-full flex items-center justify-center text-center">
-                      <div>
-                        <div className={cn(
-                          "w-12 h-12 bg-background rounded-full border border-border flex items-center justify-center mx-auto mb-6 shadow-sm transition-all duration-500",
-                          isExecuting && "border-react shadow-[0_0_20px_rgba(0,216,255,0.3)] scale-110"
-                        )}>
-                          <Play className={cn("w-5 h-5 text-react fill-current", isExecuting && "animate-pulse")} />
-                        </div>
-                        <div className="text-foreground font-bold mb-2 uppercase tracking-[0.2em] text-[10px]">
-                          {isExecuting ? 'Engine Active' : 'Simulation Engine'}
-                        </div>
-                        <div className="text-muted-foreground text-xs italic max-w-[200px] leading-relaxed">
-                          {isExecuting ? 'Reconciling virtual DOM and committing changes...' : 'Execute code to initialize the render cycle visualization.'}
-                        </div>
-                      </div>
-                  </div>
-                )}
-                {['props', 'state'].includes(topic.visualizerType) && (
-                  <div className="p-10 bg-muted rounded-xl border border-border h-full flex items-center justify-center text-center">
-                      <div>
-                        <div className={cn(
-                          "w-12 h-12 bg-background rounded-full border border-border flex items-center justify-center mx-auto mb-6 shadow-sm transition-all duration-500",
-                          isExecuting && "border-react shadow-[0_0_20px_rgba(0,216,255,0.3)] scale-110"
-                        )}>
-                          <div className={cn("w-2 h-2 bg-react rounded-full", isExecuting && "animate-ping")} />
-                        </div>
-                        <div className="text-foreground font-bold mb-2 uppercase tracking-[0.2em] text-[10px]">
-                          {topic.visualizerType} Visualizer
-                        </div>
-                        <div className="text-muted-foreground text-xs italic max-w-[200px] leading-relaxed">
-                          {isExecuting ? `Tracking ${topic.visualizerType} flow...` : `Execute to visualize ${topic.visualizerType} changes.`}
-                        </div>
-                      </div>
-                  </div>
-                )}
-              </>
+          <button 
+            onClick={handleExecute}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-widest transition-all shadow-md",
+              isExecuting 
+                ? "bg-emerald-500 text-white shadow-emerald-500/20" 
+                : "bg-cyan-500 hover:bg-cyan-400 text-black shadow-cyan-500/20"
             )}
-          </div>
-        </motion.div>
+          >
+            <Play className={cn("w-3.5 h-3.5 fill-current", isExecuting && "animate-pulse")} /> 
+            {isExecuting ? 'Simulating Update...' : 'Execute Code'}
+          </button>
+        </div>
+
+        <div className="min-h-[380px] sm:min-h-[460px] flex items-center justify-center">
+          {visualizer ? visualizer(isExecuting) : (
+            <>
+              {topic.visualizerType === 'hooks' && (
+                <HookVisualizer hooks={[
+                  { type: 'useState', memoizedState: isExecuting ? 'Updated' : 'Initial', next: true },
+                  { type: 'useEffect', memoizedState: isExecuting ? 'Syncing...' : 'Idle', next: false }
+                ]} />
+              )}
+              {topic.visualizerType === 'fiber' && (
+                <FiberVisualizer tree={{ 
+                  id: '1', 
+                  name: topic.title, 
+                  type: 'component', 
+                  status: isExecuting ? 'updating' : 'idle',
+                  children: [
+                    { id: '2', name: 'ChildComponent', type: 'component', status: isExecuting ? 'updating' : 'idle' }
+                  ]
+                }} />
+              )}
+              {['render', 'props', 'state'].includes(topic.visualizerType) && (
+                <div className="p-12 bg-muted/30 rounded-xl border border-border w-full h-[400px] flex items-center justify-center text-center">
+                    <div>
+                      <div className={cn(
+                        "w-16 h-16 bg-background rounded-2xl border border-border flex items-center justify-center mx-auto mb-6 shadow-md transition-all duration-500",
+                        isExecuting && "border-cyan-400 shadow-[0_0_30px_rgba(0,216,255,0.3)] scale-110"
+                      )}>
+                        <Play className={cn("w-6 h-6 text-cyan-400 fill-current", isExecuting && "animate-pulse")} />
+                      </div>
+                      <div className="text-foreground font-bold mb-2 uppercase tracking-[0.2em] text-xs">
+                        {isExecuting ? 'Engine Executing Update' : 'Simulation Engine Idle'}
+                      </div>
+                      <div className="text-muted-foreground text-sm italic max-w-sm leading-relaxed">
+                        {isExecuting ? `Reconciling ${topic.title} state and committing DOM changes...` : 'Click "Execute Code" to run state reconciliation simulation.'}
+                      </div>
+                    </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Full-Width Live Code Execution Editor */}
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+          <h3 className="text-xs font-bold uppercase tracking-widest text-foreground flex items-center gap-2">
+            <span>Executable Code Snippet</span>
+          </h3>
+        </div>
+        <ReactCodeEditor code={code} onChange={setCode} />
+      </div>
+
+      {/* Technical Caveats & Key Takeaways */}
+      <div className="bg-card rounded-2xl p-6 sm:p-8 border border-border/80 shadow-sm space-y-4">
+        <div className="flex items-center gap-2 text-foreground font-bold uppercase text-xs tracking-widest">
+          <AlertCircle className="w-4 h-4 text-amber-500" /> Technical Takeaways & Best Practices
+        </div>
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          {[
+            "Component re-renders are triggered by state or prop changes.",
+            "Reconciliation algorithm diffs the Virtual DOM to minimize actual DOM updates.",
+            "Automatic batching optimizes multiple state updates into a single render cycle."
+          ].map((item, i) => (
+            <li key={i} className="p-4 rounded-xl bg-muted/40 border border-border text-xs text-muted-foreground leading-relaxed flex gap-3">
+              <span className="text-cyan-400 font-bold font-mono select-none">0{i+1}.</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
