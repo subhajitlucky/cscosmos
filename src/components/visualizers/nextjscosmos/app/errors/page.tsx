@@ -36,7 +36,7 @@ export default function ErrorsPage() {
               transition={{ delay: idx * 0.1 }}
             >
               <Link
-                href={`/errors/${error.slug}`}
+                href={`/nextjscosmos/errors/${error.slug}`}
                 className="group flex flex-col p-8 rounded-[2.5rem] border border-border bg-card hover:border-red-500/30 transition-all shadow-xl shadow-black/5 h-full"
               >
                 <div className="flex items-center justify-between mb-6">

@@ -14,7 +14,7 @@ export function ConceptNavigation({
     ? getErrorNavigation(currentSlug)
     : getNavigation(currentSlug)
 
-  const basePath = isErrorPage ? "/errors" : "/concepts"
+  const basePath = isErrorPage ? "/nextjscosmos/errors" : "/nextjscosmos/concepts"
 
   return (
     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-12 border-t mt-12 w-full">

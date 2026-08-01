@@ -50,7 +50,7 @@ export function TopicSearch() {
               <CommandItem
                 key={concept.slug}
                 onSelect={() => {
-                  router.push(`/concepts/${concept.slug}`)
+                  router.push(`/nextjscosmos/concepts/${concept.slug}`)
                   setOpen(false)
                 }}
                 className="flex items-center gap-2 cursor-pointer"

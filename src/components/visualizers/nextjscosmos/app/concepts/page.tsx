@@ -105,7 +105,7 @@ export default function ConceptsPage() {
                         return (
                           <Link
                             key={item.slug}
-                            href={`/concepts/${item.slug}`}
+                            href={`/nextjscosmos/concepts/${item.slug}`}
                             className={cn(
                               "group flex items-center justify-between p-5 rounded-2xl transition-all border",
                               done 
