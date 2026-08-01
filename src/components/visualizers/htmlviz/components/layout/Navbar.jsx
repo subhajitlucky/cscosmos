@@ -31,18 +31,21 @@ const NavLink = ({ href, icon: Icon, children, className, onClick }) => {
 
 export default function Navbar() {
     const pathname = usePathname();
-    const { theme, setTheme } = useCSCosmosTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [mounted, setMounted] = React.useState(false);
 
-    const isDark = theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    React.useEffect(() => {
+        setMounted(true);
+        setIsMenuOpen(false);
+    }, [pathname]);
+
+    const isDark = mounted 
+        ? (theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches))
+        : false;
 
     const toggleTheme = () => {
         setTheme(isDark ? 'light' : 'dark');
     };
-
-    React.useEffect(() => {
-        setIsMenuOpen(false);
-    }, [pathname]);
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/80 transition-all duration-300">
