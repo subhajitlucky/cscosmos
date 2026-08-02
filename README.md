@@ -1,6 +1,6 @@
 # CSCosmos
 
-CSCosmos is a curated hub of computer science microsites across Full Stack, DSA, Web3, Cybersecurity, AI, Core CS, DevOps, and Advanced Engineering.
+CSCosmos is an interactive computer science visualizer hub and learning platform, organizing 157+ topics across 8 core domains with natively absorbed interactive visualization engines.
 
 - Live: https://cscosmos.vercel.app
 - Repo: https://github.com/subhajitlucky/cscosmos
@@ -10,17 +10,18 @@ CSCosmos is a curated hub of computer science microsites across Full Stack, DSA,
 
 ## Proof
 
-- 172 planned computer science learning modules.
-- 34 live microsites linked from the hub.
+- 157+ planned computer science learning modules.
+- 35 live visualizer topics (8 natively absorbed, 27 externally linked).
 - 8 major domains with dedicated routes.
+- 363 statically pre-rendered pages via Next.js SSG.
 - Search, domain browsing, topic detail pages, live/coming-soon states, and dark/light theme support.
-- Vercel deployment with SPA rewrites for deep links.
+- Vercel deployment with SSG pre-rendering and App Router.
 
 ## Why This Exists
 
 Computer science topics are usually scattered across separate articles, demos, videos, and one-off visualizers. CSCosmos organizes them into one navigable map so learners can move from fundamentals to advanced systems without losing context.
 
-The goal is not to publish a static list. The hub acts as an index for a growing set of focused microsites where each topic can eventually become an interactive visual learning module.
+The goal is not to publish a static list. The hub acts as an index for a growing set of focused microsites where each topic can eventually become an interactive visual learning module — natively absorbed into the platform.
 
 ## Current Domains
 
@@ -33,16 +34,25 @@ The goal is not to publish a static list. The hub acts as an index for a growing
 - DevOps, Cloud, and Engineering
 - Advanced Engineering and Systems
 
-## Selected Live Microsites
+## Natively Absorbed Visualizers
 
-- Program execution visualizer: https://programviz.vercel.app
-- HTTP and web protocols: https://webprotocols.vercel.app
-- Web security visualizer: https://websecureviz.vercel.app
-- JavaScript visualizer: https://jsviz.vercel.app
+These microsites have been fully integrated as native Next.js routes within CSCosmos:
+
+| Site | Route | Features |
+|:-----|:------|:---------|
+| Program Execution | `/program-cosmos` | CPU, Memory, Instruction Cycle |
+| HTML & Accessibility | `/html-cosmos` | 53 pre-rendered topic pages |
+| CSS Visualizer | `/css-cosmos` | Box Model, Flexbox, Grid |
+| Web Protocols | `/webprotocols` | HTTP, DNS, TCP/IP |
+| Web Security | `/websecurity` | XSS, CSRF, CSP, CORS |
+| JavaScript Visualizer | `/jsviz` | Event Loop, Call Stack, Scope Chain, Memory |
+| React Visualizer | `/reactcosmos` | 35 topics, Fiber, Hooks, lab playground |
+| Next.js Visualizer | `/nextjscosmos` | 35 modules, RSC, SSG/SSR/ISR, Error debugger |
+
+## Selected External Microsites
+
 - TypeScript visualizer: https://tsviz.vercel.app
 - Browser internals: https://browseruniverse.vercel.app
-- React visualizer: https://reactcosmos.vercel.app
-- Next.js visualizer: https://nextjscosmos.vercel.app
 - SQL visualizer: https://sqlcosmos.vercel.app
 - Blockchain fundamentals: https://blockchainviz.vercel.app
 - EVM internals: https://evminternals.vercel.app
@@ -59,27 +69,28 @@ The authoritative list is defined in `src/data/topics.ts`.
 - Launch live microsites directly from topic cards or detail pages.
 - Distinguish `active` modules from `coming-soon` modules.
 - Persist light/dark theme preference with local storage.
-- Support direct links and refreshes through Vercel rewrites.
+- Full SSG pre-rendering for fast page loads and SEO.
+- Interactive code workbenches with live execution.
 
 ## Architecture
 
 ```text
-src/App.tsx
-  React Router route tree
+src/app/
+  Next.js 15 App Router pages and catch-all routes for absorbed visualizers
 
 src/data/domains.ts
-  Domain metadata: name, route, description, color
+  Domain metadata: name, route, description, color, icons
 
 src/data/topics.ts
   Topic catalog: id, name, domain, slug, status, optional URL
 
-src/pages/*
-  Home, all topics, domain pages, topic detail, about, coming soon
+src/components/visualizers/
+  Native visualizer engine implementations (jsviz, cssviz, reactcosmos, etc.)
 
-src/components/*
+src/components/
   Navbar, footer, search, domain cards, topic cards, theme toggle
 
-public/*
+public/
   robots.txt, sitemap.xml, llms.txt, static public assets
 ```
 
@@ -103,50 +114,57 @@ To publish a new live microsite:
 
 1. Add or update the topic in `src/data/topics.ts`.
 2. Set `status: 'active'`.
-3. Add the deployed `url`.
+3. Add the deployed `url` (for external links) or an internal route path.
 4. The home page, topic index, domain page, counts, badges, and launch links update from the same data source.
+
+To absorb a microsite natively:
+
+1. Place source components in `src/components/visualizers/<site_name>/`.
+2. Create the route in `src/app/<site_name>/[[...slug]]/page.tsx`.
+3. Provide `generateStaticParams()` returning all sub-routes for SSG.
+4. Update `src/data/topics.ts` matching topic IDs: set `status: 'active'`.
 
 ## Routing And Deployment
 
-CSCosmos uses React Router for client-side routes:
+CSCosmos uses the Next.js 15 App Router for file-system based routing:
 
-- `/`
-- `/topics`
-- `/about`
-- `/:domainKey`
-- `/:domainKey/:topicSlug`
+- `/` — Home page
+- `/topics` — Full topic catalog
+- `/about` — About page
+- `/[domain]` — Domain-specific topic lists (e.g., `/fullstack`, `/ai`, `/dsa`)
+- `/learn/[slug]` — Universal player loading native visualizers or fallback registry
+- `/program-cosmos/[[...slug]]` — Absorbed visualizer routes
+- `/html-cosmos/[[...slug]]`
+- `/css-cosmos/[[...slug]]`
+- `/jsviz/[[...slug]]`
+- `/webprotocols/[[...slug]]`
+- `/websecurity/[[...slug]]`
+- `/reactcosmos/[[...slug]]`
+- `/nextjscosmos/[[...slug]]`
 
-Because this is a Vite SPA, `vercel.json` rewrites all requests to `/index.html`:
-
-```json
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
-```
-
-This keeps deep links and browser refreshes working on Vercel.
+All routes are statically pre-rendered at build time via `generateStaticParams()` for optimal performance and SEO.
 
 ## SEO And AI Discovery
 
-The hub includes:
+The platform includes:
 
-- Static title, description, canonical URL, robots metadata, OpenGraph, Twitter metadata, and JSON-LD in `index.html`.
+- Server-rendered HTML for all pages via Next.js SSG.
+- Proper title, description, canonical URL, robots metadata, OpenGraph, and Twitter metadata.
 - `public/robots.txt`.
 - `public/sitemap.xml`.
 - `public/llms.txt`.
 
-The current hub is still a client-rendered SPA, so the next major SEO upgrade would be migrating the hub to Next.js or another static/server-rendered setup so topic and domain pages ship richer HTML before hydration.
-
 ## Tech Stack
 
+- Next.js 15 (App Router)
 - React 19
 - TypeScript
-- Vite
 - Tailwind CSS
-- React Router
+- Radix UI
+- Framer Motion
 - Lucide React
+- Monaco Editor
+- Anime.js / D3.js
 - Vercel
 
 ## Getting Started
@@ -158,14 +176,12 @@ npm run dev
 
 Copy `.env.example` to `.env.local` when you need local environment
 overrides. Google Analytics is opt-in and only initializes in production when
-`VITE_GA_MEASUREMENT_ID` contains a valid GA4 measurement ID. Configure each
-deployment with its own ID so local development and forks do not send analytics
-to the upstream project's property.
+`NEXT_PUBLIC_GA_MEASUREMENT_ID` contains a valid GA4 measurement ID.
 
 Visit:
 
 ```text
-http://localhost:5173
+http://localhost:3000
 ```
 
 ## Scripts
@@ -173,23 +189,27 @@ http://localhost:5173
 ```bash
 npm run dev
 npm run build
-npm run preview
 npm run lint
 ```
 
 ## Tradeoffs
 
-- The Vite SPA keeps development fast and deployment simple, but it does not provide per-route server-rendered HTML.
+- Next.js App Router provides SSG pre-rendering and SEO out of the box, but adds build complexity compared to a plain SPA.
 - The topic catalog is stored in TypeScript for simplicity, but a larger version could move to MDX, JSON, a CMS, or a database.
-- Live microsites are separate deployments, which keeps each topic isolated but increases maintenance work across many small projects.
+- Absorbing microsites natively keeps the user experience seamless but increases the monorepo surface area.
+- External microsites remain as separate deployments, which keeps each topic isolated but increases maintenance work across many small projects.
 
 ## Roadmap
 
+- Absorb TypeScript visualizer (`tsviz`) as native route.
+- Absorb SQL visualizer (`sqlcosmos`) as native route.
+- Absorb Docker visualizer (`dockercosmos`) as native route.
+- Absorb Kubernetes visualizer (`k8scosmos`) as native route.
+- Absorb Blockchain + EVM visualizers as native routes.
 - Add screenshots and short previews for live microsites.
 - Add generated sitemap entries for every active topic.
 - Add progress filters for active versus planned modules.
 - Add richer topic metadata: difficulty, estimated reading time, prerequisites, and related topics.
-- Consider migrating the hub to Next.js for static generation of domain and topic pages.
 
 ## Contributing
 
