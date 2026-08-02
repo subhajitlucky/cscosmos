@@ -8,7 +8,7 @@ export default function BrowserSecurity() {
       stepNumber={1}
       title="Browser Security Foundations"
       description="Before diving into attacks, we must understand the trust boundaries that the web is built upon. The Same-Origin Policy (SOP) is the cornerstone of this model."
-      nextPath="/cors"
+      nextPath="/websecurity/cors"
     >
       <OriginIsolation />
 

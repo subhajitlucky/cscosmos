@@ -8,7 +8,7 @@ export default function Cors() {
       stepNumber={2}
       title="Cross-Origin Resource Sharing (CORS)"
       description="CORS is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served."
-      nextPath="/xss"
+      nextPath="/websecurity/xss"
     >
       <CorsPreflight />
     </TopicLayout>

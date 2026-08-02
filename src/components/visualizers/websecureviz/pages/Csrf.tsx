@@ -8,7 +8,7 @@ export default function Csrf() {
       stepNumber={4}
       title="Cross-Site Request Forgery (CSRF)"
       description="CSRF is an attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated."
-      nextPath="/csp"
+      nextPath="/websecurity/csp"
     >
       <CsrfFlow />
     </TopicLayout>

@@ -59,7 +59,7 @@ export default function Exercises() {
       stepNumber={6}
       title="Conceptual Exercises"
       description="Apply what you've learned. Analyze request flows, identify vulnerabilities, and predict browser behaviors."
-      nextPath="/simulations"
+      nextPath="/websecurity/simulations"
     >
       <Quiz questions={questions} />
     </TopicLayout>

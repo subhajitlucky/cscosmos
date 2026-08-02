@@ -8,7 +8,7 @@ export default function Csp() {
       stepNumber={5}
       title="Content Security Policy (CSP)"
       description="CSP is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks."
-      nextPath="/exercises"
+      nextPath="/websecurity/exercises"
     >
       <CspBuilder />
     </TopicLayout>
