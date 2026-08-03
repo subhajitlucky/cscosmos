@@ -5,7 +5,7 @@ import HomePage from '@/components/visualizers/nextjscosmos/app/page';
 import ConceptsCatalogPage from '@/components/visualizers/nextjscosmos/app/concepts/page';
 import ErrorsCatalogPage from '@/components/visualizers/nextjscosmos/app/errors/page';
 import ErrorDetailPage from '@/components/visualizers/nextjscosmos/app/errors/[slug]/page';
-import { PlaygroundLab } from '@/components/visualizers/nextjscosmos/components/playground-lab';
+import PlaygroundPage from '@/components/visualizers/nextjscosmos/app/playground/page';
 import { Navbar } from '@/components/visualizers/nextjscosmos/components/navbar';
 import { Footer } from '@/components/visualizers/nextjscosmos/components/footer';
 
@@ -112,7 +112,7 @@ export default function NextJSCosmosClientPage({ slug }: { slug: string[] }) {
     }
 
     if (mainRoute === 'playground') {
-      return <PlaygroundLab />;
+      return <PlaygroundPage />;
     }
 
     return <HomePage />;

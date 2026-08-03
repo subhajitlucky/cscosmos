@@ -1,8 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "./ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 import { RoutingVisualizer } from "./visualizers/routing-visualizer"
 import { StreamingVisualizer } from "./visualizers/streaming-visualizer"
@@ -12,16 +11,13 @@ import { SSGVisualizer } from "./visualizers/ssg-visualizer"
 import { ServerActionVisualizer } from "./visualizers/server-action-visualizer"
 import { OptimisticVisualizer } from "./visualizers/optimistic-visualizer"
 import { PPRVisualizer } from "./visualizers/ppr-visualizer"
-import { Settings2, Info, PlayCircle, Code, Terminal, Activity, Heart, Sparkles, Database, Layers, Play } from "lucide-react"
-import ReactCodeEditor from "./ReactCodeEditor"
+import { Settings2, Info, PlayCircle, Code, Terminal, Activity, Heart, Sparkles, Database, Layers } from "lucide-react"
 
 type Scenario = 'ssr' | 'ssg' | 'routing' | 'streaming' | 'rsc' | 'actions' | 'optimistic' | 'ppr'
 
 export function PlaygroundLab() {
   const [scenario, setScenario] = useState<Scenario>('ssr')
   const [latency, setLatency] = useState(42)
-  const [code, setCode] = useState('')
-  const [isExecuting, setIsExecuting] = useState(false)
 
   const scenarios = [
     { id: 'ssr', label: 'Dynamic SSR', icon: Activity, cat: 'Rendering' },
@@ -34,27 +30,18 @@ export function PlaygroundLab() {
     { id: 'optimistic', label: 'Optimistic UI', icon: Heart, cat: 'Interactions' },
   ]
 
-  const getSourceCode = (sc: Scenario) => {
-    switch(sc) {
-      case 'ssr': return `// app/page.tsx\nexport const dynamic = 'force-dynamic'\n\nexport default async function Page() {\n  const data = await fetch('https://api.cscosmos.org/data')\n  return <DataView data={data} />\n}`
-      case 'ssg': return `// app/blog/page.tsx\nexport default async function Page() {\n  // Pre-rendered statically at build time\n  const posts = await fetch('https://api.cscosmos.org/posts')\n  return <BlogList posts={posts} />\n}`
+  const getSourceCode = () => {
+    switch(scenario) {
+      case 'ssr': return `// app/page.tsx\nexport const dynamic = 'force-dynamic'\n\nexport default async function Page() {\n  const data = await fetch('...')\n  return <DataView data={data} />\n}`
+      case 'ssg': return `// app/blog/page.tsx\nexport default async function Page() {\n  // Cached by default in Next.js\n  const posts = await fetch('...')\n  return <BlogList posts={posts} />\n}`
       case 'routing': return `// File Structure:\n// app/\n//   dashboard/\n//     layout.tsx  (Shared UI)\n//     page.tsx    (/dashboard)\n//     settings/\n//       page.tsx  (/dashboard/settings)`
       case 'streaming': return `// app/dashboard/page.tsx\nimport { Suspense } from 'react'\n\nexport default function Page() {\n  return (\n    <Suspense fallback={<Skeleton />}>\n      <SlowComponent />\n    </Suspense>\n  )\n}`
       case 'rsc': return `// app/server-component.tsx (Default)\nexport default async function Server() {\n  return <div>Rendered on Server</div>\n}\n\n// app/client-component.tsx\n'use client'\nexport function Client() {\n  return <button>Interactive</button>\n}`
       case 'actions': return `'use server'\n\nexport async function updateData(formData: FormData) {\n  const name = formData.get('name')\n  await db.user.update({ name })\n  revalidatePath('/')\n}`
       case 'optimistic': return `// app/like-button.tsx\n'use client'\nimport { useOptimistic } from 'react'\n\nconst [optimisticLikes, addOptimisticLike] = useOptimistic(\n  likes,\n  (state, newLike) => state + 1\n)`
       case 'ppr': return `// next.config.ts\nexperimental: { ppr: true }\n\n// app/page.tsx\n<Suspense fallback={<Loading />}>\n  <DynamicHole />\n</Suspense>`
-      default: return `// Interactive Behavior Lab\n// Scenario: ${sc}`
+      default: return `// Interactive Behavior Lab\n// Scenario: ${scenario}`
     }
-  }
-
-  useEffect(() => {
-    setCode(getSourceCode(scenario))
-  }, [scenario])
-
-  const handleExecute = () => {
-    setIsExecuting(true)
-    setTimeout(() => setIsExecuting(false), 2000)
   }
 
   return (
@@ -93,8 +80,8 @@ export function PlaygroundLab() {
           </div>
         </div>
 
-        <div className="p-6 flex-1 bg-muted/20">
-           <div className="flex items-center gap-2 mb-4 text-muted-foreground font-bold text-xs uppercase tracking-widest">
+        <div className="p-6 flex-1 bg-grid-premium">
+           <div className="flex items-center gap-2 mb-6 text-muted-foreground font-bold text-xs uppercase tracking-widest">
             <Info className="h-4 w-4" />
             Lab Context
           </div>
@@ -115,10 +102,10 @@ export function PlaygroundLab() {
              
              <div className="pt-6 border-t border-border">
                 <div className="flex items-center justify-between mb-4">
-                   <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Environment</span>
-                   <div className="flex gap-1">
-                     <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                   </div>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Environment</span>
+                  <div className="flex gap-1">
+                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  </div>
                 </div>
                 <div className="space-y-4">
                    <div className="bg-zinc-950 rounded-xl p-4 font-mono text-[10px] text-zinc-500 space-y-1 overflow-hidden border border-white/5">
@@ -149,22 +136,15 @@ export function PlaygroundLab() {
       {/* Main Canvas Area */}
       <div className="flex-1 flex flex-col bg-background min-w-0">
         <Tabs defaultValue="visualizer" className="flex-1 flex flex-col">
-          <div className="h-16 border-b border-border flex items-center justify-between px-4 md:px-8 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
+          <div className="h-20 border-b border-border flex items-center justify-between px-4 md:px-8 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
             <TabsList className="bg-muted/50 p-1 rounded-xl">
-              <TabsTrigger value="visualizer" className="rounded-lg px-4 md:px-6 font-bold text-xs md:text-sm">Visualizer</TabsTrigger>
-              <TabsTrigger value="code" className="rounded-lg px-4 md:px-6 font-bold text-xs md:text-sm">Live Source Code</TabsTrigger>
+              <TabsTrigger value="visualizer" className="rounded-lg px-4 md:px-6 font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm text-xs md:text-sm">Visualizer</TabsTrigger>
+              <TabsTrigger value="code" className="rounded-lg px-4 md:px-6 font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm text-xs md:text-sm">Source</TabsTrigger>
             </TabsList>
-            <div className="flex items-center gap-3">
-               <Button
-                 size="sm"
-                 onClick={handleExecute}
-                 className={`font-bold text-xs uppercase tracking-wider ${
-                   isExecuting ? "bg-emerald-600 text-white" : "bg-primary text-primary-foreground"
-                 }`}
-               >
-                 <Play className="h-3 w-3 mr-1.5 fill-current" />
-                 {isExecuting ? 'Running Simulation...' : 'Execute Lab Code'}
-               </Button>
+            <div className="hidden sm:flex items-center gap-3">
+               <span className="text-xs font-mono text-muted-foreground">RTT: {latency}ms</span>
+               <div className="h-4 w-px bg-border" />
+               <span className="text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">LIVE RUNTIME</span>
             </div>
           </div>
           
@@ -178,7 +158,7 @@ export function PlaygroundLab() {
                 className="h-full"
               >
                 <TabsContent value="visualizer" className="m-0 h-full">
-                  <div className="h-full overflow-y-auto custom-scrollbar p-6">
+                  <div className="h-full overflow-y-auto custom-scrollbar">
                     {scenario === 'ssr' && <SSRVisualizer />}
                     {scenario === 'ssg' && <SSGVisualizer />}
                     {scenario === 'routing' && <RoutingVisualizer />}
@@ -189,8 +169,20 @@ export function PlaygroundLab() {
                     {scenario === 'ppr' && <PPRVisualizer />}
                   </div>
                 </TabsContent>
-                <TabsContent value="code" className="m-0 h-full p-4">
-                  <ReactCodeEditor code={code} onChange={setCode} />
+                <TabsContent value="code" className="m-0 h-full bg-zinc-950">
+                   <div className="p-6 md:p-12 overflow-auto h-full">
+                      <div className="flex items-center justify-between mb-6">
+                         <div className="flex gap-1.5">
+                            <div className="w-3 h-3 rounded-full bg-red-500/20" />
+                            <div className="w-3 h-3 rounded-full bg-amber-500/20" />
+                            <div className="w-3 h-3 rounded-full bg-emerald-500/20" />
+                         </div>
+                         <span className="text-[10px] font-mono text-zinc-600">app/blueprint.tsx</span>
+                      </div>
+                      <pre className="text-xs md:text-sm text-zinc-400 font-mono leading-relaxed">
+                        {getSourceCode()}
+                      </pre>
+                   </div>
                 </TabsContent>
               </motion.div>
             </AnimatePresence>
