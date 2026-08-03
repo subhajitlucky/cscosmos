@@ -1,466 +1,184 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import {
-  ArrowRight,
-  Zap,
-  Server,
-  Globe,
-  Play,
-  Layers,
-  Rocket,
-  BookOpen,
-  Code2,
-  MonitorSmartphone,
-} from "lucide-react";
-import Link from "next/link";
+import { motion } from "framer-motion"
+import { ArrowRight, Zap, Server, Globe, ChevronRight, Play } from "lucide-react"
+import Link from "next/link"
 
-/* ------------------------------------------------------------------ */
-/*  Animated Counter Hook                                             */
-/* ------------------------------------------------------------------ */
-function useCountUp(target: number, duration = 1800, shouldStart = false) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!shouldStart) return;
-    let startTime: number | null = null;
-    let raf: number;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * target));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [target, duration, shouldStart]);
-  return count;
-}
-
-/* ------------------------------------------------------------------ */
-/*  Architecture Diagram Node                                         */
-/* ------------------------------------------------------------------ */
-function DiagramNode({
-  label,
-  sublabel,
-  icon: Icon,
-  color,
-  delay,
-}: {
-  label: string;
-  sublabel: string;
-  icon: React.ElementType;
-  color: string;
-  delay: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.7 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ delay, type: "spring", stiffness: 200, damping: 20 }}
-      className="flex flex-col items-center gap-2 relative z-10"
-    >
-      <div
-        className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border flex items-center justify-center shadow-lg ${color}`}
-      >
-        <Icon className="w-7 h-7 sm:w-8 sm:h-8" />
-      </div>
-      <span className="text-sm sm:text-base font-bold text-foreground">
-        {label}
-      </span>
-      <span className="text-[11px] text-muted-foreground text-center max-w-[100px] leading-tight">
-        {sublabel}
-      </span>
-    </motion.div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Animated connector arrow between diagram nodes                    */
-/* ------------------------------------------------------------------ */
-function DiagramArrow({ delay }: { delay: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scaleX: 0 }}
-      whileInView={{ opacity: 1, scaleX: 1 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ delay, duration: 0.5, ease: "easeOut" }}
-      className="hidden sm:flex items-center origin-left"
-    >
-      <div className="w-12 md:w-20 h-[2px] bg-gradient-to-r from-cyan-500/60 to-blue-500/60 relative">
-        {/* Animated pulse traveling along the arrow */}
-        <motion.div
-          className="absolute top-[-2px] left-0 w-3 h-[6px] rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
-          animate={{ left: ["0%", "100%"] }}
-          transition={{
-            duration: 1.4,
-            repeat: Infinity,
-            repeatDelay: 0.6,
-            ease: "easeInOut",
-            delay: delay + 0.5,
-          }}
-        />
-      </div>
-      <ArrowRight className="w-4 h-4 text-blue-400/70 -ml-1" />
-    </motion.div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Mobile vertical connector                                         */
-/* ------------------------------------------------------------------ */
-function DiagramArrowVertical({ delay }: { delay: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scaleY: 0 }}
-      whileInView={{ opacity: 1, scaleY: 1 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ delay, duration: 0.4, ease: "easeOut" }}
-      className="flex sm:hidden flex-col items-center origin-top"
-    >
-      <div className="w-[2px] h-8 bg-gradient-to-b from-cyan-500/60 to-blue-500/60" />
-      <ArrowRight className="w-4 h-4 text-blue-400/70 rotate-90 -mt-1" />
-    </motion.div>
-  );
-}
-
-/* ================================================================== */
-/*  HOMEPAGE                                                          */
-/* ================================================================== */
 export default function HomePage() {
-  /* Stats section - trigger counters on scroll */
-  const statsRef = useRef<HTMLDivElement>(null);
-  const statsInView = useInView(statsRef, { once: true, amount: 0.4 });
-
-  const moduleCount = useCountUp(35, 1600, statsInView);
-  const phaseCount = useCountUp(5, 1200, statsInView);
-  const labCount = useCountUp(20, 1400, statsInView);
-
-  /* Feature cards data */
-  const features = [
-    {
-      title: "Server Components",
-      desc: "Zero-bundle execution model that streams HTML directly from the server — no JS shipped to the client.",
-      icon: Server,
-      accent: "text-cyan-400",
-      bg: "bg-cyan-400/10 border-cyan-400/20",
-    },
-    {
-      title: "Streaming UI",
-      desc: "Progressive rendering powered by React Suspense boundaries for instant perceived load times.",
-      icon: Zap,
-      accent: "text-amber-400",
-      bg: "bg-amber-400/10 border-amber-400/20",
-    },
-    {
-      title: "SSR / SSG / ISR",
-      desc: "Granular cache control and revalidation strategies deployed at the global CDN edge.",
-      icon: Globe,
-      accent: "text-emerald-400",
-      bg: "bg-emerald-400/10 border-emerald-400/20",
-    },
-    {
-      title: "Server Actions",
-      desc: "Type-safe RPC layer connecting client forms directly to server-side mutation logic.",
-      icon: Layers,
-      accent: "text-blue-400",
-      bg: "bg-blue-400/10 border-blue-400/20",
-    },
-  ];
-
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground transition-colors duration-300">
-      {/* ============================================================ */}
-      {/*  HERO SECTION                                                */}
-      {/* ============================================================ */}
-      <section className="relative pt-20 md:pt-28 pb-24 overflow-hidden border-b border-border/60">
-        {/* Ambient glow blobs */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-15%] left-[15%] w-[520px] h-[520px] bg-cyan-500/15 rounded-full blur-[160px]" />
-          <div className="absolute bottom-[5%] right-[10%] w-[420px] h-[420px] bg-blue-600/10 rounded-full blur-[140px]" />
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="relative pt-12 md:pt-20 pb-24 md:pb-32 overflow-hidden bg-grid-premium">
+        {/* Glow Effects */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-full pointer-events-none">
+           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] opacity-50 animate-pulse" />
+           <div className="absolute bottom-[10%] right-[-10%] w-[30%] h-[30%] bg-primary/10 rounded-full blur-[100px] opacity-30" />
         </div>
-
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10 text-center flex flex-col items-center">
-          {/* Pill badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-bold uppercase tracking-widest mb-8 shadow-sm"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
-            </span>
-            Next.js 15 · App Router · Interactive
-          </motion.div>
-
-          {/* Heading — cyan-to-blue gradient only, NO purple */}
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.08]"
-          >
-            Master Next.js{" "}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              App Router
-            </span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base sm:text-xl text-muted-foreground mb-10 max-w-2xl leading-relaxed"
-          >
-            Explore interactive visualizations, live code playgrounds, and
-            animated architecture diagrams that make advanced Next.js concepts
-            click — instantly.
-          </motion.p>
-
-          {/* CTA buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Link
-              href="/nextjscosmos/concepts"
-              className="px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-sm uppercase tracking-wider shadow-lg shadow-cyan-500/25 transition-all flex items-center justify-center gap-2 group"
+        
+        <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background pointer-events-none" />
+        
+        <div className="container-custom relative z-10 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-primary text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6 md:mb-8 overflow-hidden transition-all hover:bg-primary/10 hover:border-primary/20"
             >
-              <span>Start Learning</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-
-            <Link
-              href="/nextjscosmos/playground"
-              className="px-8 py-4 rounded-xl border border-border bg-card hover:bg-muted text-foreground font-bold text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+              {/* Shimmer Effect */}
+              <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-linear-to-r from-transparent via-primary/10 to-transparent" />
+              
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              <span className="relative z-10">Engineered for Next.js 16</span>
+            </motion.div>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 md:mb-8 leading-[1.1] text-gradient"
             >
-              <Play className="w-4 h-4 text-cyan-400 fill-current" />
-              <span>Open Playground</span>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  ANIMATED ARCHITECTURE DIAGRAM                               */}
-      {/* ============================================================ */}
-      <section className="py-20 md:py-28 border-b border-border/60 bg-muted/30">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10">
-          {/* Section label */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 mb-2 block">
-              How It Works
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
-              The App Router Request Lifecycle
-            </h2>
-            <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto">
-              Watch data flow from the browser through edge middleware, server
-              components, and back to the client — all in real time.
-            </p>
-          </motion.div>
-
-          {/* Diagram */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-0">
-            <DiagramNode
-              label="Client"
-              sublabel="Browser Request"
-              icon={MonitorSmartphone}
-              color="text-cyan-400 bg-cyan-400/10 border-cyan-400/25"
-              delay={0}
-            />
-            <DiagramArrow delay={0.15} />
-            <DiagramArrowVertical delay={0.15} />
-
-            <DiagramNode
-              label="Edge"
-              sublabel="Middleware & Routing"
-              icon={Zap}
-              color="text-amber-400 bg-amber-400/10 border-amber-400/25"
-              delay={0.25}
-            />
-            <DiagramArrow delay={0.4} />
-            <DiagramArrowVertical delay={0.4} />
-
-            <DiagramNode
-              label="Server"
-              sublabel="RSC Rendering"
-              icon={Server}
-              color="text-emerald-400 bg-emerald-400/10 border-emerald-400/25"
-              delay={0.5}
-            />
-            <DiagramArrow delay={0.65} />
-            <DiagramArrowVertical delay={0.65} />
-
-            <DiagramNode
-              label="Response"
-              sublabel="Streamed HTML + RSC Payload"
-              icon={Globe}
-              color="text-blue-400 bg-blue-400/10 border-blue-400/25"
-              delay={0.75}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  FEATURE HIGHLIGHT CARDS                                     */}
-      {/* ============================================================ */}
-      <section className="py-20 md:py-28 border-b border-border/60">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 mb-2 block">
-              Core Pillars
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
-              What You&apos;ll Master
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((f, i) => (
-              <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: i * 0.1, type: "spring", stiffness: 180 }}
-                className="group p-6 rounded-2xl border border-border bg-card shadow-md hover:shadow-xl hover:border-cyan-500/40 transition-all flex flex-col"
+              Illuminate the <br className="hidden sm:block" />
+              Next.js Universe.
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 md:mb-12 max-w-2xl leading-relaxed px-4 sm:px-0"
+            >
+              Deconstruct the App Router with high-fidelity, interactive visualizations. 
+              Experience the architecture in real-time—zero abstractions, just pure mental models.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto px-6 sm:px-0"
+            >
+              <Link 
+                href="/nextjscosmos/concepts"
+                className="inline-flex items-center justify-center h-12 md:h-14 px-8 rounded-full text-sm md:text-base font-semibold bg-primary text-primary-foreground shadow-xl shadow-primary/10 hover:bg-primary/90 transition-all w-full sm:w-auto"
               >
-                <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 border ${f.bg} ${f.accent}`}
-                >
-                  <f.icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-bold mb-2 text-foreground group-hover:text-cyan-400 transition-colors">
-                  {f.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed flex-1">
-                  {f.desc}
-                </p>
-              </motion.div>
-            ))}
+                Explore the Cosmos <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link 
+                href="/nextjscosmos/playground"
+                className="inline-flex items-center justify-center h-12 md:h-14 px-8 rounded-full text-sm md:text-base font-semibold border border-border bg-background/50 backdrop-blur-xs hover:bg-muted transition-all w-full sm:w-auto"
+              >
+                Open Playground <Play className="ml-2 h-4 w-4 fill-current" />
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/*  INTERACTIVE STATS BANNER                                    */}
-      {/* ============================================================ */}
-      <section
-        ref={statsRef}
-        className="py-20 md:py-24 border-b border-border/60 bg-muted/30 relative overflow-hidden"
-      >
-        {/* Subtle glow */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-500/5 rounded-full blur-[120px]" />
-        </div>
-
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      {/* Feature Grid */}
+      <section className="py-20 md:py-24 bg-muted/30">
+        <div className="container-custom px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-1px bg-transparent md:bg-border overflow-hidden rounded-3xl md:border border-border">
             {[
               {
-                value: moduleCount,
-                suffix: "+",
-                label: "Interactive Modules",
-                icon: BookOpen,
+                title: "Server Components",
+                desc: "Visualize the zero-bundle size execution model.",
+                icon: Server,
+                color: "text-blue-500"
               },
               {
-                value: phaseCount,
-                suffix: "",
-                label: "Learning Phases",
-                icon: Layers,
+                title: "Streaming Architecture",
+                desc: "Observe how Suspense boundaries deliver UI progressively.",
+                icon: Zap,
+                color: "text-amber-500"
               },
               {
-                value: labCount,
-                suffix: "+",
-                label: "Hands-On Labs",
-                icon: Code2,
-              },
-              {
-                value: 1,
-                suffix: "",
-                label: "Live Code Editor",
-                icon: Rocket,
-                isStatic: true,
-              },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ delay: i * 0.1 }}
-                className="flex flex-col items-center gap-2"
-              >
-                <stat.icon className="w-6 h-6 text-cyan-400 mb-1" />
-                <span className="text-4xl sm:text-5xl font-black text-foreground tabular-nums">
-                  {/* For the Live Code Editor stat, show a checkmark icon instead of a number */}
-                  {"isStatic" in stat && stat.isStatic ? (
-                    <span className="text-cyan-400">✓</span>
-                  ) : (
-                    <>
-                      {stat.value}
-                      {stat.suffix}
-                    </>
-                  )}
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                  {stat.label}
-                </span>
-              </motion.div>
+                title: "Static & Dynamic",
+                desc: "Understand the lifecycle of SSG, SSR, and ISR.",
+                icon: Globe,
+                color: "text-emerald-500"
+              }
+            ].map((feature, i) => (
+              <div key={i} className="bg-background p-8 md:p-10 hover:bg-muted/50 transition-colors group rounded-2xl md:rounded-none border border-border md:border-none shadow-sm md:shadow-none">
+                <feature.icon className={`h-8 w-8 md:h-10 md:w-10 mb-6 ${feature.color}`} />
+                <h3 className="text-lg md:text-xl font-bold mb-3 flex items-center gap-2">
+                  {feature.title}
+                  <ChevronRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </h3>
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{feature.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/*  QUICK START CTA                                             */}
-      {/* ============================================================ */}
+      {/* Visualizer Showcase */}
       <section className="py-24 md:py-32">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ type: "spring", stiffness: 160 }}
-          >
-            <Rocket className="w-10 h-10 text-cyan-400 mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground mb-4">
-              Ready to deep-dive?
-            </h2>
-            <p className="text-muted-foreground text-base sm:text-lg mb-10 max-w-lg mx-auto">
-              Jump into the interactive learning engine and start building real
-              mental models of modern Next.js architecture — today.
-            </p>
-            <Link
-              href="/nextjscosmos/concepts"
-              className="inline-flex items-center gap-2.5 px-10 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-sm uppercase tracking-wider shadow-lg shadow-cyan-500/25 transition-all group"
-            >
-              <span>Begin Your Journey</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
+        <div className="container-custom px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
+            <div className="space-y-6 md:space-y-8 text-center lg:text-left">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+                Architectural Clarity <br className="hidden md:block" /> by Design.
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                We believe that complex technical concepts shouldn&apos;t be explained with text walls. 
+                Our visualizers are built using real Next.js runtime logs to show you exactly 
+                how your application behaves in production.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center gap-6 pt-4 justify-center lg:justify-start">
+                <div className="flex -space-x-3 md:space-x-[-1rem]">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="h-8 w-8 md:h-10 md:w-10 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[8px] md:text-[10px] font-bold">
+                       JD
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs md:text-sm font-medium text-muted-foreground">
+                  Trusted by 2,000+ developers
+                </p>
+              </div>
+            </div>
+            
+            <div className="relative px-4 sm:px-0">
+              <div className="absolute -inset-4 bg-primary/10 rounded-[2rem] md:rounded-[3rem] blur-2xl md:blur-3xl opacity-50" />
+              <div className="relative aspect-video rounded-2xl md:rounded-3xl border border-border bg-background shadow-2xl overflow-hidden p-1 bg-linear-to-br from-border/50 to-transparent">
+                 <div className="h-full w-full rounded-[1.4rem] bg-zinc-950 flex flex-col">
+                    <div className="h-8 border-b border-white/5 flex items-center px-4 gap-1.5">
+                       <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
+                       <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20" />
+                       <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20" />
+                       <div className="ml-4 h-3 w-32 bg-white/5 rounded" />
+                    </div>
+                    <div className="flex-1 p-8 font-mono text-xs text-zinc-500 space-y-4">
+                       <div className="flex gap-4">
+                          <span className="text-emerald-500">GET</span>
+                          <span className="text-zinc-300">/dashboard</span>
+                          <span className="ml-auto text-zinc-600">200 OK</span>
+                       </div>
+                       <div className="space-y-2">
+                          <div className="h-1.5 w-full bg-white/5 rounded" />
+                          <div className="h-1.5 w-3/4 bg-white/5 rounded" />
+                          <div className="h-1.5 w-5/6 bg-white/5 rounded" />
+                       </div>
+                       <motion.div 
+                         initial={{ opacity: 0 }}
+                         animate={{ opacity: [0, 1, 0] }}
+                         transition={{ repeat: Infinity, duration: 2 }}
+                         className="flex gap-2 items-center text-primary"
+                       >
+                         <span className="h-2 w-2 rounded-full bg-primary" />
+                         Streaming payload...
+                       </motion.div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
-  );
+  )
 }

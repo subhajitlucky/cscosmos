@@ -42,6 +42,10 @@ When integrating a new standalone visualizer microsite:
 3. Provide `generateStaticParams()` returning all sub-routes to enable static pre-rendering.
 4. Update `src/data/topics.ts` for matching topic IDs: set `status: 'active'`.
 
+### 4. Visual Identity & Original Layout Preservation
+- When absorbing an external microsite, preserve its original layout structure, color branding, typography, interactive components, and content to maintain exact experience and design parity with the independent standalone site.
+- Seamlessly integrate the site's styling with CSCosmos theme controls (supporting both Light and Dark modes).
+
 ---
 
 ## 🧪 Verification Commands
