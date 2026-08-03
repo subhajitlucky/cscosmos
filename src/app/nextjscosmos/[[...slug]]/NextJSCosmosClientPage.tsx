@@ -119,7 +119,7 @@ export default function NextJSCosmosClientPage({ slug }: { slug: string[] }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
+    <div className="min-h-screen flex flex-col bg-background dark:bg-zinc-950 text-foreground transition-colors duration-300">
       <Navbar />
       <main className="flex-1">{renderContent()}</main>
       <Footer />
