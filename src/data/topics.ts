@@ -77,6 +77,7 @@ export const topics: Topic[] = [
     createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack"),
 
     // 5. Architecture & Scale
+    createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', url: '/dockercosmos' }),
     createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack"),
     createTopic("Microservices Architecture (Services, Failures)", "fullstack"),
     createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack"),
