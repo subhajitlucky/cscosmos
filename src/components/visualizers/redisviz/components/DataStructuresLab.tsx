@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { ArrowRight, Database, Hash, Layers, ListFilter, Sparkles, Terminal, Trophy } from 'lucide-react';
 

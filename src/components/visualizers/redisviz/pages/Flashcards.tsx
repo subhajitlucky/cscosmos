@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Database, HelpCircle, Lightbulb, RotateCcw } from 'lucide-react';
 import { REDIS_FLASHCARDS, type RedisFlashcard } from '../data/flashcards';

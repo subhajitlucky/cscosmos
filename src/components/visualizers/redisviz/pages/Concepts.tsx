@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Filter, Sparkles } from 'lucide-react';

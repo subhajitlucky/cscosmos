@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { Database, Network, Search, Server, Sparkles, Terminal, Zap } from 'lucide-react';
 

@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { HardDrive, Play, Plus, RotateCcw, Sparkles, Trash2 } from 'lucide-react';
 

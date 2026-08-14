@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { Bookmark, Check, Copy, Database, Search, Terminal } from 'lucide-react';
 import { REDIS_CHEATSHEET } from '../data/cheatsheet';

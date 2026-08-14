@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { ArrowDown, ArrowRight, CheckCircle2, ChevronRight, Play, RotateCcw, Search, Sparkles, Trophy } from 'lucide-react';
 

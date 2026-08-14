@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Database, RefreshCw, Server, Smartphone, Sparkles, Zap } from 'lucide-react';
 

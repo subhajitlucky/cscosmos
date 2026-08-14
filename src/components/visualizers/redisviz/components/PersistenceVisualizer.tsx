@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { Database, FileText, HardDrive, Play, RefreshCw, Sparkles, Zap } from 'lucide-react';
 

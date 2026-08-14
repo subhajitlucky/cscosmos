@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { AlertOctagon, AlertTriangle, CheckCircle2, ShieldAlert, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 

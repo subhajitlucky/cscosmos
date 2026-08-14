@@ -1,114 +1,202 @@
 'use client';
 
-import React from 'react';
+'use client';
+
+import { motion } from 'framer-motion';
+import { Database, Zap, Cpu, Server, Layers, ArrowRight, Rocket, Terminal, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Database, HardDrive, HelpCircle, Layers, Network, Play, RefreshCw, Server, Sparkles, Terminal, Trophy, Zap } from 'lucide-react';
-import { DataStructuresLab } from '../components/DataStructuresLab';
-import { SkipListSearchStepper } from '../components/SkipListSearchStepper';
-import { CachingStrategiesLab } from '../components/CachingStrategiesLab';
-import { CacheDisasterSimulator } from '../components/CacheDisasterSimulator';
-import { EvictionSimulator } from '../components/EvictionSimulator';
-import { RedisClusterSlotVisualizer } from '../components/RedisClusterSlotVisualizer';
-import { RedisCliPlayground } from '../components/RedisCliPlayground';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
-export default function Home() {
-  return (
-    <div className="space-y-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
-      {/* Hero Section */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-widest">
-          <Sparkles className="w-3.5 h-3.5" /> Complete Redis 7.x In-Memory Architecture
+const Home = () => {
+    const roadmapSteps = [
+        {
+            stage: "Level 1",
+            title: "The Basics",
+            items: [
+                {
+                    title: "Data Structures",
+                    description: "Learn how Redis stores data in-memory using Strings, Hashes, and Lists.",
+                    icon: <Database className="w-6 h-6" />,
+                    path: "/redisviz/data-structures",
+                    color: "bg-blue-500/10 text-blue-500",
+                },
+                {
+                    title: "Architecture",
+                    description: "Understand the Event Loop and Single-Threaded nature of Redis.",
+                    icon: <Cpu className="w-6 h-6" />,
+                    path: "/redisviz/architecture",
+                    color: "bg-purple-500/10 text-purple-500",
+                }
+            ]
+        },
+        {
+            stage: "Level 2",
+            title: "Simulations",
+            items: [
+                {
+                    title: "Command Execution",
+                    description: "Step through how a single command is parsed and executed.",
+                    icon: <Terminal className="w-6 h-6" />,
+                    path: "/redisviz/execution",
+                    color: "bg-amber-500/10 text-amber-500",
+                },
+                {
+                    title: "Memory Internals",
+                    description: "Fragmentation, Allocation, and Eviction policies in action.",
+                    icon: <Layers className="w-6 h-6" />,
+                    path: "/redisviz/memory",
+                    color: "bg-green-500/10 text-green-500",
+                }
+            ]
+        },
+        {
+            stage: "Level 3",
+            title: "Advanced Concepts",
+            items: [
+                {
+                    title: "Persistence",
+                    description: "Snapshots (RDB) vs Logs (AOF). Ensuring data durability.",
+                    icon: <Server className="w-6 h-6" />,
+                    path: "/redisviz/persistence",
+                    color: "bg-orange-500/10 text-orange-500",
+                },
+                {
+                    title: "Scaling & Replication",
+                    description: "Sentinels, Clusters, and High Availability setups.",
+                    icon: <Zap className="w-6 h-6" />,
+                    path: "/redisviz/replication",
+                    color: "bg-rose-500/10 text-rose-500",
+                }
+            ]
+        }
+    ];
+
+    return (
+        <div className="space-y-32 pb-20 max-w-7xl mx-auto px-6 md:px-8">
+            {/* Hero Section */}
+            <section className="relative text-center space-y-10 max-w-4xl mx-auto pt-10">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-rose-500/10 rounded-full blur-3xl -z-10" />
+
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="space-y-4"
+                >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 text-sm font-medium">
+                        <Rocket className="w-4 h-4" />
+                        Interactive Redis Learning Engine
+                    </div>
+                    <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
+                        Visual Guide to <br />
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-orange-500">Redis Internals</span>
+                    </h1>
+                </motion.div>
+
+                <motion.p
+                    className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                    Master Redis concepts through interactive simulations, architectural maps, and deep-dives into internal data structures. Perfect for CS graduates and system engineers.
+                </motion.p>
+
+                <motion.div
+                    className="flex flex-wrap justify-center gap-4"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                    <Button asChild size="lg" className="bg-rose-600 hover:bg-rose-700 text-white rounded-xl px-8 h-14 text-lg">
+                        <Link href="/redisviz/data-structures">
+                            Start Journey <ArrowRight className="ml-2 w-5 h-5" />
+                        </Link>
+                    </Button>
+                    <Button asChild variant="outline" size="lg" className="rounded-xl px-8 h-14 text-lg">
+                        <Link href="/redisviz/architecture">Quick Overview</Link>
+                    </Button>
+                </motion.div>
+            </section>
+
+            {/* Learning Roadmap */}
+            <section className="space-y-12">
+                <div className="text-center space-y-4 mb-20">
+                    <h2 className="text-4xl font-bold flex items-center justify-center gap-3">
+                        <GraduationCap className="text-rose-600 dark:text-rose-400 w-10 h-10" />
+                        Learning Roadmap
+                    </h2>
+                    <p className="text-muted-foreground text-lg">Follow this sequential path to master Redis from zero to expert.</p>
+                </div>
+
+                <div className="space-y-24 relative">
+                    {/* Road Connector Line (Visible on md+) */}
+                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-border/40 -translate-x-1/2 hidden md:block" />
+
+                    {roadmapSteps.map((group) => (
+                        <div key={group.stage} className="space-y-12 relative">
+                            <div className="flex justify-center mb-8 relative z-10">
+                                <Badge className="bg-muted text-foreground border-border px-6 py-1.5 text-lg rounded-full">
+                                    {group.stage}: {group.title}
+                                </Badge>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 relative z-10">
+                                {group.items.map((item, iIdx) => (
+                                    <motion.div
+                                        key={item.title}
+                                        initial={{ opacity: 0, x: iIdx % 2 === 0 ? -20 : 20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        <Link href={item.path}>
+                                            <Card className="group relative h-full hover:shadow-2xl hover:shadow-rose-500/5 border-border/40 hover:border-rose-500/40 transition-all duration-300 overflow-hidden bg-white/5 backdrop-blur-sm">
+                                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-150 transition-transform duration-500">
+                                                    {item.icon}
+                                                </div>
+                                                <CardHeader className="p-8">
+                                                    <div className={`p-4 rounded-2xl w-fit mb-6 ${item.color} group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
+                                                        {item.icon}
+                                                    </div>
+                                                    <CardTitle className="text-3xl mb-4 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+                                                        {item.title}
+                                                    </CardTitle>
+                                                    <CardDescription className="text-lg leading-relaxed">
+                                                        {item.description}
+                                                    </CardDescription>
+                                                </CardHeader>
+                                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-rose-500/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                                            </Card>
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <section className="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-12 md:p-20 text-center space-y-8">
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(216,44,32,0.15),transparent)] pointer-events-none" />
+                <h2 className="text-4xl md:text-5xl font-bold relative z-10">Ready to dive deeper?</h2>
+                <p className="text-slate-400 text-xl max-w-2xl mx-auto relative z-10">
+                    Explore real-world use cases or jump straight into our interactive command simulator.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4 relative z-10 pt-4">
+                    <Button asChild size="lg" className="bg-rose-600 hover:bg-rose-700 text-white rounded-xl px-10">
+                        <Link href="/redisviz/use-cases">Use Cases</Link>
+                    </Button>
+                    <Button asChild variant="secondary" size="lg" className="rounded-xl px-10">
+                        <Link href="/redisviz/execution">Interactive CLI</Link>
+                    </Button>
+                </div>
+            </section>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
-          Master the <span className="text-red-600 dark:text-red-400">Redis</span> Engine.
-        </h1>
-        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive engines for in-memory data structures (SDS, SkipLists, QuickLists), enterprise caching patterns, failure defenses, memory eviction, cluster hash slots, and live CLI execution.
-        </p>
-        <div className="flex flex-wrap justify-center gap-3 pt-2">
-          <Link
-            href="/redisviz/concepts"
-            className="px-6 py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-red-500/25 flex items-center gap-2"
-          >
-            <BookOpen className="w-4 h-4" /> Explore 18 Concepts
-          </Link>
-          <Link
-            href="/redisviz/playground"
-            className="px-6 py-3 rounded-2xl border border-border hover:bg-card text-foreground font-bold text-xs uppercase tracking-wider transition flex items-center gap-2"
-          >
-            <Terminal className="w-4 h-4" /> Web CLI Terminal
-          </Link>
-        </div>
-      </div>
+    );
+};
 
-      {/* Feature 1: In-Memory Data Structures Lab */}
-      <DataStructuresLab />
-
-      {/* Feature 2: SkipList O(log N) Search Stepper */}
-      <SkipListSearchStepper />
-
-      {/* Feature 3: Enterprise Caching Strategies */}
-      <CachingStrategiesLab />
-
-      {/* Feature 4: The Big 3 Cache Disasters & Defenses */}
-      <CacheDisasterSimulator />
-
-      {/* Feature 5: Maxmemory Eviction Simulator */}
-      <EvictionSimulator />
-
-      {/* Feature 6: Redis Cluster 16,384 Hash Slot Visualizer */}
-      <RedisClusterSlotVisualizer />
-
-      {/* Feature 7: Interactive CLI Playground */}
-      <RedisCliPlayground />
-
-      {/* Quick Navigation Cards */}
-      <div className="grid sm:grid-cols-3 gap-6 pt-4">
-        <Link
-          href="/redisviz/concepts"
-          className="p-6 rounded-3xl bg-card border border-border/80 hover:border-red-500/50 hover:shadow-lg transition-all space-y-3 group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center font-bold">
-            <BookOpen className="w-5 h-5" />
-          </div>
-          <h3 className="text-lg font-bold text-foreground group-hover:text-red-500 transition-colors">
-            18 In-Depth Lessons
-          </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Mental models, complexity analysis, architecture takeaways, and production pitfall warnings.
-          </p>
-        </Link>
-
-        <Link
-          href="/redisviz/persistence"
-          className="p-6 rounded-3xl bg-card border border-border/80 hover:border-red-500/50 hover:shadow-lg transition-all space-y-3 group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center font-bold">
-            <Database className="w-5 h-5" />
-          </div>
-          <h3 className="text-lg font-bold text-foreground group-hover:text-red-500 transition-colors">
-            RDB &amp; AOF Persistence
-          </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Compare binary snapshotting via Linux fork() against stream logging with fsync policies.
-          </p>
-        </Link>
-
-        <Link
-          href="/redisviz/flashcards"
-          className="p-6 rounded-3xl bg-card border border-border/80 hover:border-red-500/50 hover:shadow-lg transition-all space-y-3 group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center font-bold">
-            <HelpCircle className="w-5 h-5" />
-          </div>
-          <h3 className="text-lg font-bold text-foreground group-hover:text-red-500 transition-colors">
-            Senior Flashcards
-          </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Master tricky Redis interview questions covering single-threading, SkipLists, and Cache Avalanche.
-          </p>
-        </Link>
-      </div>
-    </div>
-  );
-}
+export default Home;

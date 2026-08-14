@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import React, { useState } from 'react';
 import { Play, RotateCcw, Sparkles, Terminal } from 'lucide-react';
 

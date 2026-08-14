@@ -1,37 +1,32 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { Navbar } from '@/components/visualizers/redisviz/components/Navbar';
-import { Footer } from '@/components/visualizers/redisviz/components/Footer';
+import Navbar from '@/components/visualizers/redisviz/components/layout/Navbar';
 import Home from '@/components/visualizers/redisviz/pages/Home';
-import Concepts from '@/components/visualizers/redisviz/pages/Concepts';
-import ConceptDetail from '@/components/visualizers/redisviz/pages/ConceptDetail';
+import Architecture from '@/components/visualizers/redisviz/pages/Architecture';
 import DataStructures from '@/components/visualizers/redisviz/pages/DataStructures';
-import CachingLab from '@/components/visualizers/redisviz/pages/CachingLab';
-import EvictionLab from '@/components/visualizers/redisviz/pages/EvictionLab';
-import CliPlayground from '@/components/visualizers/redisviz/pages/CliPlayground';
+import CommandExecution from '@/components/visualizers/redisviz/pages/CommandExecution';
+import MemoryManagement from '@/components/visualizers/redisviz/pages/MemoryManagement';
 import Persistence from '@/components/visualizers/redisviz/pages/Persistence';
-import Flashcards from '@/components/visualizers/redisviz/pages/Flashcards';
-import CheatSheet from '@/components/visualizers/redisviz/pages/CheatSheet';
-import { REDIS_TOPICS } from '@/components/visualizers/redisviz/data/topics';
+import Replication from '@/components/visualizers/redisviz/pages/Replication';
+import Sentinel from '@/components/visualizers/redisviz/pages/Sentinel';
+import Cluster from '@/components/visualizers/redisviz/pages/Cluster';
+import Performance from '@/components/visualizers/redisviz/pages/Performance';
+import UseCases from '@/components/visualizers/redisviz/pages/UseCases';
 
 export function generateStaticParams() {
-  const params: { slug: string[] }[] = [
+  return [
     { slug: [] },
-    { slug: ['concepts'] },
-    { slug: ['structures'] },
-    { slug: ['caching-lab'] },
-    { slug: ['eviction-lab'] },
-    { slug: ['playground'] },
+    { slug: ['architecture'] },
+    { slug: ['data-structures'] },
+    { slug: ['execution'] },
+    { slug: ['memory'] },
     { slug: ['persistence'] },
-    { slug: ['flashcards'] },
-    { slug: ['cheatsheet'] },
+    { slug: ['replication'] },
+    { slug: ['sentinel'] },
+    { slug: ['cluster'] },
+    { slug: ['performance'] },
+    { slug: ['use-cases'] },
   ];
-
-  REDIS_TOPICS.forEach((topic) => {
-    params.push({ slug: ['concepts', topic.id] });
-  });
-
-  return params;
 }
 
 export default async function RedisVizPage({
@@ -41,39 +36,46 @@ export default async function RedisVizPage({
 }) {
   const { slug } = await params;
   const first = slug && slug.length > 0 ? slug[0] : '';
-  const second = slug && slug.length > 1 ? slug[1] : '';
 
   let content = <Home />;
 
-  if (first === 'concepts') {
-    if (second) {
-      content = <ConceptDetail topicId={second} />;
-    } else {
-      content = <Concepts />;
-    }
-  } else if (first === 'structures') {
+  if (first === 'architecture') {
+    content = <Architecture />;
+  } else if (first === 'data-structures') {
     content = <DataStructures />;
-  } else if (first === 'caching-lab') {
-    content = <CachingLab />;
-  } else if (first === 'eviction-lab') {
-    content = <EvictionLab />;
-  } else if (first === 'playground') {
-    content = <CliPlayground />;
+  } else if (first === 'execution') {
+    content = <CommandExecution />;
+  } else if (first === 'memory') {
+    content = <MemoryManagement />;
   } else if (first === 'persistence') {
     content = <Persistence />;
-  } else if (first === 'flashcards') {
-    content = <Flashcards />;
-  } else if (first === 'cheatsheet') {
-    content = <CheatSheet />;
+  } else if (first === 'replication') {
+    content = <Replication />;
+  } else if (first === 'sentinel') {
+    content = <Sentinel />;
+  } else if (first === 'cluster') {
+    content = <Cluster />;
+  } else if (first === 'performance') {
+    content = <Performance />;
+  } else if (first === 'use-cases') {
+    content = <UseCases />;
   } else if (first !== '') {
     notFound();
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
+    <div className="relative min-h-screen bg-background text-foreground transition-colors duration-300">
       <Navbar />
-      <main className="flex-1 w-full">{content}</main>
-      <Footer />
+      <main className="container mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-20">
+        {content}
+      </main>
+      <footer className="py-12 border-t border-border/40">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Redis Visualizer. Built for educational purposes.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
