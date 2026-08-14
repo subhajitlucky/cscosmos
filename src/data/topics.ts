@@ -74,7 +74,7 @@ export const topics: Topic[] = [
     createTopic("SQL Visualizer (Queries, Indexes)", "fullstack", { status: 'active', slug: 'sqlcosmos', url: '/sqlcosmos' }),
     createTopic("MongoDB Visualizer (Documents, Aggregation)", "fullstack", { status: 'active', slug: 'mongocosmos', url: '/mongocosmos' }),
     createTopic("Redis Visualizer (Caching, Data Structures)", "fullstack", { status: 'active', slug: 'redisviz', url: '/redisviz' }),
-    createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack"),
+    createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack", { status: 'active', slug: 'synccosmos', url: '/synccosmos' }),
 
     // 5. Architecture & Scale
     createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', url: '/dockercosmos' }),

@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.synccosmos-root {
+  --sync-primary: #06b6d4;
+  --sync-primary-hover: #0891b2;
+  --sync-teal: #10b981;
+  --sync-indigo: #6366f1;
+  --sync-amber: #f59e0b;
+  --sync-rose: #f43f5e;
+  
+  --sync-bg: #070a14;
+  --sync-surface: #0e1424;
+  --sync-surface-2: #161e36;
+  --sync-border: rgba(6, 182, 212, 0.25);
+  --sync-border-subtle: rgba(255, 255, 255, 0.08);
+  --sync-text: #f8fafc;
+  --sync-muted: #8c95b3;
+  
+  --sync-display: 'Syne', sans-serif;
+  --sync-sans: 'Inter', sans-serif;
+  --sync-mono: 'DM Mono', monospace;
+
+  font-family: var(--sync-sans);
+  background-color: var(--sync-bg);
+  color: var(--sync-text);
+  min-height: 100vh;
+}
+
+html.light .synccosmos-root,
+html[data-theme='light'] .synccosmos-root,
+html:not(.dark) .synccosmos-root,
+.synccosmos-root[data-theme='light'],
+.synccosmos-root.light-mode {
+  --sync-bg: #f8fafc;
+  --sync-surface: #ffffff;
+  --sync-surface-2: #f1f5f9;
+  --sync-border: rgba(6, 182, 212, 0.28);
+  --sync-border-subtle: rgba(0, 0, 0, 0.08);
+  --sync-text: #0f172a;
+  --sync-muted: #64748b;
+}
+
+html.dark .synccosmos-root,
+html[data-theme='dark'] .synccosmos-root,
+.synccosmos-root[data-theme='dark'],
+.synccosmos-root.dark-mode {
+  --sync-bg: #070a14;
+  --sync-surface: #0e1424;
+  --sync-surface-2: #161e36;
+  --sync-border: rgba(6, 182, 212, 0.25);
+  --sync-border-subtle: rgba(255, 255, 255, 0.08);
+  --sync-text: #f8fafc;
+  --sync-muted: #8c95b3;
+}
+
+.synccosmos-root .font-display {
+  font-family: var(--sync-display);
+}
+
+.synccosmos-root .font-mono {
+  font-family: var(--sync-mono);
+}
+
+.synccosmos-root .sync-glow {
+  text-shadow: 0 0 25px rgba(6, 182, 212, 0.55), 0 0 50px rgba(6, 182, 212, 0.2);
+}
+
+.synccosmos-root .sync-card {
+  background: var(--sync-surface);
+  border: 1px solid var(--sync-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.synccosmos-root .sync-card:hover {
+  border-color: var(--sync-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.18);
+}
+
+.synccosmos-root .sync-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
