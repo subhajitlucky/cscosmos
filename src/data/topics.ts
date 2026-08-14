@@ -86,7 +86,7 @@ export const topics: Topic[] = [
     createTopic("Testing & Quality Engineering (TDD, BDD, Property-Based)", "fullstack"),
 
     // Data Structures & Algorithms
-    createTopic("Array Visualizer (Memory, Indexing)", "dsa", { status: 'active', url: "https://arrayviz.vercel.app/" }),
+    createTopic("Array Visualizer (Memory, Indexing)", "dsa", { status: 'active', slug: 'arrayviz', url: '/arrayviz' }),
     createTopic("String Algorithms (Encoding, Patterns)", "dsa" , { status: 'active', url: "https://stringalgoviz.vercel.app/" }),
     createTopic("Stack Visualizer (LIFO, Call Stack)", "dsa"),
     createTopic("Queue Visualizer (FIFO, Scheduling)", "dsa"),
