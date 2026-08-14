@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.aicosmos-root {
+  --ai-primary: #6366f1;
+  --ai-primary-hover: #4f46e5;
+  --ai-violet: #8b5cf6;
+  --ai-emerald: #10b981;
+  --ai-cyan: #06b6d4;
+  --ai-amber: #f59e0b;
+  --ai-rose: #f43f5e;
+  
+  --ai-bg: #060814;
+  --ai-surface: #0c1022;
+  --ai-surface-2: #131932;
+  --ai-border: rgba(99, 102, 241, 0.25);
+  --ai-border-subtle: rgba(255, 255, 255, 0.08);
+  --ai-text: #f8fafc;
+  --ai-muted: #8d97b0;
+  
+  --ai-display: 'Syne', sans-serif;
+  --ai-sans: 'Inter', sans-serif;
+  --ai-mono: 'DM Mono', monospace;
+
+  font-family: var(--ai-sans);
+  background-color: var(--ai-bg);
+  color: var(--ai-text);
+  min-height: 100vh;
+}
+
+html.light .aicosmos-root,
+html[data-theme='light'] .aicosmos-root,
+html:not(.dark) .aicosmos-root,
+.aicosmos-root[data-theme='light'],
+.aicosmos-root.light-mode {
+  --ai-bg: #f8fafc;
+  --ai-surface: #ffffff;
+  --ai-surface-2: #f1f5f9;
+  --ai-border: rgba(99, 102, 241, 0.28);
+  --ai-border-subtle: rgba(0, 0, 0, 0.08);
+  --ai-text: #0f172a;
+  --ai-muted: #64748b;
+}
+
+html.dark .aicosmos-root,
+html[data-theme='dark'] .aicosmos-root,
+.aicosmos-root[data-theme='dark'],
+.aicosmos-root.dark-mode {
+  --ai-bg: #060814;
+  --ai-surface: #0c1022;
+  --ai-surface-2: #131932;
+  --ai-border: rgba(99, 102, 241, 0.25);
+  --ai-border-subtle: rgba(255, 255, 255, 0.08);
+  --ai-text: #f8fafc;
+  --ai-muted: #8d97b0;
+}
+
+.aicosmos-root .font-display {
+  font-family: var(--ai-display);
+}
+
+.aicosmos-root .font-mono {
+  font-family: var(--ai-mono);
+}
+
+.aicosmos-root .ai-glow {
+  text-shadow: 0 0 25px rgba(99, 102, 241, 0.55), 0 0 50px rgba(139, 92, 246, 0.2);
+}
+
+.aicosmos-root .ai-card {
+  background: var(--ai-surface);
+  border: 1px solid var(--ai-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aicosmos-root .ai-card:hover {
+  border-color: var(--ai-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.18);
+}
+
+.aicosmos-root .ai-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}

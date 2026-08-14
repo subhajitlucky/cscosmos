@@ -82,7 +82,7 @@ export const topics: Topic[] = [
     createTopic("Microservices Architecture (Services, Failures)", "fullstack", { status: 'active', slug: 'microservicesviz', url: '/microservicesviz' }),
     createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack", { status: 'active', slug: 'lldcosmos', url: '/lldcosmos' }),
     createTopic("System Design & Scalability (Caching, Sharding)", "fullstack", { status: 'active', slug: 'systemdesignviz', url: '/systemdesignviz' }),
-    createTopic("AI Application Engineering (RAG, Agents, Vector Search)", "fullstack"),
+    createTopic("AI Application Engineering (RAG, Agents, Vector Search)", "fullstack", { status: 'active', slug: 'aicosmos', url: '/aicosmos' }),
     createTopic("Testing & Quality Engineering (TDD, BDD, Property-Based)", "fullstack"),
 
     // Data Structures & Algorithms
