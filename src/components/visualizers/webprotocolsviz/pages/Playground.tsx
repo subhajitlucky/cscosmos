@@ -64,6 +64,24 @@ const Playground = () => {
       headers: [
         { id: '1', key: 'Content-Type', value: 'application/json' }
       ]
+    },
+    'WEBSOCKET_UPGRADE': {
+      method: 'GET' as const,
+      status: '101',
+      headers: [
+        { id: '1', key: 'Upgrade', value: 'websocket' },
+        { id: '2', key: 'Connection', value: 'Upgrade' },
+        { id: '3', key: 'Sec-WebSocket-Key', value: 'dGhlIHNhbXBsZSBub25jZQ==' },
+        { id: '4', key: 'Sec-WebSocket-Version', value: '13' }
+      ]
+    },
+    'HTTP3_QUIC': {
+      method: 'GET' as const,
+      status: '200',
+      headers: [
+        { id: '1', key: 'Alt-Svc', value: 'h3=":443"; ma=86400' },
+        { id: '2', key: 'Protocol', value: 'UDP / QUIC 0-RTT' }
+      ]
     }
   };
 

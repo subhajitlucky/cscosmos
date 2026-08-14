@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { TOPICS, type Category } from '../data/topics';
-import { ArrowLeft, Play, Info, AlertCircle, Sparkles } from 'lucide-react';
+import { ArrowLeft, Play, Info, AlertCircle, Sparkles, CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
 import HookVisualizer from '../components/visualizers/HookVisualizer';
 import FiberVisualizer from '../components/visualizers/FiberVisualizer';
 import ReactCodeEditor from '../components/ReactCodeEditor';
@@ -24,6 +24,12 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
   const topic = TOPICS.find(t => t.id === topicId) || TOPICS[0];
   const [code, setCode] = useState(topic?.codeSnippet || '');
   const [isExecuting, setIsExecuting] = useState(false);
+
+  useEffect(() => {
+    if (topic?.codeSnippet) {
+      setCode(topic.codeSnippet);
+    }
+  }, [topic?.codeSnippet]);
 
   const handleExecute = () => {
     setIsExecuting(true);
@@ -58,7 +64,7 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
           <Info className="w-4 h-4 text-cyan-400" /> Mental Model
         </h3>
         <p className="text-foreground italic text-base leading-relaxed font-medium">
-          "{topic.mentalModel}"
+          &ldquo;{topic.mentalModel}&rdquo;
         </p>
       </div>
 
@@ -144,23 +150,45 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
 
       {/* Full-Width Live Code Execution Editor */}
       <div className="space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
-          Executable Code Snippet
-        </h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
+            Executable React 19 Code Snippet
+          </h3>
+          <span className="text-[11px] font-mono text-muted-foreground">Editable Sandbox</span>
+        </div>
         <ReactCodeEditor code={code} onChange={setCode} />
       </div>
+
+      {/* ⚠️ Common Beginner Pitfall Card */}
+      {topic.commonPitfall && (
+        <div className="rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-500/10 p-6 space-y-3 shadow-sm">
+          <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold uppercase text-xs tracking-widest">
+            <AlertTriangle className="w-4 h-4 text-rose-500" /> Common Beginner Pitfall &amp; Anti-Pattern
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-start gap-2 text-xs sm:text-sm text-rose-700 dark:text-rose-300 font-medium">
+              <XCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
+              <span><strong>Mistake:</strong> {topic.commonPitfall.mistake}</span>
+            </div>
+            <div className="flex items-start gap-2 text-xs sm:text-sm text-emerald-700 dark:text-emerald-300 font-medium pl-6">
+              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-500" />
+              <span><strong>Fix:</strong> {topic.commonPitfall.fix}</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Technical Takeaways */}
       <div className="bg-card rounded-2xl p-6 sm:p-8 border border-border/80 shadow-sm space-y-4">
         <div className="flex items-center gap-2 text-foreground font-bold uppercase text-xs tracking-widest">
-          <AlertCircle className="w-4 h-4 text-amber-500" /> Technical Takeaways & Best Practices
+          <AlertCircle className="w-4 h-4 text-cyan-400" /> Key Takeaways &amp; Architectural Rules
         </div>
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          {[
+          {(topic.takeaways || [
             "Component re-renders are triggered by state or prop changes.",
             "Reconciliation algorithm diffs the Virtual DOM to minimize actual DOM updates.",
             "Automatic batching optimizes multiple state updates into a single render cycle."
-          ].map((item, i) => (
+          ]).map((item, i) => (
             <li key={i} className="p-4 rounded-xl bg-muted/40 border border-border text-xs text-muted-foreground leading-relaxed flex gap-3">
               <span className="text-cyan-400 font-bold font-mono select-none">0{i+1}.</span>
               <span>{item}</span>

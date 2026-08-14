@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
+import { AssemblySimulator } from '../components/AssemblySimulator';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, Search, Cpu, Database, Save } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -130,6 +131,9 @@ export const InstructionCycle: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Interactive 8-Bit Machine Code & Hardware Stepper */}
+        <AssemblySimulator />
 
         <div className={cn(
           "grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t transition-colors",

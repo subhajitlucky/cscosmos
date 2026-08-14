@@ -3,6 +3,7 @@
 import { Button } from "../components/ui/button";
 import Link from "next/link";
 import { ArrowRight, Play } from "lucide-react";
+import { SqlInjectionSimulator } from "../components/visuals/SqlInjectionSimulator";
 
 const sims = [
   {
@@ -45,7 +46,10 @@ export default function Simulations() {
         <p className="text-muted-foreground">Jump directly into any security simulation module below.</p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* Embedded SQL Injection vs Parameterized Query Simulator */}
+      <SqlInjectionSimulator />
+
+      <div className="grid md:grid-cols-2 gap-6 pt-4">
         {sims.map((sim, i) => (
           <div key={i} className="border border-border/80 rounded-2xl p-6 bg-card space-y-4 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-center gap-3">
