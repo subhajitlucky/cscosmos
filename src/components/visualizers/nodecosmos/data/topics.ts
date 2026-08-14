@@ -200,6 +200,45 @@ const rawBuf = Buffer.allocUnsafe(1024);`,
       mistake: 'Using Buffer.allocUnsafe() and sending it over the network without populating all bytes, leaking memory secrets.',
       fix: 'Always default to Buffer.alloc() for secure zero-initialized memory.'
     },
+    nextTopicId: 'eventemitter-memory-leaks'
+  },
+  {
+    id: 'eventemitter-memory-leaks',
+    title: 'EventEmitter Internals & MaxListenersExceeded Warnings',
+    category: 'foundations',
+    difficulty: 'Intermediate',
+    summary: 'EventEmitter is the cornerstone of Node.js networking and streams. Registering listeners without cleanup leads to silent memory leaks when objects retain closure references.',
+    mentalModel: 'The Megaphone & Crowd: If 50 people register to listen to the megaphone and never leave when the announcement ends, the room becomes dangerously crowded (memory leak).',
+    codeSnippet: `import { EventEmitter } from 'events';
+
+const emitter = new EventEmitter();
+
+// Default warning limit is 10 listeners:
+emitter.setMaxListeners(20);
+
+function onUserLogin(user: { id: string }) {
+  console.log('User logged in:', user.id);
+}
+
+// Subscribe:
+emitter.on('login', onUserLogin);
+
+// Always unsubscribe when teardown occurs to prevent leaks:
+emitter.off('login', onUserLogin);
+
+// Modern AbortSignal cleanup:
+const controller = new AbortController();
+emitter.on('data', () => {}, { signal: controller.signal });
+controller.abort(); // Automatically removes listener!`,
+    takeaways: [
+      'MaxListenersExceededWarning indicates potential memory leak from unremoved event listeners.',
+      'Use EventEmitter once() for single-use events to auto-remove the listener.',
+      'Node.js v16+ supports AbortSignal in emitter.on(event, fn, { signal }) for declarative teardown.'
+    ],
+    commonPitfall: {
+      mistake: 'Adding anonymous callback listeners inside request handlers without removing them: req.on("close", () => ...), leaking 1 closure per HTTP request.',
+      fix: 'Use once("close") or extract to named functions and remove with emitter.off().'
+    },
     nextTopicId: 'clustering-vs-worker-threads'
   },
   {
@@ -227,7 +266,6 @@ if (isMainThread) {
   const worker = new Worker(new URL(import.meta.url));
   worker.on('message', (msg) => console.log('Result from worker:', msg));
 } else {
-  // Heavy CPU work:
   parentPort?.postMessage('Fibonacci calculated in parallel thread');
 }`,
     takeaways: [
@@ -274,6 +312,63 @@ async function handleRequest(reqId: string) {
       mistake: 'Mutating AsyncLocalStorage store state concurrently across parallel branches without scoping.',
       fix: 'Treat objects stored inside AsyncLocalStorage as immutable records.'
     },
+    nextTopicId: 'garbage-collection-v8-scavenger'
+  },
+  {
+    id: 'garbage-collection-v8-scavenger',
+    title: 'V8 Garbage Collection: Scavenger Minor GC & Mark-Sweep Major GC',
+    category: 'internals',
+    difficulty: 'Expert',
+    summary: 'V8 manages RAM via Generational Garbage Collection: Young Generation (Eden + Semi-Spaces From/To for fast Minor GC) and Old Generation (Mark-Sweep-Compact for long-lived objects).',
+    mentalModel: 'The Recycling Bin vs The Attic: Short-lived objects (daily receipts) are dumped into the paper recycling bin (Minor GC) every minute. Things kept for over a month are moved upstairs to the Attic (Old Generation) and cleaned once a year (Major GC).',
+    codeSnippet: `import v8 from 'v8';
+
+// Inspect current heap memory:
+const stats = v8.getHeapStatistics();
+console.log('Heap Size Limit:', stats.heap_size_limit / 1024 / 1024, 'MB');
+console.log('Used Heap:', stats.used_heap_size / 1024 / 1024, 'MB');
+
+// Run with exposed GC (debugging only):
+// node --expose-gc script.js
+if (global.gc) {
+  global.gc(); // Forces manual Major Mark-Sweep GC cycle
+}`,
+    takeaways: [
+      'Minor GC (Scavenger): Operates on Young Generation (1-64MB) using Cheney algorithm in < 2ms.',
+      'Objects surviving 2 Minor GC cycles are promoted to the Old Generation.',
+      'Major GC (Mark-Sweep-Compact): Reclaims Old Gen objects; long Major GC cycles cause latency spikes in API responses.'
+    ],
+    commonPitfall: {
+      mistake: 'Retaining references to large objects in global arrays, preventing Mark-Sweep GC from reclaiming Old Generation memory and causing OOM.',
+      fix: 'Use WeakMap or WeakSet for caches where keys should be garbage-collected automatically.'
+    },
+    nextTopicId: 'esm-vs-cjs-interop'
+  },
+  {
+    id: 'esm-vs-cjs-interop',
+    title: 'ESM vs CommonJS Dual Package Hazard & Top-Level Await',
+    category: 'foundations',
+    difficulty: 'Intermediate',
+    summary: 'Node.js supports both CommonJS (require/module.exports - synchronous) and ECMAScript Modules (import/export - asynchronous with static analysis and Top-Level Await).',
+    mentalModel: 'Direct Delivery vs Scheduled Flight: CommonJS require() is an instant courier handoff (synchronous, halts execution); ESM import is a booked flight evaluated and linked before takeoff.',
+    codeSnippet: `// 1. ESM (package.json has "type": "module"):
+import { readFile } from 'fs/promises';
+
+// Top-Level Await (Native in ESM):
+const data = await readFile('./config.json', 'utf-8');
+console.log('Loaded config:', data);
+
+// 2. Dynamic Import (Works in both CJS and ESM):
+const module = await import('./heavy-plugin.js');`,
+    takeaways: [
+      'CommonJS cannot use Top-Level Await; ESM natively supports top-level await in modules.',
+      'require() is synchronous; import is asynchronous and statically analyzable by bundlers (Rollup, Vite).',
+      'Dual package hazard: Bundling both CJS and ESM versions of the same library can instantiate duplicate singleton state.'
+    ],
+    commonPitfall: {
+      mistake: 'Trying to use require() inside an ES Module without createRequire, causing ReferenceError: require is not defined.',
+      fix: 'Use import statement or createRequire(import.meta.url).'
+    },
     nextTopicId: 'process-signals-graceful-shutdown'
   },
   {
@@ -295,7 +390,7 @@ async function gracefulShutdown(signal: string) {
   // 1. Stop accepting new HTTP connections:
   server.close(async () => {
     console.log('HTTP server closed. Finishing DB pools...');
-    // 2. Close Database connections:
+    // 2. Close Database connections
     // await db.pool.end();
     // 3. Exit with success code:
     process.exit(0);

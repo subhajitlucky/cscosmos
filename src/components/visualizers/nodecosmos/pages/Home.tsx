@@ -7,6 +7,8 @@ import { LibuvEventLoopStepper } from '../components/LibuvEventLoopStepper';
 import { ThreadPoolVisualizer } from '../components/ThreadPoolVisualizer';
 import { StreamsBackpressureLab } from '../components/StreamsBackpressureLab';
 import { ClusterVsWorkerLab } from '../components/ClusterVsWorkerLab';
+import { V8MemoryVisualizer } from '../components/V8MemoryVisualizer';
+import { EventEmitterVisualizer } from '../components/EventEmitterVisualizer';
 import { NodePlayground } from '../components/NodePlayground';
 
 export default function Home() {
@@ -21,7 +23,7 @@ export default function Home() {
           Master the <span className="text-emerald-600 dark:text-emerald-400">Node.js &amp; Libuv</span> Engine.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for the 6-phase Libuv event loop, thread pool offloading, streams backpressure with highWaterMark, multi-core clustering, and worker threads.
+          Interactive visualizers for the 6-phase Libuv event loop, thread pool offloading, streams backpressure, V8 generational garbage collection, EventEmitter memory leaks, and clustering.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -48,10 +50,16 @@ export default function Home() {
       {/* Feature 3: Streams Backpressure Flow */}
       <StreamsBackpressureLab />
 
-      {/* Feature 4: Cluster vs Worker Threads */}
+      {/* Feature 4: V8 Generational Garbage Collection Visualizer */}
+      <V8MemoryVisualizer />
+
+      {/* Feature 5: EventEmitter Memory Leak Visualizer */}
+      <EventEmitterVisualizer />
+
+      {/* Feature 6: Cluster vs Worker Threads */}
       <ClusterVsWorkerLab />
 
-      {/* Feature 5: In-Browser Node Playground */}
+      {/* Feature 7: In-Browser Node Playground */}
       <NodePlayground />
 
       {/* Navigation Cards */}
