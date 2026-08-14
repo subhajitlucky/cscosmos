@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.microservicesviz-root {
+  --ms-primary: #8b5cf6;
+  --ms-primary-hover: #7c3aed;
+  --ms-indigo: #6366f1;
+  --ms-emerald: #10b981;
+  --ms-rose: #f43f5e;
+  --ms-amber: #f59e0b;
+  --ms-sky: #38bdf8;
+  
+  --ms-bg: #070913;
+  --ms-surface: #0e1222;
+  --ms-surface-2: #151a32;
+  --ms-border: rgba(139, 92, 246, 0.25);
+  --ms-border-subtle: rgba(255, 255, 255, 0.08);
+  --ms-text: #f8fafc;
+  --ms-muted: #8e98b0;
+  
+  --ms-display: 'Syne', sans-serif;
+  --ms-sans: 'Inter', sans-serif;
+  --ms-mono: 'DM Mono', monospace;
+
+  font-family: var(--ms-sans);
+  background-color: var(--ms-bg);
+  color: var(--ms-text);
+  min-height: 100vh;
+}
+
+html.light .microservicesviz-root,
+html[data-theme='light'] .microservicesviz-root,
+html:not(.dark) .microservicesviz-root,
+.microservicesviz-root[data-theme='light'],
+.microservicesviz-root.light-mode {
+  --ms-bg: #f8fafc;
+  --ms-surface: #ffffff;
+  --ms-surface-2: #f1f5f9;
+  --ms-border: rgba(139, 92, 246, 0.28);
+  --ms-border-subtle: rgba(0, 0, 0, 0.08);
+  --ms-text: #0f172a;
+  --ms-muted: #64748b;
+}
+
+html.dark .microservicesviz-root,
+html[data-theme='dark'] .microservicesviz-root,
+.microservicesviz-root[data-theme='dark'],
+.microservicesviz-root.dark-mode {
+  --ms-bg: #070913;
+  --ms-surface: #0e1222;
+  --ms-surface-2: #151a32;
+  --ms-border: rgba(139, 92, 246, 0.25);
+  --ms-border-subtle: rgba(255, 255, 255, 0.08);
+  --ms-text: #f8fafc;
+  --ms-muted: #8e98b0;
+}
+
+.microservicesviz-root .font-display {
+  font-family: var(--ms-display);
+}
+
+.microservicesviz-root .font-mono {
+  font-family: var(--ms-mono);
+}
+
+.microservicesviz-root .ms-glow {
+  text-shadow: 0 0 25px rgba(139, 92, 246, 0.55), 0 0 50px rgba(139, 92, 246, 0.2);
+}
+
+.microservicesviz-root .ms-card {
+  background: var(--ms-surface);
+  border: 1px solid var(--ms-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.microservicesviz-root .ms-card:hover {
+  border-color: var(--ms-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.18);
+}
+
+.microservicesviz-root .ms-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(139, 92, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
