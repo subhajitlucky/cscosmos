@@ -57,7 +57,7 @@ export const topics: Topic[] = [
     createTopic("Next.js Visualizer (Routing, SSR, RSC)", "fullstack" , { status: 'active', url: "/nextjscosmos" }),
     createTopic("Vue Visualizer (Reactivity, Templates)", "fullstack", { status: 'active', slug: 'vuecosmos', url: '/vuecosmos' }),
     createTopic("Svelte / SvelteKit Visualizer (Compiler, Reactivity)", "fullstack", { status: 'active', slug: 'sveltecosmos', url: '/sveltecosmos' }),
-    createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack"),
+    createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack", { status: 'active', slug: 'tailwindcosmos', url: '/tailwindcosmos' }),
     createTopic("WebAssembly Internals (Wasm & Linear Memory)", "fullstack"),
     createTopic("Spatial Computing & XR (3D UI, WebXR)", "fullstack"),
     createTopic("Cross-Platform Internals (React Native Bridge vs Skia)", "fullstack"),

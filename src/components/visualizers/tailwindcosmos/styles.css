@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.tailwindcosmos-root {
+  --twc-primary: #06b6d4;
+  --twc-primary-hover: #0891b2;
+  --twc-sky: #0ea5e9;
+  --twc-indigo: #6366f1;
+  --twc-emerald: #10b981;
+  --twc-rose: #f43f5e;
+  --twc-amber: #f59e0b;
+  
+  --twc-bg: #07090e;
+  --twc-surface: #0f141f;
+  --twc-surface-2: #161e2e;
+  --twc-border: rgba(6, 182, 212, 0.22);
+  --twc-border-subtle: rgba(255, 255, 255, 0.08);
+  --twc-text: #f1f5f9;
+  --twc-muted: #8492a6;
+  
+  --twc-display: 'Syne', sans-serif;
+  --twc-sans: 'Inter', sans-serif;
+  --twc-mono: 'DM Mono', monospace;
+
+  font-family: var(--twc-sans);
+  background-color: var(--twc-bg);
+  color: var(--twc-text);
+  min-height: 100vh;
+}
+
+html.light .tailwindcosmos-root,
+html[data-theme='light'] .tailwindcosmos-root,
+html:not(.dark) .tailwindcosmos-root,
+.tailwindcosmos-root[data-theme='light'],
+.tailwindcosmos-root.light-mode {
+  --twc-bg: #f8fafc;
+  --twc-surface: #ffffff;
+  --twc-surface-2: #f1f5f9;
+  --twc-border: rgba(6, 182, 212, 0.28);
+  --twc-border-subtle: rgba(0, 0, 0, 0.08);
+  --twc-text: #0f172a;
+  --twc-muted: #64748b;
+}
+
+html.dark .tailwindcosmos-root,
+html[data-theme='dark'] .tailwindcosmos-root,
+.tailwindcosmos-root[data-theme='dark'],
+.tailwindcosmos-root.dark-mode {
+  --twc-bg: #07090e;
+  --twc-surface: #0f141f;
+  --twc-surface-2: #161e2e;
+  --twc-border: rgba(6, 182, 212, 0.22);
+  --twc-border-subtle: rgba(255, 255, 255, 0.08);
+  --twc-text: #f1f5f9;
+  --twc-muted: #8492a6;
+}
+
+.tailwindcosmos-root .font-display {
+  font-family: var(--twc-display);
+}
+
+.tailwindcosmos-root .font-mono {
+  font-family: var(--twc-mono);
+}
+
+.tailwindcosmos-root .twc-glow {
+  text-shadow: 0 0 25px rgba(6, 182, 212, 0.55), 0 0 50px rgba(6, 182, 212, 0.2);
+}
+
+.tailwindcosmos-root .twc-card {
+  background: var(--twc-surface);
+  border: 1px solid var(--twc-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tailwindcosmos-root .twc-card:hover {
+  border-color: var(--twc-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.15);
+}
+
+.tailwindcosmos-root .twc-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
