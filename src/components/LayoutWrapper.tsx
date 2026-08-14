@@ -15,6 +15,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/websecurity',
   '/reactcosmos',
   '/nextjscosmos',
+  '/golangviz',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -27,6 +28,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/websecurity',
   '/reactcosmos',
   '/nextjscosmos',
+  '/golangviz',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
