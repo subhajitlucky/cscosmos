@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.xrcosmos-root {
+  --xr-primary: #8b5cf6;
+  --xr-primary-hover: #7c3aed;
+  --xr-teal: #14b8a6;
+  --xr-cyan: #06b6d4;
+  --xr-rose: #f43f5e;
+  --xr-amber: #f59e0b;
+  --xr-emerald: #10b981;
+  
+  --xr-bg: #060810;
+  --xr-surface: #0d1020;
+  --xr-surface-2: #141830;
+  --xr-border: rgba(139, 92, 246, 0.25);
+  --xr-border-subtle: rgba(255, 255, 255, 0.08);
+  --xr-text: #f8fafc;
+  --xr-muted: #8a91ad;
+  
+  --xr-display: 'Syne', sans-serif;
+  --xr-sans: 'Inter', sans-serif;
+  --xr-mono: 'DM Mono', monospace;
+
+  font-family: var(--xr-sans);
+  background-color: var(--xr-bg);
+  color: var(--xr-text);
+  min-height: 100vh;
+}
+
+html.light .xrcosmos-root,
+html[data-theme='light'] .xrcosmos-root,
+html:not(.dark) .xrcosmos-root,
+.xrcosmos-root[data-theme='light'],
+.xrcosmos-root.light-mode {
+  --xr-bg: #f8fafc;
+  --xr-surface: #ffffff;
+  --xr-surface-2: #f1f5f9;
+  --xr-border: rgba(139, 92, 246, 0.28);
+  --xr-border-subtle: rgba(0, 0, 0, 0.08);
+  --xr-text: #0f172a;
+  --xr-muted: #64748b;
+}
+
+html.dark .xrcosmos-root,
+html[data-theme='dark'] .xrcosmos-root,
+.xrcosmos-root[data-theme='dark'],
+.xrcosmos-root.dark-mode {
+  --xr-bg: #060810;
+  --xr-surface: #0d1020;
+  --xr-surface-2: #141830;
+  --xr-border: rgba(139, 92, 246, 0.25);
+  --xr-border-subtle: rgba(255, 255, 255, 0.08);
+  --xr-text: #f8fafc;
+  --xr-muted: #8a91ad;
+}
+
+.xrcosmos-root .font-display {
+  font-family: var(--xr-display);
+}
+
+.xrcosmos-root .font-mono {
+  font-family: var(--xr-mono);
+}
+
+.xrcosmos-root .xr-glow {
+  text-shadow: 0 0 25px rgba(139, 92, 246, 0.55), 0 0 50px rgba(139, 92, 246, 0.2);
+}
+
+.xrcosmos-root .xr-card {
+  background: var(--xr-surface);
+  border: 1px solid var(--xr-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.xrcosmos-root .xr-card:hover {
+  border-color: var(--xr-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.2);
+}
+
+.xrcosmos-root .xr-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(139, 92, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}

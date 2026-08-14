@@ -59,7 +59,7 @@ export const topics: Topic[] = [
     createTopic("Svelte / SvelteKit Visualizer (Compiler, Reactivity)", "fullstack", { status: 'active', slug: 'sveltecosmos', url: '/sveltecosmos' }),
     createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack", { status: 'active', slug: 'tailwindcosmos', url: '/tailwindcosmos' }),
     createTopic("WebAssembly Internals (Wasm & Linear Memory)", "fullstack", { status: 'active', slug: 'wasmcosmos', url: '/wasmcosmos' }),
-    createTopic("Spatial Computing & XR (3D UI, WebXR)", "fullstack"),
+    createTopic("Spatial Computing & XR (3D UI, WebXR)", "fullstack", { status: 'active', slug: 'xrcosmos', url: '/xrcosmos' }),
     createTopic("Cross-Platform Internals (React Native Bridge vs Skia)", "fullstack"),
 
     // 3. Backend & Runtime

@@ -32,6 +32,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/mqviz',
   '/tailwindcosmos',
   '/wasmcosmos',
+  '/xrcosmos',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -61,6 +62,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/mqviz',
   '/tailwindcosmos',
   '/wasmcosmos',
+  '/xrcosmos',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
