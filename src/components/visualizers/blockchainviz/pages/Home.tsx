@@ -2,10 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Box, Coins, Cpu, GitFork, HelpCircle, Layers, Link as LinkIcon, Network, Play, Server, Sparkles, Terminal, Waves, Zap } from 'lucide-react';
+import { ArrowRight, BookOpen, Box, Coins, Cpu, Flame, GitFork, HelpCircle, Layers, Link as LinkIcon, Network, Play, Server, ShieldAlert, Sparkles, Terminal, Waves, Zap } from 'lucide-react';
 import { BlockMiningSimulator } from '../components/BlockMiningSimulator';
 import { MerkleTreeVisualizer } from '../components/MerkleTreeVisualizer';
+import { PatriciaTrieVisualizer } from '../components/PatriciaTrieVisualizer';
 import { EvmStackVisualizer } from '../components/EvmStackVisualizer';
+import { ReentrancyAttackVisualizer } from '../components/ReentrancyAttackVisualizer';
+import { Eip1559FeeVisualizer } from '../components/Eip1559FeeVisualizer';
 import { UtxoVsAccountVisualizer } from '../components/UtxoVsAccountVisualizer';
 import { P2pConsensusSimulator } from '../components/P2pConsensusSimulator';
 import { Web3Playground } from '../components/Web3Playground';
@@ -22,7 +25,7 @@ export default function Home() {
           Master the <span className="text-amber-600 dark:text-amber-400">Blockchain &amp; EVM</span> Engine.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for Proof-of-Work block mining, cryptographic tampering cascades, Binary Merkle Trees, Ethereum 256-bit EVM Opcode stack machines, UTXO vs Account models, and P2P Gossip consensus.
+          Interactive visualizers for Proof-of-Work block mining, cryptographic tampering cascades, Binary Merkle Trees, Modified Merkle Patricia Tries (MPT), 256-bit EVM Opcode stack machines, DAO Reentrancy attacks, EIP-1559 base fee burning, UTXO vs Account models, and P2P Gossip consensus.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -46,16 +49,25 @@ export default function Home() {
       {/* Feature 2: Binary Merkle Trees & Inclusion Proofs */}
       <MerkleTreeVisualizer />
 
-      {/* Feature 3: EVM 256-Bit Stack Machine & Gas Meter */}
+      {/* Feature 3: Ethereum Modified Merkle Patricia Trie (MPT) */}
+      <PatriciaTrieVisualizer />
+
+      {/* Feature 4: EVM 256-Bit Stack Machine & Gas Meter */}
       <EvmStackVisualizer />
 
-      {/* Feature 4: Bitcoin UTXO vs Ethereum Account Model */}
+      {/* Feature 5: DAO Reentrancy Attack Stepper */}
+      <ReentrancyAttackVisualizer />
+
+      {/* Feature 6: EIP-1559 Dynamic Gas Fee & Base Fee Burn */}
+      <Eip1559FeeVisualizer />
+
+      {/* Feature 7: Bitcoin UTXO vs Ethereum Account Model */}
       <UtxoVsAccountVisualizer />
 
-      {/* Feature 5: P2P Gossip Consensus */}
+      {/* Feature 8: P2P Gossip Consensus */}
       <P2pConsensusSimulator />
 
-      {/* Feature 6: Keccak256 & ABI Selector Playground */}
+      {/* Feature 9: Keccak256 & ABI Selector Playground */}
       <Web3Playground />
 
       {/* Navigation Cards */}
