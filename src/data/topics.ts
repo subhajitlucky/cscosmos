@@ -72,7 +72,7 @@ export const topics: Topic[] = [
 
     // 4. Data & State
     createTopic("SQL Visualizer (Queries, Indexes)", "fullstack", { status: 'active', slug: 'sqlcosmos', url: '/sqlcosmos' }),
-    createTopic("MongoDB Visualizer (Documents, Aggregation)", "fullstack"),
+    createTopic("MongoDB Visualizer (Documents, Aggregation)", "fullstack", { status: 'active', slug: 'mongocosmos', url: '/mongocosmos' }),
     createTopic("Redis Visualizer (Caching, Data Structures)", "fullstack", { status: 'active', slug: 'redisviz', url: '/redisviz' }),
     createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack"),
 
