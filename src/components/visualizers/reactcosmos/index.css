@@ -43,7 +43,7 @@
   --token-attr: #7c3aed;
 }
 
-.dark {
+.dark, [data-theme='dark'] {
   --background: #000000;
   --foreground: #fafafa;
   --muted: #09090b;

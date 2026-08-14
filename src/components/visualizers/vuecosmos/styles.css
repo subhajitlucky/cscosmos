@@ -22,6 +22,9 @@
   --vue-mono: 'DM Mono', monospace;
 }
 
+html.light .vuecosmos-root,
+html[data-theme='light'] .vuecosmos-root,
+html:not(.dark) .vuecosmos-root,
 .vuecosmos-root[data-theme='light'],
 .vuecosmos-root.light-mode {
   --vue-bg: #f2f0e8;
@@ -31,6 +34,19 @@
   --vue-muted: #5d5b64;
   --vue-dim: #77757d;
   --vue-line: rgba(20,20,26,.15);
+}
+
+html.dark .vuecosmos-root,
+html[data-theme='dark'] .vuecosmos-root,
+.vuecosmos-root[data-theme='dark'],
+.vuecosmos-root.dark-mode {
+  --vue-bg: #111117;
+  --vue-surface: #18181f;
+  --vue-surface-2: #202029;
+  --vue-ink: #f2f0ea;
+  --vue-muted: #8c8b92;
+  --vue-dim: #575761;
+  --vue-line: rgba(242,240,234,.13);
 }
 
 .vuecosmos-root button, .vuecosmos-root input { font: inherit; }
@@ -363,9 +379,9 @@
 .vuecosmos-root .code-lab-grid { display: grid; grid-template-columns: 1.3fr 1fr; border: 1px solid var(--vue-line); }
 .vuecosmos-root .template-editor, .vuecosmos-root .template-preview { min-width: 0; background: var(--vue-surface); }
 .vuecosmos-root .template-preview { border-left: 1px solid var(--vue-line); background: var(--vue-surface-2); }
-.vuecosmos-root .template-code { display: grid; grid-template-columns: 45px 1fr; min-height: 345px; background: #15151c; }
+.vuecosmos-root .template-code { display: grid; grid-template-columns: 45px 1fr; min-height: 345px; background: var(--vue-surface); }
 .vuecosmos-root .line-numbers { padding: 19px 12px 19px 0; border-right: 1px solid var(--vue-line); color: var(--vue-dim); font-size: 9px; line-height: 2.08; text-align: right; user-select: none; }
-.vuecosmos-root .template-code textarea { width: 100%; min-height: 345px; padding: 19px 17px; resize: vertical; border: 0; outline: 0; background: transparent; color: #bce7d0; font: 10px/2.08 var(--vue-mono); tab-size: 2; }
+.vuecosmos-root .template-code textarea { width: 100%; min-height: 345px; padding: 19px 17px; resize: vertical; border: 0; outline: 0; background: transparent; color: var(--vue-ink); font: 10px/2.08 var(--vue-mono); tab-size: 2; }
 .vuecosmos-root .template-code textarea:focus { box-shadow: inset 0 0 0 1px rgba(217,249,94,.35); }
 .vuecosmos-root .template-editor .editor-foot { padding: 12px 15px; }
 .vuecosmos-root .template-editor .editor-foot button { display: inline-flex; align-items: center; gap: 6px; background: transparent; color: var(--vue-muted); font-size: 8px; }

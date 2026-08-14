@@ -26,6 +26,9 @@
   min-height: 100vh;
 }
 
+html.light .sveltecosmos-root,
+html[data-theme='light'] .sveltecosmos-root,
+html:not(.dark) .sveltecosmos-root,
 .sveltecosmos-root[data-theme='light'],
 .sveltecosmos-root.light-mode {
   --svelte-bg: #f8f9fa;
@@ -35,6 +38,19 @@
   --svelte-border-subtle: rgba(0, 0, 0, 0.1);
   --svelte-text: #1a1b23;
   --svelte-muted: #5a5f73;
+}
+
+html.dark .sveltecosmos-root,
+html[data-theme='dark'] .sveltecosmos-root,
+.sveltecosmos-root[data-theme='dark'],
+.sveltecosmos-root.dark-mode {
+  --svelte-bg: #0c0d12;
+  --svelte-surface: #14161f;
+  --svelte-surface-2: #1b1e2b;
+  --svelte-border: rgba(255, 62, 0, 0.2);
+  --svelte-border-subtle: rgba(255, 255, 255, 0.08);
+  --svelte-text: #f4f4f8;
+  --svelte-muted: #8b8f9f;
 }
 
 .sveltecosmos-root .font-display {

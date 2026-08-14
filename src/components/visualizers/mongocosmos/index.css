@@ -29,7 +29,7 @@
   --radius: 0px;
 }
 
-.dark {
+.dark, [data-theme='dark'] {
   /* Industrial Data Terminal Palette */
   --background: 224 71% 2%;
   --foreground: 156 72% 95%;
@@ -54,7 +54,7 @@
   --ring: 156 72% 45%;
 }
 
-.light {
+.light, [data-theme='light'], html:not(.dark) {
   --background: 0 0% 98%;
   --foreground: 222 47% 11%;
 

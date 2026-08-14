@@ -29,8 +29,10 @@ export function Navbar() {
     setSearchOpen(false);
   };
 
+  const isDark = theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(isDark ? 'light' : 'dark');
   };
 
   return (
@@ -110,7 +112,7 @@ export function Navbar() {
             onClick={toggleTheme}
             aria-label={`Switch theme`}
           >
-            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            {isDark ? <Sun size={17} /> : <Moon size={17} />}
           </button>
 
           <button

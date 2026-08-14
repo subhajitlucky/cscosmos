@@ -42,7 +42,7 @@
   --radius: 0.75rem;
 }
 
-.dark {
+.dark, [data-theme='dark'] {
   --background: oklch(0.12 0.015 240);
   --foreground: oklch(0.95 0.01 240);
   --card: oklch(0.14 0.02 240);
