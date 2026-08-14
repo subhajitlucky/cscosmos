@@ -128,7 +128,7 @@ export const topics: Topic[] = [
     createTopic("Streaming & Distributed Graph Algorithms (PageRank, Louvain, GNNs)", "dsa"),
 
     // Web3 & Blockchain
-    createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3" , { status: 'active', url: "https://blockchainviz.vercel.app" }),
+    createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3" , { status: 'active', slug: 'blockchainviz', url: '/blockchainviz' }),
     createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3" , { status: 'active', url: "https://cryptviz.vercel.app" }),
     createTopic("Merkle Tree Visualizer (Integrity)", "web3" , { status: 'active', url: "https://merkletreeviz.vercel.app" }),
     createTopic("Patricia Trie Visualizer (State Storage)", "web3" , { status: 'active', url: "https://patriciatrie.vercel.app" }),

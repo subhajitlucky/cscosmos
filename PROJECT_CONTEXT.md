@@ -47,6 +47,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/sqlcosmos` | **Absorbed** | SQL Query Planner, B+ Tree Indexing, Joins Engine, EXPLAIN, MVCC |
 | `/nodecosmos` | **Absorbed** | Node.js 6-Phase Libuv Event Loop, Thread Pool, Streams Backpressure |
 | `/dockercosmos` | **Absorbed** | Linux Namespaces, cgroups v2, OverlayFS, Pod Lifecycle, kube-proxy |
+| `/blockchainviz` | **Absorbed** | Block Mining, Merkle Trees, EVM Stack, UTXO vs Account, Gossip Consensus |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -68,10 +69,11 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 12: `sqlcosmos` -> `/sqlcosmos` (Completed: B+ Tree Index Traversal, EXPLAIN ANALYZE Cost Optimizer, Physical Joins Engine, MVCC Tuple Versioning, SQL Playground)
 - ✅ Site 13: `nodecosmos` -> `/nodecosmos` (Completed: 6-Phase Libuv Event Loop Stepper, UV_THREADPOOL_SIZE Thread Pool, Streams Backpressure Lab, Cluster vs Worker Threads)
 - ✅ Site 14: `dockercosmos` -> `/dockercosmos` (Completed: 6 Linux Kernel Namespaces, OverlayFS Layered Storage Driver & CoW, cgroups v2 & OOM Killer, K8s Pod Lifecycle, kube-proxy Routing)
+- ✅ Site 15: `blockchainviz` -> `/blockchainviz` (Completed: PoW Block Mining & Nonce Stepper, Merkle Trees & O(log N) SPV Proofs, 256-bit EVM Opcode Stack & Gas Meter, UTXO vs Account Flow, P2P Gossip Consensus)
 
 ### Planned Next Absorptions:
-- ⏳ Site 15: `blockchainviz` & `evminternals` (Web3 & Ethereum Virtual Machine)
 - ⏳ Site 16: `arrayviz` & `stringalgoviz` (DSA Memory & Patterns)
+- ⏳ Site 17: `systemdesignviz` (High-scale distributed systems)
 
 ---
 

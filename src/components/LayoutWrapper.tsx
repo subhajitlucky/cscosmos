@@ -21,6 +21,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/sqlcosmos',
   '/nodecosmos',
   '/dockercosmos',
+  '/blockchainviz',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -39,6 +40,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/sqlcosmos',
   '/nodecosmos',
   '/dockercosmos',
+  '/blockchainviz',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
