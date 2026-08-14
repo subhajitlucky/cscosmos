@@ -2,11 +2,14 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Database, GitBranch, Globe, HelpCircle, Layers, Lock, Play, Server, Sparkles, Terminal, Zap } from 'lucide-react';
+import { ArrowRight, BookOpen, Database, GitBranch, GitFork, Globe, HelpCircle, Layers, Lock, Play, Server, Sparkles, Terminal, Zap } from 'lucide-react';
 import { GraphqlResolverVisualizer } from '../components/GraphqlResolverVisualizer';
 import { DataLoaderVisualizer } from '../components/DataLoaderVisualizer';
 import { ProtocolComparisonVisualizer } from '../components/ProtocolComparisonVisualizer';
 import { IdempotencyKeyVisualizer } from '../components/IdempotencyKeyVisualizer';
+import { ApolloFederationVisualizer } from '../components/ApolloFederationVisualizer';
+import { PaginationDriftVisualizer } from '../components/PaginationDriftVisualizer';
+import { WebhookSignatureVisualizer } from '../components/WebhookSignatureVisualizer';
 import { ApiPlayground } from '../components/ApiPlayground';
 
 export default function Home() {
@@ -21,7 +24,7 @@ export default function Home() {
           Master <span className="text-pink-600 dark:text-pink-400">REST, GraphQL &amp; gRPC</span>.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for GraphQL AST field resolvers, DataLoader N+1 query batching, REST vs GraphQL vs gRPC vs tRPC tradeoffs, Idempotency-Key safe retries, and API sandboxes.
+          Interactive visualizers for GraphQL AST field resolvers, DataLoader N+1 query batching, Apollo Federation query plans, Keyset pagination drift, HMAC webhook verification, REST vs GraphQL vs gRPC tradeoffs, Idempotency-Key safe retries, and API sandboxes.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -45,13 +48,22 @@ export default function Home() {
       {/* Feature 2: DataLoader N+1 Problem Simulator */}
       <DataLoaderVisualizer />
 
-      {/* Feature 3: Protocol Matrix */}
+      {/* Feature 3: Apollo Federation v2 Query Planner */}
+      <ApolloFederationVisualizer />
+
+      {/* Feature 4: Keyset vs Offset Pagination Drift */}
+      <PaginationDriftVisualizer />
+
+      {/* Feature 5: HMAC-SHA256 Webhook Verification */}
+      <WebhookSignatureVisualizer />
+
+      {/* Feature 6: Protocol Matrix */}
       <ProtocolComparisonVisualizer />
 
-      {/* Feature 4: Idempotency Key Engine */}
+      {/* Feature 7: Idempotency Key Engine */}
       <IdempotencyKeyVisualizer />
 
-      {/* Feature 5: Interactive Sandbox */}
+      {/* Feature 8: Interactive Sandbox */}
       <ApiPlayground />
 
       {/* Navigation Cards */}
