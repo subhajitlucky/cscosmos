@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { ArrowRight, BookOpen, Bug, Code2, Cpu, Filter, Layers, Sparkles, Trophy, Wrench, Zap } from 'lucide-react';
 import { TypeNarrowingStepper } from '../components/TypeNarrowingStepper';
 import { StructuralAssignabilityLab } from '../components/StructuralAssignabilityLab';
+import { SatisfiesVsAsLab } from '../components/SatisfiesVsAsLab';
+import { TypeHierarchyVisualizer } from '../components/TypeHierarchyVisualizer';
+import { BrandedTypesLab } from '../components/BrandedTypesLab';
 import { UtilityTypesLab } from '../components/UtilityTypesLab';
 
 export default function Home() {
@@ -19,14 +22,14 @@ export default function Home() {
           Master the <span className="text-blue-600 dark:text-blue-400">TypeScript</span> Type System.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive engines for structural subtyping, control flow type narrowing, generics, standard utility types, and compiler AST pipelines.
+          Interactive engines for structural subtyping, control flow type narrowing, the satisfies operator, branded nominal types, and compiler AST pipelines.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
             href="/tsviz/concepts"
             className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-blue-500/25 flex items-center gap-2"
           >
-            <BookOpen className="w-4 h-4" /> Explore 11 Concepts
+            <BookOpen className="w-4 h-4" /> Explore 22 Concepts
           </Link>
           <Link
             href="/tsviz/utility-lab"
@@ -40,10 +43,19 @@ export default function Home() {
       {/* Feature 1: Type Narrowing Stepper */}
       <TypeNarrowingStepper />
 
-      {/* Feature 2: Structural Subtyping & Assignability Lab */}
+      {/* Feature 2: satisfies vs as Lab */}
+      <SatisfiesVsAsLab />
+
+      {/* Feature 3: Type Hierarchy Tree */}
+      <TypeHierarchyVisualizer />
+
+      {/* Feature 4: Branded / Nominal Types Lab */}
+      <BrandedTypesLab />
+
+      {/* Feature 5: Structural Subtyping & Assignability Lab */}
       <StructuralAssignabilityLab />
 
-      {/* Feature 3: Standard Utility Types Lab */}
+      {/* Feature 6: Standard Utility Types Lab */}
       <UtilityTypesLab />
 
       {/* Quick Navigation Cards */}
@@ -56,7 +68,7 @@ export default function Home() {
             <BookOpen className="w-5 h-5" />
           </div>
           <h3 className="text-lg font-bold text-foreground group-hover:text-blue-500 transition-colors">
-            Core Concepts
+            22 Core Concepts
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
             Deep-dive lessons with mental models, runnable snippets, takeaways, and common pitfalls.

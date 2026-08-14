@@ -178,6 +178,144 @@ function render(state: AsyncState) {
       mistake: 'Checking typeof null === "object", which incorrectly identifies null as a plain object.',
       fix: 'Check for truthiness: if (val && typeof val === "object").'
     },
+    nextTopicId: 'unknown-any-never'
+  },
+  {
+    id: 'unknown-any-never',
+    title: 'Top & Bottom Types (unknown, any, never)',
+    category: 'types',
+    difficulty: 'Intermediate',
+    summary: 'In TypeScript type theory, "unknown" and "any" are Top Types (contain all values), while "never" is the Bottom Type (empty set / unreachable).',
+    mentalModel: 'The Universe & The Black Hole: "unknown" is the entire universe (could be anything, must verify before touching); "never" is a black hole where nothing exists.',
+    codeSnippet: `// 1. any: Disables type-checking (DANGEROUS)
+let a: any = 'hello';
+a.nonExistentMethod(); // Compiles fine, crashes at runtime!
+
+// 2. unknown: Safe Top Type (MUST narrow before use)
+let u: unknown = 'hello';
+// u.toUpperCase(); // ❌ Compiler error!
+if (typeof u === 'string') {
+  console.log(u.toUpperCase()); // ✅ Safe!
+}
+
+// 3. never: Bottom Type (Exhaustiveness checking)
+function assertNever(x: never): never {
+  throw new Error('Unexpected object: ' + x);
+}`,
+    takeaways: [
+      'Always prefer "unknown" over "any" when dealing with dynamic data (JSON.parse, API responses).',
+      '"never" is assignable to every type, but no type (except never itself) is assignable to never.',
+      'Use assertNever() in the default case of discriminated unions to catch unhandled enum variants at compile time.'
+    ],
+    commonPitfall: {
+      mistake: 'Using "any" to silence compiler errors, masking critical runtime crashes.',
+      fix: 'Use "unknown" and perform type narrowing with zod or type guards.'
+    },
+    nextTopicId: 'satisfies-operator'
+  },
+  {
+    id: 'satisfies-operator',
+    title: 'The satisfies Operator (TS 4.9+)',
+    category: 'types',
+    difficulty: 'Intermediate',
+    summary: 'The "satisfies" operator validates that an expression matches a type contract without widening or mutating its inferred literal type.',
+    mentalModel: 'The Passport Checkpoint: The officer checks if your passport satisfies the visa rules, but does NOT stamp over your name or blur your identity photo.',
+    codeSnippet: `type RGB = [red: number, green: number, blue: number];
+type Color = string | RGB;
+
+// ❌ With type annotation (widens palette values to string | RGB):
+const paletteAnnotated: Record<string, Color> = {
+  red: [255, 0, 0],
+  green: '#00ff00',
+};
+// paletteAnnotated.green.toUpperCase(); // ❌ Error: toUpperCase does not exist on RGB!
+
+// ✅ With satisfies operator (validates contract AND preserves exact literal types):
+const palette = {
+  red: [255, 0, 0],
+  green: '#00ff00',
+} satisfies Record<string, Color>;
+
+palette.green.toUpperCase(); // ✅ TypeScript knows green is string!
+palette.red.map(c => c * 2);  // ✅ TypeScript knows red is RGB tuple!`,
+    takeaways: [
+      '"satisfies" ensures an object matches a constraint without losing specific property key or literal type inference.',
+      'Prevents typos in object keys while retaining autocompletion for exact property names.',
+      'Replaces the need for unsafe "as" type assertions in config objects.'
+    ],
+    commonPitfall: {
+      mistake: 'Using "as Record<string, Color>" which silences genuine property typos and type mismatches.',
+      fix: 'Use "satisfies Record<string, Color>" for strict validation with zero type widening.'
+    },
+    nextTopicId: 'as-const-assertions'
+  },
+  {
+    id: 'as-const-assertions',
+    title: 'as const & Const Assertions',
+    category: 'types',
+    difficulty: 'Intermediate',
+    summary: 'Suffixing an expression with "as const" signals to the compiler that all literal types should be preserved and object properties made readonly.',
+    mentalModel: 'Laminating a Document: Once laminated, no text can be altered, numbers become exact immutable constants, and arrays become fixed tuples.',
+    codeSnippet: `// Without as const: inferred as string[]
+const routesMutable = ['/home', '/about', '/contact'];
+
+// With as const: inferred as readonly ["/home", "/about", "/contact"]
+const ROUTES = ['/home', '/about', '/contact'] as const;
+type AppRoute = typeof ROUTES[number]; 
+// Inferred as: "/home" | "/about" | "/contact"
+
+const config = {
+  endpoint: 'https://api.com',
+  retries: 3
+} as const;
+// config.retries = 5; // ❌ Error: Cannot assign to 'retries' because it is a read-only property.`,
+    takeaways: [
+      '"as const" locks object properties as readonly and narrows strings/numbers to literal types.',
+      'Arrays become fixed readonly tuples instead of mutable arrays.',
+      'Ideal for creating single-source-of-truth configuration objects and deriving union types.'
+    ],
+    commonPitfall: {
+      mistake: 'Defining a separate union type manually: type Routes = "/home" | "/about" and duplicating the array.',
+      fix: 'Declare the array once with "as const" and derive the union with typeof array[number].'
+    },
+    nextTopicId: 'type-predicates'
+  },
+  {
+    id: 'type-predicates',
+    title: 'Type Predicates & Assertion Functions',
+    category: 'types',
+    difficulty: 'Intermediate',
+    summary: 'Custom type guards with "param is Type" and assertion functions with "asserts condition" teach the compiler how to narrow types in custom logic.',
+    mentalModel: 'The Authenticity Certificate: An expert appraiser inspects a diamond and issues a formal signed certificate (is Diamond) guaranteeing its purity to buyers.',
+    codeSnippet: `interface Fish { swim: () => void; }
+interface Bird { fly: () => void; }
+
+// Custom Type Predicate:
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (pet as Fish).swim !== undefined;
+}
+
+function move(pet: Fish | Bird) {
+  if (isFish(pet)) {
+    pet.swim(); // TypeScript knows pet is Fish!
+  } else {
+    pet.fly();  // TypeScript knows pet is Bird!
+  }
+}
+
+// Assertion Function:
+function assertNonNull<T>(val: T, msg: string): asserts val is NonNullable<T> {
+  if (val === null || val === undefined) throw new Error(msg);
+}`,
+    takeaways: [
+      'Type predicate functions return a boolean and have the return type "argName is SpecificType".',
+      'Assertion functions (asserts condition) throw on failure and narrow the variable in the subsequent outer scope.',
+      'Enables clean filtering of arrays: array.filter(isNotNull).'
+    ],
+    commonPitfall: {
+      mistake: 'Writing a type predicate that returns a plain boolean: function isFish(p): boolean, failing to narrow the calling scope.',
+      fix: 'Explicitly specify the type predicate return type: pet is Fish.'
+    },
     nextTopicId: 'generics-basics'
   },
   {
@@ -239,6 +377,35 @@ function getProp<T, K extends keyof T>(obj: T, key: K): T[K] {
     commonPitfall: {
       mistake: 'Using T[keyof T] when a specific key is required, returning a broad union of all values.',
       fix: 'Use a second constrained generic parameter <T, K extends keyof T>(obj: T, key: K): T[K].'
+    },
+    nextTopicId: 'const-type-parameters'
+  },
+  {
+    id: 'const-type-parameters',
+    title: 'Const Type Parameters (TS 5.0+)',
+    category: 'generics',
+    difficulty: 'Advanced',
+    summary: 'TypeScript 5.0 introduced <const T> to allow functions to infer the most specific literal and readonly types without requiring callers to pass "as const".',
+    mentalModel: 'Automatic Seal: The function automatically adds the "as const" wax seal to whatever arguments you pass in, saving callers repetitive typing.',
+    codeSnippet: `// Without const modifier: T is inferred as string[]
+function getRoutesOld<T extends string[]>(routes: T): T {
+  return routes;
+}
+const r1 = getRoutesOld(['/home', '/dashboard']); // string[]
+
+// With const type parameter: T is inferred as readonly ['/home', '/dashboard']
+function getRoutesNew<const T extends readonly string[]>(routes: T): T {
+  return routes;
+}
+const r2 = getRoutesNew(['/home', '/dashboard']); // readonly ["/home", "/dashboard"]`,
+    takeaways: [
+      '<const T> infers literal string, number, and boolean types instead of wide primitives.',
+      'Array literals passed to <const T> functions are inferred as readonly tuples.',
+      'Dramatically improves ergonomics for DSLs, router builders, and schema libraries.'
+    ],
+    commonPitfall: {
+      mistake: 'Expecting <const T> to freeze objects at runtime.',
+      fix: 'Remember that TypeScript is compile-time only; use Object.freeze() if runtime immutability is required.'
     },
     nextTopicId: 'conditional-types'
   },
@@ -329,6 +496,205 @@ const validMargin: CSSLength = '16px'; // ✅
     commonPitfall: {
       mistake: 'Creating giant combinatoric unions with 4+ large unions, causing compiler slowdowns.',
       fix: 'Keep template literal combinations focused on discrete finite sets.'
+    },
+    nextTopicId: 'branded-types'
+  },
+  {
+    id: 'branded-types',
+    title: 'Branded / Nominal Types & Unit Safety',
+    category: 'advanced',
+    difficulty: 'Advanced',
+    summary: 'TypeScript is structural by default, but branded types use unique symbol tags to enforce nominal distinction between identical primitives (e.g. USD vs EUR, UserId vs PostId).',
+    mentalModel: 'The Currency Exchange: A $100 dollar bill and a €100 euro bill are both paper rectangles with the number 100 on them, but you cannot spend euros in a US vending machine.',
+    codeSnippet: `// Brand helper:
+declare const brand: unique symbol;
+type Brand<T, B> = T & { readonly [brand]: B };
+
+type USD = Brand<number, 'USD'>;
+type EUR = Brand<number, 'EUR'>;
+
+function makeUSD(n: number): USD { return n as USD; }
+function makeEUR(n: number): EUR { return n as EUR; }
+
+function payInUSD(amount: USD) {
+  console.log(\`Paid USD: \${amount}\`);
+}
+
+const walletUSD = makeUSD(50);
+const walletEUR = makeEUR(50);
+
+payInUSD(walletUSD); // ✅ Valid!
+// payInUSD(walletEUR); // ❌ Error! Type 'EUR' is not assignable to type 'USD'.`,
+    takeaways: [
+      'Branded types attach a unique nominal phantom property to prevent accidental primitive substitution.',
+      'Essential for safety in financial applications (currencies), physics calculations (meters vs feet), and database IDs.',
+      'Zero runtime overhead—the brand symbol exists purely at compile time.'
+    ],
+    commonPitfall: {
+      mistake: 'Passing raw primitive numbers or unvalidated strings to functions expecting specific branded IDs.',
+      fix: 'Use constructor/validation functions (e.g. parseEmail()) that return branded types.'
+    },
+    nextTopicId: 'indexed-access-types'
+  },
+  {
+    id: 'indexed-access-types',
+    title: 'Indexed Access Types & keyof typeof',
+    category: 'types',
+    difficulty: 'Intermediate',
+    summary: 'Indexed access types let you look up the type of a specific property on another type using T[K] syntax.',
+    mentalModel: 'The Card Catalog: You look up the drawer label ("author") in the library catalog to inspect the exact format of the author card.',
+    codeSnippet: `const API_ROUTES = {
+  users: '/api/v1/users',
+  posts: '/api/v1/posts',
+  auth: { login: '/api/v1/login', logout: '/api/v1/logout' }
+};
+
+type Routes = typeof API_ROUTES;
+type AuthRoutes = Routes['auth']; // { login: string; logout: string }
+type RouteValues = Routes[keyof Routes]; // string | { login: string; logout: string }`,
+    takeaways: [
+      'Syntax: Type["propertyName"].',
+      'Use typeof object to capture the type of an existing JavaScript runtime variable.',
+      'Index with [number] to extract the element type of an array (e.g. MyArray[number]).'
+    ],
+    commonPitfall: {
+      mistake: 'Indexing with dot notation: Type.prop (which is invalid type syntax; use Type["prop"]).',
+      fix: 'Always use bracket notation for indexed access types: Type["prop"].'
+    },
+    nextTopicId: 'covariance-contravariance'
+  },
+  {
+    id: 'covariance-contravariance',
+    title: 'Function Variance: Covariance & Contravariance',
+    category: 'advanced',
+    difficulty: 'Expert',
+    summary: 'Variance describes how subtyping between complex types relates to subtyping between their components. Return types are Covariant, while function parameters are Contravariant.',
+    mentalModel: 'The Strict Restaurant Contract: A restaurant promise says "Order a Meal, get Food" (Covariant return). But to fulfill the chef role, you must be able to cook ANY meal, not just burgers (Contravariant parameter).',
+    codeSnippet: `class Animal { name = 'Animal'; }
+class Dog extends Animal { bark() {} }
+
+// 1. Return Types are COVARIANT (Dog is assignable to Animal):
+type AnimalProducer = () => Animal;
+type DogProducer = () => Dog;
+let produceAnimal: AnimalProducer = () => new Dog(); // ✅ Safe!
+
+// 2. Parameter Types are CONTRAVARIANT (AnimalConsumer is assignable to DogConsumer):
+type AnimalConsumer = (a: Animal) => void;
+type DogConsumer = (d: Dog) => void;
+let consumeDog: DogConsumer = (a: Animal) => console.log(a.name); // ✅ Safe!`,
+    takeaways: [
+      'Covariance: Subtype relationship is preserved in the same direction (Dog -> Animal produces () => Dog -> () => Animal).',
+      'Contravariance: Subtype relationship is reversed in function parameters ((Animal) => void is assignable to (Dog) => void).',
+      'TypeScript enables strictFunctionTypes by default to catch unsafe parameter bivariance.'
+    ],
+    commonPitfall: {
+      mistake: 'Using method syntax in interfaces (foo(x: Dog): void) which defaults to unsafe bivariance.',
+      fix: 'Use property function syntax: foo: (x: Dog) => void to enforce strict contravariance.'
+    },
+    nextTopicId: 'declaration-merging'
+  },
+  {
+    id: 'declaration-merging',
+    title: 'Declaration Merging & Module Augmentation',
+    category: 'advanced',
+    difficulty: 'Advanced',
+    summary: 'TypeScript allows merging multiple declarations sharing the same name (e.g. interfaces, namespaces) into a single definition.',
+    mentalModel: 'The Addendum: When new amendments are ratified to the constitution, they merge into the official legal document without replacing earlier articles.',
+    codeSnippet: `// Merging Interfaces:
+interface User {
+  id: string;
+}
+interface User {
+  name: string; // Merged into User { id: string; name: string }
+}
+
+// Module Augmentation (extending Express Request):
+declare global {
+  namespace Express {
+    interface Request {
+      currentUser?: { id: string; role: string };
+    }
+  }
+}`,
+    takeaways: [
+      'Interfaces with the same name in the same scope automatically merge their member fields.',
+      'Type aliases ("type") cannot merge; attempting to declare duplicate types throws an error.',
+      'Module augmentation lets you add custom properties to third-party npm packages safely.'
+    ],
+    commonPitfall: {
+      mistake: 'Trying to redeclare conflicting property types across merged interfaces (e.g. id: string vs id: number).',
+      fix: 'Ensure merged properties have identical or compatible types.'
+    },
+    nextTopicId: 'decorators-tc39'
+  },
+  {
+    id: 'decorators-tc39',
+    title: 'Stage 3 TC39 Decorators (TS 5.0+)',
+    category: 'advanced',
+    difficulty: 'Advanced',
+    summary: 'Standard ECMAScript Decorators allow annotating and modifying class declarations, methods, and fields cleanly without experimental flags.',
+    mentalModel: 'The Security Checkpoint Guard: A function wrapper placed before entering a secure room that logs timestamps and checks credentials before allowing entry.',
+    codeSnippet: `// Method timing decorator:
+function loggedMethod<This, Args extends any[], Return>(
+  target: (this: This, ...args: Args) => Return,
+  context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Return>
+) {
+  return function (this: This, ...args: Args): Return {
+    console.log(\`Calling \${String(context.name)} with args:\`, args);
+    const result = target.call(this, ...args);
+    console.log(\`Result:\`, result);
+    return result;
+  };
+}
+
+class Calculator {
+  @loggedMethod
+  add(a: number, b: number) {
+    return a + b;
+  }
+}`,
+    takeaways: [
+      'TypeScript 5.0 implements standard TC39 Stage 3 decorators (no experimentalDecorators flag needed).',
+      'Decorators receive target and a type-safe context object (ClassMethodDecoratorContext).',
+      'Used heavily in modern backend frameworks like NestJS and UI component libraries.'
+    ],
+    commonPitfall: {
+      mistake: 'Confusing legacy experimentalDecorators syntax with modern Stage 3 decorator context APIs.',
+      fix: 'Use ClassMethodDecoratorContext and modern TS 5.0+ signature patterns.'
+    },
+    nextTopicId: 'tsconfig-module-resolution'
+  },
+  {
+    id: 'tsconfig-module-resolution',
+    title: 'Modern tsconfig & moduleResolution: "bundler"',
+    category: 'compiler',
+    difficulty: 'Intermediate',
+    summary: 'Modern TypeScript projects use moduleResolution: "bundler" with ESNext module targets to mirror Vite, Webpack, and Next.js resolution rules.',
+    mentalModel: 'The GPS Map Version: An updated satellite map that knows modern roundabouts and bridges exists, instead of an old 1990s paper road atlas.',
+    codeSnippet: `// tsconfig.json (Modern recommended Next.js / Vite setup):
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}`,
+    takeaways: [
+      '"moduleResolution": "bundler" supports package.json "exports" subpaths and extensionless imports.',
+      '"isolatedModules": true ensures single-file transpilers (esbuild, SWC) can transpile each file independently.',
+      '"noEmit": true offloads bundle generation to Vite/Next.js while using tsc purely for type diagnostics.'
+    ],
+    commonPitfall: {
+      mistake: 'Using legacy moduleResolution: "node" in modern Vite/Next.js projects, breaking package.json exports mapping.',
+      fix: 'Update tsconfig.json to moduleResolution: "bundler" for modern ESM tooling.'
     },
     nextTopicId: 'compiler-pipeline'
   },
