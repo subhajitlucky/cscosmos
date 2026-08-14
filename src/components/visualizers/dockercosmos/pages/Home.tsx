@@ -2,12 +2,15 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Box, Cpu, HardDrive, HelpCircle, Layers, Network, Play, Server, Sparkles, Terminal, Waves, Zap } from 'lucide-react';
+import { ArrowRight, BookOpen, Box, Cpu, Globe, HardDrive, HelpCircle, Layers, Network, Play, Server, Sparkles, Terminal, Waves, Zap } from 'lucide-react';
 import { LinuxNamespacesVisualizer } from '../components/LinuxNamespacesVisualizer';
 import { OverlayFsLayersVisualizer } from '../components/OverlayFsLayersVisualizer';
+import { MultiStageCacheVisualizer } from '../components/MultiStageCacheVisualizer';
 import { CgroupsV2Visualizer } from '../components/CgroupsV2Visualizer';
 import { K8sPodLifecycleVisualizer } from '../components/K8sPodLifecycleVisualizer';
 import { K8sServiceRoutingVisualizer } from '../components/K8sServiceRoutingVisualizer';
+import { IngressRouterVisualizer } from '../components/IngressRouterVisualizer';
+import { CniPacketFlowVisualizer } from '../components/CniPacketFlowVisualizer';
 import { DockerCliPlayground } from '../components/DockerCliPlayground';
 
 export default function Home() {
@@ -22,7 +25,7 @@ export default function Home() {
           Master the <span className="text-sky-600 dark:text-sky-400">Docker &amp; K8s</span> Engine.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for the 6 Linux Kernel Namespaces, OverlayFS layered filesystems with Copy-on-Write, cgroups v2 resource limits, Kubernetes Pod lifecycle, and kube-proxy packet routing.
+          Interactive visualizers for the 6 Linux Kernel Namespaces, OverlayFS Copy-on-Write layers, multi-stage build caching, cgroups v2 resource limits, Kubernetes Pod lifecycle, Ingress controllers, and cross-node CNI eBPF packet routing.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -46,16 +49,25 @@ export default function Home() {
       {/* Feature 2: OverlayFS Layers Visualizer */}
       <OverlayFsLayersVisualizer />
 
-      {/* Feature 3: cgroups v2 & OOM Killer */}
+      {/* Feature 3: Multi-Stage BuildKit & Layer Cache Visualizer */}
+      <MultiStageCacheVisualizer />
+
+      {/* Feature 4: cgroups v2 & OOM Killer */}
       <CgroupsV2Visualizer />
 
-      {/* Feature 4: K8s Pod Lifecycle Stepper */}
+      {/* Feature 5: K8s Pod Lifecycle Stepper */}
       <K8sPodLifecycleVisualizer />
 
-      {/* Feature 5: K8s Service & kube-proxy Routing */}
+      {/* Feature 6: K8s Service & kube-proxy Routing */}
       <K8sServiceRoutingVisualizer />
 
-      {/* Feature 6: In-Browser Docker/kubectl Sandbox */}
+      {/* Feature 7: Ingress Controller Layer-7 Gateway */}
+      <IngressRouterVisualizer />
+
+      {/* Feature 8: Cross-Node CNI Networking (eBPF vs VXLAN) */}
+      <CniPacketFlowVisualizer />
+
+      {/* Feature 9: In-Browser Docker/kubectl Sandbox */}
       <DockerCliPlayground />
 
       {/* Navigation Cards */}
