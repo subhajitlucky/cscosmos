@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.wasmcosmos-root {
+  --wasm-primary: #654ff0;
+  --wasm-primary-hover: #523de0;
+  --wasm-magenta: #d946ef;
+  --wasm-cyan: #06b6d4;
+  --wasm-emerald: #10b981;
+  --wasm-amber: #f59e0b;
+  --wasm-rose: #f43f5e;
+  
+  --wasm-bg: #090a12;
+  --wasm-surface: #111322;
+  --wasm-surface-2: #181b30;
+  --wasm-border: rgba(101, 79, 240, 0.25);
+  --wasm-border-subtle: rgba(255, 255, 255, 0.08);
+  --wasm-text: #f8fafc;
+  --wasm-muted: #8b92af;
+  
+  --wasm-display: 'Syne', sans-serif;
+  --wasm-sans: 'Inter', sans-serif;
+  --wasm-mono: 'DM Mono', monospace;
+
+  font-family: var(--wasm-sans);
+  background-color: var(--wasm-bg);
+  color: var(--wasm-text);
+  min-height: 100vh;
+}
+
+html.light .wasmcosmos-root,
+html[data-theme='light'] .wasmcosmos-root,
+html:not(.dark) .wasmcosmos-root,
+.wasmcosmos-root[data-theme='light'],
+.wasmcosmos-root.light-mode {
+  --wasm-bg: #f8fafc;
+  --wasm-surface: #ffffff;
+  --wasm-surface-2: #f1f5f9;
+  --wasm-border: rgba(101, 79, 240, 0.28);
+  --wasm-border-subtle: rgba(0, 0, 0, 0.08);
+  --wasm-text: #0f172a;
+  --wasm-muted: #64748b;
+}
+
+html.dark .wasmcosmos-root,
+html[data-theme='dark'] .wasmcosmos-root,
+.wasmcosmos-root[data-theme='dark'],
+.wasmcosmos-root.dark-mode {
+  --wasm-bg: #090a12;
+  --wasm-surface: #111322;
+  --wasm-surface-2: #181b30;
+  --wasm-border: rgba(101, 79, 240, 0.25);
+  --wasm-border-subtle: rgba(255, 255, 255, 0.08);
+  --wasm-text: #f8fafc;
+  --wasm-muted: #8b92af;
+}
+
+.wasmcosmos-root .font-display {
+  font-family: var(--wasm-display);
+}
+
+.wasmcosmos-root .font-mono {
+  font-family: var(--wasm-mono);
+}
+
+.wasmcosmos-root .wasm-glow {
+  text-shadow: 0 0 25px rgba(101, 79, 240, 0.55), 0 0 50px rgba(101, 79, 240, 0.2);
+}
+
+.wasmcosmos-root .wasm-card {
+  background: var(--wasm-surface);
+  border: 1px solid var(--wasm-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wasmcosmos-root .wasm-card:hover {
+  border-color: var(--wasm-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(101, 79, 240, 0.15);
+}
+
+.wasmcosmos-root .wasm-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(101, 79, 240, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(101, 79, 240, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
