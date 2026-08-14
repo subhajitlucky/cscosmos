@@ -18,6 +18,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/golangviz',
   '/tsviz',
   '/redisviz',
+  '/sqlcosmos',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -33,6 +34,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/golangviz',
   '/tsviz',
   '/redisviz',
+  '/sqlcosmos',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {

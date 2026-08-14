@@ -44,6 +44,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/golangviz` | **Absorbed** | Go GMP Scheduler, Channels, Slice Memory Header, Stepper |
 | `/tsviz` | **Absorbed** | TypeScript Type Narrowing, CFA, Generics, Utility Lab & TSC Pipeline |
 | `/redisviz` | **Absorbed** | Redis Data Structures (SDS, SkipList), Caching Patterns, Eviction, CLI |
+| `/sqlcosmos` | **Absorbed** | SQL Query Planner, B+ Tree Indexing, Joins Engine, EXPLAIN, MVCC |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -62,9 +63,9 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 9: `golangviz` -> `/golangviz` (Completed: Go GMP Scheduler, Channels, Slice Memory Lab, Stepper, 70 Concepts, Flashcards, 50 Pitfalls)
 - ✅ Site 10: `tsviz` -> `/tsviz` (Completed: Control Flow Narrowing, Structural Subtyping, 12 Utility Types Lab, TSC 5-Stage Pipeline, Type Challenges, Flashcards, Cheat Sheet)
 - ✅ Site 11: `redisviz` -> `/redisviz` (Completed: In-Memory Data Structures SDS/SkipList/QuickList, Caching Strategies Lab, Eviction Simulator, Interactive CLI, Persistence RDB/AOF)
+- ✅ Site 12: `sqlcosmos` -> `/sqlcosmos` (Completed: B+ Tree Index Traversal, EXPLAIN ANALYZE Cost Optimizer, Physical Joins Engine, MVCC Tuple Versioning, SQL Playground)
 
 ### Planned Next Absorptions:
-- ⏳ Site 12: `sqlcosmos` (SQL queries & Index visualizer)
 - ⏳ Site 13: `nodecosmos` (Node.js runtime & Libuv event loop visualizer)
 - ⏳ Site 14: `dockercosmos` & `k8scosmos` (Container & Orchestration visualizers)
 - ⏳ Site 15: `blockchainviz` & `evminternals`
