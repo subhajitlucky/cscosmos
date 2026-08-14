@@ -43,6 +43,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/nextjscosmos` | **Absorbed** | Next.js 15 App Router concepts, RSC, SSG/SSR/ISR, Error Debugger |
 | `/golangviz` | **Absorbed** | Go GMP Scheduler, Channels, Slice Memory Header, Stepper |
 | `/tsviz` | **Absorbed** | TypeScript Type Narrowing, CFA, Generics, Utility Lab & TSC Pipeline |
+| `/redisviz` | **Absorbed** | Redis Data Structures (SDS, SkipList), Caching Patterns, Eviction, CLI |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -59,10 +60,10 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 7: `reactcosmos` -> `/reactcosmos` (Completed: 35 pre-rendered React topics, Fiber visualizer, Hooks simulator, lab playground)
 - ✅ Site 8: `nextjscosmos` -> `/nextjscosmos` (Completed: 35 pre-rendered Next.js 15 App Router modules, RSC visualizer, SSG/SSR/ISR engine, Error debugger & Interactive lab)
 - ✅ Site 9: `golangviz` -> `/golangviz` (Completed: Go GMP Scheduler, Channels, Slice Memory Lab, Stepper, 70 Concepts, Flashcards, 50 Pitfalls)
-- ✅ Site 10: `tsviz` -> `/tsviz` (Completed: Control Flow Narrowing, Structural Subtyping, 12 Utility Types Lab, TSC 5-Stage Pipeline, Diagnostic Error Debugger)
+- ✅ Site 10: `tsviz` -> `/tsviz` (Completed: Control Flow Narrowing, Structural Subtyping, 12 Utility Types Lab, TSC 5-Stage Pipeline, Type Challenges, Flashcards, Cheat Sheet)
+- ✅ Site 11: `redisviz` -> `/redisviz` (Completed: In-Memory Data Structures SDS/SkipList/QuickList, Caching Strategies Lab, Eviction Simulator, Interactive CLI, Persistence RDB/AOF)
 
 ### Planned Next Absorptions:
-- ⏳ Site 11: `redisviz` (Redis In-Memory Engine & Data Structures visualizer)
 - ⏳ Site 12: `sqlcosmos` (SQL queries & Index visualizer)
 - ⏳ Site 13: `nodecosmos` (Node.js runtime & Libuv event loop visualizer)
 - ⏳ Site 14: `dockercosmos` & `k8scosmos` (Container & Orchestration visualizers)

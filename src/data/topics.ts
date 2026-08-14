@@ -73,7 +73,7 @@ export const topics: Topic[] = [
     // 4. Data & State
     createTopic("SQL Visualizer (Queries, Indexes)", "fullstack", { status: 'active', url: "https://sqlcosmos.vercel.app" }),
     createTopic("MongoDB Visualizer (Documents, Aggregation)", "fullstack"),
-    createTopic("Redis Visualizer (Caching, Data Structures)", "fullstack", { status: 'active', url: "https://redisviz.vercel.app" }),
+    createTopic("Redis Visualizer (Caching, Data Structures)", "fullstack", { status: 'active', slug: 'redisviz', url: '/redisviz' }),
     createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack"),
 
     // 5. Architecture & Scale
