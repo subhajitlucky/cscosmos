@@ -2,11 +2,14 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Database, GitMerge, HardDrive, HelpCircle, Layers, Play, Search, ShieldCheck, Sparkles, Terminal, Trophy, Zap } from 'lucide-react';
+import { ArrowRight, BookOpen, Database, Filter, GitMerge, HardDrive, HelpCircle, Layers, Play, Search, ShieldAlert, ShieldCheck, Sparkles, Table, Terminal, Trophy, Zap } from 'lucide-react';
 import { BTreeIndexVisualizer } from '../components/BTreeIndexVisualizer';
+import { CompositeIndexEvaluator } from '../components/CompositeIndexEvaluator';
 import { ExplainPlanVisualizer } from '../components/ExplainPlanVisualizer';
 import { SqlJoinsVisualizer } from '../components/SqlJoinsVisualizer';
+import { TransactionAnomalyStepper } from '../components/TransactionAnomalyStepper';
 import { AcidMvccVisualizer } from '../components/AcidMvccVisualizer';
+import { WindowFunctionVisualizer } from '../components/WindowFunctionVisualizer';
 import { SqlPlayground } from '../components/SqlPlayground';
 
 export default function Home() {
@@ -21,7 +24,7 @@ export default function Home() {
           Master the <span className="text-indigo-600 dark:text-indigo-400">SQL &amp; Database</span> Engine.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive engines for B+ Tree index traversal, EXPLAIN ANALYZE cost optimization, physical joins (Nested Loop, Hash, Merge), MVCC tuple versioning, and live SQL execution.
+          Interactive engines for B+ Tree index traversal, Composite Index Prefix rules, EXPLAIN cost plans, physical joins, ACID isolation anomalies, and analytical window functions.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -42,16 +45,25 @@ export default function Home() {
       {/* Feature 1: B+ Tree Index Visualizer */}
       <BTreeIndexVisualizer />
 
-      {/* Feature 2: EXPLAIN ANALYZE Cost Plan Inspector */}
+      {/* Feature 2: Composite Index & Leftmost Prefix Rule */}
+      <CompositeIndexEvaluator />
+
+      {/* Feature 3: EXPLAIN ANALYZE Cost Plan Inspector */}
       <ExplainPlanVisualizer />
 
-      {/* Feature 3: Joins Engine */}
+      {/* Feature 4: Joins Engine */}
       <SqlJoinsVisualizer />
 
-      {/* Feature 4: MVCC & Tuple Versioning Simulator */}
+      {/* Feature 5: Concurrency Anomaly & Isolation Stepper */}
+      <TransactionAnomalyStepper />
+
+      {/* Feature 6: MVCC & Tuple Versioning Simulator */}
       <AcidMvccVisualizer />
 
-      {/* Feature 5: In-Browser SQL Playground */}
+      {/* Feature 7: Window Functions Frame Partition Visualizer */}
+      <WindowFunctionVisualizer />
+
+      {/* Feature 8: In-Browser SQL Playground */}
       <SqlPlayground />
 
       {/* Quick Navigation Cards */}
