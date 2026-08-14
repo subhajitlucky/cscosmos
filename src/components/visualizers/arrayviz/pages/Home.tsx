@@ -7,8 +7,11 @@ import { ContiguousMemoryVisualizer } from '../components/ContiguousMemoryVisual
 import { CacheLocalityVisualizer } from '../components/CacheLocalityVisualizer';
 import { DynamicArrayResizingVisualizer } from '../components/DynamicArrayResizingVisualizer';
 import { SlidingWindowVisualizer } from '../components/SlidingWindowVisualizer';
+import { DutchNationalFlagVisualizer } from '../components/DutchNationalFlagVisualizer';
+import { MonotonicStackVisualizer } from '../components/MonotonicStackVisualizer';
 import { KmpPatternVisualizer } from '../components/KmpPatternVisualizer';
 import { RabinKarpRollingHashVisualizer } from '../components/RabinKarpRollingHashVisualizer';
+import { ManacherVisualizer } from '../components/ManacherVisualizer';
 import { ArrayPlayground } from '../components/ArrayPlayground';
 
 export default function Home() {
@@ -23,7 +26,7 @@ export default function Home() {
           Master <span className="text-emerald-600 dark:text-emerald-400">Array Memory &amp; Strings</span>.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for physical contiguous RAM pointer arithmetic, 64-byte CPU cache lines, dynamic geometric doubling, sliding window two-pointers, KMP LPS pattern search, and Rabin-Karp rolling hashes.
+          Interactive visualizers for physical contiguous RAM pointer arithmetic, 64-byte CPU cache lines, dynamic geometric doubling, sliding window two-pointers, Dutch National Flag 3-way partitioning, Monotonic stacks, KMP LPS pattern search, Rabin-Karp rolling hashes, and Manacher&apos;s O(N) palindromes.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -53,13 +56,22 @@ export default function Home() {
       {/* Feature 4: Sliding Window Subarray Stepper */}
       <SlidingWindowVisualizer />
 
-      {/* Feature 5: KMP Pattern Matching & LPS Table */}
+      {/* Feature 5: Dutch National Flag 3-Way Partitioning */}
+      <DutchNationalFlagVisualizer />
+
+      {/* Feature 6: Monotonic Decreasing Stack */}
+      <MonotonicStackVisualizer />
+
+      {/* Feature 7: KMP Pattern Matching & LPS Table */}
       <KmpPatternVisualizer />
 
-      {/* Feature 6: Rabin-Karp Polynomial Rolling Hash */}
+      {/* Feature 8: Rabin-Karp Polynomial Rolling Hash */}
       <RabinKarpRollingHashVisualizer />
 
-      {/* Feature 7: Interactive DSA Sandbox */}
+      {/* Feature 9: Manacher's O(N) Palindromic Substring Finder */}
+      <ManacherVisualizer />
+
+      {/* Feature 10: Interactive DSA Sandbox */}
       <ArrayPlayground />
 
       {/* Navigation Cards */}
