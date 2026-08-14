@@ -25,6 +25,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/arrayviz',
   '/systemdesignviz',
   '/apiviz',
+  '/authviz',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -47,6 +48,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/arrayviz',
   '/systemdesignviz',
   '/apiviz',
+  '/authviz',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {

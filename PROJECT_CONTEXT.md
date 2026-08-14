@@ -51,6 +51,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/arrayviz` | **Absorbed** | Contiguous RAM Layout, 64-Byte Cache Lines, Sliding Window, KMP, Rabin-Karp |
 | `/systemdesignviz` | **Absorbed** | Consistent Hashing Ring, Raft Consensus, Rate Limiters, CAP Partitioning, Sharding |
 | `/apiviz` | **Absorbed** | GraphQL AST Resolvers, DataLoader N+1 Batching, Protocols Matrix, Idempotency Keys |
+| `/authviz` | **Absorbed** | OAuth 2.0 PKCE, JWT RS256/None Exploit, HttpOnly Cookies, RBAC/ABAC, Argon2id |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -76,9 +77,10 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 16: `arrayviz` -> `/arrayviz` (Completed: Contiguous RAM Address Arithmetic, 64-Byte CPU Cache Line Spatial Locality, Geometric Resizing, Sliding Window Subarrays, KMP & Rabin-Karp)
 - ✅ Site 17: `systemdesignviz` -> `/systemdesignviz` (Completed: Consistent Hashing & Virtual Nodes, Raft Consensus 5-Node Cluster, Distributed Rate Limiters, CAP Theorem & PACELC, Sharding & WAL, Back-of-the-Envelope Calculator)
 - ✅ Site 18: `apiviz` -> `/apiviz` (Completed: GraphQL AST Resolvers Pipeline, DataLoader N+1 Batching & Caching, REST vs GraphQL vs gRPC vs tRPC Matrix, Idempotency Keys & Safe Retries, Mock API Sandbox)
+- ✅ Site 19: `authviz` -> `/authviz` (Completed: OAuth 2.0 PKCE Flow Stepper, JWT RS256/None Exploit Inspector, HttpOnly Cookie vs LocalStorage XSS Sandbox, RBAC vs ABAC Engine, Argon2id vs bcrypt Hashing Calculator)
 
 ### Planned Next Absorptions:
-- ⏳ Site 19: `authviz` (OAuth 2.0 PKCE, OpenID Connect, JWT Claims & RS256 Signatures, Session Cookies vs Bearer Tokens)
+- ⏳ Site 20: `mlviz` / `aiviz` (Neural Networks, Backpropagation, Attention Mechanism & Transformers, Gradient Descent)
 
 ---
 

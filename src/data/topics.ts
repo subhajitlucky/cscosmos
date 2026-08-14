@@ -68,7 +68,7 @@ export const topics: Topic[] = [
     createTopic("Rust Backend Internals (Ownership, Concurrency)", "fullstack" , { status: 'active', url: "https://rustviz.vercel.app" }),
     createTopic("Python FastAPI Backend (Async, Dependency Injection)", "fullstack"),
     createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', slug: 'apiviz', url: '/apiviz' }),
-    createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', url: "https://authviz.vercel.app" }),
+    createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', slug: 'authviz', url: '/authviz' }),
 
     // 4. Data & State
     createTopic("SQL Visualizer (Queries, Indexes)", "fullstack", { status: 'active', slug: 'sqlcosmos', url: '/sqlcosmos' }),

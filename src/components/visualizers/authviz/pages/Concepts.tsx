@@ -1,0 +1,78 @@
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { ArrowRight, BookOpen, Filter, ShieldCheck, Sparkles } from 'lucide-react';
+import { AUTH_TOPICS, type AuthTopic } from '../data/topics';
+
+export default function Concepts() {
+  const [filter, setFilter] = useState<string>('all');
+
+  const filtered = filter === 'all'
+    ? AUTH_TOPICS
+    : AUTH_TOPICS.filter((t) => t.category === filter);
+
+  return (
+    <div className="space-y-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+      <div className="space-y-2">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-widest">
+          Curriculum
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+          Authentication, OAuth 2.0 &amp; Security Concepts
+        </h1>
+        <p className="text-muted-foreground text-sm sm:text-base">
+          20 in-depth architectural topics from OAuth 2.0 PKCE and RS256 JWTs to HttpOnly Cookie defenses, RBAC/ABAC engines, and Argon2id password hashing.
+        </p>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap gap-2">
+        {['all', 'oauth-oidc', 'jwt-tokens', 'sessions-cookies', 'authz-rbac', 'cryptography-passwords'].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setFilter(cat)}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold capitalize transition-all ${
+              filter === cat
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'bg-card border border-border text-foreground hover:border-emerald-500'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filtered.map((topic) => (
+          <Link
+            key={topic.id}
+            href={`/authviz/concepts/${topic.id}`}
+            className="p-6 rounded-3xl bg-card border border-border/80 hover:border-emerald-500/50 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between group"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
+                  {topic.category}
+                </span>
+                <span className="text-xs text-muted-foreground font-mono">{topic.difficulty}</span>
+              </div>
+              <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-500 transition-colors">
+                {topic.title}
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                {topic.summary}
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-border flex items-center justify-between text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+              <span>Start Interactive Lesson</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
