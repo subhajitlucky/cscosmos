@@ -2,13 +2,16 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Activity, ArrowRight, BookOpen, Calculator, Database, Gauge, GitFork, HelpCircle, Layers, Network, Server, Sparkles, Terminal, Zap } from 'lucide-react';
+import { Activity, ArrowRight, BookOpen, Calculator, Database, Gauge, GitFork, HardDrive, HelpCircle, Layers, Network, Server, ShieldCheck, Sparkles, Terminal, Zap } from 'lucide-react';
 import { ConsistentHashingVisualizer } from '../components/ConsistentHashingVisualizer';
 import { RaftConsensusVisualizer } from '../components/RaftConsensusVisualizer';
 import { RateLimiterVisualizer } from '../components/RateLimiterVisualizer';
 import { CapTheoremVisualizer } from '../components/CapTheoremVisualizer';
 import { DatabaseShardingVisualizer } from '../components/DatabaseShardingVisualizer';
 import { CachePatternsVisualizer } from '../components/CachePatternsVisualizer';
+import { CircuitBreakerVisualizer } from '../components/CircuitBreakerVisualizer';
+import { KafkaPartitionVisualizer } from '../components/KafkaPartitionVisualizer';
+import { WalCrashRecoveryVisualizer } from '../components/WalCrashRecoveryVisualizer';
 import { CapacityCalculator } from '../components/CapacityCalculator';
 
 export default function Home() {
@@ -23,7 +26,7 @@ export default function Home() {
           Master <span className="text-indigo-600 dark:text-indigo-400">System Design &amp; Scale</span>.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for Consistent Hashing rings, Raft consensus leader elections, distributed Token/Leaky bucket rate limiters, CAP Theorem network partitions, horizontal database sharding, and back-of-the-envelope capacity estimations.
+          Interactive visualizers for Consistent Hashing rings, Raft consensus leader elections, distributed Token/Leaky bucket rate limiters, CAP Theorem network partitions, Circuit Breakers, Kafka partition rebalances, Write-Ahead Log (WAL) crash recovery, and back-of-the-envelope capacity estimations.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -53,13 +56,22 @@ export default function Home() {
       {/* Feature 4: CAP Theorem Network Partition Simulator */}
       <CapTheoremVisualizer />
 
-      {/* Feature 5: Database Sharding & Shard Key Routing */}
+      {/* Feature 5: Circuit Breaker & Cascading Failure Stepper */}
+      <CircuitBreakerVisualizer />
+
+      {/* Feature 6: Kafka Partition Log & Consumer Group Rebalance */}
+      <KafkaPartitionVisualizer />
+
+      {/* Feature 7: Write-Ahead Log (WAL) & Crash Recovery */}
+      <WalCrashRecoveryVisualizer />
+
+      {/* Feature 8: Database Sharding & Shard Key Routing */}
       <DatabaseShardingVisualizer />
 
-      {/* Feature 6: Cache-Aside vs Write-Through Patterns */}
+      {/* Feature 9: Cache-Aside vs Write-Through Patterns */}
       <CachePatternsVisualizer />
 
-      {/* Feature 7: Back-of-the-Envelope Scale Calculator */}
+      {/* Feature 10: Back-of-the-Envelope Scale Calculator */}
       <CapacityCalculator />
 
       {/* Navigation Cards */}
