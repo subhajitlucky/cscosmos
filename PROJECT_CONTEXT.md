@@ -49,6 +49,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/dockercosmos` | **Absorbed** | Linux Namespaces, cgroups v2, OverlayFS, Pod Lifecycle, kube-proxy |
 | `/blockchainviz` | **Absorbed** | Block Mining, Merkle Trees, EVM Stack, UTXO vs Account, Gossip Consensus |
 | `/arrayviz` | **Absorbed** | Contiguous RAM Layout, 64-Byte Cache Lines, Sliding Window, KMP, Rabin-Karp |
+| `/systemdesignviz` | **Absorbed** | Consistent Hashing Ring, Raft Consensus, Rate Limiters, CAP Partitioning, Sharding |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -72,9 +73,10 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 14: `dockercosmos` -> `/dockercosmos` (Completed: 6 Linux Kernel Namespaces, OverlayFS Layered Storage Driver & CoW, cgroups v2 & OOM Killer, K8s Pod Lifecycle, kube-proxy Routing)
 - ✅ Site 15: `blockchainviz` -> `/blockchainviz` (Completed: PoW Block Mining & Nonce Stepper, Merkle Trees & O(log N) SPV Proofs, 256-bit EVM Opcode Stack & Gas Meter, UTXO vs Account Flow, P2P Gossip Consensus)
 - ✅ Site 16: `arrayviz` -> `/arrayviz` (Completed: Contiguous RAM Address Arithmetic, 64-Byte CPU Cache Line Spatial Locality, Geometric Resizing, Sliding Window Subarrays, KMP & Rabin-Karp)
+- ✅ Site 17: `systemdesignviz` -> `/systemdesignviz` (Completed: Consistent Hashing & Virtual Nodes, Raft Consensus 5-Node Cluster, Distributed Rate Limiters, CAP Theorem & PACELC, Sharding & WAL, Back-of-the-Envelope Calculator)
 
 ### Planned Next Absorptions:
-- ⏳ Site 17: `systemdesignviz` (High-scale distributed systems, Consistent Hashing, Raft Consensus, Sharding)
+- ⏳ Site 18: `graphqlviz` & `apiviz` (GraphQL Schema AST, Resolvers, N+1 DataLoader & REST)
 
 ---
 

@@ -81,7 +81,7 @@ export const topics: Topic[] = [
     createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack"),
     createTopic("Microservices Architecture (Services, Failures)", "fullstack"),
     createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack"),
-    createTopic("System Design & Scalability (Caching, Sharding)", "fullstack"),
+    createTopic("System Design & Scalability (Caching, Sharding)", "fullstack", { status: 'active', slug: 'systemdesignviz', url: '/systemdesignviz' }),
     createTopic("AI Application Engineering (RAG, Agents, Vector Search)", "fullstack"),
     createTopic("Testing & Quality Engineering (TDD, BDD, Property-Based)", "fullstack"),
 
