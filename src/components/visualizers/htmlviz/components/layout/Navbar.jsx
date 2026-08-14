@@ -33,6 +33,7 @@ export default function Navbar() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [mounted, setMounted] = React.useState(false);
+    const { theme, setTheme } = useCSCosmosTheme();
 
     React.useEffect(() => {
         setMounted(true);
