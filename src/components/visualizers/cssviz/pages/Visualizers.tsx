@@ -5,6 +5,8 @@ import GlassCard from '@/components/visualizers/cssviz/components/common/GlassCa
 import PageTransition from '@/components/visualizers/cssviz/components/common/PageTransition';
 import SectionHeader from '@/components/visualizers/cssviz/components/common/SectionHeader';
 import { topics } from '@/components/visualizers/cssviz/data/topics';
+import { CssChallengeArena } from '@/components/visualizers/cssviz/components/CssChallengeArena';
+import { CssSpecificityCalculator } from '@/components/visualizers/cssviz/components/CssSpecificityCalculator';
 
 const Visualizers = () => {
   const visualizerTopics = topics;
@@ -22,6 +24,12 @@ const Visualizers = () => {
           the dedicated page and opens the live visualizer.
         </p>
       </section>
+
+      {/* Feature 1: CSS Layout Challenge Arena */}
+      <CssChallengeArena />
+
+      {/* Feature 2: CSS Specificity & Cascade Calculator */}
+      <CssSpecificityCalculator />
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         {visualizerTopics.map((topic) => (
