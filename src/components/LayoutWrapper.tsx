@@ -24,6 +24,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/blockchainviz',
   '/arrayviz',
   '/systemdesignviz',
+  '/apiviz',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -45,6 +46,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/blockchainviz',
   '/arrayviz',
   '/systemdesignviz',
+  '/apiviz',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {

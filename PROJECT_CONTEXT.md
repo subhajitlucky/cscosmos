@@ -50,6 +50,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/blockchainviz` | **Absorbed** | Block Mining, Merkle Trees, EVM Stack, UTXO vs Account, Gossip Consensus |
 | `/arrayviz` | **Absorbed** | Contiguous RAM Layout, 64-Byte Cache Lines, Sliding Window, KMP, Rabin-Karp |
 | `/systemdesignviz` | **Absorbed** | Consistent Hashing Ring, Raft Consensus, Rate Limiters, CAP Partitioning, Sharding |
+| `/apiviz` | **Absorbed** | GraphQL AST Resolvers, DataLoader N+1 Batching, Protocols Matrix, Idempotency Keys |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -74,9 +75,10 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 15: `blockchainviz` -> `/blockchainviz` (Completed: PoW Block Mining & Nonce Stepper, Merkle Trees & O(log N) SPV Proofs, 256-bit EVM Opcode Stack & Gas Meter, UTXO vs Account Flow, P2P Gossip Consensus)
 - ✅ Site 16: `arrayviz` -> `/arrayviz` (Completed: Contiguous RAM Address Arithmetic, 64-Byte CPU Cache Line Spatial Locality, Geometric Resizing, Sliding Window Subarrays, KMP & Rabin-Karp)
 - ✅ Site 17: `systemdesignviz` -> `/systemdesignviz` (Completed: Consistent Hashing & Virtual Nodes, Raft Consensus 5-Node Cluster, Distributed Rate Limiters, CAP Theorem & PACELC, Sharding & WAL, Back-of-the-Envelope Calculator)
+- ✅ Site 18: `apiviz` -> `/apiviz` (Completed: GraphQL AST Resolvers Pipeline, DataLoader N+1 Batching & Caching, REST vs GraphQL vs gRPC vs tRPC Matrix, Idempotency Keys & Safe Retries, Mock API Sandbox)
 
 ### Planned Next Absorptions:
-- ⏳ Site 18: `graphqlviz` & `apiviz` (GraphQL Schema AST, Resolvers, N+1 DataLoader & REST)
+- ⏳ Site 19: `authviz` (OAuth 2.0 PKCE, OpenID Connect, JWT Claims & RS256 Signatures, Session Cookies vs Bearer Tokens)
 
 ---
 

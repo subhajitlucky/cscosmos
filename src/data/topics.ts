@@ -67,7 +67,7 @@ export const topics: Topic[] = [
     createTopic("Go Backend Internals (Goroutines, Memory)", "fullstack", { status: 'active', slug: 'golangviz', url: '/golangviz' }),
     createTopic("Rust Backend Internals (Ownership, Concurrency)", "fullstack" , { status: 'active', url: "https://rustviz.vercel.app" }),
     createTopic("Python FastAPI Backend (Async, Dependency Injection)", "fullstack"),
-    createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', url: "https://apiviz.vercel.app" }),
+    createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', slug: 'apiviz', url: '/apiviz' }),
     createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', url: "https://authviz.vercel.app" }),
 
     // 4. Data & State
