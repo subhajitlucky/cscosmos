@@ -5,23 +5,8 @@ import { notFound } from 'next/navigation';
 import Home from '@/components/visualizers/golangviz/app/page';
 import PathPage from '@/components/visualizers/golangviz/app/path/page';
 import PlaygroundPage from '@/components/visualizers/golangviz/app/playground/page';
-import IntroToGo from '@/components/visualizers/golangviz/app/concepts/introduction-to-go/page';
-import InstallSetup from '@/components/visualizers/golangviz/app/concepts/installation-and-setup/page';
-import HelloWorld from '@/components/visualizers/golangviz/app/concepts/hello-world/page';
-import BasicSyntax from '@/components/visualizers/golangviz/app/concepts/basic-syntax/page';
-import Variables from '@/components/visualizers/golangviz/app/concepts/variables/page';
-import BasicTypes from '@/components/visualizers/golangviz/app/concepts/basic-types/page';
-import Constants from '@/components/visualizers/golangviz/app/concepts/constants/page';
-
-const CONCEPT_PAGES: Record<string, React.ComponentType> = {
-  'introduction-to-go': IntroToGo,
-  'installation-and-setup': InstallSetup,
-  'hello-world': HelloWorld,
-  'basic-syntax': BasicSyntax,
-  'variables': Variables,
-  'basic-types': BasicTypes,
-  'constants': Constants,
-};
+import { ConceptPageRenderer } from '@/components/visualizers/golangviz/components/ConceptPageRenderer';
+import { conceptsMap } from '@/components/visualizers/golangviz/data/concepts-data';
 
 export default function GolangVizClientPage({ slug }: { slug: string[] }) {
   const first = slug[0] || '';
@@ -36,9 +21,12 @@ export default function GolangVizClientPage({ slug }: { slug: string[] }) {
   } else if (first === 'playground') {
     View = <PlaygroundPage />;
   } else if (first === 'concepts') {
-    if (second && CONCEPT_PAGES[second]) {
-      const ConceptComp = CONCEPT_PAGES[second];
-      View = <ConceptComp />;
+    if (second) {
+      const concept = conceptsMap.get(second);
+      if (!concept) {
+        notFound();
+      }
+      View = <ConceptPageRenderer concept={concept} />;
     } else {
       View = <PathPage />;
     }

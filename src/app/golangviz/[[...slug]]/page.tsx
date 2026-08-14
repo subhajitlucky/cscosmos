@@ -1,17 +1,16 @@
 import GolangVizClientPage from './GolangVizClientPage';
+import { allConcepts } from '@/components/visualizers/golangviz/data/concepts-data';
 
 export function generateStaticParams() {
+  const conceptRoutes = allConcepts.map((concept) => ({
+    slug: ['concepts', concept.slug],
+  }));
+
   return [
     { slug: [] },
     { slug: ['path'] },
     { slug: ['playground'] },
-    { slug: ['concepts', 'introduction-to-go'] },
-    { slug: ['concepts', 'installation-and-setup'] },
-    { slug: ['concepts', 'hello-world'] },
-    { slug: ['concepts', 'basic-syntax'] },
-    { slug: ['concepts', 'variables'] },
-    { slug: ['concepts', 'basic-types'] },
-    { slug: ['concepts', 'constants'] },
+    ...conceptRoutes,
   ];
 }
 
