@@ -46,6 +46,35 @@ export default {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                redis: {
+                    light: '#FF4438',
+                    DEFAULT: '#D82C20',
+                    dark: '#A51D14',
+                },
+                react: {
+                    light: '#61dafb',
+                    DEFAULT: '#00d8ff',
+                    dark: '#01579b',
+                },
+                space: {
+                    950: '#050507',
+                    900: '#0a0a0c',
+                    800: '#111114',
+                    700: '#1b1b1f',
+                },
+                mongo: {
+                    green: '#00ED64',
+                    grassy: '#00ED64',
+                    dark: '#001E2B',
+                    slate: '#00684A',
+                    charcoal: '#3F4F5A'
+                },
+                syntax: {
+                    key: '#E06C75',
+                    string: '#98C379',
+                    number: '#D19A66',
+                    boolean: '#56B6C2'
+                },
             },
             boxShadow: {
                 glow: 'var(--shadow-glow)',
