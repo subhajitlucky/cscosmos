@@ -55,7 +55,7 @@ export const topics: Topic[] = [
     // 2. Frontend Engineering
     createTopic("React Visualizer (Hooks, Reconciliation)", "fullstack" , { status: 'active', url: "/reactcosmos" }),
     createTopic("Next.js Visualizer (Routing, SSR, RSC)", "fullstack" , { status: 'active', url: "/nextjscosmos" }),
-    createTopic("Vue Visualizer (Reactivity, Templates)", "fullstack"),
+    createTopic("Vue Visualizer (Reactivity, Templates)", "fullstack", { status: 'active', slug: 'vuecosmos', url: '/vuecosmos' }),
     createTopic("Svelte / SvelteKit Visualizer (Compiler, Reactivity)", "fullstack"),
     createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack"),
     createTopic("WebAssembly Internals (Wasm & Linear Memory)", "fullstack"),
