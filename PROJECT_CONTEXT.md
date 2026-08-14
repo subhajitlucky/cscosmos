@@ -42,6 +42,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/reactcosmos` | **Absorbed** | React Fiber, Virtual DOM, Reconciliation & Hooks visualizers |
 | `/nextjscosmos` | **Absorbed** | Next.js 15 App Router concepts, RSC, SSG/SSR/ISR, Error Debugger |
 | `/golangviz` | **Absorbed** | Go GMP Scheduler, Channels, Slice Memory Header, Stepper |
+| `/tsviz` | **Absorbed** | TypeScript Type Narrowing, CFA, Generics, Utility Lab & TSC Pipeline |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -54,17 +55,17 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 3: `cssviz` -> `/css-cosmos`
 - ✅ Site 4: `webprotocolsviz` -> `/webprotocols`
 - ✅ Site 5: `websecureviz` -> `/websecurity`
-- ✅ Site 6: `jsviz` -> `/jsviz` (Completed: sticky sidebar layout, SSR safety, dark/light theme, Cpu icon bugfix)
+- ✅ Site 6: `jsviz` -> `/jsviz` (Completed: sticky sidebar layout, SSR safety, dark/light theme, Event Loop & V8 GC Steppers)
 - ✅ Site 7: `reactcosmos` -> `/reactcosmos` (Completed: 35 pre-rendered React topics, Fiber visualizer, Hooks simulator, lab playground)
 - ✅ Site 8: `nextjscosmos` -> `/nextjscosmos` (Completed: 35 pre-rendered Next.js 15 App Router modules, RSC visualizer, SSG/SSR/ISR engine, Error debugger & Interactive lab)
-- ✅ Site 9: `golangviz` -> `/golangviz` (Completed: Go GMP Scheduler, Channels, Slice Memory Lab, Stepper & Concepts)
+- ✅ Site 9: `golangviz` -> `/golangviz` (Completed: Go GMP Scheduler, Channels, Slice Memory Lab, Stepper, 70 Concepts, Flashcards, 50 Pitfalls)
+- ✅ Site 10: `tsviz` -> `/tsviz` (Completed: Control Flow Narrowing, Structural Subtyping, 12 Utility Types Lab, TSC 5-Stage Pipeline, Diagnostic Error Debugger)
 
 ### Planned Next Absorptions:
-- ⏳ Site 10: `redisviz` (Redis In-Memory Engine & Data Structures visualizer)
-- ⏳ Site 11: `apiviz` (API Architecture: REST, GraphQL, gRPC visualizer)
-- ⏳ Site 12: `tsviz` (TypeScript type checker & compiler visualizer)
-- ⏳ Site 13: `dockercosmos` & `k8scosmos` (Container & Orchestration visualizers)
-- ⏳ Site 14: `sqlcosmos` (SQL queries & Index visualizer)
+- ⏳ Site 11: `redisviz` (Redis In-Memory Engine & Data Structures visualizer)
+- ⏳ Site 12: `sqlcosmos` (SQL queries & Index visualizer)
+- ⏳ Site 13: `nodecosmos` (Node.js runtime & Libuv event loop visualizer)
+- ⏳ Site 14: `dockercosmos` & `k8scosmos` (Container & Orchestration visualizers)
 - ⏳ Site 15: `blockchainviz` & `evminternals`
 
 ---

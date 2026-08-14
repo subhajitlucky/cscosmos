@@ -16,6 +16,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/reactcosmos',
   '/nextjscosmos',
   '/golangviz',
+  '/tsviz',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -29,6 +30,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/reactcosmos',
   '/nextjscosmos',
   '/golangviz',
+  '/tsviz',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
