@@ -6,6 +6,9 @@ import Home from '@/components/visualizers/golangviz/app/page';
 import PathPage from '@/components/visualizers/golangviz/app/path/page';
 import PlaygroundPage from '@/components/visualizers/golangviz/app/playground/page';
 import CheatSheetPage from '@/components/visualizers/golangviz/app/cheatsheet/page';
+import LabsPage from '@/components/visualizers/golangviz/app/labs/page';
+import FlashcardsPage from '@/components/visualizers/golangviz/app/flashcards/page';
+import PitfallsPage from '@/components/visualizers/golangviz/app/pitfalls/page';
 import { ConceptPageRenderer } from '@/components/visualizers/golangviz/components/ConceptPageRenderer';
 import { conceptsMap } from '@/components/visualizers/golangviz/data/concepts-data';
 
@@ -23,6 +26,12 @@ export default function GolangVizClientPage({ slug }: { slug: string[] }) {
     View = <PlaygroundPage />;
   } else if (first === 'cheatsheet') {
     View = <CheatSheetPage />;
+  } else if (first === 'labs') {
+    View = <LabsPage />;
+  } else if (first === 'flashcards') {
+    View = <FlashcardsPage />;
+  } else if (first === 'pitfalls') {
+    View = <PitfallsPage />;
   } else if (first === 'concepts') {
     if (second) {
       const concept = conceptsMap.get(second);

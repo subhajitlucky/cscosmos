@@ -9,6 +9,9 @@ import { ArrowLeft, BookOpen, CheckCircle2, Cpu, Play } from "lucide-react";
 const links = [
   { href: "/golangviz", label: "Home" },
   { href: "/golangviz/path", label: "70 Concepts" },
+  { href: "/golangviz/labs", label: "Coding Labs" },
+  { href: "/golangviz/flashcards", label: "Flashcards" },
+  { href: "/golangviz/pitfalls", label: "Pitfalls" },
   { href: "/golangviz/playground", label: "Playground" },
   { href: "/golangviz/cheatsheet", label: "Cheat Sheet" },
 ];
