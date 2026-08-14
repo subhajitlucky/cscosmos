@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.mqviz-root {
+  --mq-primary: #f59e0b;
+  --mq-primary-hover: #d97706;
+  --mq-cyan: #06b6d4;
+  --mq-emerald: #10b981;
+  --mq-rose: #f43f5e;
+  --mq-purple: #a855f7;
+  
+  --mq-bg: #090a0f;
+  --mq-surface: #11131c;
+  --mq-surface-2: #181b26;
+  --mq-border: rgba(245, 158, 11, 0.22);
+  --mq-border-subtle: rgba(255, 255, 255, 0.08);
+  --mq-text: #f1f5f9;
+  --mq-muted: #84899b;
+  
+  --mq-display: 'Syne', sans-serif;
+  --mq-sans: 'Inter', sans-serif;
+  --mq-mono: 'DM Mono', monospace;
+
+  font-family: var(--mq-sans);
+  background-color: var(--mq-bg);
+  color: var(--mq-text);
+  min-height: 100vh;
+}
+
+.mqviz-root[data-theme='light'],
+.mqviz-root.light-mode {
+  --mq-bg: #f8fafc;
+  --mq-surface: #ffffff;
+  --mq-surface-2: #f1f5f9;
+  --mq-border: rgba(245, 158, 11, 0.28);
+  --mq-border-subtle: rgba(0, 0, 0, 0.08);
+  --mq-text: #0f172a;
+  --mq-muted: #64748b;
+}
+
+.mqviz-root .font-display {
+  font-family: var(--mq-display);
+}
+
+.mqviz-root .font-mono {
+  font-family: var(--mq-mono);
+}
+
+.mqviz-root .mq-glow {
+  text-shadow: 0 0 25px rgba(245, 158, 11, 0.55), 0 0 50px rgba(245, 158, 11, 0.2);
+}
+
+.mqviz-root .mq-card {
+  background: var(--mq-surface);
+  border: 1px solid var(--mq-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mqviz-root .mq-card:hover {
+  border-color: var(--mq-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(245, 158, 11, 0.15);
+}
+
+.mqviz-root .mq-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+@keyframes packet-flow {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.mqviz-root .animate-packet-flow {
+  animation: packet-flow 1.5s linear infinite;
+}

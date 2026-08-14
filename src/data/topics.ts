@@ -78,7 +78,7 @@ export const topics: Topic[] = [
 
     // 5. Architecture & Scale
     createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', url: '/dockercosmos' }),
-    createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack"),
+    createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack", { status: 'active', slug: 'mqviz', url: '/mqviz' }),
     createTopic("Microservices Architecture (Services, Failures)", "fullstack"),
     createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack"),
     createTopic("System Design & Scalability (Caching, Sharding)", "fullstack", { status: 'active', slug: 'systemdesignviz', url: '/systemdesignviz' }),
