@@ -5,92 +5,86 @@ import { Playground } from "@/components/visualizers/golangviz/components/playgr
 import { ChannelVisualizer } from "@/components/visualizers/golangviz/components/visualizers/channel-visualizer";
 import { SchedulerVisualizer } from "@/components/visualizers/golangviz/components/visualizers/scheduler-visualizer";
 import { SliceLab } from "@/components/visualizers/golangviz/components/visualizers/slice-lab";
+import { LiveGoRunner } from "@/components/visualizers/golangviz/components/LiveGoRunner";
 
 export default function PlaygroundPage() {
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-blue-500/30">
       <Navigation />
-      <main className="space-y-6 pb-16">
+      <main className="max-w-6xl mx-auto px-4 space-y-10 pb-20 pt-6">
+        {/* Top Feature: In-Browser Live Code Runner */}
+        <LiveGoRunner />
+
+        {/* Section 1: Memory & Stepper */}
         <Section
-          id="playground"
-          kicker="Playground"
-          title="Live visuals for memory, channels, and scheduler"
-          description="Step through code, watch stack/heap, channel queues, and goroutine scheduling. Use these presets or paste your own snippets."
+          id="memory-stepper"
+          kicker="Step-Through Debugger"
+          title="Interactive Stack, Heap &amp; Variable Stepper"
+          description="Step through code frame by frame to observe stack allocation, heap escape, pointers, and channel queues in real time."
         >
-          <div className="grid gap-4 lg:grid-cols-[1.2fr,0.8fr]">
-            <div className="surface rounded-2xl p-5 shadow-md">
-              <div className="flex items-center justify-between text-sm text-[var(--muted)]">
-                <span className="font-semibold text-[var(--foreground)]">Mini Playground</span>
-                <span>Topic: stack vs heap, pointers</span>
+          <div className="grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
+            <div className="surface rounded-3xl p-6 shadow-md border border-[var(--panel-border)]">
+              <div className="flex items-center justify-between text-sm text-[var(--muted)] border-b border-[var(--panel-border)] pb-3 mb-4">
+                <span className="font-bold text-[var(--foreground)]">Execution Stepper</span>
+                <span className="text-xs font-mono text-blue-500">Topic: Stack vs Heap &amp; Escapes</span>
               </div>
-              <p className="mt-2 text-sm text-[var(--muted)]">
-                Step through a snippet; see variables and channels change frame by frame.
-              </p>
-              <div className="mt-3 rounded-xl border border-[var(--panel-border)] bg-[var(--panel)] p-3 transition hover:-translate-y-1 hover:shadow-lg">
-                <Playground />
-              </div>
+              <Playground />
             </div>
-            <div className="grid gap-3">
-              <div className="rounded-2xl border border-[var(--panel-border)] bg-[var(--panel)] p-4 shadow-sm">
-                <div className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">Visual tips</div>
-                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
-                  <li>Watch stack vs heap allocations: pointers that escape move to heap.</li>
-                  <li>Look for len/cap changes in slices; sharing happens until a resize.</li>
-                  <li>Channels: blocked sends/receives light up; buffered vs unbuffered behavior differs.</li>
-                  <li>Scheduler: goroutines move runnable → running → waiting; Ps own run queues.</li>
-                </ul>
-              </div>
-              <div className="rounded-2xl border border-[var(--panel-border)] bg-[var(--panel)] p-4 shadow-sm">
-                <div className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">Try these snippets</div>
-                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
-                  <li>Pointer + escape: take address of a local; see heap allocation.</li>
-                  <li>Slice growth: append in a loop; watch cap double.</li>
-                  <li>Channel buffering: make(chan int, 2); send thrice; see blocked send.</li>
-                  <li>Goroutine scheduling: start multiple goroutines; observe run queues.</li>
+
+            <div className="space-y-4">
+              <div className="rounded-3xl border border-[var(--panel-border)] bg-[var(--panel)] p-6 shadow-sm space-y-3">
+                <div className="text-xs uppercase font-extrabold tracking-wider text-blue-500">Visual Insights</div>
+                <ul className="space-y-2 text-xs text-[var(--muted)] leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    <span><strong>Stack vs Heap:</strong> Local variables remain on the stack unless a pointer outlives the creating function frame.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    <span><strong>Slice Growth:</strong> Appending beyond capacity allocates a new doubled backing array in heap memory.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    <span><strong>Channels:</strong> Blocked sends and receives light up immediately until rendezvous synchronization.</span>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
         </Section>
 
+        {/* Section 2: Channel Visualizer */}
         <Section
           id="channels"
-          kicker="Channels"
-          title="Channel debugger"
-          description="Visualize buffered vs unbuffered channels, blocking sends/receives, and event timeline."
+          kicker="Concurrency CSP"
+          title="Channel Visualizer &amp; Deadlock Detector"
+          description="Visualize buffered vs unbuffered channels, blocking sends/receives, and concurrent event pipelines."
         >
-          <div className="rounded-2xl border border-[var(--panel-border)] bg-[var(--panel)] p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="text-sm text-[var(--muted)] mb-2">
-              Topic: channel queues, blocking, select readiness
-            </div>
+          <div className="surface rounded-3xl p-6 shadow-md border border-[var(--panel-border)]">
             <ChannelVisualizer />
           </div>
         </Section>
 
+        {/* Section 3: GMP Scheduler */}
         <Section
           id="scheduler"
-          kicker="Scheduler"
-          title="G/M/P scheduler view"
-          description="See goroutines across Ps, run queues, and waiting states. Dispatch, spawn, and park to watch transitions."
+          kicker="Runtime Architecture"
+          title="Go GMP Runtime Scheduler"
+          description="Inspect how Goroutines (G), OS Threads (M), and Logical Processors (P) cooperate with work-stealing queues."
         >
-          <div className="rounded-2xl border border-[var(--panel-border)] bg-[var(--panel)] p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="text-sm text-[var(--muted)] mb-2">
-              Topic: goroutines, work stealing, runnable vs waiting
-            </div>
+          <div className="surface rounded-3xl p-6 shadow-md border border-[var(--panel-border)]">
             <SchedulerVisualizer />
           </div>
         </Section>
 
+        {/* Section 4: Slice Lab */}
         <Section
           id="slices"
-          kicker="Slices"
-          title="Slice growth lab"
-          description="Append and watch len/cap, generation changes, and sharing behavior."
+          kicker="Memory Anatomy"
+          title="Slice Memory Lab &amp; Doubling Strategy"
+          description="Inspect the 24-byte Slice Header struct (pointer, length, capacity) and watch memory growth algorithms."
         >
-          <div className="rounded-2xl border border-[var(--panel-border)] bg-[var(--panel)] p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="text-sm text-[var(--muted)] mb-2">
-              Topic: slice header, backing array, reallocation
-            </div>
+          <div className="surface rounded-3xl p-6 shadow-md border border-[var(--panel-border)]">
             <SliceLab />
           </div>
         </Section>
@@ -99,4 +93,3 @@ export default function PlaygroundPage() {
     </div>
   );
 }
-

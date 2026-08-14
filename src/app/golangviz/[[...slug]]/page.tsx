@@ -10,6 +10,7 @@ export function generateStaticParams() {
     { slug: [] },
     { slug: ['path'] },
     { slug: ['playground'] },
+    { slug: ['cheatsheet'] },
     ...conceptRoutes,
   ];
 }

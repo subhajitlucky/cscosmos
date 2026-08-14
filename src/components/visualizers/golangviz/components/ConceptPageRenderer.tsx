@@ -1,22 +1,31 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { Navigation } from './navigation';
 import { Footer } from './footer';
 import { Section } from './section';
 import { ConceptNavigation } from './concept-navigation';
 import { QuizCards } from './quiz-cards';
+import { useGoProgress } from '../lib/useGoProgress';
+import { InteractivePointerWidget } from './widgets/InteractivePointerWidget';
+import { InteractiveSliceWidget } from './widgets/InteractiveSliceWidget';
+import { InteractiveChannelWidget } from './widgets/InteractiveChannelWidget';
+import { InteractiveMutexWidget } from './widgets/InteractiveMutexWidget';
+import { ProductionCaseStudyCard } from './ProductionCaseStudyCard';
+import { caseStudiesMap } from '../data/case-studies-data';
 import {
   AlertTriangle,
   ArrowLeft,
   BookOpen,
   CheckCircle2,
+  Circle,
   Code2,
   HelpCircle,
   Lightbulb,
   Sparkles,
   Terminal,
+  Trophy,
   XCircle,
 } from 'lucide-react';
 import type { FullConcept } from '../data/concepts-data';
@@ -26,23 +35,55 @@ interface ConceptPageRendererProps {
 }
 
 export function ConceptPageRenderer({ concept }: ConceptPageRendererProps) {
+  const { isLoaded, isCompleted, toggleCompleted, recordVisit, completedCount, totalConcepts, percentage } =
+    useGoProgress();
+
+  useEffect(() => {
+    recordVisit(concept.slug);
+  }, [concept.slug, recordVisit]);
+
+  const done = isCompleted(concept.slug);
+  const caseStudy = caseStudiesMap.get(concept.slug);
+
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-blue-500/30">
       <Navigation />
 
       <main className="max-w-4xl mx-auto px-4 space-y-8 pb-20 pt-6 animate-in fade-in slide-in-from-bottom-3 duration-300">
-        {/* Breadcrumb & Top Bar */}
-        <div className="flex items-center justify-between text-xs text-[var(--muted)] border-b border-[var(--panel-border)] pb-4">
+        {/* Breadcrumb & Progress Control Top Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--muted)] border-b border-[var(--panel-border)] pb-4">
           <Link
             href="/golangviz/path"
             className="inline-flex items-center gap-1.5 font-semibold text-[var(--foreground)] hover:text-blue-500 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Back to Concepts Roadmap
           </Link>
-          <div className="flex items-center gap-2">
+
+          <div className="flex items-center gap-3">
             <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 font-mono text-[11px] text-blue-600 dark:text-blue-400 font-bold">
               {concept.levelBadge}
             </span>
+
+            <button
+              onClick={() => toggleCompleted(concept.slug)}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all shadow-sm ${
+                done
+                  ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                  : 'border border-[var(--panel-border)] bg-[var(--panel)] text-[var(--foreground)] hover:border-emerald-500 hover:text-emerald-600'
+              }`}
+            >
+              {done ? (
+                <>
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Completed 🎉</span>
+                </>
+              ) : (
+                <>
+                  <Circle className="w-3.5 h-3.5" />
+                  <span>Mark Complete</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
 
@@ -77,6 +118,20 @@ export function ConceptPageRenderer({ concept }: ConceptPageRendererProps) {
               &ldquo;{concept.analogy}&rdquo;
             </p>
           </div>
+        )}
+
+        {/* 🧩 Inline Interactive Simulator Widgets */}
+        {(concept.slug === 'pointers' || concept.slug === 'variables') && (
+          <InteractivePointerWidget />
+        )}
+        {(concept.slug === 'slices' || concept.slug === 'slice-internals') && (
+          <InteractiveSliceWidget />
+        )}
+        {(concept.slug === 'channels' || concept.slug === 'channel-internals' || concept.slug === 'goroutines') && (
+          <InteractiveChannelWidget />
+        )}
+        {(concept.slug === 'sync-primitives' || concept.slug === 'atomic-operations') && (
+          <InteractiveMutexWidget />
         )}
 
         {/* 🧠 Visual Mental Model Diagram (ASCII) */}
@@ -143,6 +198,9 @@ export function ConceptPageRenderer({ concept }: ConceptPageRendererProps) {
             </Section>
           ))}
 
+        {/* 🏢 Battle-Tested Production Case Study */}
+        {caseStudy && <ProductionCaseStudyCard caseStudy={caseStudy} />}
+
         {/* ⚠️ Common Beginner Gotchas & Pitfalls */}
         {concept.commonPitfalls && concept.commonPitfalls.length > 0 && (
           <div className="rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-500/10 p-6 space-y-4 shadow-sm">
@@ -176,6 +234,35 @@ export function ConceptPageRenderer({ concept }: ConceptPageRendererProps) {
             <QuizCards quizzes={concept.quizzes} />
           </Section>
         )}
+
+        {/* Lesson Completion Action Card */}
+        <div className="rounded-2xl border border-[var(--panel-border)] bg-[var(--panel)] p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${done ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'}`}>
+              <Trophy className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-[var(--foreground)]">
+                {done ? 'Lesson Completed!' : 'Finished this lesson?'}
+              </h3>
+              <p className="text-xs text-[var(--muted)]">
+                {done ? `Great job! Your progress: ${completedCount}/${totalConcepts} (${percentage}%)` : 'Mark it as complete to track your overall Go mastery.'}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => toggleCompleted(concept.slug)}
+            className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all shadow-md flex items-center gap-2 ${
+              done
+                ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                : 'bg-emerald-600 text-white hover:bg-emerald-700 hover:scale-105'
+            }`}
+          >
+            {done ? 'Mark as Incomplete' : 'Complete & Continue'}
+            <CheckCircle2 className="w-4 h-4" />
+          </button>
+        </div>
 
         {/* Navigation to Next/Prev */}
         <ConceptNavigation />
