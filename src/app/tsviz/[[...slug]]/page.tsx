@@ -9,12 +9,18 @@ import UtilityLab from '@/components/visualizers/tsviz/pages/UtilityLab';
 import CompilerPipeline from '@/components/visualizers/tsviz/pages/CompilerPipeline';
 import Errors from '@/components/visualizers/tsviz/pages/Errors';
 import Playground from '@/components/visualizers/tsviz/pages/Playground';
+import TypeChallenges from '@/components/visualizers/tsviz/pages/TypeChallenges';
+import Flashcards from '@/components/visualizers/tsviz/pages/Flashcards';
+import CheatSheet from '@/components/visualizers/tsviz/pages/CheatSheet';
 import { TS_TOPICS } from '@/components/visualizers/tsviz/data/topics';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
     { slug: [] },
     { slug: ['concepts'] },
+    { slug: ['challenges'] },
+    { slug: ['flashcards'] },
+    { slug: ['cheatsheet'] },
     { slug: ['utility-lab'] },
     { slug: ['compiler-pipeline'] },
     { slug: ['errors'] },
@@ -45,6 +51,12 @@ export default async function TsVizPage({
     } else {
       content = <Concepts />;
     }
+  } else if (first === 'challenges') {
+    content = <TypeChallenges />;
+  } else if (first === 'flashcards') {
+    content = <Flashcards />;
+  } else if (first === 'cheatsheet') {
+    content = <CheatSheet />;
   } else if (first === 'utility-lab') {
     content = <UtilityLab />;
   } else if (first === 'compiler-pipeline') {
