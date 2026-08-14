@@ -1,118 +1,143 @@
 'use client';
 
-import React from 'react';
+import { ArrowRight, Layers, Server, Database, Globe, Network } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Database, GitBranch, GitFork, Globe, HelpCircle, Layers, Lock, Play, Server, Sparkles, Terminal, Zap } from 'lucide-react';
-import { GraphqlResolverVisualizer } from '../components/GraphqlResolverVisualizer';
-import { DataLoaderVisualizer } from '../components/DataLoaderVisualizer';
-import { ProtocolComparisonVisualizer } from '../components/ProtocolComparisonVisualizer';
-import { IdempotencyKeyVisualizer } from '../components/IdempotencyKeyVisualizer';
-import { ApolloFederationVisualizer } from '../components/ApolloFederationVisualizer';
-import { PaginationDriftVisualizer } from '../components/PaginationDriftVisualizer';
-import { WebhookSignatureVisualizer } from '../components/WebhookSignatureVisualizer';
-import { ApiPlayground } from '../components/ApiPlayground';
 
-export default function Home() {
+export function Home() {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, x: -20 },
+    show: { opacity: 1, x: 0 }
+  };
+
   return (
-    <div className="space-y-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
-      {/* Hero Section */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400 text-xs font-bold uppercase tracking-widest">
-          <Sparkles className="w-3.5 h-3.5" /> Modern API Design &amp; GraphQL Visualizer
+    <div className="relative flex flex-col items-start text-left">
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="w-full space-y-24"
+      >
+        {/* Technical Hero */}
+        <div className="space-y-12">
+          <motion.div variants={item} className="flex items-center gap-4">
+            <div className="h-px w-12 bg-cyan-400" />
+            <div className="px-3 py-1 border border-cyan-400 text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] bg-cyan-400/5 shadow-[0_0_10px_rgba(0,255,255,0.1)]">
+              API_DESIGN_SYSTEM_ANALYSIS_V1.0
+            </div>
+          </motion.div>
+
+          <motion.div variants={item} className="space-y-8">
+            <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] uppercase italic text-[#d6f5f5]">
+              Visual <br/> 
+              <span className="text-cyan-400 drop-shadow-[0_0_20px_rgba(0,255,255,0.5)] font-black">API_Design</span>
+            </h1>
+            <p className="text-lg md:text-xl text-cyan-400/60 max-w-2xl font-bold leading-relaxed uppercase border-l-4 border-cyan-400/20 pl-8">
+              A visual-first educational terminal dedicated to deconstructing request-response lifecycles, schema evolution, and modern API architecture.
+            </p>
+          </motion.div>
+
+          <motion.div variants={item} className="flex flex-col sm:flex-row gap-6">
+            <Link 
+              href="/apiviz/learn"
+              className="h-16 px-12 bg-cyan-400 text-black font-black text-sm tracking-[0.2em] uppercase hover:bg-cyan-300 transition-all flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(0,255,255,0.3)] active:scale-95"
+            >
+              INITIALIZE_PATH
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link 
+              href="/apiviz/playground"
+              className="h-16 px-12 border-2 border-cyan-400/20 text-cyan-400/60 font-black text-sm tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-400 transition-all flex items-center justify-center gap-3"
+            >
+              OPEN_PLAYGROUND
+            </Link>
+          </motion.div>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
-          Master <span className="text-pink-600 dark:text-pink-400">REST, GraphQL &amp; gRPC</span>.
-        </h1>
-        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for GraphQL AST field resolvers, DataLoader N+1 query batching, Apollo Federation query plans, Keyset pagination drift, HMAC webhook verification, REST vs GraphQL vs gRPC tradeoffs, Idempotency-Key safe retries, and API sandboxes.
-        </p>
-        <div className="flex flex-wrap justify-center gap-3 pt-2">
-          <Link
-            href="/apiviz/concepts"
-            className="px-6 py-3 rounded-2xl bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-pink-500/25 flex items-center gap-2"
-          >
-            <BookOpen className="w-4 h-4" /> Explore 20 Concepts
-          </Link>
-          <Link
-            href="/apiviz/playground"
-            className="px-6 py-3 rounded-2xl border border-border hover:bg-card text-foreground font-bold text-xs uppercase tracking-wider transition flex items-center gap-2"
-          >
-            <Terminal className="w-4 h-4" /> API Sandbox
-          </Link>
-        </div>
-      </div>
 
-      {/* Feature 1: GraphQL Field Resolver Pipeline */}
-      <GraphqlResolverVisualizer />
-
-      {/* Feature 2: DataLoader N+1 Problem Simulator */}
-      <DataLoaderVisualizer />
-
-      {/* Feature 3: Apollo Federation v2 Query Planner */}
-      <ApolloFederationVisualizer />
-
-      {/* Feature 4: Keyset vs Offset Pagination Drift */}
-      <PaginationDriftVisualizer />
-
-      {/* Feature 5: HMAC-SHA256 Webhook Verification */}
-      <WebhookSignatureVisualizer />
-
-      {/* Feature 6: Protocol Matrix */}
-      <ProtocolComparisonVisualizer />
-
-      {/* Feature 7: Idempotency Key Engine */}
-      <IdempotencyKeyVisualizer />
-
-      {/* Feature 8: Interactive Sandbox */}
-      <ApiPlayground />
-
-      {/* Navigation Cards */}
-      <div className="grid sm:grid-cols-3 gap-6 pt-4">
-        <Link
-          href="/apiviz/concepts"
-          className="p-6 rounded-3xl bg-card border border-border/80 hover:border-pink-500/50 hover:shadow-lg transition-all space-y-3 group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold">
-            <BookOpen className="w-5 h-5" />
+        {/* REST vs GraphQL High-Level Comparison */}
+        <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 border-t-2 border-cyan-400/10">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <Globe className="w-6 h-6 text-cyan-400" />
+              <h2 className="text-2xl font-black uppercase tracking-tighter italic text-cyan-400">REST_Architecture</h2>
+            </div>
+            <div className="aspect-video bg-black/40 border-2 border-cyan-400/10 p-8 relative overflow-hidden group">
+              <div className="absolute inset-0 grid-bg opacity-10" />
+              <div className="relative z-10 flex flex-col justify-center h-full space-y-6">
+                <div className="flex justify-between items-center px-4">
+                  <div className="w-12 h-12 border border-cyan-400/40 flex items-center justify-center bg-cyan-400/5 text-cyan-400 text-[10px] font-black">CLIENT</div>
+                  <div className="flex-grow h-px bg-cyan-400/20 mx-4 relative">
+                    <motion.div 
+                      animate={{ x: ["0%", "100%"] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                      className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-cyan-400 shadow-[0_0_10px_rgba(0,255,255,1)]"
+                    />
+                  </div>
+                  <div className="w-12 h-12 border border-cyan-400/40 flex items-center justify-center bg-cyan-400/5 text-cyan-400 text-[10px] font-black">SERVER</div>
+                </div>
+                <div className="text-center">
+                  <span className="text-[10px] font-black text-cyan-400/40 uppercase">Multiple Endpoints / Overfetching</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3 className="text-lg font-bold text-foreground group-hover:text-pink-500 transition-colors">
-            20 In-Depth Lessons
-          </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Apollo Federation, OpenAPI specs, Keyset pagination, HMAC webhooks, Subscriptions, and RFC 7807 error formats.
-          </p>
-        </Link>
 
-        <Link
-          href="/apiviz/dataloader-lab"
-          className="p-6 rounded-3xl bg-card border border-border/80 hover:border-pink-500/50 hover:shadow-lg transition-all space-y-3 group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold">
-            <Database className="w-5 h-5" />
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <Layers className="w-6 h-6 text-purple-400" />
+              <h2 className="text-2xl font-black uppercase tracking-tighter italic text-purple-400">GraphQL_Gateway</h2>
+            </div>
+            <div className="aspect-video bg-black/40 border-2 border-purple-400/20 p-8 relative overflow-hidden group">
+              <div className="absolute inset-0 grid-bg opacity-10" />
+              <div className="relative z-10 flex flex-col justify-center h-full space-y-6">
+                <div className="flex justify-between items-center px-4">
+                  <div className="w-12 h-12 border border-purple-400/40 flex items-center justify-center bg-purple-400/5 text-purple-400 text-[10px] font-black">CLIENT</div>
+                  <div className="flex-grow h-px bg-purple-400/20 mx-4 relative">
+                    <motion.div 
+                      animate={{ x: ["0%", "100%"] }}
+                      transition={{ repeat: Infinity, duration: 1.5 }}
+                      className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-purple-400 shadow-[0_0_10px_rgba(192,132,252,1)]"
+                    />
+                  </div>
+                  <div className="w-12 h-12 border border-purple-400/40 flex items-center justify-center bg-purple-400/5 text-purple-400 text-[10px] font-black">GATEWAY</div>
+                </div>
+                <div className="text-center">
+                  <span className="text-[10px] font-black text-purple-400/40 uppercase">Single Endpoint / Precise Fetching</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3 className="text-lg font-bold text-foreground group-hover:text-pink-500 transition-colors">
-            DataLoader Lab
-          </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Inspect how microtask batching reduces 11 database queries down to strictly 2 SQL queries.
-          </p>
-        </Link>
+        </motion.div>
 
-        <Link
-          href="/apiviz/flashcards"
-          className="p-6 rounded-3xl bg-card border border-border/80 hover:border-pink-500/50 hover:shadow-lg transition-all space-y-3 group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold">
-            <HelpCircle className="w-5 h-5" />
+        {/* System Trace Breakdown */}
+        <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-8 py-12 border-y-2 border-cyan-400/10 bg-cyan-400/5 px-12">
+          <div className="space-y-4">
+            <Server className="w-8 h-8 text-cyan-400/40" />
+            <h3 className="font-black text-sm uppercase tracking-widest text-cyan-400">Scalable_Modeling</h3>
+            <p className="text-[10px] font-bold text-cyan-400/40 uppercase leading-relaxed">Designing resources that withstand the pressure of industrial-scale traffic.</p>
           </div>
-          <h3 className="text-lg font-bold text-foreground group-hover:text-pink-500 transition-colors">
-            Senior Flashcards
-          </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Master tough API Architect interview questions on idempotency locks, cursor pagination, and Protobuf.
-          </p>
-        </Link>
-      </div>
+          <div className="space-y-4">
+            <Network className="w-8 h-8 text-cyan-400/40" />
+            <h3 className="font-black text-sm uppercase tracking-widest text-cyan-400">Protocol_Integrity</h3>
+            <p className="text-[10px] font-bold text-cyan-400/40 uppercase leading-relaxed">Ensuring safety and idempotency across complex network traversals.</p>
+          </div>
+          <div className="space-y-4">
+            <Database className="w-8 h-8 text-cyan-400/40" />
+            <h3 className="font-black text-sm uppercase tracking-widest text-cyan-400">Schema_Evolution</h3>
+            <p className="text-[10px] font-bold text-cyan-400/40 uppercase leading-relaxed">Managing backward compatibility through surgical versioning strategies.</p>
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

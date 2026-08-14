@@ -2,12 +2,15 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Cookie, Database, Fingerprint, HelpCircle, Key, KeyRound, Lock, ShieldCheck, Sparkles, UserCheck, Zap } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Cookie, Database, Fingerprint, HelpCircle, Key, KeyRound, Lock, ShieldCheck, Sparkles, UserCheck, Zap } from 'lucide-react';
 import { OAuthPkceVisualizer } from '../components/OAuthPkceVisualizer';
 import { JwtSignatureVisualizer } from '../components/JwtSignatureVisualizer';
 import { SessionVsTokenVisualizer } from '../components/SessionVsTokenVisualizer';
 import { RbacAbacVisualizer } from '../components/RbacAbacVisualizer';
 import { PasswordHashingVisualizer } from '../components/PasswordHashingVisualizer';
+import { WebAuthnPasskeyVisualizer } from '../components/WebAuthnPasskeyVisualizer';
+import { TotpMfaVisualizer } from '../components/TotpMfaVisualizer';
+import { JwksRotationVisualizer } from '../components/JwksRotationVisualizer';
 
 export default function Home() {
   return (
@@ -21,7 +24,7 @@ export default function Home() {
           Master <span className="text-emerald-600 dark:text-emerald-400">OAuth 2.0, JWT &amp; Identity</span>.
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Interactive visualizers for OAuth 2.0 PKCE flows, JWT header/payload RS256 signature verification, HttpOnly SameSite cookie security vs LocalStorage XSS risks, RBAC vs ABAC policy engines, and Argon2id password hashing.
+          Interactive visualizers for OAuth 2.0 PKCE flows, JWT header/payload RS256 signature verification, WebAuthn Passkeys, TOTP RFC 6238 MFA timesteps, JWKS key rotation, HttpOnly SameSite cookie security, RBAC vs ABAC policy engines, and Argon2id password hashing.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link
@@ -45,13 +48,22 @@ export default function Home() {
       {/* Feature 2: JWT Signature & Exploit Inspector */}
       <JwtSignatureVisualizer />
 
-      {/* Feature 3: Cookies vs Tokens XSS Simulator */}
+      {/* Feature 3: WebAuthn / FIDO2 Passkeys Biometric Stepper */}
+      <WebAuthnPasskeyVisualizer />
+
+      {/* Feature 4: TOTP RFC 6238 MFA Visualizer */}
+      <TotpMfaVisualizer />
+
+      {/* Feature 5: JWKS Public Key Rotation Simulator */}
+      <JwksRotationVisualizer />
+
+      {/* Feature 6: Cookies vs Tokens XSS Simulator */}
       <SessionVsTokenVisualizer />
 
-      {/* Feature 4: RBAC vs ABAC Policy Engine */}
+      {/* Feature 7: RBAC vs ABAC Policy Engine */}
       <RbacAbacVisualizer />
 
-      {/* Feature 5: Argon2id vs bcrypt Hashing Calculator */}
+      {/* Feature 8: Argon2id vs bcrypt Hashing Calculator */}
       <PasswordHashingVisualizer />
 
       {/* Navigation Cards */}

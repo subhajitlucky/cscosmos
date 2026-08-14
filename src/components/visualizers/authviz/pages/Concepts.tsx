@@ -28,7 +28,7 @@ export default function Concepts() {
 
       {/* Filter Tabs */}
       <div className="flex flex-wrap gap-2">
-        {['all', 'oauth-oidc', 'jwt-tokens', 'sessions-cookies', 'authz-rbac', 'cryptography-passwords'].map((cat) => (
+        {['all', 'oauth-oidc', 'jwt-tokens', 'sessions-cookies', 'authz-rbac', 'cryptography-passwords', 'resilience-security'].map((cat) => (
           <button
             key={cat}
             onClick={() => setFilter(cat)}
