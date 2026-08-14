@@ -64,7 +64,7 @@ export const topics: Topic[] = [
 
     // 3. Backend & Runtime
     createTopic("Node.js Runtime (Event Loop, libuv)", "fullstack" , { status: 'active', url: "https://nodecosmos.vercel.app" }),
-    createTopic("Go Backend Internals (Goroutines, Memory)", "fullstack", { status: 'active', url: "https://golangviz.vercel.app" }),
+    createTopic("Go Backend Internals (Goroutines, Memory)", "fullstack", { status: 'active', slug: 'golangviz', url: '/golangviz' }),
     createTopic("Rust Backend Internals (Ownership, Concurrency)", "fullstack" , { status: 'active', url: "https://rustviz.vercel.app" }),
     createTopic("Python FastAPI Backend (Async, Dependency Injection)", "fullstack"),
     createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', url: "https://apiviz.vercel.app" }),

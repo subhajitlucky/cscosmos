@@ -40,6 +40,8 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/webprotocols` | **Absorbed** | HTTP, DNS, TCP/IP web protocols visualizers |
 | `/websecurity` | **Absorbed** | XSS, CSRF, CSP, CORS security visualizers |
 | `/reactcosmos` | **Absorbed** | React Fiber, Virtual DOM, Reconciliation & Hooks visualizers |
+| `/nextjscosmos` | **Absorbed** | Next.js 15 App Router concepts, RSC, SSG/SSR/ISR, Error Debugger |
+| `/golangviz` | **Absorbed** | Go GMP Scheduler, Channels, Slice Memory Header, Stepper |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -55,13 +57,15 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 6: `jsviz` -> `/jsviz` (Completed: sticky sidebar layout, SSR safety, dark/light theme, Cpu icon bugfix)
 - ✅ Site 7: `reactcosmos` -> `/reactcosmos` (Completed: 35 pre-rendered React topics, Fiber visualizer, Hooks simulator, lab playground)
 - ✅ Site 8: `nextjscosmos` -> `/nextjscosmos` (Completed: 35 pre-rendered Next.js 15 App Router modules, RSC visualizer, SSG/SSR/ISR engine, Error debugger & Interactive lab)
+- ✅ Site 9: `golangviz` -> `/golangviz` (Completed: Go GMP Scheduler, Channels, Slice Memory Lab, Stepper & Concepts)
 
 ### Planned Next Absorptions:
-- ⏳ Site 9: `tsviz` (TypeScript type checker & compiler visualizer)
-- ⏳ Site 10: `sqlcosmos` (SQL queries & Index visualizer)
-- ⏳ Site 11: `dockercosmos` (Docker container isolation visualizer)
-- ⏳ Site 12: `k8scosmos` (Kubernetes orchestration visualizer)
-- ⏳ Site 12: `blockchainviz` & `evminternals`
+- ⏳ Site 10: `redisviz` (Redis In-Memory Engine & Data Structures visualizer)
+- ⏳ Site 11: `apiviz` (API Architecture: REST, GraphQL, gRPC visualizer)
+- ⏳ Site 12: `tsviz` (TypeScript type checker & compiler visualizer)
+- ⏳ Site 13: `dockercosmos` & `k8scosmos` (Container & Orchestration visualizers)
+- ⏳ Site 14: `sqlcosmos` (SQL queries & Index visualizer)
+- ⏳ Site 15: `blockchainviz` & `evminternals`
 
 ---
 

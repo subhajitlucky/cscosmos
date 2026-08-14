@@ -256,3 +256,45 @@
     transform: rotate(360deg);
   }
 }
+
+/* GolangViz Scoped Variables & Surfaces */
+.golangviz-scope {
+  --background: #f4f6fb;
+  --foreground: #0b1220;
+  --accent: #1d4ed8;
+  --muted: #334155;
+  --panel: #ffffff;
+  --panel-border: #cbd5e1;
+  --bg-pattern: radial-gradient(circle at 20% 20%, #f8fbff, #e7eefc 35%),
+    radial-gradient(circle at 80% 0%, rgba(29, 78, 216, 0.06), transparent 32%),
+    #f4f6fb;
+  background: var(--bg-pattern);
+  color: var(--foreground);
+}
+
+.dark .golangviz-scope,
+.golangviz-scope.dark {
+  --background: #050914;
+  --foreground: #e5edff;
+  --accent: #3b82f6;
+  --muted: #94a3b8;
+  --panel: rgba(255, 255, 255, 0.05);
+  --panel-border: rgba(255, 255, 255, 0.1);
+  --bg-pattern: radial-gradient(circle at 20% 20%, #0b1326, #050914 40%),
+    radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.08), transparent 35%),
+    radial-gradient(circle at 70% 70%, rgba(16, 185, 129, 0.08), transparent 35%),
+    #050914;
+  background: var(--bg-pattern);
+  color: var(--foreground);
+}
+
+.surface {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+}
+
+.surface-ghost {
+  background: color-mix(in srgb, var(--panel) 60%, transparent);
+  border: 1px solid var(--panel-border);
+}
+

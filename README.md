@@ -11,9 +11,9 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 ## Proof
 
 - 157+ planned computer science learning modules.
-- 35 live visualizer topics (8 natively absorbed, 27 externally linked).
+- 34 live visualizer topics (9 natively absorbed, 25 externally linked).
 - 8 major domains with dedicated routes.
-- 363 statically pre-rendered pages via Next.js SSG.
+- 373 statically pre-rendered pages via Next.js SSG.
 - Search, domain browsing, topic detail pages, live/coming-soon states, and dark/light theme support.
 - Vercel deployment with SSG pre-rendering and App Router.
 
@@ -48,6 +48,7 @@ These microsites have been fully integrated as native Next.js routes within CSCo
 | JavaScript Visualizer | `/jsviz` | Event Loop, Call Stack, Scope Chain, Memory |
 | React Visualizer | `/reactcosmos` | 35 topics, Fiber, Hooks, lab playground |
 | Next.js Visualizer | `/nextjscosmos` | 35 modules, RSC, SSG/SSR/ISR, Error debugger |
+| Go Backend Internals | `/golangviz` | GMP Scheduler, Channels, Slice Memory Lab, Stepper |
 
 ## Selected External Microsites
 

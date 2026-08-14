@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --background: #f4f6fb; /* light slate base */
+  --foreground: #0b1220; /* near-black for max contrast */
+  --accent: #1d4ed8; /* blue-700 */
+  --muted: #334155; /* slate-700 */
+  --panel: #ffffff;
+  --panel-border: #94a3b8; /* slate-400 */
+  --bg-pattern: radial-gradient(circle at 20% 20%, #f8fbff, #e7eefc 35%),
+    radial-gradient(circle at 80% 0%, rgba(29, 78, 216, 0.06), transparent 32%),
+    #f4f6fb;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #050914;
+  --foreground: #e5edff;
+  --accent: #3b82f6;
+  --muted: #94a3b8;
+  --panel: rgba(255, 255, 255, 0.05);
+  --panel-border: rgba(255, 255, 255, 0.1);
+  --bg-pattern: radial-gradient(circle at 20% 20%, #0b1326, #050914 40%),
+    radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.08), transparent 35%),
+    radial-gradient(circle at 70% 70%, rgba(16, 185, 129, 0.08), transparent 35%),
+    #050914;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--bg-pattern);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+code {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.surface {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+}
+
+.surface-ghost {
+  background: color-mix(in srgb, var(--panel) 60%, transparent);
+  border: 1px solid var(--panel-border);
+}
