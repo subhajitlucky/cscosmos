@@ -22,7 +22,7 @@ export default function Navbar() {
             title="Return to CSCosmos Catalog"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>← CSCosmos</span>
+            <span>CSCosmos</span>
           </Link>
 
           <Link href="/webprotocols" className="flex items-center gap-2 font-bold text-lg tracking-tight">
