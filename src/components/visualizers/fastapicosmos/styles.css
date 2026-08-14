@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.fastapicosmos-root {
+  --fastapi-primary: #059669;
+  --fastapi-primary-hover: #047857;
+  --fastapi-teal: #10b981;
+  --fastapi-sky: #38bdf8;
+  --fastapi-amber: #f59e0b;
+  --fastapi-gold: #fbbf24;
+  --fastapi-purple: #a855f7;
+  --fastapi-rose: #f43f5e;
+  
+  --fastapi-bg: #070c18;
+  --fastapi-surface: #0f172a;
+  --fastapi-surface-2: #1e293b;
+  --fastapi-border: rgba(16, 185, 129, 0.25);
+  --fastapi-border-subtle: rgba(255, 255, 255, 0.08);
+  --fastapi-text: #f8fafc;
+  --fastapi-muted: #94a3b8;
+  
+  --fastapi-display: 'Syne', sans-serif;
+  --fastapi-sans: 'Inter', sans-serif;
+  --fastapi-mono: 'DM Mono', monospace;
+
+  font-family: var(--fastapi-sans);
+  background-color: var(--fastapi-bg);
+  color: var(--fastapi-text);
+  min-height: 100vh;
+}
+
+html.light .fastapicosmos-root,
+html[data-theme='light'] .fastapicosmos-root,
+html:not(.dark) .fastapicosmos-root,
+.fastapicosmos-root[data-theme='light'],
+.fastapicosmos-root.light-mode {
+  --fastapi-bg: #f8fafc;
+  --fastapi-surface: #ffffff;
+  --fastapi-surface-2: #f1f5f9;
+  --fastapi-border: rgba(16, 185, 129, 0.28);
+  --fastapi-border-subtle: rgba(0, 0, 0, 0.08);
+  --fastapi-text: #0f172a;
+  --fastapi-muted: #64748b;
+}
+
+html.dark .fastapicosmos-root,
+html[data-theme='dark'] .fastapicosmos-root,
+.fastapicosmos-root[data-theme='dark'],
+.fastapicosmos-root.dark-mode {
+  --fastapi-bg: #070c18;
+  --fastapi-surface: #0f172a;
+  --fastapi-surface-2: #1e293b;
+  --fastapi-border: rgba(16, 185, 129, 0.25);
+  --fastapi-border-subtle: rgba(255, 255, 255, 0.08);
+  --fastapi-text: #f8fafc;
+  --fastapi-muted: #94a3b8;
+}
+
+.fastapicosmos-root .font-display {
+  font-family: var(--fastapi-display);
+}
+
+.fastapicosmos-root .font-mono {
+  font-family: var(--fastapi-mono);
+}
+
+.fastapicosmos-root .fastapi-glow {
+  text-shadow: 0 0 25px rgba(16, 185, 129, 0.55), 0 0 50px rgba(16, 185, 129, 0.2);
+}
+
+.fastapicosmos-root .fastapi-card {
+  background: var(--fastapi-surface);
+  border: 1px solid var(--fastapi-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fastapicosmos-root .fastapi-card:hover {
+  border-color: var(--fastapi-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.18);
+}
+
+.fastapicosmos-root .fastapi-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
