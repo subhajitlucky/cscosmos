@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.lldcosmos-root {
+  --lld-primary: #3b82f6;
+  --lld-primary-hover: #2563eb;
+  --lld-indigo: #6366f1;
+  --lld-emerald: #10b981;
+  --lld-amber: #f59e0b;
+  --lld-cyan: #06b6d4;
+  --lld-purple: #a855f7;
+  --lld-rose: #f43f5e;
+  
+  --lld-bg: #070914;
+  --lld-surface: #0d1222;
+  --lld-surface-2: #141b32;
+  --lld-border: rgba(59, 130, 246, 0.25);
+  --lld-border-subtle: rgba(255, 255, 255, 0.08);
+  --lld-text: #f8fafc;
+  --lld-muted: #8d97b0;
+  
+  --lld-display: 'Syne', sans-serif;
+  --lld-sans: 'Inter', sans-serif;
+  --lld-mono: 'DM Mono', monospace;
+
+  font-family: var(--lld-sans);
+  background-color: var(--lld-bg);
+  color: var(--lld-text);
+  min-height: 100vh;
+}
+
+html.light .lldcosmos-root,
+html[data-theme='light'] .lldcosmos-root,
+html:not(.dark) .lldcosmos-root,
+.lldcosmos-root[data-theme='light'],
+.lldcosmos-root.light-mode {
+  --lld-bg: #f8fafc;
+  --lld-surface: #ffffff;
+  --lld-surface-2: #f1f5f9;
+  --lld-border: rgba(59, 130, 246, 0.28);
+  --lld-border-subtle: rgba(0, 0, 0, 0.08);
+  --lld-text: #0f172a;
+  --lld-muted: #64748b;
+}
+
+html.dark .lldcosmos-root,
+html[data-theme='dark'] .lldcosmos-root,
+.lldcosmos-root[data-theme='dark'],
+.lldcosmos-root.dark-mode {
+  --lld-bg: #070914;
+  --lld-surface: #0d1222;
+  --lld-surface-2: #141b32;
+  --lld-border: rgba(59, 130, 246, 0.25);
+  --lld-border-subtle: rgba(255, 255, 255, 0.08);
+  --lld-text: #f8fafc;
+  --lld-muted: #8d97b0;
+}
+
+.lldcosmos-root .font-display {
+  font-family: var(--lld-display);
+}
+
+.lldcosmos-root .font-mono {
+  font-family: var(--lld-mono);
+}
+
+.lldcosmos-root .lld-glow {
+  text-shadow: 0 0 25px rgba(59, 130, 246, 0.55), 0 0 50px rgba(59, 130, 246, 0.2);
+}
+
+.lldcosmos-root .lld-card {
+  background: var(--lld-surface);
+  border: 1px solid var(--lld-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lldcosmos-root .lld-card:hover {
+  border-color: var(--lld-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.18);
+}
+
+.lldcosmos-root .lld-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}

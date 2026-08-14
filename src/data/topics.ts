@@ -80,7 +80,7 @@ export const topics: Topic[] = [
     createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', url: '/dockercosmos' }),
     createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack", { status: 'active', slug: 'mqviz', url: '/mqviz' }),
     createTopic("Microservices Architecture (Services, Failures)", "fullstack", { status: 'active', slug: 'microservicesviz', url: '/microservicesviz' }),
-    createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack"),
+    createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack", { status: 'active', slug: 'lldcosmos', url: '/lldcosmos' }),
     createTopic("System Design & Scalability (Caching, Sharding)", "fullstack", { status: 'active', slug: 'systemdesignviz', url: '/systemdesignviz' }),
     createTopic("AI Application Engineering (RAG, Agents, Vector Search)", "fullstack"),
     createTopic("Testing & Quality Engineering (TDD, BDD, Property-Based)", "fullstack"),

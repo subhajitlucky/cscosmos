@@ -37,6 +37,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/fastapicosmos',
   '/synccosmos',
   '/microservicesviz',
+  '/lldcosmos',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -71,6 +72,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/fastapicosmos',
   '/synccosmos',
   '/microservicesviz',
+  '/lldcosmos',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
