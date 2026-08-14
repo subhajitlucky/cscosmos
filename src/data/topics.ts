@@ -36,7 +36,7 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
         slug,
         shortDescription: `Interactive visualization and learning module for ${name}.`,
         status,
-        url: status === 'active' ? (options?.url && options.url.startsWith('/') ? options.url : `/learn/${slug}`) : undefined,
+        url: status === 'active' ? (options?.url ?? `/learn/${slug}`) : undefined,
     };
 };
 
