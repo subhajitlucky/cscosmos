@@ -45,6 +45,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/tsviz` | **Absorbed** | TypeScript Type Narrowing, CFA, Generics, Utility Lab & TSC Pipeline |
 | `/redisviz` | **Absorbed** | Redis Data Structures (SDS, SkipList), Caching Patterns, Eviction, CLI |
 | `/sqlcosmos` | **Absorbed** | SQL Query Planner, B+ Tree Indexing, Joins Engine, EXPLAIN, MVCC |
+| `/nodecosmos` | **Absorbed** | Node.js 6-Phase Libuv Event Loop, Thread Pool, Streams Backpressure |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -64,9 +65,9 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 10: `tsviz` -> `/tsviz` (Completed: Control Flow Narrowing, Structural Subtyping, 12 Utility Types Lab, TSC 5-Stage Pipeline, Type Challenges, Flashcards, Cheat Sheet)
 - ✅ Site 11: `redisviz` -> `/redisviz` (Completed: In-Memory Data Structures SDS/SkipList/QuickList, Caching Strategies Lab, Eviction Simulator, Interactive CLI, Persistence RDB/AOF)
 - ✅ Site 12: `sqlcosmos` -> `/sqlcosmos` (Completed: B+ Tree Index Traversal, EXPLAIN ANALYZE Cost Optimizer, Physical Joins Engine, MVCC Tuple Versioning, SQL Playground)
+- ✅ Site 13: `nodecosmos` -> `/nodecosmos` (Completed: 6-Phase Libuv Event Loop Stepper, UV_THREADPOOL_SIZE Thread Pool, Streams Backpressure Lab, Cluster vs Worker Threads)
 
 ### Planned Next Absorptions:
-- ⏳ Site 13: `nodecosmos` (Node.js runtime & Libuv event loop visualizer)
 - ⏳ Site 14: `dockercosmos` & `k8scosmos` (Container & Orchestration visualizers)
 - ⏳ Site 15: `blockchainviz` & `evminternals`
 

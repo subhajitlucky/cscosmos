@@ -63,7 +63,7 @@ export const topics: Topic[] = [
     createTopic("Cross-Platform Internals (React Native Bridge vs Skia)", "fullstack"),
 
     // 3. Backend & Runtime
-    createTopic("Node.js Runtime (Event Loop, libuv)", "fullstack" , { status: 'active', url: "https://nodecosmos.vercel.app" }),
+    createTopic("Node.js Runtime (Event Loop, libuv)", "fullstack" , { status: 'active', slug: 'nodecosmos', url: '/nodecosmos' }),
     createTopic("Go Backend Internals (Goroutines, Memory)", "fullstack", { status: 'active', slug: 'golangviz', url: '/golangviz' }),
     createTopic("Rust Backend Internals (Ownership, Concurrency)", "fullstack" , { status: 'active', url: "https://rustviz.vercel.app" }),
     createTopic("Python FastAPI Backend (Async, Dependency Injection)", "fullstack"),
