@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.crossplatformviz-root {
+  --cp-primary: #6366f1;
+  --cp-primary-hover: #4f46e5;
+  --cp-sky: #0ea5e9;
+  --cp-amber: #f59e0b;
+  --cp-orange: #f97316;
+  --cp-emerald: #10b981;
+  --cp-rose: #f43f5e;
+  
+  --cp-bg: #090b14;
+  --cp-surface: #101424;
+  --cp-surface-2: #181d33;
+  --cp-border: rgba(99, 102, 241, 0.25);
+  --cp-border-subtle: rgba(255, 255, 255, 0.08);
+  --cp-text: #f8fafc;
+  --cp-muted: #8b93af;
+  
+  --cp-display: 'Syne', sans-serif;
+  --cp-sans: 'Inter', sans-serif;
+  --cp-mono: 'DM Mono', monospace;
+
+  font-family: var(--cp-sans);
+  background-color: var(--cp-bg);
+  color: var(--cp-text);
+  min-height: 100vh;
+}
+
+html.light .crossplatformviz-root,
+html[data-theme='light'] .crossplatformviz-root,
+html:not(.dark) .crossplatformviz-root,
+.crossplatformviz-root[data-theme='light'],
+.crossplatformviz-root.light-mode {
+  --cp-bg: #f8fafc;
+  --cp-surface: #ffffff;
+  --cp-surface-2: #f1f5f9;
+  --cp-border: rgba(99, 102, 241, 0.28);
+  --cp-border-subtle: rgba(0, 0, 0, 0.08);
+  --cp-text: #0f172a;
+  --cp-muted: #64748b;
+}
+
+html.dark .crossplatformviz-root,
+html[data-theme='dark'] .crossplatformviz-root,
+.crossplatformviz-root[data-theme='dark'],
+.crossplatformviz-root.dark-mode {
+  --cp-bg: #090b14;
+  --cp-surface: #101424;
+  --cp-surface-2: #181d33;
+  --cp-border: rgba(99, 102, 241, 0.25);
+  --cp-border-subtle: rgba(255, 255, 255, 0.08);
+  --cp-text: #f8fafc;
+  --cp-muted: #8b93af;
+}
+
+.crossplatformviz-root .font-display {
+  font-family: var(--cp-display);
+}
+
+.crossplatformviz-root .font-mono {
+  font-family: var(--cp-mono);
+}
+
+.crossplatformviz-root .cp-glow {
+  text-shadow: 0 0 25px rgba(99, 102, 241, 0.55), 0 0 50px rgba(99, 102, 241, 0.2);
+}
+
+.crossplatformviz-root .cp-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.crossplatformviz-root .cp-card:hover {
+  border-color: var(--cp-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.2);
+}
+
+.crossplatformviz-root .cp-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}

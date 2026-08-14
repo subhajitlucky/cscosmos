@@ -60,7 +60,7 @@ export const topics: Topic[] = [
     createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack", { status: 'active', slug: 'tailwindcosmos', url: '/tailwindcosmos' }),
     createTopic("WebAssembly Internals (Wasm & Linear Memory)", "fullstack", { status: 'active', slug: 'wasmcosmos', url: '/wasmcosmos' }),
     createTopic("Spatial Computing & XR (3D UI, WebXR)", "fullstack", { status: 'active', slug: 'xrcosmos', url: '/xrcosmos' }),
-    createTopic("Cross-Platform Internals (React Native Bridge vs Skia)", "fullstack"),
+    createTopic("Cross-Platform Internals (React Native Bridge vs Skia)", "fullstack", { status: 'active', slug: 'crossplatformviz', url: '/crossplatformviz' }),
 
     // 3. Backend & Runtime
     createTopic("Node.js Runtime (Event Loop, libuv)", "fullstack" , { status: 'active', slug: 'nodecosmos', url: '/nodecosmos' }),
