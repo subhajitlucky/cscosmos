@@ -50,7 +50,7 @@ export const topics: Topic[] = [
     createTopic("CSS Visualizer (Box Model, Flexbox, Grid)", "fullstack", { status: 'active', slug: 'css-cosmos', url: '/css-cosmos' }),
     createTopic("JavaScript Visualizer (Execution, Async, Memory)", "fullstack", { status: 'active', slug: 'jsviz', url: '/jsviz' }),
     createTopic("TypeScript Visualizer (Types, Inference, Compiler)", "fullstack", { status: 'active', slug: 'tsviz', url: '/tsviz' }),
-    createTopic("Browser Internals (DOM, Rendering, Storage)", "fullstack", { status: 'active', url: "https://browseruniverse.vercel.app/" }),
+    createTopic("Browser Internals (DOM, Rendering, Storage)", "fullstack", { status: 'active', slug: 'browseruniverse', url: '/browseruniverse' }),
 
     // 2. Frontend Engineering
     createTopic("React Visualizer (Hooks, Reconciliation)", "fullstack" , { status: 'active', url: "/reactcosmos" }),

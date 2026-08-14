@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+.browseruniverse-root {
+  --bu-primary: #06b6d4;
+  --bu-primary-hover: #0891b2;
+  --bu-v8-orange: #f97316;
+  --bu-emerald: #10b981;
+  --bu-purple: #a855f7;
+  --bu-amber: #f59e0b;
+  --bu-rose: #f43f5e;
+  
+  --bu-bg: #070914;
+  --bu-surface: #0d1222;
+  --bu-surface-2: #141b32;
+  --bu-border: rgba(6, 182, 212, 0.25);
+  --bu-border-subtle: rgba(255, 255, 255, 0.08);
+  --bu-text: #f8fafc;
+  --bu-muted: #8d97b0;
+  
+  --bu-display: 'Syne', sans-serif;
+  --bu-sans: 'Inter', sans-serif;
+  --bu-mono: 'DM Mono', monospace;
+
+  font-family: var(--bu-sans);
+  background-color: var(--bu-bg);
+  color: var(--bu-text);
+  min-height: 100vh;
+}
+
+html.light .browseruniverse-root,
+html[data-theme='light'] .browseruniverse-root,
+html:not(.dark) .browseruniverse-root,
+.browseruniverse-root[data-theme='light'],
+.browseruniverse-root.light-mode {
+  --bu-bg: #f8fafc;
+  --bu-surface: #ffffff;
+  --bu-surface-2: #f1f5f9;
+  --bu-border: rgba(6, 182, 212, 0.28);
+  --bu-border-subtle: rgba(0, 0, 0, 0.08);
+  --bu-text: #0f172a;
+  --bu-muted: #64748b;
+}
+
+html.dark .browseruniverse-root,
+html[data-theme='dark'] .browseruniverse-root,
+.browseruniverse-root[data-theme='dark'],
+.browseruniverse-root.dark-mode {
+  --bu-bg: #070914;
+  --bu-surface: #0d1222;
+  --bu-surface-2: #141b32;
+  --bu-border: rgba(6, 182, 212, 0.25);
+  --bu-border-subtle: rgba(255, 255, 255, 0.08);
+  --bu-text: #f8fafc;
+  --bu-muted: #8d97b0;
+}
+
+.browseruniverse-root .font-display {
+  font-family: var(--bu-display);
+}
+
+.browseruniverse-root .font-mono {
+  font-family: var(--bu-mono);
+}
+
+.browseruniverse-root .bu-glow {
+  text-shadow: 0 0 25px rgba(6, 182, 212, 0.55), 0 0 50px rgba(6, 182, 212, 0.2);
+}
+
+.browseruniverse-root .bu-card {
+  background: var(--bu-surface);
+  border: 1px solid var(--bu-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.browseruniverse-root .bu-card:hover {
+  border-color: var(--bu-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.18);
+}
+
+.browseruniverse-root .bu-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.06) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
