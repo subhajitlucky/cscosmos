@@ -1,45 +1,44 @@
 'use client';
 
 import React from 'react';
+import { Github, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
-import { Compass, Sparkles } from 'lucide-react';
 
-export function Footer() {
+export default function Footer() {
   return (
-    <footer className="border-t border-[var(--bu-border-subtle)] bg-[var(--bu-surface)] mt-24 py-12">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[var(--bu-primary)]/10 border border-[var(--bu-primary)]/30 flex items-center justify-center text-[var(--bu-primary)]">
-            <Compass className="w-4 h-4 text-[var(--bu-primary)]" />
-          </div>
-          <div>
-            <span className="font-display font-bold text-sm text-[var(--bu-text)]">
-              BROWSER::UNIVERSE
-            </span>
-            <p className="text-[11px] text-[var(--bu-muted)] font-mono">
-              Critical Rendering Path &bull; V8 Engine &bull; Event Loop &bull; Multi-Process Architecture
-            </p>
-          </div>
+    <footer className="relative z-10 mt-10 border-t border-border/70 bg-card/50 backdrop-blur">
+      <div className="page-container flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-semibold text-white">BrowserUniverse</p>
+          <p className="text-xs text-slate-400">Learn the browser from bytes to pixels.</p>
         </div>
-
-        <div className="flex items-center gap-6 text-xs text-[var(--bu-muted)] font-mono">
-          <Link href="/browseruniverse/learn" className="hover:text-[var(--bu-primary)] transition-colors">
-            Concept Map
+        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
+          <Link className="inline-flex items-center gap-1 hover:text-white" href="/browseruniverse/about">
+            About
           </Link>
-          <Link href="/browseruniverse/crp-lab" className="hover:text-[var(--bu-primary)] transition-colors">
-            CRP &amp; Reflow Lab
+          <Link className="inline-flex items-center gap-1 hover:text-white" href="/browseruniverse/topics">
+            Topics
           </Link>
-          <Link href="/browseruniverse/v8-lab" className="hover:text-[var(--bu-primary)] transition-colors">
-            V8 JIT Lab
-          </Link>
-          <Link href="/browseruniverse/about" className="hover:text-[var(--bu-primary)] transition-colors">
-            Architecture
-          </Link>
-        </div>
-
-        <div className="flex items-center gap-2 text-xs font-mono text-[var(--bu-muted)]">
-          <span>Part of CSCosmos</span>
-          <Sparkles className="w-3.5 h-3.5 text-[var(--bu-primary)]" />
+          <a
+            className="inline-flex items-center gap-1 hover:text-white"
+            href="https://developer.chrome.com/docs/devtools"
+            target="_blank"
+            rel="noreferrer"
+          >
+            DevTools <ExternalLink size={14} />
+          </a>
+          <a
+            className="inline-flex items-center gap-1 hover:text-white"
+            href="https://github.com/subhajitlucky/browseruniverse"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Github size={16} />
+            GitHub
+          </a>
+          <span className="rounded-full border border-border px-3 py-1 text-[11px] uppercase tracking-[0.2rem] text-slate-400">
+            MIT License
+          </span>
         </div>
       </div>
     </footer>
