@@ -1,12 +1,19 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   compress: true,
+  productionBrowserSourceMaps: false,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
   experimental: {
+    cpus: 12,
+    staticGenerationMaxConcurrency: 12,
+    staticGenerationMinPagesPerWorker: 10,
+    webpackBuildWorker: true,
+    parallelServerCompiles: true,
+    parallelServerBuildTraces: true,
     optimizePackageImports: [
       'lucide-react', 
       'framer-motion', 
@@ -17,7 +24,10 @@ const nextConfig: NextConfig = {
       '@radix-ui/react-scroll-area',
       '@radix-ui/react-separator',
       'd3',
-      'recharts'
+      'animejs',
+      'zustand',
+      'clsx',
+      'tailwind-merge'
     ],
   },
   eslint: {
