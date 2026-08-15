@@ -17,18 +17,18 @@ function ShellInner({ children, className }: Props) {
 
   return (
     <div className={cn('browseruniverse-root relative min-h-screen font-sans antialiased transition-colors duration-300', theme === 'light' ? 'light-mode' : 'dark-mode', className)}>
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         {theme === 'dark' ? (
           <>
-            <div className="gradient-blur left-[10%] top-[-10%] h-64 w-64 bg-[#7c3aed]/30" />
-            <div className="gradient-blur right-[5%] top-10 h-72 w-72 bg-[#22d3ee]/25" />
-            <div className="gradient-blur left-[20%] bottom-[-10%] h-80 w-80 bg-[#22c55e]/20" />
+            <div className="absolute left-[10%] top-[-5%] h-[32rem] w-[32rem] rounded-full bg-[#7c3aed]/15 blur-[120px]" />
+            <div className="absolute right-[5%] top-[10%] h-[28rem] w-[28rem] rounded-full bg-[#22d3ee]/12 blur-[120px]" />
+            <div className="absolute left-[20%] bottom-[5%] h-[32rem] w-[32rem] rounded-full bg-[#22c55e]/08 blur-[120px]" />
           </>
         ) : (
           <>
-            <div className="gradient-blur left-[10%] top-[-10%] h-64 w-64 bg-[#7c3aed]/10" />
-            <div className="gradient-blur right-[5%] top-10 h-72 w-72 bg-[#22d3ee]/10" />
-            <div className="gradient-blur left-[20%] bottom-[-10%] h-80 w-80 bg-[#22c55e]/10" />
+            <div className="absolute left-[10%] top-[-5%] h-[32rem] w-[32rem] rounded-full bg-[#7c3aed]/06 blur-[140px]" />
+            <div className="absolute right-[5%] top-[10%] h-[28rem] w-[28rem] rounded-full bg-[#22d3ee]/05 blur-[140px]" />
+            <div className="absolute left-[20%] bottom-[5%] h-[32rem] w-[32rem] rounded-full bg-[#22c55e]/04 blur-[140px]" />
           </>
         )}
       </div>

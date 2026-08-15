@@ -181,6 +181,32 @@ html.light .browseruniverse-root .bg-gradient-to-br,
   background-color: var(--bu-accent-hover) !important;
 }
 
+/* Ambient glow blobs */
+.browseruniverse-root .gradient-blur {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+html.light .browseruniverse-root .gradient-blur,
+.browseruniverse-root.light-mode .gradient-blur {
+  opacity: 0.3;
+  filter: blur(140px);
+}
+
+.browseruniverse-root .grid-accent {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 36px 36px;
+}
+
+html.light .browseruniverse-root .grid-accent,
+.browseruniverse-root.light-mode .grid-accent {
+  background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.06) 1px, transparent 0);
+}
+
 /* Page container */
 .browseruniverse-root .page-container {
   width: 100%;
