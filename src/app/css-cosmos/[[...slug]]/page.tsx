@@ -35,7 +35,12 @@ export default async function CssCosmosPage({ params }: { params: Promise<{ slug
         }
         content = <TopicPage topic={foundTopic} />;
     } else if (firstSegment !== '') {
-        notFound();
+        const directTopic = topics.find(t => t.path.replace(/^\//, '') === firstSegment);
+        if (directTopic) {
+            content = <TopicPage topic={directTopic} />;
+        } else {
+            notFound();
+        }
     }
 
     return (

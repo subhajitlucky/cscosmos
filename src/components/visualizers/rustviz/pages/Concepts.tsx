@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BookOpen, Search, ArrowRight, Filter, Clock, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import { BookOpen, Search, ArrowRight, Clock } from 'lucide-react';
 import { rustConcepts, rustCategories } from '../data/concepts';
 
 export function Concepts() {
@@ -69,7 +70,7 @@ export function Concepts() {
       {/* Concepts Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredConcepts.map((concept) => (
-          <a
+          <Link
             key={concept.id}
             href={`/rustviz/concepts/${concept.slug}`}
             className="rust-card rounded-xl p-6 flex flex-col justify-between group block transition-all"
@@ -98,7 +99,7 @@ export function Concepts() {
               <span>Read Full Breakdown</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </div>
-          </a>
+          </Link>
         ))}
       </div>
 

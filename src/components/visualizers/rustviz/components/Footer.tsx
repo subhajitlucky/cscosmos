@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Flame, ExternalLink, ShieldCheck, Cpu, Terminal, ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+import { Flame, ExternalLink, ShieldCheck, Cpu, ArrowUpRight } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -18,7 +19,7 @@ export function Footer() {
               <span className="text-sm font-bold text-[var(--rust-text)]">RustViz Backend Internals</span>
             </div>
             <p className="max-w-md leading-relaxed text-[var(--rust-muted)]">
-              An interactive visual simulation engine and deep-dive learning platform for Rust memory management, ownership & move semantics, borrow checking, lifetimes, smart pointers, and concurrency.
+              An interactive visual simulation engine and deep-dive learning platform for Rust memory management, ownership &amp; move semantics, borrow checking, lifetimes, smart pointers, and concurrency.
             </p>
             <div className="flex items-center space-x-4 pt-2 text-[11px]">
               <span className="flex items-center text-[var(--rust-emerald)]">
@@ -41,61 +42,61 @@ export function Footer() {
             <h4 className="font-bold text-[var(--rust-text)] uppercase tracking-wider text-[11px] mb-3">Interactive Engines</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/rustviz/ownership-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Ownership & Move Lab <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                </a>
+                <Link href="/rustviz/ownership-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  Ownership &amp; Move Lab <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                </Link>
               </li>
               <li>
-                <a href="/rustviz/borrow-checker" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Borrow Checker & NLL <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                </a>
+                <Link href="/rustviz/borrow-checker" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  Borrow Checker &amp; NLL <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                </Link>
               </li>
               <li>
-                <a href="/rustviz/lifetimes-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Lifetimes & Variance <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                </a>
+                <Link href="/rustviz/lifetimes-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  Lifetimes &amp; Variance <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                </Link>
               </li>
               <li>
-                <a href="/rustviz/smart-pointers" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                <Link href="/rustviz/smart-pointers" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
                   Smart Pointers (Rc/Arc) <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/rustviz/concurrency-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Tokio & Channels Lab <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                </a>
+                <Link href="/rustviz/concurrency-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  Tokio &amp; Channels Lab <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Col 3: Resources & Hub */}
           <div>
-            <h4 className="font-bold text-[var(--rust-text)] uppercase tracking-wider text-[11px] mb-3">Reference & Hub</h4>
+            <h4 className="font-bold text-[var(--rust-text)] uppercase tracking-wider text-[11px] mb-3">Reference &amp; Hub</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/rustviz/concepts" className="hover:text-[var(--rust-primary)] transition-colors">
+                <Link href="/rustviz/concepts" className="hover:text-[var(--rust-primary)] transition-colors">
                   12 Deep Dive Concepts
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/rustviz/pitfalls" className="hover:text-[var(--rust-primary)] transition-colors">
+                <Link href="/rustviz/pitfalls" className="hover:text-[var(--rust-primary)] transition-colors">
                   Top Compiler Errors
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/rustviz/flashcards" className="hover:text-[var(--rust-primary)] transition-colors">
+                <Link href="/rustviz/flashcards" className="hover:text-[var(--rust-primary)] transition-colors">
                   Memory Flashcards
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/rustviz/cheatsheet" className="hover:text-[var(--rust-primary)] transition-colors">
+                <Link href="/rustviz/cheatsheet" className="hover:text-[var(--rust-primary)] transition-colors">
                   Rust Architecture Cheat Sheet
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="text-[var(--rust-primary)] hover:underline font-semibold flex items-center pt-2">
+                <Link href="/topics" className="text-[var(--rust-primary)] hover:underline font-semibold flex items-center pt-2">
                   Explore All CSCosmos Visualizers <ExternalLink className="ml-1 h-3 w-3" />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

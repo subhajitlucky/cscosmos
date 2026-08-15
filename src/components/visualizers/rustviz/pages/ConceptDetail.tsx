@@ -1,19 +1,18 @@
 'use client';
 
 import React from 'react';
-import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { 
   ArrowLeft, 
   Clock, 
   CheckCircle2, 
-  BookOpen, 
   Code, 
   Layers, 
-  AlertTriangle,
-  ArrowRight,
-  Sparkles
+  AlertTriangle, 
+  ArrowRight, 
+  Sparkles 
 } from 'lucide-react';
-import { rustConcepts, RustConcept } from '../data/concepts';
+import { rustConcepts } from '../data/concepts';
 import { rustPitfalls } from '../data/pitfalls';
 
 export function ConceptDetail({ slug }: { slug: string }) {
@@ -24,9 +23,9 @@ export function ConceptDetail({ slug }: { slug: string }) {
       <div className="mx-auto max-w-3xl px-4 py-20 text-center space-y-4">
         <h2 className="text-2xl font-bold text-[var(--rust-text)]">Concept Not Found</h2>
         <p className="text-xs text-[var(--rust-muted)]">The requested concept could not be found.</p>
-        <a href="/rustviz/concepts" className="inline-flex items-center text-xs font-bold text-[var(--rust-primary)] hover:underline">
+        <Link href="/rustviz/concepts" className="inline-flex items-center text-xs font-bold text-[var(--rust-primary)] hover:underline">
           <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to all concepts
-        </a>
+        </Link>
       </div>
     );
   }
@@ -38,13 +37,13 @@ export function ConceptDetail({ slug }: { slug: string }) {
       
       {/* Top Nav & Breadcrumbs */}
       <div className="flex items-center justify-between border-b border-[var(--rust-border)] pb-4">
-        <a
+        <Link
           href="/rustviz/concepts"
           className="flex items-center text-xs font-semibold text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
         >
           <ArrowLeft className="mr-1.5 h-4 w-4" />
           <span>All Concepts</span>
-        </a>
+        </Link>
 
         <div className="flex items-center space-x-3 text-xs font-mono">
           <span className="px-2 py-0.5 rounded bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-bold uppercase text-[10px]">
@@ -144,7 +143,7 @@ export function ConceptDetail({ slug }: { slug: string }) {
 
           <div className="grid grid-cols-1 gap-3">
             {relatedPitfalls.map((pitfall) => (
-              <a
+              <Link
                 key={pitfall.id}
                 href="/rustviz/pitfalls"
                 className="rounded-lg border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 flex items-center justify-between hover:border-rose-500/50 transition-colors group"
@@ -157,7 +156,7 @@ export function ConceptDetail({ slug }: { slug: string }) {
                   <p className="text-[11px] text-[var(--rust-muted)] mt-1">{pitfall.summary}</p>
                 </div>
                 <ArrowRight className="h-4 w-4 text-[var(--rust-muted)] group-hover:text-rose-400 transition-colors shrink-0" />
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -165,13 +164,13 @@ export function ConceptDetail({ slug }: { slug: string }) {
 
       {/* Footer Navigation */}
       <div className="pt-6 border-t border-[var(--rust-border)] flex items-center justify-between">
-        <a
+        <Link
           href="/rustviz/ownership-lab"
           className="inline-flex items-center text-xs font-bold text-[var(--rust-primary)] hover:underline"
         >
           <span>Open Interactive Memory Stepper</span>
           <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-        </a>
+        </Link>
       </div>
 
     </div>

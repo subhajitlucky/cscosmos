@@ -40,6 +40,7 @@ const CUSTOM_HEADER_ROUTES = [
   '/lldcosmos',
   '/browseruniverse',
   '/aicosmos',
+  '/rustviz',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -77,6 +78,7 @@ const CUSTOM_FOOTER_ROUTES = [
   '/lldcosmos',
   '/browseruniverse',
   '/aicosmos',
+  '/rustviz',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {

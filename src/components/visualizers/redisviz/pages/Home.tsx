@@ -147,10 +147,8 @@ const Home = () => {
                                 {group.items.map((item, iIdx) => (
                                     <motion.div
                                         key={item.title}
-                                        initial={{ opacity: 0, x: iIdx % 2 === 0 ? -20 : 20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.5 }}
+                                        initial={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.3 }}
                                     >
                                         <Link href={item.path}>
                                             <Card className="group relative h-full hover:shadow-2xl hover:shadow-rose-500/5 border-border/40 hover:border-rose-500/40 transition-all duration-300 overflow-hidden bg-white/5 backdrop-blur-sm">
