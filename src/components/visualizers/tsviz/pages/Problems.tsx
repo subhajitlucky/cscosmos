@@ -13,9 +13,9 @@ const difficulties: ProblemDifficulty[] = ["Easy", "Medium", "Hard"];
 function ProblemsContent() {
     const searchParams = useSearchParams();
     const initialConcept = searchParams?.get("concept") || "";
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(initialConcept);
     const [difficulty, setDifficulty] = useState<ProblemDifficulty | "All">("All");
-    const [conceptFilter, setConceptFilter] = useState("");
+    const [conceptFilter, setConceptFilter] = useState(initialConcept);
 
     useEffect(() => {
         if (initialConcept) {
@@ -49,9 +49,9 @@ function ProblemsContent() {
     }, [search, difficulty, conceptFilter]);
 
     return (
-        <div className="container mx-auto py-10 space-y-6 max-w-5xl px-4">
+        <div className="container py-10 space-y-6 max-w-5xl">
             <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground">TypeScript Problems</h1>
+                <h1 className="text-3xl font-bold tracking-tight">TypeScript Problems</h1>
                 <p className="text-muted-foreground">
                     50 practice tasks to master TypeScript. Filter by difficulty or search by concept.
                 </p>
@@ -64,7 +64,7 @@ function ProblemsContent() {
                         setSearch(e.target.value);
                     }}
                     placeholder="Search problems (title, concept)…"
-                    className="md:w-80 h-10 rounded-md border border-border bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="md:w-80 h-10 rounded-md border bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 />
                 <div className="flex items-center gap-2 flex-wrap">
                     {(["All", ...difficulties] as const).map((d) => (
@@ -75,10 +75,10 @@ function ProblemsContent() {
                                 setDifficulty(d);
                             }}
                             className={cn(
-                                "h-10 px-3.5 rounded-md border text-sm font-medium transition",
+                                "h-10 px-3 rounded-md border text-sm transition",
                                 difficulty === d
-                                    ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                                    : "bg-background text-foreground hover:border-blue-500/40"
+                                    ? "bg-primary text-primary-foreground border-primary"
+                                    : "bg-background text-foreground/80 hover:border-primary/40"
                             )}
                         >
                             {d}
@@ -91,9 +91,9 @@ function ProblemsContent() {
                                 setConceptFilter("");
                                 setSearch("");
                             }}
-                            className="h-9 px-2.5 rounded-md border text-xs bg-muted text-foreground hover:border-primary/40"
+                            className="h-9 px-2 rounded-md border text-xs bg-muted text-foreground/80 hover:border-primary/40"
                         >
-                            Clear filter: {conceptFilter} ✕
+                            Clear concept filter: {conceptFilter}
                         </button>
                     )}
                 </div>
@@ -101,13 +101,13 @@ function ProblemsContent() {
 
             <div className="grid gap-4 md:grid-cols-2">
                 {filtered.map((p) => (
-                    <Link key={p.id} href={`/tsviz/problems/${p.id}`} className="block group">
+                    <Link key={p.id} href={`/tsviz/problems/${p.id}`} className="block">
                         <ProblemCard problem={p} />
                     </Link>
                 ))}
                 {filtered.length === 0 && (
-                    <Card className="col-span-2">
-                        <CardContent className="p-8 text-center text-muted-foreground">
+                    <Card>
+                        <CardContent className="p-6 text-muted-foreground">
                             No problems found. Try clearing filters or searching a different term.
                         </CardContent>
                     </Card>
@@ -119,17 +119,15 @@ function ProblemsContent() {
 
 function ProblemCard({ problem }: { problem: Problem }) {
     return (
-        <Card className="h-full border border-border transition-all hover:border-blue-500/50 hover:shadow-md">
+        <Card className="h-full">
             <CardHeader className="pb-3">
                 <div className="flex items-center justify-between gap-2">
-                    <CardTitle className="text-lg font-bold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {problem.title}
-                    </CardTitle>
+                    <CardTitle className="text-lg">{problem.title}</CardTitle>
                     <Badge variant={badgeVariant(problem.difficulty)}>{problem.difficulty}</Badge>
                 </div>
-                <div className="text-sm font-medium text-blue-600 dark:text-blue-400">{problem.concept}</div>
+                <div className="text-sm text-muted-foreground">{problem.concept}</div>
             </CardHeader>
-            <CardContent className="text-sm text-muted-foreground leading-relaxed">{problem.summary}</CardContent>
+            <CardContent className="text-sm text-muted-foreground">{problem.summary}</CardContent>
         </Card>
     );
 }
@@ -147,7 +145,7 @@ function badgeVariant(difficulty: ProblemDifficulty): "outline" | "secondary" | 
 
 export function Problems() {
     return (
-        <Suspense fallback={<div className="container mx-auto py-10 text-muted-foreground text-center">Loading TypeScript problems...</div>}>
+        <Suspense fallback={<div className="container py-10 text-muted-foreground">Loading...</div>}>
             <ProblemsContent />
         </Suspense>
     );

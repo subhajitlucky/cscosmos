@@ -23,7 +23,7 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
     const problemId = propProblemId || (Array.isArray(slug) && slug.length > 1 ? slug[1] : undefined);
     const problem = problems.find((p) => p.id === problemId);
 
-    const [code, setCode] = useState(() => problem ? (problem.starterCode || defaultTemplate(problem.title)) : "");
+    const [code, setCode] = useState(() => (problem ? problem.starterCode || defaultTemplate(problem.title) : ""));
     const [result, setResult] = useState<Awaited<ReturnType<typeof checkTypeScriptSyntax>> | null>(null);
     const [isRunning, setIsRunning] = useState(false);
     const [showHints, setShowHints] = useState(false);
@@ -38,11 +38,11 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
 
     if (!problem) {
         return (
-            <div className="container mx-auto py-16 text-center space-y-4 px-4">
+            <div className="container py-16 text-center space-y-4">
                 <div className="flex justify-center">
                     <AlertCircle className="h-10 w-10 text-muted-foreground" />
                 </div>
-                <h1 className="text-2xl font-bold text-foreground">Problem not found</h1>
+                <h1 className="text-2xl font-bold">Problem not found</h1>
                 <Button variant="link" onClick={() => router.push("/tsviz/problems")}>Back to Problems</Button>
             </div>
         );
@@ -61,7 +61,7 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
     };
 
     return (
-        <div className="container mx-auto py-8 max-w-6xl space-y-6 px-4">
+        <div className="container py-8 max-w-6xl space-y-6">
             <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-2">
                     <Link href="/tsviz/problems">
@@ -72,30 +72,28 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
                     </Link>
                     <Badge variant={badgeVariant(problem.difficulty)}>{problem.difficulty}</Badge>
                 </div>
-                <Badge variant="outline" className="border-blue-500/30 text-blue-600 dark:text-blue-400 font-medium">
-                    {problem.concept}
-                </Badge>
+                <Badge variant="outline">{problem.concept}</Badge>
             </div>
 
             <div className="grid gap-6 lg:grid-cols-2">
-                <Card className="h-full border border-border shadow-sm">
+                <Card className="h-full">
                     <CardHeader>
-                        <CardTitle className="text-xl font-bold text-foreground">{problem.title}</CardTitle>
+                        <CardTitle className="text-xl">{problem.title}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4 text-sm text-muted-foreground">
-                        <p className="leading-relaxed text-foreground/90">{problem.description || problem.summary}</p>
+                        <p className="leading-relaxed text-foreground">{problem.description || problem.summary}</p>
                         {problem.starterCode && (
                             <p className="text-xs text-muted-foreground/80">
                                 Starter provided. Feel free to modify.
                             </p>
                         )}
                         {problem.expectedOutput && (
-                            <div className="rounded-md border border-border bg-muted/30 p-3">
-                                <div className="text-xs uppercase font-semibold text-muted-foreground mb-1">Expected output</div>
-                                <pre className="text-sm font-mono whitespace-pre-wrap text-foreground">{problem.expectedOutput}</pre>
+                            <div className="rounded-md border bg-muted/30 p-3">
+                                <div className="text-xs uppercase text-muted-foreground mb-1">Expected output</div>
+                                <pre className="text-sm font-mono whitespace-pre-wrap">{problem.expectedOutput}</pre>
                             </div>
                         )}
-                        <div className="flex flex-wrap gap-2 pt-2">
+                        <div className="flex flex-wrap gap-2">
                             {problem.hints && problem.hints.length > 0 && (
                                 <Button size="sm" variant="secondary" className="gap-2" onClick={() => setShowHints((v) => !v)}>
                                     <Lightbulb className="h-4 w-4" />
@@ -110,53 +108,51 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
                             )}
                         </div>
                         {showHints && problem.hints && (
-                            <ul className="list-disc list-inside space-y-1.5 text-foreground bg-muted/40 p-4 rounded-lg border border-border">
+                            <ul className="list-disc list-inside space-y-1 text-foreground">
                                 {problem.hints.map((h, idx) => (
-                                    <li key={idx} className="leading-relaxed">{h}</li>
+                                    <li key={idx}>{h}</li>
                                 ))}
                             </ul>
                         )}
                         {showSolution && problem.solution && (
-                            <div className="rounded-md border border-border bg-muted/40 p-4">
-                                <div className="text-xs uppercase font-bold text-muted-foreground mb-2">Solution Reference</div>
-                                <pre className="text-sm font-mono whitespace-pre-wrap text-foreground">{problem.solution}</pre>
+                            <div className="rounded-md border bg-muted/30 p-3">
+                                <div className="text-xs uppercase text-muted-foreground mb-1">Solution</div>
+                                <pre className="text-sm font-mono whitespace-pre-wrap">{problem.solution}</pre>
                             </div>
                         )}
                     </CardContent>
                 </Card>
 
-                <Card className="h-full border border-border shadow-sm flex flex-col">
-                    <CardHeader className="flex flex-row items-center justify-between pb-3">
-                        <CardTitle className="text-lg font-bold text-foreground">Solution Workspace</CardTitle>
+                <Card className="h-full">
+                    <CardHeader className="flex flex-row items-center justify-between">
+                        <CardTitle className="text-lg">Solution</CardTitle>
                         <div className="flex gap-2">
                             <Button variant="outline" size="sm" onClick={handleReset}>
                                 <RotateCcw className="h-4 w-4 mr-1" />
                                 Reset
                             </Button>
-                            <Button size="sm" onClick={handleRun} disabled={isRunning} className="bg-blue-600 hover:bg-blue-700 text-white">
+                            <Button size="sm" onClick={handleRun} disabled={isRunning}>
                                 <Play className="h-4 w-4 mr-1" />
                                 {isRunning ? "Running..." : "Run"}
                             </Button>
                         </div>
                     </CardHeader>
-                    <CardContent className="space-y-3 flex-1 flex flex-col">
-                        <div className="rounded-lg overflow-hidden border border-border">
-                            <Editor
-                                height="320px"
-                                defaultLanguage="typescript"
-                                value={code}
-                                onChange={(val) => setCode(val || "")}
-                                theme="vs-dark"
-                                options={{
-                                    minimap: { enabled: false },
-                                    fontSize: 14,
-                                    lineNumbers: "on",
-                                    scrollBeyondLastLine: false,
-                                    automaticLayout: true,
-                                    tabSize: 2,
-                                }}
-                            />
-                        </div>
+                    <CardContent className="space-y-3">
+                        <Editor
+                            height="320px"
+                            defaultLanguage="typescript"
+                            value={code}
+                            onChange={(val) => setCode(val || "")}
+                            theme="vs-dark"
+                            options={{
+                                minimap: { enabled: false },
+                                fontSize: 14,
+                                lineNumbers: "on",
+                                scrollBeyondLastLine: false,
+                                automaticLayout: true,
+                                tabSize: 2,
+                            }}
+                        />
                         <OutputPanel result={result} />
                     </CardContent>
                 </Card>
@@ -168,7 +164,7 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
 function OutputPanel({ result }: { result: Awaited<ReturnType<typeof checkTypeScriptSyntax>> | null }) {
     if (!result) {
         return (
-            <div className="rounded-md border border-border bg-muted/30 p-3 text-sm text-muted-foreground">
+            <div className="rounded-md border bg-muted/30 p-3 text-sm text-muted-foreground">
                 Run your code to see output and diagnostics.
             </div>
         );
@@ -178,9 +174,9 @@ function OutputPanel({ result }: { result: Awaited<ReturnType<typeof checkTypeSc
         <div className="space-y-3">
             <div className="flex items-center gap-2 text-sm font-semibold">
                 {result.success ? (
-                    <span className="text-green-600 dark:text-green-400">✓ Type Check Passed</span>
+                    <span className="text-green-600 dark:text-green-400">Success</span>
                 ) : (
-                    <span className="text-red-600 dark:text-red-400">✗ Compiler Errors</span>
+                    <span className="text-red-600 dark:text-red-400">Errors</span>
                 )}
             </div>
 
@@ -205,13 +201,13 @@ function OutputPanel({ result }: { result: Awaited<ReturnType<typeof checkTypeSc
             )}
 
             {result.output && (
-                <div className="rounded border border-border bg-muted/30 px-3 py-2 font-mono text-sm whitespace-pre-wrap text-foreground">
+                <div className="rounded border bg-muted/30 px-3 py-2 font-mono text-sm whitespace-pre-wrap">
                     {result.output.trim().length > 0 ? result.output : "No output (nothing was logged). Add console.log to view values."}
                 </div>
             )}
 
             {!result.output && (
-                <div className="rounded border border-border bg-muted/30 px-3 py-2 font-mono text-sm whitespace-pre-wrap text-muted-foreground">
+                <div className="rounded border bg-muted/30 px-3 py-2 font-mono text-sm whitespace-pre-wrap text-muted-foreground">
                     No output (nothing was logged). Add console.log to view values.
                 </div>
             )}

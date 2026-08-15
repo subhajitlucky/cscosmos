@@ -75,16 +75,16 @@ export function Playground() {
   }, [code]);
 
   return (
-    <div className="container mx-auto py-6 space-y-6 max-w-7xl px-4">
+    <div className="container py-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-1 text-foreground">TypeScript Playground</h1>
+          <h1 className="text-3xl font-bold mb-2">TypeScript Playground</h1>
           <p className="text-muted-foreground">
             Write, compile, and experiment with TypeScript code in real-time
           </p>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">
@@ -97,7 +97,7 @@ export function Playground() {
                   key={key}
                   onClick={() => loadExample(key)}
                   className={cn(
-                    selectedExample === key && "bg-accent font-semibold"
+                    selectedExample === key && "bg-accent"
                   )}
                 >
                   {example.name}
@@ -109,7 +109,7 @@ export function Playground() {
             <RotateCcw className="mr-2 h-4 w-4" />
             Reset
           </Button>
-          <Button onClick={handleRun} disabled={isCompiling} className="bg-blue-600 hover:bg-blue-700 text-white">
+          <Button onClick={handleRun} disabled={isCompiling}>
             <Play className="mr-2 h-4 w-4" />
             {isCompiling ? "Running..." : "Run"}
           </Button>
@@ -119,12 +119,12 @@ export function Playground() {
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Editor Panel */}
-        <Card className="flex flex-col border border-border shadow-sm">
+        <Card className="flex flex-col">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg font-bold text-foreground">Editor</CardTitle>
+            <CardTitle className="text-lg">Editor</CardTitle>
           </CardHeader>
           <CardContent className="flex-1 p-0">
-            <div className="h-[600px] border-t border-border overflow-hidden">
+            <div className="h-[600px] border-t">
               <Editor
                 height="100%"
                 defaultLanguage="typescript"
@@ -151,10 +151,10 @@ export function Playground() {
         {/* Output Panel */}
         <div className="space-y-6">
           {/* Compilation Status */}
-          <Card className="border border-border shadow-sm">
+          <Card>
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-bold text-foreground">Status</CardTitle>
+                <CardTitle className="text-lg">Status</CardTitle>
                 {compilationResult && (
                   <div className="flex items-center gap-2">
                     {compilationResult.success ? (
@@ -164,7 +164,7 @@ export function Playground() {
                     )}
                     <span
                       className={cn(
-                        "text-sm font-semibold",
+                        "text-sm font-medium",
                         compilationResult.success
                           ? "text-green-500"
                           : "text-red-500"
@@ -228,13 +228,13 @@ export function Playground() {
           </Card>
 
           {/* Output */}
-          <Card className="border border-border shadow-sm">
+          <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-bold text-foreground">Output</CardTitle>
+              <CardTitle className="text-lg">Output</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted/40 rounded-md p-4 min-h-[180px] max-h-[280px] overflow-auto border border-border">
-                <pre className="text-sm font-mono whitespace-pre-wrap text-foreground">
+              <div className="bg-muted rounded-md p-4 min-h-[200px] max-h-[300px] overflow-auto">
+                <pre className="text-sm font-mono whitespace-pre-wrap">
                   {compilationResult?.output || "No output yet. Click 'Run' to execute your code."}
                 </pre>
               </div>
@@ -242,9 +242,9 @@ export function Playground() {
           </Card>
 
           {/* Info Card */}
-          <Card className="border border-border shadow-sm">
+          <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-bold text-foreground">Tips</CardTitle>
+              <CardTitle className="text-lg">Tips</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="text-sm text-muted-foreground space-y-2 list-disc list-inside">
