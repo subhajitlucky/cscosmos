@@ -58,8 +58,8 @@ export function Navbar() {
             <div className="bg-primary text-primary-foreground p-1.5 rounded-lg group-hover:scale-105 transition-transform">
               <LayoutDashboard className="h-4 w-4" />
             </div>
-            <span className="font-extrabold text-lg tracking-tight text-foreground">
-              Next.js<span className="text-primary">Cosmos</span>
+            <span className="font-bold text-xl tracking-tight text-foreground">
+              Cosmos<span className="text-primary">.</span>
             </span>
           </Link>
 
@@ -84,7 +84,7 @@ export function Navbar() {
                 pathname.includes('/errors') ? 'text-primary font-bold' : 'text-muted-foreground'
               }`}
             >
-              Errors & Pitfalls
+              Errors
             </Link>
             <Link
               href="/nextjscosmos/playground"
@@ -92,7 +92,7 @@ export function Navbar() {
                 pathname.includes('/playground') ? 'text-primary font-bold' : 'text-muted-foreground'
               }`}
             >
-              Playground Lab
+              Playground
             </Link>
           </nav>
         </div>
