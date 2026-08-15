@@ -8,6 +8,8 @@ import { Learn } from '@/components/visualizers/aicosmos/pages/Learn';
 import { TopicDetail } from '@/components/visualizers/aicosmos/pages/TopicDetail';
 import { RagLab } from '@/components/visualizers/aicosmos/pages/RagLab';
 import { AgentLab } from '@/components/visualizers/aicosmos/pages/AgentLab';
+import { NeuralNetworkLab } from '@/components/visualizers/aicosmos/pages/NeuralNetworkLab';
+import { TransformerAttentionLab } from '@/components/visualizers/aicosmos/pages/TransformerAttentionLab';
 import { About } from '@/components/visualizers/aicosmos/pages/About';
 import { aiTopics } from '@/components/visualizers/aicosmos/data/topics';
 
@@ -15,6 +17,8 @@ export function generateStaticParams() {
   const params: { slug: string[] }[] = [
     { slug: [] },
     { slug: ['learn'] },
+    { slug: ['nn-lab'] },
+    { slug: ['attention-lab'] },
     { slug: ['rag-lab'] },
     { slug: ['agent-lab'] },
     { slug: ['about'] },
@@ -44,6 +48,10 @@ export default async function AiCosmosPage({
     } else {
       content = <Learn />;
     }
+  } else if (first === 'nn-lab') {
+    content = <NeuralNetworkLab />;
+  } else if (first === 'attention-lab') {
+    content = <TransformerAttentionLab />;
   } else if (first === 'rag-lab') {
     content = <RagLab />;
   } else if (first === 'agent-lab') {

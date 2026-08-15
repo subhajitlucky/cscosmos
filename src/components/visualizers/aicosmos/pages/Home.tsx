@@ -2,7 +2,22 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Bot, Network, ArrowUpRight, CheckCircle2, RotateCcw, Play, Zap, Cpu, ShieldCheck, Database } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Sparkles, 
+  Bot, 
+  Network, 
+  ArrowUpRight, 
+  RotateCcw, 
+  Play, 
+  Zap, 
+  Cpu, 
+  ShieldCheck, 
+  BrainCircuit, 
+  Layers,
+  Activity,
+  CheckCircle2
+} from 'lucide-react';
 import { aiTopics } from '../data/topics';
 
 const SAMPLE_QUERIES = [
@@ -63,6 +78,7 @@ export function Home() {
 
   return (
     <div className="space-y-24 pb-20">
+      
       {/* Hero Section */}
       <section className="relative pt-12 md:pt-20 px-6 max-w-7xl mx-auto">
         <div className="ai-grid-bg absolute inset-0 -z-10 rounded-3xl opacity-60" />
@@ -72,40 +88,49 @@ export function Home() {
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--ai-primary)]/30 bg-[var(--ai-primary)]/10 text-[var(--ai-primary)] text-xs font-mono">
               <Sparkles className="w-3.5 h-3.5 animate-pulse text-[var(--ai-primary)]" />
-              RAG &bull; Autonomous Agents &bull; Vector Databases &bull; Guardrails
+              Neural Networks &bull; Attention &bull; RAG &bull; Autonomous Agents
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-[var(--ai-text)]">
-              Grounded Retrieval.<br />
-              <span className="text-[var(--ai-primary)] ai-glow">Enterprise RAG &amp;</span> Autonomous Agents.
+              Deep Learning.<br />
+              <span className="text-[var(--ai-primary)] ai-glow">Transformers &amp;</span> Agentic AI.
             </h1>
 
             <p className="text-base md:text-lg text-[var(--ai-muted)] max-w-xl leading-relaxed">
-              Master modern AI Application Engineering. Explore high-dimensional vector search, Cross-Encoder re-ranking, autonomous ReAct agent loops, and the RAG Triad evaluation framework.
+              Master the complete AI engineering stack from first principles. Visualize multi-layer backpropagation derivatives, scaled dot-product attention matrices, high-dimensional vector search, and autonomous ReAct agent loops.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 pt-4">
+            <div className="flex flex-wrap items-center gap-3 pt-4">
               <Link
-                href="/aicosmos/learn"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[var(--ai-primary)] text-white font-semibold text-sm hover:bg-[var(--ai-primary-hover)] transition-all shadow-[0_0_20px_rgba(99,102,241,0.35)] active:scale-95"
+                href="/aicosmos/nn-lab"
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-lg bg-[var(--ai-primary)] text-white font-semibold text-xs sm:text-sm hover:bg-[var(--ai-primary-hover)] transition-all shadow-[0_0_20px_rgba(99,102,241,0.35)] active:scale-95"
               >
-                Explore Concept Map <ArrowRight className="w-4 h-4" />
+                <BrainCircuit className="w-4 h-4" />
+                <span>Backprop Simulator</span>
               </Link>
               
               <Link
-                href="/aicosmos/rag-lab"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--ai-border)] bg-[var(--ai-surface)] text-[var(--ai-text)] font-mono text-sm hover:border-[var(--ai-primary)] hover:text-[var(--ai-primary)] transition-all"
+                href="/aicosmos/attention-lab"
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-lg border border-[var(--ai-border)] bg-[var(--ai-surface)] text-[var(--ai-text)] font-mono text-xs sm:text-sm hover:border-[var(--ai-cyan)] hover:text-[var(--ai-cyan)] transition-all"
               >
-                <Network className="w-4 h-4 text-[var(--ai-cyan)]" />
-                RAG Lab
+                <Cpu className="w-4 h-4 text-[var(--ai-cyan)]" />
+                <span>Transformer Attention</span>
+              </Link>
+
+              <Link
+                href="/aicosmos/rag-lab"
+                className="inline-flex items-center gap-2 px-4 py-3.5 rounded-lg border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] font-mono text-xs sm:text-sm hover:text-[var(--ai-text)] transition-all"
+              >
+                <Network className="w-4 h-4 text-[var(--ai-emerald)]" />
+                <span>RAG Lab</span>
               </Link>
 
               <Link
                 href="/aicosmos/agent-lab"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] font-mono text-sm hover:text-[var(--ai-text)] transition-all"
+                className="inline-flex items-center gap-2 px-4 py-3.5 rounded-lg border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] font-mono text-xs sm:text-sm hover:text-[var(--ai-text)] transition-all"
               >
                 <Bot className="w-4 h-4 text-[var(--ai-amber)]" />
-                ReAct Agent Lab
+                <span>Agent Lab</span>
               </Link>
             </div>
           </div>
@@ -216,6 +241,84 @@ export function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Featured Interactive Sandboxes Banner */}
+      <section className="max-w-7xl mx-auto px-6 space-y-8">
+        <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
+          <div>
+            <span className="text-xs font-mono text-[var(--ai-primary)] uppercase tracking-wider">Live Simulators</span>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ai-text)]">
+              Explore Interactive AI Simulators
+            </h2>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Link
+            href="/aicosmos/nn-lab"
+            className="ai-card p-6 rounded-2xl space-y-4 group block"
+          >
+            <div className="w-10 h-10 rounded-xl bg-[var(--ai-primary)]/10 border border-[var(--ai-primary)]/30 flex items-center justify-center text-[var(--ai-primary)] group-hover:scale-105 transition-transform">
+              <BrainCircuit className="w-5 h-5" />
+            </div>
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-[var(--ai-primary)] transition-colors flex items-center justify-between">
+              <span>Neural Net Backprop</span>
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </h3>
+            <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
+              Step through partial derivatives, weight gradient heatmaps, and live 2D decision boundary convergence.
+            </p>
+          </Link>
+
+          <Link
+            href="/aicosmos/attention-lab"
+            className="ai-card p-6 rounded-2xl space-y-4 group block"
+          >
+            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-cyan-400 transition-colors flex items-center justify-between">
+              <span>Transformer Attention</span>
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </h3>
+            <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
+              Deconstruct Scaled Dot-Product, softmax probability heatmaps, multi-head projection, and causal masking.
+            </p>
+          </Link>
+
+          <Link
+            href="/aicosmos/rag-lab"
+            className="ai-card p-6 rounded-2xl space-y-4 group block"
+          >
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+              <Network className="w-5 h-5" />
+            </div>
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-emerald-400 transition-colors flex items-center justify-between">
+              <span>Enterprise RAG Lab</span>
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </h3>
+            <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
+              Experience semantic chunking, cosine distance metrics, Cross-Encoder re-ranking, and vector embeddings.
+            </p>
+          </Link>
+
+          <Link
+            href="/aicosmos/agent-lab"
+            className="ai-card p-6 rounded-2xl space-y-4 group block"
+          >
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+              <Bot className="w-5 h-5" />
+            </div>
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-amber-400 transition-colors flex items-center justify-between">
+              <span>ReAct Agent Loop</span>
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </h3>
+            <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
+              Observe autonomous agents execute tool calls, formulate intermediate thoughts, and observe results.
+            </p>
+          </Link>
         </div>
       </section>
 

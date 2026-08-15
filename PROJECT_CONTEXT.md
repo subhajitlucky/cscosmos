@@ -80,9 +80,10 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 18: `apiviz` -> `/apiviz` (Completed: GraphQL AST Resolvers Pipeline, DataLoader N+1 Batching & Caching, REST vs GraphQL vs gRPC vs tRPC Matrix, Idempotency Keys & Safe Retries, Mock API Sandbox)
 - ✅ Site 19: `authviz` -> `/authviz` (Completed: OAuth 2.0 PKCE Flow Stepper, JWT RS256/None Exploit Inspector, HttpOnly Cookie vs LocalStorage XSS Sandbox, RBAC vs ABAC Engine, Argon2id vs bcrypt Hashing Calculator)
 - ✅ Site 20: `rustviz` -> `/rustviz` (Completed: Stack & Heap Fat Pointer Memory Stepper, Aliasing XOR Mutability Inspector, Non-Lexical Lifetimes CFG analyzer, Lifetimes & Variance Lab, Smart Pointers Rc/Arc/RefCell Sandbox, mpsc Channels & Tokio Concurrency, 15 Compiler Diagnostics, Spaced-Repetition Flashcards, and Standard Library Cheat Sheet)
+- ✅ Site 21: `aicosmos` -> `/aicosmos` (Completed: Multi-Layer Perceptron Live Backpropagation & 2D Decision Boundary Canvas, Transformer Scaled Dot-Product Self-Attention Heatmap, Multi-Head Projections, Causal Masking, Enterprise RAG Pipeline, and ReAct Agent Execution Loop)
 
 ### Planned Next Absorptions:
-- ⏳ Site 21: `mlviz` / `aiviz` (Neural Networks, Backpropagation, Attention Mechanism & Transformers, Gradient Descent)
+- ⏳ Site 22: `distributedcosmos` / `raftviz` (Distributed Consensus, Raft Leader Election, Log Replication & Split-Brain Simulation)
 
 ---
 
