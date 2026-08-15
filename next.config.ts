@@ -30,9 +30,6 @@ const nextConfig: NextConfig = {
       'tailwind-merge'
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: false,
   },
