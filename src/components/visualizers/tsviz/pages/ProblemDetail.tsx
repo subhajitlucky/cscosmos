@@ -61,7 +61,7 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
     };
 
     return (
-        <div className="container py-8 max-w-6xl space-y-6">
+        <div className="container mx-auto px-4 py-8 max-w-6xl space-y-6">
             <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-2">
                     <Link href="/tsviz/problems">

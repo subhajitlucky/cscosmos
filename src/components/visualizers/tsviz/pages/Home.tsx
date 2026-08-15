@@ -10,7 +10,7 @@ export function Home() {
     return (
         <div className="flex flex-col min-h-[calc(100vh-3.5rem)]">
             <section className="space-y-10 pb-12 pt-10 md:pb-16 md:pt-14 lg:py-36">
-                <div className="container flex max-w-[72rem] flex-col items-center gap-6 text-center">
+                <div className="container mx-auto px-4 flex max-w-[72rem] flex-col items-center gap-6 text-center">
                     <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter">
                         Master TypeScript by
                         <br className="hidden sm:inline" />
@@ -39,7 +39,7 @@ export function Home() {
                 </div>
             </section>
 
-            <section className="container space-y-8 py-12 md:py-16 lg:py-24 border-t border-border/60">
+            <section className="container mx-auto px-4 space-y-8 py-12 md:py-16 lg:py-24 border-t border-border/60">
                 <div className="text-center space-y-2">
                     <h2 className="text-2xl font-bold tracking-tight">Why TSViz?</h2>
                     <p className="text-muted-foreground">Visual mental models + hands-on practice.</p>
@@ -75,7 +75,7 @@ export function Home() {
                 </div>
             </section>
 
-            <section className="container space-y-8 py-12 md:py-16 border-t border-border/60">
+            <section className="container mx-auto px-4 space-y-8 py-12 md:py-16 border-t border-border/60">
                 <div className="text-center space-y-2">
                     <h2 className="text-2xl font-bold tracking-tight">Learning Path</h2>
                     <p className="text-muted-foreground">Basics → Intermediate → Advanced</p>
@@ -111,8 +111,8 @@ export function Home() {
                 </div>
             </section>
 
-            <section className="container space-y-8 py-12 md:py-16 border-t border-border/60">
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <section className="container mx-auto px-4 space-y-8 py-12 md:py-16 border-t border-border/60">
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between max-w-5xl mx-auto">
                     <div>
                         <h2 className="text-2xl font-bold tracking-tight">Practice to mastery</h2>
                         <p className="text-muted-foreground">50+ problems with hints, solutions, and expected outputs across Easy/Medium/Hard.</p>
@@ -123,7 +123,7 @@ export function Home() {
                         </Button>
                     </Link>
                 </div>
-                <div className="grid gap-4 md:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-3 max-w-5xl mx-auto">
                     <Card>
                         <CardHeader>
                             <CardTitle>Guided practice</CardTitle>

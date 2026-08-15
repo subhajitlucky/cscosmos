@@ -34,21 +34,15 @@ export function Topic({ topicId: propTopicId }: { topicId?: string }) {
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
             {/* Hero Section */}
             <div className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
-                <div className="container py-4">
+                <div className="container mx-auto px-4 py-4 max-w-5xl">
                     <div className="flex items-center justify-between mb-3">
                         <Link href="/tsviz/concepts">
                             <Button variant="ghost" size="sm" className="gap-2 h-8">
-                                <ArrowLeft className="h-3.5 w-3.5" />
-                                Back
+                                <ArrowLeft className="h-4 w-4" />
+                                All Topics
                             </Button>
                         </Link>
-                        <Link href={`/tsviz/problems?concept=${encodeURIComponent(concept.title)}`}>
-                            <Button variant="outline" size="sm" className="gap-2 h-8">
-                                <BookOpen className="h-3.5 w-3.5" />
-                                Problems
-                            </Button>
-                        </Link>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
                             {concept.phase}
                         </Badge>
                     </div>
@@ -64,7 +58,7 @@ export function Topic({ topicId: propTopicId }: { topicId?: string }) {
             </div>
 
             {/* Main Content */}
-            <div className="container py-8 max-w-4xl">
+            <div className="container mx-auto px-4 py-8 max-w-5xl">
                 <div className="space-y-8">
 
                     {/* Definition Section */}

@@ -6,12 +6,13 @@ import Link from "next/link";
 import { concepts, type Phase } from "../data/concepts";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 const phases: Phase[] = ["Basics", "Intermediate", "Advanced"];
 
 export function Concepts() {
     return (
-        <div className="container py-10 max-w-4xl">
+        <div className="container mx-auto px-4 py-10 max-w-5xl">
             <div className="text-center mb-16 space-y-4">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
@@ -50,27 +51,33 @@ export function Concepts() {
                         <div className="space-y-8">
                             {concepts
                                 .filter((c) => c.phase === phase)
-                                .map((concept, index) => (
-                                    <motion.div
-                                        key={concept.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: index * 0.1 }}
-                                    >
-                                        <Link href={`/tsviz/concepts/${concept.id}`}>
-                                            <Card className="relative overflow-hidden transition-all hover:ring-2 hover:ring-primary/50 hover:shadow-lg group md:w-[calc(50%-2rem)] md:ml-auto md:mr-0 data-[even=true]:md:mr-auto data-[even=true]:md:ml-0" data-even={index % 2 === 0}>
-                                                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                <CardHeader>
-                                                    <CardTitle className="flex items-center gap-2">
-                                                        {concept.title}
-                                                    </CardTitle>
-                                                    <CardDescription>{concept.description}</CardDescription>
-                                                </CardHeader>
-                                            </Card>
-                                        </Link>
-                                    </motion.div>
-                                ))}
+                                .map((concept, index) => {
+                                    const isEven = index % 2 === 0;
+                                    return (
+                                        <motion.div
+                                            key={concept.id}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.1 }}
+                                        >
+                                            <Link href={`/tsviz/concepts/${concept.id}`} className="block">
+                                                <Card className={cn(
+                                                    "relative overflow-hidden transition-all hover:ring-2 hover:ring-primary/50 hover:shadow-lg group w-full md:w-[calc(50%-2rem)]",
+                                                    isEven ? "md:mr-auto md:ml-0" : "md:ml-auto md:mr-0"
+                                                )}>
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                    <CardHeader>
+                                                        <CardTitle className="flex items-center gap-2">
+                                                            {concept.title}
+                                                        </CardTitle>
+                                                        <CardDescription>{concept.description}</CardDescription>
+                                                    </CardHeader>
+                                                </Card>
+                                            </Link>
+                                        </motion.div>
+                                    );
+                                })}
                         </div>
                     </div>
                 ))}
