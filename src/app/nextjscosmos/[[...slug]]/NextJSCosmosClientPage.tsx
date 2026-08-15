@@ -8,6 +8,7 @@ import ErrorDetailPage from '@/components/visualizers/nextjscosmos/app/errors/[s
 import PlaygroundPage from '@/components/visualizers/nextjscosmos/app/playground/page';
 import { Navbar } from '@/components/visualizers/nextjscosmos/components/navbar';
 import { Footer } from '@/components/visualizers/nextjscosmos/components/footer';
+import '@/components/visualizers/nextjscosmos/styles.css';
 
 // Import all 35 concept pages
 import AppRouterOverview from '@/components/visualizers/nextjscosmos/app/concepts/app-router-overview/page';
@@ -119,7 +120,7 @@ export default function NextJSCosmosClientPage({ slug }: { slug: string[] }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background dark:bg-zinc-950 text-foreground transition-colors duration-300">
+    <div className="nextjscosmos-root min-h-screen flex flex-col transition-colors duration-300">
       <Navbar />
       <main className="flex-1">{renderContent()}</main>
       <Footer />

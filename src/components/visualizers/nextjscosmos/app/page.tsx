@@ -69,7 +69,7 @@ export default function HomePage() {
               </Link>
               <Link 
                 href="/nextjscosmos/playground"
-                className="inline-flex items-center justify-center h-12 md:h-14 px-8 rounded-full text-sm md:text-base font-semibold border border-border bg-background/50 backdrop-blur-xs hover:bg-muted transition-all w-full sm:w-auto"
+                className="inline-flex items-center justify-center h-12 md:h-14 px-8 rounded-full text-sm md:text-base font-semibold border border-border bg-card text-foreground hover:bg-muted transition-all w-full sm:w-auto shadow-sm"
               >
                 Open Playground <Play className="ml-2 h-4 w-4 fill-current" />
               </Link>

@@ -1,0 +1,97 @@
+.nextjscosmos-root {
+  --background: #ffffff;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --primary: #18181b;
+  --primary-foreground: #ffffff;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+  --border: #e4e4e7;
+  --ring: #18181b;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "ss01";
+}
+
+.nextjscosmos-root.dark,
+.dark .nextjscosmos-root,
+html.dark .nextjscosmos-root,
+[data-theme='dark'] .nextjscosmos-root {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --card: #121215;
+  --card-foreground: #f4f4f5;
+  --primary: #f4f4f5;
+  --primary-foreground: #09090b;
+  --muted: #1e1e24;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #f4f4f5;
+  --border: rgba(255, 255, 255, 0.1);
+  --ring: #f4f4f5;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.nextjscosmos-root .bg-primary {
+  background-color: var(--primary) !important;
+}
+
+.nextjscosmos-root .text-primary {
+  color: var(--primary) !important;
+}
+
+.nextjscosmos-root .text-primary-foreground {
+  color: var(--primary-foreground) !important;
+}
+
+.nextjscosmos-root .bg-background {
+  background-color: var(--background) !important;
+}
+
+.nextjscosmos-root .text-foreground {
+  color: var(--foreground) !important;
+}
+
+.nextjscosmos-root .bg-card {
+  background-color: var(--card) !important;
+}
+
+.nextjscosmos-root .text-card-foreground {
+  color: var(--card-foreground) !important;
+}
+
+.nextjscosmos-root .border-border {
+  border-color: var(--border) !important;
+}
+
+.nextjscosmos-root .bg-grid-premium {
+  background-image: radial-gradient(circle at 1px 1px, var(--border) 1.5px, transparent 0);
+  background-size: 32px 32px;
+}
+
+.nextjscosmos-root .text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to bottom right, var(--foreground), var(--muted-foreground));
+}
+
+.nextjscosmos-root .glass {
+  background-color: var(--background);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nextjscosmos-root .container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
