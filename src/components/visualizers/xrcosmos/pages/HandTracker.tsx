@@ -97,7 +97,7 @@ export function HandTracker() {
           {/* Pinch Distance Slider */}
           <div className="space-y-2">
             <div className="flex justify-between text-[11px]">
-              <span className="text-[var(--xr-muted)]">Thumb-Index Distance ($\Delta d$)</span>
+              <span className="text-[var(--xr-muted)]">Thumb-Index Distance (&Delta;d)</span>
               <span className={`font-bold ${isPinching ? 'text-[var(--xr-teal)]' : 'text-[var(--xr-primary)]'}`}>
                 {pinchDistanceMm} mm
               </span>

@@ -44,7 +44,7 @@ export function SpatialLab() {
           Volumetric <span className="text-[var(--xr-primary)] xr-glow">3D Spatial Lab</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--xr-muted)] max-w-2xl leading-relaxed">
-          Manipulate 3D geometry in virtual room space. Inspect real-time $4\times 4$ Model-View-Projection (MVP) transformation matrices and IPD stereoscopic eye convergence.
+          Manipulate 3D geometry in virtual room space. Inspect real-time 4&times;4 Model-View-Projection (MVP) transformation matrices and IPD stereoscopic eye convergence.
         </p>
       </div>
 
@@ -227,7 +227,7 @@ export function SpatialLab() {
           <div className="rounded-2xl border border-[var(--xr-border-subtle)] bg-[var(--xr-surface)] p-6 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-[var(--xr-primary)] uppercase tracking-wider font-bold flex items-center gap-2">
-                <Layers className="w-3.5 h-3.5" /> $4\times 4$ Model Transform Matrix ($M = T \times R \times S$)
+                <Layers className="w-3.5 h-3.5" /> 4&times;4 Model Transform Matrix (M = T &times; R &times; S)
               </span>
               <span className="text-[10px] text-[var(--xr-muted)]">AFFINE MATRIX</span>
             </div>

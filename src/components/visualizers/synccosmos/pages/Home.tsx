@@ -231,7 +231,7 @@ export function Home() {
               </span>
             </div>
             <p className="text-xs text-[var(--sync-muted)] leading-relaxed">
-              Pioneered by Google Docs and Etherpad. Clients send intent operations to a central master server. The server serializes all edits and transforms character index coordinates using transformation functions $T(op_1, op_2)$.
+              Pioneered by Google Docs and Etherpad. Clients send intent operations to a central master server. The server serializes all edits and transforms character index coordinates using transformation functions T(op1, op2).
             </p>
             <div className="p-4 rounded-lg bg-[var(--sync-bg)] font-mono text-[11px] text-[var(--sync-muted)] space-y-2 border border-[var(--sync-border-subtle)]">
               <div>• Requires 100% active connection to central coordinator</div>
@@ -250,7 +250,7 @@ export function Home() {
               </span>
             </div>
             <p className="text-xs text-[var(--sync-muted)] leading-relaxed">
-              Used by Figma, Notion, Yjs, and Automerge. Edits attach immutable identifiers. Mutations form a Bounded Join-Semilattice where merge operations ($\sqcup$) are mathematically guaranteed to converge anywhere.
+              Used by Figma, Notion, Yjs, and Automerge. Edits attach immutable identifiers. Mutations form a Bounded Join-Semilattice where merge operations (&sqcup; join) are mathematically guaranteed to converge anywhere.
             </p>
             <div className="p-4 rounded-lg bg-[var(--sync-bg)] font-mono text-[11px] text-[var(--sync-muted)] space-y-2 border border-[var(--sync-primary)]/20">
               <div className="text-[var(--sync-primary)]">• Mathematical Strong Eventual Consistency (SEC)</div>

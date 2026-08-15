@@ -162,7 +162,7 @@ export function RetrySimulator() {
                 onClick={() => runSimulation(true)}
                 className="py-3 rounded-lg bg-[var(--mq-rose)] text-white font-semibold text-xs hover:opacity-90 transition-all shadow-md flex items-center justify-center gap-1.5"
               >
-                <AlertTriangle className="w-3.5 h-3.5" /> Poison Pill $\to$ DLQ
+                <AlertTriangle className="w-3.5 h-3.5" /> Poison Pill &rarr; DLQ
               </button>
             </div>
           </div>

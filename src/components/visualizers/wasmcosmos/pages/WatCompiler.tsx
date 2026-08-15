@@ -76,7 +76,7 @@ export function WatCompiler() {
           <Binary className="w-3.5 h-3.5" /> Binary Bytecode &amp; Section Tables
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--wasm-text)]">
-          WAT Text $\to$ <span className="text-[var(--wasm-primary)] wasm-glow">Binary Hex Inspector</span>
+          WAT Text &rarr; <span className="text-[var(--wasm-primary)] wasm-glow">Binary Hex Inspector</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--wasm-muted)] max-w-2xl leading-relaxed">
           Inspect how human-readable WebAssembly Text S-expressions encode into raw machine bytecode with sequential section headers.
