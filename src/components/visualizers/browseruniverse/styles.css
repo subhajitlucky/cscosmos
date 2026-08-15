@@ -1,22 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
+/* ==========================================================================
+   BrowserUniverse Custom Scoped Stylesheet & Dynamic Theme Engine
+   ========================================================================== */
+
 .browseruniverse-root {
-  --bu-primary: #06b6d4;
-  --bu-primary-hover: #0891b2;
-  --bu-v8-orange: #f97316;
-  --bu-emerald: #10b981;
-  --bu-purple: #a855f7;
-  --bu-amber: #f59e0b;
-  --bu-rose: #f43f5e;
-  
-  --bu-bg: #070914;
-  --bu-surface: #0d1222;
-  --bu-surface-2: #141b32;
-  --bu-border: rgba(6, 182, 212, 0.25);
-  --bu-border-subtle: rgba(255, 255, 255, 0.08);
+  --bu-bg: #0b1220;
+  --bu-surface: #0f172a;
+  --bu-surface-card: #0f172a;
+  --bu-muted: #1e293b;
+  --bu-border: rgba(255, 255, 255, 0.12);
+  --bu-border-subtle: rgba(255, 255, 255, 0.06);
   --bu-text: #f8fafc;
-  --bu-muted: #8d97b0;
-  
+  --bu-text-secondary: #cbd5e1;
+  --bu-text-muted: #94a3b8;
+  --bu-accent: #7c3aed;
+  --bu-accent-hover: #9333ea;
+  --bu-accent-soft: #c084fc;
+  --bu-accent-blue: #22d3ee;
+  --bu-accent-green: #22c55e;
+  --bu-glass-bg: rgba(15, 23, 42, 0.78);
+  --bu-glass-border: rgba(255, 255, 255, 0.1);
+  --bu-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  --bu-shadow-glow: 0 0 35px rgba(124, 58, 237, 0.25);
+
   --bu-display: 'Syne', sans-serif;
   --bu-sans: 'Inter', sans-serif;
   --bu-mono: 'DM Mono', monospace;
@@ -27,31 +34,175 @@
   min-height: 100vh;
 }
 
+/* ==========================================================================
+   Light Mode Rules & Overrides
+   ========================================================================== */
+
 html.light .browseruniverse-root,
 html[data-theme='light'] .browseruniverse-root,
-html:not(.dark) .browseruniverse-root,
-.browseruniverse-root[data-theme='light'],
-.browseruniverse-root.light-mode {
+.light .browseruniverse-root,
+.browseruniverse-root.light-mode,
+.browseruniverse-root[data-theme='light'] {
   --bu-bg: #f8fafc;
   --bu-surface: #ffffff;
-  --bu-surface-2: #f1f5f9;
-  --bu-border: rgba(6, 182, 212, 0.28);
-  --bu-border-subtle: rgba(0, 0, 0, 0.08);
+  --bu-surface-card: #ffffff;
+  --bu-muted: #f1f5f9;
+  --bu-border: rgba(15, 23, 42, 0.12);
+  --bu-border-subtle: rgba(15, 23, 42, 0.06);
   --bu-text: #0f172a;
-  --bu-muted: #64748b;
+  --bu-text-secondary: #334155;
+  --bu-text-muted: #64748b;
+  --bu-accent: #6d28d9;
+  --bu-accent-hover: #7c3aed;
+  --bu-accent-soft: #6d28d9;
+  --bu-accent-blue: #0284c7;
+  --bu-accent-green: #16a34a;
+  --bu-glass-bg: rgba(255, 255, 255, 0.95);
+  --bu-glass-border: rgba(15, 23, 42, 0.1);
+  --bu-shadow: 0 8px 30px -6px rgba(15, 23, 42, 0.08);
+  --bu-shadow-glow: 0 0 30px rgba(109, 40, 217, 0.12);
+
+  background-color: var(--bu-bg);
+  color: var(--bu-text);
 }
 
-html.dark .browseruniverse-root,
-html[data-theme='dark'] .browseruniverse-root,
-.browseruniverse-root[data-theme='dark'],
-.browseruniverse-root.dark-mode {
-  --bu-bg: #070914;
-  --bu-surface: #0d1222;
-  --bu-surface-2: #141b32;
-  --bu-border: rgba(6, 182, 212, 0.25);
-  --bu-border-subtle: rgba(255, 255, 255, 0.08);
-  --bu-text: #f8fafc;
-  --bu-muted: #8d97b0;
+/* Typography mappings for Light Mode */
+html.light .browseruniverse-root .text-white,
+html[data-theme='light'] .browseruniverse-root .text-white,
+.light .browseruniverse-root .text-white,
+.browseruniverse-root.light-mode .text-white {
+  color: var(--bu-text) !important;
+}
+
+html.light .browseruniverse-root .text-slate-100,
+html[data-theme='light'] .browseruniverse-root .text-slate-100,
+.light .browseruniverse-root .text-slate-100,
+.browseruniverse-root.light-mode .text-slate-100 {
+  color: var(--bu-text) !important;
+}
+
+html.light .browseruniverse-root .text-slate-200,
+html[data-theme='light'] .browseruniverse-root .text-slate-200,
+.light .browseruniverse-root .text-slate-200,
+.browseruniverse-root.light-mode .text-slate-200 {
+  color: var(--bu-text-secondary) !important;
+}
+
+html.light .browseruniverse-root .text-slate-300,
+html[data-theme='light'] .browseruniverse-root .text-slate-300,
+.light .browseruniverse-root .text-slate-300,
+.browseruniverse-root.light-mode .text-slate-300 {
+  color: var(--bu-text-muted) !important;
+}
+
+html.light .browseruniverse-root .text-slate-400,
+html[data-theme='light'] .browseruniverse-root .text-slate-400,
+.light .browseruniverse-root .text-slate-400,
+.browseruniverse-root.light-mode .text-slate-400 {
+  color: var(--bu-text-muted) !important;
+}
+
+/* Background mappings in Light Mode */
+html.light .browseruniverse-root .bg-base,
+html[data-theme='light'] .browseruniverse-root .bg-base,
+.light .browseruniverse-root .bg-base,
+.browseruniverse-root.light-mode .bg-base,
+html.light .browseruniverse-root .bg-base\/60,
+html.light .browseruniverse-root .bg-base\/70,
+html.light .browseruniverse-root .bg-base\/80,
+html.light .browseruniverse-root .bg-base\/90,
+.browseruniverse-root.light-mode .bg-base\/60,
+.browseruniverse-root.light-mode .bg-base\/70,
+.browseruniverse-root.light-mode .bg-base\/80,
+.browseruniverse-root.light-mode .bg-base\/90 {
+  background-color: var(--bu-bg) !important;
+}
+
+html.light .browseruniverse-root .bg-card,
+html[data-theme='light'] .browseruniverse-root .bg-card,
+.light .browseruniverse-root .bg-card,
+.browseruniverse-root.light-mode .bg-card,
+html.light .browseruniverse-root .bg-card\/60,
+html.light .browseruniverse-root .bg-card\/70,
+html.light .browseruniverse-root .bg-card\/80,
+html.light .browseruniverse-root .bg-card\/90,
+.browseruniverse-root.light-mode .bg-card\/60,
+.browseruniverse-root.light-mode .bg-card\/70,
+.browseruniverse-root.light-mode .bg-card\/80,
+.browseruniverse-root.light-mode .bg-card\/90 {
+  background-color: var(--bu-surface) !important;
+}
+
+html.light .browseruniverse-root .bg-muted,
+html[data-theme='light'] .browseruniverse-root .bg-muted,
+.light .browseruniverse-root .bg-muted,
+.browseruniverse-root.light-mode .bg-muted,
+html.light .browseruniverse-root .bg-muted\/70,
+.browseruniverse-root.light-mode .bg-muted\/70 {
+  background-color: var(--bu-muted) !important;
+}
+
+/* Border mappings in Light Mode */
+html.light .browseruniverse-root .border-border,
+html[data-theme='light'] .browseruniverse-root .border-border,
+.light .browseruniverse-root .border-border,
+.browseruniverse-root.light-mode .border-border,
+html.light .browseruniverse-root .border-border\/60,
+html.light .browseruniverse-root .border-border\/80,
+.browseruniverse-root.light-mode .border-border\/60,
+.browseruniverse-root.light-mode .border-border\/80 {
+  border-color: var(--bu-border) !important;
+}
+
+/* Glass cards */
+.browseruniverse-root .glass {
+  background: var(--bu-glass-bg);
+  border: 1px solid var(--bu-glass-border);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--bu-shadow);
+}
+
+/* Hero gradient in Light Mode */
+html.light .browseruniverse-root .bg-gradient-to-br,
+.browseruniverse-root.light-mode .bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, #ffffff, #f1f5f9, #ffffff) !important;
+}
+
+/* High-contrast solid action buttons */
+.browseruniverse-root a.bg-accent,
+.browseruniverse-root button.bg-accent,
+.browseruniverse-root .bg-accent.text-white {
+  background-color: var(--bu-accent) !important;
+  color: #ffffff !important;
+}
+
+.browseruniverse-root a.bg-accent:hover,
+.browseruniverse-root button.bg-accent:hover {
+  background-color: var(--bu-accent-hover) !important;
+}
+
+/* Page container */
+.browseruniverse-root .page-container {
+  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .browseruniverse-root .page-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .browseruniverse-root .page-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .browseruniverse-root .font-display {
@@ -62,25 +213,20 @@ html[data-theme='dark'] .browseruniverse-root,
   font-family: var(--bu-mono);
 }
 
-.browseruniverse-root .bu-glow {
-  text-shadow: 0 0 25px rgba(6, 182, 212, 0.55), 0 0 50px rgba(6, 182, 212, 0.2);
+.browseruniverse-root .shadow-glow {
+  box-shadow: var(--bu-shadow-glow);
 }
 
-.browseruniverse-root .bu-card {
-  background: var(--bu-surface);
-  border: 1px solid var(--bu-border-subtle);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.browseruniverse-root .section-title {
+  font-family: var(--bu-display);
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--bu-text);
 }
 
-.browseruniverse-root .bu-card:hover {
-  border-color: var(--bu-border);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.18);
-}
-
-.browseruniverse-root .bu-grid-bg {
-  background-image: 
-    linear-gradient(to right, rgba(6, 182, 212, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(6, 182, 212, 0.06) 1px, transparent 1px);
-  background-size: 38px 38px;
+@media (min-width: 640px) {
+  .browseruniverse-root .section-title {
+    font-size: 2.25rem;
+  }
 }

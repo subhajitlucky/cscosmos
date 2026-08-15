@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Code2, Github } from 'lucide-react';
+import { Code2, Github, ArrowLeft } from 'lucide-react';
 import { ModeToggle } from '../components/mode-toggle';
 import '../styles.css';
 
@@ -14,14 +14,22 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         <div className="tsviz-root min-h-screen bg-background text-foreground font-sans antialiased flex flex-col">
             <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="container flex h-14 items-center justify-between">
-                    <div className="flex items-center gap-6 md:gap-10">
+                    <div className="flex items-center gap-3 sm:gap-6 md:gap-8">
+                        <Link
+                            href="/topics"
+                            className="flex items-center gap-1.5 rounded-md border border-border/80 bg-muted/40 hover:bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                            title="Return to CSCosmos Catalog"
+                        >
+                            <ArrowLeft className="h-3.5 w-3.5" />
+                            <span>CSCosmos</span>
+                        </Link>
                         <Link href="/tsviz" className="flex items-center space-x-2">
-                            <Code2 className="h-6 w-6" />
+                            <Code2 className="h-5 w-5 sm:h-6 sm:w-6" />
                             <span className="hidden font-bold sm:inline-block">
                                 TSViz
                             </span>
                         </Link>
-                        <nav className="flex gap-6 text-sm font-medium">
+                        <nav className="flex gap-4 sm:gap-6 text-sm font-medium">
                             <Link
                                 href="/tsviz/concepts"
                                 className={`transition-colors hover:text-foreground/80 ${
@@ -55,7 +63,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <div className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                                <div className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9">
                                     <Github className="h-4 w-4" />
                                     <span className="sr-only">GitHub</span>
                                 </div>
