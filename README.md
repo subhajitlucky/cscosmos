@@ -49,6 +49,7 @@ These microsites have been fully integrated as native Next.js routes within CSCo
 | React Visualizer | `/reactcosmos` | 35 topics, Fiber, Hooks, lab playground |
 | Next.js Visualizer | `/nextjscosmos` | 35 modules, RSC, SSG/SSR/ISR, Error debugger |
 | Go Backend Internals | `/golangviz` | 70 topics, Coding Labs (go test), Flashcards, Top 50 Pitfalls, Live Runner, Simulators |
+| Rust Backend Internals | `/rustviz` | Stack/Heap Stepper, Aliasing XOR Mutability, NLL, Lifetimes, Smart Pointers, Tokio Concurrency |
 
 ## Selected External Microsites
 

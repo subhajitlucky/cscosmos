@@ -52,6 +52,7 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/systemdesignviz` | **Absorbed** | Consistent Hashing Ring, Raft Consensus, Rate Limiters, CAP Partitioning, Sharding |
 | `/apiviz` | **Absorbed** | GraphQL AST Resolvers, DataLoader N+1 Batching, Protocols Matrix, Idempotency Keys |
 | `/authviz` | **Absorbed** | OAuth 2.0 PKCE, JWT RS256/None Exploit, HttpOnly Cookies, RBAC/ABAC, Argon2id |
+| `/rustviz` | **Absorbed** | Rust Ownership, Fat Pointers, Borrow Checker NLL, Lifetimes & Variance, Tokio Concurrency |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
@@ -78,9 +79,10 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 17: `systemdesignviz` -> `/systemdesignviz` (Completed: Consistent Hashing & Virtual Nodes, Raft Consensus 5-Node Cluster, Distributed Rate Limiters, CAP Theorem & PACELC, Sharding & WAL, Back-of-the-Envelope Calculator)
 - ✅ Site 18: `apiviz` -> `/apiviz` (Completed: GraphQL AST Resolvers Pipeline, DataLoader N+1 Batching & Caching, REST vs GraphQL vs gRPC vs tRPC Matrix, Idempotency Keys & Safe Retries, Mock API Sandbox)
 - ✅ Site 19: `authviz` -> `/authviz` (Completed: OAuth 2.0 PKCE Flow Stepper, JWT RS256/None Exploit Inspector, HttpOnly Cookie vs LocalStorage XSS Sandbox, RBAC vs ABAC Engine, Argon2id vs bcrypt Hashing Calculator)
+- ✅ Site 20: `rustviz` -> `/rustviz` (Completed: Stack & Heap Fat Pointer Memory Stepper, Aliasing XOR Mutability Inspector, Non-Lexical Lifetimes CFG analyzer, Lifetimes & Variance Lab, Smart Pointers Rc/Arc/RefCell Sandbox, mpsc Channels & Tokio Concurrency, 15 Compiler Diagnostics, Spaced-Repetition Flashcards, and Standard Library Cheat Sheet)
 
 ### Planned Next Absorptions:
-- ⏳ Site 20: `mlviz` / `aiviz` (Neural Networks, Backpropagation, Attention Mechanism & Transformers, Gradient Descent)
+- ⏳ Site 21: `mlviz` / `aiviz` (Neural Networks, Backpropagation, Attention Mechanism & Transformers, Gradient Descent)
 
 ---
 

@@ -1,79 +1,63 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import { Navbar } from '@/components/visualizers/tsviz/components/Navbar';
-import { Footer } from '@/components/visualizers/tsviz/components/Footer';
-import Home from '@/components/visualizers/tsviz/pages/Home';
-import Concepts from '@/components/visualizers/tsviz/pages/Concepts';
-import ConceptDetail from '@/components/visualizers/tsviz/pages/ConceptDetail';
-import UtilityLab from '@/components/visualizers/tsviz/pages/UtilityLab';
-import CompilerPipeline from '@/components/visualizers/tsviz/pages/CompilerPipeline';
-import Errors from '@/components/visualizers/tsviz/pages/Errors';
-import Playground from '@/components/visualizers/tsviz/pages/Playground';
-import TypeChallenges from '@/components/visualizers/tsviz/pages/TypeChallenges';
-import Flashcards from '@/components/visualizers/tsviz/pages/Flashcards';
-import CheatSheet from '@/components/visualizers/tsviz/pages/CheatSheet';
-import { TS_TOPICS } from '@/components/visualizers/tsviz/data/topics';
+import { MainLayout } from '@/components/visualizers/tsviz/layouts/MainLayout';
+import { Home } from '@/components/visualizers/tsviz/pages/Home';
+import { Concepts } from '@/components/visualizers/tsviz/pages/Concepts';
+import { Topic } from '@/components/visualizers/tsviz/pages/Topic';
+import { Problems } from '@/components/visualizers/tsviz/pages/Problems';
+import { ProblemDetail } from '@/components/visualizers/tsviz/pages/ProblemDetail';
+import { Playground } from '@/components/visualizers/tsviz/pages/Playground';
+import { concepts } from '@/components/visualizers/tsviz/data/concepts';
+import { problems } from '@/components/visualizers/tsviz/data/problems';
 
 export function generateStaticParams() {
-  const params: { slug: string[] }[] = [
-    { slug: [] },
-    { slug: ['concepts'] },
-    { slug: ['challenges'] },
-    { slug: ['flashcards'] },
-    { slug: ['cheatsheet'] },
-    { slug: ['utility-lab'] },
-    { slug: ['compiler-pipeline'] },
-    { slug: ['errors'] },
-    { slug: ['playground'] },
-  ];
+    const conceptParams = concepts.map((c) => ({ slug: ['concepts', c.id] }));
+    const problemParams = problems.map((p) => ({ slug: ['problems', p.id] }));
 
-  TS_TOPICS.forEach((topic) => {
-    params.push({ slug: ['concepts', topic.id] });
-  });
-
-  return params;
+    return [
+        { slug: [] },
+        { slug: ['concepts'] },
+        ...conceptParams,
+        { slug: ['problems'] },
+        ...problemParams,
+        { slug: ['playground'] },
+    ];
 }
 
-export default async function TsVizPage({
-  params,
+export default async function TsVizAppPage({
+    params,
 }: {
-  params: Promise<{ slug?: string[] }>;
+    params: Promise<{ slug?: string[] }>;
 }) {
-  const { slug } = await params;
-  const first = slug && slug.length > 0 ? slug[0] : '';
-  const second = slug && slug.length > 1 ? slug[1] : '';
+    const { slug } = await params;
+    const first = slug && slug.length > 0 ? slug[0] : '';
+    const second = slug && slug.length > 1 ? slug[1] : '';
 
-  let content = <Home />;
+    let content = <Home />;
 
-  if (first === 'concepts') {
-    if (second) {
-      content = <ConceptDetail topicId={second} />;
-    } else {
-      content = <Concepts />;
+    if (first === 'concepts') {
+        if (second) {
+            content = <Topic topicId={second} />;
+        } else {
+            content = <Concepts />;
+        }
+    } else if (first === 'problems') {
+        if (second) {
+            content = <ProblemDetail problemId={second} />;
+        } else {
+            content = <Problems />;
+        }
+    } else if (first === 'playground') {
+        content = <Playground />;
+    } else if (first !== '') {
+        notFound();
     }
-  } else if (first === 'challenges') {
-    content = <TypeChallenges />;
-  } else if (first === 'flashcards') {
-    content = <Flashcards />;
-  } else if (first === 'cheatsheet') {
-    content = <CheatSheet />;
-  } else if (first === 'utility-lab') {
-    content = <UtilityLab />;
-  } else if (first === 'compiler-pipeline') {
-    content = <CompilerPipeline />;
-  } else if (first === 'errors') {
-    content = <Errors />;
-  } else if (first === 'playground') {
-    content = <Playground />;
-  } else if (first !== '') {
-    notFound();
-  }
 
-  return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
-      <Navbar />
-      <main className="flex-1 w-full">{content}</main>
-      <Footer />
-    </div>
-  );
+    return (
+        <MainLayout>
+            <Suspense fallback={<div className="container mx-auto py-10 text-center text-muted-foreground">Loading...</div>}>
+                {content}
+            </Suspense>
+        </MainLayout>
+    );
 }

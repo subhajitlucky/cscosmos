@@ -1,76 +1,82 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { ArrowRight, BookOpen, Filter, Sparkles } from 'lucide-react';
-import { TS_TOPICS, type TsTopic } from '../data/topics';
+import React from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { concepts, type Phase } from "../data/concepts";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
-export default function Concepts() {
-  const [filter, setFilter] = useState<string>('all');
+const phases: Phase[] = ["Basics", "Intermediate", "Advanced"];
 
-  const filtered = filter === 'all' ? TS_TOPICS : TS_TOPICS.filter((t) => t.category === filter);
+export function Concepts() {
+    return (
+        <div className="container mx-auto py-10 max-w-4xl px-4">
+            <div className="text-center mb-16 space-y-4">
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-4xl font-bold tracking-tight lg:text-5xl text-foreground"
+                >
+                    Learning Path
+                </motion.h1>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="text-xl text-muted-foreground"
+                >
+                    A step-by-step journey to TypeScript mastery.
+                </motion.p>
+            </div>
 
-  return (
-    <div className="space-y-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
-      <div className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest">
-          Curriculum
+            <div className="space-y-12 relative">
+                {/* Vertical Line */}
+                <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2 hidden md:block" />
+
+                {phases.map((phase) => (
+                    <div key={phase} className="relative">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="sticky top-20 z-10 mb-8 md:text-center"
+                        >
+                            <Badge variant="outline" className="text-lg py-1 px-4 bg-background/90 backdrop-blur border-blue-500/40 text-blue-600 dark:text-blue-400 font-bold">
+                                {phase}
+                            </Badge>
+                        </motion.div>
+
+                        <div className="space-y-8">
+                            {concepts
+                                .filter((c) => c.phase === phase)
+                                .map((concept, index) => (
+                                    <motion.div
+                                        key={concept.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: index * 0.05 }}
+                                    >
+                                        <Link href={`/tsviz/concepts/${concept.id}`} className="block">
+                                            <Card className="relative overflow-hidden transition-all hover:ring-2 hover:ring-blue-500/50 hover:shadow-lg group md:w-[calc(50%-2rem)] md:ml-auto md:mr-0 data-[even=true]:md:mr-auto data-[even=true]:md:ml-0" data-even={index % 2 === 0}>
+                                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <CardHeader>
+                                                    <CardTitle className="flex items-center gap-2 text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                        {concept.title}
+                                                    </CardTitle>
+                                                    <CardDescription className="leading-relaxed">{concept.description}</CardDescription>
+                                                </CardHeader>
+                                            </Card>
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-          TypeScript Concepts &amp; Architecture
-        </h1>
-        <p className="text-muted-foreground text-sm sm:text-base">
-          From fundamental structural typing to advanced conditional type gymnastics and compiler mechanics.
-        </p>
-      </div>
-
-      {/* Category Filter */}
-      <div className="flex flex-wrap gap-2">
-        {['all', 'foundations', 'types', 'generics', 'advanced', 'compiler'].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setFilter(cat)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold capitalize transition-all ${
-              filter === cat
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'bg-card border border-border text-foreground hover:border-blue-500'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Concept Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((topic) => (
-          <Link
-            key={topic.id}
-            href={`/tsviz/concepts/${topic.id}`}
-            className="p-6 rounded-3xl bg-card border border-border/80 hover:border-blue-500/50 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between group"
-          >
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider">
-                  {topic.category}
-                </span>
-                <span className="text-xs text-muted-foreground font-mono">{topic.difficulty}</span>
-              </div>
-              <h3 className="text-lg font-bold text-foreground group-hover:text-blue-500 transition-colors">
-                {topic.title}
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                {topic.summary}
-              </p>
-            </div>
-
-            <div className="pt-2 border-t border-border flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
-              <span>Start Interactive Lesson</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
+    );
 }
+
+export default Concepts;
