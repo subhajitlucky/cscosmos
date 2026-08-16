@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import RouteClientShell from './RouteClientShell';
 
 export function generateStaticParams() {
@@ -8,7 +8,6 @@ export function generateStaticParams() {
     { slug: ['concepts'] },
     { slug: ['playground'] },
     { slug: ['lab'] },
-    
   ];
 
   const topicIds = ["why-integrity","hashing-recap","leaf-nodes","internal-nodes","merkle-root","binary-tree-structure","merkle-proofs","efficiency","blockchains"];
@@ -28,5 +27,9 @@ export default async function MerkletreevizPage({
   params: Promise<{ slug?: string[] }>;
 }) {
   const resolved = await params;
-  return <RouteClientShell slug={resolved?.slug || []} />;
+  return (
+    <Suspense fallback={null}>
+      <RouteClientShell slug={resolved?.slug || []} />
+    </Suspense>
+  );
 }

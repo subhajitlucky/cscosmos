@@ -4,11 +4,12 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { RouteProvider } from '@/components/visualizers/shared/RouterShim';
 
+import { Layout } from '@/components/visualizers/merkletreeviz/components/Layout';
+
 const Home = dynamic(() => import('@/components/visualizers/merkletreeviz/pages/Home'), { ssr: false });
 const Learn = dynamic(() => import('@/components/visualizers/merkletreeviz/pages/Learn'), { ssr: false });
 const TopicPage = dynamic(() => import('@/components/visualizers/merkletreeviz/pages/TopicPage'), { ssr: false });
 const Playground = dynamic(() => import('@/components/visualizers/merkletreeviz/pages/Playground'), { ssr: false });
-
 
 export default function RouteClientShell({ slug }: { slug: string[] }) {
   const first = slug[0] || '';
@@ -26,7 +27,7 @@ export default function RouteClientShell({ slug }: { slug: string[] }) {
     pageContent = <TopicPage />;
   } else if (first === 'playground' || first === 'lab') {
     pageContent = <Playground />;
-  }  else if (first !== '') {
+  } else if (first !== '') {
     pageContent = <TopicPage />;
   }
 
@@ -39,9 +40,9 @@ export default function RouteClientShell({ slug }: { slug: string[] }) {
 
   return (
     <RouteProvider basePath="/merkletreeviz" params={routeParams}>
-      <div className="min-h-screen w-full bg-background text-foreground transition-colors">
+      <Layout>
         {pageContent}
-      </div>
+      </Layout>
     </RouteProvider>
   );
 }
