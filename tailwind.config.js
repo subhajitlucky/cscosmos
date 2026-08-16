@@ -52,6 +52,7 @@ export default {
                 card: {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
+                    border: "var(--card-border, hsl(var(--border)))",
                 },
                 redis: {
                     light: '#FF4438',

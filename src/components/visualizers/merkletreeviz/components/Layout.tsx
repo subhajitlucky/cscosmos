@@ -109,7 +109,7 @@ const Navbar = () => {
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="merkletree-theme min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300">
       <Navbar />
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 pb-8">
         {children}

@@ -1,8 +1,9 @@
-import { useContext } from 'react';
-import { ThemeContext } from '../context/ThemeContext';
+import { useTheme as useGlobalTheme } from '@/context/useTheme';
 
 export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) throw new Error('useTheme must be used within a ThemeProvider');
-  return context;
+  const { theme, setTheme } = useGlobalTheme();
+  return {
+    theme: (theme === 'dark' ? 'dark' : 'light') as 'dark' | 'light',
+    toggleTheme: () => setTheme(theme === 'dark' ? 'light' : 'dark'),
+  };
 };

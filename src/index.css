@@ -141,6 +141,72 @@
     background-color: #09090b !important;
     background-image: none !important;
   }
+
+  /* MerkleTreeViz Standalone Scoped Colors (Pure White / Black with Crisp Borders & Royal Blue Accent) */
+  .merkletree-theme {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --card-border: #d4d4d4;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: rgba(0, 0, 0, 0.05);
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 32.2%; /* #525252 readable text */
+    --muted-foreground: 0 0% 45.1%; /* #737373 */
+    --accent: 221.2 83.2% 53.3%; /* #2563eb Royal Blue */
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: rgba(37, 99, 235, 0.1);
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+    --grid-color: rgba(0, 0, 0, 0.04);
+    background-color: #ffffff !important;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.1) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, rgba(0, 0, 0, 0.05) 0, transparent 50%) !important;
+    background-attachment: fixed !important;
+  }
+
+  .dark .merkletree-theme,
+  [data-theme="dark"] .merkletree-theme,
+  [data-mode="dark"] .merkletree-theme {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 100%;
+    --card-border: #171717;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --primary-glow: rgba(255, 255, 255, 0.1);
+    --secondary: 0 0% 3.9%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 63.9%; /* #a3a3a3 */
+    --muted-foreground: 0 0% 32.2%; /* #525252 */
+    --accent: 217.2 91.2% 59.8%; /* #3b82f6 Bright Blue */
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: rgba(59, 130, 246, 0.15);
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 9%;
+    --input: 0 0% 9%;
+    --ring: 217.2 91.2% 59.8%;
+    --grid-color: rgba(255, 255, 255, 0.03);
+    background-color: #000000 !important;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, rgba(255, 255, 255, 0.1) 0, transparent 50%) !important;
+    background-attachment: fixed !important;
+  }
 }
 
 @layer base {
