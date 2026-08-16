@@ -87,7 +87,7 @@ export const topics: Topic[] = [
 
     // Data Structures & Algorithms
     createTopic("Array Visualizer (Memory, Indexing)", "dsa", { status: 'active', slug: 'arrayviz', url: '/arrayviz' }),
-    createTopic("String Algorithms (Encoding, Patterns)", "dsa" , { status: 'active', url: "https://stringalgoviz.vercel.app/" }),
+    createTopic("String Algorithms (Encoding, Patterns)", "dsa" , { status: 'active', slug: 'stringalgoviz', url: '/stringalgoviz' }),
     createTopic("Stack Visualizer (LIFO, Call Stack)", "dsa"),
     createTopic("Queue Visualizer (FIFO, Scheduling)", "dsa"),
     createTopic("Linked List Visualizer (Pointers, Nodes)", "dsa"),
@@ -129,13 +129,13 @@ export const topics: Topic[] = [
 
     // Web3 & Blockchain
     createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3" , { status: 'active', slug: 'blockchainviz', url: '/blockchainviz' }),
-    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3" , { status: 'active', url: "https://cryptviz.vercel.app" }),
-    createTopic("Merkle Tree Visualizer (Integrity)", "web3" , { status: 'active', url: "https://merkletreeviz.vercel.app" }),
-    createTopic("Patricia Trie Visualizer (State Storage)", "web3" , { status: 'active', url: "https://patriciatrie.vercel.app" }),
-    createTopic("Blockchain Consensus (PoW, PoS)", "web3" , { status: 'active', url: "https://consensusviz.vercel.app" }),
-    createTopic("Blockchain P2P Networking (Gossip)", "web3" , { status: 'active', url: "https://ptopblockchain.vercel.app" }),
-    createTopic("EVM Internals (Storage, Execution)", "web3" , { status: 'active', url: "https://evminternals.vercel.app" }),
-    createTopic("Solidity Smart Contracts (EVM Logic)", "web3", { status: 'active', url: "https://solidityviz.vercel.app" }),
+    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3" , { status: 'active', slug: 'cryptviz', url: '/cryptviz' }),
+    createTopic("Merkle Tree Visualizer (Integrity)", "web3" , { status: 'active', slug: 'merkletreeviz', url: '/merkletreeviz' }),
+    createTopic("Patricia Trie Visualizer (State Storage)", "web3" , { status: 'active', slug: 'patriciatrie', url: '/patriciatrie' }),
+    createTopic("Blockchain Consensus (PoW, PoS)", "web3" , { status: 'active', slug: 'consensusviz', url: '/consensusviz' }),
+    createTopic("Blockchain P2P Networking (Gossip)", "web3" , { status: 'active', slug: 'ptopblockchain', url: '/ptopblockchain' }),
+    createTopic("EVM Internals (Storage, Execution)", "web3" , { status: 'active', slug: 'evminternals', url: '/evminternals' }),
+    createTopic("Solidity Smart Contracts (EVM Logic)", "web3", { status: 'active', slug: 'solidityviz', url: '/solidityviz' }),
     createTopic("Move Language (Resource-Oriented Programming & Safety)", "web3"),
     createTopic("Solana / Rust Contracts (Parallel Execution)", "web3"),
     createTopic("Smart Contract Security (Attacks, Defenses)", "web3"),
@@ -152,7 +152,7 @@ export const topics: Topic[] = [
     createTopic("DePIN (Decentralized Physical Infrastructure Networks)", "web3"),
 
     // Cybersecurity & Ethical Hacking
-    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "security" , { status: 'active', url: "https://cryptviz.vercel.app" }),
+    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "security" , { status: 'active', slug: 'cryptviz', url: '/cryptviz' }),
     createTopic("Network Defense & Traffic Analysis (Wireshark, Firewalls)", "security"),
     createTopic("Software Defined Radio (SDR) & Signal Hacking", "security"),
     createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security"),
@@ -165,7 +165,7 @@ export const topics: Topic[] = [
     createTopic("Security Engineering (Threat Models)", "security"),
 
     // Artificial Intelligence
-    createTopic("Math for Machine Learning (Linear Algebra, Probability)", "ai" , { status: 'active', url: "https://aimathviz.vercel.app" }),
+    createTopic("Math for Machine Learning (Linear Algebra, Probability)", "ai" , { status: 'active', slug: 'aimathviz', url: '/aimathviz' }),
     createTopic("Optimization Algorithms (Gradient Descent)", "ai", { status: 'active', url: '/aicosmos/nn-lab' }),
     createTopic("Machine Learning Fundamentals (Bias-Variance)", "ai", { status: 'active', url: '/aicosmos/nn-lab' }),
     createTopic("Decision Trees (Splits)", "ai"),
@@ -207,13 +207,13 @@ export const topics: Topic[] = [
     createTopic("Formal Methods & TLA+ (The Math of Correctness)", "corecs"),
 
     // DevOps / Cloud / Engineering
-    createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', url: "https://gitcosmos.vercel.app" }),
-    createTopic("Docker & Containers (Isolation)", "devops" , { status: 'active', url: "https://dockercosmos.vercel.app" }),
-    createTopic("Kubernetes & Orchestration (Scheduling)", "devops" , { status: 'active', url: "https://k8scosmos.vercel.app" }),
-    createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops" , { status: 'active', url: "https://cloudcosmos.vercel.app" }),
+    createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', slug: 'gitcosmos', url: '/gitcosmos' }),
+    createTopic("Docker & Containers (Isolation)", "devops" , { status: 'active', slug: 'dockercosmos', url: '/dockercosmos' }),
+    createTopic("Kubernetes & Orchestration (Scheduling)", "devops" , { status: 'active', slug: 'k8scosmos', url: '/k8scosmos' }),
+    createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops" , { status: 'active', slug: 'cloudcosmos', url: '/cloudcosmos' }),
     createTopic("CI/CD Pipeline Visualizer (Build, Deploy)", "devops"),
     createTopic("Infrastructure as Code (Terraform)", "devops"),
-    createTopic("Load Balancing (Traffic Distribution)", "devops" , { status: 'active', url: "https://loadbalancing.vercel.app" }),
+    createTopic("Load Balancing (Traffic Distribution)", "devops" , { status: 'active', slug: 'loadbalancing', url: '/loadbalancing' }),
     createTopic("Rate Limiting (Throttling)", "devops"),
     createTopic("Observability Systems (Logs, Metrics)", "devops"),
     createTopic("Site Reliability Engineering (SLIs, SLOs)", "devops"),

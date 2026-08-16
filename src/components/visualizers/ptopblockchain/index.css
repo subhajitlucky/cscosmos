@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-dim: var(--primary-dim);
+  --color-surface: var(--surface);
+  --color-border-dim: var(--border-dim);
+  --color-bg-app: var(--bg-app);
+  --color-main: var(--text-main);
+  --color-muted: var(--text-muted);
+  
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+}
+
+:root {
+  /* VOID THEME (Dark) - Default */
+  --bg-app: #050b14;
+  --surface: #0a1120;
+  --primary: #00f3ff;
+  --primary-dim: rgba(0, 243, 255, 0.1);
+  --border-dim: rgba(0, 243, 255, 0.15);
+  --text-main: #e0f7fa;
+  --text-muted: rgba(0, 243, 255, 0.5);
+  --accent: #ffaa00;
+  --glass: rgba(10, 17, 32, 0.8);
+}
+
+/* Specific class for light mode toggle */
+.light {
+  --bg-app: #f8fafc;
+  --surface: #ffffff;
+  --primary: #0066ff;
+  --primary-dim: rgba(0, 102, 255, 0.05);
+  --border-dim: rgba(0, 102, 255, 0.1);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent: #f59e0b;
+  --glass: rgba(255, 255, 255, 0.8);
+}
+
+.light .hud-panel-bg {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 102, 255, 0.15);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    @apply antialiased selection:bg-primary/30 min-h-screen flex flex-col;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .premium-panel {
+    @apply relative bg-surface border border-border-dim rounded-2xl shadow-xl backdrop-blur-xl overflow-hidden transition-all duration-500;
+  }
+  
+  .premium-btn {
+    @apply relative px-8 py-3 font-display text-sm font-bold uppercase tracking-wider text-primary border border-primary/30 bg-primary/5 rounded-xl transition-all active:scale-[0.97] overflow-hidden;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.05), inset 0 0 10px rgba(0, 243, 255, 0.02);
+  }
+  
+  .premium-btn:hover {
+    @apply bg-primary/10 border-primary/60;
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.15), inset 0 0 15px rgba(0, 243, 255, 0.05);
+    animation: btn-glow-pulse 2s infinite;
+  }
+
+  .tech-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.3em] text-primary/60;
+  }
+}
+
+@layer utilities {
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .gradient-mesh {
+    background: radial-gradient(at 0% 0%, var(--primary-dim) 0, transparent 50%),
+                radial-gradient(at 50% 0%, rgba(0, 102, 255, 0.1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, var(--primary-dim) 0, transparent 50%);
+  }
+
+  .text-shadow-glow {
+    text-shadow: 0 0 15px var(--primary-dim);
+  }
+  
+  .scanline-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.02) 50%,
+      rgba(0,0,0,0.02)
+    );
+    background-size: 100% 4px;
+  }
+}
+
+.animate-spin-slow {
+  animation: spin 12s linear infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.3); }
+  70% { transform: scale(1); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 0.833s ease-in-out infinite;
+}
+
+@keyframes btn-glow-pulse {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

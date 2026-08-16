@@ -1,0 +1,362 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Enable class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme configuration */
+@theme {
+  /* Primary colors (teal) */
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+  
+  /* Accent colors (amber/orange) */
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  
+  /* Fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-math: 'STIX Two Math', 'Cambria Math', serif;
+}
+
+/* CSS Custom properties for vectors */
+:root {
+  --color-vector-i: #ef4444;
+  --color-vector-j: #22c55e;
+  --color-vector-k: #3b82f6;
+  --color-result: #f59e0b;
+  --color-grid: #e5e7eb;
+  --color-axis: #6b7280;
+}
+
+html.dark {
+  --color-grid: #4b5563;
+  --color-axis: #9ca3af;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  @apply bg-white text-slate-900 transition-colors duration-300 m-0;
+}
+
+html.dark body {
+  @apply bg-slate-900 text-slate-100;
+}
+
+* {
+  @apply border-slate-200;
+}
+
+html.dark * {
+  @apply border-slate-700;
+}
+
+/* Component classes */
+.glass-card {
+  @apply bg-white/80 backdrop-blur-xl border border-slate-200/50 rounded-2xl shadow-xl;
+}
+
+html.dark .glass-card {
+  @apply bg-slate-800/80 border-slate-700/50;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #14b8a6, #06b6d4, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #14b8a6, #06b6d4, #0ea5e9);
+  background-size: 300% 300%;
+  animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.math-container {
+  font-family: var(--font-math);
+  @apply text-lg leading-relaxed;
+}
+
+.interactive-hint {
+  @apply text-sm text-slate-500 italic flex items-center gap-2;
+}
+
+html.dark .interactive-hint {
+  @apply text-slate-400;
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Aria live region for announcements */
+[aria-live] {
+  @apply sr-only;
+}
+
+.visualization-canvas {
+  @apply w-full aspect-square bg-slate-50 rounded-xl border-2 border-dashed border-slate-200 overflow-hidden;
+}
+
+html.dark .visualization-canvas {
+  @apply bg-slate-800/50 border-slate-700;
+}
+
+.control-panel {
+  @apply p-4 bg-slate-50 rounded-xl;
+}
+
+html.dark .control-panel {
+  @apply bg-slate-800/50;
+}
+
+.slider-label {
+  @apply text-sm font-medium text-slate-700 flex justify-between items-center;
+}
+
+html.dark .slider-label {
+  @apply text-slate-300;
+}
+
+.concept-card {
+  @apply p-6 bg-white/80 backdrop-blur-xl border border-slate-200/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer;
+}
+
+.concept-card:hover {
+  transform: translateY(-4px);
+}
+
+html.dark .concept-card {
+  @apply bg-slate-800/80 border-slate-700/50;
+}
+
+.nav-link {
+  @apply px-4 py-2 rounded-lg text-slate-600 transition-all duration-200;
+}
+
+.nav-link:hover {
+  @apply text-primary-600 bg-primary-50;
+}
+
+html.dark .nav-link {
+  @apply text-slate-400;
+}
+
+html.dark .nav-link:hover {
+  @apply text-primary-400 bg-primary-900/20;
+}
+
+.nav-link-active {
+  @apply text-primary-600 bg-primary-50;
+}
+
+html.dark .nav-link-active {
+  @apply text-primary-400 bg-primary-900/20;
+}
+
+.btn-primary {
+  @apply px-6 py-3 text-white font-semibold rounded-xl transition-all duration-300;
+  background: linear-gradient(to right, #14b8a6, #06b6d4);
+}
+
+.btn-primary:hover {
+  @apply shadow-lg;
+  background: linear-gradient(to right, #0d9488, #0891b2);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-slate-100 text-slate-700 font-semibold rounded-xl transition-all duration-200;
+}
+
+.btn-secondary:hover {
+  @apply bg-slate-200;
+}
+
+html.dark .btn-secondary {
+  @apply bg-slate-800 text-slate-300;
+}
+
+html.dark .btn-secondary:hover {
+  @apply bg-slate-700;
+}
+
+.section-title {
+  @apply text-3xl font-bold mb-6;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    @apply text-4xl;
+  }
+}
+
+.subsection-title {
+  @apply text-xl font-semibold mb-4;
+}
+
+@media (min-width: 768px) {
+  .subsection-title {
+    @apply text-2xl;
+  }
+}
+
+.topic-badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+}
+
+.topic-badge-linear {
+  @apply bg-blue-100 text-blue-700;
+}
+
+html.dark .topic-badge-linear {
+  @apply bg-blue-900/30 text-blue-300;
+}
+
+.topic-badge-probability {
+  @apply bg-amber-100 text-amber-700;
+}
+
+html.dark .topic-badge-probability {
+  @apply bg-amber-900/30 text-amber-300;
+}
+
+.topic-badge-ml {
+  @apply bg-amber-100 text-amber-700;
+}
+
+html.dark .topic-badge-ml {
+  @apply bg-amber-900/30 text-amber-300;
+}
+
+.ml-callout {
+  @apply p-4 bg-amber-50 border-l-4 border-amber-500 rounded-r-lg;
+}
+
+html.dark .ml-callout {
+  @apply bg-amber-900/20;
+}
+
+.intuition-box {
+  @apply p-4 bg-primary-50 border-l-4 border-primary-500 rounded-r-lg;
+}
+
+html.dark .intuition-box {
+  @apply bg-primary-900/20;
+}
+
+.formula-box {
+  @apply p-4 bg-slate-100 rounded-lg text-sm overflow-x-auto;
+  font-family: var(--font-mono);
+}
+
+html.dark .formula-box {
+  @apply bg-slate-800;
+}
+
+/* Utility classes */
+.text-balance {
+  text-wrap: balance;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Canvas and SVG styling */
+.vector-canvas {
+  touch-action: none;
+}
+
+.vector-i { stroke: var(--color-vector-i); fill: var(--color-vector-i); }
+.vector-j { stroke: var(--color-vector-j); fill: var(--color-vector-j); }
+.vector-k { stroke: var(--color-vector-k); fill: var(--color-vector-k); }
+.vector-result { stroke: var(--color-result); fill: var(--color-result); }
+.grid-line { stroke: var(--color-grid); }
+.axis-line { stroke: var(--color-axis); }
+
+/* Smooth number transitions */
+.number-transition {
+  transition: all 0.15s ease-out;
+}
+
+/* Distribution curve styling */
+.distribution-curve {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Draw line animation */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.animate-draw {
+  animation: draw 2s ease-in-out forwards;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

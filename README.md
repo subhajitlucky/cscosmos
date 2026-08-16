@@ -36,30 +36,17 @@ The goal is not to publish a static list. The hub acts as an index for a growing
 
 ## Natively Absorbed Visualizers
 
-These microsites have been fully integrated as native Next.js routes within CSCosmos:
+## Natively Absorbed Visualizers
 
-| Site | Route | Features |
-|:-----|:------|:---------|
-| Program Execution | `/program-cosmos` | CPU, Memory, Instruction Cycle |
-| HTML & Accessibility | `/html-cosmos` | 53 pre-rendered topic pages |
-| CSS Visualizer | `/css-cosmos` | Box Model, Flexbox, Grid |
-| Web Protocols | `/webprotocols` | HTTP, DNS, TCP/IP |
-| Web Security | `/websecurity` | XSS, CSRF, CSP, CORS |
-| JavaScript Visualizer | `/jsviz` | Event Loop, Call Stack, Scope Chain, Memory |
-| React Visualizer | `/reactcosmos` | 35 topics, Fiber, Hooks, lab playground |
-| Next.js Visualizer | `/nextjscosmos` | 35 modules, RSC, SSG/SSR/ISR, Error debugger |
-| Go Backend Internals | `/golangviz` | 70 topics, Coding Labs (go test), Flashcards, Top 50 Pitfalls, Live Runner, Simulators |
-| Rust Backend Internals | `/rustviz` | Stack/Heap Stepper, Aliasing XOR Mutability, NLL, Lifetimes, Smart Pointers, Tokio Concurrency |
+All 47 microsites and interactive visualizer engines have been fully absorbed and integrated as native Next.js routes within CSCosmos with 1,500+ statically pre-rendered SSG pages:
 
-## Selected External Microsites
-
-- TypeScript visualizer: https://tsviz.vercel.app
-- Browser internals: https://browseruniverse.vercel.app
-- SQL visualizer: https://sqlcosmos.vercel.app
-- Blockchain fundamentals: https://blockchainviz.vercel.app
-- EVM internals: https://evminternals.vercel.app
-- Docker visualizer: https://dockercosmos.vercel.app
-- Kubernetes visualizer: https://k8scosmos.vercel.app
+| Domain | Absorbed Visualizer Routes |
+|:-------|:---------------------------|
+| **Full Stack & Core Web** | `/program-cosmos`, `/html-cosmos`, `/css-cosmos`, `/webprotocols`, `/websecurity`, `/jsviz`, `/tsviz`, `/browseruniverse`, `/reactcosmos`, `/nextjscosmos`, `/vuecosmos`, `/sveltecosmos`, `/tailwindcosmos`, `/wasmcosmos`, `/xrcosmos`, `/crossplatformviz` |
+| **Backend & Systems** | `/nodecosmos`, `/golangviz`, `/rustviz`, `/fastapicosmos`, `/apiviz`, `/authviz`, `/sqlcosmos`, `/mongocosmos`, `/redisviz`, `/synccosmos` |
+| **Architecture & DevOps** | `/dockercosmos`, `/k8scosmos`, `/gitcosmos`, `/cloudcosmos`, `/loadbalancing`, `/mqviz`, `/microservicesviz`, `/lldcosmos`, `/systemdesignviz` |
+| **Web3 & Blockchain** | `/blockchainviz`, `/cryptviz`, `/merkletreeviz`, `/patriciatrie`, `/consensusviz`, `/ptopblockchain`, `/evminternals`, `/solidityviz` |
+| **DSA & AI** | `/arrayviz`, `/stringalgoviz`, `/aimathviz`, `/aicosmos` |
 
 The authoritative list is defined in `src/data/topics.ts`.
 

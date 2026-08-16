@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  
+  --color-evm-bg: var(--evm-bg);
+  --color-evm-card: var(--evm-card);
+  --color-evm-border: var(--evm-border);
+  --color-evm-accent: #00ff41;
+  --color-evm-stack: #3b82f6;
+  --color-evm-memory: #ef4444;
+  --color-evm-storage: #f59e0b;
+  --color-evm-gas: #10b981;
+  
+  /* Dynamic helper variables for visualizers */
+  --color-viz-dimmed: var(--evm-viz-dimmed);
+  --color-viz-active: var(--evm-viz-active);
+  --color-viz-secondary: var(--evm-viz-secondary);
+}
+
+:root {
+  --evm-bg: #ffffff;
+  --evm-card: #f8fafc;
+  --evm-border: #e5e7eb;
+  
+  --evm-viz-dimmed: #d1d5db; /* neutral-300 */
+  --evm-viz-active: #d97706; /* amber-600 */
+  --evm-viz-secondary: #059669; /* green-600 */
+  
+  color-scheme: light;
+}
+
+:root.dark {
+  --evm-bg: #0a0a0a;
+  --evm-card: #141414;
+  --evm-border: #262626;
+  
+  --evm-viz-dimmed: #262626; /* neutral-800 */
+  --evm-viz-active: #fbbf24; /* amber-400 */
+  --evm-viz-secondary: #34d399; /* green-400 */
+  
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-evm-bg text-neutral-900 dark:text-neutral-200 font-sans antialiased transition-colors duration-300;
+  margin: 0;
+  min-height: 100vh;
+}
+
+* {
+  @apply transition-colors duration-300;
+}
+
+code, pre {
+  @apply font-mono;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100 dark:bg-neutral-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300 dark:bg-neutral-700 rounded-full hover:bg-neutral-400 dark:hover:bg-neutral-600 transition-colors;
+}
+
+/* Base styles for cards to respect theme */
+.evm-card {
+  @apply bg-white dark:bg-neutral-900/40 border border-evm-border transition-colors duration-300 shadow-sm;
+}
+
+.evm-input {
+  @apply bg-neutral-50 dark:bg-neutral-950 border border-evm-border text-neutral-900 dark:text-neutral-100 transition-colors duration-300;
+}

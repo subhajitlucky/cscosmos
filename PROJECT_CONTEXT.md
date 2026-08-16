@@ -108,6 +108,19 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 - ✅ Site 32: `mongocosmos` -> `/mongocosmos` (WiredTiger B-Tree & BSON Engine, Aggregation Pipeline Studio, Replica Set Failover)
 - ✅ Site 33: `vuecosmos` -> `/vuecosmos` (Vue 3 Proxy Reactivity Track/Trigger, Template AST Compiler, SFC Pipeline, Component Lifecycle)
 - ✅ Site 34: `browseruniverse` -> `/browseruniverse` (HTML/CSS Lexer & Tokenizer, Render Tree Layout Geometry, Paint & Composite Layers)
+- ✅ Site 35: `cryptviz` -> `/cryptviz` (Cryptographic Fundamentals, Hashing, Avalanche Effect, Asymmetric Keys, Digital Signatures)
+- ✅ Site 36: `merkletreeviz` -> `/merkletreeviz` (Merkle Tree Visualizer, Cryptographic Verification, Proof Paths, Tamper Simulation)
+- ✅ Site 37: `patriciatrie` -> `/patriciatrie` (Merkle Patricia State Trie, Radix Trees, Nibble HP-Encoding, Ethereum Storage State)
+- ✅ Site 38: `blockchainconsensus` -> `/consensusviz` (Consensus Protocols, PoW, PoS, DPoS, PoA, PBFT, Raft, Byzantine Fault Tolerance)
+- ✅ Site 39: `blockchainptopnetwork` -> `/ptopblockchain` (Blockchain P2P Networking, Gossip Protocol, Peer Discovery, Network Partitions)
+- ✅ Site 40: `evmviz` -> `/evminternals` (EVM Execution Engine, Stack Machine, Linear Memory, Storage Slots, Opcode Cost Analyzer)
+- ✅ Site 41: `solidityviz` -> `/solidityviz` (Solidity Smart Contracts, Interactive EVM Simulation, Storage Layout, Reentrancy Studio)
+- ✅ Site 42: `gitcosmos` -> `/gitcosmos` (Git Directed Acyclic Graph, Commit Trees, Branches, Merges, Rebase, Interactive DAG Studio)
+- ✅ Site 43: `kubernetescosmos` -> `/k8scosmos` (Kubernetes Architecture, Control Plane, Pod Lifecycles, ReplicaSets, Ingress, Cluster Lab)
+- ✅ Site 44: `cloudcosmos` -> `/cloudcosmos` (Cloud Infrastructure, Regions & AZs, Auto-scaling Groups, CDN Caching, Performance & Cost Lab)
+- ✅ Site 45: `loadbalancing` -> `/loadbalancing` (Load Balancing Algorithms, Round Robin, Weighted, Least Connections, Consistent Hashing Lab)
+- ✅ Site 46: `stringcosmos` -> `/stringalgoviz` (String Algorithms & Pattern Matching, KMP, Rabin-Karp, Z-Algorithm, Trie, Suffix Arrays)
+- ✅ Site 47: `mathmlcosmos` -> `/aimathviz` (Mathematics for Machine Learning, Linear Algebra Vectors, Matrix Decomposition, Calculus Gradients)
 
 ---
 
