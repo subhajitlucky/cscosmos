@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
     return (
-        <div className="min-h-screen bg-background text-foreground flex flex-col font-sans transition-colors duration-300">
+        <div className="blockviz-theme min-h-screen bg-background text-foreground flex flex-col font-sans transition-colors duration-300">
             <Header />
             <main className="flex-1">
                 {children}
