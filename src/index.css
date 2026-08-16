@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 216 33% 98%;
-    --foreground: 224 71% 4%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
-    --primary: 244 75% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 224 71% 4%;
-    --muted: 220 14% 95%;
-    --muted-foreground: 223 15% 45%;
-    --accent: 230 55% 96%;
-    --accent-foreground: 224 71% 8%;
-    --destructive: 0 80% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 244 75% 60%;
-    --radius: 1rem;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
 
     /* CSSViz Light Theme Variables */
     --bg: #f8fafc;
@@ -48,25 +48,25 @@
   }
 
   .dark {
-    --background: 240 10% 4%; /* Near Void Black */
-    --foreground: 210 35% 98%;
-    --card: 240 10% 6%;
-    --card-foreground: 210 35% 98%;
-    --popover: 240 10% 6%;
-    --popover-foreground: 210 35% 98%;
-    --primary: 262 80% 65%; /* Slightly brighter purple */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 240 6% 12%;
-    --secondary-foreground: 210 35% 98%;
-    --muted: 240 6% 12%;
-    --muted-foreground: 216 10% 70%;
-    --accent: 262 50% 15%;
-    --accent-foreground: 210 35% 98%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 240 6% 14%;
-    --input: 240 6% 14%;
-    --ring: 262 80% 65%;
+    --background: 240 10% 3.9%; /* Pure Deep Obsidian Black */
+    --foreground: 0 0% 98%;
+    --card: 240 10% 5.5%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 5.5%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%; /* High contrast pure monochrome */
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
 
     /* CSSViz Dark Theme Variables */
     --bg: #020617;
@@ -150,19 +150,12 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background-image:
-      radial-gradient(1500px 900px at 20% 0%, rgba(96, 165, 250, 0.12), transparent),
-      radial-gradient(1200px 800px at 80% 10%, rgba(167, 139, 250, 0.14), transparent);
+    background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
   .dark body {
-    background-image:
-      radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
-      radial-gradient(1px 1px at 20% 20%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
-      radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
-      radial-gradient(1px 1px at 40% 40%, rgba(255, 255, 255, 0.05) 1px, transparent 0),
-      radial-gradient(1200px 800px at 50% 0%, rgba(82, 50, 200, 0.15), transparent),
-      radial-gradient(1000px 800px at 100% 100%, rgba(50, 100, 200, 0.1), transparent);
-    background-size: 500px 500px, 400px 400px, 300px 300px, 200px 200px, 100% 100%, 100% 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
   h1, h2, h3, h4 {
     font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

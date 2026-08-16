@@ -21,15 +21,14 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
 
     return (
         <div className="pb-16">
-            <section className="relative overflow-hidden py-14 md:py-18">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-transparent blur-3xl opacity-70" />
+            <section className="relative py-14 md:py-18">
                 <div className="page-container relative z-10">
                     <div className="max-w-3xl space-y-4">
-                        <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary">
+                        <div className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                             Domain: {domain.name}
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">{domain.name}</h1>
-                        <p className="text-xl text-muted-foreground">{domain.description}</p>
+                        <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">{domain.name}</h1>
+                        <p className="text-xl text-muted-foreground font-normal">{domain.description}</p>
                     </div>
                 </div>
             </section>

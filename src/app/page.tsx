@@ -34,48 +34,43 @@ export default function HomePage() {
         <div className="space-y-16 pb-16">
             {/* Hero Section */}
             <section className="relative overflow-hidden pt-20 pb-16 md:pt-28 md:pb-24">
-                <div className="absolute inset-0">
-                    <div className="absolute top-[-20%] left-[10%] h-72 w-72 bg-primary/20 blur-3xl rounded-full" />
-                    <div className="absolute bottom-[-10%] right-[5%] h-80 w-80 bg-purple-400/25 blur-3xl rounded-full" />
-                </div>
                 <div className="page-container text-center relative z-10 space-y-8">
-                    <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary shadow-sm">
-                        <Sparkles className="mr-2 h-3.5 w-3.5" /> {totalTopics} Interactive Learning Modules · {liveTopics} live
+                    <div className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground shadow-sm">
+                        <Sparkles className="mr-2 h-3.5 w-3.5 text-primary" /> {totalTopics} Interactive Learning Modules · {liveTopics} live
                     </div>
 
                     <div className="space-y-4">
-                        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl leading-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/85 to-primary/90">
-                            Explore the Universe of Computer Science
+                        <h1 className="text-4xl font-black tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground">
+                            Explore the Universe of <br className="hidden sm:inline" /> Computer Science
                         </h1>
-                        <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
+                        <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl font-normal">
                             Deconstructing the digital universe. {totalTopics} visual deep-dives into the core of computing,
                             designed for those who refuse to just use tools and choose to master them.
                         </p>
-                        <p className="text-sm md:text-base font-mono text-primary/80 italic animate-pulse">
+                        <p className="text-sm md:text-base font-mono text-muted-foreground italic">
                             "Only the people who understand the machine can control the machine."
                         </p>
                     </div>
 
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Link href="/topics">
-                            <Button size="lg" className="text-base h-12 px-8">
+                            <Button size="lg" className="text-base h-12 px-8 font-semibold shadow-md">
                                 Explore Topics
                             </Button>
                         </Link>
                         <Link href="/about">
-                            <Button variant="outline" size="lg" className="text-base h-12 px-8">
+                            <Button variant="outline" size="lg" className="text-base h-12 px-8 font-semibold">
                                 About CSCosmos
                             </Button>
                         </Link>
                     </div>
 
-                    <div className="max-w-2xl mx-auto relative group">
-                        <div className="absolute -inset-px bg-gradient-to-r from-primary to-blue-500 rounded-full blur-lg opacity-25 group-hover:opacity-40 transition duration-500 group-hover:duration-200" />
+                    <div className="max-w-2xl mx-auto relative">
                         <SearchBar
                             placeholder="Search any topic (e.g. 'Binary Search', 'React', 'Docker')..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="relative shadow-xl"
+                            className="relative shadow-lg border border-border/80"
                         />
                     </div>
                 </div>

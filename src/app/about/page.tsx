@@ -17,10 +17,10 @@ export default function AboutPage() {
             <div className="page-container max-w-4xl space-y-20">
                 {/* The Hook */}
                 <section className="space-y-8 text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
+                    <h1 className="text-4xl font-black tracking-tight lg:text-6xl text-foreground">
                         The Survival Guide <br/> for the AI Age.
                     </h1>
-                    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-light">
+                    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-normal">
                         We don't teach syntax. We teach Architecture. <br/>
                         We don't teach how to use tools. We teach how to build them.
                     </p>
@@ -28,26 +28,26 @@ export default function AboutPage() {
 
                 {/* The Philosophy */}
                 <section className="grid md:grid-cols-3 gap-8">
-                    <div className="glass-card rounded-2xl p-8 space-y-4 border-t-4 border-t-primary">
-                        <Cpu className="h-8 w-8 text-primary" />
+                    <div className="glass-card rounded-2xl p-8 space-y-4 border border-border">
+                        <Cpu className="h-8 w-8 text-foreground" />
                         <h3 className="text-2xl font-bold">Deep Internals</h3>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground text-sm leading-relaxed">
                             In a world of AI code generation, the "Coder" is obsolete. The "Architect" is king. 
                             We dive into Memory Allocators, Compilers, and Kernels.
                         </p>
                     </div>
-                    <div className="glass-card rounded-2xl p-8 space-y-4 border-t-4 border-t-purple-600">
-                        <ShieldCheck className="h-8 w-8 text-purple-600" />
+                    <div className="glass-card rounded-2xl p-8 space-y-4 border border-border">
+                        <ShieldCheck className="h-8 w-8 text-foreground" />
                         <h3 className="text-2xl font-bold">Future Proof</h3>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground text-sm leading-relaxed">
                             From <strong>Quantum Computing</strong> to <strong>Neural Implants</strong>. 
                             We cover the technologies that will define the next 20 years, not just the next 20 months.
                         </p>
                     </div>
-                    <div className="glass-card rounded-2xl p-8 space-y-4 border-t-4 border-t-rose-600">
-                        <Terminal className="h-8 w-8 text-rose-600" />
+                    <div className="glass-card rounded-2xl p-8 space-y-4 border border-border">
+                        <Terminal className="h-8 w-8 text-foreground" />
                         <h3 className="text-2xl font-bold">The Mission</h3>
-                        <p className="text-muted-foreground italic font-medium">
+                        <p className="text-muted-foreground italic font-medium text-sm leading-relaxed">
                             "{siteConfig.slogan}"
                         </p>
                     </div>

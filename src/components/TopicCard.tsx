@@ -16,7 +16,7 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
 
     const CardContent = (
         <div
-            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-white/70 dark:bg-white/5 p-5 card-hover backdrop-blur min-h-[180px]"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-5 transition-all duration-200 hover:border-foreground/20 hover:shadow-md min-h-[180px]"
             role={onClick ? "button" : "article"}
             tabIndex={onClick ? 0 : -1}
             aria-label={cardAriaLabel}
@@ -28,8 +28,6 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
                 }
             }}
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
             <div className="relative z-10 flex justify-between items-start mb-3">
                 <div>
                     <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{topic.domain}</p>
