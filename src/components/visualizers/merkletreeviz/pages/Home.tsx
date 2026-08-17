@@ -62,7 +62,7 @@ const Home = () => {
             className="text-6xl md:text-[10rem] font-black leading-[0.85] tracking-tighter"
           >
             THE SUMMIT <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-accent to-accent/40">OF TRUST</span>
+            <span className="text-gradient-accent text-transparent bg-clip-text bg-gradient-to-b from-accent to-accent/40">OF TRUST</span>
           </motion.h1>
 
           <motion.p 
