@@ -144,73 +144,73 @@
     background-image: none !important;
   }
 
-  /* MerkleTreeViz Standalone Scoped Colors (Pure White / Black with Crisp Borders & Royal Blue Accent) */
+  /* MerkleTreeViz Standalone Scoped Colors (Refined Modern Slate/Obsidian with Royal Blue Accents) */
   .merkletree-theme {
     --background: 0 0% 100%;
-    --foreground: 0 0% 4%;
+    --foreground: 222.2 47.4% 11.2%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
-    --card-border: #d4d4d4;
+    --card-foreground: 222.2 47.4% 11.2%;
+    --card-border: #e2e8f0;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
-    --primary: 0 0% 0%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: rgba(0, 0, 0, 0.05);
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 32%;
-    --muted-foreground: 0 0% 45%;
+    --primary-glow: rgba(37, 99, 235, 0.15);
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 215.4 16.3% 46.9%;
+    --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 221.2 83.2% 53.3%;
     --accent-foreground: 0 0% 100%;
     --accent-glow: rgba(37, 99, 235, 0.1);
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --success: #10b981;
-    --border: 0 0% 83%;
-    --input: 0 0% 83%;
+    --success: 142 71% 45%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
-    --grid-color: rgba(0, 0, 0, 0.03);
+    --grid-color: rgba(0, 0, 0, 0.04);
     background-color: #ffffff !important;
     color: #0a0a0a !important;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.1) 0, transparent 50%), 
-      radial-gradient(at 100% 0%, rgba(0, 0, 0, 0.05) 0, transparent 50%) !important;
+      radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.08) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, rgba(0, 0, 0, 0.03) 0, transparent 50%) !important;
     background-attachment: fixed !important;
   }
 
   .dark .merkletree-theme,
   [data-theme="dark"] .merkletree-theme,
   [data-mode="dark"] .merkletree-theme {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 100%;
-    --card-border: #171717;
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --primary-glow: rgba(255, 255, 255, 0.1);
-    --secondary: 0 0% 4%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 64%;
-    --muted-foreground: 0 0% 32%;
+    --background: 222.2 47.4% 7%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 47.4% 10%;
+    --card-foreground: 210 40% 98%;
+    --card-border: #1e2436;
+    --popover: 222.2 47.4% 10%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: rgba(59, 130, 246, 0.25);
+    --secondary: 222.2 47.4% 13%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 20.2% 65.1%;
+    --muted-foreground: 215 16.3% 50%;
     --accent: 217.2 91.2% 59.8%;
     --accent-foreground: 0 0% 100%;
-    --accent-glow: rgba(59, 130, 246, 0.15);
+    --accent-glow: rgba(59, 130, 246, 0.2);
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --success: #34d399;
-    --border: 0 0% 9%;
-    --input: 0 0% 9%;
+    --success: 142 71% 45%;
+    --border: 222.2 47.4% 15%;
+    --input: 222.2 47.4% 15%;
     --ring: 217.2 91.2% 59.8%;
-    --grid-color: rgba(255, 255, 255, 0.03);
-    background-color: #000000 !important;
-    color: #ffffff !important;
+    --grid-color: rgba(255, 255, 255, 0.04);
+    background-color: #0b0f19 !important;
+    color: #f8fafc !important;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0, transparent 50%), 
-      radial-gradient(at 100% 0%, rgba(255, 255, 255, 0.1) 0, transparent 50%) !important;
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, rgba(30, 41, 59, 0.3) 0, transparent 50%) !important;
     background-attachment: fixed !important;
   }
 }
