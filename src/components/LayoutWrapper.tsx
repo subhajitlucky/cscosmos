@@ -41,6 +41,19 @@ const CUSTOM_HEADER_ROUTES = [
   '/browseruniverse',
   '/aicosmos',
   '/rustviz',
+  '/cryptviz',
+  '/merkletreeviz',
+  '/patriciatrie',
+  '/consensusviz',
+  '/ptopblockchain',
+  '/evminternals',
+  '/solidityviz',
+  '/gitcosmos',
+  '/k8scosmos',
+  '/cloudcosmos',
+  '/loadbalancing',
+  '/stringalgoviz',
+  '/aimathviz',
 ];
 
 // Sub-sites that manage their own custom footer
@@ -79,6 +92,19 @@ const CUSTOM_FOOTER_ROUTES = [
   '/browseruniverse',
   '/aicosmos',
   '/rustviz',
+  '/cryptviz',
+  '/merkletreeviz',
+  '/patriciatrie',
+  '/consensusviz',
+  '/ptopblockchain',
+  '/evminternals',
+  '/solidityviz',
+  '/gitcosmos',
+  '/k8scosmos',
+  '/cloudcosmos',
+  '/loadbalancing',
+  '/stringalgoviz',
+  '/aimathviz',
 ];
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
