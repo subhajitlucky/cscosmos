@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import NextLink from 'next/link';
 import { Link, useLocation } from '@/components/visualizers/shared/RouterShim';
-import { Network, Github, Menu, X } from 'lucide-react';
+import { Network, Github, Menu, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -27,20 +28,41 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
+  const isItemActive = (path: string) => {
+    const p = location.pathname || '';
+    if (path === '/') {
+      return p === '/' || p === '' || p === '/patriciatrie';
+    }
+    return p.startsWith(path) || p.startsWith(`/patriciatrie${path}`);
+  };
+
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-primary/30 transition-colors duration-300">
+    <div className="patriciatrie-theme min-h-screen bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-primary/30 transition-colors duration-300">
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-md">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Network size={20} className="text-white" />
-            </div>
-            <span>Patricia<span className="text-primary">Trie</span></span>
-          </Link>
+          <div className="flex items-center gap-3 sm:gap-4">
+            <NextLink
+              href="/web3"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 text-xs font-semibold text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              title="Return to CSCosmos Web3 Hub"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">CSCosmos</span>
+            </NextLink>
+
+            <div className="h-4 w-px bg-neutral-200 dark:bg-neutral-800" />
+
+            <Link to="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <Network size={20} className="text-white" />
+              </div>
+              <span>Patricia<span className="text-primary">Trie</span></span>
+            </Link>
+          </div>
 
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
-              const isActive = location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path));
+              const isActive = isItemActive(item.path);
               return (
                 <Link
                   key={item.path}
@@ -48,7 +70,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   className={cn(
                     "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors",
                     isActive 
-                      ? "bg-primary/10 text-primary" 
+                      ? "bg-primary/10 text-primary font-semibold" 
                       : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800"
                   )}
                 >
@@ -63,10 +85,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             
             <div className="hidden sm:flex items-center gap-2">
               <a 
-                href="https://github.com" 
+                href="https://github.com/subhajitlucky/cscosmos" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                title="View on GitHub"
               >
                 <Github size={20} />
               </a>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import RouteClientShell from './RouteClientShell';
 
 export function generateStaticParams() {
@@ -8,7 +8,6 @@ export function generateStaticParams() {
     { slug: ['concepts'] },
     { slug: ['playground'] },
     { slug: ['lab'] },
-    
   ];
 
   const topicIds = ["intro","radix-trie","node-types","hex-nibbles","hp-encoding","state-trie","storage-trie","proofs"];
@@ -28,5 +27,9 @@ export default async function PatriciatriePage({
   params: Promise<{ slug?: string[] }>;
 }) {
   const resolved = await params;
-  return <RouteClientShell slug={resolved?.slug || []} />;
+  return (
+    <Suspense fallback={null}>
+      <RouteClientShell slug={resolved?.slug || []} />
+    </Suspense>
+  );
 }
