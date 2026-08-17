@@ -59,14 +59,15 @@ const TreeVisualizer: React.FC<TreeVisualizerProps> = ({
                   <path
                     d={`M ${x1} ${y1} L ${x2} ${y2}`}
                     fill="none"
-                    className="stroke-muted/20"
+                    stroke="hsl(var(--muted))"
+                    strokeOpacity="0.25"
                     strokeWidth="1"
                   />
                   
                   <motion.path
                     d={`M ${x1} ${y1} L ${x2} ${y2}`}
                     fill="none"
-                    stroke={isCorrupted || isBroken ? "#ef4444" : isPathActive ? "var(--accent)" : "transparent"}
+                    stroke={isCorrupted || isBroken ? "#ef4444" : isPathActive ? "hsl(var(--accent))" : "transparent"}
                     strokeWidth={isPathActive || isBroken ? 2 : 1}
                     strokeDasharray="8, 12"
                     animate={{ strokeDashoffset: [0, -20] }}
@@ -98,8 +99,8 @@ const TreeVisualizer: React.FC<TreeVisualizerProps> = ({
                   <motion.rect
                     x={x - 40} y={y - 18} width={80} height={36} rx={8}
                     animate={{ 
-                      stroke: isTampered || isBroken ? '#ef4444' : isHighlighted ? 'var(--accent)' : 'var(--card-border)',
-                      fill: isBroken ? '#ef4444' : isHighlighted ? 'var(--accent)' : 'var(--card)',
+                      stroke: isTampered || isBroken ? '#ef4444' : isHighlighted ? 'hsl(var(--accent))' : 'var(--card-border)',
+                      fill: isBroken ? '#ef4444' : isHighlighted ? 'hsl(var(--accent))' : 'hsl(var(--card))',
                       strokeWidth: isHighlighted || isTampered || isBroken ? 2 : 1
                     }}
                     className="transition-colors duration-300 shadow-sm"
@@ -108,18 +109,16 @@ const TreeVisualizer: React.FC<TreeVisualizerProps> = ({
                   <foreignObject x={x - 34} y={y - 12} width={16} height={16} className="pointer-events-none">
                     <div className="flex items-center justify-center h-full w-full">
                       {isRoot ? <ShieldCheck className={clsx("w-3 h-3", isHighlighted || isBroken ? "text-white" : "text-accent")} /> :
-                       lIndex === 0 ? <Database className={clsx("w-2.5 h-2.5", isHighlighted || isBroken ? "text-white" : "text-muted")} /> :
-                       <Cpu className={clsx("w-2.5 h-2.5", isHighlighted || isBroken ? "text-white" : "text-muted/40")} />}
+                       lIndex === 0 ? <Database className={clsx("w-2.5 h-2.5", isHighlighted || isBroken ? "text-white" : "text-muted-foreground")} /> :
+                       <Cpu className={clsx("w-2.5 h-2.5", isHighlighted || isBroken ? "text-white" : "text-muted-foreground/60")} />}
                     </div>
                   </foreignObject>
 
                   <text 
                     x={x + 10} y={y - 2}
                     textAnchor="middle"
-                    className={clsx(
-                      "text-[9px] font-mono font-bold tracking-tighter pointer-events-none",
-                      isHighlighted || isBroken ? "fill-white" : "fill-foreground"
-                    )}
+                    fill={isHighlighted || isBroken ? "#ffffff" : "hsl(var(--foreground))"}
+                    className="text-[9px] font-mono font-bold tracking-tighter pointer-events-none select-none"
                   >
                     {node.hash.substring(0, 6)}
                   </text>
@@ -127,7 +126,8 @@ const TreeVisualizer: React.FC<TreeVisualizerProps> = ({
                   <text 
                     x={x + 10} y={y + 10} 
                     textAnchor="middle"
-                    className={clsx("text-[6px] font-black uppercase tracking-[0.2em] pointer-events-none", isHighlighted || isBroken ? "fill-white/80" : "fill-muted")}
+                    fill={isHighlighted || isBroken ? "rgba(255,255,255,0.85)" : "hsl(var(--muted-foreground))"}
+                    className="text-[6px] font-black uppercase tracking-[0.2em] pointer-events-none select-none"
                   >
                     {isRoot ? 'SUMMIT' : node.isLeaf ? `BLOCK ${nIndex}` : `L${lIndex}`}
                   </text>
