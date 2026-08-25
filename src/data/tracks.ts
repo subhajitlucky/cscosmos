@@ -63,6 +63,25 @@ export const tracks: Track[] = [
             { id: 'realtime-sync-crdts', title: 'Real-Time Sync Algorithms (CRDTs & OT)', engineId: 'synccosmos' },
         ],
     }),
+    createTrack({
+        slug: 'web-foundations',
+        title: 'Web Foundations: From Code to Browser',
+        outcome: 'Understand how a webpage actually works - from raw code to a rendered, secured, networked experience.',
+        description:
+            'The journey of every web app, in dependency order: how programs execute, then structure (HTML), style (CSS and Tailwind), behavior (JavaScript), the browser runtime that binds them, the HTTP protocol that delivers them, and the security model that protects them. Start here if the web feels like magic; leave able to name every layer.',
+        level: 'beginner',
+        estHours: 14,
+        modules: [
+            { id: 'programs-execute', title: 'How Programs Execute (CPU, Memory, I/O)', engineId: 'program-cosmos' },
+            { id: 'html-accessibility', title: 'HTML & Accessibility (Semantics, ARIA)', engineId: 'html-cosmos' },
+            { id: 'css-visualizer', title: 'CSS Visualizer (Box Model, Flexbox, Grid)', engineId: 'css-cosmos' },
+            { id: 'tailwind-playground', title: 'TailwindCSS Playground (Utility-First CSS)', engineId: 'tailwindcosmos' },
+            { id: 'javascript-execution', title: 'JavaScript Visualizer (Execution, Async, Memory)', engineId: 'jsviz' },
+            { id: 'browser-internals', title: 'Browser Internals (DOM, Rendering, Storage)', engineId: 'browseruniverse' },
+            { id: 'http-web-protocols', title: 'HTTP & Web Protocols (Headers, Caching)', engineId: 'webprotocols' },
+            { id: 'web-security-model', title: 'Web Security (XSS, CSRF, CSP, CORS)', engineId: 'websecurity' },
+        ],
+    }),
 ];
 
 export function getTrackBySlug(slug: string): Track | undefined {
