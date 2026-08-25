@@ -15,7 +15,7 @@ export function VisualizerRegistry({ slug, topic }: VisualizerRegistryProps) {
         <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center space-y-6">
             <div className="relative">
                 <div className="absolute -inset-4 rounded-full bg-primary/20 blur-xl animate-pulse" />
-                <div className="relative h-20 w-20 rounded-2xl bg-gradient-to-tr from-primary to-purple-600 flex items-center justify-center text-white shadow-2xl">
+                <div className="relative h-20 w-20 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground shadow-2xl">
                     <Cpu className="h-10 w-10 animate-bounce" />
                 </div>
             </div>

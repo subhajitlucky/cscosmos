@@ -212,7 +212,7 @@ export function SpatialLab() {
 
               {/* 3D Rendered Shape */}
               <div
-                className="w-32 h-32 rounded-3xl bg-gradient-to-tr from-violet-600 via-indigo-600 to-teal-400 border-2 border-violet-300 shadow-[0_0_50px_rgba(139,92,246,0.5)] flex flex-col items-center justify-center text-white transition-all duration-75"
+                className="w-32 h-32 rounded-3xl bg-cyan-600 border-2 border-cyan-300 shadow-[0_0_50px_rgba(6,182,212,0.45)] flex flex-col items-center justify-center text-white transition-all duration-75"
                 style={{
                   transform: `translate3d(${posX * 40}px, ${-posY * 40}px, ${(posZ + 1.8) * 60}px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${scale})`,
                 }}

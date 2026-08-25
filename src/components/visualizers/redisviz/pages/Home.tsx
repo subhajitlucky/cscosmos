@@ -91,7 +91,7 @@ const Home = () => {
                     </div>
                     <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
                         Visual Guide to <br />
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-orange-500">Redis Internals</span>
+                        <span className="text-redis">Redis Internals</span>
                     </h1>
                 </motion.div>
 
@@ -166,7 +166,7 @@ const Home = () => {
                                                         {item.description}
                                                     </CardDescription>
                                                 </CardHeader>
-                                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-rose-500/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-redis/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                                             </Card>
                                         </Link>
                                     </motion.div>

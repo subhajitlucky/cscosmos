@@ -3,7 +3,7 @@ import { siteConfig } from "../config/site"
 
 export function Footer() {
     return (
-        <footer className="border-t border-border/60 bg-gradient-to-b from-background to-background/60">
+        <footer className="border-t border-border/60 bg-background">
             <div className="page-container py-8 md:py-12">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-center gap-2">

@@ -47,7 +47,7 @@ export default function LearningPathPage() {
 
               <div className="w-full h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 transition-all duration-700"
+                  className="h-full bg-[#00ADD8] transition-all duration-700"
                   style={{ width: `${percentage}%` }}
                 />
               </div>

@@ -4,7 +4,7 @@ export default function PlaygroundPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="py-24 border-b bg-zinc-950 text-white bg-grid-premium overflow-hidden relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/50" />
+        <div className="absolute inset-0 bg-zinc-950/30" />
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-[10px] font-bold uppercase tracking-widest mb-6">

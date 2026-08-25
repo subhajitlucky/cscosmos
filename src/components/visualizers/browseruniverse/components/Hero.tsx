@@ -14,7 +14,7 @@ type Props = {
 
 export default function Hero({ title, subtitle, primaryCta, secondaryCta }: Props) {
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-card/90 via-base/90 to-card/90 p-6 sm:p-10 shadow-glow">
+    <div className="relative overflow-hidden rounded-3xl border border-border bg-card/90 p-6 sm:p-10 shadow-glow">
       <div className="absolute inset-0 grid-accent opacity-60" aria-hidden />
       <div className="relative z-10 grid gap-6 lg:grid-cols-[1.2fr,0.8fr] lg:items-center">
         <div className="space-y-4">

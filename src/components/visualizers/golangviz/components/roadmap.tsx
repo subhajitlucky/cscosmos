@@ -7,7 +7,7 @@ type RoadmapItem = {
 export function Roadmap({ items }: { items: RoadmapItem[] }) {
   return (
     <div className="relative">
-      <div className="absolute left-4 top-0 h-full w-px bg-gradient-to-b from-blue-400/40 via-[var(--panel-border)] to-transparent" />
+      <div className="absolute left-4 top-0 h-full w-px bg-[var(--panel-border)]" />
       <div className="space-y-8">
         {items.map((item, idx) => (
           <div key={item.title} className="relative pl-12">

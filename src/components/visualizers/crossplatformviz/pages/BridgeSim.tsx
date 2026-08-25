@@ -198,7 +198,7 @@ export function BridgeSim() {
               <div className="h-6 rounded-lg bg-[var(--cp-surface-2)] overflow-hidden flex">
                 {metrics.queueDepth > 0 ? (
                   <div
-                    className="h-full bg-gradient-to-r from-amber-500 to-rose-500 transition-all duration-100 flex items-center justify-center text-[10px] text-black font-bold"
+                    className="h-full bg-amber-500 transition-all duration-100 flex items-center justify-center text-[10px] text-black font-bold"
                     style={{ width: `${Math.min(100, metrics.queueDepth * 2.5)}%` }}
                   >
                     Queue: {metrics.queueDepth}

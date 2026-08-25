@@ -133,7 +133,7 @@ const DataStructures = () => {
                                         ))}
                                     </Accordion>
 
-                                    <Card className="bg-gradient-to-br from-redis/5 to-transparent border-redis/20 shadow-lg shadow-redis/5">
+                                    <Card className="bg-redis/5 border-redis/20 shadow-lg shadow-redis/5">
                                         <CardHeader>
                                             <CardTitle className="text-base flex items-center gap-2 text-redis">
                                                 <Zap className="w-4 h-4" />

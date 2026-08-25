@@ -105,7 +105,7 @@ const Playground: React.FC = () => {
         {/* Column 1: Code & Status */}
         <div className="xl:col-span-3 flex flex-col gap-4">
           {/* Smart Assistant Panel */}
-          <div className="p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-evm-accent/5 dark:from-blue-500/20 dark:to-evm-accent/10 border border-blue-500/20 dark:border-blue-500/30 relative overflow-hidden group">
+          <div className="p-4 rounded-lg bg-blue-500/10 dark:bg-blue-500/15 border border-blue-500/20 dark:border-blue-500/30 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
               <BrainCircuit size={32} className="text-blue-500" />
             </div>

@@ -69,7 +69,7 @@ const BentoCard = ({ icon: Icon, title, desc, delay, className, color, to }: Ben
     )}
   >
     <Link to={to} className="absolute inset-0 z-20" />
-    <div className={clsx("absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br", color)} />
+    <div className={clsx("absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700", color)} />
     
     <div className="relative z-10 p-8 flex flex-col h-full">
       <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
@@ -117,7 +117,7 @@ export const Home: React.FC = () => {
         >
           The Architecture of
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-indigo-500 to-indigo-600 dark:from-brand-300 dark:to-indigo-400">
+          <span className="text-amber-600 dark:text-amber-300">
              Digital Trust.
           </span>
         </motion.h1>
@@ -166,7 +166,7 @@ export const Home: React.FC = () => {
             title="Real-time Simulation"
             desc="Witness the Avalanche Effect in real-time. Watch as one bit flips the entire cryptographic universe."
             className="md:col-span-8"
-            color="from-brand-500/5 to-transparent"
+            color="bg-brand-500/5"
             to="/playground"
           />
           
@@ -176,7 +176,7 @@ export const Home: React.FC = () => {
             title="Hardware Logic"
             desc="Intuitive visual models of low-level cryptography operations."
             className="md:col-span-4"
-            color="from-indigo-500/5 to-transparent"
+            color="bg-indigo-500/5"
             to="/learn/intro"
           />
 
@@ -186,7 +186,7 @@ export const Home: React.FC = () => {
             title="Digital Immutability"
             desc="Understand why history cannot be rewritten once the math is cast in stone."
             className="md:col-span-4"
-            color="from-emerald-500/5 to-transparent"
+            color="bg-emerald-500/5"
             to="/learn/blockchain"
           />
 
@@ -196,7 +196,7 @@ export const Home: React.FC = () => {
             title="Global Trust"
             desc="Explore the primitives that secure trillions in digital assets and billions of private conversations daily."
             className="md:col-span-8"
-            color="from-amber-500/5 to-transparent"
+            color="bg-amber-500/5"
             to="/learn"
           />
           

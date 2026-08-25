@@ -29,7 +29,7 @@ export default function Navbar() {
             <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-500">
               <Globe className="w-5 h-5" />
             </div>
-            <span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">
+            <span className="text-blue-500">
               WebProtocols
             </span>
           </Link>

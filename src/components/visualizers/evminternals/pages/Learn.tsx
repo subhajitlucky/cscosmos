@@ -66,7 +66,7 @@ const Learn: React.FC = () => {
         </div>
       </div>
 
-      <div className="mt-12 p-8 rounded-2xl bg-gradient-to-br from-evm-accent/15 to-transparent border border-evm-accent/20 text-center">
+      <div className="mt-12 p-8 rounded-2xl bg-evm-accent/10 border border-evm-accent/20 text-center">
          <h2 className="text-xl font-bold mb-2 text-neutral-900 dark:text-white">Ready for the deep end?</h2>
          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6 max-w-sm mx-auto">Skip the lessons and head straight to the playground to write your own raw EVM bytecode.</p>
          <Link to="/playground" className="inline-flex items-center gap-2 px-6 py-3 bg-evm-accent text-neutral-950 font-semibold rounded-lg hover:scale-[1.02] transition-all">

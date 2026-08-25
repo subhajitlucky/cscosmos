@@ -378,7 +378,7 @@ export function TransformerAttentionLab() {
           {/* Scale Legend */}
           <div className="flex items-center justify-between text-[11px] font-mono text-[var(--ai-muted)] pt-3 border-t border-[var(--ai-border-subtle)]">
             <span>Low Attention (0%)</span>
-            <div className="h-2.5 w-48 rounded-full bg-gradient-to-r from-[rgba(99,102,241,0.1)] to-[rgba(99,102,241,1.0)] border border-[var(--ai-border-subtle)]" />
+            <div className="flex h-2.5 w-48 rounded-full overflow-hidden border border-[var(--ai-border-subtle)]"><span className="flex-1 bg-[rgba(99,102,241,0.15)]" /><span className="flex-1 bg-[rgba(99,102,241,0.55)]" /><span className="flex-1 bg-[rgba(99,102,241,1)]" /></div>
             <span>High Attention (100%)</span>
           </div>
 

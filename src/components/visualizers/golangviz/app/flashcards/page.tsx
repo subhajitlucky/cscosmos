@@ -124,7 +124,7 @@ export default function FlashcardsPage() {
             {/* Flip Card Container */}
             <div
               onClick={() => setIsFlipped((prev) => !prev)}
-              className="cursor-pointer min-h-[300px] rounded-3xl border border-[var(--panel-border)] bg-gradient-to-br from-[var(--panel)] to-background p-8 shadow-xl flex flex-col justify-between transition-all hover:scale-[1.01] hover:border-purple-500/50 relative overflow-hidden"
+              className="cursor-pointer min-h-[300px] rounded-3xl border border-[var(--panel-border)] bg-[var(--panel)] p-8 shadow-xl flex flex-col justify-between transition-all hover:scale-[1.01] hover:border-purple-500/50 relative overflow-hidden"
             >
               <div className="flex items-center justify-between text-xs text-[var(--muted)] border-b border-[var(--panel-border)] pb-3">
                 <span className="font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider text-[11px]">

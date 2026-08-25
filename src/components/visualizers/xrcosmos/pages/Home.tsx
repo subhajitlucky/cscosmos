@@ -110,7 +110,7 @@ export function Home() {
                   <div className={`flex items-center justify-center gap-6 w-full ${stereoMode === 'stereo' ? 'px-4' : ''}`}>
                     {/* Left Eye View */}
                     <div
-                      className="w-24 h-24 rounded-2xl bg-gradient-to-br from-violet-600/80 via-indigo-600/60 to-teal-500/80 border-2 border-violet-400/80 shadow-[0_0_30px_rgba(139,92,246,0.4)] flex flex-col items-center justify-center text-white transition-all"
+                      className="w-24 h-24 rounded-2xl bg-cyan-600 border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(6,182,212,0.35)] flex flex-col items-center justify-center text-white transition-all"
                       style={{
                         transform: `translate3d(${posX * 30 - (stereoMode === 'stereo' ? 10 : 0)}px, ${-posY * 30}px, ${(posZ + 1.5) * 50}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,
                       }}
@@ -122,7 +122,7 @@ export function Home() {
                     {/* Right Eye View (Stereo Mode Only) */}
                     {stereoMode === 'stereo' && (
                       <div
-                        className="w-24 h-24 rounded-2xl bg-gradient-to-br from-teal-600/80 via-cyan-600/60 to-violet-500/80 border-2 border-teal-400/80 shadow-[0_0_30px_rgba(20,184,166,0.4)] flex flex-col items-center justify-center text-white transition-all"
+                        className="w-24 h-24 rounded-2xl bg-cyan-600 border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(6,182,212,0.35)] flex flex-col items-center justify-center text-white transition-all"
                         style={{
                           transform: `translate3d(${posX * 30 + 10}px, ${-posY * 30}px, ${(posZ + 1.5) * 50}px) rotateX(${rotX}deg) rotateY(${rotY + 4}deg)`,
                         }}

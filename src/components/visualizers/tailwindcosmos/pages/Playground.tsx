@@ -20,8 +20,8 @@ const PRESETS = [
   },
   {
     id: 'pricing-badge',
-    name: 'Gradient Pro Badge',
-    classes: 'relative overflow-hidden p-6 rounded-2xl bg-gradient-to-br from-indigo-950 to-slate-900 border border-indigo-500/30 text-white shadow-xl',
+    name: 'Pro Badge',
+    classes: 'relative overflow-hidden p-6 rounded-2xl bg-indigo-950 border border-indigo-500/30 text-white shadow-xl',
     html: `<div class="flex items-center justify-between mb-4">
   <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 font-bold">ENTERPRISE</span>
   <span class="text-2xl font-bold font-display">$99<span class="text-xs text-slate-400 font-normal">/mo</span></span>

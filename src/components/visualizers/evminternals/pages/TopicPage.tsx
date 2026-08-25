@@ -113,7 +113,7 @@ const MemoryAnimation: React.FC = () => (
           initial={{ height: 0 }}
           animate={{ height: `${20 + Math.sin(i * 0.8) * 15 + 20}%` }}
           transition={{ delay: i * 0.1, duration: 0.5 }}
-          className="w-8 bg-gradient-to-t from-blue-500/30 to-blue-500/10 border border-blue-500/30 rounded-t"
+          className="w-8 bg-amber-500/20 border border-amber-500/40 rounded-t"
         />
       ))}
     </div>

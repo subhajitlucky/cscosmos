@@ -125,7 +125,7 @@ const Home = () => {
                 </motion.div>
                 
                 <div className="flex items-center">
-                  <div className="w-20 h-px bg-gradient-to-r from-react/50 to-transparent relative">
+                  <div className="w-20 h-px bg-react/40 relative">
                     <motion.div 
                       animate={{ x: [0, 80] }}
                       transition={{ repeat: Infinity, duration: 2, ease: "linear" }}

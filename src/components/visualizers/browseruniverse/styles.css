@@ -162,12 +162,6 @@ html.light .browseruniverse-root .border-border\/80,
   box-shadow: var(--bu-shadow);
 }
 
-/* Hero gradient in Light Mode */
-html.light .browseruniverse-root .bg-gradient-to-br,
-.browseruniverse-root.light-mode .bg-gradient-to-br {
-  background-image: linear-gradient(to bottom right, #ffffff, #f1f5f9, #ffffff) !important;
-}
-
 /* High-contrast solid action buttons */
 .browseruniverse-root a.bg-accent,
 .browseruniverse-root button.bg-accent,

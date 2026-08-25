@@ -350,29 +350,6 @@
     box-shadow: var(--shadow-surface);
   }
 
-  .neon-border {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .neon-border::after {
-    content: '';
-    position: absolute;
-    inset: -120%;
-    background: conic-gradient(from 90deg, #6366f1, #06b6d4, #16a34a, #6366f1);
-    animation: gradient-spin 12s linear infinite;
-  }
-
-  .neon-border::before {
-    content: '';
-    position: absolute;
-    inset: 2px;
-    border-radius: inherit;
-    background: var(--bg);
-    backdrop-filter: blur(16px);
-    z-index: 1;
-  }
-
   .neon-content {
     position: relative;
     z-index: 2;
@@ -447,12 +424,6 @@
 
   .bg-brand-lime {
     background-color: var(--accent-main);
-  }
-}
-
-@keyframes gradient-spin {
-  to {
-    transform: rotate(360deg);
   }
 }
 

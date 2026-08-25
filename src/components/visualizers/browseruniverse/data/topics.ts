@@ -65,7 +65,7 @@ div.card.primary { border: 1px solid #22d3ee; }`,
     description:
       'Display lists, paint records, layerization, raster threads, tiles, and compositing to the final frame.',
     exampleHTML: `<div class="card layer">Layered content</div>`,
-    exampleCSS: `.layer { will-change: transform; background: linear-gradient(120deg, #7c3aed, #22d3ee); }`,
+    exampleCSS: `.layer { will-change: transform; background: var(--bu-accent); }`,
     exampleJS: `document.querySelector('.layer')?.animate([{opacity:1},{opacity:0.6},{opacity:1}], {duration: 1200, iterations: Infinity})`,
     tags: ['paint', 'layers', 'raster'],
   },

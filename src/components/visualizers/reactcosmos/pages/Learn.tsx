@@ -57,7 +57,7 @@ const Learn = () => {
       </header>
 
       <div className="relative">
-        <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-react/50 via-purple-500/50 to-amber-500/50 opacity-20 hidden md:block" />
+        <div className="absolute left-8 top-0 bottom-0 w-1 bg-react/40 opacity-20 hidden md:block" />
 
         <div className="space-y-12">
           {orderedTopics.map((topic, index) => (

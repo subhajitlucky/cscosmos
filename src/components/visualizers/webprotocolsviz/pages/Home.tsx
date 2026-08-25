@@ -97,7 +97,7 @@ const Home = () => {
                 <div className="w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center border border-white/20">
                    <div className="text-white text-[10px] font-mono">CLIENT</div>
                 </div>
-                <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent relative mx-4">
+                <div className="flex-1 h-[2px] bg-primary/60 relative mx-4">
                    <motion.div 
                     animate={{ x: ['-100%', '300%'] }}
                     transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
