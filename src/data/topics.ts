@@ -164,7 +164,7 @@ export const topics: Topic[] = [
     createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "security", { aliases: ['advanced'] }),
     createTopic("Zero Trust Architecture & IAM", "security"),
     createTopic("Software Supply Chain Security (SBOM, Sigstore, SLSA)", "security", { aliases: ['devops'] }),
-    createTopic("Security Engineering (Threat Models)", "security", { aliases: ['advanced'] }),
+    createTopic("Security Engineering (Threat Models)", "security", { status: 'active', slug: 'security-engineering-threat-models', url: '/security-engineering-threat-models', aliases: ['advanced'] }),
 
     // Artificial Intelligence
     createTopic("Math for Machine Learning (Linear Algebra, Probability)", "ai" , { status: 'active', slug: 'aimathviz', url: '/aimathviz' }),
