@@ -160,9 +160,9 @@ export const topics: Topic[] = [
     createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security"),
     createTopic("Digital Forensics & Incident Response (DFIR)", "security"),
     createTopic("Malware Analysis & Sandbox Internals", "security"),
-    createTopic("Reverse Engineering & Assembly (Low-Level Code)", "security", { aliases: ['advanced'] }),
+    createTopic("Reverse Engineering & Assembly (Low-Level Code)", "security", { status: 'active', slug: 'reverse-engineering-and-assembly-low-level-code', url: '/reverse-engineering-and-assembly-low-level-code', aliases: ['advanced'] }),
     createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "security", { aliases: ['advanced'] }),
-    createTopic("Zero Trust Architecture & IAM", "security"),
+    createTopic("Zero Trust Architecture & IAM", "security", { status: 'active', slug: 'zero-trust-architecture-and-iam', url: '/zero-trust-architecture-and-iam' }),
     createTopic("Software Supply Chain Security (SBOM, Sigstore, SLSA)", "security", { aliases: ['devops'] }),
     createTopic("Security Engineering (Threat Models)", "security", { status: 'active', slug: 'security-engineering-threat-models', url: '/security-engineering-threat-models', aliases: ['advanced'] }),
 
