@@ -95,7 +95,6 @@ const AnimationLab = () => {
       }
       preview={
         <div className="relative flex min-h-[220px] items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.1),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.12),transparent_40%)]" />
           <motion.div
             className="relative grid h-24 w-24 place-items-center rounded-full bg-gradient-to-br from-primary via-secondary to-accent shadow-glow"
             animate={{

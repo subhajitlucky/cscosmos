@@ -81,7 +81,6 @@ const VisualizerPanel = ({
         </div>
         <div className="space-y-4">
           <div className="relative overflow-hidden rounded-xl border border-slate-200/70 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-slate-900/75">
-            <div className="pointer-events-none absolute inset-0 animate-gradient-move bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.14),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.12),transparent_30%)] opacity-55 dark:opacity-35" />
             <div className="relative z-10">{preview}</div>
           </div>
 

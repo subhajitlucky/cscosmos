@@ -31,7 +31,7 @@ export function Topic({ topicId: propTopicId }: { topicId?: string }) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+        <div className="min-h-screen bg-background">
             {/* Hero Section */}
             <div className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
                 <div className="container mx-auto px-4 py-4 max-w-5xl">
@@ -150,7 +150,7 @@ console.log(example);`}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
                     >
-                        <Card className="bg-gradient-to-br from-primary/5 via-primary/5 to-transparent border-primary/20">
+                        <Card className="bg-[#3178C6]/5 border-[#3178C6]/20">
                             <CardContent className="p-4">
                                 <div className="flex gap-3">
                                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">

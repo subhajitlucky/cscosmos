@@ -17,7 +17,7 @@ export function Navbar() {
         <nav className="w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
             <div className="w-full max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 <Link to="/" className="flex items-center space-x-2 font-bold text-xl hover:opacity-80 transition-opacity">
-                    <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">SolidityViz</span>
+                    <span className="text-amber-600 dark:text-amber-500">SolidityViz</span>
                 </Link>
 
                 <div className="flex items-center space-x-6">

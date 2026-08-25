@@ -186,7 +186,7 @@ const Playground = () => {
             </div>
             <div className="h-1 sm:h-1.5 w-full bg-primary/10 rounded-full overflow-hidden border border-primary/5">
               <motion.div 
-                className="h-full bg-gradient-to-r from-primary to-blue-600 shadow-[0_0_15px_var(--primary)]" 
+                className="h-full bg-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.45)]" 
                 initial={{ width: 0 }}
                 animate={{ width: `${stats.coverage}%` }}
                 transition={{ duration: 1 }}

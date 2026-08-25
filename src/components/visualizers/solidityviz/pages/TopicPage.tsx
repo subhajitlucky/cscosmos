@@ -125,7 +125,7 @@ export function TopicPage() {
                                     <Sparkles className="w-5 h-5" />
                                     <h3 className="font-semibold uppercase tracking-wider text-sm">Mental Model</h3>
                                 </div>
-                                <div className="p-6 bg-gradient-to-br from-primary/5 to-transparent border border-primary/10 rounded-xl">
+                                <div className="p-6 bg-amber-500/5 border border-amber-500/30 rounded-xl">
                                     <h4 className="font-bold text-lg mb-2">{topic.mentalModel.title}</h4>
                                     <p className="text-muted-foreground leading-relaxed text-sm">
                                         {topic.mentalModel.description}
@@ -220,7 +220,7 @@ export function TopicPage() {
 
                 {/* 6. Interactive Visualization */}
                 <section className="pt-8">
-                    <div className="rounded-3xl p-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-2xl">
+                    <div className="rounded-3xl p-1 bg-zinc-900 border border-amber-500/40 shadow-2xl">
                         <div className="bg-background rounded-[22px] overflow-hidden">
                             <div className="p-8 md:p-10 text-center border-b bg-muted/10">
                                 <div className="inline-flex items-center justify-center p-3 rounded-full bg-purple-500/10 text-purple-500 mb-4">

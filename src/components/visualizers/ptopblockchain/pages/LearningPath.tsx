@@ -16,7 +16,7 @@ const LearningPath = () => {
           <h1 className="text-3xl md:text-5xl lg:text-7xl font-display font-black tracking-tighter text-main mb-4 md:mb-6">
             TRAINING_MODULES
           </h1>
-          <div className="h-1 w-16 md:w-24 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+          <div className="h-1 w-16 md:w-24 bg-amber-500/70" />
         </div>
       </header>
 

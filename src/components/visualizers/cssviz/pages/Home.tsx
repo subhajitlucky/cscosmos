@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <PageTransition>
       <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-white px-6 py-12 shadow-glow transition-colors duration-300 dark:bg-surface sm:px-10">
-        <div className="absolute inset-0 animate-gradient-move bg-[length:200%_200%] bg-[linear-gradient(135deg,rgba(99,102,241,0.35),rgba(34,211,238,0.3),rgba(22,163,74,0.25))]" />
+        <div className="absolute inset-0 bg-indigo-500/10" />
         <div className="absolute -right-6 top-10 h-40 w-40 rounded-full bg-white/10 blur-[80px]" />
         <div className="relative z-10 grid gap-10 lg:grid-cols-[1.2fr,1fr]">
           <div className="space-y-6">
@@ -72,7 +72,7 @@ const Home = () => {
             </div>
           </div>
 
-          <GlassCard className="neon-border">
+          <GlassCard>
             <div className="neon-content space-y-4 p-6">
               <div className="flex items-center justify-between">
                 <p className="text-xs uppercase tracking-[0.2em] text-primary">Live token playground</p>

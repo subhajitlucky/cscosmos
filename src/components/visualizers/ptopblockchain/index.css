@@ -87,10 +87,8 @@
     pointer-events: none;
   }
 
-  .gradient-mesh {
-    background: radial-gradient(at 0% 0%, var(--primary-dim) 0, transparent 50%),
-                radial-gradient(at 50% 0%, rgba(0, 102, 255, 0.1) 0, transparent 50%),
-                radial-gradient(at 100% 0%, var(--primary-dim) 0, transparent 50%);
+  .surface-tint {
+    background-color: rgba(245, 158, 11, 0.05);
   }
 
   .text-shadow-glow {

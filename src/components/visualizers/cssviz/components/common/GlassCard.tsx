@@ -20,7 +20,7 @@ const GlassCard = ({ children, className }: GlassCardProps) => (
       className="glass-overlay pointer-events-none absolute inset-0 transition-opacity duration-300"
       style={{ opacity: 'var(--overlay-opacity)' }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-primary/10" />
+      <div className="absolute inset-0 bg-white/[0.04]" />
     </div>
     <div className="relative z-10">{children}</div>
   </div>

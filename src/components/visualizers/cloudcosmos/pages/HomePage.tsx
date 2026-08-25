@@ -58,10 +58,9 @@ export function HomePage() {
               className="w-full max-w-5xl mt-20 relative px-4"
             >
               <div className="aspect-[16/9] rounded-3xl glass border-2 border-primary/20 shadow-2xl overflow-hidden relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 pointer-events-none" />
+                <div className="absolute inset-0 bg-[#326CE5]/5 pointer-events-none" />
                 <ArchitectureBackground />
-                {/* Reduced gradient mask height to show more of the animation */}
-                <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background via-background/20 to-transparent z-20" />
+                {/* Flat treatment: animation clips cleanly at the rounded container edge */}
                 
                 {/* Floating UI elements - removed hidden md:block to ensure visibility */}
                 <motion.div 

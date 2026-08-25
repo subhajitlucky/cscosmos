@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-border-dim bg-bg-app/80 backdrop-blur-xl transition-all duration-500">
       {/* Top decorative line */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-amber-500/50" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between h-16 items-center">

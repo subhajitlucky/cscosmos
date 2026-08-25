@@ -93,11 +93,11 @@ export const TrafficVisualizer = () => {
           <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-4 right-4 flex flex-col items-end gap-1 opacity-40">
                   <div className="flex items-center gap-2 text-[8px] sm:text-[10px] font-bold text-blue-500 uppercase tracking-[0.2em]"><Globe className="h-3 w-3" /> US-East</div>
-                  <div className="h-px w-20 sm:w-32 bg-gradient-to-l from-blue-500/50 to-transparent" />
+                  <div className="h-px w-20 sm:w-32 bg-blue-500/50" />
               </div>
               <div className="absolute bottom-4 right-4 flex flex-col items-end gap-1 opacity-40">
                   <div className="flex items-center gap-2 text-[8px] sm:text-[10px] font-bold text-purple-500 uppercase tracking-[0.2em]"><Globe className="h-3 w-3" /> EU-West</div>
-                  <div className="h-px w-20 sm:w-32 bg-gradient-to-l from-purple-500/50 to-transparent" />
+                  <div className="h-px w-20 sm:w-32 bg-purple-500/50" />
               </div>
           </div>
       )}
@@ -157,7 +157,7 @@ export const TrafficVisualizer = () => {
 
       {!isClientSide && (
           <motion.div className="absolute -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: LB_X, top: LB_Y }} initial={false} animate={{ scale: isCDN ? 0.75 : 0.9 }}>
-            <div className={cn("relative p-1 rounded-xl shadow-xl transition-all duration-500", mode === 'circuit-breaker' ? (circuitBreakerStatus === 'open' ? "bg-red-500" : circuitBreakerStatus === 'half-open' ? "bg-amber-500" : "bg-emerald-500") : (isCDN ? "bg-zinc-400" : "bg-gradient-to-b from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800"))}>
+            <div className={cn("relative p-1 rounded-xl shadow-xl transition-all duration-500", mode === 'circuit-breaker' ? (circuitBreakerStatus === 'open' ? "bg-red-500" : circuitBreakerStatus === 'half-open' ? "bg-amber-500" : "bg-emerald-500") : (isCDN ? "bg-zinc-400" : "bg-zinc-200 dark:bg-zinc-700"))}>
                 <div className="bg-white dark:bg-zinc-900 px-4 sm:px-6 py-3 sm:py-4 rounded-[calc(0.75rem-2px)] flex flex-col items-center gap-2" style={{ width: LB_CARD_WIDTH }}>
                     <div className={cn("p-2 rounded-lg transition-colors", mode === 'circuit-breaker' ? (circuitBreakerStatus === 'open' ? "bg-red-100 text-red-600" : "bg-emerald-100 text-emerald-600") : "bg-zinc-950 dark:bg-zinc-800 text-white dark:text-zinc-100")}>
                         {isCDN ? <Layers className="h-4 w-4 sm:h-5 sm:w-5" /> : mode === 'circuit-breaker' && circuitBreakerStatus === 'open' ? <Activity className="h-4 w-4 sm:h-5 sm:w-5" /> : <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5" />}

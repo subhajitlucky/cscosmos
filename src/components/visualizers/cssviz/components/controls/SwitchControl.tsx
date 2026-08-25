@@ -19,8 +19,8 @@ const SwitchControl = ({ label, checked, onChange }: SwitchControlProps) => (
       }`}
     >
       <span
-        className={`absolute left-1 h-5 w-5 rounded-full bg-white shadow transition ${
-          checked ? 'translate-x-5 bg-gradient-to-r from-primary to-secondary' : ''
+        className={`absolute left-1 h-5 w-5 rounded-full shadow transition ${
+          checked ? 'translate-x-5 bg-primary' : 'bg-white'
         }`}
       />
     </button>

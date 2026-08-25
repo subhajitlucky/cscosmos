@@ -76,7 +76,7 @@ export function AvailabilityVisualizer({ mode }: Props) {
                <motion.div 
                  animate={{ pathLength: [0, 1], opacity: [0, 1, 0] }}
                  transition={{ duration: 3, repeat: Infinity }}
-                 className="flex-1 h-[2px] bg-gradient-to-r from-primary to-indigo-500 mx-4" 
+                 className="flex-1 h-[2px] bg-cyan-400 mx-4" 
                />
 
                <div className="flex flex-col items-center gap-2">

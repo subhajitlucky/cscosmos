@@ -30,7 +30,7 @@ export function LoadBalancerVisualizer() {
 
       <div className="relative w-full max-w-[320px] h-72 glass border-2 border-primary/10 rounded-[2rem] flex flex-col items-center justify-between py-10 overflow-hidden shadow-inner">
         {/* Entrance */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-10 bg-gradient-to-b from-primary/40 to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-10 bg-[#326CE5]/40" />
         
         {/* Load Balancer */}
         <div className="relative z-10 p-5 glass border-2 border-primary/50 text-primary rounded-[2rem] shadow-2xl flex flex-col items-center group">

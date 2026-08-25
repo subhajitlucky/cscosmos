@@ -40,7 +40,7 @@ export function MemoryDiagram({ step, prev }: Props) {
         .filter(Boolean) as { from: { x: number; y: number }; to: { x: number; y: number }; key: string }[];
 
     return (
-        <div className="relative overflow-hidden rounded-lg border bg-gradient-to-br from-background via-muted/30 to-background p-4">
+        <div className="relative overflow-hidden rounded-lg border bg-muted/30 p-4">
             <div className="absolute inset-0 pointer-events-none">
                 <svg width="100%" height={Math.max((stack.length + heap.length) * rowH, 220)} className="overflow-visible">
                     <defs>

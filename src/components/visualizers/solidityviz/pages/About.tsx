@@ -4,7 +4,7 @@ export function About() {
     return (
         <div className="max-w-4xl mx-auto py-16 space-y-16">
             <div className="text-center space-y-6">
-                <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-4xl font-bold tracking-tight text-amber-600 dark:text-amber-500">
                     About Solidity Visualized
                 </h1>
                 <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">

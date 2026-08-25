@@ -66,7 +66,7 @@ export function Concepts() {
                                                     "relative overflow-hidden transition-all hover:ring-2 hover:ring-primary/50 hover:shadow-lg group w-full md:w-[calc(50%-2rem)]",
                                                     isEven ? "md:mr-auto md:ml-0" : "md:ml-auto md:mr-0"
                                                 )}>
-                                                    <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                    <div className="absolute inset-0 bg-[#3178C6]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                     <CardHeader>
                                                         <CardTitle className="flex items-center gap-2">
                                                             {concept.title}

@@ -12,7 +12,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       
       {/* Background Layers */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 gradient-mesh opacity-40 transition-opacity duration-1000" />
+        <div className="absolute inset-0 surface-tint opacity-40 transition-opacity duration-1000" />
         <div className="absolute inset-0 noise opacity-[0.02] mix-blend-overlay" />
       </div>
 

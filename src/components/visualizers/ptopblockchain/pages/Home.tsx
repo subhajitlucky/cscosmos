@@ -22,7 +22,7 @@ const Home = () => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-black leading-[0.95] tracking-tighter mb-6 text-main text-balance">
-              MASTER THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">DECENTRALIZED</span> WEB.
+              MASTER THE <span className="text-amber-600 dark:text-amber-500">DECENTRALIZED</span> WEB.
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-text-muted max-w-md mb-8 sm:mb-10 font-medium leading-relaxed border-l border-primary/30 pl-6">
