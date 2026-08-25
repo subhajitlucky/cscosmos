@@ -1,6 +1,6 @@
 # CSCosmos
 
-CSCosmos is an interactive computer science visualizer hub and learning platform, organizing 157+ topics across 8 core domains with natively absorbed interactive visualization engines.
+CSCosmos is an interactive computer science visualizer hub and learning platform, organizing 173 curated topics across 8 core domains with natively absorbed interactive visualization engines.
 
 - Live: https://cscosmos.vercel.app
 - Repo: https://github.com/subhajitlucky/cscosmos
@@ -10,10 +10,11 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 
 ## Proof
 
-- 157+ planned computer science learning modules.
-- 34 live visualizer topics (9 natively absorbed, 25 externally linked).
+- 173 curated computer science learning modules.
+- 55 live visualizer topics powered by 47 natively absorbed interactive engines (zero externally linked).
 - 8 major domains with dedicated routes.
-- 440 statically pre-rendered pages via Next.js SSG.
+- 1,500+ statically pre-rendered pages via Next.js SSG.
+- Free Learning Tracks: curated multi-engine journeys with unified cross-engine progress tracking.
 - Search, domain browsing, topic detail pages, live/coming-soon states, and dark/light theme support.
 - Vercel deployment with SSG pre-rendering and App Router.
 
@@ -33,8 +34,6 @@ The goal is not to publish a static list. The hub acts as an index for a growing
 - Core Computer Science
 - DevOps, Cloud, and Engineering
 - Advanced Engineering and Systems
-
-## Natively Absorbed Visualizers
 
 ## Natively Absorbed Visualizers
 
@@ -186,17 +185,14 @@ npm run lint
 - Next.js App Router provides SSG pre-rendering and SEO out of the box, but adds build complexity compared to a plain SPA.
 - The topic catalog is stored in TypeScript for simplicity, but a larger version could move to MDX, JSON, a CMS, or a database.
 - Absorbing microsites natively keeps the user experience seamless but increases the monorepo surface area.
-- External microsites remain as separate deployments, which keeps each topic isolated but increases maintenance work across many small projects.
+- All former external microsites now run as native routes, so every topic shares one deployment pipeline and one SEO surface.
 
 ## Roadmap
 
-- Absorb TypeScript visualizer (`tsviz`) as native route.
-- Absorb SQL visualizer (`sqlcosmos`) as native route.
-- Absorb Docker visualizer (`dockercosmos`) as native route.
-- Absorb Kubernetes visualizer (`k8scosmos`) as native route.
-- Absorb Blockchain + EVM visualizers as native routes.
+- Expand the DSA domain (38 planned algorithm modules).
+- Build the Core Computer Science domain (OS internals, networks, database internals).
 - Add screenshots and short previews for live microsites.
-- Add generated sitemap entries for every active topic.
+- Tag-based cross-listing for topics shared between domains.
 - Add progress filters for active versus planned modules.
 - Add richer topic metadata: difficulty, estimated reading time, prerequisites, and related topics.
 
