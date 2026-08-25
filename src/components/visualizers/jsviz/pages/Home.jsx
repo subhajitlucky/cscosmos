@@ -11,7 +11,7 @@ const Home = () => {
             <div className="border-b border-brand-border bg-brand-black relative overflow-hidden">
                 {/* Animated Background Grid */}
                 <div className="absolute inset-0 opacity-5 pointer-events-none">
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-lime/20 via-transparent to-brand-blue/20 animate-pulse"></div>
+                    <div className="absolute inset-0 bg-brand-lime/10 animate-pulse"></div>
                 </div>
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 py-24 sm:py-32 text-center">

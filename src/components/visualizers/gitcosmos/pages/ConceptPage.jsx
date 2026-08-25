@@ -352,7 +352,7 @@ function Visualization({ type, isDark }) {
             </div>
             <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full relative overflow-hidden">
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500 to-transparent w-1/2"
+                className="absolute inset-0 bg-emerald-500/60 w-1/2 rounded-full"
                 animate={{ x: ['-100%', '200%'] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />

@@ -58,7 +58,7 @@ export default function Navbar() {
                         <span>CSCosmos</span>
                     </Link>
                     <Link href="/html-cosmos" className="flex items-center gap-3 group">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-lime-400 to-emerald-500 flex items-center justify-center shadow-[0_0_20px_rgba(163,230,53,0.3)] group-hover:scale-105 transition-transform">
+                        <div className="w-10 h-10 rounded-xl bg-[#E34F26] flex items-center justify-center shadow-[0_0_20px_rgba(227,79,38,0.3)] group-hover:scale-105 transition-transform">
                             <Code2 className="text-slate-950" size={24} strokeWidth={2.5} />
                         </div>
                         <div>

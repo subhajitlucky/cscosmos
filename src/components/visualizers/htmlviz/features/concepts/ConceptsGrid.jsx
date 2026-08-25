@@ -78,7 +78,7 @@ export default function ConceptsGrid() {
 
                 {viewMode === 'path' && (
                     <div className="space-y-16 relative">
-                        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-lime-400/50 via-lime-400/20 to-transparent hidden md:block" />
+                        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-lime-400/20 hidden md:block" />
 
                         {Object.entries(levels).map(([levelName, tags]) => (
                             tags.length > 0 && (

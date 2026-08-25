@@ -24,25 +24,25 @@ const mlConnections = [
     math: 'Vectors',
     ml: 'Data points & features',
     icon: Layers,
-    color: 'from-blue-500 to-cyan-500',
+    color: 'bg-teal-600',
   },
   {
     math: 'Matrices',
     ml: 'Neural network layers',
     icon: Grid3X3,
-    color: 'from-teal-500 to-cyan-500',
+    color: 'bg-teal-700',
   },
   {
     math: 'Gradients',
     ml: 'Training & optimization',
     icon: TrendingUp,
-    color: 'from-green-500 to-emerald-500',
+    color: 'bg-emerald-600',
   },
   {
     math: 'Probability',
     ml: 'Predictions & uncertainty',
     icon: Dice5,
-    color: 'from-amber-500 to-orange-500',
+    color: 'bg-emerald-700',
   },
 ];
 
@@ -86,7 +86,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 lg:py-32">
         {/* Background decoration */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800" />
+        <div className="absolute inset-0 bg-primary-50 dark:bg-slate-800/40" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5Q0EzQUYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-50 dark:opacity-20" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -197,7 +197,7 @@ export default function HomePage() {
                 transition={{ delay: idx * 0.1 }}
                 className="concept-card text-center"
               >
-                <div className={`w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center`}>
+                <div className={`w-14 h-14 mx-auto mb-4 rounded-xl ${item.color} flex items-center justify-center`}>
                   <item.icon className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{item.math}</h3>
@@ -396,7 +396,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="glass-card p-12 gradient-bg relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-600/90 to-accent-600/90" />
+            <div className="absolute inset-0 bg-primary-700" />
             <div className="relative z-10">
               <Zap className="w-12 h-12 text-white mx-auto mb-6" />
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">

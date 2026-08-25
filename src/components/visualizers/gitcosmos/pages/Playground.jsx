@@ -56,7 +56,7 @@ function Playground() {
             >
               <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                  <div className="w-8 h-8 rounded-xl bg-[#F05033] flex items-center justify-center shadow-lg shadow-[#F05033]/25">
                     <Zap className="w-4 h-4 text-white" />
                   </div>
                   <div>

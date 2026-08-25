@@ -186,10 +186,7 @@ body {
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--color-1)), hsl(var(--color-2)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: hsl(var(--color-1));
   }
 
   .section-title {

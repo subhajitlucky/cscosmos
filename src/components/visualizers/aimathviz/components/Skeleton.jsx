@@ -8,7 +8,7 @@ export function CanvasSkeleton({ width = 400, height = 300, className = '' }) {
       style={{ width: '100%', maxWidth: width, aspectRatio: `${width}/${height}` }}
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent"
+        className="absolute inset-0 bg-slate-200/70 dark:bg-slate-700/70"
         animate={{ x: ['-100%', '100%'] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
       />

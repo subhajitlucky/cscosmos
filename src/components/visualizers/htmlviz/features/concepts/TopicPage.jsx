@@ -54,7 +54,7 @@ export default function TopicPage({ topicId: propTopicId }) {
                             <span className="text-lime-600 dark:text-lime-400">✦</span> In The Wild
                         </h2>
                         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 relative overflow-hidden group shadow-sm">
-                            <div className={`absolute inset-0 opacity-10 bg-gradient-to-br ${tagData.realWorld.color || 'from-lime-400 to-purple-600'}`} />
+                            <div className={`absolute inset-0 opacity-10 ${tagData.realWorld.color || 'bg-orange-500'}`} />
 
                             <div className="relative z-10 flex flex-col md:flex-row gap-6 items-center">
                                 <div className="flex-1">

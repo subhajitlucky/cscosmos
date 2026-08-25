@@ -62,7 +62,7 @@ const MetaprogrammingVisualizer = ({ code }) => {
                 </div>
 
                 {/* The Interception Beam (Caller to Proxy) */}
-                <div className="absolute left-6 right-1/2 top-6 h-[2px] bg-gradient-to-r from-blue-400 to-transparent -z-10 opacity-30" />
+                <div className="absolute left-6 right-1/2 top-6 h-[2px] bg-blue-400 -z-10 opacity-30" />
 
                 {/* Proxy Layer */}
                 <div className="proxy-layer relative flex flex-col items-center gap-4">
@@ -83,7 +83,7 @@ const MetaprogrammingVisualizer = ({ code }) => {
                 </div>
 
                 {/* The Target Beam (Proxy to Target) */}
-                <div className="absolute left-1/2 right-6 top-6 h-[2px] bg-gradient-to-r from-transparent to-brand-lime -z-10 opacity-30" />
+                <div className="absolute left-1/2 right-6 top-6 h-[2px] bg-brand-lime -z-10 opacity-30" />
 
                 {/* Target side */}
                 <div className="target-node flex flex-col items-center gap-2 z-10">

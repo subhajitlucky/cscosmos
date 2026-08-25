@@ -126,7 +126,7 @@ export const htmlTags = [
       app: "Instagram",
       feature: "Post Container",
       description: "Every single post card on your feed is wrapped in a <div>. It holds the header, the image, and the comments together.",
-      color: "from-pink-500 via-red-500 to-yellow-500"
+      color: "bg-pink-500"
     },
     exampleCode: `<div style="background-color: #333; color: white; padding: 20px;">
   <h2>I am a Div</h2>
@@ -145,7 +145,7 @@ export const htmlTags = [
       app: "Twitter / X",
       feature: "Character Count",
       description: "The little number showing how many characters you have left? That's likely a <span> styled to turn red when you're close to the limit.",
-      color: "from-blue-400 to-blue-600"
+      color: "bg-blue-500"
     },
     exampleCode: `<p>My mother has <span style="color:blue; font-weight:bold;">blue</span> eyes.</p>`
   },
@@ -157,7 +157,7 @@ export const htmlTags = [
       app: "YouTube",
       feature: "Top Bar",
       description: "The bar at the top with the Search, Create, and Profile buttons is the <header> of the page.",
-      color: "from-red-600 to-red-800"
+      color: "bg-red-600"
     },
     exampleCode: '<header><h1>Page Title</h1></header>'
   },
@@ -167,7 +167,7 @@ export const htmlTags = [
       app: "Spotify",
       feature: "Sidebar Menu",
       description: "The sidebar with 'Home', 'Search', and 'Your Library' is a classic <nav> element.",
-      color: "from-green-400 to-green-600"
+      color: "bg-green-600"
     },
     exampleCode: '<nav><a href="/home">Home</a> | <a href="/about">About</a></nav>'
   },
@@ -248,7 +248,7 @@ export const htmlTags = [
       app: "Netflix",
       feature: "Login Box",
       description: "The entire box asking for your Email and Password is a <form>. It handles sending that data to the server.",
-      color: "from-red-600 to-black"
+      color: "bg-red-700"
     },
     exampleCode: `<form action="/submit">\n  <label for="fname">First name:</label><br>\n  <input type="text" id="fname" name="fname"><br>\n  <input type="submit" value="Submit">\n</form>`
   },
@@ -258,7 +258,7 @@ export const htmlTags = [
       app: "Google",
       feature: "Search Bar",
       description: "The most famous <input> in the world. It accepts text and sends it to find your answers.",
-      color: "from-blue-500 via-green-500 to-yellow-500"
+      color: "bg-yellow-400"
     },
     exampleCode: `<input type="text" placeholder="Enter text here">`
   },
@@ -268,7 +268,7 @@ export const htmlTags = [
       app: "Amazon",
       feature: "Buy Now",
       description: "That orange 'Buy Now' button that takes your money? It's a <button> designed to be clicked.",
-      color: "from-yellow-400 to-orange-500"
+      color: "bg-orange-500"
     },
     exampleCode: `<button type="button" onclick="alert('Hello!')">Click Me!</button>`
   },

@@ -81,7 +81,7 @@ const InternalVisualizer = ({ topicId, code }) => {
                             <span className="text-[8px] font-mono text-orange-500">THREAD_B</span>
                         </div>
                         {/* Data Flow Lines */}
-                        <div className="absolute left-8 right-8 top-1/2 h-[1px] bg-gradient-to-r from-green-500 via-transparent to-orange-500 -z-10" />
+                        <div className="absolute left-8 right-8 top-1/2 h-[1px] bg-yellow-500/60 -z-10" />
                     </div>
                     <div className="flex gap-2">
                         <Zap size={14} className="text-yellow-400 animate-bounce" />

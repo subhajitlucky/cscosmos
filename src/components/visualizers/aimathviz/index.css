@@ -75,21 +75,15 @@ html.dark .glass-card {
 }
 
 .gradient-text {
-  background: linear-gradient(to right, #14b8a6, #06b6d4, #0ea5e9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-primary-700);
+}
+
+html.dark .gradient-text {
+  color: var(--color-primary-400);
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #14b8a6, #06b6d4, #0ea5e9);
-  background-size: 300% 300%;
-  animation: gradient 8s ease infinite;
-}
-
-@keyframes gradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  background: var(--color-primary-700);
 }
 
 .math-container {
@@ -196,12 +190,12 @@ html.dark .nav-link-active {
 
 .btn-primary {
   @apply px-6 py-3 text-white font-semibold rounded-xl transition-all duration-300;
-  background: linear-gradient(to right, #14b8a6, #06b6d4);
+  background: var(--color-primary-700);
 }
 
 .btn-primary:hover {
   @apply shadow-lg;
-  background: linear-gradient(to right, #0d9488, #0891b2);
+  background: var(--color-primary-800);
   transform: translateY(-2px);
 }
 

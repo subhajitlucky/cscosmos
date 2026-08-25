@@ -29,7 +29,7 @@ function Home() {
 
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
             Understand Git <br />
-            <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+            <span className="text-[#F05033]">
               Beyond Commands
             </span>
           </h1>

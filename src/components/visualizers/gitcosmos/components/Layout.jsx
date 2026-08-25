@@ -17,7 +17,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      <div className="fixed inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-purple-500/5 pointer-events-none" />
+      <div className="fixed inset-0 bg-[#F05033]/[0.04] pointer-events-none" />
       
       <nav className="sticky top-0 z-50 glass border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -27,7 +27,7 @@ export default function Layout() {
                 <GitBranch className="w-6 h-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-emerald-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent">
+              <span className="text-xl font-bold tracking-tight text-[#F05033]">
                 GitCosmos
               </span>
             </Link>

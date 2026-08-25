@@ -41,7 +41,7 @@ export default function Home() {
 
                         <motion.h1 variants={item} className="text-5xl font-display font-bold tracking-tighter text-slate-900 dark:text-white sm:text-8xl mb-8">
                             Master Modern <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-500 via-emerald-500 to-teal-500 dark:from-lime-400 dark:via-emerald-400 dark:to-teal-400">
+                            <span className="text-[#E34F26]">
                                 HTML & ARIA
                             </span>
                         </motion.h1>
