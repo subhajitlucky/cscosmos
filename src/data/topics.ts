@@ -156,9 +156,9 @@ export const topics: Topic[] = [
     createTopic("DePIN (Decentralized Physical Infrastructure Networks)", "web3"),
 
     // Cybersecurity & Ethical Hacking    createTopic("Network Defense & Traffic Analysis (Wireshark, Firewalls)", "security"),
-    createTopic("Software Defined Radio (SDR) & Signal Hacking", "security"),
-    createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security"),
-    createTopic("Digital Forensics & Incident Response (DFIR)", "security"),
+    createTopic("Software Defined Radio (SDR) & Signal Hacking", "security", { status: 'active', slug: 'software-defined-radio-sdr-and-signal-hacking', url: '/software-defined-radio-sdr-and-signal-hacking' }),
+    createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security", { status: 'active', slug: 'penetration-testing-and-red-teaming-exploits-c2', url: '/penetration-testing-and-red-teaming-exploits-c2' }),
+    createTopic("Digital Forensics & Incident Response (DFIR)", "security", { status: 'active', slug: 'digital-forensics-and-incident-response-dfir', url: '/digital-forensics-and-incident-response-dfir' }),
     createTopic("Malware Analysis & Sandbox Internals", "security"),
     createTopic("Reverse Engineering & Assembly (Low-Level Code)", "security", { status: 'active', slug: 'reverse-engineering-and-assembly-low-level-code', url: '/reverse-engineering-and-assembly-low-level-code', aliases: ['advanced'] }),
     createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "security", { aliases: ['advanced'] }),
