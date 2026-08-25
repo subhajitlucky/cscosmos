@@ -30,6 +30,9 @@ export function Navbar() {
                     <Link href="/topics" className={getLinkClass("/topics")}>
                         Topics
                     </Link>
+                    <Link href="/tracks" className={getLinkClass("/tracks")}>
+                        Tracks
+                    </Link>
                     <Link href="/about" className={getLinkClass("/about")}>
                         About
                     </Link>
