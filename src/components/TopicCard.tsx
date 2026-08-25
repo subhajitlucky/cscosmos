@@ -1,15 +1,18 @@
 'use client';
 
 import type { Topic } from "../data/topics"
+import type { Domain } from "../data/domains"
 import { Lock } from "lucide-react"
 import Link from "next/link"
 
 interface TopicCardProps {
     topic: Topic;
     onClick?: () => void;
+    /** Set when the card surfaces via an alias tag; names the topic's home domain. */
+    alsoInDomain?: Domain;
 }
 
-export function TopicCard({ topic, onClick }: TopicCardProps) {
+export function TopicCard({ topic, onClick, alsoInDomain }: TopicCardProps) {
     const isLive = topic.status === 'active';
     const cardAriaLabel = `${topic.name}${isLive ? " (Live)" : " (Coming soon)"}`;
     const targetUrl = topic.url || `/domain/${topic.domain}/${topic.slug}`;
@@ -30,7 +33,17 @@ export function TopicCard({ topic, onClick }: TopicCardProps) {
         >
             <div className="relative z-10 flex justify-between items-start mb-3">
                 <div>
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{topic.domain}</p>
+                    <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <p className="text-xs uppercase tracking-wide text-muted-foreground">{topic.domain}</p>
+                        {alsoInDomain && (
+                            <span
+                                className="inline-flex items-center rounded-full border border-border bg-secondary/60 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground"
+                                title={"Cross-listed from " + alsoInDomain.name}
+                            >
+                                Also in {alsoInDomain.name}
+                            </span>
+                        )}
+                    </div>
                     <h4 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors pr-4 line-clamp-2 min-h-[48px]">
                         {topic.name}
                     </h4>

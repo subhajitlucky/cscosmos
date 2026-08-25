@@ -17,7 +17,10 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
         notFound();
     }
 
-    const domainTopics = topics.filter((t) => t.domain === domainKey);
+    // A topic belongs here if it calls this domain home OR is cross-listed via an alias tag.
+    const domainTopics = topics.filter(
+        (t) => t.domain === domain.domainKey || t.aliases?.includes(domain.domainKey),
+    );
 
     return (
         <div className="pb-16">
@@ -43,7 +46,15 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
                 {domainTopics.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {domainTopics.map((topic) => (
-                            <TopicCard key={topic.id} topic={topic} />
+                            <TopicCard
+                                key={topic.id}
+                                topic={topic}
+                                alsoInDomain={
+                                    topic.domain === domainKey
+                                        ? undefined
+                                        : domains.find((d) => d.domainKey === topic.domain)
+                                }
+                            />
                         ))}
                     </div>
                 ) : (

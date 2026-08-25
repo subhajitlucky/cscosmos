@@ -4,6 +4,8 @@ export interface Topic {
     id: number;
     name: string;
     domain: DomainKey;
+    /** Extra domains this topic is cross-listed under (tag-based cross-listing). */
+    aliases?: DomainKey[];
     shortDescription: string;
     slug: string;
     status: 'coming-soon' | 'active'; // Future proofing
@@ -24,6 +26,7 @@ type TopicOptions = {
     status?: Topic['status'];
     url?: string;
     slug?: string;
+    aliases?: DomainKey[];
 }
 
 const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): Topic => {
@@ -33,6 +36,7 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
         id: idCounter++,
         name,
         domain,
+        aliases: options?.aliases,
         slug,
         shortDescription: `Interactive visualization and learning module for ${name}.`,
         status,
@@ -129,7 +133,7 @@ export const topics: Topic[] = [
 
     // Web3 & Blockchain
     createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3" , { status: 'active', slug: 'blockchainviz', url: '/blockchainviz' }),
-    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3" , { status: 'active', slug: 'cryptviz', url: '/cryptviz' }),
+    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3", { status: 'active', slug: 'cryptviz', url: '/cryptviz', aliases: ['security'] }),
     createTopic("Merkle Tree Visualizer (Integrity)", "web3" , { status: 'active', slug: 'merkletreeviz', url: '/merkletreeviz' }),
     createTopic("Patricia Trie Visualizer (State Storage)", "web3" , { status: 'active', slug: 'patriciatrie', url: '/patriciatrie' }),
     createTopic("Blockchain Consensus (PoW, PoS)", "web3" , { status: 'active', slug: 'consensusviz', url: '/consensusviz' }),
@@ -151,18 +155,16 @@ export const topics: Topic[] = [
     createTopic("Shared Security & Restaking (EigenLayer & AVS)", "web3"),
     createTopic("DePIN (Decentralized Physical Infrastructure Networks)", "web3"),
 
-    // Cybersecurity & Ethical Hacking
-    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "security" , { status: 'active', slug: 'cryptviz', url: '/cryptviz' }),
-    createTopic("Network Defense & Traffic Analysis (Wireshark, Firewalls)", "security"),
+    // Cybersecurity & Ethical Hacking    createTopic("Network Defense & Traffic Analysis (Wireshark, Firewalls)", "security"),
     createTopic("Software Defined Radio (SDR) & Signal Hacking", "security"),
     createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security"),
     createTopic("Digital Forensics & Incident Response (DFIR)", "security"),
     createTopic("Malware Analysis & Sandbox Internals", "security"),
-    createTopic("Reverse Engineering & Assembly (Low-Level Code)", "security"),
-    createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "security"),
+    createTopic("Reverse Engineering & Assembly (Low-Level Code)", "security", { aliases: ['advanced'] }),
+    createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "security", { aliases: ['advanced'] }),
     createTopic("Zero Trust Architecture & IAM", "security"),
-    createTopic("Software Supply Chain Security (SBOM, Sigstore, SLSA)", "security"),
-    createTopic("Security Engineering (Threat Models)", "security"),
+    createTopic("Software Supply Chain Security (SBOM, Sigstore, SLSA)", "security", { aliases: ['devops'] }),
+    createTopic("Security Engineering (Threat Models)", "security", { aliases: ['advanced'] }),
 
     // Artificial Intelligence
     createTopic("Math for Machine Learning (Linear Algebra, Probability)", "ai" , { status: 'active', slug: 'aimathviz', url: '/aimathviz' }),
@@ -219,23 +221,15 @@ export const topics: Topic[] = [
     createTopic("Site Reliability Engineering (SLIs, SLOs)", "devops"),
     createTopic("Disaster Recovery (Backups)", "devops"),
     createTopic("Chaos Engineering (Failure Injection)", "devops"),
-    createTopic("eBPF & Low-Level Observability (Kernel Hooks, Sandboxing)", "devops"),
-    createTopic("Software Supply Chain Security (SBOM, Sigstore, SLSA)", "devops"),
-    createTopic("FinOps & Cloud Economics (Cost Optimization, Carbon Tracking)", "devops"),
+    createTopic("eBPF & Low-Level Observability (Kernel Hooks, Sandboxing)", "devops"),    createTopic("FinOps & Cloud Economics (Cost Optimization, Carbon Tracking)", "devops"),
     createTopic("Platform Engineering & Internal Developer Portals (IDPs)", "devops"),
 
     // Advanced Engineering & Systems
     createTopic("Distributed Systems Visualizer (Replication, Consistency)", "advanced"),
     createTopic("Event Sourcing & CQRS (Write/Read Models)", "advanced"),
-    createTopic("Streaming Systems (Event Time)", "advanced"),
-    createTopic("Security Engineering (Threat Models)", "advanced"),
-    createTopic("Performance Engineering (Profiling)", "advanced"),
+    createTopic("Streaming Systems (Event Time)", "advanced"),    createTopic("Performance Engineering (Profiling)", "advanced"),
     createTopic("Functional Programming (Category Theory, Immutability)", "advanced"),
-    createTopic("Computer Graphics & Physics (Raytracing, Engines)", "advanced"),
-    createTopic("Reverse Engineering & Assembly (Low-Level Code)", "advanced"),
-    createTopic("Bootloader & Kernel Boot Process (Startup)", "advanced"),
+    createTopic("Computer Graphics & Physics (Raytracing, Engines)", "advanced"),    createTopic("Bootloader & Kernel Boot Process (Startup)", "advanced"),
     createTopic("Real-Time Operating Systems (RTOS) & Determinism", "advanced"),
-    createTopic("Consensus Protocols (Raft, Paxos, Zab)", "advanced"),
-    createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "advanced"),
-    createTopic("Agent-Based Simulation (Digital Twins, City Simulation)", "advanced"),
+    createTopic("Consensus Protocols (Raft, Paxos, Zab)", "advanced"),    createTopic("Agent-Based Simulation (Digital Twins, City Simulation)", "advanced"),
 ];

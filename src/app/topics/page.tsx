@@ -7,15 +7,18 @@ import { topics } from "@/data/topics";
 import { domains, type DomainKey } from "@/data/domains";
 import { Button } from "@/components/ui/button";
 
-const allOption: DomainKey | "all" = "all";
+const allOption = "all" as const;
 
 export default function AllTopicsPage() {
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedDomain, setSelectedDomain] = useState<typeof allOption>(allOption);
+    const [selectedDomain, setSelectedDomain] = useState<DomainKey | typeof allOption>(allOption);
 
     const filteredTopics = useMemo(() => {
         return topics.filter((topic) => {
-            const matchesDomain = selectedDomain === allOption || topic.domain === selectedDomain;
+            const matchesDomain =
+                selectedDomain === allOption ||
+                topic.domain === selectedDomain ||
+                topic.aliases?.includes(selectedDomain);
             const matchesQuery = topic.name.toLowerCase().includes(searchQuery.toLowerCase());
             return matchesDomain && matchesQuery;
         });
@@ -71,9 +74,23 @@ export default function AllTopicsPage() {
 
                 {filteredTopics.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredTopics.map((topic) => (
-                            <TopicCard key={topic.id} topic={topic} />
-                        ))}
+                        {filteredTopics.map((topic) => {
+                            const matchedViaAlias =
+                                selectedDomain !== allOption &&
+                                topic.domain !== selectedDomain &&
+                                Boolean(topic.aliases?.includes(selectedDomain));
+                            return (
+                                <TopicCard
+                                    key={topic.id}
+                                    topic={topic}
+                                    alsoInDomain={
+                                        matchedViaAlias
+                                            ? domains.find((d) => d.domainKey === topic.domain)
+                                            : undefined
+                                    }
+                                />
+                            );
+                        })}
                     </div>
                 ) : (
                     <div className="glass-card rounded-2xl p-8 text-center text-muted-foreground">
