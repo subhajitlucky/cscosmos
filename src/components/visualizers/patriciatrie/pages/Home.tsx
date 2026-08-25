@@ -12,7 +12,7 @@ const Home: React.FC = () => {
       {/* Cinematic Background */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-500/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-violet-600/20 rounded-full blur-[120px] animate-pulse delay-1000" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-amber-600/15 rounded-full blur-[120px] animate-pulse delay-1000" />
         <div className="absolute top-[20%] left-[20%] right-[20%] h-[60%] bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.02)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(255,255,255,0.02)_100%)] opacity-50" />
       </div>
 
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
           </div>
 
           <h1 className="text-6xl sm:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] text-neutral-900 dark:text-white">
-            State <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 bg-[200%_auto] animate-gradient">Machine</span>
+            State <span className="text-orange-600 dark:text-amber-500">Machine</span>
             <br />
             <span className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-400">Architecture</span>
           </h1>
@@ -86,21 +86,21 @@ const Home: React.FC = () => {
             desc="Optimizing storage by collapsing redundant nodes."
             icon={Layers}
             colSpan="md:col-span-2"
-            bg="bg-gradient-to-br from-orange-500/10 to-amber-500/10"
+            bg="bg-amber-500/10"
             delay={0.1}
           />
           <BentoItem 
             title="Cryptographic Proofs" 
             desc="Trustless verification of any state."
             icon={ShieldCheck}
-            bg="bg-gradient-to-br from-emerald-500/10 to-teal-500/10"
+            bg="bg-emerald-500/10"
             delay={0.2}
           />
           <BentoItem 
             title="State Root" 
             desc="The 32-byte anchor of truth."
             icon={Database}
-            bg="bg-gradient-to-br from-violet-500/10 to-purple-500/10"
+            bg="bg-sky-500/10"
             delay={0.3}
           />
           <BentoItem 
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
             desc="Deterministic execution across millions of nodes."
             icon={Globe}
             colSpan="md:col-span-2"
-            bg="bg-gradient-to-br from-rose-500/10 to-pink-500/10"
+            bg="bg-orange-500/10"
             delay={0.4}
           />
         </div>
@@ -154,7 +154,7 @@ const MagneticButton = ({ children, to, primary = false }: { children: React.Rea
         `}
       >
         <span className="relative z-10 flex items-center gap-2">{children}</span>
-        <div className={`absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${primary ? 'bg-gradient-to-r from-orange-500 to-amber-500' : 'bg-neutral-100 dark:bg-neutral-800'}`} />
+        <div className={`absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${primary ? 'bg-amber-500' : 'bg-neutral-100 dark:bg-neutral-800'}`} />
       </Link>
     </motion.div>
   );
@@ -198,7 +198,7 @@ const TiltCard = () => {
           style={{ transform: "translateZ(50px)" }}
           className="flex flex-col items-center gap-6"
         >
-          <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white shadow-2xl shadow-orange-500/30">
+          <div className="w-24 h-24 rounded-3xl bg-amber-600 flex items-center justify-center text-white shadow-2xl shadow-amber-600/30">
             <Activity size={48} />
           </div>
           <div className="text-center">

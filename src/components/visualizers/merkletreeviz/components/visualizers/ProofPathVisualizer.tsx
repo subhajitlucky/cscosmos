@@ -42,7 +42,7 @@ export const ProofPathVisualizer = () => {
     <div className="flex flex-col items-center w-full h-full max-w-2xl py-2 space-y-6">
       {/* 1. Header State - Ultra Premium */}
       <div className="flex items-center justify-between w-full px-8 py-4 bg-secondary/30 backdrop-blur-xl rounded-[2rem] border border-muted/20 shadow-xl relative overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50" />
+        <div className="absolute inset-0 bg-primary/5" />
         
         <div className="flex flex-col relative z-10">
           <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em] mb-1">Verification Pipeline</span>

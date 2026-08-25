@@ -116,7 +116,7 @@ const BlockProposersViz: React.FC = () => {
               {/* Pointer Indicator (Fixed at TOP) */}
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center">
                  <div className="w-4 h-6 bg-indigo-600 dark:bg-indigo-400 clip-path-triangle" style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }} />
-                 <div className="w-1 h-32 bg-gradient-to-b from-indigo-600/50 dark:from-indigo-400/50 to-transparent absolute top-6" />
+                 <div className="w-1 h-32 bg-indigo-600/30 dark:bg-indigo-400/30 absolute top-6" />
               </div>
 
               <motion.svg

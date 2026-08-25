@@ -51,7 +51,7 @@ export const ModulePage = () => {
                         <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-primary">
                             <Terminal className="w-3.5 h-3.5" /> Simulation Core v1.0
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/40 uppercase">
+                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none text-foreground uppercase">
                             Protocol <span className="text-primary">Playground.</span>
                         </h1>
                         <p className="text-muted-foreground text-lg font-medium tracking-tight max-w-xl">

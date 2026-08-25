@@ -111,7 +111,7 @@ const PoWOverviewViz: React.FC = () => {
                 'border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900'
               }`}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 dark:from-white/5 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-white/5 dark:bg-white/[0.03] pointer-events-none" />
               
               <AnimatePresence mode="wait">
                 <motion.div

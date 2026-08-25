@@ -45,7 +45,7 @@ const Learn: React.FC = () => {
               
               <h1 className="text-6xl sm:text-8xl font-black tracking-tighter text-neutral-900 dark:text-white leading-[0.9]">
                 Protocol <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-600">Mastery</span>
+                <span className="text-orange-600 dark:text-amber-500">Mastery</span>
               </h1>
               
               <p className="text-xl text-neutral-600 dark:text-neutral-400 font-medium leading-relaxed max-w-2xl">
@@ -60,7 +60,7 @@ const Learn: React.FC = () => {
               transition={{ delay: 0.2 }}
               className="w-full lg:w-80 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl border border-neutral-200 dark:border-white/10 p-6 rounded-[32px] shadow-2xl relative overflow-hidden"
             >
-               <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-amber-500/5" />
+               <div className="absolute inset-0 bg-amber-500/5" />
                <div className="relative z-10 space-y-4">
                  <div className="flex justify-between items-end">
                     <div>
@@ -77,7 +77,7 @@ const Learn: React.FC = () => {
                       initial={{ width: 0 }}
                       animate={{ width: `${progressPercentage}%` }}
                       transition={{ duration: 1, ease: "easeOut" }}
-                      className="h-full bg-gradient-to-r from-orange-500 to-amber-500"
+                      className="h-full bg-amber-500"
                     />
                  </div>
                  
@@ -100,7 +100,7 @@ const Learn: React.FC = () => {
         {/* Timeline Grid */}
         <div className="relative space-y-8">
           {/* Connecting Line */}
-          <div className="absolute left-8 top-8 bottom-8 w-px bg-gradient-to-b from-orange-500/0 via-neutral-300 dark:via-neutral-700 to-orange-500/0 hidden sm:block" />
+          <div className="absolute left-8 top-8 bottom-8 w-px bg-neutral-200 dark:bg-neutral-800 hidden sm:block" />
 
           {allTopics.map((topic, i) => {
             const completed = isCompleted(topic.id);

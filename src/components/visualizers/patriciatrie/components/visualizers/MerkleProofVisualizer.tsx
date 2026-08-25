@@ -20,7 +20,7 @@ const MerkleProofVisualizer: React.FC = () => {
     <div className="w-full h-full flex flex-col gap-6 sm:gap-10">
       {/* Premium Verification Input */}
       <div className="relative group">
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-600 opacity-20 blur-xl"></div>
+        <div className="absolute -inset-1 bg-amber-500 opacity-20 blur-xl"></div>
         <div className="relative p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 rounded-[28px] sm:rounded-[32px] shadow-2xl flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">

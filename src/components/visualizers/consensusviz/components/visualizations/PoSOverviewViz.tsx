@@ -96,7 +96,7 @@ const PoSOverviewViz: React.FC = () => {
               <motion.div 
                 animate={isPaused ? {} : { rotate: 360 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[300px] h-[1px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent" 
+                className="absolute w-[300px] h-[1px] bg-indigo-500/60" 
               />
            </div>
 

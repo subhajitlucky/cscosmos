@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 const conceptGroups = [
   {
     name: 'Kubernetes Fundamentals',
-    color: 'from-blue-500/10 to-blue-500/5',
+    color: 'bg-blue-500/10',
     concepts: [
       { id: 'what-is-kubernetes', name: 'What is Kubernetes', desc: 'Understanding the orchestration platform' },
       { id: 'control-plane', name: 'Control Plane Overview', desc: 'Core components that manage the cluster' },
@@ -15,7 +15,7 @@ const conceptGroups = [
   },
   {
     name: 'Pods & Nodes',
-    color: 'from-purple-500/10 to-purple-500/5',
+    color: 'bg-sky-500/10',
     concepts: [
       { id: 'node', name: 'Node', desc: 'Worker machines in the cluster' },
       { id: 'pod', name: 'Pod', desc: 'The smallest deployable unit' },
@@ -24,7 +24,7 @@ const conceptGroups = [
   },
   {
     name: 'Scheduling Basics',
-    color: 'from-green-500/10 to-green-500/5',
+    color: 'bg-green-500/10',
     concepts: [
       { id: 'scheduler-overview', name: 'Scheduler Overview', desc: 'How the scheduler works' },
       { id: 'scheduling-lifecycle', name: 'Scheduling Lifecycle', desc: 'From pod creation to binding' },
@@ -37,7 +37,7 @@ const conceptGroups = [
   },
   {
     name: 'Scheduling Constraints',
-    color: 'from-orange-500/10 to-orange-500/5',
+    color: 'bg-orange-500/10',
     concepts: [
       { id: 'labels-selectors', name: 'Labels & Selectors', desc: 'Organizing and selecting objects' },
       { id: 'node-affinity', name: 'Node Affinity', desc: 'Rules for node selection' },
@@ -48,7 +48,7 @@ const conceptGroups = [
   },
   {
     name: 'Advanced Scheduling',
-    color: 'from-red-500/10 to-red-500/5',
+    color: 'bg-red-500/10',
     concepts: [
       { id: 'daemonsets', name: 'DaemonSets', desc: 'Running pods on every node' },
       { id: 'replicasets', name: 'ReplicaSets', desc: 'Maintaining pod replicas' },
@@ -60,7 +60,7 @@ const conceptGroups = [
   },
   {
     name: 'Failures & Recovery',
-    color: 'from-cyan-500/10 to-cyan-500/5',
+    color: 'bg-cyan-500/10',
     concepts: [
       { id: 'unschedulable-pods', name: 'Unschedulable Pods', desc: 'When scheduling is impossible' },
       { id: 'why-pods-pending', name: 'Why Pods Stay Pending', desc: 'Common causes and solutions' },
@@ -97,7 +97,7 @@ export function ConceptMapPage() {
                 transition={{ delay: groupIndex * 0.1 }}
               >
                 <h2 className="text-2xl font-bold mb-4 text-foreground">{group.name}</h2>
-                  <div className={`bg-gradient-to-br ${group.color} rounded-xl p-6 border border-border`}>
+                  <div className={`${group.color} rounded-xl p-6 border border-border`}>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {group.concepts.map((concept) => (
                         <Link

@@ -28,7 +28,7 @@ export const EfficiencyVisualizer = () => {
       </div>
 
       <div className="w-full bg-secondary/30 backdrop-blur-sm p-8 rounded-[2rem] border border-muted/20 shadow-xl space-y-8 relative overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
         
         <div className="flex justify-between items-end relative z-10">
           <div>
@@ -60,7 +60,7 @@ export const EfficiencyVisualizer = () => {
 
           <div className="absolute w-full h-4 bg-muted/20 rounded-full overflow-hidden shadow-inner border border-muted/10 peer-focus-visible:ring-4 peer-focus-visible:ring-primary/20 transition-all">
              <div 
-                className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-100 ease-out" 
+                className="h-full bg-primary transition-all duration-100 ease-out" 
                 style={{ width: `${sliderValue}%` }}
              />
           </div>
@@ -89,7 +89,7 @@ export const EfficiencyVisualizer = () => {
           </div>
           <div className="h-14 w-full bg-muted/10 rounded-xl overflow-hidden relative border border-muted/20">
             <motion.div 
-              className="h-full bg-gradient-to-r from-red-500/80 to-red-600"
+              className="h-full bg-red-500"
               initial={{ width: 0 }}
               animate={{ width: `${(items / maxItems) * 100}%` }}
               transition={{ type: "spring", stiffness: 50 }}
@@ -111,7 +111,7 @@ export const EfficiencyVisualizer = () => {
           </div>
           <div className="h-14 w-full bg-muted/10 rounded-xl overflow-hidden relative border border-muted/20">
             <motion.div 
-              className="h-full bg-gradient-to-r from-green-500/80 to-green-600"
+              className="h-full bg-green-500"
               initial={{ width: 0 }}
               animate={{ width: `${Math.max(2, (logValue / maxLog) * 100)}%` }}
               transition={{ type: "spring", stiffness: 50 }}

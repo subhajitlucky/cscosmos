@@ -77,7 +77,7 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground;
+    @apply text-foreground;
     opacity: 0.8;
   }
   

@@ -39,7 +39,7 @@ const Learn = () => {
           className="text-6xl md:text-8xl font-black font-display tracking-tight leading-none"
         >
           MASTER THE <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/40">PROTOCOL</span>
+          <span className="text-foreground/70">PROTOCOL</span>
         </motion.h1>
         
         <motion.p 

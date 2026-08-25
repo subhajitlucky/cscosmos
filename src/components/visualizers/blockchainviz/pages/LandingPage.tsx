@@ -72,7 +72,7 @@ export const LandingPage = () => {
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-8"
             >
-                <h1 className="text-6xl font-black tracking-[-0.04em] sm:text-7xl md:text-8xl lg:text-9xl leading-[0.85] bg-clip-text text-transparent bg-gradient-to-b from-foreground via-foreground to-foreground/40">
+                <h1 className="text-6xl font-black tracking-[-0.04em] sm:text-7xl md:text-8xl lg:text-9xl leading-[0.85] text-foreground">
                     Architect Your <br />
                     <span className="text-primary italic font-serif pr-4">Knowledge</span> Graph.
                 </h1>
@@ -102,7 +102,7 @@ export const LandingPage = () => {
                 transition={{ repeat: Infinity, duration: 2 }}
                 className="mt-20 flex flex-col items-center gap-2 opacity-30"
             >
-                <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent" />
+                <div className="w-px h-12 bg-primary/40" />
                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Explore Systems</span>
             </motion.div>
         </div>

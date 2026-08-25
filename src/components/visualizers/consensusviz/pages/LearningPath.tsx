@@ -57,7 +57,7 @@ const LearningPath: React.FC = () => {
 
       <div className="relative z-10 max-w-3xl mx-auto">
         {/* Connection Line */}
-        <div className="absolute left-8 sm:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-gray-200 dark:via-slate-800 to-transparent sm:-translate-x-1/2" />
+        <div className="absolute left-8 sm:left-1/2 top-0 bottom-0 w-[1px] bg-gray-200 dark:bg-slate-800 sm:-translate-x-1/2" />
 
         <div className="space-y-8">
           {topics.map((topic, i) => {
@@ -86,7 +86,7 @@ const LearningPath: React.FC = () => {
                   <Link to={`/learn/${topic.id}`} className="block">
                     <div className="bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-800 rounded-2xl p-5 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/5 dark:hover:shadow-blue-500/10 transition-all duration-500 relative overflow-hidden group/card">
                       {/* Glassmorphic Background */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.02] to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity" />
+                      <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover/card:opacity-100 transition-opacity" />
                       
                       <div className="relative z-10 flex items-start gap-4">
                         <div className={clsx(

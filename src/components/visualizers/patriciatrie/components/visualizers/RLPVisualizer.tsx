@@ -62,7 +62,7 @@ const RLPVisualizer: React.FC = () => {
               </Tooltip>
            </motion.div>
            
-           <div className="w-1 h-8 sm:w-16 sm:h-1 bg-gradient-to-b sm:bg-gradient-to-r from-primary to-violet-500 opacity-50" />
+           <div className="w-1 h-8 sm:w-16 sm:h-1 bg-amber-600 opacity-50" />
 
            <motion.div 
              className="p-6 sm:p-8 bg-violet-500/10 border-2 border-violet-500/30 rounded-3xl flex flex-col items-center gap-3 shadow-2xl max-w-full"

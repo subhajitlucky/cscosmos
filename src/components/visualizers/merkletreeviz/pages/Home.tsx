@@ -28,7 +28,7 @@ const Home = () => {
           }}
         />
         {/* Perspective Lines */}
-        <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-accent/10 to-transparent perspective-[1000px]">
+        <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-amber-500/5 perspective-[1000px]">
             <div 
                 className="w-[200%] h-full ml-[-50%] rotate-x-[60deg] refinery-grid opacity-20"
                 style={{ transform: 'rotateX(60deg)' }}
@@ -49,8 +49,8 @@ const Home = () => {
             className="group px-4 py-1.5 rounded-full border border-muted/20 bg-card/50 backdrop-blur-md text-[10px] font-black tracking-[0.3em] uppercase text-muted-foreground flex items-center gap-3"
           >
             <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
             Protocols Active: v2.0.26
           </motion.div>
@@ -62,7 +62,7 @@ const Home = () => {
             className="text-6xl md:text-[10rem] font-black leading-[0.85] tracking-tighter"
           >
             THE SUMMIT <br />
-            <span className="text-gradient-accent text-transparent bg-clip-text bg-gradient-to-b from-accent to-accent/40">OF TRUST</span>
+            <span className="text-amber-600 dark:text-amber-400">OF TRUST</span>
           </motion.h1>
 
           <motion.p 
@@ -116,7 +116,7 @@ const Home = () => {
                         <motion.div 
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 4, repeat: Infinity }}
-                            className="w-24 h-24 bg-accent rounded-3xl flex items-center justify-center shadow-2xl shadow-accent/40"
+                            className="w-24 h-24 bg-amber-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-amber-600/40"
                         >
                             <ShieldCheck className="text-white w-12 h-12" />
                         </motion.div>
@@ -124,7 +124,7 @@ const Home = () => {
                         <div className="grid grid-cols-4 gap-4 w-full">
                             {[0, 1, 2, 3].map((i) => (
                                 <div key={i} className="flex flex-col items-center gap-4">
-                                    <div className="w-1 h-12 bg-gradient-to-b from-accent/50 to-transparent" />
+                                    <div className="w-1 h-12 bg-amber-600/40" />
                                     <motion.div 
                                         animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1, 0.9] }}
                                         transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}

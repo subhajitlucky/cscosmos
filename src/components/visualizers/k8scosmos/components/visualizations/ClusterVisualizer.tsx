@@ -23,10 +23,10 @@ export function ClusterVisualizer({ nodes, pods, onNodeClick, selectedNodeId }: 
   };
 
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-background to-muted/20 p-8">
+    <div className="relative w-full h-full bg-muted/20 p-8">
       <div className="absolute top-4 left-4 flex items-center space-x-4 bg-background/80 backdrop-blur-sm rounded-lg p-3 border border-border">
         <div className="flex items-center space-x-2 text-sm">
-          <div className="w-3 h-3 rounded-full bg-primary"></div>
+          <div className="w-3 h-3 rounded-full bg-[#326CE5]"></div>
           <span>Control Plane</span>
         </div>
         <div className="flex items-center space-x-2 text-sm">
@@ -45,8 +45,8 @@ export function ClusterVisualizer({ nodes, pods, onNodeClick, selectedNodeId }: 
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center"
         >
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg shadow-primary/20 border-2 border-primary/30">
-            <Activity className="w-10 h-10 text-primary-foreground" />
+          <div className="w-24 h-24 rounded-full bg-[#326CE5] flex items-center justify-center shadow-lg shadow-[#326CE5]/25 border-2 border-[#326CE5]/40">
+            <Activity className="w-10 h-10 text-white" />
           </div>
           <span className="mt-2 text-sm font-medium text-muted-foreground">Control Plane</span>
         </motion.div>
@@ -66,7 +66,7 @@ export function ClusterVisualizer({ nodes, pods, onNodeClick, selectedNodeId }: 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 className={`relative cursor-pointer transition-all ${
-                  selectedNodeId === node.id ? 'ring-2 ring-primary' : ''
+                  selectedNodeId === node.id ? 'ring-2 ring-[#326CE5]' : ''
                 }`}
                 onClick={() => onNodeClick?.(node)}
               >

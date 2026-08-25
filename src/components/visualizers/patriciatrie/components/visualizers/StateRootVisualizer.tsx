@@ -20,7 +20,7 @@ const StateRootVisualizer: React.FC = () => {
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-8 p-4 sm:p-0">
       {/* Block Header Simulation */}
       <div className="relative group">
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 opacity-20 blur-xl group-hover:opacity-30 transition duration-1000"></div>
+        <div className="absolute -inset-1 bg-amber-500 opacity-20 blur-xl group-hover:opacity-30 transition duration-1000"></div>
         <div className="relative p-6 sm:p-8 bg-neutral-900 text-white rounded-[40px] border border-neutral-800 shadow-2xl overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-5">
              <Box size={150} />
@@ -100,7 +100,7 @@ const StateRootVisualizer: React.FC = () => {
         </div>
 
         <div className="p-8 bg-primary text-white rounded-[40px] shadow-xl shadow-primary/20 relative overflow-hidden">
-           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+           <div className="absolute inset-0 bg-white/5"></div>
            <div className="relative z-10 h-full flex flex-col justify-center">
               <h5 className="font-black text-sm mb-4 uppercase tracking-widest opacity-80">The Result</h5>
               <p className="text-lg font-bold leading-snug">

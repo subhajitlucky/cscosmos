@@ -155,7 +155,7 @@ const MiningViz: React.FC = () => {
         {/* Animated Interior Glow */}
         <div className={clsx(
           "absolute inset-0 opacity-[0.05] dark:opacity-20 transition-opacity duration-1000",
-          isMining ? "opacity-30 dark:opacity-30 bg-gradient-to-br from-blue-600/20 to-transparent" : "",
+          isMining ? "opacity-30 dark:opacity-30 bg-amber-500/15" : "",
           isFound ? "opacity-40 dark:opacity-40 bg-emerald-500/10" : ""
         )} />
 

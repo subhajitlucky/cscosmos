@@ -162,7 +162,7 @@ const Playground: React.FC = () => {
               {/* Glass Effect Highlight */}
               <div className={clsx(
                 "absolute inset-0 opacity-[0.03] transition-opacity duration-1000",
-                node.isMining ? "opacity-[0.08] dark:opacity-20 bg-gradient-to-br from-amber-500 to-transparent" : "bg-gradient-to-br from-blue-500 to-transparent"
+                node.isMining ? "opacity-[0.08] dark:opacity-20 bg-amber-500/10" : "bg-blue-500/10"
               )} />
 
               <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-6">

@@ -102,7 +102,7 @@ const TopicPage: React.FC = () => {
           className="max-w-4xl"
         >
           <div className="inline-flex items-center gap-2 mb-6">
-             <span className="w-1 h-8 bg-gradient-to-b from-orange-500 to-violet-600 rounded-full" />
+             <span className="w-1 h-8 bg-amber-600 rounded-full" />
              <span className="text-xs font-black uppercase tracking-[0.2em] text-neutral-400">
                {topic.tag} Protocol
              </span>
@@ -115,7 +115,7 @@ const TopicPage: React.FC = () => {
           </p>
           
           <div className="mt-10 p-6 rounded-3xl bg-orange-500/5 border border-orange-500/20 backdrop-blur-sm flex gap-5 items-start">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/20">
+            <div className="w-12 h-12 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-amber-600/20">
               <Lightbulb size={24} />
             </div>
             <div>
@@ -127,7 +127,7 @@ const TopicPage: React.FC = () => {
 
         {/* Cinematic Simulation Stage */}
         <div className="w-full relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-violet-500/5 to-orange-500/5 blur-3xl -z-10" />
+          <div className="absolute inset-0 bg-amber-500/5 blur-3xl -z-10" />
           <div className="w-full min-h-[500px] lg:min-h-[700px] bg-white dark:bg-neutral-900/80 rounded-[48px] border border-neutral-200 dark:border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden flex flex-col">
             
             {/* Simulation Header / Toolbar */}
@@ -252,7 +252,7 @@ const TopicPage: React.FC = () => {
                     {nextTopic && (
                       <Link
                         to={`/learn/${nextTopic.id}`}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-xl hover:shadow-orange-500/30 transition-all active:scale-95"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-10 py-5 bg-amber-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-xl hover:shadow-amber-600/30 transition-all active:scale-95"
                       >
                         Next Lesson <ArrowRight size={16} />
                       </Link>

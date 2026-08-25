@@ -25,7 +25,7 @@ export const ConceptPage = () => {
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1 text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4">
                     The Learning Path
                 </div>
-                <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/40">
+                <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] text-foreground">
                     Protocol <br />
                     <span className="text-primary italic font-serif pr-4">Fundamentals.</span>
                 </h1>
@@ -38,7 +38,7 @@ export const ConceptPage = () => {
         {/* Timeline Path */}
         <div className="max-w-4xl mx-auto relative">
             {/* Central Animated Line */}
-            <div className="absolute left-[23px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-border to-transparent md:-ml-[0.5px]" />
+            <div className="absolute left-[23px] md:left-1/2 top-0 bottom-0 w-px bg-border md:-ml-[0.5px]" />
 
             <div className="space-y-24">
                 {topics.map((topic, index) => (
@@ -97,7 +97,7 @@ export const ConceptPage = () => {
 
             {/* Bottom CTA */}
             <div className="flex flex-col items-center mt-40 relative z-10 space-y-8">
-                <div className="w-px h-24 bg-gradient-to-b from-primary to-transparent" />
+                <div className="w-px h-24 bg-primary/40" />
                 <Link to="/playground">
                     <motion.div
                         whileHover={{ scale: 1.05 }}

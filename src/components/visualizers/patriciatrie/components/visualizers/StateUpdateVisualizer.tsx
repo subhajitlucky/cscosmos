@@ -28,7 +28,7 @@ const StateUpdateVisualizer: React.FC = () => {
     <div className="w-full h-full flex flex-col gap-6 lg:gap-8">
       {/* Premium Control Header */}
       <div className="relative group">
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-emerald-500 opacity-10 blur-xl"></div>
+        <div className="absolute -inset-1 bg-emerald-500 opacity-10 blur-xl"></div>
         <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 rounded-3xl shadow-xl">
           <div className="flex items-center gap-4 min-w-0">
             <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shadow-inner shrink-0">

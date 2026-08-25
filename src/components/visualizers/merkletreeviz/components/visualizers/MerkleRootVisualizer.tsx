@@ -59,7 +59,7 @@ export const MerkleRootVisualizer = () => {
               className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center shadow-2xl text-white relative border-4 border-background overflow-hidden z-10"
               style={{ willChange: "transform, background-color" }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
+              <div className="absolute inset-0 bg-white/10" />
               <AnimatePresence mode="wait">
                 {isTampered ? (
                   <motion.div

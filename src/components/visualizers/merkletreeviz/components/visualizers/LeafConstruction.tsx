@@ -162,7 +162,7 @@ export const LeafConstruction = () => {
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    className="h-full bg-gradient-to-r from-primary/40 via-primary to-primary/40"
+                    className="h-full bg-primary/80"
                   />
                 </div>
                 <div className="mt-2 sm:mt-3 font-mono text-[8px] text-primary/60 break-all text-center">

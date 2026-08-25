@@ -97,7 +97,7 @@ const WhyBlockchainStateVisualizer: React.FC = () => {
                <motion.div 
                  animate={{ rotate: 360 }}
                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                 className="absolute -inset-8 bg-gradient-to-r from-primary via-emerald-500 to-primary opacity-20 blur-3xl rounded-full"
+                 className="absolute -inset-8 bg-emerald-500 opacity-20 blur-3xl rounded-full"
                />
                <div className="relative w-32 h-32 bg-neutral-900 border-4 border-primary rounded-[40px] flex items-center justify-center shadow-[0_0_50px_rgba(59,130,246,0.5)]">
                   <CheckCircle2 size={64} className="text-primary" />

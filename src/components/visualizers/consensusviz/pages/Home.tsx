@@ -9,7 +9,7 @@ const Home: React.FC = () => {
       {/* Premium Background Background */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" 
            style={{ backgroundImage: 'radial-gradient(#3b82f6 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-blue-500/5 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-blue-500/[0.03] pointer-events-none" />
 
       {/* Hero Section */}
       <section className="relative z-10 pt-20 pb-32 px-4">
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white tracking-tighter"
           >
-            DECODE THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-emerald-600 dark:from-cyan-400 dark:to-emerald-400 uppercase">Consensus</span>
+            DECODE THE <span className="text-emerald-600 dark:text-emerald-400 uppercase">Consensus</span>
           </motion.h1>
 
           <motion.p

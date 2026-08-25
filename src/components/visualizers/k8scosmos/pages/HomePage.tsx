@@ -21,7 +21,7 @@ export function HomePage() {
               <span className="text-sm font-medium text-primary">Interactive Learning</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
               Master Kubernetes Scheduling
             </h1>
 
@@ -86,7 +86,7 @@ export function HomePage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="mt-16 bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 border border-primary/20"
+            className="mt-16 bg-[#326CE5]/10 rounded-2xl p-8 border border-[#326CE5]/30"
           >
             <h2 className="text-2xl font-bold mb-4 text-center">What You'll Learn</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">

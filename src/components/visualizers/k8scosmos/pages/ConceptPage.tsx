@@ -54,7 +54,7 @@ export function ConceptPage() {
             transition={{ delay: 0.1 }}
             className="space-y-8"
           >
-            <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20">
+            <div className="bg-[#326CE5]/10 rounded-xl p-6 border border-[#326CE5]/30">
               <div className="flex items-center space-x-2 mb-3">
                 <Lightbulb className="w-5 h-5 text-primary" />
                 <h2 className="text-lg font-semibold">Mental Model</h2>

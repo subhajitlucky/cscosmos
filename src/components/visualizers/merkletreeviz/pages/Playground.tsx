@@ -301,14 +301,14 @@ const Playground = () => {
           </div>
 
           {/* Challenge Mode CTA - Moved to bottom of simulation on small screens, and prominent on large */}
-          <div className="order-3 p-6 rounded-[2rem] bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 shadow-lg relative overflow-hidden group cursor-pointer hover:border-indigo-500/40 transition-colors">
+          <div className="order-3 p-6 rounded-[2rem] bg-amber-500/10 border border-amber-500/30 shadow-lg relative overflow-hidden group cursor-pointer hover:border-amber-500/50 transition-colors">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                   <Gamepad2 className="w-16 h-16" />
               </div>
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-indigo-500 mb-2">Gamified Repair</h4>
+              <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400 mb-2">Gamified Repair</h4>
               <p className="text-xs font-medium text-foreground/70 mb-4">Can you find the corrupted shard in O(log n) clicks using binary search principles?</p>
               <button 
-                className="w-full sm:w-auto px-8 py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-lg shadow-indigo-500/20"
+                className="w-full sm:w-auto px-8 py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-lg shadow-amber-600/20"
                 onClick={() => {
                   playClick();
                   setIsChallengeActive(true);

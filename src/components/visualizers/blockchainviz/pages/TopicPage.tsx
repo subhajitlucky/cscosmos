@@ -64,7 +64,7 @@ export const TopicPage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         className="space-y-4 mb-16 text-center"
                     >
-                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60 uppercase">
+                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none text-foreground uppercase">
                             {title}
                         </h1>
                         <p className="text-xl md:text-2xl text-primary font-serif italic opacity-80">{subtitle}</p>
