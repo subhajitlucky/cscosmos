@@ -193,7 +193,7 @@ export const topics: Topic[] = [
     // Core Computer Science
     createTopic("Operating Systems Internals (Processes, Memory)", "corecs", { status: 'active', slug: 'operating-systems-internals-processes-memory', url: '/operating-systems-internals-processes-memory' }),
     createTopic("Memory Allocators & Virtual Memory (Malloc, Paging)", "corecs", { status: 'active', slug: 'memory-allocators-and-virtual-memory-malloc-paging', url: '/memory-allocators-and-virtual-memory-malloc-paging' }),
-    createTopic("Linkers, Loaders & Executables (ELF, PE)", "corecs"),
+    createTopic("Linkers, Loaders & Executables (ELF, PE)", "corecs", { status: 'active', slug: 'linkers-loaders-and-executables-elf-pe', url: '/linkers-loaders-and-executables-elf-pe' }),
     createTopic("C & C++ Systems Programming (Memory, Pointers)", "corecs"),
     createTopic("Java & JVM Internals (Garbage Collection, Bytecode)", "corecs"),
     createTopic("Computer Architecture (CPU, Caches)", "corecs"),
