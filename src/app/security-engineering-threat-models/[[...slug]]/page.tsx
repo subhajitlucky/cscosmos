@@ -1,5 +1,6 @@
 import React from 'react';
 import RouteClientShell from './RouteClientShell';
+import { LESSONS } from '@/components/visualizers/threatmodelviz/data';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -7,6 +8,10 @@ export function generateStaticParams() {
     { slug: ['learn'] },
     { slug: ['playground'] },
   ];
+  for (const lesson of LESSONS) {
+    params.push({ slug: ['learn', lesson.id] });
+    params.push({ slug: [lesson.id] });
+  }
   return params;
 }
 
