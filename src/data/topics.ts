@@ -201,12 +201,12 @@ export const topics: Topic[] = [
     createTopic("Database Internals (Indexes, Transactions)", "corecs", { status: 'active', slug: 'database-internals-indexes-transactions', url: '/database-internals-indexes-transactions' }),
     createTopic("Compilers & Runtime Internals (AST, Bytecode)", "corecs", { status: 'active', slug: 'compilers-and-runtime-internals-ast-bytecode', url: '/compilers-and-runtime-internals-ast-bytecode' }),
     createTopic("Theory of Computation (Automata, Languages, Complexity)", "corecs", { status: 'active', slug: 'theory-of-computation-automata-languages-complexity', url: '/theory-of-computation-automata-languages-complexity' }),
-    createTopic("Quantum Computing Internals (Qubits, Gates, Circuits)", "corecs"),
+    createTopic("Quantum Computing Internals (Qubits, Gates, Circuits)", "corecs", { status: 'active', slug: 'quantum-computing-internals-qubits-gates-circuits', url: '/quantum-computing-internals-qubits-gates-circuits' }),
     createTopic("DNA Storage & Molecular Computing", "corecs"),
     createTopic("Computational Biology & Bioinformatics (CRISPR, AlphaFold)", "corecs"),
-    createTopic("GPU Architecture & Parallelism (CUDA, SIMD, Shaders)", "corecs"),
+    createTopic("GPU Architecture & Parallelism (CUDA, SIMD, Shaders)", "corecs", { status: 'active', slug: 'gpu-architecture-and-parallelism-cuda-simd-shaders', url: '/gpu-architecture-and-parallelism-cuda-simd-shaders' }),
     createTopic("RISC-V & Custom Silicon (Open Hardware)", "corecs"),
-    createTopic("Formal Methods & TLA+ (The Math of Correctness)", "corecs"),
+    createTopic("Formal Methods & TLA+ (The Math of Correctness)", "corecs", { status: 'active', slug: 'formal-methods-and-tla-the-math-of-correctness', url: '/formal-methods-and-tla-the-math-of-correctness' }),
 
     // DevOps / Cloud / Engineering
     createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', slug: 'gitcosmos', url: '/gitcosmos' }),
