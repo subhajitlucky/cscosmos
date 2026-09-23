@@ -81,7 +81,7 @@ export const topics: Topic[] = [
     createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack", { status: 'active', slug: 'synccosmos', url: '/synccosmos' }),
 
     // 5. Architecture & Scale
-    createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', url: '/dockercosmos' }),
+    createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', url: '/dockercosmos', aliases: ['devops'] }),
     createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack", { status: 'active', slug: 'mqviz', url: '/mqviz' }),
     createTopic("Microservices Architecture (Services, Failures)", "fullstack", { status: 'active', slug: 'microservicesviz', url: '/microservicesviz' }),
     createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack", { status: 'active', slug: 'lldcosmos', url: '/lldcosmos' }),
@@ -202,15 +202,14 @@ export const topics: Topic[] = [
     createTopic("Compilers & Runtime Internals (AST, Bytecode)", "corecs", { status: 'active', slug: 'compilers-and-runtime-internals-ast-bytecode', url: '/compilers-and-runtime-internals-ast-bytecode' }),
     createTopic("Theory of Computation (Automata, Languages, Complexity)", "corecs", { status: 'active', slug: 'theory-of-computation-automata-languages-complexity', url: '/theory-of-computation-automata-languages-complexity' }),
     createTopic("Quantum Computing Internals (Qubits, Gates, Circuits)", "corecs", { status: 'active', slug: 'quantum-computing-internals-qubits-gates-circuits', url: '/quantum-computing-internals-qubits-gates-circuits' }),
-    createTopic("DNA Storage & Molecular Computing", "corecs"),
-    createTopic("Computational Biology & Bioinformatics (CRISPR, AlphaFold)", "corecs"),
+    createTopic("DNA Storage & Molecular Computing", "corecs", { status: 'active', slug: 'dna-storage-and-molecular-computing', url: '/dna-storage-and-molecular-computing' }),
+    createTopic("Computational Biology & Bioinformatics (CRISPR, AlphaFold)", "corecs", { status: 'active', slug: 'computational-biology-and-bioinformatics-crispr-alphaifold', url: '/computational-biology-and-bioinformatics-crispr-alphaifold' }),
     createTopic("GPU Architecture & Parallelism (CUDA, SIMD, Shaders)", "corecs", { status: 'active', slug: 'gpu-architecture-and-parallelism-cuda-simd-shaders', url: '/gpu-architecture-and-parallelism-cuda-simd-shaders' }),
-    createTopic("RISC-V & Custom Silicon (Open Hardware)", "corecs"),
+    createTopic("RISC-V & Custom Silicon (Open Hardware)", "corecs", { status: 'active', slug: 'risc-v-and-custom-silicon-open-hardware', url: '/risc-v-and-custom-silicon-open-hardware' }),
     createTopic("Formal Methods & TLA+ (The Math of Correctness)", "corecs", { status: 'active', slug: 'formal-methods-and-tla-the-math-of-correctness', url: '/formal-methods-and-tla-the-math-of-correctness' }),
 
     // DevOps / Cloud / Engineering
     createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', slug: 'gitcosmos', url: '/gitcosmos' }),
-    createTopic("Docker & Containers (Isolation)", "devops" , { status: 'active', slug: 'dockercosmos', url: '/dockercosmos' }),
     createTopic("Kubernetes & Orchestration (Scheduling)", "devops" , { status: 'active', slug: 'k8scosmos', url: '/k8scosmos' }),
     createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops" , { status: 'active', slug: 'cloudcosmos', url: '/cloudcosmos' }),
     createTopic("CI/CD Pipeline Visualizer (Build, Deploy)", "devops"),
