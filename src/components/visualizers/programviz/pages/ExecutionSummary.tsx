@@ -46,6 +46,21 @@ export const ExecutionSummary: React.FC = () => {
     setIsPlaying(false);
   };
 
+  const handleStepKeyboard = (e: React.KeyboardEvent) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      setIsPlaying(p => !p);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      setIsPlaying(false);
+      setCurrentStep(s => Math.min(s + 1, executionSteps.length - 1));
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      setIsPlaying(false);
+      setCurrentStep(s => Math.max(s - 1, 0));
+    }
+  };
+
   return (
     <TopicLayout stepNumber={7} title="Putting It All Together">
       <div className="space-y-12">
@@ -59,29 +74,39 @@ export const ExecutionSummary: React.FC = () => {
         </section>
 
         {/* Timeline Visualization */}
-        <div className={cn(
-          "rounded-2xl p-8 border transition-colors duration-300",
-          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200 shadow-sm"
-        )}>
+        <div
+          className={cn(
+            "rounded-2xl p-8 border transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+            theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200 shadow-sm"
+          )}
+          tabIndex={0}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Execution timeline stepper. Use Space to play or pause, arrow keys to step."
+          onKeyDown={handleStepKeyboard}
+        >
           <div className="flex items-center justify-between mb-12">
              <h3 className={cn(
                "uppercase tracking-widest text-sm font-semibold",
                theme === 'dark' ? "text-slate-400" : "text-slate-500"
              )}>Execution Timeline</h3>
              <div className="flex gap-2">
-                <button 
+                <button
                   onClick={() => setIsPlaying(!isPlaying)}
+                  aria-label={isPlaying ? 'Pause timeline' : 'Play timeline'}
+                  aria-pressed={isPlaying}
                   className={cn(
-                    "p-2 rounded transition-colors",
+                    "p-2 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                     theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 shadow-sm"
                   )}
                 >
                   {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
                 </button>
-                <button 
+                <button
                   onClick={handleReset}
+                  aria-label="Reset timeline to first step"
                   className={cn(
-                    "p-2 rounded transition-colors",
+                    "p-2 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                     theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 shadow-sm"
                   )}
                 >
@@ -89,6 +114,10 @@ export const ExecutionSummary: React.FC = () => {
                 </button>
              </div>
           </div>
+
+          <p aria-live="polite" className="sr-only">
+            {`Step ${currentStep + 1} of ${executionSteps.length}: ${executionSteps[currentStep].action}. ${executionSteps[currentStep].detail}`}
+          </p>
 
           <div className="relative">
             {/* The Line */}

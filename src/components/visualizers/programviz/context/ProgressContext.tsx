@@ -9,28 +9,36 @@ interface ProgressContextType {
   isStepCompleted: (stepNumber: number) => boolean;
 }
 
+const DEFAULT_PROGRESS: Progress = { completedSteps: [], currentStep: 1 };
+
 export const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
 
 export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [progress, setProgress] = useState<Progress>(() => {
+  const [progress, setProgress] = useState<Progress>(DEFAULT_PROGRESS);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('programviz-progress');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved) as Progress;
+          if (Array.isArray(parsed.completedSteps)) {
+            setProgress(parsed);
+          }
         } catch {
-          // ignore
+          // ignore corrupted storage
         }
       }
+      setIsHydrated(true);
     }
-    return { completedSteps: [], currentStep: 1 };
-  });
+  }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (isHydrated && typeof window !== 'undefined') {
       localStorage.setItem('programviz-progress', JSON.stringify(progress));
     }
-  }, [progress]);
+  }, [progress, isHydrated]);
 
   const completeStep = (stepNumber: number) => {
     setProgress((prev) => {
