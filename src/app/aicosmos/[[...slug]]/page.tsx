@@ -12,12 +12,6 @@ import { NeuralNetworkLab } from '@/components/visualizers/aicosmos/pages/Neural
 import { TransformerAttentionLab } from '@/components/visualizers/aicosmos/pages/TransformerAttentionLab';
 import { About } from '@/components/visualizers/aicosmos/pages/About';
 import { aiTopics } from '@/components/visualizers/aicosmos/data/topics';
-import { FoundationHome } from '@/components/visualizers/aicosmos/pages/FoundationHome';
-import { FoundationTopic } from '@/components/visualizers/aicosmos/pages/FoundationTopic';
-import { FoundationLab } from '@/components/visualizers/aicosmos/pages/FoundationLab';
-import { FoundationProblems } from '@/components/visualizers/aicosmos/pages/FoundationProblems';
-
-export const dynamicParams = true;
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -51,16 +45,14 @@ export default async function AiCosmosPage({
 
   if (first === 'learn') {
     if (second === 'ai-engineering-foundations') {
-      content = third ? <FoundationTopic topicId={third} /> : <FoundationHome />;
+      notFound();
     } else if (second) {
       content = <TopicDetail topicId={second} />;
     } else {
       content = <Learn />;
     }
   } else if (first === 'ai-engineering-foundations') {
-    if (second === 'lab') content = <FoundationLab />;
-    else if (second === 'problems') content = <FoundationProblems />;
-    else notFound();
+    notFound();
   } else if (first === 'nn-lab') {
     content = <NeuralNetworkLab />;
   } else if (first === 'attention-lab') {
