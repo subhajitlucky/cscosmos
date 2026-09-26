@@ -5,6 +5,12 @@ import { ArrowRight, BookOpen, FlaskConical, HelpCircle, Layers, Route } from 'l
 import { foundationSubtopics } from '../data/foundations';
 
 export function FoundationHome() {
+  const stats = [
+    { value: '26', label: 'subtopics', Icon: BookOpen },
+    { value: '01', label: 'interactive lab', Icon: FlaskConical },
+    { value: '10', label: 'core mental models', Icon: Layers },
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       <section className="relative overflow-hidden rounded-3xl border border-[var(--ai-border)] bg-[var(--ai-surface)] p-8 md:p-12">
@@ -32,12 +38,8 @@ export function FoundationHome() {
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {[
-          ['26', 'subtopics', BookOpen],
-          ['01', 'interactive lab', FlaskConical],
-          ['10', 'core mental models', Layers],
-        ].map(([value, label, Icon]) => (
-          <div key={String(label)} className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6">
+        {stats.map(({ value, label, Icon }) => (
+          <div key={label} className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6">
             <Icon className="w-5 h-5 text-[var(--ai-primary)] mb-4" />
             <div className="text-3xl font-bold text-[var(--ai-text)]">{value}</div>
             <div className="text-xs font-mono text-[var(--ai-muted)] uppercase">{label}</div>
