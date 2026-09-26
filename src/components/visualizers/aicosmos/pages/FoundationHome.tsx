@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, BookOpen, FlaskConical, HelpCircle, Layers, Route } from 'lucide-react';
+import { ArrowRight, BookOpen, FlaskConical, HelpCircle, Layers, Route, type LucideIcon } from 'lucide-react';
 import { foundationSubtopics } from '../data/foundations';
 
 export function FoundationHome() {
-  const stats = [
+  const stats: Array<{ value: string; label: string; Icon: LucideIcon }> = [
     { value: '26', label: 'subtopics', Icon: BookOpen },
     { value: '01', label: 'interactive lab', Icon: FlaskConical },
     { value: '10', label: 'core mental models', Icon: Layers },
