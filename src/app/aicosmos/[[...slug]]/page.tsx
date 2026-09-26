@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import '@/components/visualizers/aicosmos/styles.css';
 import { Navbar } from '@/components/visualizers/aicosmos/components/Navbar';
