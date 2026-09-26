@@ -12,11 +12,12 @@ import { NeuralNetworkLab } from '@/components/visualizers/aicosmos/pages/Neural
 import { TransformerAttentionLab } from '@/components/visualizers/aicosmos/pages/TransformerAttentionLab';
 import { About } from '@/components/visualizers/aicosmos/pages/About';
 import { aiTopics } from '@/components/visualizers/aicosmos/data/topics';
-import { foundationSubtopics } from '@/components/visualizers/aicosmos/data/foundations';
 import { FoundationHome } from '@/components/visualizers/aicosmos/pages/FoundationHome';
 import { FoundationTopic } from '@/components/visualizers/aicosmos/pages/FoundationTopic';
 import { FoundationLab } from '@/components/visualizers/aicosmos/pages/FoundationLab';
 import { FoundationProblems } from '@/components/visualizers/aicosmos/pages/FoundationProblems';
+
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -32,13 +33,6 @@ export function generateStaticParams() {
   aiTopics.forEach((topic) => {
     params.push({ slug: ['learn', topic.id] });
   });
-
-  params.push({ slug: ['learn', 'ai-engineering-foundations'] });
-  foundationSubtopics.forEach((topic) => {
-    params.push({ slug: ['learn', 'ai-engineering-foundations', topic.id] });
-  });
-  params.push({ slug: ['ai-engineering-foundations', 'lab'] });
-  params.push({ slug: ['ai-engineering-foundations', 'problems'] });
 
   return params;
 }
