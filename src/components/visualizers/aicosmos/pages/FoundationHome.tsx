@@ -21,7 +21,7 @@ export function FoundationHome() {
             Start with the mental model: data, models, inference, uncertainty, and the engineering pipeline.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link href="/aicosmos/learn/ai-engineering-foundations/what-is-artificial-intelligence" className="ai-primary-button inline-flex items-center gap-2">
+            <Link href="/aicosmos/learn/ai-engineering-foundations/what-is-artificial-intelligence" className="inline-flex items-center gap-2 rounded-lg bg-[var(--ai-primary)] px-5 py-3 text-sm font-semibold text-white hover:bg-[var(--ai-primary-hover)]">
               Start learning <ArrowRight className="w-4 h-4" />
             </Link>
             <Link href="/aicosmos/ai-engineering-foundations/lab" className="inline-flex items-center gap-2 rounded-lg border border-[var(--ai-border)] px-4 py-3 text-sm text-[var(--ai-text)]">
