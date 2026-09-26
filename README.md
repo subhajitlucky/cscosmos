@@ -1,6 +1,6 @@
 # CSCosmos
 
-CSCosmos is an interactive computer science visualizer hub and learning platform, organizing 173 curated topics across 8 core domains with natively absorbed interactive visualization engines.
+CSCosmos is an interactive computer science visualizer hub and learning platform, organizing 245 curated topics across 8 core domains with natively absorbed interactive visualization engines.
 
 - Live: https://cscosmos.vercel.app
 - Repo: https://github.com/subhajitlucky/cscosmos
@@ -10,7 +10,7 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 
 ## Proof
 
-- 173 curated computer science learning modules.
+- 245 curated computer science learning modules.
 - 55 live visualizer topics powered by 47 natively absorbed interactive engines (zero externally linked).
 - 8 major domains with dedicated routes.
 - 1,500+ statically pre-rendered pages via Next.js SSG.
@@ -189,7 +189,7 @@ npm run lint
 
 ## Roadmap
 
-- Expand the DSA domain (38 planned algorithm modules).
+- Expand the DSA domain (40 planned algorithm modules).
 - Build the Core Computer Science domain (OS internals, networks, database internals).
 - Add screenshots and short previews for live microsites.
 - Tag-based cross-listing for topics shared between domains.
