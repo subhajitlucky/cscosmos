@@ -12,6 +12,11 @@ import { NeuralNetworkLab } from '@/components/visualizers/aicosmos/pages/Neural
 import { TransformerAttentionLab } from '@/components/visualizers/aicosmos/pages/TransformerAttentionLab';
 import { About } from '@/components/visualizers/aicosmos/pages/About';
 import { aiTopics } from '@/components/visualizers/aicosmos/data/topics';
+import { foundationSubtopics } from '@/components/visualizers/aicosmos/data/foundations';
+import { FoundationHome } from '@/components/visualizers/aicosmos/pages/FoundationHome';
+import { FoundationTopic } from '@/components/visualizers/aicosmos/pages/FoundationTopic';
+import { FoundationLab } from '@/components/visualizers/aicosmos/pages/FoundationLab';
+import { FoundationProblems } from '@/components/visualizers/aicosmos/pages/FoundationProblems';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -22,10 +27,17 @@ export function generateStaticParams() {
     { slug: ['rag-lab'] },
     { slug: ['agent-lab'] },
     { slug: ['about'] },
+    { slug: ['learn', 'ai-engineering-foundations'] },
+    { slug: ['ai-engineering-foundations', 'lab'] },
+    { slug: ['ai-engineering-foundations', 'problems'] },
   ];
 
   aiTopics.forEach((topic) => {
     params.push({ slug: ['learn', topic.id] });
+  });
+
+  foundationSubtopics.forEach((topic) => {
+    params.push({ slug: ['learn', 'ai-engineering-foundations', topic.id] });
   });
 
   return params;
@@ -45,14 +57,16 @@ export default async function AiCosmosPage({
 
   if (first === 'learn') {
     if (second === 'ai-engineering-foundations') {
-      notFound();
+      content = third ? <FoundationTopic topicId={third} /> : <FoundationHome />;
     } else if (second) {
       content = <TopicDetail topicId={second} />;
     } else {
       content = <Learn />;
     }
   } else if (first === 'ai-engineering-foundations') {
-    notFound();
+    if (second === 'lab') content = <FoundationLab />;
+    else if (second === 'problems') content = <FoundationProblems />;
+    else notFound();
   } else if (first === 'nn-lab') {
     content = <NeuralNetworkLab />;
   } else if (first === 'attention-lab') {

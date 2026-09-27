@@ -82,6 +82,22 @@ export const tracks: Track[] = [
             { id: 'web-security-model', title: 'Web Security (XSS, CSRF, CSP, CORS)', engineId: 'websecurity' },
         ],
     }),
+    createTrack({
+        slug: 'ai-llm-systems-engineering',
+        title: 'AI & LLM Systems Engineering',
+        outcome: 'Build, evaluate, and scale production-grade RAG pipelines, neural networks, and autonomous ReAct agents.',
+        description:
+            'A complete interactive path through modern AI engineering: start with mathematical foundations (linear algebra, vectors, distributions), move into deep learning mechanics (live backpropagation, loss functions), explore transformer self-attention heatmaps, and build production RAG and autonomous ReAct agent systems with automated evals.',
+        level: 'intermediate',
+        estHours: 14,
+        modules: [
+            { id: 'math-for-ai', title: 'Mathematics for Machine Learning (Vectors, SVD, Bayes)', engineId: 'aimathviz' },
+            { id: 'neural-networks-backprop', title: 'Neural Networks & Live Backpropagation', engineId: 'aicosmos' },
+            { id: 'transformer-attention', title: 'Transformer Self-Attention & Heatmaps', engineId: 'aicosmos' },
+            { id: 'hybrid-rag-retrieval', title: 'Advanced Hybrid RAG & Re-Ranking', engineId: 'aicosmos' },
+            { id: 'autonomous-agents-react', title: 'Autonomous AI Agents & ReAct Tool Loops', engineId: 'aicosmos' },
+        ],
+    }),
 ];
 
 export function getTrackBySlug(slug: string): Track | undefined {
