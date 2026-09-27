@@ -169,7 +169,7 @@ export const topics: Topic[] = [
     // Artificial Intelligence
     // 1. AI Engineering Foundations
     createTopic("AI Engineering Foundations", "ai", { status: 'active', slug: 'ai-engineering-foundations', url: '/aicosmos/learn/ai-engineering-foundations' }),
-    createTopic("Python for AI Engineering", "ai"),
+    createTopic("Python for AI Engineering", "ai", { status: 'active', slug: 'python-for-ai-engineering', url: '/aicosmos/learn/python-for-ai-engineering' }),
     createTopic("Pandas, Polars & Tabular Data Wrangling", "ai"),
     createTopic("NumPy for AI", "ai"),
     createTopic("Data Visualization & Exploratory Data Analysis", "ai"),

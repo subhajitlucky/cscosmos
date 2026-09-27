@@ -17,6 +17,11 @@ import { FoundationHome } from '@/components/visualizers/aicosmos/pages/Foundati
 import { FoundationTopic } from '@/components/visualizers/aicosmos/pages/FoundationTopic';
 import { FoundationLab } from '@/components/visualizers/aicosmos/pages/FoundationLab';
 import { FoundationProblems } from '@/components/visualizers/aicosmos/pages/FoundationProblems';
+import { pythonAiSubtopics } from '@/components/visualizers/aicosmos/data/python-ai';
+import { PythonAiHome } from '@/components/visualizers/aicosmos/pages/PythonAiHome';
+import { PythonAiTopic } from '@/components/visualizers/aicosmos/pages/PythonAiTopic';
+import { PythonAiLab } from '@/components/visualizers/aicosmos/pages/PythonAiLab';
+import { PythonAiProblems } from '@/components/visualizers/aicosmos/pages/PythonAiProblems';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -32,6 +37,11 @@ export function generateStaticParams() {
     { slug: ['ai-engineering-foundations', 'learn'] },
     { slug: ['ai-engineering-foundations', 'lab'] },
     { slug: ['ai-engineering-foundations', 'problems'] },
+    { slug: ['learn', 'python-for-ai-engineering'] },
+    { slug: ['python-for-ai-engineering'] },
+    { slug: ['python-for-ai-engineering', 'learn'] },
+    { slug: ['python-for-ai-engineering', 'lab'] },
+    { slug: ['python-for-ai-engineering', 'problems'] },
   ];
 
   aiTopics.forEach((topic) => {
@@ -41,6 +51,11 @@ export function generateStaticParams() {
   foundationSubtopics.forEach((topic) => {
     params.push({ slug: ['learn', 'ai-engineering-foundations', topic.id] });
     params.push({ slug: ['ai-engineering-foundations', 'learn', topic.id] });
+  });
+
+  pythonAiSubtopics.forEach((topic) => {
+    params.push({ slug: ['learn', 'python-for-ai-engineering', topic.id] });
+    params.push({ slug: ['python-for-ai-engineering', 'learn', topic.id] });
   });
 
   return params;
@@ -61,6 +76,8 @@ export default async function AiCosmosPage({
   if (first === 'learn') {
     if (second === 'ai-engineering-foundations') {
       content = third ? <FoundationTopic topicId={third} /> : <FoundationHome />;
+    } else if (second === 'python-for-ai-engineering') {
+      content = third ? <PythonAiTopic topicId={third} /> : <PythonAiHome />;
     } else if (second) {
       content = <TopicDetail topicId={second} />;
     } else {
@@ -73,6 +90,14 @@ export default async function AiCosmosPage({
       content = third ? <FoundationTopic topicId={third} /> : <FoundationHome />;
     } else if (!second) {
       content = <FoundationHome />;
+    } else notFound();
+  } else if (first === 'python-for-ai-engineering') {
+    if (second === 'lab') content = <PythonAiLab />;
+    else if (second === 'problems') content = <PythonAiProblems />;
+    else if (second === 'learn') {
+      content = third ? <PythonAiTopic topicId={third} /> : <PythonAiHome />;
+    } else if (!second) {
+      content = <PythonAiHome />;
     } else notFound();
   } else if (first === 'nn-lab') {
     content = <NeuralNetworkLab />;
