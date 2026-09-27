@@ -45,9 +45,6 @@ export function PythonAiHome({ basePath = '/ai/python-for-ai-engineering' }: Pyt
     <div className="space-y-12 pb-16">
       {/* Hero Header */}
       <section className="relative overflow-hidden rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-8 md:p-12">
-        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute -left-20 -bottom-20 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
-
         <div className="relative z-10 max-w-4xl space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3.5 py-1 text-xs font-mono font-semibold uppercase tracking-wider text-blue-400">
             <Cpu className="h-3.5 w-3.5" />
@@ -202,7 +199,7 @@ export function PythonAiHome({ basePath = '/ai/python-for-ai-engineering' }: Pyt
       </div>
 
       {/* Interactive Lab Spotlight Banner */}
-      <section className="rounded-2xl border border-blue-500/30 bg-gradient-to-r from-blue-950/20 via-[var(--ai-card)] to-indigo-950/20 p-8 space-y-4">
+      <section className="rounded-2xl border border-blue-500/30 bg-[var(--ai-surface)] p-8 space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase text-amber-400">
@@ -227,7 +224,7 @@ export function PythonAiHome({ basePath = '/ai/python-for-ai-engineering' }: Pyt
       </section>
 
       {/* Certification Challenge Arena Spotlight */}
-      <section className="rounded-2xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/20 via-[var(--ai-card)] to-teal-950/20 p-8 space-y-4">
+      <section className="rounded-2xl border border-emerald-500/30 bg-[var(--ai-surface)] p-8 space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase text-emerald-400">

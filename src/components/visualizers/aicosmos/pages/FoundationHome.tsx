@@ -49,9 +49,6 @@ export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-16">
       {/* Hero Section */}
       <section className="relative overflow-hidden rounded-3xl border border-[var(--ai-border)] bg-[var(--ai-surface)] p-8 md:p-14 shadow-2xl">
-        <div className="absolute inset-0 ai-grid-bg opacity-40" />
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-[var(--ai-primary)]/10 rounded-full blur-3xl pointer-events-none" />
-
         <div className="relative space-y-6 max-w-4xl">
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--ai-primary)]/40 bg-[var(--ai-primary)]/15 px-3 py-1 text-xs font-mono text-[var(--ai-primary)] font-semibold">
