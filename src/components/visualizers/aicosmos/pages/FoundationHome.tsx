@@ -18,7 +18,11 @@ import {
 } from 'lucide-react';
 import { foundationSubtopics, foundationCategories } from '../data/foundations';
 
-export function FoundationHome() {
+interface FoundationHomeProps {
+  basePath?: string;
+}
+
+export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: FoundationHomeProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -69,19 +73,19 @@ export function FoundationHome() {
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
-              href="/aicosmos/learn/ai-engineering-foundations/what-is-artificial-intelligence"
+              href={`${basePath}/learn/what-is-artificial-intelligence`}
               className="inline-flex items-center gap-2 rounded-xl bg-[var(--ai-primary)] px-6 py-3.5 text-sm font-semibold text-white hover:bg-[var(--ai-primary-hover)] transition-all shadow-lg hover:shadow-indigo-500/25 active:scale-95"
             >
               Start Learning (Subtopic 1) <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/aicosmos/ai-engineering-foundations/lab"
+              href={`${basePath}/lab`}
               className="inline-flex items-center gap-2 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-surface-2)] px-5 py-3.5 text-sm font-semibold text-[var(--ai-text)] hover:border-[var(--ai-primary)] transition-all active:scale-95"
             >
               <FlaskConical className="w-4 h-4 text-emerald-400" /> Open Micro-Model Studio
             </Link>
             <Link
-              href="/aicosmos/ai-engineering-foundations/problems"
+              href={`${basePath}/problems`}
               className="inline-flex items-center gap-2 rounded-xl border border-[var(--ai-border-subtle)] bg-transparent px-5 py-3.5 text-sm font-semibold text-[var(--ai-muted)] hover:text-[var(--ai-text)] hover:border-[var(--ai-border)] transition-all"
             >
               <HelpCircle className="w-4 h-4 text-cyan-400" /> Knowledge Check
@@ -152,7 +156,7 @@ export function FoundationHome() {
           {filteredSubtopics.map((topic) => (
             <Link
               key={topic.id}
-              href={`/aicosmos/learn/ai-engineering-foundations/${topic.id}`}
+              href={`${basePath}/learn/${topic.id}`}
               className="ai-card rounded-2xl p-6 group flex flex-col justify-between hover:border-[var(--ai-primary)]/60 relative overflow-hidden"
             >
               <div className="space-y-3">
@@ -190,7 +194,7 @@ export function FoundationHome() {
       {/* Interactive Hub Jump Links */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-[var(--ai-border-subtle)]">
         <Link
-          href="/aicosmos/ai-engineering-foundations/lab"
+          href={`${basePath}/lab`}
           className="ai-card rounded-2xl p-6 flex flex-col justify-between space-y-4 group hover:border-emerald-500/50"
         >
           <div className="p-3 w-fit rounded-xl bg-emerald-500/10 text-emerald-400">
@@ -210,7 +214,7 @@ export function FoundationHome() {
         </Link>
 
         <Link
-          href="/aicosmos/ai-engineering-foundations/problems"
+          href={`${basePath}/problems`}
           className="ai-card rounded-2xl p-6 flex flex-col justify-between space-y-4 group hover:border-cyan-500/50"
         >
           <div className="p-3 w-fit rounded-xl bg-cyan-500/10 text-cyan-400">
@@ -230,7 +234,7 @@ export function FoundationHome() {
         </Link>
 
         <Link
-          href="/aicosmos/learn"
+          href="/ai"
           className="ai-card rounded-2xl p-6 flex flex-col justify-between space-y-4 group hover:border-indigo-500/50"
         >
           <div className="p-3 w-fit rounded-xl bg-indigo-500/10 text-[var(--ai-primary)]">

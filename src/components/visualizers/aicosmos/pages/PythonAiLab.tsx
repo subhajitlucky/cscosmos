@@ -18,7 +18,11 @@ import {
   Code2,
 } from 'lucide-react';
 
-export function PythonAiLab() {
+interface PythonAiLabProps {
+  basePath?: string;
+}
+
+export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: PythonAiLabProps) {
   const [activeTab, setActiveTab] = useState<'memory' | 'async' | 'pydantic'>('async');
 
   /* -------------------------------------------------------------------------- */
@@ -126,7 +130,7 @@ export function PythonAiLab() {
       {/* Header */}
       <div className="space-y-3">
         <Link
-          href="/aicosmos/learn/python-for-ai-engineering"
+          href={basePath}
           className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-text)] transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" /> Back to Python AI Curriculum

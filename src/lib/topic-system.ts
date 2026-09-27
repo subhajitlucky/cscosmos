@@ -12,8 +12,8 @@ export interface TopicModule {
   title: string;
   domain: string; // e.g. 'ai', 'fullstack', 'security'
   subtopics: TopicSubtopicRef[];
-  HomePage: React.ComponentType;
-  TopicPage: React.ComponentType<{ topicId: string }>;
-  LabPage: React.ComponentType;
-  ProblemsPage: React.ComponentType;
+  HomePage: React.ComponentType<{ basePath?: string }>;
+  TopicPage: React.ComponentType<{ topicId: string; basePath?: string }>;
+  LabPage: React.ComponentType<{ basePath?: string }>;
+  ProblemsPage: React.ComponentType<{ basePath?: string }>;
 }

@@ -156,7 +156,11 @@ const QUESTIONS: Question[] = [
   }
 ];
 
-export function FoundationProblems() {
+interface FoundationProblemsProps {
+  basePath?: string;
+}
+
+export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations' }: FoundationProblemsProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
@@ -180,7 +184,7 @@ export function FoundationProblems() {
       {/* Top Breadcrumb */}
       <div className="flex items-center justify-between">
         <Link
-          href="/aicosmos/learn/ai-engineering-foundations"
+          href={basePath}
           className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary)] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Foundations Curriculum
@@ -340,16 +344,16 @@ export function FoundationProblems() {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <Link
-              href="/aicosmos/ai-engineering-foundations/lab"
+              href={`${basePath}/lab`}
               className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-xs font-mono font-bold text-white hover:bg-emerald-500 transition-colors shadow-md"
             >
               <FlaskConical className="w-4 h-4" /> Open The Micro-Model Studio
             </Link>
             <Link
-              href="/aicosmos/learn"
+              href="/ai/python-for-ai-engineering"
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[var(--ai-surface)] px-5 py-3 text-xs font-mono font-bold text-[var(--ai-text)] hover:border-white/20 transition-colors"
             >
-              <BookOpen className="w-4 h-4 text-[var(--ai-primary)]" /> Continue to Next AI Subject
+              <BookOpen className="w-4 h-4 text-[var(--ai-primary)]" /> Continue to Next Subject (Python for AI)
             </Link>
           </div>
         </section>

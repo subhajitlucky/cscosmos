@@ -19,7 +19,11 @@ import {
   Zap,
 } from 'lucide-react';
 
-export function PythonAiProblems() {
+interface PythonAiProblemsProps {
+  basePath?: string;
+}
+
+export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }: PythonAiProblemsProps) {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [selectedOptions, setSelectedOptions] = useState<Record<string, number>>({});
   const [submittedQuestions, setSubmittedQuestions] = useState<Record<string, boolean>>({});
@@ -60,7 +64,7 @@ export function PythonAiProblems() {
       {/* Top Header */}
       <div className="space-y-3">
         <Link
-          href="/aicosmos/learn/python-for-ai-engineering"
+          href={basePath}
           className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-text)] transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" /> Back to Python AI Curriculum
@@ -237,7 +241,7 @@ export function PythonAiProblems() {
               <RotateCcw className="h-3.5 w-3.5" /> Retake Assessment
             </button>
             <Link
-              href="/aicosmos/learn/python-for-ai-engineering"
+              href={basePath}
               className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2 text-xs font-mono font-semibold text-white hover:bg-emerald-500"
             >
               Review Curriculum Map <ArrowRight className="h-3.5 w-3.5" />

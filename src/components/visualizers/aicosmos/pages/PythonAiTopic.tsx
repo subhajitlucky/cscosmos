@@ -507,7 +507,15 @@ function PydanticValidatorWidget() {
 /*                       MAIN SUBTOPIC DETAIL VIEW                            */
 /* -------------------------------------------------------------------------- */
 
-export function PythonAiTopic({ topicId }: { topicId: string }) {
+interface PythonAiTopicProps {
+  topicId: string;
+  basePath?: string;
+}
+
+export function PythonAiTopic({
+  topicId,
+  basePath = '/ai/python-for-ai-engineering',
+}: PythonAiTopicProps) {
   const [copied, setCopied] = useState(false);
   const topic = getPythonAiSubtopic(topicId);
 
@@ -517,7 +525,7 @@ export function PythonAiTopic({ topicId }: { topicId: string }) {
         <h1 className="text-2xl font-bold text-rose-400">Subtopic Not Found</h1>
         <p className="text-sm text-[var(--ai-muted)]">No Python for AI Engineering subtopic matching ID: {topicId}</p>
         <Link
-          href="/aicosmos/learn/python-for-ai-engineering"
+          href={basePath}
           className="inline-flex items-center gap-2 text-sm text-blue-400 hover:underline"
         >
           <ArrowLeft className="h-4 w-4" /> Back to Curriculum
@@ -541,7 +549,7 @@ export function PythonAiTopic({ topicId }: { topicId: string }) {
       {/* Top Breadcrumb & Navigation */}
       <div className="flex items-center justify-between border-b border-[var(--ai-border)] pb-4">
         <Link
-          href="/aicosmos/learn/python-for-ai-engineering"
+          href={basePath}
           className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-text)] transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" /> Back to Python AI Curriculum
@@ -647,7 +655,7 @@ export function PythonAiTopic({ topicId }: { topicId: string }) {
       <div className="flex items-center justify-between border-t border-[var(--ai-border)] pt-6">
         {previous ? (
           <Link
-            href={`/aicosmos/learn/python-for-ai-engineering/${previous.id}`}
+            href={`${basePath}/learn/${previous.id}`}
             className="group flex flex-col items-start gap-1 text-left"
           >
             <span className="font-mono text-[11px] text-[var(--ai-muted)] flex items-center gap-1">
@@ -661,7 +669,7 @@ export function PythonAiTopic({ topicId }: { topicId: string }) {
 
         {next ? (
           <Link
-            href={`/aicosmos/learn/python-for-ai-engineering/${next.id}`}
+            href={`${basePath}/learn/${next.id}`}
             className="group flex flex-col items-end gap-1 text-right"
           >
             <span className="font-mono text-[11px] text-[var(--ai-muted)] flex items-center gap-1">
@@ -673,7 +681,7 @@ export function PythonAiTopic({ topicId }: { topicId: string }) {
           </Link>
         ) : (
           <Link
-            href="/aicosmos/python-for-ai-engineering/lab"
+            href={`${basePath}/lab`}
             className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500"
           >
             Enter Studio Lab <ArrowRight className="h-3.5 w-3.5" />

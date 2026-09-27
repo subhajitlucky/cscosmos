@@ -21,7 +21,11 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
-export function PythonAiHome() {
+interface PythonAiHomeProps {
+  basePath?: string;
+}
+
+export function PythonAiHome({ basePath = '/ai/python-for-ai-engineering' }: PythonAiHomeProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -62,20 +66,20 @@ export function PythonAiHome() {
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
-              href="/aicosmos/learn/python-for-ai-engineering/cpython-memory-model-pyobject"
+              href={`${basePath}/learn/cpython-memory-model-pyobject`}
               className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:bg-blue-500 hover:scale-[1.02]"
             >
               Start Module 1 <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/aicosmos/python-for-ai-engineering/lab"
+              href={`${basePath}/lab`}
               className="inline-flex items-center gap-2 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-bg)] px-5 py-2.5 text-sm font-semibold text-[var(--ai-text)] transition-colors hover:border-blue-500/50 hover:bg-blue-500/5"
             >
               <Zap className="h-4 w-4 text-amber-400" />
               Async & Memory Studio
             </Link>
             <Link
-              href="/aicosmos/python-for-ai-engineering/problems"
+              href={`${basePath}/problems`}
               className="inline-flex items-center gap-2 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-bg)] px-5 py-2.5 text-sm font-semibold text-[var(--ai-text)] transition-colors hover:border-emerald-500/50 hover:bg-emerald-500/5"
             >
               <CheckCircle2 className="h-4 w-4 text-emerald-400" />
@@ -162,7 +166,7 @@ export function PythonAiHome() {
         {filteredTopics.map((topic) => (
           <Link
             key={topic.id}
-            href={`/aicosmos/learn/python-for-ai-engineering/${topic.id}`}
+            href={`${basePath}/learn/${topic.id}`}
             className="group relative flex flex-col justify-between rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5 transition-all hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/5 hover:-translate-y-0.5"
           >
             <div className="space-y-3">
@@ -214,7 +218,7 @@ export function PythonAiHome() {
             </p>
           </div>
           <Link
-            href="/aicosmos/python-for-ai-engineering/lab"
+            href={`${basePath}/lab`}
             className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:bg-blue-500"
           >
             Launch Execution Studio <ArrowRight className="h-4 w-4" />
@@ -239,7 +243,7 @@ export function PythonAiHome() {
             </p>
           </div>
           <Link
-            href="/aicosmos/python-for-ai-engineering/problems"
+            href={`${basePath}/problems`}
             className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/25 transition-all hover:bg-emerald-500"
           >
             Enter Certification Arena <ArrowRight className="h-4 w-4" />

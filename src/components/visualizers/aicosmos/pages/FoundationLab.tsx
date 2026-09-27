@@ -59,7 +59,11 @@ const PRESETS: Preset[] = [
   }
 ];
 
-export function FoundationLab() {
+interface FoundationLabProps {
+  basePath?: string;
+}
+
+export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: FoundationLabProps) {
   const [selectedPreset, setSelectedPreset] = useState<Preset>(PRESETS[0]);
   const [inputVal, setInputVal] = useState<number>(PRESETS[0].defaultInput);
   const [weight, setWeight] = useState<number>(PRESETS[0].defaultWeight);
@@ -116,7 +120,7 @@ export function FoundationLab() {
       {/* Top Breadcrumb */}
       <div className="flex items-center justify-between">
         <Link
-          href="/aicosmos/learn/ai-engineering-foundations"
+          href={basePath}
           className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary)] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Foundations Curriculum

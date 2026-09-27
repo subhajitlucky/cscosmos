@@ -15,7 +15,7 @@ interface TopicCardProps {
 export function TopicCard({ topic, onClick, alsoInDomain }: TopicCardProps) {
     const isLive = topic.status === 'active';
     const cardAriaLabel = `${topic.name}${isLive ? " (Live)" : " (Coming soon)"}`;
-    const targetUrl = topic.url || `/domain/${topic.domain}/${topic.slug}`;
+    const targetUrl = topic.url || `/${topic.domain}/${topic.slug}`;
 
     const CardContent = (
         <div

@@ -21,7 +21,15 @@ import {
 } from 'lucide-react';
 import { foundationSubtopics, getFoundationSubtopic, type FoundationSubtopic } from '../data/foundations';
 
-export function FoundationTopic({ topicId }: { topicId: string }) {
+interface FoundationTopicProps {
+  topicId: string;
+  basePath?: string;
+}
+
+export function FoundationTopic({
+  topicId,
+  basePath = '/ai/ai-engineering-foundations',
+}: FoundationTopicProps) {
   const topic = getFoundationSubtopic(topicId) || foundationSubtopics[0];
   const index = foundationSubtopics.findIndex((t) => t.id === topic.id);
   const previous = foundationSubtopics[index - 1];
@@ -42,7 +50,7 @@ export function FoundationTopic({ topicId }: { topicId: string }) {
       {/* Top Nav Breadcrumbs */}
       <div className="flex items-center justify-between">
         <Link
-          href="/aicosmos/learn/ai-engineering-foundations"
+          href={basePath}
           className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary)] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Foundations Curriculum
@@ -158,7 +166,7 @@ export function FoundationTopic({ topicId }: { topicId: string }) {
       <nav className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-[var(--ai-border-subtle)]">
         {previous ? (
           <Link
-            href={`/aicosmos/learn/ai-engineering-foundations/${previous.id}`}
+            href={`${basePath}/learn/${previous.id}`}
             className="ai-card p-5 rounded-2xl group flex flex-col justify-between"
           >
             <span className="text-[10px] font-mono text-[var(--ai-muted)] uppercase">
@@ -174,7 +182,7 @@ export function FoundationTopic({ topicId }: { topicId: string }) {
 
         {next ? (
           <Link
-            href={`/aicosmos/learn/ai-engineering-foundations/${next.id}`}
+            href={`${basePath}/learn/${next.id}`}
             className="ai-card p-5 rounded-2xl group flex flex-col justify-between text-right sm:items-end"
           >
             <span className="text-[10px] font-mono text-[var(--ai-primary)] uppercase font-semibold">
@@ -186,7 +194,7 @@ export function FoundationTopic({ topicId }: { topicId: string }) {
           </Link>
         ) : (
           <Link
-            href="/aicosmos/ai-engineering-foundations/lab"
+            href={`${basePath}/lab`}
             className="ai-card p-5 rounded-2xl group flex flex-col justify-between text-right sm:items-end border-emerald-500/40"
           >
             <span className="text-[10px] font-mono text-emerald-400 uppercase font-semibold">
