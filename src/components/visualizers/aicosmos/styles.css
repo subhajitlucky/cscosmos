@@ -84,3 +84,85 @@ html[data-theme='dark'] .aicosmos-root,
     linear-gradient(to bottom, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
   background-size: 38px 38px;
 }
+
+/* Custom Cybernetic Range Slider */
+.aicosmos-root input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.aicosmos-root input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), rgba(99, 102, 241, 0.7));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.aicosmos-root input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), rgba(99, 102, 241, 0.7));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.aicosmos-root input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #38bdf8;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 0 24px rgba(99, 102, 241, 0.5);
+  margin-top: -6px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.aicosmos-root input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 1), 0 0 32px rgba(99, 102, 241, 0.8);
+}
+
+.aicosmos-root input[type="range"]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #38bdf8;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 0 24px rgba(99, 102, 241, 0.5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Glassmorphism & Cyber Depth */
+.aicosmos-root .ai-glass {
+  background: rgba(12, 16, 34, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.aicosmos-root .ai-terminal {
+  background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.5) 0%, rgba(6, 8, 20, 0.95) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+/* Custom Scrollbars for Code and Inspectors */
+.aicosmos-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.aicosmos-root ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.aicosmos-root ::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.35);
+  border-radius: 9999px;
+}
+
+.aicosmos-root ::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.65);
+}
