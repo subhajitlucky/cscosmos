@@ -59,8 +59,10 @@ const SELF_CONTAINED_SUBSITE_ROUTES = new Set([
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const rootSegment = pathname ? '/' + pathname.split('/')[1] : '';
-  const isSelfContained = SELF_CONTAINED_SUBSITE_ROUTES.has(rootSegment);
+  const segments = pathname ? pathname.split('/').filter(Boolean) : [];
+  const isSelfContained = segments.some((seg) =>
+    SELF_CONTAINED_SUBSITE_ROUTES.has(`/${seg}`)
+  );
 
   return (
     <>

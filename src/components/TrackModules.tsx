@@ -87,7 +87,7 @@ function ModuleRow({ module, index, href, done, onToggle }: ModuleRowProps) {
                         </h3>
                         <div className="flex flex-wrap items-center gap-2">
                             <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground">
-                                /{module.engineId}
+                                {href}
                             </code>
                         </div>
                     </div>

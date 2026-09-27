@@ -4,11 +4,13 @@ import { notFound } from 'next/navigation';
 import '@/components/visualizers/aicosmos/styles.css';
 import { getTopicModule, getAllTopicModules } from '@/lib/topic-registry';
 import { topics } from '@/data/topics';
+import { legacyTopicRoutes } from '@/data/legacy-topic-routes';
 import type { DomainKey } from '@/data/domains';
 import { TopicInDevelopment } from '@/components/TopicInDevelopment';
 
 export function generateStaticParams() {
   const modules = getAllTopicModules();
+  const legacySlugs = new Set(legacyTopicRoutes.map((r) => r.slug));
   const params: { domain: string; topic: string; slug: string[] }[] = [];
 
   // 1. Pre-render all views and subtopics for active registered modules
@@ -23,10 +25,11 @@ export function generateStaticParams() {
     }
   }
 
-  // 2. Pre-render landing pages for all catalog topics across domains to prevent 404s
+  // 2. Pre-render landing pages for catalog topics that are in development (avoiding legacy visualizers)
   for (const t of topics) {
     const isRegistered = modules.some((m) => m.id === t.slug && m.domain === t.domain);
-    if (!isRegistered) {
+    const isLegacy = legacySlugs.has(t.slug);
+    if (!isRegistered && !isLegacy) {
       params.push({ domain: t.domain, topic: t.slug, slug: [] });
     }
   }

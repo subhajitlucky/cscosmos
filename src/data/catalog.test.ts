@@ -52,6 +52,12 @@ describe('topics', () => {
     }
   })
 
+  it('strictly adheres to the universal URL pattern /[domain]/[topic]', () => {
+    for (const topic of topics) {
+      expect(topic.url).toBe(`/${topic.domain}/${topic.slug}`)
+    }
+  })
+
   it('gives every topic a name and description', () => {
     for (const topic of topics) {
       expect(topic.name.length).toBeGreaterThan(0)
