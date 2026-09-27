@@ -5,123 +5,68 @@ import { usePathname } from 'next/navigation';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 
-// Sub-sites that manage their own custom header (with built-in CSCosmos back button & sub-navigation)
-const CUSTOM_HEADER_ROUTES = [
-  '/jsviz',
-  '/html-cosmos',
+// Sub-sites that manage their own autonomous navigation and footer
+// (with built-in CSCosmos back button, breadcrumbs, and sub-routes)
+const SELF_CONTAINED_SUBSITE_ROUTES = new Set([
+  '/aicosmos',
+  '/aimathviz',
+  '/apiviz',
+  '/arrayviz',
+  '/authviz',
+  '/blockchainviz',
+  '/browseruniverse',
+  '/cloudcosmos',
+  '/consensusviz',
+  '/crossplatformviz',
+  '/cryptviz',
   '/css-cosmos',
+  '/dockercosmos',
+  '/evminternals',
+  '/fastapicosmos',
+  '/gitcosmos',
+  '/golangviz',
+  '/html-cosmos',
+  '/jsviz',
+  '/k8scosmos',
+  '/lldcosmos',
+  '/loadbalancing',
+  '/merkletreeviz',
+  '/microservicesviz',
+  '/mongocosmos',
+  '/mqviz',
+  '/nextjscosmos',
+  '/nodecosmos',
+  '/patriciatrie',
   '/program-cosmos',
+  '/ptopblockchain',
+  '/reactcosmos',
+  '/redisviz',
+  '/rustviz',
+  '/solidityviz',
+  '/sqlcosmos',
+  '/stringalgoviz',
+  '/sveltecosmos',
+  '/synccosmos',
+  '/systemdesignviz',
+  '/tailwindcosmos',
+  '/tsviz',
+  '/vuecosmos',
+  '/wasmcosmos',
   '/webprotocols',
   '/websecurity',
-  '/reactcosmos',
-  '/nextjscosmos',
-  '/golangviz',
-  '/tsviz',
-  '/redisviz',
-  '/sqlcosmos',
-  '/nodecosmos',
-  '/dockercosmos',
-  '/blockchainviz',
-  '/arrayviz',
-  '/systemdesignviz',
-  '/apiviz',
-  '/authviz',
-  '/vuecosmos',
-  '/mongocosmos',
-  '/sveltecosmos',
-  '/mqviz',
-  '/tailwindcosmos',
-  '/wasmcosmos',
   '/xrcosmos',
-  '/crossplatformviz',
-  '/fastapicosmos',
-  '/synccosmos',
-  '/microservicesviz',
-  '/lldcosmos',
-  '/browseruniverse',
-  '/aicosmos',
-  '/rustviz',
-  '/cryptviz',
-  '/merkletreeviz',
-  '/patriciatrie',
-  '/consensusviz',
-  '/ptopblockchain',
-  '/evminternals',
-  '/solidityviz',
-  '/gitcosmos',
-  '/k8scosmos',
-  '/cloudcosmos',
-  '/loadbalancing',
-  '/stringalgoviz',
-  '/aimathviz',
-];
-
-// Sub-sites that manage their own custom footer
-const CUSTOM_FOOTER_ROUTES = [
-  '/jsviz',
-  '/html-cosmos',
-  '/css-cosmos',
-  '/program-cosmos',
-  '/webprotocols',
-  '/websecurity',
-  '/reactcosmos',
-  '/nextjscosmos',
-  '/golangviz',
-  '/tsviz',
-  '/redisviz',
-  '/sqlcosmos',
-  '/nodecosmos',
-  '/dockercosmos',
-  '/blockchainviz',
-  '/arrayviz',
-  '/systemdesignviz',
-  '/apiviz',
-  '/authviz',
-  '/vuecosmos',
-  '/mongocosmos',
-  '/sveltecosmos',
-  '/mqviz',
-  '/tailwindcosmos',
-  '/wasmcosmos',
-  '/xrcosmos',
-  '/crossplatformviz',
-  '/fastapicosmos',
-  '/synccosmos',
-  '/microservicesviz',
-  '/lldcosmos',
-  '/browseruniverse',
-  '/aicosmos',
-  '/rustviz',
-  '/cryptviz',
-  '/merkletreeviz',
-  '/patriciatrie',
-  '/consensusviz',
-  '/ptopblockchain',
-  '/evminternals',
-  '/solidityviz',
-  '/gitcosmos',
-  '/k8scosmos',
-  '/cloudcosmos',
-  '/loadbalancing',
-  '/stringalgoviz',
-  '/aimathviz',
-];
+]);
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-
-  const isCustomHeader = CUSTOM_HEADER_ROUTES.some(
-    route => pathname === route || pathname?.startsWith(route + '/')
-  );
-  const isCustomFooter = CUSTOM_FOOTER_ROUTES.some(
-    route => pathname === route || pathname?.startsWith(route + '/')
-  );
+  const rootSegment = pathname ? '/' + pathname.split('/')[1] : '';
+  const isSelfContained = SELF_CONTAINED_SUBSITE_ROUTES.has(rootSegment);
 
   return (
     <>
-      {!isCustomHeader && <Navbar />}
+      {!isSelfContained && <Navbar />}
       <main className="flex-1">{children}</main>
-      {!isCustomFooter && <Footer />}
+      {!isSelfContained && <Footer />}
     </>
   );
 }
