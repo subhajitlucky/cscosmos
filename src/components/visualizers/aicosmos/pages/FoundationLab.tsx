@@ -8,11 +8,10 @@ import {
   Play,
   CheckCircle2,
   Sliders,
-  Sparkles,
-  Zap,
+  Terminal,
   Activity,
   Layers,
-  HelpCircle
+  ArrowRight
 } from 'lucide-react';
 
 interface Preset {
@@ -35,7 +34,10 @@ const PRESETS: Preset[] = [
     defaultWeight: 1.4,
     defaultBias: -0.2,
     activation: 'sigmoid',
-    labelFormat: (p) => p ? { text: 'POSITIVE REVIEW', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' } : { text: 'NEGATIVE REVIEW', color: 'text-rose-400 bg-rose-500/10 border-rose-500/30' }
+    labelFormat: (p) =>
+      p
+        ? { text: 'POSITIVE REVIEW', color: 'text-emerald-500 border-emerald-500/40 bg-emerald-500/10' }
+        : { text: 'NEGATIVE REVIEW', color: 'text-rose-500 border-rose-500/40 bg-rose-500/10' },
   },
   {
     id: 'credit',
@@ -45,7 +47,10 @@ const PRESETS: Preset[] = [
     defaultWeight: 2.1,
     defaultBias: -1.0,
     activation: 'sigmoid',
-    labelFormat: (p) => p ? { text: 'LOAN APPROVED', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' } : { text: 'REJECTED / HIGH RISK', color: 'text-rose-400 bg-rose-500/10 border-rose-500/30' }
+    labelFormat: (p) =>
+      p
+        ? { text: 'LOAN APPROVED', color: 'text-emerald-500 border-emerald-500/40 bg-emerald-500/10' }
+        : { text: 'REJECTED / HIGH RISK', color: 'text-rose-500 border-rose-500/40 bg-rose-500/10' },
   },
   {
     id: 'spam',
@@ -55,8 +60,11 @@ const PRESETS: Preset[] = [
     defaultWeight: 2.5,
     defaultBias: 0.1,
     activation: 'step',
-    labelFormat: (p) => p ? { text: 'SPAM DETECTED', color: 'text-rose-400 bg-rose-500/10 border-rose-500/30' } : { text: 'LEGITIMATE (HAM)', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' }
-  }
+    labelFormat: (p) =>
+      p
+        ? { text: 'SPAM DETECTED', color: 'text-rose-500 border-rose-500/40 bg-rose-500/10' }
+        : { text: 'LEGITIMATE (HAM)', color: 'text-emerald-500 border-emerald-500/40 bg-emerald-500/10' },
+  },
 ];
 
 interface FoundationLabProps {
@@ -72,7 +80,7 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
   const [threshold, setThreshold] = useState<number>(0.5);
 
   const [animating, setAnimating] = useState<boolean>(false);
-  const [activeStep, setActiveStep] = useState<number>(3); // All stages illuminated
+  const [activeStep, setActiveStep] = useState<number>(3);
 
   const handleSelectPreset = (preset: Preset) => {
     setSelectedPreset(preset);
@@ -91,14 +99,14 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
     setActiveStep(3);
   };
 
-  // Mathematical pipeline calculation
+  // Pipeline calculations
   const z = useMemo(() => weight * inputVal + bias, [weight, inputVal, bias]);
 
   const activatedOutput = useMemo(() => {
     if (activation === 'sigmoid') return 1 / (1 + Math.exp(-z));
     if (activation === 'relu') return Math.max(0, z);
     if (activation === 'step') return z >= 0 ? 1 : 0;
-    return z; // linear
+    return z;
   }, [z, activation]);
 
   const isPositive = activatedOutput >= threshold;
@@ -111,51 +119,51 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
       setTimeout(() => {
         setActiveStep(step);
         if (step === 3) setAnimating(false);
-      }, (step + 1) * 550);
+      }, (step + 1) * 450);
     });
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-12">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
       {/* Top Breadcrumb */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4 text-xs font-mono text-muted-foreground">
         <Link
           href={basePath}
-          className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary)] transition-colors"
+          className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Foundations Curriculum
+          <ArrowLeft className="h-3.5 w-3.5" /> Back to Foundations Matrix
         </Link>
-        <span className="font-mono text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-          MICRO-MODEL STUDIO &bull; LAB 01
+        <span className="font-semibold text-foreground">
+          // STUDIO_01 &bull; DETERMINISTIC PIPELINE BENCH
         </span>
       </div>
 
       {/* Header */}
       <header className="space-y-4">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono text-[var(--ai-primary)] uppercase tracking-wider font-semibold">
-            Interactive Workbench
+          <span className="rounded border border-border bg-secondary/50 px-2.5 py-0.5 text-xs font-mono text-muted-foreground">
+            BENCHMARK LAB 01
           </span>
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-[var(--ai-text)] tracking-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight font-display">
           The Micro-Model Studio
         </h1>
-        <p className="text-base sm:text-lg text-[var(--ai-muted)] max-w-3xl leading-relaxed">
-          Step directly inside the mathematical execution loop of a machine learning model. Adjust input features, tune weights (slope) and bias (intercept), choose non-linear activation functions, and watch every intermediate computation transform into a final decision.
+        <p className="text-sm sm:text-base text-muted-foreground max-w-3xl leading-relaxed">
+          Step directly inside the deterministic mathematical execution loop of a learned model. Tune weight coefficients (w), bias intercepts (b), choose non-linear activation functions, and inspect intermediate memory registers transforming into classified predictions.
         </p>
       </header>
 
       {/* Preset Selector */}
-      <div className="flex flex-wrap items-center gap-3">
-        <span className="text-xs font-mono text-[var(--ai-muted)]">Select Preset Scenario:</span>
+      <div className="flex flex-wrap items-center gap-2 pt-1 font-mono text-xs">
+        <span className="text-muted-foreground mr-1">SCENARIOS:</span>
         {PRESETS.map((preset) => (
           <button
             key={preset.id}
             onClick={() => handleSelectPreset(preset)}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all ${
+            className={`px-3 py-1.5 rounded-lg border transition-colors ${
               selectedPreset.id === preset.id
-                ? 'bg-[var(--ai-primary)] text-white font-bold shadow-md'
-                : 'border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] text-[var(--ai-muted)] hover:text-[var(--ai-text)]'
+                ? 'border-foreground bg-foreground text-background font-bold'
+                : 'border-border/80 bg-secondary/30 text-muted-foreground hover:text-foreground'
             }`}
           >
             {preset.name}
@@ -163,29 +171,29 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
         ))}
       </div>
 
-      {/* Main Studio Canvas */}
+      {/* Studio Canvas */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column: Direct Controls (5 cols) */}
+        {/* Left Column: Direct Parameter Controls */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-surface)] p-6 space-y-6">
-            <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-3">
-              <h2 className="font-display font-bold text-lg text-[var(--ai-text)] flex items-center gap-2">
-                <Sliders className="w-5 h-5 text-[var(--ai-primary)]" /> Parameter Controls
+          <div className="rounded-xl border border-border/80 bg-card p-6 space-y-6">
+            <div className="flex items-center justify-between border-b border-border/80 pb-3">
+              <h2 className="font-display font-bold text-base text-foreground flex items-center gap-2">
+                <Sliders className="h-4 w-4 text-foreground" /> Parameter Registers
               </h2>
               <button
                 onClick={reset}
-                className="text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-text)] flex items-center gap-1"
+                className="text-xs font-mono text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
                 title="Reset sliders to preset defaults"
               >
-                <RotateCcw className="w-3.5 h-3.5" /> Reset
+                <RotateCcw className="h-3.5 w-3.5" /> Reset Defaults
               </button>
             </div>
 
             {/* Input Feature (x) */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex justify-between font-mono text-xs">
-                <span className="text-[var(--ai-text)] font-semibold">Input Feature (x)</span>
-                <span className="text-[var(--ai-primary)] font-bold">{inputVal.toFixed(2)}</span>
+                <span className="text-foreground">Input Scalar (x)</span>
+                <span className="font-bold text-foreground">{inputVal.toFixed(2)}</span>
               </div>
               <input
                 type="range"
@@ -194,9 +202,9 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
                 step="0.1"
                 value={inputVal}
                 onChange={(e) => setInputVal(parseFloat(e.target.value))}
-                className="w-full accent-indigo-500"
+                className="w-full"
               />
-              <div className="flex justify-between text-[10px] font-mono text-[var(--ai-muted)]">
+              <div className="flex justify-between text-[10px] font-mono text-muted-foreground">
                 <span>-3.0 (Low)</span>
                 <span>0.0</span>
                 <span>+3.0 (High)</span>
@@ -204,10 +212,10 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
             </div>
 
             {/* Learned Weight (w) */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex justify-between font-mono text-xs">
-                <span className="text-[var(--ai-text)] font-semibold">Weight Coefficient (w)</span>
-                <span className="text-emerald-400 font-bold">{weight.toFixed(2)}</span>
+                <span className="text-foreground">Weight Coefficient (w)</span>
+                <span className="font-bold text-foreground">{weight.toFixed(2)}</span>
               </div>
               <input
                 type="range"
@@ -216,9 +224,9 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
                 step="0.1"
                 value={weight}
                 onChange={(e) => setWeight(parseFloat(e.target.value))}
-                className="w-full accent-emerald-500"
+                className="w-full"
               />
-              <div className="flex justify-between text-[10px] font-mono text-[var(--ai-muted)]">
+              <div className="flex justify-between text-[10px] font-mono text-muted-foreground">
                 <span>-3.0 (Inhibitory)</span>
                 <span>0.0</span>
                 <span>+3.0 (Excitatory)</span>
@@ -226,10 +234,10 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
             </div>
 
             {/* Learned Bias (b) */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex justify-between font-mono text-xs">
-                <span className="text-[var(--ai-text)] font-semibold">Learned Bias (b)</span>
-                <span className="text-purple-400 font-bold">{bias.toFixed(2)}</span>
+                <span className="text-foreground">Bias Intercept (b)</span>
+                <span className="font-bold text-foreground">{bias.toFixed(2)}</span>
               </div>
               <input
                 type="range"
@@ -238,9 +246,9 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
                 step="0.1"
                 value={bias}
                 onChange={(e) => setBias(parseFloat(e.target.value))}
-                className="w-full accent-purple-500"
+                className="w-full"
               />
-              <div className="flex justify-between text-[10px] font-mono text-[var(--ai-muted)]">
+              <div className="flex justify-between text-[10px] font-mono text-muted-foreground">
                 <span>-2.0 (Strict)</span>
                 <span>0.0</span>
                 <span>+2.0 (Permissive)</span>
@@ -249,16 +257,16 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
 
             {/* Activation Function */}
             <div className="space-y-2">
-              <span className="font-mono text-xs text-[var(--ai-text)] font-semibold">Activation Function &sigma;(z)</span>
+              <span className="font-mono text-xs text-foreground font-semibold">Activation Function &sigma;(z)</span>
               <div className="grid grid-cols-2 gap-2 font-mono text-xs">
                 {(['sigmoid', 'relu', 'step', 'linear'] as const).map((fn) => (
                   <button
                     key={fn}
                     onClick={() => setActivation(fn)}
-                    className={`py-2 px-3 rounded-lg border text-center transition-all ${
+                    className={`py-2 px-3 rounded-lg border text-center transition-colors ${
                       activation === fn
-                        ? 'border-[var(--ai-primary)] bg-[var(--ai-primary)]/20 text-[var(--ai-text)] font-bold'
-                        : 'border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] hover:text-[var(--ai-text)]'
+                        ? 'border-foreground bg-foreground text-background font-bold'
+                        : 'border-border/80 bg-secondary/30 text-muted-foreground hover:text-foreground'
                     }`}
                   >
                     {fn.toUpperCase()}
@@ -268,10 +276,10 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
             </div>
 
             {/* Decision Threshold */}
-            <div className="space-y-2 pt-2 border-t border-[var(--ai-border-subtle)]">
+            <div className="space-y-1.5 pt-2 border-t border-border/80">
               <div className="flex justify-between font-mono text-xs">
-                <span className="text-[var(--ai-text)] font-semibold">Decision Threshold (&tau;)</span>
-                <span className="text-cyan-400 font-bold">{threshold.toFixed(2)}</span>
+                <span className="text-foreground">Decision Threshold (&tau;)</span>
+                <span className="font-bold text-foreground">{threshold.toFixed(2)}</span>
               </div>
               <input
                 type="range"
@@ -280,7 +288,7 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
                 step="0.05"
                 value={threshold}
                 onChange={(e) => setThreshold(parseFloat(e.target.value))}
-                className="w-full accent-cyan-500"
+                className="w-full"
               />
             </div>
           </div>
@@ -288,23 +296,23 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
           <button
             onClick={runStepper}
             disabled={animating}
-            className="w-full py-3.5 rounded-xl bg-[var(--ai-primary)] text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-[var(--ai-primary-hover)] active:scale-95 transition-all shadow-lg"
+            className="w-full py-3 rounded-lg bg-foreground text-background font-mono text-xs font-bold flex items-center justify-center gap-2 hover:bg-foreground/90 transition-colors disabled:opacity-50"
           >
-            <Play className="w-4 h-4" /> Run Step-by-Step Pipeline Animation
+            <Play className="h-4 w-4" /> Run Step-by-Step Pipeline Animation
           </button>
         </div>
 
-        {/* Right Column: 4-Stage Transparent Pipeline (7 cols) */}
+        {/* Right Column: 4-Stage Transparent Execution Pipeline */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-surface)] p-6 sm:p-8 space-y-6">
-            <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
+          <div className="rounded-xl border border-border/80 bg-card p-6 space-y-6">
+            <div className="flex items-center justify-between border-b border-border/80 pb-4">
               <div>
-                <span className="font-mono text-xs text-[var(--ai-primary)] uppercase">Live Architecture</span>
-                <h3 className="font-display font-bold text-xl text-[var(--ai-text)]">
-                  {selectedPreset.name} Pipeline
+                <span className="font-mono text-xs text-muted-foreground uppercase">// PIPELINE TELEMETRY</span>
+                <h3 className="font-display font-bold text-xl text-foreground">
+                  {selectedPreset.name}
                 </h3>
               </div>
-              <span className="text-xs font-mono text-[var(--ai-muted)] hidden sm:block">
+              <span className="text-xs font-mono text-muted-foreground hidden sm:block">
                 4-Stage Execution
               </span>
             </div>
@@ -313,95 +321,95 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Stage 1 */}
               <div
-                className={`p-5 rounded-xl border transition-all duration-300 ${
+                className={`p-4 rounded-xl border transition-colors ${
                   activeStep >= 0
-                    ? 'border-indigo-500/40 bg-indigo-500/5 shadow-md'
-                    : 'border-white/5 opacity-50'
+                    ? 'border-foreground/40 bg-secondary/30'
+                    : 'border-border/40 opacity-40'
                 }`}
               >
                 <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="text-indigo-400 font-bold">01 / FEATURE INGESTION</span>
-                  {activeStep >= 0 && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                  <span className="font-bold text-foreground">01 / FEATURE INGESTION</span>
+                  {activeStep >= 0 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
                 </div>
-                <div className="mt-3 text-2xl font-bold font-mono text-[var(--ai-text)]">
+                <div className="mt-2 text-2xl font-bold font-mono text-foreground">
                   x = {inputVal.toFixed(2)}
                 </div>
-                <p className="mt-1 text-xs text-[var(--ai-muted)]">
+                <p className="mt-1 text-xs text-muted-foreground">
                   Normalized scalar input representation.
                 </p>
               </div>
 
               {/* Stage 2 */}
               <div
-                className={`p-5 rounded-xl border transition-all duration-300 ${
+                className={`p-4 rounded-xl border transition-colors ${
                   activeStep >= 1
-                    ? 'border-emerald-500/40 bg-emerald-500/5 shadow-md'
-                    : 'border-white/5 opacity-50'
+                    ? 'border-foreground/40 bg-secondary/30'
+                    : 'border-border/40 opacity-40'
                 }`}
               >
                 <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="text-emerald-400 font-bold">02 / LINEAR SUM (z)</span>
-                  {activeStep >= 1 && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                  <span className="font-bold text-foreground">02 / LINEAR COMBINATION (z)</span>
+                  {activeStep >= 1 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
                 </div>
-                <div className="mt-3 text-2xl font-bold font-mono text-[var(--ai-text)]">
+                <div className="mt-2 text-2xl font-bold font-mono text-foreground">
                   z = {z.toFixed(2)}
                 </div>
-                <p className="mt-1 text-xs text-[var(--ai-muted)] font-mono">
+                <p className="mt-1 text-xs text-muted-foreground font-mono">
                   ({weight.toFixed(1)} &times; {inputVal.toFixed(1)}) + {bias.toFixed(1)}
                 </p>
               </div>
 
               {/* Stage 3 */}
               <div
-                className={`p-5 rounded-xl border transition-all duration-300 ${
+                className={`p-4 rounded-xl border transition-colors ${
                   activeStep >= 2
-                    ? 'border-purple-500/40 bg-purple-500/5 shadow-md'
-                    : 'border-white/5 opacity-50'
+                    ? 'border-foreground/40 bg-secondary/30'
+                    : 'border-border/40 opacity-40'
                 }`}
               >
                 <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="text-purple-400 font-bold">03 / ACTIVATION &sigma;(z)</span>
-                  {activeStep >= 2 && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                  <span className="font-bold text-foreground">03 / ACTIVATION &sigma;(z)</span>
+                  {activeStep >= 2 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
                 </div>
-                <div className="mt-3 text-2xl font-bold font-mono text-[var(--ai-text)]">
+                <div className="mt-2 text-2xl font-bold font-mono text-foreground">
                   a = {activatedOutput.toFixed(3)}
                 </div>
-                <p className="mt-1 text-xs text-[var(--ai-muted)] font-mono">
-                  Applied {activation.toUpperCase()} function.
+                <p className="mt-1 text-xs text-muted-foreground font-mono">
+                  Applied {activation.toUpperCase()} non-linearity.
                 </p>
               </div>
 
               {/* Stage 4 */}
               <div
-                className={`p-5 rounded-xl border transition-all duration-300 ${
+                className={`p-4 rounded-xl border transition-colors ${
                   activeStep >= 3
-                    ? 'border-cyan-500/40 bg-cyan-500/5 shadow-md'
-                    : 'border-white/5 opacity-50'
+                    ? 'border-foreground/40 bg-secondary/30'
+                    : 'border-border/40 opacity-40'
                 }`}
               >
                 <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="text-cyan-400 font-bold">04 / DECISION VERDICT</span>
-                  {activeStep >= 3 && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                  <span className="font-bold text-foreground">04 / DECISION VERDICT</span>
+                  {activeStep >= 3 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
                 </div>
                 <div className="mt-2.5">
-                  <span className={`inline-block px-3 py-1 rounded-lg text-xs font-mono font-bold border ${verdict.color}`}>
+                  <span className={`inline-block px-3 py-1 rounded text-xs font-mono font-bold border ${verdict.color}`}>
                     {verdict.text}
                   </span>
                 </div>
-                <p className="mt-2 text-xs text-[var(--ai-muted)] font-mono">
+                <p className="mt-2 text-xs text-muted-foreground font-mono">
                   Score {activatedOutput.toFixed(2)} {isPositive ? '&ge;' : '<'} Threshold {threshold.toFixed(2)}
                 </p>
               </div>
             </div>
 
             {/* Live State Machine Table */}
-            <div className="p-4 rounded-xl border border-white/10 bg-black/40 font-mono text-xs space-y-2">
-              <span className="text-[var(--ai-muted)]">&gt; Intermediate Memory Buffer:</span>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[var(--ai-text)]">
-                <div>Input x: <span className="text-indigo-400">{inputVal.toFixed(2)}</span></div>
-                <div>Weighted w&middot;x: <span className="text-emerald-400">{(weight * inputVal).toFixed(2)}</span></div>
-                <div>Linear z: <span className="text-purple-400">{z.toFixed(2)}</span></div>
-                <div>Confidence: <span className="text-cyan-400">{(activatedOutput * 100).toFixed(1)}%</span></div>
+            <div className="p-4 rounded-xl border border-border/80 bg-secondary/20 font-mono text-xs space-y-2">
+              <span className="text-muted-foreground">&gt; Intermediate Register State:</span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-foreground font-medium">
+                <div>Input x: <span className="font-bold">{inputVal.toFixed(2)}</span></div>
+                <div>Weighted w&middot;x: <span className="font-bold">{(weight * inputVal).toFixed(2)}</span></div>
+                <div>Linear z: <span className="font-bold">{z.toFixed(2)}</span></div>
+                <div>Probability: <span className="font-bold text-emerald-500">{(activatedOutput * 100).toFixed(1)}%</span></div>
               </div>
             </div>
           </div>

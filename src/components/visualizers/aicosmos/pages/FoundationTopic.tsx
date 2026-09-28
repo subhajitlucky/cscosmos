@@ -9,15 +9,13 @@ import {
   Lightbulb,
   AlertTriangle,
   Code2,
-  Sparkles,
   Copy,
   Check,
   Cpu,
   Layers,
   Sliders,
-  Dice5,
   Activity,
-  Workflow
+  Terminal
 } from 'lucide-react';
 import { foundationSubtopics, getFoundationSubtopic, type FoundationSubtopic } from '../data/foundations';
 
@@ -46,59 +44,59 @@ export function FoundationTopic({
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-10">
       {/* Top Nav Breadcrumbs */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4 text-xs font-mono text-muted-foreground">
         <Link
           href={basePath}
-          className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary)] transition-colors"
+          className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Foundations Curriculum
+          <ArrowLeft className="h-3.5 w-3.5" /> Back to Foundations Matrix
         </Link>
-        <span className="font-mono text-xs text-[var(--ai-muted)]">
-          MODULE {String(topic.number).padStart(2, '0')} OF 26
+        <span className="font-semibold text-foreground">
+          // MODULE {String(topic.number).padStart(2, '0')} OF 26
         </span>
       </div>
 
       {/* Header */}
       <header className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-xs font-bold text-[var(--ai-primary)] px-2.5 py-0.5 rounded-full bg-[var(--ai-primary)]/10 border border-[var(--ai-primary)]/20">
+          <span className="rounded border border-border bg-secondary/50 px-2.5 py-0.5 text-xs font-mono font-semibold text-foreground">
             {topic.category.toUpperCase()}
           </span>
-          <span className="text-xs font-mono text-[var(--ai-muted)]">
-            Estimated ~5 min read
+          <span className="text-xs font-mono text-muted-foreground">
+            Estimated ~5 min read &bull; Client-Side Reactive
           </span>
         </div>
 
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-[var(--ai-text)] tracking-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight font-display">
           {topic.title}
         </h1>
 
-        <p className="text-base sm:text-lg leading-relaxed text-[var(--ai-muted)] max-w-3xl">
+        <p className="text-sm sm:text-base leading-relaxed text-muted-foreground max-w-3xl">
           {topic.definition}
         </p>
       </header>
 
       {/* Mental Model & Analogy */}
-      <section className="rounded-2xl border border-[var(--ai-primary)]/30 bg-[var(--ai-primary)]/5 p-6 sm:p-8 space-y-3 relative overflow-hidden">
-        <div className="flex items-center gap-2 text-xs font-mono text-[var(--ai-primary)] uppercase tracking-wider font-semibold">
-          <Lightbulb className="w-4 h-4 text-[var(--ai-primary)]" /> Real-World Mental Model
+      <section className="rounded-xl border border-border/80 bg-secondary/30 p-6 space-y-2">
+        <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground uppercase tracking-wider font-semibold">
+          <Lightbulb className="h-4 w-4 text-foreground" /> Real-World Mental Model
         </div>
-        <p className="text-lg sm:text-xl font-display font-bold text-[var(--ai-text)] leading-snug">
-          "{topic.analogy}"
+        <p className="text-base sm:text-lg font-display font-bold text-foreground leading-snug">
+          &ldquo;{topic.analogy}&rdquo;
         </p>
       </section>
 
       {/* Interactive Visualization Studio */}
-      <section className="rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-surface)] overflow-hidden shadow-xl">
-        <div className="border-b border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] px-6 py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-mono text-[var(--ai-text)] font-semibold">
-            <Sparkles className="w-3.5 h-3.5 text-[var(--ai-primary)]" />
-            INTERACTIVE CANVAS: {topic.visualization.toUpperCase().replace(/-/g, ' ')}
+      <section className="rounded-xl border border-border/80 bg-card overflow-hidden">
+        <div className="border-b border-border/80 bg-secondary/40 px-5 py-3 flex items-center justify-between text-xs font-mono">
+          <div className="flex items-center gap-2 font-semibold text-foreground">
+            <Terminal className="h-3.5 w-3.5 text-foreground" />
+            <span>INTERACTIVE ENGINE: {topic.visualization.toUpperCase().replace(/-/g, ' ')}</span>
           </div>
-          <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Live Reactive
+          <span className="text-[11px] text-emerald-500 dark:text-emerald-400 flex items-center gap-1.5 font-mono">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Live Reactive
           </span>
         </div>
 
@@ -108,14 +106,17 @@ export function FoundationTopic({
       </section>
 
       {/* Key Takeaways */}
-      <section className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6 sm:p-8 space-y-5">
-        <h2 className="font-display text-xl sm:text-2xl font-bold text-[var(--ai-text)]">
+      <section className="rounded-xl border border-border/80 bg-card p-6 sm:p-8 space-y-4">
+        <div className="text-xs font-mono font-semibold text-muted-foreground uppercase tracking-widest">
+          CORE PRINCIPLES
+        </div>
+        <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground">
           What You Must Understand
         </h2>
-        <div className="space-y-3.5">
+        <div className="space-y-3">
           {topic.keyPoints.map((point, i) => (
-            <div key={i} className="flex items-start gap-3 text-sm leading-relaxed text-[var(--ai-muted)]">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+            <div key={i} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
               <span>{point}</span>
             </div>
           ))}
@@ -124,27 +125,27 @@ export function FoundationTopic({
 
       {/* Code Snippet */}
       {topic.codeSnippet && (
-        <section className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] overflow-hidden">
-          <div className="border-b border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] px-6 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--ai-muted)]">
-              <Code2 className="w-4 h-4 text-[var(--ai-primary)]" /> Engineering Reference Code
+        <section className="rounded-xl border border-border/80 bg-card overflow-hidden">
+          <div className="border-b border-border/80 bg-secondary/40 px-5 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+              <Code2 className="h-4 w-4 text-foreground" /> Reference Implementation
             </div>
             <button
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-text)] transition-colors px-2 py-1 rounded bg-white/5"
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded border border-border bg-secondary/60"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" /> Copied
+                  <Check className="h-3.5 w-3.5 text-emerald-500" /> Copied
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5" /> Copy Code
+                  <Copy className="h-3.5 w-3.5" /> Copy Code
                 </>
               )}
             </button>
           </div>
-          <pre className="p-6 text-xs sm:text-sm font-mono text-[var(--ai-text)] bg-black/40 overflow-x-auto leading-relaxed">
+          <pre className="p-6 text-xs sm:text-sm font-mono text-foreground bg-secondary/20 overflow-x-auto leading-relaxed">
             <code>{topic.codeSnippet}</code>
           </pre>
         </section>
@@ -152,27 +153,27 @@ export function FoundationTopic({
 
       {/* Common Pitfall Warning */}
       {topic.pitfall && (
-        <section className="rounded-2xl border border-rose-500/30 bg-rose-500/5 p-6 sm:p-8 space-y-2">
-          <div className="flex items-center gap-2 text-xs font-mono text-rose-400 uppercase tracking-wider font-semibold">
-            <AlertTriangle className="w-4 h-4 text-rose-400" /> Production Pitfall to Avoid
+        <section className="rounded-xl border border-border/80 bg-secondary/20 p-6 space-y-2">
+          <div className="flex items-center gap-2 text-xs font-mono text-amber-500 uppercase tracking-wider font-semibold">
+            <AlertTriangle className="h-4 w-4 text-amber-500" /> Production Failure Mode
           </div>
-          <p className="text-sm sm:text-base leading-relaxed text-[var(--ai-muted)]">
+          <p className="text-sm leading-relaxed text-muted-foreground">
             {topic.pitfall}
           </p>
         </section>
       )}
 
       {/* Bottom Navigation */}
-      <nav className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-[var(--ai-border-subtle)]">
+      <nav className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-border/80">
         {previous ? (
           <Link
             href={`${basePath}/learn/${previous.id}`}
-            className="ai-card p-5 rounded-2xl group flex flex-col justify-between"
+            className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-foreground/40 transition-colors"
           >
-            <span className="text-[10px] font-mono text-[var(--ai-muted)] uppercase">
-              &larr; Previous Subtopic ({previous.number})
+            <span className="text-[10px] font-mono text-muted-foreground uppercase">
+              &larr; Previous Module ({previous.number})
             </span>
-            <div className="mt-2 font-display font-bold text-base text-[var(--ai-text)] group-hover:text-[var(--ai-primary)] transition-colors">
+            <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-primary transition-colors">
               {previous.title}
             </div>
           </Link>
@@ -183,24 +184,24 @@ export function FoundationTopic({
         {next ? (
           <Link
             href={`${basePath}/learn/${next.id}`}
-            className="ai-card p-5 rounded-2xl group flex flex-col justify-between text-right sm:items-end"
+            className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between text-right sm:items-end hover:border-foreground/40 transition-colors"
           >
-            <span className="text-[10px] font-mono text-[var(--ai-primary)] uppercase font-semibold">
-              Next Subtopic ({next.number}) &rarr;
+            <span className="text-[10px] font-mono text-muted-foreground uppercase font-semibold">
+              Next Module ({next.number}) &rarr;
             </span>
-            <div className="mt-2 font-display font-bold text-base text-[var(--ai-text)] group-hover:text-[var(--ai-primary)] transition-colors">
+            <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-primary transition-colors">
               {next.title}
             </div>
           </Link>
         ) : (
           <Link
             href={`${basePath}/lab`}
-            className="ai-card p-5 rounded-2xl group flex flex-col justify-between text-right sm:items-end border-emerald-500/40"
+            className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between text-right sm:items-end hover:border-foreground/40 transition-colors"
           >
-            <span className="text-[10px] font-mono text-emerald-400 uppercase font-semibold">
-              Foundation Complete &rarr;
+            <span className="text-[10px] font-mono text-emerald-500 uppercase font-semibold">
+              Curriculum Complete &rarr;
             </span>
-            <div className="mt-2 font-display font-bold text-base text-[var(--ai-text)] group-hover:text-emerald-400 transition-colors">
+            <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-emerald-500 transition-colors">
               Launch The Micro-Model Studio
             </div>
           </Link>
@@ -214,42 +215,29 @@ export function FoundationTopic({
 // Interactive Subtopic Visualizers
 // -------------------------------------------------------------
 function SubtopicInteractiveVisualizer({ topic }: { topic: FoundationSubtopic }) {
-  // 1. Weight & Bias Linear Slider Canvas
   if (topic.visualization === 'weight-slider' || topic.visualization === 'bias-slider' || topic.id === 'weights' || topic.id === 'bias') {
     return <WeightBiasSliderWidget />;
   }
-
-  // 2. AI Taxonomy Circles
   if (topic.visualization === 'ai-taxonomy' || topic.id === 'what-is-artificial-intelligence') {
     return <AiTaxonomyWidget />;
   }
-
-  // 3. Autoregressive Next-Token Predictor
   if (topic.visualization === 'next-token' || topic.id === 'what-is-an-llm') {
     return <NextTokenWidget />;
   }
-
-  // 4. Deterministic vs Probabilistic Dice
   if (topic.visualization === 'probabilistic-dice' || topic.id === 'deterministic-vs-probabilistic-systems') {
     return <ProbabilisticSimulatorWidget />;
   }
-
-  // 5. Training vs Inference Comparison
   if (topic.visualization === 'training-vs-inference' || topic.id === 'training-vs-inference') {
     return <TrainingVsInferenceWidget />;
   }
-
-  // 6. Rule-based vs Learned ML
   if (topic.visualization === 'rule-vs-learned' || topic.id === 'ai-vs-machine-learning') {
     return <RuleVsLearnedWidget />;
   }
-
-  // 7. General Pipeline Stepper
   return <GenericPipelineWidget topic={topic} />;
 }
 
 // -------------------------------------------------------------
-// Widget 1: Weight & Bias Live Slider
+// Widget 1: Weight & Bias Live Telemetry Slider
 // -------------------------------------------------------------
 function WeightBiasSliderWidget() {
   const [weight, setWeight] = useState(1.5);
@@ -262,9 +250,9 @@ function WeightBiasSliderWidget() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-        <div className="rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] p-4 space-y-2">
-          <div className="text-[var(--ai-muted)]">Input Feature (x)</div>
-          <div className="text-xl font-bold text-[var(--ai-text)]">{inputVal.toFixed(1)}</div>
+        <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 space-y-2">
+          <div className="text-muted-foreground">Input Feature (x)</div>
+          <div className="text-2xl font-bold text-foreground">{inputVal.toFixed(1)}</div>
           <input
             type="range"
             min="-5"
@@ -272,13 +260,13 @@ function WeightBiasSliderWidget() {
             step="0.5"
             value={inputVal}
             onChange={(e) => setInputVal(parseFloat(e.target.value))}
-            className="w-full accent-indigo-500"
+            className="w-full"
           />
         </div>
 
-        <div className="rounded-xl border border-[var(--ai-primary)]/40 bg-[var(--ai-primary)]/10 p-4 space-y-2">
-          <div className="text-[var(--ai-primary)] font-semibold">Weight (w) &bull; Slope</div>
-          <div className="text-xl font-bold text-[var(--ai-text)]">{weight.toFixed(2)}</div>
+        <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 space-y-2">
+          <div className="text-muted-foreground font-semibold">Weight (w) &bull; Slope</div>
+          <div className="text-2xl font-bold text-foreground">{weight.toFixed(2)}</div>
           <input
             type="range"
             min="-3"
@@ -286,13 +274,13 @@ function WeightBiasSliderWidget() {
             step="0.1"
             value={weight}
             onChange={(e) => setWeight(parseFloat(e.target.value))}
-            className="w-full accent-indigo-500"
+            className="w-full"
           />
         </div>
 
-        <div className="rounded-xl border border-purple-500/40 bg-purple-500/10 p-4 space-y-2">
-          <div className="text-purple-400 font-semibold">Bias (b) &bull; Intercept</div>
-          <div className="text-xl font-bold text-[var(--ai-text)]">{bias.toFixed(2)}</div>
+        <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 space-y-2">
+          <div className="text-muted-foreground font-semibold">Bias (b) &bull; Intercept</div>
+          <div className="text-2xl font-bold text-foreground">{bias.toFixed(2)}</div>
           <input
             type="range"
             min="-3"
@@ -300,22 +288,22 @@ function WeightBiasSliderWidget() {
             step="0.1"
             value={bias}
             onChange={(e) => setBias(parseFloat(e.target.value))}
-            className="w-full accent-purple-500"
+            className="w-full"
           />
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-black/40 p-5 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+      <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
         <div className="space-y-1 text-center sm:text-left">
-          <span className="text-[var(--ai-muted)]">Linear Equation:</span>
-          <div className="text-base text-[var(--ai-text)] font-semibold">
-            z = (w &times; x) + b = ({weight.toFixed(2)} &times; {inputVal.toFixed(1)}) + {bias.toFixed(2)} = <span className="text-[var(--ai-primary)]">{rawSum.toFixed(2)}</span>
+          <span className="text-muted-foreground">Linear Equation:</span>
+          <div className="text-sm sm:text-base text-foreground font-semibold">
+            z = (w &times; x) + b = ({weight.toFixed(2)} &times; {inputVal.toFixed(1)}) + {bias.toFixed(2)} = <span className="font-bold underline">{rawSum.toFixed(2)}</span>
           </div>
         </div>
 
-        <div className="px-5 py-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-bold text-center">
-          <div>Sigmoid Activation &sigma;(z)</div>
-          <div className="text-lg">{(activatedSigmoid * 100).toFixed(1)}%</div>
+        <div className="px-5 py-3 rounded-lg border border-border/80 bg-secondary/50 text-foreground font-bold text-center">
+          <div className="text-[11px] text-muted-foreground font-mono">Sigmoid Activation &sigma;(z)</div>
+          <div className="text-xl font-mono text-emerald-500">{(activatedSigmoid * 100).toFixed(1)}%</div>
         </div>
       </div>
     </div>
@@ -332,31 +320,31 @@ function AiTaxonomyWidget() {
     ai: {
       name: 'Artificial Intelligence',
       scope: 'The Broad Destination',
-      desc: 'All machines exhibiting cognitive behavior (search algorithms, heuristics, expert systems, learned models).',
-      examples: 'A* Pathfinding, Deep Blue chess engine, rule engines, LLMs'
+      desc: 'All computational systems exhibiting cognitive reasoning (heuristics, tree search, expert systems, learned models).',
+      examples: 'A* Pathfinding, Minimax chess engine, rule engines, LLMs'
     },
     ml: {
       name: 'Machine Learning',
       scope: 'Empirical Parameter Learning',
-      desc: 'Algorithms that optimize weights from data instead of hardcoded if/else statements.',
+      desc: 'Algorithms that optimize weights from data instead of hand-written conditional logic.',
       examples: 'Linear Regression, XGBoost, Random Forests, K-Means'
     },
     dl: {
       name: 'Deep Learning',
       scope: 'Hierarchical Multi-Layer Networks',
-      desc: 'Neural networks with multiple hidden layers that automatically discover internal representations.',
-      examples: 'ResNet (Vision), Convolutions, Multi-Layer Perceptrons'
+      desc: 'Neural networks with multiple stacked layers that learn representations directly from raw inputs.',
+      examples: 'ResNet, Convolutions, Multi-Layer Perceptrons, Vision Transformers'
     },
     genai: {
       name: 'Generative AI',
       scope: 'Sampling Learned Distributions',
-      desc: 'Models that produce brand-new artifacts (text, image, audio) by learning P(X).',
-      examples: 'Diffusion Models (Midjourney), VAEs, Autoregressive LLMs'
+      desc: 'Models that generate synthetic data artifacts (text, image, audio) by learning probability distribution P(X).',
+      examples: 'Diffusion Models (Stable Diffusion), VAEs, Autoregressive LLMs'
     },
     llm: {
       name: 'Large Language Models',
       scope: 'Scale & Emergent Reasoning',
-      desc: 'Trillion-token Transformer models trained on next-token prediction with general reasoning capabilities.',
+      desc: 'Trillion-parameter Transformer models trained on next-token prediction with general in-context learning.',
       examples: 'GPT-4, Claude 3.5 Sonnet, Gemini 1.5, Llama 3'
     }
   };
@@ -368,10 +356,10 @@ function AiTaxonomyWidget() {
           <button
             key={key}
             onClick={() => setSelectedLayer(key)}
-            className={`p-3 rounded-xl border text-center transition-all ${
+            className={`p-3 rounded-lg border text-center transition-colors ${
               selectedLayer === key
-                ? 'border-[var(--ai-primary)] bg-[var(--ai-primary)]/20 text-[var(--ai-text)] font-bold shadow-md'
-                : 'border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] hover:text-[var(--ai-text)]'
+                ? 'border-foreground bg-foreground text-background font-bold'
+                : 'border-border/80 bg-secondary/30 text-muted-foreground hover:text-foreground'
             }`}
           >
             {layers[key].name.split(' ')[0]}
@@ -379,16 +367,16 @@ function AiTaxonomyWidget() {
         ))}
       </div>
 
-      <div className="rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-surface-2)] p-6 space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="font-display font-bold text-xl text-[var(--ai-text)]">{layers[selectedLayer].name}</h3>
-          <span className="font-mono text-xs px-2.5 py-1 rounded bg-[var(--ai-primary)]/10 text-[var(--ai-primary)] border border-[var(--ai-primary)]/30 font-semibold">
+      <div className="rounded-xl border border-border/80 bg-secondary/20 p-6 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h3 className="font-display font-bold text-xl text-foreground">{layers[selectedLayer].name}</h3>
+          <span className="font-mono text-xs px-2.5 py-1 rounded border border-border bg-secondary/60 text-muted-foreground font-semibold">
             {layers[selectedLayer].scope}
           </span>
         </div>
-        <p className="text-sm text-[var(--ai-muted)] leading-relaxed">{layers[selectedLayer].desc}</p>
-        <div className="pt-2 text-xs font-mono text-emerald-400">
-          <span className="text-[var(--ai-muted)]">Key Examples: </span>{layers[selectedLayer].examples}
+        <p className="text-sm text-muted-foreground leading-relaxed">{layers[selectedLayer].desc}</p>
+        <div className="pt-2 text-xs font-mono text-foreground">
+          <span className="text-muted-foreground">Key Examples: </span>{layers[selectedLayer].examples}
         </div>
       </div>
     </div>
@@ -408,7 +396,6 @@ function NextTokenWidget() {
     { token: 'machine', baseProb: 0.06 },
   ];
 
-  // Adjust probabilities based on temperature
   const adjusted = tokens.map((t) => {
     const raw = Math.pow(t.baseProb, 1 / Math.max(0.1, temperature));
     return { ...t, prob: raw };
@@ -418,17 +405,17 @@ function NextTokenWidget() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/10 bg-black/40 p-4 font-mono text-sm text-[var(--ai-text)]">
-        <span className="text-[var(--ai-muted)]">&gt; Context: </span>
-        <span>"Artificial Intelligence is redefining the "</span>
-        <span className="inline-block w-2.5 h-4 bg-[var(--ai-primary)] animate-pulse align-middle ml-1" />
+      <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 font-mono text-sm text-foreground">
+        <span className="text-muted-foreground">&gt; Context: </span>
+        <span>&ldquo;Artificial Intelligence is redefining the &rdquo;</span>
+        <span className="inline-block w-2 h-4 bg-foreground animate-pulse align-middle ml-1" />
       </div>
 
       <div className="space-y-2">
         <div className="flex items-center justify-between font-mono text-xs">
-          <span className="text-[var(--ai-text)] font-semibold">Temperature: {temperature.toFixed(2)}</span>
-          <span className="text-[var(--ai-muted)]">
-            {temperature < 0.3 ? 'Deterministic (Sharp)' : temperature > 1.0 ? 'High Entropy (Creative / Noisy)' : 'Balanced'}
+          <span className="text-foreground font-semibold">Temperature: {temperature.toFixed(2)}</span>
+          <span className="text-muted-foreground">
+            {temperature < 0.3 ? 'Deterministic (Sharp argmax)' : temperature > 1.0 ? 'High Entropy (Flat distribution)' : 'Balanced'}
           </span>
         </div>
         <input
@@ -438,21 +425,21 @@ function NextTokenWidget() {
           step="0.05"
           value={temperature}
           onChange={(e) => setTemperature(parseFloat(e.target.value))}
-          className="w-full accent-indigo-500"
+          className="w-full"
         />
       </div>
 
-      <div className="space-y-2 font-mono text-xs">
-        <div className="text-[var(--ai-muted)]">Next-Token Probability Distribution:</div>
+      <div className="space-y-2.5 font-mono text-xs">
+        <div className="text-muted-foreground">Next-Token Probability Distribution:</div>
         {normalized.map((item) => (
           <div key={item.token} className="space-y-1">
             <div className="flex justify-between">
-              <span className="text-[var(--ai-text)] font-bold">"{item.token}"</span>
-              <span className="text-[var(--ai-primary)]">{(item.prob * 100).toFixed(1)}%</span>
+              <span className="text-foreground font-bold">&ldquo;{item.token}&rdquo;</span>
+              <span className="text-foreground">{(item.prob * 100).toFixed(1)}%</span>
             </div>
-            <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
+            <div className="w-full h-2 rounded bg-secondary overflow-hidden">
               <div
-                className="h-full bg-[var(--ai-primary)] transition-all duration-300 rounded-full"
+                className="h-full bg-foreground transition-all duration-200 rounded"
                 style={{ width: `${item.prob * 100}%` }}
               />
             </div>
@@ -482,23 +469,23 @@ function ProbabilisticSimulatorWidget() {
 
   return (
     <div className="space-y-5 font-mono text-xs">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)]">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl border border-border/80 bg-secondary/30">
         <div>
-          <div className="text-[var(--ai-text)] font-bold">Sampling Mode:</div>
-          <div className="text-[var(--ai-muted)] text-[11px]">
-            {temperature === 0 ? 'T = 0 (Purely Deterministic: identical input always yields Result A)' : 'T > 0 (Probabilistic: random sampling across distribution)'}
+          <div className="text-foreground font-bold">Sampling Mode:</div>
+          <div className="text-muted-foreground text-[11px]">
+            {temperature === 0 ? 'T = 0 (Purely Deterministic: identical input always yields identical token)' : 'T > 0 (Probabilistic: random sampling across distribution)'}
           </div>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setTemperature(0.0)}
-            className={`px-3 py-1.5 rounded-lg border ${temperature === 0 ? 'bg-indigo-600 text-white' : 'border-white/10 text-muted-foreground'}`}
+            className={`px-3 py-1.5 rounded border ${temperature === 0 ? 'border-foreground bg-foreground text-background font-bold' : 'border-border text-muted-foreground'}`}
           >
             T = 0.0
           </button>
           <button
             onClick={() => setTemperature(0.8)}
-            className={`px-3 py-1.5 rounded-lg border ${temperature > 0 ? 'bg-indigo-600 text-white' : 'border-white/10 text-muted-foreground'}`}
+            className={`px-3 py-1.5 rounded border ${temperature > 0 ? 'border-foreground bg-foreground text-background font-bold' : 'border-border text-muted-foreground'}`}
           >
             T = 0.8
           </button>
@@ -508,18 +495,18 @@ function ProbabilisticSimulatorWidget() {
       <div className="flex items-center gap-3">
         <button
           onClick={sample}
-          className="px-4 py-2.5 rounded-xl bg-[var(--ai-primary)] text-white font-bold hover:bg-[var(--ai-primary-hover)] active:scale-95 transition-all"
+          className="px-4 py-2 rounded-lg bg-foreground text-background font-bold hover:bg-foreground/90 transition-colors"
         >
           Execute Sample (Run Inference)
         </button>
-        <span className="text-[var(--ai-muted)]">Click multiple times to observe repeatability</span>
+        <span className="text-muted-foreground text-[11px]">Click multiple times to verify repeatability</span>
       </div>
 
       {history.length > 0 && (
-        <div className="p-4 rounded-xl border border-white/10 bg-black/40 space-y-1.5">
-          <span className="text-[var(--ai-muted)]">Recent Outputs:</span>
+        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20 space-y-1.5">
+          <span className="text-muted-foreground">Recent Outputs:</span>
           {history.map((h, i) => (
-            <div key={i} className="text-emerald-400">
+            <div key={i} className="text-foreground">
               Run #{history.length - i}: <strong>{h}</strong>
             </div>
           ))}
@@ -537,43 +524,43 @@ function TrainingVsInferenceWidget() {
 
   return (
     <div className="space-y-5 font-mono text-xs">
-      <div className="flex rounded-xl p-1 bg-white/5 border border-white/10">
+      <div className="flex rounded-lg p-1 border border-border/80 bg-secondary/30">
         <button
           onClick={() => setMode('inference')}
-          className={`flex-1 py-2 rounded-lg font-bold transition-all ${mode === 'inference' ? 'bg-[var(--ai-primary)] text-white' : 'text-[var(--ai-muted)]'}`}
+          className={`flex-1 py-2 rounded font-bold transition-colors ${mode === 'inference' ? 'bg-foreground text-background' : 'text-muted-foreground'}`}
         >
           Inference Mode (Serving)
         </button>
         <button
           onClick={() => setMode('training')}
-          className={`flex-1 py-2 rounded-lg font-bold transition-all ${mode === 'training' ? 'bg-[var(--ai-primary)] text-white' : 'text-[var(--ai-muted)]'}`}
+          className={`flex-1 py-2 rounded font-bold transition-colors ${mode === 'training' ? 'bg-foreground text-background' : 'text-muted-foreground'}`}
         >
           Training Mode (Optimization)
         </button>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-4 rounded-xl border border-white/10 bg-[var(--ai-surface-2)]">
-          <div className="text-[var(--ai-muted)]">Pass Required</div>
-          <div className="text-base font-bold text-[var(--ai-text)] mt-1">
+        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
+          <div className="text-muted-foreground">Pass Required</div>
+          <div className="text-base font-bold text-foreground mt-1">
             {mode === 'inference' ? 'Forward Pass Only' : 'Forward + Backward'}
           </div>
         </div>
-        <div className="p-4 rounded-xl border border-white/10 bg-[var(--ai-surface-2)]">
-          <div className="text-[var(--ai-muted)]">Parameter State</div>
-          <div className="text-base font-bold text-emerald-400 mt-1">
+        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
+          <div className="text-muted-foreground">Parameter State</div>
+          <div className="text-base font-bold text-foreground mt-1">
             {mode === 'inference' ? 'Frozen / Static' : 'Updated via Gradients'}
           </div>
         </div>
-        <div className="p-4 rounded-xl border border-white/10 bg-[var(--ai-surface-2)]">
-          <div className="text-[var(--ai-muted)]">VRAM Footprint</div>
-          <div className="text-base font-bold text-[var(--ai-primary)] mt-1">
+        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
+          <div className="text-muted-foreground">VRAM Footprint</div>
+          <div className="text-base font-bold text-foreground mt-1">
             {mode === 'inference' ? '1x (Weights + KV)' : '3x - 4x (Optimizer + Acts)'}
           </div>
         </div>
-        <div className="p-4 rounded-xl border border-white/10 bg-[var(--ai-surface-2)]">
-          <div className="text-[var(--ai-muted)]">Latency Scale</div>
-          <div className="text-base font-bold text-cyan-400 mt-1">
+        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
+          <div className="text-muted-foreground">Latency Scale</div>
+          <div className="text-base font-bold text-foreground mt-1">
             {mode === 'inference' ? '10 - 200 ms' : 'Hours to Months'}
           </div>
         </div>
@@ -588,14 +575,14 @@ function TrainingVsInferenceWidget() {
 function RuleVsLearnedWidget() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
-      <div className="p-5 rounded-xl border border-white/10 bg-black/40 space-y-3">
-        <div className="font-bold text-amber-400 flex items-center gap-1.5">
+      <div className="p-5 rounded-xl border border-border/80 bg-secondary/20 space-y-3">
+        <div className="font-bold text-foreground flex items-center gap-1.5">
           Traditional Rule-Based Code
         </div>
-        <div className="text-[var(--ai-muted)] leading-relaxed">
+        <div className="text-muted-foreground leading-relaxed">
           Human writes explicit logic. Cannot scale to complex visual or natural language ambiguities.
         </div>
-        <pre className="p-3 rounded-lg bg-white/5 text-[11px] text-[var(--ai-text)]">
+        <pre className="p-3 rounded border border-border/60 bg-secondary/40 text-[11px] text-foreground">
           {`if (email.contains("lottery") && email.hasLink()) {
   return SPAM;
 } else if (email.senderUnknown()) {
@@ -604,14 +591,14 @@ function RuleVsLearnedWidget() {
         </pre>
       </div>
 
-      <div className="p-5 rounded-xl border border-emerald-500/30 bg-emerald-500/5 space-y-3">
-        <div className="font-bold text-emerald-400 flex items-center gap-1.5">
+      <div className="p-5 rounded-xl border border-border/80 bg-secondary/20 space-y-3">
+        <div className="font-bold text-foreground flex items-center gap-1.5">
           Learned Machine Learning Model
         </div>
-        <div className="text-[var(--ai-muted)] leading-relaxed">
-          Model learns weights from 1,000,000 examples. Discovers non-linear interactions automatically.
+        <div className="text-muted-foreground leading-relaxed">
+          Model learns weights from millions of examples. Discovers non-linear interactions automatically.
         </div>
-        <pre className="p-3 rounded-lg bg-white/5 text-[11px] text-[var(--ai-text)]">
+        <pre className="p-3 rounded border border-border/60 bg-secondary/40 text-[11px] text-foreground">
           {`// Parameterized vector dot product
 const score = dotProduct(weights, emailVector) + bias;
 const isSpam = sigmoid(score) > 0.95;`}
@@ -626,8 +613,8 @@ const isSpam = sigmoid(score) > 0.95;`}
 // -------------------------------------------------------------
 function GenericPipelineWidget({ topic }: { topic: FoundationSubtopic }) {
   const steps = [
-    { label: 'Raw Input', sub: 'User query / signal' },
-    { label: 'Preprocessing', sub: 'Tokenization / Normalization' },
+    { label: 'Raw Input', sub: 'Signal / token vector' },
+    { label: 'Preprocessing', sub: 'Normalization & Tokenization' },
     { label: 'Model Math', sub: 'Weights & Activations' },
     { label: 'Prediction', sub: 'Decision output' }
   ];
@@ -638,16 +625,16 @@ function GenericPipelineWidget({ topic }: { topic: FoundationSubtopic }) {
         {steps.map((s, i) => (
           <div
             key={s.label}
-            className="p-4 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] space-y-1 relative"
+            className="p-4 rounded-xl border border-border/80 bg-secondary/30 space-y-1 relative"
           >
-            <div className="text-[10px] text-[var(--ai-primary)] font-bold">STAGE 0{i + 1}</div>
-            <div className="font-bold text-[var(--ai-text)]">{s.label}</div>
-            <div className="text-[11px] text-[var(--ai-muted)]">{s.sub}</div>
+            <div className="text-[10px] text-muted-foreground font-bold">STAGE 0{i + 1}</div>
+            <div className="font-bold text-foreground">{s.label}</div>
+            <div className="text-[11px] text-muted-foreground">{s.sub}</div>
           </div>
         ))}
       </div>
-      <p className="text-center font-mono text-xs text-[var(--ai-muted)] pt-2">
-        Concept demonstrated: <span className="text-[var(--ai-text)] font-semibold">{topic.title}</span>
+      <p className="text-center font-mono text-xs text-muted-foreground pt-2">
+        Concept demonstrated: <span className="text-foreground font-semibold">{topic.title}</span>
       </p>
     </div>
   );

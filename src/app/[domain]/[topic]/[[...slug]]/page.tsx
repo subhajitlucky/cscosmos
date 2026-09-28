@@ -121,10 +121,10 @@ export default async function UniversalTopicPage({
     }
 
     return (
-      <div className="aicosmos-root min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+      <div className="aicosmos-root min-h-screen">
         <Suspense
           fallback={
-            <div className="p-12 text-center font-mono text-xs text-[var(--ai-muted)]">
+            <div className="p-12 text-center font-mono text-xs text-muted-foreground">
               Loading {mod.title}...
             </div>
           }

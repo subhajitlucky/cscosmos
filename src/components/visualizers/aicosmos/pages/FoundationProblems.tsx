@@ -6,12 +6,11 @@ import {
   ArrowLeft,
   CheckCircle2,
   XCircle,
-  HelpCircle,
   RotateCcw,
-  Sparkles,
-  Award,
+  ShieldCheck,
   BookOpen,
-  FlaskConical
+  Sliders,
+  ArrowRight
 } from 'lucide-react';
 
 interface Question {
@@ -58,62 +57,62 @@ const QUESTIONS: Question[] = [
       'The model can only compute negative numbers.',
       'The decision boundary is forced to pass through the origin (0, 0) whenever x = 0.',
       'The activation function fails to calculate a gradient.',
-      'The model is unable to process floating-point numbers.'
+      'The model requires 2x more floating-point operations per second (FLOPS).'
     ],
     correctIndex: 1,
-    explanation: 'Correct! Without bias (b), when all input features x are zero, z must equal zero. The bias term shifts the activation curve independently of inputs, allowing the model to fit data that does not cross the origin.'
+    explanation: 'Correct! Without a bias term b, when input x = 0, z = w * 0 = 0 regardless of the weight value. A bias offset allows the decision boundary to shift freely along the axis.'
   },
   {
     id: 4,
     category: 'Inference Mechanics',
-    question: 'What is the exact behavioral effect of setting an LLM’s sampling temperature to 0.0?',
+    question: 'What happens mathematically when you set the sampling temperature to 0.0 in an autoregressive Large Language Model?',
     options: [
-      'It shuts down model computation to save electrical power.',
-      'It causes the model to always select the single highest-probability token (Greedy Argmax decoding), making outputs deterministic.',
-      'It forces the model to search the web for external citations.',
-      'It doubles the maximum context window of the model.'
+      'The model executes pure greedy decoding (argmax), deterministically selecting the single token with the highest predicted probability.',
+      'The model randomly samples uniformly across the entire vocabulary without weighting.',
+      'The model turns off all neural network weights and executes a regex search.',
+      'The model shuts down the GPU to conserve power.'
     ],
-    correctIndex: 1,
-    explanation: 'Correct! Setting temperature to 0 eliminates stochastic sampling, causing the model to greedily pick the argmax token at each step. This produces deterministic, repeatable outputs.'
+    correctIndex: 0,
+    explanation: 'Correct! As temperature approaches 0, the softmax probability distribution collapses into a one-hot distribution, ensuring repeatable deterministic outputs where the top-ranked token is chosen every time.'
   },
   {
     id: 5,
     category: 'Generalization & Reliability',
-    question: 'A machine learning model achieves 99.8% accuracy on its training dataset, but drops to 61.2% accuracy on fresh production user queries. What has occurred?',
+    question: 'What is the root cause of model "overfitting" during empirical training?',
     options: [
-      'The model is underfitting due to insufficient training epochs.',
-      'Overfitting: the model memorized idiosyncrasies and noise in the training set rather than learning generalizable patterns.',
-      'The learning rate was set too low during inference.',
-      'The model ran out of tokens in its context window.'
+      'The server runs out of GPU memory during the forward pass.',
+      'The model memorizes noise and specific idiosyncrasies in the training set rather than learning generalizable underlying patterns, failing on unseen evaluation data.',
+      'The learning rate is set to exactly 0.0.',
+      'The dataset is too large for the model parameters to store.'
     ],
     correctIndex: 1,
-    explanation: 'Correct! A large divergence between training accuracy and validation/production accuracy is the classic symptom of overfitting (high variance). The model failed to generalize.'
+    explanation: 'Correct! Overfitting occurs when model capacity exceeds dataset complexity, allowing the optimization algorithm to minimize training loss to near zero by fitting random noise rather than generalizable signals.'
   },
   {
     id: 6,
     category: 'AI Engineering Systems',
-    question: 'Why do AI Engineers use schema validation libraries (like Pydantic or Zod) to constrain LLM outputs in production software?',
+    question: 'What is the primary difference between a classical Software 1.0 architecture and a Software 2.0 (AI/ML) architecture?',
     options: [
-      'To speed up GPU matrix multiplication by 10x.',
-      'To bound non-deterministic probabilistic text generation into strict, typed, deterministic data contracts for backend services.',
-      'To reduce the token price charged by model providers.',
-      'To automatically fine-tune the model parameters in real time.'
+      'Software 1.0 is written in Python; Software 2.0 is written in HTML.',
+      'Software 1.0 executes explicit human-authored deterministic instructions; Software 2.0 optimizes continuous mathematical weight parameters from empirical data.',
+      'Software 2.0 does not require computer hardware to execute.',
+      'Software 1.0 cannot communicate over computer networks.'
     ],
     correctIndex: 1,
-    explanation: 'Correct! Downstream software cannot reliably parse free-form, probabilistic natural language. Schema validation enforces valid JSON types (e.g. integers, enums, required fields), guaranteeing reliability.'
+    explanation: 'Correct! Software 1.0 is defined by human-written logic (if/else, loops). Software 2.0 specifies the program implicitly through dataset curation, loss functions, and optimization search.'
   },
   {
     id: 7,
     category: 'Engineering Roles',
-    question: 'Which of the following responsibilities most accurately characterizes the role of an AI Engineer (AIE) as distinct from an ML Engineer (MLE)?',
+    question: 'What is the core distinction between an AI Researcher and an AI Engineer?',
     options: [
-      'Writing custom CUDA kernels and distributed PyTorch multi-node cluster training scripts.',
-      'Building production application software, RAG context pipelines, tool-calling agents, and automated evaluation suites around foundation models.',
-      'Deriving mathematical convergence proofs for stochastic gradient descent.',
-      'Collecting raw biological training datasets in research labs.'
+      'Researchers write Python; AI Engineers only write HTML.',
+      'Researchers focus on novel model architectures, loss formulations, and mathematical benchmarks; AI Engineers integrate, serve, evaluate, and scale models into reliable production software systems.',
+      'Researchers build mobile apps; AI Engineers manage databases.',
+      'AI Engineers only use prompt engineering without writing code.'
     ],
     correctIndex: 1,
-    explanation: 'Correct! AI Engineers specialize in application-layer architecture: context construction, RAG, agent orchestration, structured outputs, prompt security, and regression evals on foundation models.'
+    explanation: 'Correct! AI Researchers push the frontier of algorithmic capabilities. AI Engineers turn those models into resilient, low-latency, deterministic software products with observability, evals, and caching.'
   },
   {
     id: 8,
@@ -164,7 +163,19 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
-  const categories = ['All', 'Lifecycle & Compute', 'Parameters vs Hyperparameters', 'Model Architecture', 'Inference Mechanics', 'Generalization & Reliability', 'AI Engineering Systems', 'Engineering Roles', 'Tokenization & Inputs', 'Production Failure Modes', 'Architecture Tradeoffs'];
+  const categories = [
+    'All',
+    'Lifecycle & Compute',
+    'Parameters vs Hyperparameters',
+    'Model Architecture',
+    'Inference Mechanics',
+    'Generalization & Reliability',
+    'AI Engineering Systems',
+    'Engineering Roles',
+    'Tokenization & Inputs',
+    'Production Failure Modes',
+    'Architecture Tradeoffs'
+  ];
 
   const filteredQuestions = QUESTIONS.filter(
     (q) => activeCategory === 'All' || q.category === activeCategory
@@ -180,41 +191,41 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-10">
       {/* Top Breadcrumb */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4 text-xs font-mono text-muted-foreground">
         <Link
           href={basePath}
-          className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary)] transition-colors"
+          className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Foundations Curriculum
+          <ArrowLeft className="h-3.5 w-3.5" /> Back to Foundations Matrix
         </Link>
-        <span className="font-mono text-xs px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-          KNOWLEDGE CHECK &bull; 10 PROBLEMS
+        <span className="font-semibold text-foreground">
+          // CERTIFICATION_01 &bull; 10 SCENARIOS
         </span>
       </div>
 
       {/* Header */}
       <header className="space-y-4">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono text-[var(--ai-primary)] uppercase tracking-wider font-semibold">
-            Certification Arena
+          <span className="rounded border border-border bg-secondary/50 px-2.5 py-0.5 text-xs font-mono text-muted-foreground">
+            AUDIT BENCH 01
           </span>
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-black text-[var(--ai-text)] tracking-tight">
-          Mental Model Knowledge Check
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight font-display">
+          Foundations Knowledge Check
         </h1>
-        <p className="text-base sm:text-lg text-[var(--ai-muted)] max-w-2xl leading-relaxed">
-          Test whether you have mastered the core definitions, parameter mechanics, compute tradeoffs, and failure modes of AI Engineering before moving into mathematics and neural networks.
+        <p className="text-sm sm:text-base text-muted-foreground max-w-2xl leading-relaxed">
+          Audit your comprehension of fundamental parameter mechanics, memory hierarchies, compute tradeoffs, and failure modes before progressing to neural networks and deep learning.
         </p>
       </header>
 
       {/* Progress & Score Bar */}
-      <div className="rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-surface)] p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+      <div className="rounded-xl border border-border/80 bg-card p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1 text-center sm:text-left">
-          <div className="text-xs font-mono text-[var(--ai-muted)] uppercase tracking-wider">Your Progress:</div>
-          <div className="text-lg font-bold font-mono text-[var(--ai-text)]">
-            Answered: <span className="text-[var(--ai-primary)]">{answeredCount}</span> of {QUESTIONS.length} &bull; Score: <span className="text-emerald-400">{correctCount}</span> correct
+          <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Audit Progress:</div>
+          <div className="text-base font-bold font-mono text-foreground">
+            Answered: <span>{answeredCount}</span> / {QUESTIONS.length} &bull; Correct: <span className="text-emerald-500">{correctCount}</span>
           </div>
         </div>
 
@@ -222,19 +233,36 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
           {answeredCount > 0 && (
             <button
               onClick={resetQuiz}
-              className="px-3.5 py-2 rounded-xl text-xs font-mono border border-white/10 text-[var(--ai-muted)] hover:text-[var(--ai-text)] hover:border-white/20 flex items-center gap-1.5 transition-colors"
+              className="px-3 py-1.5 rounded-lg border border-border text-xs font-mono text-muted-foreground hover:text-foreground hover:border-foreground/30 flex items-center gap-1.5 transition-colors"
             >
-              <RotateCcw className="w-3.5 h-3.5" /> Reset Quiz
+              <RotateCcw className="h-3.5 w-3.5" /> Reset Quiz
             </button>
           )}
-          <div className="px-4 py-2 rounded-xl bg-[var(--ai-primary)]/10 border border-[var(--ai-primary)]/30 font-mono text-sm font-bold text-[var(--ai-primary)]">
+          <div className="px-3.5 py-1.5 rounded-lg border border-border bg-secondary/40 font-mono text-xs font-bold text-foreground">
             {answeredCount === 0 ? '0%' : `${Math.round((correctCount / answeredCount) * 100)}% Accuracy`}
           </div>
         </div>
       </div>
 
+      {/* Category Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none font-mono text-xs">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-3 py-1.5 rounded-lg border whitespace-nowrap transition-colors ${
+              activeCategory === cat
+                ? 'border-foreground bg-foreground text-background font-bold'
+                : 'border-border/80 bg-secondary/30 text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       {/* Questions List */}
-      <div className="space-y-8">
+      <div className="space-y-6">
         {filteredQuestions.map((q) => {
           const selected = selectedAnswers[q.id];
           const isAnswered = selected !== undefined;
@@ -243,44 +271,44 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
           return (
             <section
               key={q.id}
-              className={`rounded-2xl border p-6 sm:p-8 space-y-6 transition-all duration-200 ${
+              className={`rounded-xl border p-6 space-y-5 transition-colors ${
                 isAnswered
                   ? isCorrect
-                    ? 'border-emerald-500/40 bg-emerald-500/5'
-                    : 'border-rose-500/40 bg-rose-500/5'
-                  : 'border-[var(--ai-border-subtle)] bg-[var(--ai-surface)]'
+                    ? 'border-emerald-500/40 bg-secondary/20'
+                    : 'border-rose-500/40 bg-secondary/20'
+                  : 'border-border/80 bg-card'
               }`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-mono font-bold text-[var(--ai-primary)] px-2 py-0.5 rounded bg-[var(--ai-primary)]/10 border border-[var(--ai-primary)]/20">
-                    PROBLEM {String(q.id).padStart(2, '0')} &bull; {q.category.toUpperCase()}
+                  <span className="text-[10px] font-mono font-bold text-muted-foreground">
+                    // SCENARIO_{String(q.id).padStart(2, '0')} &bull; {q.category.toUpperCase()}
                   </span>
-                  <h2 className="font-display font-bold text-lg sm:text-xl text-[var(--ai-text)] pt-2 leading-snug">
+                  <h2 className="font-display font-bold text-base sm:text-lg text-foreground pt-1 leading-snug">
                     {q.question}
                   </h2>
                 </div>
               </div>
 
               {/* Options */}
-              <div className="grid grid-cols-1 gap-2.5">
+              <div className="grid grid-cols-1 gap-2">
                 {q.options.map((option, optIdx) => {
                   const isThisSelected = selected === optIdx;
                   const isThisCorrect = optIdx === q.correctIndex;
 
                   let styleClass =
-                    'border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] hover:text-[var(--ai-text)] hover:border-[var(--ai-border)]';
+                    'border-border/80 bg-secondary/30 text-muted-foreground hover:text-foreground hover:border-foreground/30';
 
                   if (isAnswered) {
                     if (isThisCorrect) {
                       styleClass =
-                        'border-emerald-500/80 bg-emerald-500/15 text-emerald-200 font-semibold shadow-sm';
+                        'border-emerald-500 text-foreground font-semibold bg-emerald-500/10';
                     } else if (isThisSelected && !isThisCorrect) {
                       styleClass =
-                        'border-rose-500/80 bg-rose-500/15 text-rose-200 font-semibold';
+                        'border-rose-500 text-foreground font-semibold bg-rose-500/10';
                     } else {
                       styleClass =
-                        'border-transparent bg-white/5 text-[var(--ai-muted)] opacity-50';
+                        'border-transparent bg-secondary/10 text-muted-foreground opacity-40';
                     }
                   }
 
@@ -291,17 +319,17 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
                       onClick={() =>
                         setSelectedAnswers((prev) => ({ ...prev, [q.id]: optIdx }))
                       }
-                      className={`w-full p-4 rounded-xl border text-left text-xs sm:text-sm font-sans transition-all flex items-start gap-3 ${styleClass}`}
+                      className={`w-full p-3.5 rounded-lg border text-left text-xs sm:text-sm font-sans transition-colors flex items-start gap-3 ${styleClass}`}
                     >
                       <span className="font-mono text-xs opacity-60 mt-0.5 shrink-0">
                         [{String.fromCharCode(65 + optIdx)}]
                       </span>
                       <span className="flex-1 leading-relaxed">{option}</span>
                       {isAnswered && isThisCorrect && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
                       )}
                       {isAnswered && isThisSelected && !isThisCorrect && (
-                        <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                        <XCircle className="h-4 w-4 text-rose-500 shrink-0 mt-0.5" />
                       )}
                     </button>
                   );
@@ -311,14 +339,14 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
               {/* Explanation Box */}
               {isAnswered && (
                 <div
-                  className={`p-4 sm:p-5 rounded-xl border text-xs sm:text-sm leading-relaxed font-sans ${
+                  className={`p-4 rounded-lg border text-xs sm:text-sm leading-relaxed font-sans ${
                     isCorrect
-                      ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200'
-                      : 'border-rose-500/30 bg-rose-500/10 text-rose-200'
+                      ? 'border-emerald-500/30 bg-secondary/30 text-foreground'
+                      : 'border-rose-500/30 bg-secondary/30 text-foreground'
                   }`}
                 >
                   <div className="font-mono text-xs font-bold uppercase mb-1">
-                    {isCorrect ? '✓ Correct Rationale:' : '✕ Incorrect Rationale:'}
+                    {isCorrect ? '✓ Architectural Rationale:' : '✕ Engineering Diagnostic:'}
                   </div>
                   {q.explanation}
                 </div>
@@ -330,30 +358,31 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
 
       {/* Completion Banner */}
       {answeredCount === QUESTIONS.length && (
-        <section className="rounded-3xl border border-emerald-500/40 bg-emerald-500/10 p-8 sm:p-10 text-center space-y-5">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto shadow-lg">
-            <Award className="w-8 h-8" />
-          </div>
+        <section className="rounded-xl border border-border/80 bg-card p-8 text-center space-y-4">
           <div className="space-y-2">
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[var(--ai-text)]">
-              Foundations Knowledge Check Completed!
+            <span className="text-xs font-mono font-bold text-emerald-500 uppercase tracking-widest">
+              CERTIFICATION COMPLETE
+            </span>
+            <h2 className="font-display font-black text-2xl text-foreground">
+              Score: {correctCount} / {QUESTIONS.length} ({Math.round((correctCount / QUESTIONS.length) * 100)}%)
             </h2>
-            <p className="text-sm text-[var(--ai-muted)] max-w-lg mx-auto">
-              You scored <strong>{correctCount} out of {QUESTIONS.length}</strong> ({Math.round((correctCount / QUESTIONS.length) * 100)}%). Your mental models for AI Engineering are verified and ready.
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
+              Your mental models for foundational parameter mechanics, deterministic inference, and memory layouts have been audited and verified.
             </p>
           </div>
+
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <Link
               href={`${basePath}/lab`}
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-xs font-mono font-bold text-white hover:bg-emerald-500 transition-colors shadow-md"
+              className="inline-flex items-center gap-2 rounded-lg bg-foreground px-4 py-2.5 text-xs font-mono font-bold text-background hover:bg-foreground/90 transition-colors"
             >
-              <FlaskConical className="w-4 h-4" /> Open The Micro-Model Studio
+              <Sliders className="h-4 w-4" /> Open Micro-Model Studio
             </Link>
             <Link
               href="/ai/python-for-ai-engineering"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[var(--ai-surface)] px-5 py-3 text-xs font-mono font-bold text-[var(--ai-text)] hover:border-white/20 transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg border border-border bg-secondary/40 px-4 py-2.5 text-xs font-mono font-bold text-foreground hover:bg-secondary/70 transition-colors"
             >
-              <BookOpen className="w-4 h-4 text-[var(--ai-primary)]" /> Continue to Next Subject (Python for AI)
+              <BookOpen className="h-4 w-4" /> Next Subject: Python for AI &rarr;
             </Link>
           </div>
         </section>

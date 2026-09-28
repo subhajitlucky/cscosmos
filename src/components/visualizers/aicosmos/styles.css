@@ -1,57 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 .aicosmos-root {
-  --ai-primary: #6366f1;
-  --ai-primary-hover: #4f46e5;
-  --ai-violet: #8b5cf6;
+  --ai-primary: hsl(var(--foreground));
+  --ai-primary-hover: hsl(var(--foreground) / 0.85);
+  --ai-accent: hsl(var(--primary));
   --ai-emerald: #10b981;
-  --ai-cyan: #06b6d4;
-  --ai-amber: #f59e0b;
-  --ai-rose: #f43f5e;
+  --ai-cyan: #0284c7;
+  --ai-amber: #d97706;
+  --ai-rose: #e11d48;
   
-  --ai-bg: #060814;
-  --ai-surface: #0c1022;
-  --ai-surface-2: #131932;
-  --ai-border: rgba(99, 102, 241, 0.25);
-  --ai-border-subtle: rgba(255, 255, 255, 0.08);
-  --ai-text: #f8fafc;
-  --ai-muted: #8d97b0;
+  --ai-bg: hsl(var(--background));
+  --ai-surface: hsl(var(--card));
+  --ai-surface-2: hsl(var(--secondary) / 0.5);
+  --ai-border: hsl(var(--border));
+  --ai-border-subtle: hsl(var(--border) / 0.6);
+  --ai-text: hsl(var(--foreground));
+  --ai-muted: hsl(var(--muted-foreground));
   
-  --ai-display: 'Syne', sans-serif;
-  --ai-sans: 'Inter', sans-serif;
-  --ai-mono: 'DM Mono', monospace;
+  --ai-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --ai-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --ai-mono: 'JetBrains Mono', 'DM Mono', monospace;
 
   font-family: var(--ai-sans);
-  background-color: var(--ai-bg);
+  background-color: transparent;
   color: var(--ai-text);
-  min-height: 100vh;
-}
-
-html.light .aicosmos-root,
-html[data-theme='light'] .aicosmos-root,
-html:not(.dark) .aicosmos-root,
-.aicosmos-root[data-theme='light'],
-.aicosmos-root.light-mode {
-  --ai-bg: #f8fafc;
-  --ai-surface: #ffffff;
-  --ai-surface-2: #f1f5f9;
-  --ai-border: rgba(99, 102, 241, 0.28);
-  --ai-border-subtle: rgba(0, 0, 0, 0.08);
-  --ai-text: #0f172a;
-  --ai-muted: #64748b;
-}
-
-html.dark .aicosmos-root,
-html[data-theme='dark'] .aicosmos-root,
-.aicosmos-root[data-theme='dark'],
-.aicosmos-root.dark-mode {
-  --ai-bg: #060814;
-  --ai-surface: #0c1022;
-  --ai-surface-2: #131932;
-  --ai-border: rgba(99, 102, 241, 0.25);
-  --ai-border-subtle: rgba(255, 255, 255, 0.08);
-  --ai-text: #f8fafc;
-  --ai-muted: #8d97b0;
 }
 
 .aicosmos-root .font-display {
@@ -62,104 +34,86 @@ html[data-theme='dark'] .aicosmos-root,
   font-family: var(--ai-mono);
 }
 
-.aicosmos-root .ai-glow {
-  text-shadow: 0 0 25px rgba(99, 102, 241, 0.55), 0 0 50px rgba(139, 92, 246, 0.2);
-}
-
+/* Strict Zero-Gradient Clean Technical Cards */
 .aicosmos-root .ai-card {
   background: var(--ai-surface);
   border: 1px solid var(--ai-border-subtle);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .aicosmos-root .ai-card:hover {
-  border-color: var(--ai-border);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.18);
+  border-color: hsl(var(--foreground) / 0.35);
 }
 
-.aicosmos-root .ai-grid-bg {
-  background-image: none;
+.aicosmos-root .ai-terminal {
+  background: hsl(var(--card));
+  border: 1px solid var(--ai-border);
+  border-radius: 0.75rem;
 }
 
-/* Custom Cybernetic Range Slider */
+/* Precision Industrial Range Slider */
 .aicosmos-root input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
   cursor: pointer;
+  height: 20px;
 }
 
 .aicosmos-root input[type="range"]::-webkit-slider-runnable-track {
-  height: 6px;
-  border-radius: 9999px;
-  background: var(--ai-surface-2);
-  border: 1px solid var(--ai-border);
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ai-border);
+  border: none;
 }
 
 .aicosmos-root input[type="range"]::-moz-range-track {
-  height: 6px;
-  border-radius: 9999px;
-  background: var(--ai-surface-2);
-  border: 1px solid var(--ai-border);
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ai-border);
+  border: none;
 }
 
 .aicosmos-root input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  background: #38bdf8;
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 0 24px rgba(99, 102, 241, 0.5);
-  margin-top: -6px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  height: 14px;
+  width: 14px;
+  border-radius: 2px;
+  background: hsl(var(--foreground));
+  border: 1px solid var(--ai-border);
+  margin-top: -5px;
+  transition: transform 0.1s ease;
 }
 
 .aicosmos-root input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.18);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 1), 0 0 32px rgba(99, 102, 241, 0.8);
+  transform: scale(1.15);
 }
 
 .aicosmos-root input[type="range"]::-moz-range-thumb {
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  background: #38bdf8;
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 0 24px rgba(99, 102, 241, 0.5);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* Glassmorphism & Cyber Depth */
-.aicosmos-root .ai-glass {
-  background: rgba(12, 16, 34, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-}
-
-.aicosmos-root .ai-terminal {
-  background: var(--ai-surface);
+  height: 14px;
+  width: 14px;
+  border-radius: 2px;
+  background: hsl(var(--foreground));
   border: 1px solid var(--ai-border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+  transition: transform 0.1s ease;
 }
 
-/* Custom Scrollbars for Code and Inspectors */
+/* Monospace Code & Inspector Scrollbars */
 .aicosmos-root ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 .aicosmos-root ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: transparent;
 }
 
 .aicosmos-root ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.35);
-  border-radius: 9999px;
+  background: hsl(var(--border));
+  border-radius: 2px;
 }
 
 .aicosmos-root ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.65);
+  background: hsl(var(--muted-foreground));
 }
