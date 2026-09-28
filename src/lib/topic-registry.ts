@@ -2,6 +2,7 @@ import type { TopicModule } from './topic-system';
 
 import { foundationSubtopics } from '@/components/visualizers/aicosmos/data/foundations';
 import { FoundationHome } from '@/components/visualizers/aicosmos/pages/FoundationHome';
+import { FoundationLearn } from '@/components/visualizers/aicosmos/pages/FoundationLearn';
 import { FoundationTopic } from '@/components/visualizers/aicosmos/pages/FoundationTopic';
 import { FoundationLab } from '@/components/visualizers/aicosmos/pages/FoundationLab';
 import { FoundationProblems } from '@/components/visualizers/aicosmos/pages/FoundationProblems';
@@ -46,6 +47,7 @@ registerTopicModule({
     category: t.category,
   })),
   HomePage: FoundationHome,
+  LearnPage: FoundationLearn,
   TopicPage: FoundationTopic,
   LabPage: FoundationLab,
   ProblemsPage: FoundationProblems,

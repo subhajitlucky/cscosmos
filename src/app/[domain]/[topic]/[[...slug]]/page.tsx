@@ -46,15 +46,23 @@ export async function generateMetadata({
   const mod = getTopicModule(topic);
 
   if (mod && mod.domain === domain) {
-    const view = slug && slug.length > 0 ? slug[0] : 'learn';
+    const view = slug && slug.length > 0 ? slug[0] : '';
     const subtopicId = slug && slug.length > 1 ? slug[1] : '';
 
-    if (view === 'learn' && subtopicId) {
-      const sub = mod.subtopics.find((s) => s.id === subtopicId);
-      return {
-        title: `${sub ? sub.title : subtopicId} | ${mod.title} - CSCosmos`,
-        description: `In-depth interactive deep dive for ${sub?.title || subtopicId} in ${mod.title}.`,
-      };
+    if (view === 'learn') {
+      if (subtopicId) {
+        const sub = mod.subtopics.find((s) => s.id === subtopicId);
+        return {
+          title: `${sub ? sub.title : subtopicId} | ${mod.title} - CSCosmos`,
+          description: `In-depth interactive deep dive for ${sub?.title || subtopicId} in ${mod.title}.`,
+        };
+      }
+      if (mod.LearnPage) {
+        return {
+          title: `Curriculum & Topics Index | ${mod.title} - CSCosmos`,
+          description: `Complete syllabus, topic directory, and interactive visualizers for ${mod.title}.`,
+        };
+      }
     }
 
     if (view === 'lab') {
@@ -110,7 +118,11 @@ export default async function UniversalTopicPage({
       if (second) {
         pageContent = <mod.TopicPage topicId={second} basePath={basePath} />;
       } else {
-        pageContent = <mod.HomePage basePath={basePath} />;
+        pageContent = mod.LearnPage ? (
+          <mod.LearnPage basePath={basePath} />
+        ) : (
+          <mod.HomePage basePath={basePath} />
+        );
       }
     } else if (first === 'lab') {
       pageContent = <mod.LabPage basePath={basePath} />;

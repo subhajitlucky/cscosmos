@@ -13,6 +13,7 @@ export interface TopicModule {
   domain: string; // e.g. 'ai', 'fullstack', 'security'
   subtopics: TopicSubtopicRef[];
   HomePage: React.ComponentType<{ basePath?: string }>;
+  LearnPage?: React.ComponentType<{ basePath?: string }>;
   TopicPage: React.ComponentType<{ topicId: string; basePath?: string }>;
   LabPage: React.ComponentType<{ basePath?: string }>;
   ProblemsPage: React.ComponentType<{ basePath?: string }>;

@@ -8,8 +8,10 @@ import {
   ShieldCheck,
   Layers,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Table as TableIcon
 } from 'lucide-react';
+import { foundationSubtopics } from '../data/foundations';
 
 interface FoundationHomeProps {
   basePath?: string;
@@ -18,6 +20,7 @@ interface FoundationHomeProps {
 interface PhaseMetadata {
   number: string;
   name: string;
+  category: string;
   moduleCount: number;
   firstTopicId: string;
   description: string;
@@ -27,6 +30,7 @@ const PHASES: PhaseMetadata[] = [
   {
     number: '01',
     name: 'Core Mental Models',
+    category: 'Core Mental Models',
     moduleCount: 8,
     firstTopicId: 'what-is-artificial-intelligence',
     description: 'Foundations of cognitive systems, learned parameters vs handcrafted rules, continuous representations, and tokenized language spaces.',
@@ -34,6 +38,7 @@ const PHASES: PhaseMetadata[] = [
   {
     number: '02',
     name: 'Lifecycle & Systems Architecture',
+    category: 'Lifecycle & Roles',
     moduleCount: 4,
     firstTopicId: 'ai-vs-ml-engineer-vs-data-scientist',
     description: 'Engineering role taxonomies, Software 1.0 vs 2.0 architectures, training loops, and production inference lifecycle.',
@@ -41,6 +46,7 @@ const PHASES: PhaseMetadata[] = [
   {
     number: '03',
     name: 'Parameters & Mathematical Mechanics',
+    category: 'Parameters & Mechanics',
     moduleCount: 7,
     firstTopicId: 'parameters',
     description: 'Weights, bias offsets, feature vectors, activation non-linearities, loss functions, and decision surfaces.',
@@ -48,6 +54,7 @@ const PHASES: PhaseMetadata[] = [
   {
     number: '04',
     name: 'Systems Reliability & Drift',
+    category: 'Systems & Reliability',
     moduleCount: 5,
     firstTopicId: 'what-happens-when-model-receives-input',
     description: 'Inference dataflow, probabilistic sampling, failure modes, tool integration, and cloud vs local deployment tradeoffs.',
@@ -55,6 +62,7 @@ const PHASES: PhaseMetadata[] = [
   {
     number: '05',
     name: 'Capstone Serving Pipelines',
+    category: 'Pipeline Projects',
     moduleCount: 2,
     firstTopicId: 'first-tiny-ai-pipeline',
     description: 'Interactive end-to-end serving pipeline connecting raw input ingestion, feature transformations, forward pass, and live predictions.',
@@ -94,6 +102,14 @@ export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: 
             >
               Initialize Learning
               <ArrowRight className="h-4 w-4" />
+            </Link>
+
+            <Link
+              href={`${basePath}/learn`}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-border/80 bg-card px-8 py-4 text-sm font-mono font-bold text-foreground hover:bg-secondary/60 transition-colors"
+            >
+              <TableIcon className="h-4 w-4" />
+              All 26 Topics
             </Link>
 
             <Link
@@ -241,44 +257,79 @@ export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: 
                 The 5-Phase Learning Track
               </h2>
             </div>
-            <div className="text-xs font-mono text-muted-foreground">
-              26 In-Depth Modules &bull; 05 Progressive Milestones
+            <div className="flex items-center gap-3">
+              <Link
+                href={`${basePath}/learn`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-secondary/40 px-3.5 py-2 text-xs font-mono font-semibold text-foreground hover:bg-secondary/70 transition-colors"
+              >
+                <TableIcon className="h-3.5 w-3.5" />
+                View Full Topic Directory &amp; Matrix
+              </Link>
             </div>
           </div>
 
-          <div className="space-y-3">
-            {PHASES.map((phase) => (
-              <Link
-                key={phase.number}
-                href={`${basePath}/learn/${phase.firstTopicId}`}
-                className="group block rounded-xl border border-border/80 bg-card p-5 sm:p-6 hover:border-foreground/40 transition-all hover:bg-secondary/20"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex items-start sm:items-center gap-4">
-                    <span className="font-mono text-sm font-bold text-muted-foreground group-hover:text-foreground transition-colors border border-border/80 rounded-md px-2.5 py-1 bg-secondary/30">
-                      {phase.number}
-                    </span>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-3">
-                        <h3 className="font-display font-bold text-base sm:text-lg text-foreground group-hover:text-primary transition-colors">
-                          {phase.name}
-                        </h3>
-                        <span className="text-[11px] font-mono text-muted-foreground rounded-full border border-border/70 px-2 py-0.5">
-                          {phase.moduleCount} Modules
-                        </span>
+          <div className="space-y-6">
+            {PHASES.map((phase) => {
+              const phaseTopics = foundationSubtopics.filter(
+                (t) => t.category === phase.category
+              );
+
+              return (
+                <div
+                  key={phase.number}
+                  className="rounded-xl border border-border/80 bg-card p-5 sm:p-6 space-y-4"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-start sm:items-center gap-4">
+                      <span className="font-mono text-sm font-bold text-muted-foreground border border-border/80 rounded-md px-2.5 py-1 bg-secondary/30">
+                        {phase.number}
+                      </span>
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-3">
+                          <h3 className="font-display font-bold text-base sm:text-lg text-foreground">
+                            {phase.name}
+                          </h3>
+                          <span className="text-[11px] font-mono text-muted-foreground rounded-full border border-border/70 px-2 py-0.5">
+                            {phase.moduleCount} Modules
+                          </span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-muted-foreground font-sans max-w-2xl">
+                          {phase.description}
+                        </p>
                       </div>
-                      <p className="text-xs sm:text-sm text-muted-foreground font-sans max-w-2xl">
-                        {phase.description}
-                      </p>
                     </div>
+
+                    <Link
+                      href={`${basePath}/learn/${phase.firstTopicId}`}
+                      className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-foreground hover:text-primary transition-colors shrink-0 group"
+                    >
+                      Start Phase <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </div>
 
-                  <div className="flex items-center gap-1 text-xs font-mono font-semibold text-foreground sm:self-center shrink-0 group-hover:translate-x-1 transition-transform">
-                    Start Phase <ArrowRight className="h-3.5 w-3.5" />
+                  {/* Individual Clickable Topic Badges/Pills */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-3 border-t border-border/40">
+                    {phaseTopics.map((sub) => (
+                      <Link
+                        key={sub.id}
+                        href={`${basePath}/learn/${sub.id}`}
+                        className="group/topic flex items-center justify-between gap-2 rounded-lg border border-border/70 bg-secondary/15 p-2.5 hover:border-foreground/40 hover:bg-secondary/40 transition-all text-xs"
+                      >
+                        <div className="flex items-center gap-2 truncate">
+                          <span className="font-mono font-bold text-muted-foreground group-hover/topic:text-foreground shrink-0 text-[11px]">
+                            {String(sub.number).padStart(2, '0')}.
+                          </span>
+                          <span className="font-sans font-medium text-foreground truncate group-hover/topic:text-primary transition-colors">
+                            {sub.title}
+                          </span>
+                        </div>
+                        <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground/60 group-hover/topic:text-foreground group-hover/topic:translate-x-0.5 transition-transform" />
+                      </Link>
+                    ))}
                   </div>
                 </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
 
           {/* Bottom Track CTA Banner */}
@@ -287,15 +338,22 @@ export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: 
               Ready to Deconstruct AI Systems?
             </h3>
             <p className="text-xs sm:text-sm text-muted-foreground font-sans max-w-xl mx-auto">
-              Start with foundational mental models and progress through parameter mechanics to full deployment pipelines.
+              Start with foundational mental models or jump directly to any of the 26 interactive modules.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href={`${basePath}/learn/what-is-artificial-intelligence`}
-                className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-xs font-mono font-bold text-background hover:bg-foreground/90 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-foreground px-6 py-3 text-xs font-mono font-bold text-background hover:bg-foreground/90 transition-colors shadow-sm"
               >
-                Start Module 01: What is Artificial Intelligence?
+                Start Module 01: What is AI?
                 <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+              <Link
+                href={`${basePath}/learn`}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-border/80 bg-card px-6 py-3 text-xs font-mono font-bold text-foreground hover:bg-secondary/60 transition-colors"
+              >
+                <TableIcon className="h-3.5 w-3.5" />
+                Browse 26-Module Table
               </Link>
             </div>
           </div>

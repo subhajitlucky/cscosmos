@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,7 +15,8 @@ import {
   Cpu,
   Layers,
   Sliders,
-  Terminal
+  Terminal,
+  Table as TableIcon
 } from 'lucide-react';
 import { foundationSubtopics, getFoundationSubtopic, type FoundationSubtopic } from '../data/foundations';
 
@@ -68,6 +70,7 @@ export function FoundationTopic({
   topicId,
   basePath = '/ai/ai-engineering-foundations',
 }: FoundationTopicProps) {
+  const router = useRouter();
   const topic = getFoundationSubtopic(topicId) || foundationSubtopics[0];
   const index = foundationSubtopics.findIndex((t) => t.id === topic.id);
   const previous = foundationSubtopics[index - 1];
@@ -85,17 +88,49 @@ export function FoundationTopic({
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-10">
-      {/* Top Nav Breadcrumbs */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4 text-xs font-mono text-muted-foreground">
-        <Link
-          href={basePath}
-          className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Foundations Matrix
-        </Link>
-        <span className="font-semibold text-foreground">
-          // MODULE {String(topic.number).padStart(2, '0')} OF 26
-        </span>
+      {/* Top Nav Breadcrumbs & Quick-Jump Topic Switcher */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 pb-4 text-xs font-mono text-muted-foreground">
+        <div className="flex items-center gap-3">
+          <Link
+            href={basePath}
+            className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors font-semibold"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" /> Overview
+          </Link>
+          <span className="opacity-40">/</span>
+          <Link
+            href={`${basePath}/learn`}
+            className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
+          >
+            <TableIcon className="h-3.5 w-3.5" /> All Topics Table
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] text-muted-foreground hidden sm:inline">Jump to:</span>
+            <select
+              value={topic.id}
+              onChange={(e) => {
+                if (e.target.value) {
+                  router.push(`${basePath}/learn/${e.target.value}`);
+                }
+              }}
+              aria-label="Jump to module"
+              className="rounded-lg border border-border/80 bg-secondary/40 px-2.5 py-1 text-xs font-mono text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+            >
+              {foundationSubtopics.map((t) => (
+                <option key={t.id} value={t.id} className="bg-card text-foreground">
+                  {String(t.number).padStart(2, '0')}. {t.title}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <span className="font-semibold text-foreground hidden sm:inline">
+            // {String(topic.number).padStart(2, '0')}/26
+          </span>
+        </div>
       </div>
 
       {/* Header */}
@@ -204,49 +239,60 @@ export function FoundationTopic({
       )}
 
       {/* Bottom Navigation */}
-      <nav className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-border/80">
-        {previous ? (
-          <Link
-            href={`${basePath}/learn/${previous.id}`}
-            className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-foreground/40 transition-colors"
-          >
-            <span className="text-[10px] font-mono text-muted-foreground uppercase">
-              &larr; Previous Module ({previous.number})
-            </span>
-            <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-primary transition-colors">
-              {previous.title}
-            </div>
-          </Link>
-        ) : (
-          <div />
-        )}
+      <div className="space-y-4 pt-6 border-t border-border/80">
+        <nav className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {previous ? (
+            <Link
+              href={`${basePath}/learn/${previous.id}`}
+              className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-foreground/40 transition-colors"
+            >
+              <span className="text-[10px] font-mono text-muted-foreground uppercase">
+                &larr; Previous Module ({previous.number})
+              </span>
+              <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-primary transition-colors">
+                {previous.title}
+              </div>
+            </Link>
+          ) : (
+            <div />
+          )}
 
-        {next ? (
+          {next ? (
+            <Link
+              href={`${basePath}/learn/${next.id}`}
+              className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between text-right sm:items-end hover:border-foreground/40 transition-colors"
+            >
+              <span className="text-[10px] font-mono text-muted-foreground uppercase font-semibold">
+                Next Module ({next.number}) &rarr;
+              </span>
+              <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-primary transition-colors">
+                {next.title}
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href={`${basePath}/lab`}
+              className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between text-right sm:items-end hover:border-foreground/40 transition-colors"
+            >
+              <span className="text-[10px] font-mono text-emerald-500 uppercase font-semibold">
+                Curriculum Complete &rarr;
+              </span>
+              <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-emerald-500 transition-colors">
+                Launch The Micro-Model Studio
+              </div>
+            </Link>
+          )}
+        </nav>
+
+        <div className="flex justify-center pt-2">
           <Link
-            href={`${basePath}/learn/${next.id}`}
-            className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between text-right sm:items-end hover:border-foreground/40 transition-colors"
+            href={`${basePath}/learn`}
+            className="inline-flex items-center gap-2 rounded-lg border border-border/80 bg-secondary/20 px-5 py-2.5 text-xs font-mono font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary/40 transition-colors"
           >
-            <span className="text-[10px] font-mono text-muted-foreground uppercase font-semibold">
-              Next Module ({next.number}) &rarr;
-            </span>
-            <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-primary transition-colors">
-              {next.title}
-            </div>
+            <TableIcon className="h-3.5 w-3.5" /> View Full 26-Topic Curriculum Table
           </Link>
-        ) : (
-          <Link
-            href={`${basePath}/lab`}
-            className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between text-right sm:items-end hover:border-foreground/40 transition-colors"
-          >
-            <span className="text-[10px] font-mono text-emerald-500 uppercase font-semibold">
-              Curriculum Complete &rarr;
-            </span>
-            <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-emerald-500 transition-colors">
-              Launch The Micro-Model Studio
-            </div>
-          </Link>
-        )}
-      </nav>
+        </div>
+      </div>
     </div>
   );
 }

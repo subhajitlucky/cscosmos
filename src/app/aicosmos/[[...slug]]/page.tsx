@@ -14,6 +14,7 @@ import { About } from '@/components/visualizers/aicosmos/pages/About';
 import { aiTopics } from '@/components/visualizers/aicosmos/data/topics';
 import { foundationSubtopics } from '@/components/visualizers/aicosmos/data/foundations';
 import { FoundationHome } from '@/components/visualizers/aicosmos/pages/FoundationHome';
+import { FoundationLearn } from '@/components/visualizers/aicosmos/pages/FoundationLearn';
 import { FoundationTopic } from '@/components/visualizers/aicosmos/pages/FoundationTopic';
 import { FoundationLab } from '@/components/visualizers/aicosmos/pages/FoundationLab';
 import { FoundationProblems } from '@/components/visualizers/aicosmos/pages/FoundationProblems';
@@ -75,7 +76,11 @@ export default async function AiCosmosPage({
 
   if (first === 'learn') {
     if (second === 'ai-engineering-foundations') {
-      content = third ? <FoundationTopic topicId={third} /> : <FoundationHome />;
+      content = third ? (
+        <FoundationTopic topicId={third} basePath="/aicosmos/ai-engineering-foundations" />
+      ) : (
+        <FoundationLearn basePath="/aicosmos/ai-engineering-foundations" />
+      );
     } else if (second === 'python-for-ai-engineering') {
       content = third ? <PythonAiTopic topicId={third} /> : <PythonAiHome />;
     } else if (second) {
@@ -84,12 +89,16 @@ export default async function AiCosmosPage({
       content = <Learn />;
     }
   } else if (first === 'ai-engineering-foundations') {
-    if (second === 'lab') content = <FoundationLab />;
-    else if (second === 'problems') content = <FoundationProblems />;
+    if (second === 'lab') content = <FoundationLab basePath="/aicosmos/ai-engineering-foundations" />;
+    else if (second === 'problems') content = <FoundationProblems basePath="/aicosmos/ai-engineering-foundations" />;
     else if (second === 'learn') {
-      content = third ? <FoundationTopic topicId={third} /> : <FoundationHome />;
+      content = third ? (
+        <FoundationTopic topicId={third} basePath="/aicosmos/ai-engineering-foundations" />
+      ) : (
+        <FoundationLearn basePath="/aicosmos/ai-engineering-foundations" />
+      );
     } else if (!second) {
-      content = <FoundationHome />;
+      content = <FoundationHome basePath="/aicosmos/ai-engineering-foundations" />;
     } else notFound();
   } else if (first === 'python-for-ai-engineering') {
     if (second === 'lab') content = <PythonAiLab />;
