@@ -14,10 +14,50 @@ import {
   Cpu,
   Layers,
   Sliders,
-  Activity,
   Terminal
 } from 'lucide-react';
 import { foundationSubtopics, getFoundationSubtopic, type FoundationSubtopic } from '../data/foundations';
+
+import {
+  AiTaxonomyWidget,
+  RuleVsLearnedInteractiveWidget,
+  RepresentationLearningWidget,
+  GenerativeSamplingWidget,
+  ModelMathFunctionWidget,
+  GeneralizationCurveWidget,
+  NextTokenInteractiveWidget,
+  AiSystemsArchitectureWidget
+} from '../components/foundation-viz/Phase1Viz';
+
+import {
+  RolesMatrixWidget,
+  PipelineLifecycleWidget,
+  DataModelInferenceWidget,
+  TrainingVsInferenceDeepWidget
+} from '../components/foundation-viz/Phase2Viz';
+
+import {
+  TensorInspectorWidget,
+  HyperparameterTuningWidget,
+  MultiFeatureWeightWidget,
+  BiasOffsetWidget,
+  FeaturesVectorWidget,
+  LabelsLossWidget,
+  SoftmaxDistributionWidget
+} from '../components/foundation-viz/Phase3Viz';
+
+import {
+  InputFlowStepperWidget,
+  ProbabilisticSimulatorDeepWidget,
+  FailureModeDiagnosticWidget,
+  AiToolsStackWidget,
+  LocalVsCloudTradeoffWidget
+} from '../components/foundation-viz/Phase4Viz';
+
+import {
+  FirstTinyPipelineWidget,
+  PipelineCapstoneWidget
+} from '../components/foundation-viz/Phase5Viz';
 
 interface FoundationTopicProps {
   topicId: string;
@@ -212,430 +252,96 @@ export function FoundationTopic({
 }
 
 // -------------------------------------------------------------
-// Interactive Subtopic Visualizers
+// Interactive Subtopic Visualizers Dispatcher (26 Modules)
 // -------------------------------------------------------------
 function SubtopicInteractiveVisualizer({ topic }: { topic: FoundationSubtopic }) {
-  if (topic.visualization === 'weight-slider' || topic.visualization === 'bias-slider' || topic.id === 'weights' || topic.id === 'bias') {
-    return <WeightBiasSliderWidget />;
-  }
-  if (topic.visualization === 'ai-taxonomy' || topic.id === 'what-is-artificial-intelligence') {
+  // Phase 1: Core Mental Models (Topics 1 - 8)
+  if (topic.id === 'what-is-artificial-intelligence' || topic.visualization === 'ai-taxonomy') {
     return <AiTaxonomyWidget />;
   }
-  if (topic.visualization === 'next-token' || topic.id === 'what-is-an-llm') {
-    return <NextTokenWidget />;
+  if (topic.id === 'ai-vs-machine-learning' || topic.visualization === 'rule-vs-learned') {
+    return <RuleVsLearnedInteractiveWidget />;
   }
-  if (topic.visualization === 'probabilistic-dice' || topic.id === 'deterministic-vs-probabilistic-systems') {
-    return <ProbabilisticSimulatorWidget />;
+  if (topic.id === 'machine-learning-vs-deep-learning' || topic.visualization === 'representation') {
+    return <RepresentationLearningWidget />;
   }
-  if (topic.visualization === 'training-vs-inference' || topic.id === 'training-vs-inference') {
-    return <TrainingVsInferenceWidget />;
+  if (topic.id === 'what-is-generative-ai' || topic.visualization === 'generative-sampling') {
+    return <GenerativeSamplingWidget />;
   }
-  if (topic.visualization === 'rule-vs-learned' || topic.id === 'ai-vs-machine-learning') {
-    return <RuleVsLearnedWidget />;
+  if (topic.id === 'what-is-an-ai-model' || topic.visualization === 'math-function') {
+    return <ModelMathFunctionWidget />;
   }
-  return <GenericPipelineWidget topic={topic} />;
-}
+  if (topic.id === 'what-is-a-machine-learning-model' || topic.visualization === 'generalization') {
+    return <GeneralizationCurveWidget />;
+  }
+  if (topic.id === 'what-is-an-llm' || topic.visualization === 'next-token') {
+    return <NextTokenInteractiveWidget />;
+  }
+  if (topic.id === 'what-is-ai-engineering' || topic.visualization === 'system-architecture') {
+    return <AiSystemsArchitectureWidget />;
+  }
 
-// -------------------------------------------------------------
-// Widget 1: Weight & Bias Live Telemetry Slider
-// -------------------------------------------------------------
-function WeightBiasSliderWidget() {
-  const [weight, setWeight] = useState(1.5);
-  const [bias, setBias] = useState(0.5);
-  const [inputVal, setInputVal] = useState(2.0);
+  // Phase 2: Lifecycle & Roles (Topics 9 - 12)
+  if (topic.id === 'ai-vs-ml-engineer-vs-data-scientist' || topic.visualization === 'roles-matrix') {
+    return <RolesMatrixWidget />;
+  }
+  if (topic.id === 'ai-engineering-pipeline' || topic.visualization === 'lifecycle-stepper') {
+    return <PipelineLifecycleWidget />;
+  }
+  if (topic.id === 'data-model-inference' || topic.visualization === 'data-pipeline') {
+    return <DataModelInferenceWidget />;
+  }
+  if (topic.id === 'training-vs-inference' || topic.visualization === 'training-vs-inference') {
+    return <TrainingVsInferenceDeepWidget />;
+  }
 
-  const rawSum = weight * inputVal + bias;
-  const activatedSigmoid = 1 / (1 + Math.exp(-rawSum));
+  // Phase 3: Parameters & Mechanics (Topics 13 - 19)
+  if (topic.id === 'parameters' || topic.visualization === 'tensor-inspector') {
+    return <TensorInspectorWidget />;
+  }
+  if (topic.id === 'hyperparameters' || topic.visualization === 'hyperparameters') {
+    return <HyperparameterTuningWidget />;
+  }
+  if (topic.id === 'weights' || topic.visualization === 'weight-slider') {
+    return <MultiFeatureWeightWidget />;
+  }
+  if (topic.id === 'bias' || topic.visualization === 'bias-slider') {
+    return <BiasOffsetWidget />;
+  }
+  if (topic.id === 'features' || topic.visualization === 'features-vector') {
+    return <FeaturesVectorWidget />;
+  }
+  if (topic.id === 'labels' || topic.visualization === 'ground-truth') {
+    return <LabelsLossWidget />;
+  }
+  if (topic.id === 'predictions' || topic.visualization === 'softmax-distribution') {
+    return <SoftmaxDistributionWidget />;
+  }
 
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-        <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 space-y-2">
-          <div className="text-muted-foreground">Input Feature (x)</div>
-          <div className="text-2xl font-bold text-foreground">{inputVal.toFixed(1)}</div>
-          <input
-            type="range"
-            min="-5"
-            max="5"
-            step="0.5"
-            value={inputVal}
-            onChange={(e) => setInputVal(parseFloat(e.target.value))}
-            className="w-full"
-          />
-        </div>
+  // Phase 4: Systems & Reliability (Topics 20 - 24)
+  if (topic.id === 'what-happens-when-model-receives-input' || topic.visualization === 'input-flow') {
+    return <InputFlowStepperWidget />;
+  }
+  if (topic.id === 'deterministic-vs-probabilistic-systems' || topic.visualization === 'probabilistic-dice') {
+    return <ProbabilisticSimulatorDeepWidget />;
+  }
+  if (topic.id === 'why-ai-makes-mistakes' || topic.visualization === 'failure-modes') {
+    return <FailureModeDiagnosticWidget />;
+  }
+  if (topic.id === 'ai-engineering-tools' || topic.visualization === 'tools-radar') {
+    return <AiToolsStackWidget />;
+  }
+  if (topic.id === 'local-ai-vs-cloud-ai' || topic.visualization === 'cloud-vs-local') {
+    return <LocalVsCloudTradeoffWidget />;
+  }
 
-        <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 space-y-2">
-          <div className="text-muted-foreground font-semibold">Weight (w) &bull; Slope</div>
-          <div className="text-2xl font-bold text-foreground">{weight.toFixed(2)}</div>
-          <input
-            type="range"
-            min="-3"
-            max="3"
-            step="0.1"
-            value={weight}
-            onChange={(e) => setWeight(parseFloat(e.target.value))}
-            className="w-full"
-          />
-        </div>
+  // Phase 5: Pipeline Projects (Topics 25 - 26)
+  if (topic.id === 'first-tiny-ai-pipeline' || topic.visualization === 'pipeline-stepper') {
+    return <FirstTinyPipelineWidget />;
+  }
+  if (topic.id === 'tiny-ai-pipeline-project' || topic.visualization === 'pipeline-capstone') {
+    return <PipelineCapstoneWidget />;
+  }
 
-        <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 space-y-2">
-          <div className="text-muted-foreground font-semibold">Bias (b) &bull; Intercept</div>
-          <div className="text-2xl font-bold text-foreground">{bias.toFixed(2)}</div>
-          <input
-            type="range"
-            min="-3"
-            max="3"
-            step="0.1"
-            value={bias}
-            onChange={(e) => setBias(parseFloat(e.target.value))}
-            className="w-full"
-          />
-        </div>
-      </div>
-
-      <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
-        <div className="space-y-1 text-center sm:text-left">
-          <span className="text-muted-foreground">Linear Equation:</span>
-          <div className="text-sm sm:text-base text-foreground font-semibold">
-            z = (w &times; x) + b = ({weight.toFixed(2)} &times; {inputVal.toFixed(1)}) + {bias.toFixed(2)} = <span className="font-bold underline">{rawSum.toFixed(2)}</span>
-          </div>
-        </div>
-
-        <div className="px-5 py-3 rounded-lg border border-border/80 bg-secondary/50 text-foreground font-bold text-center">
-          <div className="text-[11px] text-muted-foreground font-mono">Sigmoid Activation &sigma;(z)</div>
-          <div className="text-xl font-mono text-emerald-500">{(activatedSigmoid * 100).toFixed(1)}%</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// -------------------------------------------------------------
-// Widget 2: AI Taxonomy Hierarchy
-// -------------------------------------------------------------
-function AiTaxonomyWidget() {
-  const [selectedLayer, setSelectedLayer] = useState<'ai' | 'ml' | 'dl' | 'genai' | 'llm'>('llm');
-
-  const layers = {
-    ai: {
-      name: 'Artificial Intelligence',
-      scope: 'The Broad Destination',
-      desc: 'All computational systems exhibiting cognitive reasoning (heuristics, tree search, expert systems, learned models).',
-      examples: 'A* Pathfinding, Minimax chess engine, rule engines, LLMs'
-    },
-    ml: {
-      name: 'Machine Learning',
-      scope: 'Empirical Parameter Learning',
-      desc: 'Algorithms that optimize weights from data instead of hand-written conditional logic.',
-      examples: 'Linear Regression, XGBoost, Random Forests, K-Means'
-    },
-    dl: {
-      name: 'Deep Learning',
-      scope: 'Hierarchical Multi-Layer Networks',
-      desc: 'Neural networks with multiple stacked layers that learn representations directly from raw inputs.',
-      examples: 'ResNet, Convolutions, Multi-Layer Perceptrons, Vision Transformers'
-    },
-    genai: {
-      name: 'Generative AI',
-      scope: 'Sampling Learned Distributions',
-      desc: 'Models that generate synthetic data artifacts (text, image, audio) by learning probability distribution P(X).',
-      examples: 'Diffusion Models (Stable Diffusion), VAEs, Autoregressive LLMs'
-    },
-    llm: {
-      name: 'Large Language Models',
-      scope: 'Scale & Emergent Reasoning',
-      desc: 'Trillion-parameter Transformer models trained on next-token prediction with general in-context learning.',
-      examples: 'GPT-4, Claude 3.5 Sonnet, Gemini 1.5, Llama 3'
-    }
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 font-mono text-xs">
-        {(Object.keys(layers) as Array<keyof typeof layers>).map((key) => (
-          <button
-            key={key}
-            onClick={() => setSelectedLayer(key)}
-            className={`p-3 rounded-lg border text-center transition-colors ${
-              selectedLayer === key
-                ? 'border-foreground bg-foreground text-background font-bold'
-                : 'border-border/80 bg-secondary/30 text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            {layers[key].name.split(' ')[0]}
-          </button>
-        ))}
-      </div>
-
-      <div className="rounded-xl border border-border/80 bg-secondary/20 p-6 space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="font-display font-bold text-xl text-foreground">{layers[selectedLayer].name}</h3>
-          <span className="font-mono text-xs px-2.5 py-1 rounded border border-border bg-secondary/60 text-muted-foreground font-semibold">
-            {layers[selectedLayer].scope}
-          </span>
-        </div>
-        <p className="text-sm text-muted-foreground leading-relaxed">{layers[selectedLayer].desc}</p>
-        <div className="pt-2 text-xs font-mono text-foreground">
-          <span className="text-muted-foreground">Key Examples: </span>{layers[selectedLayer].examples}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// -------------------------------------------------------------
-// Widget 3: Autoregressive Next-Token Predictor
-// -------------------------------------------------------------
-function NextTokenWidget() {
-  const [temperature, setTemperature] = useState(0.7);
-
-  const tokens = [
-    { token: 'world', baseProb: 0.62 },
-    { token: 'future', baseProb: 0.21 },
-    { token: 'universe', baseProb: 0.11 },
-    { token: 'machine', baseProb: 0.06 },
-  ];
-
-  const adjusted = tokens.map((t) => {
-    const raw = Math.pow(t.baseProb, 1 / Math.max(0.1, temperature));
-    return { ...t, prob: raw };
-  });
-  const total = adjusted.reduce((acc, t) => acc + t.prob, 0);
-  const normalized = adjusted.map((t) => ({ ...t, prob: t.prob / total }));
-
-  return (
-    <div className="space-y-6">
-      <div className="rounded-xl border border-border/80 bg-secondary/30 p-4 font-mono text-sm text-foreground">
-        <span className="text-muted-foreground">&gt; Context: </span>
-        <span>&ldquo;Artificial Intelligence is redefining the &rdquo;</span>
-        <span className="inline-block w-2 h-4 bg-foreground animate-pulse align-middle ml-1" />
-      </div>
-
-      <div className="space-y-2">
-        <div className="flex items-center justify-between font-mono text-xs">
-          <span className="text-foreground font-semibold">Temperature: {temperature.toFixed(2)}</span>
-          <span className="text-muted-foreground">
-            {temperature < 0.3 ? 'Deterministic (Sharp argmax)' : temperature > 1.0 ? 'High Entropy (Flat distribution)' : 'Balanced'}
-          </span>
-        </div>
-        <input
-          type="range"
-          min="0.1"
-          max="1.5"
-          step="0.05"
-          value={temperature}
-          onChange={(e) => setTemperature(parseFloat(e.target.value))}
-          className="w-full"
-        />
-      </div>
-
-      <div className="space-y-2.5 font-mono text-xs">
-        <div className="text-muted-foreground">Next-Token Probability Distribution:</div>
-        {normalized.map((item) => (
-          <div key={item.token} className="space-y-1">
-            <div className="flex justify-between">
-              <span className="text-foreground font-bold">&ldquo;{item.token}&rdquo;</span>
-              <span className="text-foreground">{(item.prob * 100).toFixed(1)}%</span>
-            </div>
-            <div className="w-full h-2 rounded bg-secondary overflow-hidden">
-              <div
-                className="h-full bg-foreground transition-all duration-200 rounded"
-                style={{ width: `${item.prob * 100}%` }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// -------------------------------------------------------------
-// Widget 4: Probabilistic Simulator
-// -------------------------------------------------------------
-function ProbabilisticSimulatorWidget() {
-  const [temperature, setTemperature] = useState(0.0);
-  const [history, setHistory] = useState<string[]>([]);
-
-  const sample = () => {
-    let outcome = 'Result A';
-    if (temperature > 0) {
-      const rand = Math.random();
-      if (rand > 0.6) outcome = 'Result B';
-      if (rand > 0.85) outcome = 'Result C';
-    }
-    setHistory((prev) => [outcome, ...prev.slice(0, 4)]);
-  };
-
-  return (
-    <div className="space-y-5 font-mono text-xs">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl border border-border/80 bg-secondary/30">
-        <div>
-          <div className="text-foreground font-bold">Sampling Mode:</div>
-          <div className="text-muted-foreground text-[11px]">
-            {temperature === 0 ? 'T = 0 (Purely Deterministic: identical input always yields identical token)' : 'T > 0 (Probabilistic: random sampling across distribution)'}
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setTemperature(0.0)}
-            className={`px-3 py-1.5 rounded border ${temperature === 0 ? 'border-foreground bg-foreground text-background font-bold' : 'border-border text-muted-foreground'}`}
-          >
-            T = 0.0
-          </button>
-          <button
-            onClick={() => setTemperature(0.8)}
-            className={`px-3 py-1.5 rounded border ${temperature > 0 ? 'border-foreground bg-foreground text-background font-bold' : 'border-border text-muted-foreground'}`}
-          >
-            T = 0.8
-          </button>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-3">
-        <button
-          onClick={sample}
-          className="px-4 py-2 rounded-lg bg-foreground text-background font-bold hover:bg-foreground/90 transition-colors"
-        >
-          Execute Sample (Run Inference)
-        </button>
-        <span className="text-muted-foreground text-[11px]">Click multiple times to verify repeatability</span>
-      </div>
-
-      {history.length > 0 && (
-        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20 space-y-1.5">
-          <span className="text-muted-foreground">Recent Outputs:</span>
-          {history.map((h, i) => (
-            <div key={i} className="text-foreground">
-              Run #{history.length - i}: <strong>{h}</strong>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// -------------------------------------------------------------
-// Widget 5: Training vs Inference
-// -------------------------------------------------------------
-function TrainingVsInferenceWidget() {
-  const [mode, setMode] = useState<'training' | 'inference'>('inference');
-
-  return (
-    <div className="space-y-5 font-mono text-xs">
-      <div className="flex rounded-lg p-1 border border-border/80 bg-secondary/30">
-        <button
-          onClick={() => setMode('inference')}
-          className={`flex-1 py-2 rounded font-bold transition-colors ${mode === 'inference' ? 'bg-foreground text-background' : 'text-muted-foreground'}`}
-        >
-          Inference Mode (Serving)
-        </button>
-        <button
-          onClick={() => setMode('training')}
-          className={`flex-1 py-2 rounded font-bold transition-colors ${mode === 'training' ? 'bg-foreground text-background' : 'text-muted-foreground'}`}
-        >
-          Training Mode (Optimization)
-        </button>
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
-          <div className="text-muted-foreground">Pass Required</div>
-          <div className="text-base font-bold text-foreground mt-1">
-            {mode === 'inference' ? 'Forward Pass Only' : 'Forward + Backward'}
-          </div>
-        </div>
-        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
-          <div className="text-muted-foreground">Parameter State</div>
-          <div className="text-base font-bold text-foreground mt-1">
-            {mode === 'inference' ? 'Frozen / Static' : 'Updated via Gradients'}
-          </div>
-        </div>
-        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
-          <div className="text-muted-foreground">VRAM Footprint</div>
-          <div className="text-base font-bold text-foreground mt-1">
-            {mode === 'inference' ? '1x (Weights + KV)' : '3x - 4x (Optimizer + Acts)'}
-          </div>
-        </div>
-        <div className="p-4 rounded-xl border border-border/80 bg-secondary/20">
-          <div className="text-muted-foreground">Latency Scale</div>
-          <div className="text-base font-bold text-foreground mt-1">
-            {mode === 'inference' ? '10 - 200 ms' : 'Hours to Months'}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// -------------------------------------------------------------
-// Widget 6: Rule-based vs Learned ML
-// -------------------------------------------------------------
-function RuleVsLearnedWidget() {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
-      <div className="p-5 rounded-xl border border-border/80 bg-secondary/20 space-y-3">
-        <div className="font-bold text-foreground flex items-center gap-1.5">
-          Traditional Rule-Based Code
-        </div>
-        <div className="text-muted-foreground leading-relaxed">
-          Human writes explicit logic. Cannot scale to complex visual or natural language ambiguities.
-        </div>
-        <pre className="p-3 rounded border border-border/60 bg-secondary/40 text-[11px] text-foreground">
-          {`if (email.contains("lottery") && email.hasLink()) {
-  return SPAM;
-} else if (email.senderUnknown()) {
-  return SUSPICIOUS;
-}`}
-        </pre>
-      </div>
-
-      <div className="p-5 rounded-xl border border-border/80 bg-secondary/20 space-y-3">
-        <div className="font-bold text-foreground flex items-center gap-1.5">
-          Learned Machine Learning Model
-        </div>
-        <div className="text-muted-foreground leading-relaxed">
-          Model learns weights from millions of examples. Discovers non-linear interactions automatically.
-        </div>
-        <pre className="p-3 rounded border border-border/60 bg-secondary/40 text-[11px] text-foreground">
-          {`// Parameterized vector dot product
-const score = dotProduct(weights, emailVector) + bias;
-const isSpam = sigmoid(score) > 0.95;`}
-        </pre>
-      </div>
-    </div>
-  );
-}
-
-// -------------------------------------------------------------
-// Widget 7: Generic Pipeline Stepper
-// -------------------------------------------------------------
-function GenericPipelineWidget({ topic }: { topic: FoundationSubtopic }) {
-  const steps = [
-    { label: 'Raw Input', sub: 'Signal / token vector' },
-    { label: 'Preprocessing', sub: 'Normalization & Tokenization' },
-    { label: 'Model Math', sub: 'Weights & Activations' },
-    { label: 'Prediction', sub: 'Decision output' }
-  ];
-
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 font-mono text-xs">
-        {steps.map((s, i) => (
-          <div
-            key={s.label}
-            className="p-4 rounded-xl border border-border/80 bg-secondary/30 space-y-1 relative"
-          >
-            <div className="text-[10px] text-muted-foreground font-bold">STAGE 0{i + 1}</div>
-            <div className="font-bold text-foreground">{s.label}</div>
-            <div className="text-[11px] text-muted-foreground">{s.sub}</div>
-          </div>
-        ))}
-      </div>
-      <p className="text-center font-mono text-xs text-muted-foreground pt-2">
-        Concept demonstrated: <span className="text-foreground font-semibold">{topic.title}</span>
-      </p>
-    </div>
-  );
+  return <ModelMathFunctionWidget />;
 }
