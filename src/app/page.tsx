@@ -29,6 +29,7 @@ import { topics, type Topic } from '@/data/topics';
 import { tracks } from '@/data/tracks';
 import { DomainCard } from '@/components/DomainCard';
 import { TopicCard } from '@/components/TopicCard';
+import { siteConfig } from '@/config/site';
 
 const DOMAIN_FILTER_OPTIONS: { label: string; key: 'all' | DomainKey }[] = [
   { label: 'All Disciplines', key: 'all' },
@@ -64,8 +65,18 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
     icon: Cpu,
   },
   {
-    title: 'Array & RAM Cache Locality',
+    title: 'AI Engineering Foundations',
     badge: 'ENGINE // 02',
+    domain: 'AI & Machine Learning',
+    url: '/ai/ai-engineering-foundations',
+    description:
+      'Master learned parameters, tensor transformations, continuous loss surfaces, and deterministic micro-model execution.',
+    topicsCovered: ['Parameter Space', 'Activation Functions', 'Decision Surfaces'],
+    icon: BrainCircuit,
+  },
+  {
+    title: 'Array & RAM Cache Locality',
+    badge: 'ENGINE // 03',
     domain: 'DSA',
     url: '/dsa/arrayviz',
     description:
@@ -75,7 +86,7 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
   },
   {
     title: 'Docker & Linux Kernel Isolation',
-    badge: 'ENGINE // 03',
+    badge: 'ENGINE // 04',
     domain: 'Full Stack / DevOps',
     url: '/fullstack/dockercosmos',
     description:
@@ -85,7 +96,7 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
   },
   {
     title: 'OS Internals & Virtual Memory',
-    badge: 'ENGINE // 04',
+    badge: 'ENGINE // 05',
     domain: 'Core CS',
     url: '/corecs/operating-systems-internals-processes-memory',
     description:
@@ -95,7 +106,7 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
   },
   {
     title: 'Blockchain & Merkle State Storage',
-    badge: 'ENGINE // 05',
+    badge: 'ENGINE // 06',
     domain: 'Web3',
     url: '/web3/blockchainviz',
     description:
@@ -105,7 +116,7 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
   },
   {
     title: 'SDR Signal Hacking & Spectrum',
-    badge: 'ENGINE // 06',
+    badge: 'ENGINE // 07',
     domain: 'Security',
     url: '/security/software-defined-radio-sdr-and-signal-hacking',
     description:
@@ -209,32 +220,38 @@ export default function HomePage() {
       </section>
 
       {/* 2. Hero Section: Architectural Statement */}
-      <section className="page-container pt-8 md:pt-14">
+      <section className="page-container pt-10 md:pt-16">
         <div className="space-y-8 max-w-4xl">
-          <div className="inline-flex items-center gap-2 rounded border border-border bg-secondary/60 px-3 py-1 text-xs font-mono text-muted-foreground uppercase tracking-widest">
-            <Terminal className="h-3.5 w-3.5 text-foreground" />
-            FIRST-PRINCIPLES COMPUTING PLATFORM
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-1.5 text-xs font-mono text-muted-foreground shadow-sm">
+            <Sparkles className="h-3.5 w-3.5 text-foreground" />
+            <span className="font-semibold text-foreground">{totalTopics} INTERACTIVE MODULES</span>
+            <span className="opacity-40">&bull;</span>
+            <span className="text-emerald-500 dark:text-emerald-400 font-semibold">{liveTopics} LIVE ENGINES</span>
           </div>
 
-          <div className="space-y-4">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-foreground leading-[0.98] uppercase font-display">
-              Deconstruct <br />
-              The Machine.
+          <div className="space-y-5">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-[1.02] font-display">
+              Explore the Universe of <br className="hidden sm:inline" />
+              <span className="text-muted-foreground">Computer Science.</span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-normal leading-relaxed max-w-3xl">
-              An open, interactive curriculum dissecting modern computer science. Step
-              through CPU register cycles, trace Linux kernel cgroup boundaries,
-              demodulate SDR radio packets, and inspect neural backpropagation weights —
-              directly in the browser.
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-normal leading-relaxed max-w-3xl font-sans">
+              Deconstructing the digital universe. Visual, interactive deep-dives into the core of computing — designed for engineers who refuse to just use tools and choose to master them.
             </p>
+
+            {/* Restored Iconic Tagline */}
+            <div className="border-l-2 border-foreground/70 pl-4 py-1.5">
+              <p className="font-mono text-sm sm:text-base text-foreground font-medium italic tracking-wide">
+                &ldquo;{siteConfig.slogan}&rdquo;
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
               href="/topics"
-              className="inline-flex h-12 items-center justify-center rounded-xl bg-foreground px-6 text-sm font-semibold text-background transition-all hover:bg-foreground/90 active:scale-95"
+              className="inline-flex h-12 items-center justify-center rounded-xl bg-foreground px-7 text-sm font-semibold text-background transition-all hover:bg-foreground/90 active:scale-95 shadow-sm"
             >
-              Browse 244 Modules <ArrowRight className="ml-2 h-4 w-4" />
+              Explore {totalTopics} Topics <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
             <Link
               href="/tracks"
@@ -246,7 +263,7 @@ export default function HomePage() {
               href="/about"
               className="inline-flex h-12 items-center justify-center rounded-xl border border-transparent px-4 text-sm font-mono text-muted-foreground transition-colors hover:text-foreground"
             >
-              Platform Manifesto →
+              About CSCosmos &rarr;
             </Link>
           </div>
         </div>
@@ -612,6 +629,14 @@ export default function HomePage() {
                   </p>
                 </div>
               </div>
+
+              {/* Manifesto Slogan Ribbon */}
+              <div className="pt-6 border-t border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-muted-foreground">
+                <span className="italic text-foreground font-medium">
+                  &ldquo;{siteConfig.slogan}&rdquo;
+                </span>
+                <span>CSCosmos &bull; Deconstructing the Digital Universe</span>
+              </div>
             </div>
           </section>
 
@@ -639,7 +664,7 @@ export default function HomePage() {
               </div>
 
               <div className="text-muted-foreground">
-                CSCosmos Engine &copy; {new Date().getFullYear()} &bull; Deconstructing the Digital Universe
+                CSCosmos Engine &copy; {new Date().getFullYear()} &bull; {siteConfig.slogan}
               </div>
             </div>
           </section>
