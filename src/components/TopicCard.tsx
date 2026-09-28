@@ -34,10 +34,10 @@ export function TopicCard({ topic, onClick, alsoInDomain }: TopicCardProps) {
             <div className="relative z-10 flex justify-between items-start mb-3">
                 <div>
                     <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">{topic.domain}</p>
+                        <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-muted-foreground">{topic.domain}</p>
                         {alsoInDomain && (
                             <span
-                                className="inline-flex items-center rounded-full border border-border bg-secondary/60 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground"
+                                className="inline-flex items-center rounded-full border border-border bg-secondary/60 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wide text-muted-foreground"
                                 title={"Cross-listed from " + alsoInDomain.name}
                             >
                                 Also in {alsoInDomain.name}
@@ -49,24 +49,25 @@ export function TopicCard({ topic, onClick, alsoInDomain }: TopicCardProps) {
                     </h4>
                 </div>
                 {isLive ? (
-                    <span className="pill-badge border border-emerald-300 bg-emerald-100 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-500/15 dark:text-emerald-100">
-                        Live
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-mono font-medium text-emerald-500 dark:text-emerald-400">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+                        LIVE
                     </span>
                 ) : (
-                    <span className="pill-badge border border-indigo-200 bg-indigo-100 text-indigo-900 dark:border-indigo-500/40 dark:bg-indigo-500/15 dark:text-indigo-100">
-                        Coming Soon
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary/60 px-2.5 py-0.5 text-[11px] font-mono text-muted-foreground">
+                        PLANNED
                     </span>
                 )}
             </div>
 
-            <p className="relative z-10 text-sm text-muted-foreground line-clamp-2 min-h-[40px]">
+            <p className="relative z-10 text-sm text-muted-foreground line-clamp-2 min-h-[40px] leading-relaxed">
                 {topic.shortDescription}
             </p>
 
             {!isLive && (
-                <div className="absolute inset-0 bg-background/5 backdrop-blur-[1px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                    <div className="bg-background text-foreground px-4 py-2 rounded-full shadow-lg border border-border flex items-center text-sm font-medium">
-                        <Lock className="w-3 h-3 mr-2" /> Coming Soon
+                <div className="absolute inset-0 bg-background/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                    <div className="bg-card text-foreground px-3.5 py-1.5 rounded-md border border-border shadow-sm flex items-center text-xs font-mono">
+                        <Lock className="w-3 h-3 mr-1.5 text-muted-foreground" /> In Development
                     </div>
                 </div>
             )}
