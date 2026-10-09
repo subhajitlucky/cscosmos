@@ -133,41 +133,7 @@ export default function HomePage() {
 
   return (
     <div className="space-y-24 pb-24">
-      {/* 1. System Telemetry Bar */}
-      <section className="border-b border-border/80 bg-secondary/30">
-        <div className="page-container py-3">
-          <div className="flex flex-wrap items-center justify-between gap-y-2 text-xs font-mono text-muted-foreground">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5 font-semibold text-foreground">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse motion-reduce:animate-none" aria-hidden="true" />
-                SYS_STATUS // NOMINAL
-              </span>
-              <span className="hidden sm:inline text-border">|</span>
-              <span className="hidden sm:inline">ONLINE // TELEMETRY VERIFIED</span>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <span>
-                <strong className="text-foreground">{liveTopics}</strong> LIVE ENGINES
-              </span>
-              <span className="text-border">/</span>
-              <span>
-                <strong className="text-foreground">{totalTopics}</strong> MODULES
-              </span>
-              <span className="text-border">/</span>
-              <span className="hidden md:inline">
-                <strong className="text-foreground">8</strong> DISCIPLINES
-              </span>
-              <span className="text-border hidden md:inline">/</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-semibold hidden lg:inline">
-                100% OPEN
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Hero Section: Architectural Statement */}
+      {/* 1. Hero Section: Architectural Statement */}
       <section className="page-container pt-10 md:pt-16">
         <div className="space-y-8 max-w-4xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-1.5 text-xs font-mono text-muted-foreground shadow-sm">
