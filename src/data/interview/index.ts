@@ -43,7 +43,7 @@ export function getCategoryFacets(key: InterviewCategoryKey): CategoryFacets {
     count: qs.length,
     topics: [...counts.entries()]
       .map(([value, count]) => ({ value, count }))
-      .sort((a, b) => a.value.localeCompare(b.value)),
+      .sort((a, b) => (a.value < b.value ? -1 : a.value > b.value ? 1 : 0)),
   };
 }
 

@@ -5,7 +5,10 @@ import {
   QUESTION_TYPES,
   ROUNDS,
   categories,
+  getAdjacentQuestions,
   getCategoryByKey,
+  getCategoryFacets,
+  getQuestion,
   getQuestionsByCategory,
   interviewQuestions,
 } from './index';
@@ -75,20 +78,39 @@ describe('interview questions', () => {
     }
   });
 
-  it('every category has at least 3 questions with >=5 frames', () => {
+  it('every category has at least 3 questions, each animation with >=3 frames', () => {
     for (const c of categories) {
       const qs = getQuestionsByCategory(c.key);
       expect(qs.length, `${c.key} question count`).toBeGreaterThanOrEqual(3);
       for (const q of qs) {
         for (const step of q.steps) {
-          if (step.animation.kind === 'step-flow' || step.animation.kind === 'code-trace' || step.animation.kind === 'timeline' || step.animation.kind === 'before-after' || step.animation.kind === 'memory-diagram') {
-            expect(
-              step.animation.kind === 'step-flow' ? step.animation.phases : step.animation.frames,
-              `${q.slug} frames`,
-            ).toBeDefined();
+          if (
+            step.animation.kind !== 'custom'
+          ) {
+            const frames =
+              step.animation.kind === 'step-flow' ? step.animation.phases : step.animation.frames;
+            expect(frames.length, `${q.slug} frames`).toBeGreaterThanOrEqual(3);
           }
         }
       }
     }
+  });
+});
+
+describe('interview aggregation helpers', () => {
+  it('getCategoryFacets returns zero count and no topics for an empty category', () => {
+    expect(getCategoryFacets('fullstack')).toEqual({ count: 0, topics: [] });
+  });
+
+  it('getAdjacentQuestions returns empty object for unknown slug', () => {
+    expect(getAdjacentQuestions('fullstack', 'does-not-exist')).toEqual({});
+  });
+
+  it('getQuestion returns undefined for unknown slug', () => {
+    expect(getQuestion('fullstack', 'does-not-exist')).toBeUndefined();
+  });
+
+  it('getCategoryByKey returns undefined for unknown key', () => {
+    expect(getCategoryByKey('nope')).toBeUndefined();
   });
 });
