@@ -10,6 +10,7 @@ import { useFramePlayer } from './useFramePlayer';
 export function StepFlow({ spec }: { spec: StepFlowSpec }) {
   const player = useFramePlayer(spec.phases.length);
   const phase = spec.phases[player.index];
+  if (!phase) return null;
   const active = new Set(phase.activeNodeIds ?? []);
   const done = new Set(phase.doneNodeIds ?? []);
   const error = new Set(phase.errorNodeIds ?? []);

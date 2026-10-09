@@ -39,15 +39,18 @@ export function FrameControls({ player, className }: { player: FramePlayer; clas
       >
         <SkipForward className="h-3.5 w-3.5" />
       </button>
-      <div className="ml-1 flex items-center gap-1" role="progressbar" aria-valuenow={player.index + 1} aria-valuemin={1} aria-valuemax={player.count}>
+      <div className="ml-1 flex items-center gap-0" role="group" aria-label="Animation frames">
         {Array.from({ length: player.count }).map((_, i) => (
           <button
             key={i}
             type="button"
             onClick={() => player.goTo(i)}
-            aria-label={`Frame ${i + 1}`}
-            className={cn('h-1.5 rounded-full transition-all', i === player.index ? 'w-4 bg-primary' : 'w-1.5 bg-border hover:bg-muted-foreground')}
-          />
+            aria-label={`Frame ${i + 1}${i === player.index ? ' (current)' : ''}`}
+            aria-current={i === player.index ? 'true' : undefined}
+            className="flex h-6 w-6 items-center justify-center"
+          >
+            <span className={cn('h-1.5 rounded-full transition-all', i === player.index ? 'w-4 bg-primary' : 'w-1.5 bg-border')} />
+          </button>
         ))}
       </div>
       <span className="ml-1 font-mono text-[10px] text-muted-foreground">
