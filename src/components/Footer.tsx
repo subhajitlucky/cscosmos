@@ -4,7 +4,6 @@ import { siteConfig } from "../config/site"
 
 const EXPLORE_LINKS = [
     { href: "/topics", label: "Topics" },
-    { href: "/tracks", label: "Tracks" },
     { href: "/interview", label: "Interview" },
     { href: "/about", label: "About" },
 ]

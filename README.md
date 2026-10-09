@@ -14,7 +14,7 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 - 55 live visualizer topics powered by 47 natively absorbed interactive engines (zero externally linked).
 - 8 major domains with dedicated routes.
 - 1,500+ statically pre-rendered pages via Next.js SSG.
-- Free Learning Tracks: curated multi-engine journeys with unified cross-engine progress tracking.
+- Interview Prep: 17 deep-dive questions across 5 categories with step-by-step animated walkthroughs.
 - Search, domain browsing, topic detail pages, live/coming-soon states, and dark/light theme support.
 - Vercel deployment with SSG pre-rendering and App Router.
 

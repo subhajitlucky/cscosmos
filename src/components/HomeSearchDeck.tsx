@@ -56,8 +56,6 @@ export function HomeSearchDeck({ totalTopics, children }: HomeSearchDeckProps) {
         searchInputRef.current?.focus();
       } else if (e.key === 't' || e.key === 'T') {
         router.push('/topics');
-      } else if (e.key === 'l' || e.key === 'L') {
-        router.push('/tracks');
       }
     };
 

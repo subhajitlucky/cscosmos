@@ -6,7 +6,6 @@ import {
   Boxes,
   Blocks,
   BrainCircuit,
-  Clock,
   Code2,
   Cpu,
   HardDrive,
@@ -17,7 +16,6 @@ import {
 } from 'lucide-react';
 import { domains } from '@/data/domains';
 import { topics } from '@/data/topics';
-import { tracks } from '@/data/tracks';
 import { DomainCard } from '@/components/DomainCard';
 import { HomeSearchDeck } from '@/components/HomeSearchDeck';
 import { siteConfig } from '@/config/site';
@@ -167,10 +165,10 @@ export default function HomePage() {
               Explore {totalTopics} Topics <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
-              href="/tracks"
+              href="/interview"
               className="inline-flex h-12 items-center justify-center rounded-xl border border-border/80 bg-secondary/30 px-6 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/70 hover:border-foreground/30 active:scale-95"
             >
-              Curated Learning Tracks
+              Interview Prep
             </Link>
             <Link
               href="/about"
@@ -292,85 +290,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* 7. Structured Learning Tracks Showcase */}
-          <section className="page-container space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/80 pb-6">
-              <div className="space-y-2">
-                <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                  CURATED PATHWAYS // SEQUENCE RUNS
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display text-balance">
-                  Structured Learning Tracks
-                </h2>
-                <p className="text-sm text-muted-foreground max-w-2xl">
-                  Multi-module sequences connecting individual visualizers into comprehensive
-                  engineering journeys. Free, forever, without paywalls.
-                </p>
-              </div>
-
-              <Link
-                href="/tracks"
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap focus-ring"
-              >
-                View all tracks <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {tracks.map((track) => (
-                <Link
-                  key={track.slug}
-                  href={`/tracks/${track.slug}`}
-                  className="group flex flex-col justify-between rounded-xl border border-border/80 bg-card p-6 transition-colors duration-200 hover:border-foreground/30 hover:bg-secondary/20 focus-ring"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="rounded border border-border/80 bg-secondary/50 px-2.5 py-0.5 font-mono text-[10px] uppercase font-semibold text-muted-foreground">
-                        {track.level}
-                      </span>
-                      <span className="flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
-                        <Clock className="h-3.5 w-3.5" aria-hidden="true" /> ~{track.estHours}h sequence
-                      </span>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <h3 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                        {track.title}
-                      </h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                        {track.description}
-                      </p>
-                    </div>
-
-                    <div className="space-y-2 pt-2">
-                      <span className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider block">
-                        Included Interactive Engines ({track.modules.length}):
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {track.modules.map((m) => (
-                          <span
-                            key={m.id}
-                            className="rounded border border-border/60 bg-secondary/40 px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
-                          >
-                            {m.title}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 pt-4 border-t border-border/40 flex items-center justify-between text-xs font-mono font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                    <span className="text-emerald-600 dark:text-emerald-400 font-medium">Free &amp; Self-Paced</span>
-                    <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                      Start Track <ArrowRight className="h-3 w-3" aria-hidden="true" />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {/* 8. Engineering Philosophy / Manifesto */}
+          {/* 7. Engineering Philosophy / Manifesto */}
           <section className="page-container">
             <div className="rounded-2xl border border-border/80 bg-card p-8 md:p-12 space-y-8">
               <div className="space-y-2 max-w-2xl">
@@ -410,7 +330,7 @@ export default function HomePage() {
                     03 // CLIENT-SIDE &amp; FREE
                   </span>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Zero forced accounts, zero paywalled tracks, zero telemetry trackers. Pure interactive software compiled directly into the web runtime.
+                    Zero forced accounts, zero paywalled courses, zero telemetry trackers. Pure interactive software compiled directly into the web runtime.
                   </p>
                 </div>
               </div>
@@ -424,7 +344,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* 9. Bottom Keyboard Navigation Ribbon */}
+          {/* 8. Bottom Keyboard Navigation Ribbon */}
           <section className="page-container pt-4">
             <div className="flex flex-wrap items-center gap-4 border-t border-border/60 pt-6 text-xs font-mono text-muted-foreground">
               <span>SHORTCUTS:</span>
@@ -435,10 +355,6 @@ export default function HomePage() {
               <span className="inline-flex items-center gap-1.5">
                 <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">T</kbd>
                 Topics
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">L</kbd>
-                Tracks
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">Esc</kbd>
