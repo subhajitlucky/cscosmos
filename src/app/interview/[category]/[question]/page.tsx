@@ -64,7 +64,7 @@ export default async function InterviewQuestionPage({
     <main className="page-container py-10">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
       <QuestionView category={category} question={question} />
       <nav className="mt-10 flex items-center justify-between gap-4 border-t border-border pt-6">

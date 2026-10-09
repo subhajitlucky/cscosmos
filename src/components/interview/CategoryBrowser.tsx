@@ -107,7 +107,7 @@ function FilterRow<T extends string>({
             aria-pressed={active}
             onClick={() => onChange(option.value)}
             className={cn(
-              'rounded-full border px-3 py-1 text-xs transition-colors',
+              'rounded-full border px-3 py-1 text-xs transition-colors focus-ring',
               active
                 ? 'border-primary bg-primary/10 font-medium text-primary'
                 : 'border-border text-muted-foreground hover:text-foreground',
@@ -252,7 +252,7 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search questions, topics, tags..."
-              className="w-full rounded-md border border-border bg-background py-2 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+              className="w-full rounded-md border border-border bg-background py-2 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus-ring"
             />
           </div>
           <div className="flex flex-col gap-2 lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-5">
