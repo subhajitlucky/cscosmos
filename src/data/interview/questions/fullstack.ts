@@ -19,19 +19,19 @@ export const fullstackQuestions: InterviewQuestion[] = [
     steps: [
       {
         title: 'Browser cache and DNS resolution',
-        body: 'Before any network traffic, the browser checks its own HTTP cache and the OS resolver cache. On a miss, a recursive DNS lookup runs: root servers point to the TLD servers, the TLD points to the authoritative nameserver, and the authoritative server returns the IP. Watch the query walk the hierarchy — each hop is a chance to answer from cache instead.',
+        body: 'Before any network traffic, the browser checks its own HTTP cache. On a miss the query reaches a recursive resolver, which checks its own cache; only when that misses does a DNS lookup run: root servers point to the TLD servers, the TLD points to the authoritative nameserver, and the authoritative server returns the IP. Watch the query walk the hierarchy — each hop is a chance to answer from cache instead.',
         animation: {
           kind: 'step-flow',
           nodes: [
             { id: 'browser', label: 'Browser' },
-            { id: 'os', label: 'OS Resolver', sublabel: 'cache' },
+            { id: 'os', label: 'Resolver', sublabel: 'recursive cache' },
             { id: 'root', label: 'Root DNS' },
             { id: 'tld', label: 'TLD .com' },
             { id: 'auth', label: 'Authoritative DNS' },
           ],
           phases: [
             { id: 'p1', caption: 'Browser cache miss — the hostname is unknown locally.', activeNodeIds: ['browser'] },
-            { id: 'p2', caption: 'OS resolver cache miss — ask the network.', packets: [{ from: 'browser', to: 'os', label: 'resolve?' }], activeNodeIds: ['os'] },
+            { id: 'p2', caption: 'The recursive resolver misses its own cache — ask the network.', packets: [{ from: 'browser', to: 'os', label: 'resolve?' }], activeNodeIds: ['os'] },
             { id: 'p3', caption: 'Recursive resolver asks a root server where .com lives.', packets: [{ from: 'os', to: 'root', label: '?' }], activeNodeIds: ['root'] },
             { id: 'p4', caption: 'Root delegates to the .com TLD servers.', packets: [{ from: 'root', to: 'tld', label: '.com →' }], doneNodeIds: ['root'], activeNodeIds: ['tld'] },
             { id: 'p5', caption: 'TLD delegates to the authoritative nameserver.', packets: [{ from: 'tld', to: 'auth', label: 'auth NS' }], doneNodeIds: ['root', 'tld'], activeNodeIds: ['auth'] },
@@ -148,7 +148,7 @@ export const fullstackQuestions: InterviewQuestion[] = [
     steps: [
       {
         title: 'The duplicated network calls',
-        body: `Open a fresh React 18 app, put a fetch or a subscription inside useEffect, and the network tab shows the work twice — while the production build shows it once. Candidates usually blame the fetch, the cache, or the dev server. The real trigger is StrictMode, which React enables in development templates. Watch the first animation: the console prints subscribe, unsubscribe, subscribe in a tight rhythm, then goes quiet. That rhythm is the fingerprint of an intentional mount, cleanup, and remount cycle. The important question is not how to silence the duplicate log — it is why React insists your effect survive a teardown it never asked you to write. If the effect is correct, the double invoke is harmless; if it is not, StrictMode has just exposed a bug that a real unmount or dependency change would eventually trigger in production.`,
+        body: `Open a fresh React 18 app, put a fetch or a subscription inside useEffect, and the network tab shows the work twice — while the production build shows it once. Candidates usually blame the fetch, the cache, or the dev server. The real trigger is StrictMode, which React enables in development templates. Watch the first animation: React renders the component twice before any effect runs, then the console prints subscribe, unsubscribe, subscribe in a tight rhythm and goes quiet. That rhythm is the fingerprint of an intentional effect setup, cleanup, and setup cycle. The important question is not how to silence the duplicate log — it is why React insists your effect survive a teardown it never asked you to write. If the effect is correct, the double invoke is harmless; if it is not, StrictMode has just exposed a bug that a real unmount or dependency change would eventually trigger in production.`,
         animation: {
           kind: 'code-trace',
           language: 'tsx',
@@ -161,17 +161,17 @@ export const fullstackQuestions: InterviewQuestion[] = [
   };
 }, [roomId]);`,
           frames: [
-            { id: 'f1', caption: 'First setup runs and logs subscribe.', activeLines: [2, 3], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1', changed: true }, { name: 'cleanupRuns', value: '0' }], output: 'subscribe' },
-            { id: 'f2', caption: 'StrictMode tears the effect down immediately and cleanup runs.', activeLines: [4, 5, 6], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '1', changed: true }], output: 'subscribe\nunsubscribe' },
-            { id: 'f3', caption: 'React mounts it again — subscribe fires a second time.', activeLines: [2, 3], variables: [{ name: 'renderCount', value: '2', changed: true }, { name: 'effectRuns', value: '2', changed: true }, { name: 'cleanupRuns', value: '1' }], output: 'subscribe\nunsubscribe\nsubscribe' },
-            { id: 'f4', caption: 'Only the second subscription stays live; cleanup removed the first.', activeLines: [3, 6], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '2' }, { name: 'cleanupRuns', value: '1' }], output: 'subscribe\nunsubscribe\nsubscribe' },
-            { id: 'f5', caption: 'A production build runs the same effect exactly once — no teardown in between.', activeLines: [2, 3], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '0' }], output: 'subscribe' },
+            { id: 'f1', caption: 'First render: the component body runs before any effect.', activeLines: [1], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '0' }, { name: 'cleanupRuns', value: '0' }] },
+            { id: 'f2', caption: 'StrictMode renders the body a second time with the same values — still before any effect.', activeLines: [1], variables: [{ name: 'renderCount', value: '2', changed: true }, { name: 'effectRuns', value: '0' }, { name: 'cleanupRuns', value: '0' }] },
+            { id: 'f3', caption: 'Effect setup runs for the first time and logs subscribe.', activeLines: [2, 3], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '1', changed: true }, { name: 'cleanupRuns', value: '0' }], output: 'subscribe' },
+            { id: 'f4', caption: 'StrictMode tears that effect down immediately and cleanup runs.', activeLines: [4, 5, 6], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '1', changed: true }], output: 'subscribe\nunsubscribe' },
+            { id: 'f5', caption: 'Setup runs a second time — subscribe fires again, and only that subscription stays live.', activeLines: [2, 3], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '2', changed: true }, { name: 'cleanupRuns', value: '1' }], output: 'subscribe\nunsubscribe\nsubscribe' },
           ],
         },
       },
       {
         title: 'StrictMode is a debugger',
-        body: `StrictMode is not a linter or a scaffold you should strip out; it is a deliberate correctness harness. In development React double-invokes component bodies, state updater functions, and effect setup/cleanup so that non-idempotent code fails loudly on your machine instead of silently in production. The animation walks the full lifecycle — mount, cleanup, remount — before the user ever sees a symptom. React chose this in version 18 to prepare apps for concurrent rendering, where a component can be mounted, paused, and discarded before it ever commits. Any effect that connects, subscribes, or starts a timer must return a cleanup that fully reverses its setup. When the cleanup is complete, the remount becomes invisible: same final state, one live connection, no leaked listener. The double invoke is the test; the cleanup is the answer.`,
+        body: `StrictMode is not a linter or a scaffold you should strip out; it is a deliberate correctness harness. StrictMode has long double-invoked render logic in development — component bodies, state updater functions, and other render-time code — so that non-idempotent code fails loudly on your machine instead of silently in production. React 18 added the effect half of that simulation: in development each effect runs setup, cleanup, then setup again, to prepare apps for concurrent rendering, where a component can be mounted, paused, and discarded before it ever commits. The animation walks the full dev lifecycle — render, render, setup, cleanup, setup — before the user ever sees a symptom. Any effect that connects, subscribes, or starts a timer must return a cleanup that fully reverses its setup. When the cleanup is complete, the remount becomes invisible: same final state, one live connection, no leaked listener. The double invoke is the test; the cleanup is the answer.`,
         animation: {
           kind: 'code-trace',
           language: 'tsx',
@@ -184,17 +184,17 @@ export const fullstackQuestions: InterviewQuestion[] = [
   return <p>ready</p>;
 }`,
           frames: [
-            { id: 'f1', caption: 'React renders the component body.', activeLines: [2], variables: [{ name: 'renderCount', value: '1', changed: true }, { name: 'effectRuns', value: '0' }, { name: 'cleanupRuns', value: '0' }], output: 'render' },
-            { id: 'f2', caption: 'The effect setup runs after the commit.', activeLines: [4], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1', changed: true }, { name: 'cleanupRuns', value: '0' }], output: 'render\neffect setup' },
-            { id: 'f3', caption: 'StrictMode immediately runs the returned cleanup.', activeLines: [5], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '1', changed: true }], output: 'render\neffect setup\neffect cleanup' },
-            { id: 'f4', caption: 'The component body is invoked again, then setup runs again.', activeLines: [2, 4], variables: [{ name: 'renderCount', value: '2', changed: true }, { name: 'effectRuns', value: '2', changed: true }, { name: 'cleanupRuns', value: '1' }], output: 'render\neffect setup\neffect cleanup\nrender\neffect setup' },
-            { id: 'f5', caption: 'Net result: one active effect, but setup had to be re-entrant.', activeLines: [4, 5], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '2' }, { name: 'cleanupRuns', value: '1' }] },
+            { id: 'f1', caption: 'First render: React invokes the component body.', activeLines: [2], variables: [{ name: 'renderCount', value: '1', changed: true }, { name: 'effectRuns', value: '0' }, { name: 'cleanupRuns', value: '0' }], output: 'render' },
+            { id: 'f2', caption: 'StrictMode renders the body a second time — same values, still before any effect.', activeLines: [2], variables: [{ name: 'renderCount', value: '2', changed: true }, { name: 'effectRuns', value: '0' }, { name: 'cleanupRuns', value: '0' }], output: 'render\nrender' },
+            { id: 'f3', caption: 'Only now does the effect setup run, after the commit.', activeLines: [4], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '1', changed: true }, { name: 'cleanupRuns', value: '0' }], output: 'render\nrender\neffect setup' },
+            { id: 'f4', caption: 'StrictMode immediately runs the returned cleanup.', activeLines: [5], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '1', changed: true }], output: 'render\nrender\neffect setup\neffect cleanup' },
+            { id: 'f5', caption: 'Setup runs again: one active effect, and setup had to be re-entrant.', activeLines: [4], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '2', changed: true }, { name: 'cleanupRuns', value: '1' }], output: 'render\nrender\neffect setup\neffect cleanup\neffect setup' },
           ],
         },
       },
       {
         title: 'Trace the lifecycle counters',
-        body: `Now trace the counters. renderCount tracks how many times the component body runs, effectRuns counts setup functions, and cleanupRuns counts teardowns. In development the component body renders once, setup runs, and StrictMode immediately invokes the returned cleanup — cleanupRuns becomes one before the tree ever re-renders for the user. React then invokes the body and setup a second time, so effectRuns reaches two while only the second subscription stays live. Watch the final frame: production does not run this simulation, so you see one render, one setup, and zero cleanups until the component actually unmounts. The counters make the rule concrete — whenever setup runs, cleanup must be able to run too, in any order, without leaving duplicate subscriptions, timers, or listeners behind. If your cleanup is complete, the counters are boring in production and healthy in development.`,
+        body: `Now trace the counters. renderCount tracks how many times the component body runs, effectRuns counts setup functions, and cleanupRuns counts teardowns. In development StrictMode renders the body twice before any effect runs; then setup runs, StrictMode immediately invokes the returned cleanup — cleanupRuns becomes one only after that second render — and setup runs a second time, so effectRuns reaches two while only the second subscription stays live. Watch the final frame: production does not run this simulation, so you see one render, one setup, and zero cleanups until the component actually unmounts. The counters make the rule concrete — whenever setup runs, cleanup must be able to run too, in any order, without leaving duplicate subscriptions, timers, or listeners behind. If your cleanup is complete, the counters are boring in production and healthy in development.`,
         code: {
           language: 'tsx',
           source: `function ChatRoom({ roomId }: { roomId: string }) {
@@ -231,10 +231,10 @@ export const fullstackQuestions: InterviewQuestion[] = [
 }`,
           frames: [
             { id: 'f1', caption: 'First render completes with an empty message list.', activeLines: [2], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '0' }, { name: 'cleanupRuns', value: '0' }] },
-            { id: 'f2', caption: 'Effect setup runs and subscribes to the room.', activeLines: [4, 5, 6], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1', changed: true }, { name: 'cleanupRuns', value: '0' }], output: 'setup general' },
-            { id: 'f3', caption: 'StrictMode fires the cleanup returned by that effect.', activeLines: [7, 8, 9], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '1', changed: true }], output: 'setup general\ncleanup general' },
-            { id: 'f4', caption: 'The component remounts and setup runs a second time.', activeLines: [4, 5, 6], variables: [{ name: 'renderCount', value: '2', changed: true }, { name: 'effectRuns', value: '2', changed: true }, { name: 'cleanupRuns', value: '1' }], output: 'setup general\ncleanup general\nsetup general' },
-            { id: 'f5', caption: 'One subscription stays live — the cleanup prevented a leak.', activeLines: [6, 9], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '2' }, { name: 'cleanupRuns', value: '1' }] },
+            { id: 'f2', caption: 'StrictMode renders the body a second time — same values, still before any effect.', activeLines: [2], variables: [{ name: 'renderCount', value: '2', changed: true }, { name: 'effectRuns', value: '0' }, { name: 'cleanupRuns', value: '0' }] },
+            { id: 'f3', caption: 'Effect setup runs and subscribes to the room.', activeLines: [4, 5, 6], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '1', changed: true }, { name: 'cleanupRuns', value: '0' }], output: 'setup general' },
+            { id: 'f4', caption: 'StrictMode fires the cleanup returned by that effect.', activeLines: [7, 8, 9], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '1', changed: true }], output: 'setup general\ncleanup general' },
+            { id: 'f5', caption: 'Setup runs a second time — only that subscription stays live, so the cleanup prevented a leak.', activeLines: [4, 5, 6], variables: [{ name: 'renderCount', value: '2' }, { name: 'effectRuns', value: '2', changed: true }, { name: 'cleanupRuns', value: '1' }], output: 'setup general\ncleanup general\nsetup general' },
             { id: 'f6', caption: 'Production skips the simulation: setup once, cleanup only on unmount.', activeLines: [4, 5], variables: [{ name: 'renderCount', value: '1' }, { name: 'effectRuns', value: '1' }, { name: 'cleanupRuns', value: '0' }], output: 'setup general' },
           ],
         },
@@ -306,7 +306,7 @@ export const fullstackQuestions: InterviewQuestion[] = [
       },
     ],
     edgeCases: [
-      'State from the first run clobbers the second: abort the stale request (AbortController) or ignore it with a cancelled flag in cleanup.',
+      'State from the first run clobbers the second: abort the stale request (AbortController) or ignore it with a canceled flag in cleanup.',
       'Not resetting refs, intervals, or third-party widgets in cleanup: return a teardown that reverses every side effect the setup started.',
       'Removing StrictMode to hide the duplicate: the missing cleanup is still a bug and will fire on route changes and dependency changes in production.',
       'Guarding setup with a mountedRef: refs survive the simulated remount, so the second setup is skipped after the first was cleaned up — leaving zero live subscriptions.',
@@ -446,7 +446,7 @@ console.log('D');`,
       'Forgetting that code after await is a microtask: an async continuation still runs before any timer callback.',
       'Treating Node and browsers as identical: process.nextTick beats promise microtasks in Node, and setImmediate runs in the check phase, not the timer phase.',
       'Starving the loop with a promise chain that reschedules itself: insert a macrotask yield so rendering and timers can run.',
-      'Calling requestAnimationFrame a microtask: rAF runs in the render phase, after microtasks drain and before paint, not before timers.',
+      'Calling requestAnimationFrame a microtask: rAF is a render-phase callback that fires before the next paint, not a microtask; relative to a timer it fires at the next render opportunity — never between synchronous code and the microtask queue.',
     ],
     followUps: [
       { q: 'Why does Promise.resolve().then run before setTimeout(0)?', a: 'Microtasks drain at the end of the current task, while timers are macrotasks that need a later loop turn. The engine always empties microtasks first.' },
@@ -569,7 +569,7 @@ SELECT * FROM users WHERE first_name = 'Ana';`,
           phases: [
             { id: 'p1', caption: "WHERE last_name = 'Patel' — a usable leftmost prefix.", activeNodeIds: ['query'] },
             { id: 'p2', caption: 'The planner matches the prefix and picks the composite index.', packets: [{ from: 'query', to: 'planner' }], activeNodeIds: ['planner'] },
-            { id: 'p3', caption: 'The seek lands at the Patel range; first_name narrows within it.', packets: [{ from: 'planner', to: 'index' }], doneNodeIds: ['query'], activeNodeIds: ['index'] },
+            { id: 'p3', caption: 'The seek lands at the Patel range; every Patel row is contiguous there.', packets: [{ from: 'planner', to: 'index' }], doneNodeIds: ['query'], activeNodeIds: ['index'] },
             { id: 'p4', caption: 'Filtering on first_name alone has no anchor, so every leaf is scanned.', packets: [{ from: 'index', to: 'leaf', label: 'full index scan' }], doneNodeIds: ['planner'], activeNodeIds: ['leaf'] },
             { id: 'p5', caption: 'Only entries that survive the index filter fetch heap rows.', packets: [{ from: 'leaf', to: 'heap', label: 'row pointer' }], doneNodeIds: ['index'], activeNodeIds: ['leaf', 'heap'] },
             { id: 'p6', caption: 'Column order decides which of these plans can seek.', doneNodeIds: ['query', 'planner', 'index', 'leaf', 'heap'], activeNodeIds: ['index'] },

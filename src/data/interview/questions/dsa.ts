@@ -130,7 +130,7 @@ seen.set(nums[i], i);`,
       },
       {
         title: 'Duplicates and missing pairs',
-        body: `Duplicate values are where candidates slip. With nums = [3, 3] and target 6, the correct output is [0, 1]. Check-then-insert handles it naturally: index 0 stores 3 -> 0, and index 1 finds the complement 3 at index 0 before it ever considers overwriting the entry. If you inserted first, index 0 would find itself and report [1, 1]. The map keeps only one index per value, so with many duplicates you get the earliest compatible partner, which is fine because the problem asks for any valid pair. Also decide what a missing pair returns: the standard contract returns an empty array, but some variants throw or guarantee exactly one answer, so state your assumption. Finally, complement arithmetic is safe with negative values and zeros, but fixed-width languages must watch for overflow when target - nums[i] crosses the integer bounds.`,
+        body: `Duplicate values are where candidates slip. With nums = [3, 3] and target 6, the correct output is [0, 1]. Check-then-insert handles it naturally: index 0 stores 3 -> 0, and index 1 finds the complement 3 at index 0 before it ever considers overwriting the entry. If you inserted first, index 0 would find itself and report [1, 1]. The map keeps only one index per value, so with many duplicates you get the most recent compatible partner, which is fine because the problem asks for any valid pair. Also decide what a missing pair returns: the standard contract returns an empty array, but some variants throw or guarantee exactly one answer, so state your assumption. Finally, complement arithmetic is safe with negative values and zeros, but fixed-width languages must watch for overflow when target - nums[i] crosses the integer bounds.`,
         animation: {
           kind: 'code-trace',
           language: 'javascript',
@@ -154,7 +154,7 @@ return [seen.get(3), 1]; // [0, 1] - never [1, 1]`,
       'No valid pair: the loop should exit and return an empty array, but some variants guarantee exactly one solution - state the contract before coding.',
       'Negative values and zeros are safe: complement = target - nums[i] needs no special casing; absolute-value heuristics break them.',
       'Integer overflow in fixed-width languages: target - nums[i] can cross the integer bounds even when the final answer is valid - use 64-bit arithmetic or reorder the comparison.',
-      'Huge duplicate runs overwrite one map entry per value: since the check happens first, you still get the earliest compatible partner, which satisfies any-valid-pair contracts.',
+      'Huge duplicate runs overwrite one map entry per value: since the check happens first, you still get the most recent compatible partner, which satisfies any-valid-pair contracts.',
     ],
     followUps: [
       { q: 'What changes if the input array is already sorted?', a: 'Use two pointers from both ends: move the left pointer in when the sum is too small and the right pointer in when it is too large. That is O(n) time and O(1) space, beating the hash map on memory.' },
@@ -293,15 +293,15 @@ const fallback = lps[4]; // 3 - the suffix "ABA" is already matched`,
       },
       {
         title: 'Why the fallback is correct',
-        body: `The failure function is correct because of what the failed attempt leaves behind. When text[i] mismatches with j matched characters, the text's last j characters already equal pattern[0..j-1] - that is guaranteed by the loop's own history, not by an assumption. Any next alignment whose pattern index is k greater than zero requires that pattern[0..j-k-1] matches the tail of that same window, which is exactly a prefix-equals-suffix relation. The largest k for which this can hold is lps[j-1], so setting j = lps[j-1] keeps the longest alignment that is still possible and discards only alignments that cannot match. The animation makes the chain concrete: the window ABABA has the suffix ABA equal to the prefix ABA, so after falling back the A that ended the window is already covered again. Every fallback is like that, which is why KMP never misses a match - and why the text pointer never rewinds.`,
+        body: `The failure function is correct because of what the failed attempt leaves behind. When text[i] mismatches with j matched characters, the text's last j characters already equal pattern[0..j-1] - that is guaranteed by the loop's own history, not by an assumption. A shift of k requires the pattern's first j−k characters to equal its last j−k characters — i.e. a border of length j−k. The longest border length is lps[j-1], so the largest valid shift is j − lps[j-1], which is exactly j ← lps[j-1] — the alignment that keeps the longest still-possible overlap and discards only alignments that cannot match. The animation makes the chain concrete: the window ABABA has the suffix ABA equal to the prefix ABA, so after falling back the A that ended the window is already covered again. Every fallback is like that, which is why KMP never misses a match - and why the text pointer never rewinds.`,
         animation: {
           kind: 'code-trace',
           language: 'javascript',
           code: `// After matching j characters, the consumed text ends with pattern[0..j-1].
-// A still-possible alignment starts at some k <= j with
-//   pattern[0..j-k-1] === text window suffix
-// which is a prefix-equals-suffix overlap of pattern[0..j-1].
-// lps[j-1] is the longest such overlap, so j = lps[j-1].
+// A shift of k requires the pattern's first j-k characters to equal
+// its last j-k characters: a border of length j-k.
+// The longest border is lps[j-1], so the largest valid shift is
+// j - lps[j-1], which is exactly j = lps[j-1].
 j = lps[j - 1];
 // The text pointer i is untouched: the window already validated these chars.`,
           frames: [
@@ -448,7 +448,7 @@ this.tail.prev = this.head;`,
             { id: 'f2', caption: 'remove(a) splices the node out; its neighbors now point at each other.', activeLines: [14, 38, 39], variables: [{ name: 'list', value: 'c <-> b' }, { name: 'node', value: 'a unlinked', changed: true }] },
             { id: 'f3', caption: 'addFront(a) inserts it between the head sentinel and c.', activeLines: [15, 43, 44, 45, 46], variables: [{ name: 'list', value: 'a <-> c <-> b', changed: true }, { name: 'MRU', value: 'a' }] },
             { id: 'f4', caption: 'get returns the value; a is now the most recently used key.', activeLines: [16], variables: [{ name: 'return', value: 'a.value' }, { name: 'MRU', value: 'a' }, { name: 'LRU', value: 'b' }], output: 'a.value' },
-            { id: 'f5', caption: 'All of it was pointer work: O(1) regardless of cache size.', activeLines: [12, 14, 15, 16], variables: [{ name: 'get', value: 'O(1)' }, { name: 'pointers touched', value: '4 writes' }] },
+            { id: 'f5', caption: 'All of it was pointer work: O(1) regardless of cache size.', activeLines: [12, 14, 15, 16], variables: [{ name: 'get', value: 'O(1)' }, { name: 'pointers touched', value: '6 writes' }] },
           ],
         },
       },
@@ -527,7 +527,7 @@ this.tail.prev = this.head;`,
 //            + eviction (map.delete + remove) O(1)            = O(1)
 // space:     one node and one map entry per live key          = O(capacity)`,
           frames: [
-            { id: 'f1', caption: 'get touches the map once and rewires two pointer pairs.', activeLines: [1], variables: [{ name: 'get', value: 'O(1)' }, { name: 'pointers', value: '4 writes' }] },
+            { id: 'f1', caption: 'get touches the map once and rewires six pointers.', activeLines: [1], variables: [{ name: 'get', value: 'O(1)' }, { name: 'pointers', value: '6 writes' }] },
             { id: 'f2', caption: 'put on an existing key follows the same promotion path.', activeLines: [2], variables: [{ name: 'put', value: 'O(1)' }, { name: 'evictions', value: '0' }] },
             { id: 'f3', caption: 'put on a new key adds one eviction: unlink and delete.', activeLines: [2, 3], variables: [{ name: 'put', value: 'O(1)' }, { name: 'evictions', value: '1', changed: true }] },
             { id: 'f4', caption: 'An adversarial collision set can degrade the map toward O(n).', activeLines: [1, 3], variables: [{ name: 'hashing', value: 'average O(1)' }, { name: 'caveat', value: 'collisions' }] },
@@ -711,7 +711,7 @@ this.tail.prev = this.head;`,
       'Cycle at the head: the reset phase still converges at the head, but code that assumes the entrance differs from the meeting point breaks - trace [1, 2] with 2 pointing back to 1 to verify.',
       'A single node pointing to itself: fast must check fast and fast.next before the double step, or the second hop dereferences null.',
       'Even-length acyclic lists: fast.next is null while fast is not, so the loop must test both conditions rather than only fast.',
-      'Stopping at the first meeting: the meeting node is the entrance only when the head-to-entrance distance is zero - always run the reset phase before claiming the entrance.',
+      'Stopping at the first meeting: the meeting node is the entrance when the head-to-entrance distance is congruent to 0 modulo the cycle length (a ≡ 0 (mod L)), not only when a = 0 — always run the reset phase before claiming the entrance.',
       'Mutating nodes to mark visited (for example stealing a spare flag) corrupts the list for concurrent readers; when no allocation is allowed, Floyd is the safe alternative.',
     ],
     followUps: [

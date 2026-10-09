@@ -11,11 +11,11 @@ export const systemDesignQuestions: InterviewQuestion[] = [
     round: 'system-design',
     type: 'design',
     tags: ['url-shortener', 'scalability', 'caching', 'key-value-store', 'id-generation'],
-    oneLiner: 'A read-dominated system whose entire design funnels into one decision: how to generate tiny, unique, unguessable keys.',
+    oneLiner: 'A read-dominated system whose entire design funnels into one decision: how to generate tiny, unique keys — random ones are unguessable, while counter and Snowflake IDs stay unpredictable only if the sequence state stays secret.',
     whyAsked:
       'Interviewers want to see structured estimation before design: pinning requirements, deriving a 100:1 read:write ratio, and letting those numbers pick the architecture. The shortener also forces a real decision — ID generation strategy and 301 versus 302 — where every answer has a visible consequence for scale and analytics.',
     mentalModel:
-      'URL shortening is a write-once, read-forever lookup: a counter or Snowflake ID encoded in base62 produces the key, a key-value store is the source of truth, and caches at the edge absorb the 100:1 read traffic. The redirect status code is a product decision: 301 maximizes cacheability, 302 keeps every click visible to analytics.',
+      'URL shortening is a write-once, read-forever lookup: a key generator — a secret counter, a Snowflake, or random bytes encoded in base62 — produces the key, a key-value store is the source of truth, and caches at the edge absorb the 100:1 read traffic. Random keys are unguessable; counter and Snowflake keys are unpredictable only while the sequence state stays secret, and sequential values leak volume and ordering. The redirect status code is a product decision: 301 maximizes cacheability, 302 keeps every click visible to analytics.',
     steps: [
       {
         title: 'Requirements and back-of-envelope math',
@@ -40,7 +40,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
       },
       {
         title: 'Generate unique base62 keys',
-        body: `Generating the key is the only genuinely hard part. Three families exist. A global counter encoded in base62 is simple, collision-free, and predictable, but sequential keys are guessable and one counter is a bottleneck — allocate disjoint counter ranges to app servers to scale it horizontally. Hashing the long URL and taking the first seven base62 characters is idempotent, so the same URL can return the same short link, but collisions and hot-URL skew need handling with a conditional put and retry. Snowflake-style IDs combine a timestamp, a machine id, and a per-machine sequence to produce unique keys across nodes without coordination; encode them in base62 afterwards. Most production designs pick counter ranges or Snowflake and reserve hashing for deduplication. Whatever the generator, uniqueness must be enforced at write time by a conditional put, never assumed. Watch the animation as the counter is consumed, encoded, and committed exactly once.`,
+        body: `Generating the key is the only genuinely hard part. Three families exist. A global counter encoded in base62 is simple, collision-free, and predictable, but sequential keys are guessable and one counter is a bottleneck — allocate disjoint counter ranges to app servers to scale it horizontally. Hashing the long URL and taking the first seven base62 characters is idempotent, so the same URL can return the same short link, but collisions and hot-URL skew need handling with a conditional put and retry. Snowflake-style IDs combine a timestamp, a machine id, and a per-machine sequence to produce unique keys across nodes without coordination; a raw 64-bit Snowflake takes 11 base62 characters, so short codes either encode a truncated slice (for example the low 41 timestamp-ish bits, which fits in seven) or accept the longer key. Most production designs pick counter ranges or Snowflake and reserve hashing for deduplication. Whatever the generator, uniqueness must be enforced at write time by a conditional put, never assumed. Watch the animation as the counter is consumed, encoded, and committed exactly once.`,
         animation: {
           kind: 'step-flow',
           nodes: [
@@ -52,7 +52,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
           phases: [
             { id: 'p1', caption: 'A write request arrives at the API tier with a long URL.', packets: [{ from: 'client', to: 'api' }], activeNodeIds: ['client'] },
             { id: 'p2', caption: 'The ID generator claims the next counter range or a Snowflake ID.', packets: [{ from: 'api', to: 'idgen' }], activeNodeIds: ['idgen'] },
-            { id: 'p3', caption: 'Base62-encode the integer into six or seven URL-safe characters.', activeNodeIds: ['idgen'] },
+            { id: 'p3', caption: 'Base62-encode it: a raw 64-bit Snowflake needs 11 characters; a seven-character code truncates to the low timestamp-ish bits.', activeNodeIds: ['idgen'] },
             { id: 'p4', caption: 'A conditional put stores key to URL and rejects any duplicate.', packets: [{ from: 'idgen', to: 'store' }], doneNodeIds: ['idgen'], activeNodeIds: ['store'] },
             { id: 'p5', caption: 'The short link returns to the client; the mapping is durable.', doneNodeIds: ['api', 'idgen', 'store'], activeNodeIds: ['client'] },
           ],
@@ -130,7 +130,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
     ],
     edgeCases: [
       'Hash collisions in a hash-based generator silently overwrite a mapping: conditional-put the candidate key and retry with a salted input on conflict.',
-      'Sequential base62 keys are guessable: shuffle the encoding alphabet, mix in a random salt, or use Snowflake IDs when enumeration is a risk.',
+      'Sequential base62 keys are guessable: shuffle the encoding alphabet, mix in a random salt, or add entropy — a plain Snowflake is time-ordered and unpredictable only while its sequence state stays secret.',
       '301 responses bypass analytics entirely: use 302 or 307 when clicks must be counted, and reserve 301 for immutable links.',
       'Cache stampede on a viral link: add jittered TTLs and single-flight request coalescing so one miss cannot flood the KV store.',
       'Custom aliases and reserved words collide with generated keys: keep aliases in the same keyspace and reject reserved paths such as api, admin, and favicon.',
@@ -182,7 +182,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
       },
       {
         title: 'Adding a node remaps keys',
-        body: `Now add a fourth node and count what moves. With naive modulo hashing, key k lives at hash(k) mod N. Changing N from 3 to 4 changes the modulus for every key, so a key survives only if hash(k) mod 3 equals hash(k) mod 4 — on average just one in N of them. Roughly 1 minus 1/N, here 75 percent, of all keys are remapped, and almost every cache entry becomes a miss or every partition is rewritten at once. The ring behaves differently. Adding node D only affects keys whose position lies between D's predecessor and D, because only those keys find a new first-node-clockwise. That is D's arc, on average 1/N of the keyspace. Watch the animation contrast the two: the modulo panel drains almost all keys, while the ring moves a single arc. The captions show the remapped fraction — 75 percent versus 25 percent — which is the difference between a full migration and a bounded one.`,
+        body: `Now add a fourth node and count what moves. With naive modulo hashing, key k lives at hash(k) mod N. Changing N from 3 to 4 changes the modulus for every key, so a key survives only if hash(k) mod 3 equals hash(k) mod 4 — on average only one in N+1 of them survives. Moving from N to N+1 nodes remaps N/(N+1) of the keys — equivalently 1 − 1/N′, where N′ is the new node count; here that is 75 percent — and almost every cache entry becomes a miss or every partition is rewritten at once. The ring behaves differently. Adding node D only affects keys whose position lies between D's predecessor and D, because only those keys find a new first-node-clockwise. That is D's arc, on average 1/(N+1) of the keyspace — one quarter, here. Watch the animation contrast the two: the modulo panel drains almost all keys, while the ring moves a single arc. The captions show the remapped fraction — 75 percent versus 25 percent — which is the difference between a full migration and a bounded one.`,
         animation: {
           kind: 'step-flow',
           nodes: [
@@ -247,7 +247,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
       },
       {
         title: 'Virtual nodes smooth the ring',
-        body: `Virtual nodes are the fix for both hotspots and churn. Instead of one point per server, each physical node is hashed to 100 to 200 points, its virtual nodes, spread around the ring. A key still walks clockwise to the first point, but now the small arcs average out: the node that would have owned a 52 percent super-arc owns many small arcs that sum to roughly 1/N of the keyspace. With 150 vnodes per node, the standard deviation of load shrinks to roughly 1 over the square root of 150 — a few percent — so a three-node cluster lands near 33/33/33. Vnodes also soften joins and failures: adding one server inserts 150 small arcs instead of one giant one, so transferred keys spread across many nodes in small pieces, and a dead node's load is absorbed by many successors. Watch the final animation as the bold arcs dissolve into hundreds of tiny arcs converging on 36/33/31.`,
+        body: `Virtual nodes are the fix for both hotspots and churn. Instead of one point per server, each physical node is hashed to 100 to 200 points, its virtual nodes, spread around the ring. A key still walks clockwise to the first point, but now the small arcs average out: the node that would have owned a 52 percent super-arc owns many small arcs that sum to roughly 1/N of the keyspace. With 150 vnodes per node, the relative standard deviation of load shrinks to roughly 1/√150 ≈ 8.2 percent — across a three-node cluster that is an absolute spread of about 2.7 percentage points — so it lands near 33/33/33. Vnodes also soften joins and failures: adding one server inserts 150 small arcs instead of one giant one, so transferred keys spread across many nodes in small pieces, and a dead node's load is absorbed by many successors. Watch the final animation as the bold arcs dissolve into hundreds of tiny arcs converging on 36/33/31.`,
         animation: {
           kind: 'step-flow',
           nodes: [
@@ -274,7 +274,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
       'Clients with stale ring views briefly route to the wrong node: version the ring through gossip or a config service and retry lookups on miss.',
     ],
     followUps: [
-      { q: 'Why does adding a node to modulo hashing move most keys?', a: 'Every key is placed by hash(key) mod N, and changing N changes the remainder for nearly every key, so only about 1/N keep their owner — roughly 75 percent move when N goes from 3 to 4.' },
+      { q: 'Why does adding a node to modulo hashing move most keys?', a: 'Every key is placed by hash(key) mod N, and changing the node count to N+1 changes the remainder for nearly every key, so only about 1/(N+1) keep their owner — equivalently, 1 − 1/N′ where N′ is the new node count; roughly 75 percent move when N goes from 3 to 4.' },
       { q: 'How many virtual nodes are enough?', a: '100 to 200 per physical node is the usual range; beyond that the marginal smoothing is small while the routing table grows, so more vnodes buy little.' },
       { q: 'What happens to a dead node\'s keys?', a: 'They fall clockwise to the next node. With replication factor R, reads fail over to a replica instantly and a background process rebuilds the lost copies.' },
       { q: 'Can consistent hashing guarantee even distribution?', a: 'No. With enough vnodes it bounds imbalance to a few percent in expectation, but hot keys and heterogeneous nodes still need load-aware scheduling.' },

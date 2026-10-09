@@ -129,14 +129,14 @@ element.innerHTML = DOMPurify.sanitize(userComment);`,
       },
       {
         title: 'Encode for every context',
-        body: `Escaping is context-specific, which is why "just escape it" is incomplete advice. A value placed between tags needs HTML entity encoding; inside an attribute it also needs quote encoding; inside a URL it needs percent encoding; and inside a script block it needs JavaScript-safe encoding or, better, JSON serialization. Modern template engines escape automatically for HTML contexts, but they cannot follow a value into a URL or an inline event handler. The animation contrasts string-built HTML — where one bio value is safe in one context and breaks the next — with template interpolation that applies the right encoder per slot. The practical rules are short: never concatenate HTML by hand, let the template engine escape, percent-encode dynamic URL components, and render data for scripts with JSON.stringify instead of string interpolation.`,
+        body: `Escaping is context-specific, which is why "just escape it" is incomplete advice. A value placed between tags needs HTML entity encoding; inside an attribute it also needs quote encoding; inside a URL it needs percent encoding; and inside a script block it needs a serializer designed for script contexts. JSON.stringify alone is unsafe there: it does not escape <, so a payload containing </script> can break out of the block, and server-rendered script data must escape <, >, and & (or use a serializer built for script contexts). Modern template engines escape automatically for HTML contexts, but they cannot follow a value into a URL or an inline event handler. The animation contrasts string-built HTML — where one bio value is safe in one context and breaks the next — with template interpolation that applies the right encoder per slot. The practical rules are short: never concatenate HTML by hand, let the template engine escape, percent-encode dynamic URL components, and render script data through a serializer that escapes <, >, and & rather than raw JSON.stringify.`,
         code: {
           language: 'javascript',
           source: `// choose the encoder for the destination context
 const safeText = escapeHtml(bio);            // HTML body
 const safeAttr = escapeHtml(quote(bio));     // attribute value
 const safeUrl = encodeURIComponent(bio);     // URL component
-const safeJson = JSON.stringify(bio);        // inside <script>`,
+const safeJson = JSON.stringify(bio);        // NOT safe alone in <script>: escape <, >, &`,
         },
         animation: {
           kind: 'before-after',
@@ -238,7 +238,7 @@ const safeJson = JSON.stringify(bio);        // inside <script>`,
     steps: [
       {
         title: 'Three parts, no secrets',
-        body: `A JWT is three base64url segments joined by dots: a header describing the algorithm, a claims payload, and a signature. Base64url is reversible encoding, not encryption, which is the first misconception this question tests. Anyone holding the token can decode the payload and read every claim — user id, role, expiry — and the animation shows exactly that, with the decoded object appearing beside the raw string. What the signature actually buys is integrity: it proves the server issued these claims and that nobody altered them, because forging a valid signature without the key is infeasible. It does not encrypt the payload and it does not identify the current holder. The distinction to say out loud in an interview is "signed, not secret" — then explain what that means for storage and trust.`,
+        body: `A JWT is three base64url segments joined by dots: a header describing the algorithm, a claims payload, and a signature. Base64url is reversible encoding, not encryption, which is the first misconception this question tests. Anyone holding the token can decode the payload and read every claim — user id, role, expiry — and the animation shows exactly that, with the decoded object appearing beside the raw string. What the signature actually buys is integrity: it proves the server issued these claims and that nobody altered them, because forging a valid signature without the key is infeasible — provided the verifier pins the expected algorithm and rejects none; naive verification that trusts the token's own alg header falls to alg-confusion or unsigned-token attacks. It does not encrypt the payload and it does not identify the current holder. The distinction to say out loud in an interview is "signed, not secret" — then explain what that means for storage and trust.`,
         code: {
           language: 'javascript',
           source: `// raw token: header.payload.signature
