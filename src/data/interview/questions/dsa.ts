@@ -293,15 +293,15 @@ const fallback = lps[4]; // 3 - the suffix "ABA" is already matched`,
       },
       {
         title: 'Why the fallback is correct',
-        body: `The failure function is correct because of what the failed attempt leaves behind. When text[i] mismatches with j matched characters, the text's last j characters already equal pattern[0..j-1] - that is guaranteed by the loop's own history, not by an assumption. A shift of k requires the pattern's first j−k characters to equal its last j−k characters — i.e. a border of length j−k. The longest border length is lps[j-1], so the largest valid shift is j − lps[j-1], which is exactly j ← lps[j-1] — the alignment that keeps the longest still-possible overlap and discards only alignments that cannot match. The animation makes the chain concrete: the window ABABA has the suffix ABA equal to the prefix ABA, so after falling back the A that ended the window is already covered again. Every fallback is like that, which is why KMP never misses a match - and why the text pointer never rewinds.`,
+        body: `The failure function is correct because of what the failed attempt leaves behind. When text[i] mismatches with j matched characters, the text's last j characters already equal pattern[0..j-1] - that is guaranteed by the loop's own history, not by an assumption. A shift of k requires the pattern's first j−k characters to equal its last j−k characters — i.e. a border of length j−k. The longest border length is lps[j-1], so the smallest valid shift is j − lps[j-1] — no alignment is skipped — which is exactly j ← lps[j-1], the alignment that keeps the longest still-possible overlap and discards only alignments that cannot match. The animation makes the chain concrete: the window ABABA has the suffix ABA equal to the prefix ABA, so after falling back the A that ended the window is already covered again. Every fallback is like that, which is why KMP never misses a match - and why the text pointer never rewinds.`,
         animation: {
           kind: 'code-trace',
           language: 'javascript',
           code: `// After matching j characters, the consumed text ends with pattern[0..j-1].
 // A shift of k requires the pattern's first j-k characters to equal
 // its last j-k characters: a border of length j-k.
-// The longest border is lps[j-1], so the largest valid shift is
-// j - lps[j-1], which is exactly j = lps[j-1].
+// The longest border is lps[j-1], so the smallest valid shift is
+// j - lps[j-1] (no alignment is skipped), which is exactly j = lps[j-1].
 j = lps[j - 1];
 // The text pointer i is untouched: the window already validated these chars.`,
           frames: [
