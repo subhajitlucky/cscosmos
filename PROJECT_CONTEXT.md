@@ -67,9 +67,24 @@ The platform organizes 172+ topics across 8 core domains and natively embeds int
 | `/mongocosmos` | **Absorbed** | MongoDB Internals (WiredTiger B-Tree & BSON Engine, Aggregation Pipeline, Replica Set Failover) |
 | `/vuecosmos` | **Absorbed** | Vue 3 Reactivity (Proxy Track/Trigger, Template AST Compiler, SFC Pipeline, Component Lifecycle) |
 | `/browseruniverse` | **Absorbed** | Browser Internals (HTML/CSS Parsing & Tokenizer, Render Tree & Layout Geometry, Compositor, V8 Engine) |
+| `/interview` | Live | Interview Prep Hub — 5 categories (Full Stack, Cybersecurity, DSA, System Design, AI/ML) |
+| `/interview/[category]` | Live | Filterable question list (topic, difficulty, frequency, round, type + search) |
+| `/interview/[category]/[question]` | Live | Dedicated question page — step-by-step walkthrough, each step pairs text with its own animation |
 | `/learn/[slug]` | Active | Universal player loading native visualizers or fallback registry |
 
 ---
+
+## 🎯 Interview Prep Section
+
+A dedicated interview-preparation area, separate from the topic catalog.
+
+- **Data**: `src/data/interview/` — `types.ts` (content + animation spec unions), `categories.ts` (5 categories), `questions/<category>.ts` (17 questions), `index.ts` (helpers + facets), `interview.test.ts` (data invariants).
+- **Animations**: `src/components/interview/animations/` — reusable primitives `StepFlow`, `CodeTrace`, `Timeline`, `BeforeAfter`, `MemoryDiagram`, plus `custom/AttentionScaling`; `AnimationBlock` resolves each step's `AnimationSpec`. Data-driven: new questions need no new code.
+- **Pages**: `src/app/interview/` — hub, `[category]` filterable list (`CategoryBrowser`, filters synced to URL query params), `[category]/[question]` detail page (`QuestionView` + `StepWalkthrough`, JSON-LD `QAPage`).
+- **Template rule**: every question = 5 solution steps; each step pairs 80-200 words of explanation with its own 3-7 frame animation.
+
+---
+
 
 ## 🔄 Roadmap & Absorption Progress
 

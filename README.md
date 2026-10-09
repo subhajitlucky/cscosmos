@@ -119,6 +119,9 @@ CSCosmos uses the Next.js 15 App Router for file-system based routing:
 - `/` — Home page
 - `/topics` — Full topic catalog
 - `/about` — About page
+- `/interview` — Interview preparation hub across 5 categories
+- `/interview/[category]` — Filterable question list (topic, difficulty, frequency, round, type)
+- `/interview/[category]/[question]` — Dedicated question page with step-by-step animated walkthrough
 - `/[domain]` — Domain-specific topic lists (e.g., `/fullstack`, `/ai`, `/dsa`)
 - `/learn/[slug]` — Universal player loading native visualizers or fallback registry
 - `/program-cosmos/[[...slug]]` — Absorbed visualizer routes
