@@ -426,30 +426,24 @@ export default function HomePage() {
 
           {/* 9. Bottom Keyboard Navigation Ribbon */}
           <section className="page-container pt-4">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border/60 pt-6 text-xs font-mono text-muted-foreground">
-              <div className="flex flex-wrap items-center gap-4">
-                <span>SHORTCUTS:</span>
-                <span className="inline-flex items-center gap-1.5">
-                  <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">/</kbd>
-                  Search
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">T</kbd>
-                  Topics
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">L</kbd>
-                  Tracks
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">Esc</kbd>
-                  Clear
-                </span>
-              </div>
-
-              <div className="text-muted-foreground" suppressHydrationWarning>
-                CSCosmos Engine &copy; {new Date().getFullYear()} &bull; {siteConfig.slogan}
-              </div>
+            <div className="flex flex-wrap items-center gap-4 border-t border-border/60 pt-6 text-xs font-mono text-muted-foreground">
+              <span>SHORTCUTS:</span>
+              <span className="inline-flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">/</kbd>
+                Search
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">T</kbd>
+                Topics
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">L</kbd>
+                Tracks
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">Esc</kbd>
+                Clear
+              </span>
             </div>
           </section>
         </>
