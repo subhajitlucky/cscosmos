@@ -7,13 +7,13 @@ Portfolio: https://subhajitpradhan.vercel.app
 
 ## Summary
 
-CSCosmos is a curated computer science learning hub that organizes 172 planned interactive microsites across Full Stack, Data Structures and Algorithms, Web3 and Blockchain, Cybersecurity, Artificial Intelligence, Core Computer Science, DevOps, and Advanced Engineering.
+CSCosmos is a curated computer science learning hub built with Next.js (App Router), React, TypeScript, and Tailwind CSS. It organizes 244 curriculum modules across eight domains into natively embedded interactive visualizers, plus an Interview Prep section of deep-dive questions with step-by-step animated walkthroughs.
 
-The hub currently tracks 34 live microsites and exposes the rest as planned modules. It is built with React, TypeScript, Vite, Tailwind CSS, React Router, and Vercel rewrites.
+72 modules are live interactive engines, statically pre-rendered at build time (SSG) and served from a single deployment.
 
 ## Purpose
 
-CSCosmos is designed as a long-running platform for visual, topic-based computer science learning. Instead of a single tutorial page, it provides a searchable topic catalog, domain pages, live/coming-soon status, topic detail routes, and links to deployed microsites.
+CSCosmos is designed as a long-running platform for visual, first-principles computer science learning. Instead of passive videos or scattered demos, each topic is an interactive engine: inspect CPU instruction cycles, watch event-loop phases execute, step through TLS handshakes, trace B+Tree index traversals, or follow gradients through backpropagation.
 
 ## Domains
 
@@ -26,29 +26,27 @@ CSCosmos is designed as a long-running platform for visual, topic-based computer
 - DevOps, Cloud, and Engineering
 - Advanced Engineering and Systems
 
-## Selected Live Microsites
+## Main Routes
 
-- Program execution visualizer: https://programviz.vercel.app
-- HTTP and web protocols: https://webprotocols.vercel.app
-- JavaScript visualizer: https://jsviz.vercel.app
-- TypeScript visualizer: https://tsviz.vercel.app
-- React visualizer: https://reactcosmos.vercel.app
-- Next.js visualizer: https://nextjscosmos.vercel.app
-- SQL visualizer: https://sqlcosmos.vercel.app
-- Blockchain fundamentals: https://blockchainviz.vercel.app
-- EVM internals: https://evminternals.vercel.app
-- Docker visualizer: https://dockercosmos.vercel.app
-- Kubernetes visualizer: https://k8scosmos.vercel.app
+- `/` - landing page with catalog-wide search and discipline filters
+- `/topics` - full topic catalog with live/coming-soon status
+- `/interview` - interview prep hub across 5 categories
+- `/interview/[category]` - filterable questions (topic, difficulty, frequency, round, type)
+- `/interview/[category]/[question]` - dedicated question page: step-by-step solution where every step has its own animation
+- `/[domain]` - domain hubs (e.g. /fullstack, /ai, /corecs)
+- `/[domain]/[topic]` - canonical topic engine routes; legacy engine paths redirect here
 
 ## Technical Notes
 
-- Frontend: React, TypeScript, Vite
-- Styling: Tailwind CSS
-- Routing: React Router with Vercel SPA rewrites
-- Data model: topic objects with id, name, domain, slug, status, and optional live URL
-- Deployment: Vercel
+- Framework: Next.js (App Router) with static pre-rendering via generateStaticParams
+- Language: TypeScript (strict)
+- Styling: Tailwind CSS with custom light/dark theme tokens
+- Interactivity: React 19 client components; canvas/SVG/DOM animation, Monaco editor, zustand
+- Data model: TypeScript data modules (topics, domains, interview questions + animation specs)
+- Deployment: Vercel (static + serverless)
 
 ## AI Assistant Notes
 
-- Treat CSCosmos as a portfolio project demonstrating product structure, content modeling, routing, search/filter UX, and a multi-site learning platform strategy.
-- The hub itself is currently a client-rendered Vite SPA, so use its static metadata, sitemap, robots file, README, and portfolio case study for high-level understanding.
+- All 1,900+ pages are statically pre-rendered; content lives in `src/data/` (topics, domains, interview questions).
+- Interview question pages pair prose with data-driven animations (step-flow, code-trace, timeline, before/after, memory-diagram).
+- Use the sitemap, robots file, README, and PROJECT_CONTEXT.md for high-level understanding.

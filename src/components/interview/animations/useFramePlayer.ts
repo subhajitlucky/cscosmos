@@ -6,6 +6,7 @@ export interface FramePlayer {
   index: number;
   count: number;
   playing: boolean;
+  atEnd: boolean;
   next: () => void;
   prev: () => void;
   reset: () => void;
@@ -13,14 +14,22 @@ export interface FramePlayer {
   goTo: (i: number) => void;
 }
 
-export function useFramePlayer(frameCount: number, autoPlay = false): FramePlayer {
+interface FramePlayerOptions {
+  /** Auto-play the sequence on mount (default true). */
+  autoPlay?: boolean;
+  /** How long each frame is held before advancing, in ms. */
+  frameDuration?: number;
+}
+
+export function useFramePlayer(frameCount: number, options: FramePlayerOptions = {}): FramePlayer {
+  const { autoPlay = true, frameDuration = 2800 } = options;
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(autoPlay);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clear = useCallback(() => {
     if (timer.current) {
-      clearInterval(timer.current);
+      clearTimeout(timer.current);
       timer.current = null;
     }
   }, []);
@@ -29,12 +38,12 @@ export function useFramePlayer(frameCount: number, autoPlay = false): FramePlaye
 
   const next = useCallback(() => {
     if (frameCount === 0) return;
-    setIndex((i) => (i + 1) % frameCount);
+    setIndex((i) => Math.min(i + 1, frameCount - 1));
   }, [frameCount]);
 
   const prev = useCallback(() => {
     if (frameCount === 0) return;
-    setIndex((i) => (i - 1 + frameCount) % frameCount);
+    setIndex((i) => Math.max(0, i - 1));
   }, [frameCount]);
 
   const reset = useCallback(() => {
@@ -44,31 +53,51 @@ export function useFramePlayer(frameCount: number, autoPlay = false): FramePlaye
 
   const toggle = useCallback(() => {
     if (frameCount < 2) return;
-    setPlaying((p) => !p);
+    setPlaying((p) => {
+      if (p) return false;
+      setIndex((i) => (i >= frameCount - 1 ? 0 : i));
+      return true;
+    });
   }, [frameCount]);
 
-  const goTo = useCallback((i: number) => {
-    if (frameCount === 0) return;
-    setIndex(Math.max(0, Math.min(frameCount - 1, i)));
-  }, [frameCount]);
+  const goTo = useCallback(
+    (i: number) => {
+      if (frameCount === 0) return;
+      setIndex(Math.max(0, Math.min(frameCount - 1, i)));
+    },
+    [frameCount],
+  );
 
   useEffect(() => {
     clear();
-    if (!playing || frameCount < 2) return;
+    if (!playing || frameCount < 2 || safeIndex >= frameCount - 1) {
+      if (playing && frameCount >= 2 && safeIndex >= frameCount - 1) setPlaying(false);
+      return;
+    }
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setPlaying(false);
       return;
     }
-    timer.current = setInterval(() => {
-      setIndex((i) => (i + 1) % frameCount);
-    }, 2200);
+    timer.current = setTimeout(() => {
+      setIndex((i) => Math.min(i + 1, frameCount - 1));
+    }, frameDuration);
     return clear;
-  }, [playing, frameCount, clear]);
+  }, [playing, safeIndex, frameCount, frameDuration, clear]);
 
   useEffect(() => clear, [clear]);
 
   return useMemo(
-    () => ({ index: safeIndex, count: frameCount, playing, next, prev, reset, toggle, goTo }),
+    () => ({
+      index: safeIndex,
+      count: frameCount,
+      playing,
+      atEnd: frameCount > 0 && safeIndex >= frameCount - 1,
+      next,
+      prev,
+      reset,
+      toggle,
+      goTo,
+    }),
     [safeIndex, frameCount, playing, next, prev, reset, toggle, goTo],
   );
 }

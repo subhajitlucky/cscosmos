@@ -68,8 +68,8 @@ export function StepWalkthrough({ steps }: { steps: QuestionStep[] }) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:gap-10">
-        <div>
+      <div className="mt-6 space-y-8">
+        <div className="max-w-3xl">
           <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
           {paragraphs.map((paragraph, index) => (
             <p
@@ -89,11 +89,12 @@ export function StepWalkthrough({ steps }: { steps: QuestionStep[] }) {
           )}
         </div>
 
-        <div className="h-fit lg:sticky lg:top-20">
-          <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
+        <div>
+          <p className="mb-2 flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-primary motion-reduce:animate-none" aria-hidden="true" />
             Animation — {step.title}
           </p>
-          <AnimationBlock key={current} spec={step.animation} />
+          <AnimationBlock key={`${current}-${step.title}`} spec={step.animation} />
         </div>
       </div>
 
