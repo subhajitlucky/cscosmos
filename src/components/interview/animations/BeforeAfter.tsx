@@ -9,7 +9,7 @@ import { useFramePlayer } from './useFramePlayer';
 
 const toneClass: Record<PanelLine['tone'], string> = {
   danger: 'border-red-500/30 bg-red-500/5 text-red-600 dark:text-red-400',
-  success: 'border-green-500/30 bg-green-500/5 text-green-600 dark:text-green-400',
+  success: 'border-green-500/30 bg-green-500/5 text-green-700 dark:text-green-400',
   neutral: 'border-border bg-muted/30 text-muted-foreground',
 };
 
@@ -33,13 +33,13 @@ export function BeforeAfter({ spec }: { spec: BeforeAfterSpec }) {
       lines: spec.after,
       activeIndex: frame.afterIndex,
       Icon: ShieldCheck,
-      iconClass: 'text-green-500',
+      iconClass: 'text-green-600 dark:text-green-400',
     },
   ];
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
-      <div className="grid gap-4 p-4 md:grid-cols-2" aria-live="polite">
+      <div className="grid gap-4 p-4 md:grid-cols-2">
         {panels.map(({ key, label, lines, activeIndex, Icon, iconClass }) => (
           <div key={key} className="space-y-1.5">
             <div className="flex items-center gap-2">

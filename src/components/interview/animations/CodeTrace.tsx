@@ -34,10 +34,7 @@ export function CodeTrace({ spec }: { spec: CodeTraceSpec }) {
             );
           })}
         </div>
-        <div
-          className="w-full shrink-0 border-t border-border py-3 sm:w-40 sm:border-l sm:border-t-0 lg:w-48"
-          aria-live="polite"
-        >
+        <div className="w-full shrink-0 border-t border-border py-3 sm:w-40 sm:border-l sm:border-t-0 lg:w-48">
           <div className="px-3">
             <h4 className="text-[10px] uppercase tracking-wider text-muted-foreground">Variables</h4>
             <div className="mt-2 space-y-1">
@@ -54,7 +51,7 @@ export function CodeTrace({ spec }: { spec: CodeTraceSpec }) {
         </div>
       </div>
       {frame.output !== undefined && (
-        <div className="border-t border-border bg-muted/40 px-4 py-2 font-mono text-xs text-green-600 dark:text-green-400">
+        <div className="border-t border-border bg-muted/40 px-4 py-2 font-mono text-xs text-green-700 dark:text-green-400">
           <span aria-hidden="true">› </span>
           {frame.output}
         </div>

@@ -13,7 +13,7 @@ export function Timeline({ spec }: { spec: TimelineSpec }) {
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
-      <div className="space-y-2 px-4 py-4" aria-live="polite">
+      <div className="space-y-2 px-4 py-4">
         {spec.lanes.map((lane) => {
           const marks = frame.marks.filter((mark) => mark.laneId === lane.id);
           return (
@@ -30,7 +30,7 @@ export function Timeline({ spec }: { spec: TimelineSpec }) {
                       'rounded-full border px-2 py-0.5 font-mono text-[10px]',
                       mark.status === 'active'
                         ? 'animate-pulse border-primary bg-primary/10 text-primary motion-reduce:animate-none'
-                        : 'border-green-500/40 bg-green-500/10 text-green-600 dark:text-green-400',
+                        : 'border-green-500/40 bg-green-500/10 text-green-700 dark:text-green-400',
                     )}
                   >
                     {mark.label}

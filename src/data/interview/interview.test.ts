@@ -95,6 +95,27 @@ describe('interview questions', () => {
       }
     }
   });
+
+  it('step-flow phases reference real nodes and never mark a node both done and error', () => {
+    for (const q of interviewQuestions) {
+      for (const step of q.steps) {
+        if (step.animation.kind !== 'step-flow') continue;
+        const ids = new Set(step.animation.nodes.map((n) => n.id));
+        for (const phase of step.animation.phases) {
+          const done = phase.doneNodeIds ?? [];
+          const error = phase.errorNodeIds ?? [];
+          for (const id of done) expect(ids.has(id), `${q.slug} done id ${id}`).toBe(true);
+          for (const id of error) expect(ids.has(id), `${q.slug} error id ${id}`).toBe(true);
+          for (const p of phase.packets ?? []) {
+            expect(ids.has(p.from), `${q.slug} packet from ${p.from}`).toBe(true);
+            expect(ids.has(p.to), `${q.slug} packet to ${p.to}`).toBe(true);
+          }
+          const overlap = done.filter((id) => error.includes(id));
+          expect(overlap, `${q.slug} done∩error`).toEqual([]);
+        }
+      }
+    }
+  });
 });
 
 describe('interview aggregation helpers', () => {

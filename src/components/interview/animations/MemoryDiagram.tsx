@@ -9,7 +9,7 @@ import { useFramePlayer } from './useFramePlayer';
 const cursorTone: Record<MemoryCursor['tone'], string> = {
   primary: 'border-primary/40 bg-primary/10 text-primary',
   danger: 'border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-400',
-  success: 'border-green-500/40 bg-green-500/10 text-green-600 dark:text-green-400',
+  success: 'border-green-500/40 bg-green-500/10 text-green-700 dark:text-green-400',
 };
 
 export function MemoryDiagram({ spec }: { spec: MemoryDiagramSpec }) {
@@ -21,7 +21,7 @@ export function MemoryDiagram({ spec }: { spec: MemoryDiagramSpec }) {
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
-      <div className="space-y-3 p-4" aria-live="polite">
+      <div className="space-y-3 p-4">
         {spec.regions.map((region) => {
           const boxIds = new Set(region.boxes.map((box) => box.id));
           const cursors = frame.cursors.filter((cursor) => boxIds.has(cursor.targetBoxId));

@@ -40,12 +40,12 @@ export function AttentionScaling() {
                   )}
                 >
                   <div
-                    className="w-1/2 rounded-t-sm bg-red-500/70"
+                    className="w-1/2 rounded-t-sm bg-red-600/70"
                     style={{ height: `${redHeight}%` }}
                     title={`unscaled σ ≈ ${Math.sqrt(2 ** e).toFixed(2)}`}
                   />
                   <div
-                    className="w-1/2 rounded-t-sm bg-green-500/70"
+                    className="w-1/2 rounded-t-sm bg-green-700/70"
                     style={{ height: `${greenHeight}%` }}
                     title="scaled σ = 1.00"
                   />
@@ -59,12 +59,12 @@ export function AttentionScaling() {
         </div>
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px]">
-          <span className="flex items-center gap-1.5 text-muted-foreground">
-            <span className="h-2 w-2 rounded-sm bg-red-500/70" aria-hidden="true" />
+          <span className="flex items-center gap-1.5 text-red-600 dark:text-red-400">
+            <span className="h-2 w-2 rounded-sm bg-red-600/70" aria-hidden="true" />
             unscaled σ ≈ √d_k
           </span>
-          <span className="flex items-center gap-1.5 text-muted-foreground">
-            <span className="h-2 w-2 rounded-sm bg-green-500/70" aria-hidden="true" />
+          <span className="flex items-center gap-1.5 text-green-700 dark:text-green-400">
+            <span className="h-2 w-2 rounded-sm bg-green-700/70" aria-hidden="true" />
             scaled σ = 1
           </span>
         </div>
@@ -85,7 +85,7 @@ export function AttentionScaling() {
           />
           <div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs">
             <span className="text-red-600 dark:text-red-400">unscaled σ ≈ √d_k = {sigma.toFixed(2)}</span>
-            <span className="text-green-600 dark:text-green-400">scaled σ = 1.00</span>
+            <span className="text-green-700 dark:text-green-400">scaled σ = 1.00</span>
           </div>
         </div>
 

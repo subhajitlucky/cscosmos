@@ -570,7 +570,7 @@ fetch('https://bank.com/transfer', {
             { id: 'p3', caption: 'The bank sees a valid session: POST-only did not block the forgery.', packets: [{ from: 'victim', to: 'bank', label: 'POST + cookie' }], doneNodeIds: ['evil'], activeNodeIds: ['bank'] },
             { id: 'p4', caption: 'Now the attacker tries a JSON fetch with Content-Type application/json.', packets: [{ from: 'evil', to: 'victim', label: 'JSON fetch' }], activeNodeIds: ['evil', 'victim'] },
             { id: 'p5', caption: 'Because the request is non-simple, the browser sends an OPTIONS preflight first.', packets: [{ from: 'victim', to: 'bank', label: 'OPTIONS preflight' }], doneNodeIds: ['cookies'], activeNodeIds: ['bank'] },
-            { id: 'p6', caption: 'No CORS approval comes back, so the fetch is blocked — yet the form POST already succeeded.', errorNodeIds: ['evil'], doneNodeIds: ['victim', 'evil', 'bank', 'cookies'] },
+            { id: 'p6', caption: 'No CORS approval comes back, so the fetch is blocked — yet the form POST already succeeded.', errorNodeIds: ['evil'], doneNodeIds: ['victim', 'bank', 'cookies'] },
           ],
         },
       },
