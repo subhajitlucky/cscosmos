@@ -547,3 +547,14 @@
 @media (prefers-reduced-motion: reduce) {
   .interview-packet { animation: none; }
 }
+
+@keyframes interview-flash {
+  0% { background-color: hsl(var(--primary) / 0.25); }
+  100% { background-color: transparent; }
+}
+.interview-flash {
+  animation: interview-flash 0.8s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .interview-flash { animation: none; }
+}
