@@ -98,8 +98,16 @@ describe('interview questions', () => {
 });
 
 describe('interview aggregation helpers', () => {
-  it('getCategoryFacets returns zero count and no topics for an empty category', () => {
-    expect(getCategoryFacets('fullstack')).toEqual({ count: 0, topics: [] });
+  it('getCategoryFacets count and topic buckets are consistent with the question list', () => {
+    for (const c of categories) {
+      const questions = getQuestionsByCategory(c.key);
+      const facets = getCategoryFacets(c.key);
+      expect(facets.count).toBe(questions.length);
+      const bucketTotal = facets.topics.reduce((sum, t) => sum + t.count, 0);
+      expect(bucketTotal, `${c.key} topic bucket total`).toBe(facets.count);
+      const values = facets.topics.map((t) => t.value);
+      expect([...values].sort(), `${c.key} topics sorted`).toEqual(values);
+    }
   });
 
   it('getAdjacentQuestions returns empty object for unknown slug', () => {
