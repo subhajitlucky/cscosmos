@@ -86,7 +86,7 @@ export function DomainCard({ domain }: DomainCardProps) {
   return (
     <Link
       href={domain.path}
-      className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-card p-6 transition-all duration-200 hover:border-foreground/30 hover:bg-secondary/20"
+      className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-card p-6 transition-colors duration-200 hover:border-foreground/30 hover:bg-secondary/20 focus-ring"
     >
       <div className="flex flex-col h-full space-y-4">
         <div className="flex items-center justify-between">

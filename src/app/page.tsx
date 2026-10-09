@@ -1,47 +1,38 @@
-'use client';
-
-import { useState, useMemo, useRef, useEffect } from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   ArrowRight,
   ArrowUpRight,
-  Search,
-  Terminal,
-  Cpu,
   Boxes,
-  ShieldCheck,
-  BrainCircuit,
-  Binary,
-  Code2,
   Blocks,
+  BrainCircuit,
+  Clock,
+  Code2,
+  Cpu,
   HardDrive,
   Layers,
   Radio,
-  FileCode,
-  Network,
-  Clock,
   Sparkles,
-  Command,
+  type LucideIcon,
 } from 'lucide-react';
-import { domains, type DomainKey } from '@/data/domains';
-import { topics, type Topic } from '@/data/topics';
+import { domains } from '@/data/domains';
+import { topics } from '@/data/topics';
 import { tracks } from '@/data/tracks';
 import { DomainCard } from '@/components/DomainCard';
-import { TopicCard } from '@/components/TopicCard';
+import { HomeSearchDeck } from '@/components/HomeSearchDeck';
 import { siteConfig } from '@/config/site';
 
-const DOMAIN_FILTER_OPTIONS: { label: string; key: 'all' | DomainKey }[] = [
-  { label: 'All Disciplines', key: 'all' },
-  { label: 'Full Stack', key: 'fullstack' },
-  { label: 'Algorithms', key: 'dsa' },
-  { label: 'Web3', key: 'web3' },
-  { label: 'Cybersecurity', key: 'security' },
-  { label: 'AI & Machine Learning', key: 'ai' },
-  { label: 'Core CS & Systems', key: 'corecs' },
-  { label: 'DevOps & Cloud', key: 'devops' },
-  { label: 'Advanced Engineering', key: 'advanced' },
-];
+export const metadata: Metadata = {
+  title: 'CSCosmos - Computer Science Learning Hub',
+  description: siteConfig.description,
+  openGraph: {
+    title: 'CSCosmos - Computer Science Learning Hub',
+    description: siteConfig.description,
+    url: '/',
+    siteName: siteConfig.name,
+    type: 'website',
+  },
+};
 
 interface FlagshipEngine {
   title: string;
@@ -50,7 +41,7 @@ interface FlagshipEngine {
   url: string;
   description: string;
   topicsCovered: string[];
-  icon: typeof Cpu;
+  icon: LucideIcon;
 }
 
 const FLAGSHIP_ENGINES: FlagshipEngine[] = [
@@ -124,64 +115,21 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
     topicsCovered: ['RF Waterfall', 'I/Q Constellation', 'Packet Demod'],
     icon: Radio,
   },
+  {
+    title: 'JavaScript Runtime & Event Loop',
+    badge: 'ENGINE // 08',
+    domain: 'Full Stack',
+    url: '/fullstack/jsviz',
+    description:
+      'Watch the call stack, microtask queue, and macrotask phases execute in real time — closures, scope chains, and V8 garbage collection without hand-waving.',
+    topicsCovered: ['Event Loop', 'Call Stack', 'Scope Chain'],
+    icon: Code2,
+  },
 ];
 
 export default function HomePage() {
-  const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDomain, setSelectedDomain] = useState<'all' | DomainKey>('all');
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
   const totalTopics = topics.length;
   const liveTopics = topics.filter((t) => t.status === 'active').length;
-
-  // Keyboard shortcut listener: press "/" to focus search, "Escape" to clear
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const activeTag = document.activeElement?.tagName.toLowerCase();
-      const isInputFocused = activeTag === 'input' || activeTag === 'textarea';
-
-      if (e.key === '/' && !isInputFocused) {
-        e.preventDefault();
-        searchInputRef.current?.focus();
-      } else if (e.key === 'Escape' && isInputFocused) {
-        searchInputRef.current?.blur();
-        setSearchQuery('');
-      } else if ((e.key === 't' || e.key === 'T') && !isInputFocused) {
-        router.push('/topics');
-      } else if ((e.key === 'l' || e.key === 'L') && !isInputFocused) {
-        router.push('/tracks');
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [router]);
-
-  // Filtered topics based on search & domain chips
-  const filteredTopics = useMemo(() => {
-    return topics.filter((topic) => {
-      const matchesDomain =
-        selectedDomain === 'all' ||
-        topic.domain === selectedDomain ||
-        topic.aliases?.includes(selectedDomain);
-
-      if (!searchQuery.trim()) {
-        return matchesDomain;
-      }
-
-      const q = searchQuery.toLowerCase();
-      const matchesQuery =
-        topic.name.toLowerCase().includes(q) ||
-        topic.slug.toLowerCase().includes(q) ||
-        topic.shortDescription.toLowerCase().includes(q) ||
-        topic.domain.toLowerCase().includes(q);
-
-      return matchesDomain && matchesQuery;
-    });
-  }, [searchQuery, selectedDomain]);
-
-  const isFiltering = searchQuery.trim().length > 0 || selectedDomain !== 'all';
 
   return (
     <div className="space-y-24 pb-24">
@@ -191,8 +139,8 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-between gap-y-2 text-xs font-mono text-muted-foreground">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1.5 font-semibold text-foreground">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                SYS_VER // 2.4.0
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse motion-reduce:animate-none" aria-hidden="true" />
+                SYS_STATUS // NOMINAL
               </span>
               <span className="hidden sm:inline text-border">|</span>
               <span className="hidden sm:inline">ONLINE // TELEMETRY VERIFIED</span>
@@ -211,7 +159,7 @@ export default function HomePage() {
                 <strong className="text-foreground">8</strong> DISCIPLINES
               </span>
               <span className="text-border hidden md:inline">/</span>
-              <span className="text-emerald-500 dark:text-emerald-400 font-semibold hidden lg:inline">
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold hidden lg:inline">
                 100% OPEN
               </span>
             </div>
@@ -223,14 +171,14 @@ export default function HomePage() {
       <section className="page-container pt-10 md:pt-16">
         <div className="space-y-8 max-w-4xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-1.5 text-xs font-mono text-muted-foreground shadow-sm">
-            <Sparkles className="h-3.5 w-3.5 text-foreground" />
-            <span className="font-semibold text-foreground">{totalTopics} INTERACTIVE MODULES</span>
-            <span className="opacity-40">&bull;</span>
-            <span className="text-emerald-500 dark:text-emerald-400 font-semibold">{liveTopics} LIVE ENGINES</span>
+            <Sparkles className="h-3.5 w-3.5 text-foreground" aria-hidden="true" />
+            <span className="font-semibold text-foreground">{totalTopics} CURRICULUM MODULES</span>
+            <span className="opacity-40" aria-hidden="true">&bull;</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{liveTopics} LIVE ENGINES</span>
           </div>
 
           <div className="space-y-5">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-[1.02] font-display">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-[1.02] font-display text-balance">
               Explore the Universe of <br className="hidden sm:inline" />
               <span className="text-muted-foreground">Computer Science.</span>
             </h1>
@@ -238,7 +186,6 @@ export default function HomePage() {
               Deconstructing the digital universe. Visual, interactive deep-dives into the core of computing — designed for engineers who refuse to just use tools and choose to master them.
             </p>
 
-            {/* Restored Iconic Tagline */}
             <div className="border-l-2 border-foreground/70 pl-4 py-1.5">
               <p className="font-mono text-sm sm:text-base text-foreground font-medium italic tracking-wide">
                 &ldquo;{siteConfig.slogan}&rdquo;
@@ -249,19 +196,19 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
               href="/topics"
-              className="inline-flex h-12 items-center justify-center rounded-xl bg-foreground px-7 text-sm font-semibold text-background transition-all hover:bg-foreground/90 active:scale-95 shadow-sm"
+              className="inline-flex h-12 items-center justify-center rounded-xl bg-foreground px-7 text-sm font-semibold text-background transition-colors hover:bg-foreground/90 active:scale-95 shadow-sm"
             >
-              Explore {totalTopics} Topics <ArrowRight className="ml-2 h-4 w-4" />
+              Explore {totalTopics} Topics <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               href="/tracks"
-              className="inline-flex h-12 items-center justify-center rounded-xl border border-border/80 bg-secondary/30 px-6 text-sm font-semibold text-foreground transition-all hover:bg-secondary/70 hover:border-foreground/30 active:scale-95"
+              className="inline-flex h-12 items-center justify-center rounded-xl border border-border/80 bg-secondary/30 px-6 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/70 hover:border-foreground/30 active:scale-95"
             >
               Curated Learning Tracks
             </Link>
             <Link
               href="/about"
-              className="inline-flex h-12 items-center justify-center rounded-xl border border-transparent px-4 text-sm font-mono text-muted-foreground transition-colors hover:text-foreground"
+              className="inline-flex h-12 items-center justify-center rounded-xl border border-transparent px-4 text-sm font-mono text-muted-foreground transition-colors hover:text-foreground focus-ring"
             >
               About CSCosmos &rarr;
             </Link>
@@ -269,136 +216,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Interactive Command Deck & Search */}
-      <section className="page-container">
-        <div className="rounded-2xl border border-border/80 bg-card p-6 md:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <h2 className="text-xl font-bold tracking-tight text-foreground flex items-center gap-2">
-                <Command className="h-4 w-4 text-muted-foreground" />
-                Quick Search & Filter Matrix
-              </h2>
-              <p className="text-xs font-mono text-muted-foreground">
-                Press <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">/</kbd> anywhere to focus. Real-time filtering across {totalTopics} curriculum topics.
-              </p>
-            </div>
-
-            <div className="text-xs font-mono text-muted-foreground">
-              Showing <strong className="text-foreground">{filteredTopics.length}</strong> of {totalTopics} modules
-            </div>
-          </div>
-
-          <div className="relative w-full">
-            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-            <input
-              ref={searchInputRef}
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search topics, algorithms, protocols, data structures (e.g. 'CPU', 'EVM', 'Docker', 'Cache')..."
-              className="flex h-13 w-full rounded-xl border border-border/80 bg-secondary/20 px-11 pr-24 py-3 text-sm font-sans text-foreground placeholder:text-muted-foreground/60 transition-colors focus:border-foreground/40 focus:bg-background focus:outline-none"
-            />
-            <div className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="rounded border border-border bg-secondary/80 px-2 py-0.5 text-[11px] font-mono text-muted-foreground hover:text-foreground"
-                >
-                  Clear [Esc]
-                </button>
-              )}
-              <kbd className="hidden sm:inline-flex items-center gap-1 rounded border border-border bg-secondary/80 px-2 py-0.5 font-mono text-[10px] text-muted-foreground pointer-events-none">
-                /
-              </kbd>
-            </div>
-          </div>
-
-          {/* Domain Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-border/40">
-            {DOMAIN_FILTER_OPTIONS.map((opt) => {
-              const count =
-                opt.key === 'all'
-                  ? totalTopics
-                  : topics.filter(
-                      (t) =>
-                        t.domain === opt.key ||
-                        (t.aliases as readonly string[] | undefined)?.includes(opt.key)
-                    ).length;
-
-              const isSelected = selectedDomain === opt.key;
-
-              return (
-                <button
-                  key={opt.key}
-                  type="button"
-                  onClick={() => setSelectedDomain(opt.key)}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-mono transition-all ${
-                    isSelected
-                      ? 'border-foreground bg-foreground text-background font-semibold shadow-sm'
-                      : 'border-border/80 bg-secondary/20 text-muted-foreground hover:text-foreground hover:border-foreground/30'
-                  }`}
-                >
-                  <span>{opt.label}</span>
-                  <span className={`text-[10px] ${isSelected ? 'text-background/80' : 'text-muted-foreground/60'}`}>
-                    ({count})
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Active Search Results Grid (Surfaces when user is searching/filtering) */}
-      {isFiltering ? (
-        <section className="page-container space-y-6">
-          <div className="flex items-center justify-between border-b border-border/80 pb-4">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Matching Modules
-              </h2>
-              <p className="text-xs font-mono text-muted-foreground">
-                {filteredTopics.length} topics found for criteria
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedDomain('all');
-              }}
-              className="text-xs font-mono text-muted-foreground hover:text-foreground underline underline-offset-4"
-            >
-              Reset Filters
-            </button>
-          </div>
-
-          {filteredTopics.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredTopics.map((topic) => (
-                <TopicCard key={topic.id} topic={topic} />
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-dashed border-border/80 p-12 text-center space-y-4">
-              <p className="text-sm font-mono text-muted-foreground">
-                NO TOPICS MATCHING “{searchQuery}” IN DOMAIN “{selectedDomain.toUpperCase()}”.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedDomain('all');
-                }}
-                className="inline-flex items-center gap-2 rounded-lg border border-border bg-secondary/40 px-4 py-2 text-xs font-mono text-foreground hover:bg-secondary"
-              >
-                Clear Search Filter
-              </button>
-            </div>
-          )}
-        </section>
-      ) : (
+      {/* 3-4. Interactive Command Deck & Search (+ conditional static sections) */}
+      <HomeSearchDeck totalTopics={totalTopics}>
         <>
           {/* 5. Flagship Visualizer Engines Showcase */}
           <section className="page-container space-y-8">
@@ -407,7 +226,7 @@ export default function HomePage() {
                 <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
                   CORE INTERACTIVE ENGINES // REPOSITORIES
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display">
+                <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display text-balance">
                   Featured Interactive Visualizers
                 </h2>
                 <p className="text-sm text-muted-foreground max-w-2xl">
@@ -418,9 +237,9 @@ export default function HomePage() {
 
               <Link
                 href="/topics"
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap focus-ring"
               >
-                View all {liveTopics} live visualizers <ArrowUpRight className="h-3.5 w-3.5" />
+                Browse the full curriculum <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </div>
 
@@ -431,19 +250,19 @@ export default function HomePage() {
                   <Link
                     key={engine.url}
                     href={engine.url}
-                    className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-card p-6 transition-all duration-200 hover:border-foreground/30 hover:bg-secondary/20"
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-card p-6 transition-colors duration-200 hover:border-foreground/30 hover:bg-secondary/20 focus-ring"
                   >
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-secondary/60 text-foreground group-hover:text-primary transition-colors">
-                          <Icon className="h-4 w-4" />
+                          <Icon className="h-4 w-4" aria-hidden="true" />
                         </span>
                         <div className="flex items-center gap-2">
                           <span className="font-mono text-[10px] text-muted-foreground tracking-wider uppercase">
                             {engine.domain}
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-mono text-emerald-500 dark:text-emerald-400 font-semibold">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" aria-hidden="true" />
                             LIVE
                           </span>
                         </div>
@@ -474,9 +293,9 @@ export default function HomePage() {
                     </div>
 
                     <div className="mt-6 pt-4 border-t border-border/40 flex items-center justify-between text-xs font-mono font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                      <span className="text-[11px] text-muted-foreground/70">Interactive Workbench</span>
+                      <span className="text-[11px] text-muted-foreground">Interactive Workbench</span>
                       <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        Launch Engine <ArrowRight className="h-3 w-3" />
+                        Launch Engine <ArrowRight className="h-3 w-3" aria-hidden="true" />
                       </span>
                     </div>
                   </Link>
@@ -491,7 +310,7 @@ export default function HomePage() {
               <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
                 DISCIPLINE DIRECTORY // 8 CORE PILLARS
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display text-balance">
                 The Computer Science Matrix
               </h2>
               <p className="text-sm text-muted-foreground max-w-2xl">
@@ -514,7 +333,7 @@ export default function HomePage() {
                 <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
                   CURATED PATHWAYS // SEQUENCE RUNS
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display">
+                <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display text-balance">
                   Structured Learning Tracks
                 </h2>
                 <p className="text-sm text-muted-foreground max-w-2xl">
@@ -525,9 +344,9 @@ export default function HomePage() {
 
               <Link
                 href="/tracks"
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap focus-ring"
               >
-                View all tracks <ArrowUpRight className="h-3.5 w-3.5" />
+                View all tracks <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </div>
 
@@ -536,7 +355,7 @@ export default function HomePage() {
                 <Link
                   key={track.slug}
                   href={`/tracks/${track.slug}`}
-                  className="group flex flex-col justify-between rounded-xl border border-border/80 bg-card p-6 transition-all duration-200 hover:border-foreground/30 hover:bg-secondary/20"
+                  className="group flex flex-col justify-between rounded-xl border border-border/80 bg-card p-6 transition-colors duration-200 hover:border-foreground/30 hover:bg-secondary/20 focus-ring"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -544,7 +363,7 @@ export default function HomePage() {
                         {track.level}
                       </span>
                       <span className="flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
-                        <Clock className="h-3.5 w-3.5" /> ~{track.estHours}h sequence
+                        <Clock className="h-3.5 w-3.5" aria-hidden="true" /> ~{track.estHours}h sequence
                       </span>
                     </div>
 
@@ -558,7 +377,7 @@ export default function HomePage() {
                     </div>
 
                     <div className="space-y-2 pt-2">
-                      <span className="text-[11px] font-mono text-muted-foreground/80 uppercase tracking-wider block">
+                      <span className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider block">
                         Included Interactive Engines ({track.modules.length}):
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -575,9 +394,9 @@ export default function HomePage() {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-border/40 flex items-center justify-between text-xs font-mono font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                    <span className="text-emerald-500 font-medium">Free & Self-Paced</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-medium">Free &amp; Self-Paced</span>
                     <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                      Start Track <ArrowRight className="h-3 w-3" />
+                      Start Track <ArrowRight className="h-3 w-3" aria-hidden="true" />
                     </span>
                   </div>
                 </Link>
@@ -592,7 +411,7 @@ export default function HomePage() {
                 <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
                   THE FIRST-PRINCIPLES MANIFESTO
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground font-display">
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground font-display text-balance">
                   Why CSCosmos?
                 </h2>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -607,7 +426,7 @@ export default function HomePage() {
                     01 // STATE OVER SYNTAX
                   </span>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    You don't understand CPU pipelining by reading paragraphs. You understand it by stalling the hazard register and watching instructions flush.
+                    You don&apos;t understand CPU pipelining by reading paragraphs. You understand it by stalling the hazard register and watching instructions flush.
                   </p>
                 </div>
 
@@ -622,7 +441,7 @@ export default function HomePage() {
 
                 <div className="space-y-2 rounded-xl border border-border/60 bg-secondary/20 p-5">
                   <span className="font-mono text-xs font-bold text-foreground">
-                    03 // CLIENT-SIDE & FREE
+                    03 // CLIENT-SIDE &amp; FREE
                   </span>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Zero forced accounts, zero paywalled tracks, zero telemetry trackers. Pure interactive software compiled directly into the web runtime.
@@ -630,7 +449,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Manifesto Slogan Ribbon */}
               <div className="pt-6 border-t border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-muted-foreground">
                 <span className="italic text-foreground font-medium">
                   &ldquo;{siteConfig.slogan}&rdquo;
@@ -663,13 +481,13 @@ export default function HomePage() {
                 </span>
               </div>
 
-              <div className="text-muted-foreground">
+              <div className="text-muted-foreground" suppressHydrationWarning>
                 CSCosmos Engine &copy; {new Date().getFullYear()} &bull; {siteConfig.slogan}
               </div>
             </div>
           </section>
         </>
-      )}
+      </HomeSearchDeck>
     </div>
   );
 }
