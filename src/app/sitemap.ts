@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { domains } from "@/data/domains";
 import { topics } from "@/data/topics";
 import { tracks } from "@/data/tracks";
+import { categories as interviewCategories, getQuestionsByCategory } from "@/data/interview";
 
 const BASE_URL = "https://cscosmos.vercel.app";
 
@@ -41,6 +42,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         if (seen.has(t.url)) continue;
         seen.add(t.url);
         entries.push(entry(t.url, "weekly", 0.7));
+    }
+
+    // Interview prep: hub, category pages, and every question page.
+    entries.push(entry("/interview", "weekly", 0.9));
+    for (const c of interviewCategories) {
+        entries.push(entry(`/interview/${c.key}`, "weekly", 0.8));
+        for (const q of getQuestionsByCategory(c.key)) {
+            entries.push(entry(`/interview/${c.key}/${q.slug}`, "monthly", 0.7));
+        }
     }
 
     return entries;
