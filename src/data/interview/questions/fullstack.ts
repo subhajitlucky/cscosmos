@@ -1497,4 +1497,144 @@ COMMIT;`,
     ],
     relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
   },
+  {
+    slug: 'collaborative-editor-ot-crdt-conflicts',
+    category: 'fullstack',
+    topic: 'Architecture',
+    title: 'Design real-time collaboration — and what survives a disconnect',
+    difficulty: 'advanced',
+    frequency: 'sometimes',
+    round: 'system-design',
+    type: 'design',
+    tags: ['websockets', 'ot', 'crdt', 'redis', 'consistency'],
+    oneLiner:
+      'Operations are relative and go stale, so the real design question is who holds the order — a central transformer (OT) or a mergeable data structure (CRDT) — and what survives a disconnect.',
+    whyAsked:
+      'Collaborative editing compresses the hardest realtime problems into one room: concurrency, ordering, fan-out, persistence, and offline merge. Interviewers listen for whether you know the hard part is not WebSockets but intention — position 4 meant the old document, and replaying it against the new one corrupts meaning without any bug in the plumbing. Strong candidates separate the durable document from the ephemeral presence layer and can explain recovery without hand-waving "the server broadcasts, so it is fine".',
+    mentalModel:
+      'A document is shared mutable state at character granularity, and the whole architecture hangs on one decision: who decides the final order and meaning of edits. OT delegates that to a central authority that transforms each operation against the ones it missed. CRDTs bake identity into every atom so arrival order stops mattering entirely. Gateways, pub/sub, snapshots, and resync are plumbing arranged around that choice — get the choice wrong and the plumbing cannot save you.',
+    steps: [
+      {
+        title: 'Why concurrent edits corrupt: position is a lie after edits',
+        body: `The naive model — operations are positions in a string, apply them in arrival order — dies immediately in collaboration. User A, briefly offline, computes "insert 'very ' at position 4" against version 1 of the document. Meanwhile B deletes positions 4 through 8 and commits version 2. When A reconnects and the server applies insert(4), position 4 in version 2 is somewhere else entirely — inside a different word, or past the end. Nobody made a typo: "4" was a statement about an old document, and the document moved. Watch the animation: every frame is individually correct, and the sequence is still wrong. This is the staging problem every collaborative system must solve — not connection management, not fan-out, but the fact that an edit's meaning is relative to the state it was authored against.`,
+        animation: {
+          kind: 'timeline',
+          lanes: [
+            { id: 'doc', label: 'Document version', kind: 'custom' },
+            { id: 'a', label: 'User A (offline buffer)', kind: 'custom' },
+            { id: 'b', label: 'User B (live)', kind: 'custom' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'Version 1 is the shared base both users start from.', marks: [{ laneId: 'doc', label: 'v1 is the shared base', status: 'active' }] },
+            { id: 'f2', caption: 'A (offline) queues insert(4, \u2018very \u2019) — meaningful only against v1.', marks: [{ laneId: 'a', label: 'insert(4, \u2018very \u2019) @v1', status: 'active' }, { laneId: 'doc', label: 'v1', status: 'active' }] },
+            { id: 'f3', caption: 'B deletes positions 4\u20138 in live version 1 and commits v2.', marks: [{ laneId: 'b', label: 'delete(4\u20138) \u2192 v2', status: 'active' }, { laneId: 'doc', label: 'v2 (positions moved)', status: 'active' }] },
+            { id: 'f4', caption: 'A reconnects and the server applies insert(4) to v2 — a correct operation, in the wrong world.', marks: [{ laneId: 'a', label: 'replays insert(4) on v2', status: 'active' }, { laneId: 'doc', label: 'meaning diverges', status: 'active' }] },
+            { id: 'f5', caption: 'Every step obeyed the rules; the merged text did not reflect anyone\u2019s intention. That gap is the problem to design against.', marks: [{ laneId: 'doc', label: 'stale offset \u2260 intention', status: 'done' }, { laneId: 'a', label: 'edit unsatisfied', status: 'done' }, { laneId: 'b', label: 'edit satisfied', status: 'done' }] },
+          ],
+        },
+      },
+      {
+        title: 'OT or CRDT: where conflict resolution lives',
+        body: `Both families fix the stale-position problem, and the interview signal is knowing what each one really is. OT keeps operations relative and adds the missing ingredient: the server receives every op, orders them per document, and transforms each against everything it missed — insert(4) becomes insert(6) because the server knows v2 shifted it. It is what Google Docs runs, it keeps clients dumb, and it demands one authoritative order per document. CRDTs instead make every character or atom carry an identity, so operations reference atoms rather than offsets and merge is commutative — arrival order does not matter, ever. That buys offline-first and peer-to-peer, at the cost of metadata per atom and tombstones for deletions. The decision rule to say out loud: with a central server and short disconnects, OT is simpler; with long offline periods or no central authority, CRDTs pay for themselves.`,
+        animation: {
+          kind: 'before-after',
+          beforeLabel: 'OT — a central transformer',
+          afterLabel: 'CRDT — identity-carrying atoms',
+          before: [
+            { text: 'Ops are relative (\u201cinsert at 4\u201d); the server transforms each against the missed ops', tone: 'neutral' },
+            { text: 'One authoritative order per document: the server sequences everything', tone: 'neutral' },
+            { text: 'Mature and battle-tested centrally (Google Docs); clients stay dumb', tone: 'success' },
+            { text: 'Offline edits must be transformed through the entire missed history', tone: 'danger' },
+          ],
+          after: [
+            { text: 'Every atom has identity; ops reference atoms, never offsets', tone: 'neutral' },
+            { text: 'Merge is commutative and associative: arrival order stops mattering', tone: 'success' },
+            { text: 'Offline-first and peer-to-peer work without any central authority', tone: 'success' },
+            { text: 'Cost: metadata per atom, tombstones for deletes, periodic compaction', tone: 'danger' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'Start from the stale-offset problem: the question is where resolution lives.', beforeIndex: 0, afterIndex: 0 },
+            { id: 'f2', caption: 'OT keeps resolution on the server; a CRDT moves it into the data itself.', beforeIndex: 1, afterIndex: 1 },
+            { id: 'f3', caption: 'Disconnect length decides: long offline windows favor CRDTs.', beforeIndex: 3, afterIndex: 2 },
+            { id: 'f4', caption: 'Either way, convergence is by construction — same order plus same transform, or merge that ignores order.', beforeIndex: 2, afterIndex: 3 },
+          ],
+        },
+      },
+      {
+        title: 'Fan-out: one order per document, N gateway instances',
+        body: `At 100,000 concurrent users the WebSocket tier cannot hold the truth — it holds sockets. Any gateway instance accepts a keystroke, wraps it with document id, client id, and the client\u2019s last-seen version, and routes it to the document\u2019s lane without interpreting it. The critical scalability insight: there is no global order — there is one order per document. A document actor (or a partitioned service keyed by document id) consumes that lane, transforms and sequences each op, and broadcasts the result on a per-document pub/sub channel. Redis fans the transformed op out to every gateway, each pushing to the sockets subscribed to that document. Watch the animation: 100k users, but a single writer per document — correctness comes from the per-document lane, scale comes from having 100k documents each with their own. Sticky sessions are an optimization for locality, never a correctness mechanism, because session migration would silently break ordering.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'client', label: 'Clients', sublabel: 'any gateway, no stickiness needed' },
+            { id: 'gateway', label: 'WS gateways', sublabel: 'N instances · hold sockets only' },
+            { id: 'bus', label: 'Redis channels', sublabel: 'one channel per document' },
+            { id: 'actor', label: 'Document actor', sublabel: 'single ordered lane per doc' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'A keystroke arrives at whichever gateway holds the socket, tagged with doc id and last-seen version.', packets: [{ from: 'client', to: 'gateway', label: 'op (docId, clientId, version)' }], activeNodeIds: ['client'] },
+            { id: 'p2', caption: 'The gateway does not interpret the op — it routes it to the document\u2019s lane.', packets: [{ from: 'gateway', to: 'bus', label: 'route by docId' }], doneNodeIds: ['client'], activeNodeIds: ['gateway'] },
+            { id: 'p3', caption: 'One lane per document serializes everything: 100k users, but each document has exactly one order.', packets: [{ from: 'bus', to: 'actor', label: 'append to ordered log' }], doneNodeIds: ['gateway'], activeNodeIds: ['bus'] },
+            { id: 'p4', caption: 'The actor transforms the op against the log and broadcasts the committed version.', packets: [{ from: 'actor', to: 'gateway', label: 'broadcast op v42' }], doneNodeIds: ['bus'], activeNodeIds: ['actor'] },
+            { id: 'p5', caption: 'Every gateway pushes to its subscribed sockets; all clients apply ops in the same version order.', packets: [{ from: 'gateway', to: 'client', label: 'op v42 \u00b7 per-doc order' }], doneNodeIds: ['actor', 'gateway', 'client'] },
+          ],
+        },
+      },
+      {
+        title: 'Persistence: append per op, snapshot on idle',
+        body: `Writing PostgreSQL on every keystroke is the classic mistake: a fast typist generates tens of writes per second per user, and row-level updates of a live document serialize the hot path. The working state instead lives in the ordered op log — appends are cheap — and durability comes from periodic snapshots: after the document sits idle for a debounce window, or after every N operations, a snapshot of the versioned document is written to Postgres. Each snapshot carries its version number, making it a base that the op-log tail can replay onto. The failure question lands here: crash after broadcasting an update but before persisting? The op was already committed to the log with its version, and the clients that received it hold it too — recovery replays the log tail onto the last snapshot, and the worst case degrades to "the broadcast is ahead of storage", which resync repairs. Snapshotting also compacts: once durable, the log before the snapshot can be trimmed.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'actor', label: 'Document actor' },
+            { id: 'redis', label: 'Redis', sublabel: 'ordered op log \u00b7 fast tail' },
+            { id: 'snap', label: 'Snapshotter', sublabel: 'idle debounce / N-ops' },
+            { id: 'pg', label: 'PostgreSQL', sublabel: 'versioned snapshots' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'Every accepted op appends to the document\u2019s log — the live truth while the document is hot.', packets: [{ from: 'actor', to: 'redis', label: 'append op v1204' }], activeNodeIds: ['actor'] },
+            { id: 'p2', caption: 'A keystroke costs an append, not a row update: nobody writes the database per character.', doneNodeIds: ['actor'], activeNodeIds: ['redis'] },
+            { id: 'p3', caption: 'Idle debounce (or every N ops) triggers a snapshot of the versioned document.', packets: [{ from: 'redis', to: 'snap', label: 'flush snapshot @v1204' }], doneNodeIds: ['redis'], activeNodeIds: ['snap'] },
+            { id: 'p4', caption: 'The snapshot lands in Postgres with its version — a durable base for replay.', packets: [{ from: 'snap', to: 'pg', label: 'snapshot v1204' }], doneNodeIds: ['snap'], activeNodeIds: ['pg'] },
+            { id: 'p5', caption: 'Crash after broadcast, before snapshot? The log tail and the clients still hold the delta — replay onto v1204.', doneNodeIds: ['actor', 'redis', 'snap', 'pg'] },
+          ],
+        },
+      },
+      {
+        title: 'Reconnection: resume by version, converge by construction',
+        body: `A disconnected user is not a lost user — they are a replica that fell behind, and the resync is a delta, never a full reload that would discard their local edits. The client reconnects announcing its last applied version (for OT) or its state vector (for CRDTs — a per-replica summary of what it has seen), and the server computes exactly the missing ops. OT transforms the user\u2019s buffered offline operations through every op they missed, in order; CRDTs merge the buffered atoms directly, because identity makes the merge order-independent. Now the bonus scenario: two users replace the same paragraph while a third deletes it. OT resolves it by definition, not by accident — the server serializes the three operations and the transform rules decide precisely how replace-vs-delete interacts, so the outcome is deterministic and testable. CRDTs resolve it structurally: the paragraph\u2019s atoms were deleted, and replacements targeting deleted atoms are absorbed or reinsert as defined — legitimate edits are not silently dropped, they are deterministically superseded and recoverable from the log. Watch the animation: announce, delta, apply, converge.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'client', label: 'Reconnecting client', sublabel: 'buffered local edits' },
+            { id: 'gateway', label: 'Gateway' },
+            { id: 'engine', label: 'Doc engine', sublabel: 'OT transform / CRDT merge' },
+            { id: 'store', label: 'Log + snapshots', sublabel: 'ops since version' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'The client reconnects and announces its last applied version (or state vector).', packets: [{ from: 'client', to: 'gateway', label: 'resume(docId, v=38)' }], activeNodeIds: ['client'] },
+            { id: 'p2', caption: 'The gateway routes the resume to the document\u2019s engine — no state lives in the socket.', packets: [{ from: 'gateway', to: 'engine', label: 'resume v=38 + buffered ops' }], doneNodeIds: ['client'], activeNodeIds: ['gateway'] },
+            { id: 'p3', caption: 'The engine loads the snapshot and reads the op tail after v=38.', packets: [{ from: 'engine', to: 'store', label: 'ops v39\u2013v57' }], doneNodeIds: ['gateway'], activeNodeIds: ['engine'] },
+            { id: 'p4', caption: 'Offline edits are transformed through the missed ops (OT) or merged by identity (CRDT) — never naively appended.', packets: [{ from: 'engine', to: 'client', label: 'delta v39\u2013v57, transformed' }], doneNodeIds: ['store'], activeNodeIds: ['engine'] },
+            { id: 'p5', caption: 'Both sides converge on v57. Every legitimate edit survives or is deterministically superseded — nothing vanishes silently.', doneNodeIds: ['client', 'gateway', 'engine', 'store'] },
+          ],
+        },
+      },
+    ],
+    edgeCases: [
+      'Presence, cursors, and typing indicators are ephemeral and lossy by design: never persist them as document state or replay them on reconnect — dropping a cursor is free, dropping an edit is data loss.',
+      'A document is an ordering domain, not the system: forcing a global order across all documents is the scalability trap — one lane per document gives correctness and 100k documents give throughput.',
+      'Snapshotting must never block editing: the snapshot is taken at a specific version while later ops keep appending, so the stop-the-world copy of a live structure is a latent outage.',
+      'Undo/redo changes meaning under collaboration: per-user undo needs per-client operation history to "remove my last edit" from a merged state — a global undo stack will silently revert other people\u2019s work.',
+      'Redis pub/sub is fire-and-forget: a gateway that was down misses updates, which is acceptable only because every client can recover via version-based resync — the day resync is broken, pub/sub losses become silent divergence.',
+    ],
+    followUps: [
+      { q: 'When would you choose CRDTs over OT?', a: 'When offline-first or peer-to-peer is a product requirement: long disconnects, local-first apps, or no central authority. Libraries like Yjs make it practical, and the price is per-atom metadata, tombstones, and compaction — pay it deliberately, not by default.' },
+      { q: 'How does Redis pub/sub survive 100,000 concurrent users?', a: 'It does not carry users — it carries document channels between gateways: connections stay on gateway instances, each document has one ordered lane, and pub/sub fans transformed ops to the instances holding subscribers. Fire-and-forget is fine because clients recover by version.' },
+      { q: 'What is a state vector and why does resync need it?', a: 'A compact per-replica summary of what a client has already seen. Exchanging vectors lets the server compute exactly the missing operations — no full reload, no over-sending, and it works even when the client has made offline edits of its own.' },
+      { q: 'Why is last-write-wins the wrong default for a document?', a: 'Granularity: replacing whole paragraphs because of one keystroke discards paragraphs of legitimate work. Even character-level LWW without identity misapplies stale offsets — you need identity or transformation, not a timestamp.' },
+      { q: 'How do you guarantee every user sees the same document?', a: 'Deterministic convergence: OT applies the same op order and the same transform rules at every site; CRDT merges are commutative, associative, and idempotent by construction. Either way, convergence is a property of the algorithm — the network only decides when, not what.' },
+    ],
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+  },
 ];
