@@ -8,7 +8,7 @@ export const categories: InterviewCategory[] = [
     description: 'JavaScript, React, networking and databases — the rounds that gate every web role.',
     icon: 'Layers',
     accent: 'text-blue-500',
-    topics: ['Browser', 'React', 'JavaScript', 'Databases'],
+    topics: ['Browser', 'React', 'JavaScript', 'Databases', 'Architecture'],
   },
   {
     key: 'cybersecurity',
