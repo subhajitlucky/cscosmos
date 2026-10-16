@@ -1207,4 +1207,294 @@ return posts;`,
     ],
     relatedEngine: { label: 'Explore Database Internals', href: '/corecs/database-internals-indexes-transactions' },
   },
+  {
+    slug: 'exactly-once-payment-retries',
+    category: 'fullstack',
+    topic: 'Architecture',
+    title: 'Design a payment that charges exactly once — through retries and crashes',
+    difficulty: 'advanced',
+    frequency: 'very-often',
+    round: 'system-design',
+    type: 'design',
+    tags: ['payments', 'idempotency', 'outbox-pattern', 'queues', 'consistency'],
+    oneLiner:
+      'The card is charged but the crash eats the record — exactly-once charging is not inherited from any tool, it is built from a unique constraint, an outbox, and idempotent effects everywhere.',
+    whyAsked:
+      'Payment idempotency is the senior-interview litmus test: it compresses concurrency, distributed failure, and data modeling into one problem with a rupee amount attached. Candidates earn the offer by naming the crash window between an external side effect and a local write, putting the invariant in the database instead of a lock, closing dual writes with a transactional outbox, and treating retries and webhook replays as the default weather rather than the exception.',
+    mentalModel:
+      'Exactly-once delivery does not exist over unreliable networks — exactly-once effects do. Every step is rebuilt as at-least-once plus idempotent: requests carry a key the database can enforce once, state changes and events commit in the same transaction, consumers deduplicate by event id, and a reconciliation job compares your ledger against the provider\u2019s settlement when all else fails. The question is never "will it retry?" but "is it safe when it does?"',
+    steps: [
+      {
+        title: 'The double charge: a crash inside the window',
+        body: `Replay the incident slowly. Request A reaches the provider and the card is charged — a real, external, irreversible side effect. Before the API can write "paid" to PostgreSQL, the process dies. No row exists, so the state is indistinguishable from "nothing happened" — and when the user retries, request B sees an empty database and charges the card again. The deep point is that no database transaction spans the provider: the charge happens in the outside world, your record happens inside yours, and the gap between them is the bug. Watch the animation — the two charges are not caused by a race in your SQL; they are caused by a lost write around an external effect. Any system where a retry can re-trigger the external call without proof of prior execution will double-charge under exactly this sequence.`,
+        animation: {
+          kind: 'timeline',
+          lanes: [
+            { id: 'a', label: 'Request A (first click)', kind: 'custom' },
+            { id: 'b', label: 'Request B (user retry)', kind: 'custom' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'Request A reaches the provider and the card is charged — successfully.', marks: [{ laneId: 'a', label: 'provider charge OK', status: 'active' }] },
+            { id: 'f2', caption: 'The backend crashes before writing anything to the database. The charge exists; the record does not.', marks: [{ laneId: 'a', label: 'crash before DB write', status: 'active' }, { laneId: 'b', label: 'user retries \u2192 request B', status: 'active' }] },
+            { id: 'f3', caption: 'B checks the database, finds no record of A — and charges the card again.', marks: [{ laneId: 'a', label: 'outcome unknown', status: 'done' }, { laneId: 'b', label: 'charges again', status: 'active' }] },
+            { id: 'f4', caption: 'Two charges, one intended payment. Retries around a crash turned a lost write into money.', marks: [{ laneId: 'a', label: 'charge #1', status: 'done' }, { laneId: 'b', label: 'charge #2', status: 'done' }] },
+          ],
+        },
+      },
+      {
+        title: 'Idempotency keys: the database enforces "once"',
+        body: `The fix starts with a client-generated key — one per checkout attempt, not per HTTP retry — sent in a header like Idempotency-Key. Retries of the same attempt reuse the same key; a genuinely new attempt gets a new one. The crucial implementation detail: the key becomes a row with a UNIQUE constraint before the provider is called, so only one request in the entire fleet can own the attempt. A concurrent duplicate does not race into a second charge — it loses an INSERT and is answered deterministically: "in progress, try later", or the stored result once the winner finishes. When the charge succeeds, the receipt is stored against the key; every replay returns that receipt without touching the provider. Watch the animation: the app never needs to be clever about "checking" — the database simply refuses the second owner. This is the invariant behavior interviewers want: charge-once is not a promise the code makes, it is a constraint the storage keeps.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'client', label: 'Client', sublabel: 'checkout attempt' },
+            { id: 'api', label: 'Payment API' },
+            { id: 'db', label: 'PostgreSQL', sublabel: 'idempotency keys' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'The client generates one key per checkout attempt — retries within the attempt reuse it.', packets: [{ from: 'client', to: 'api', label: 'POST /pay \u00b7 Idempotency-Key: 7f3a' }], activeNodeIds: ['client'] },
+            { id: 'p2', caption: 'Before charging, the API inserts the key with a UNIQUE constraint: only one request can own the attempt.', packets: [{ from: 'api', to: 'db', label: 'INSERT key (unique)' }], doneNodeIds: ['client'], activeNodeIds: ['api'] },
+            { id: 'p3', caption: 'A concurrent duplicate arrives with the same key and loses the insert — the database refuses a second owner.', packets: [{ from: 'client', to: 'api', label: 'duplicate \u00b7 same key' }], activeNodeIds: ['db'] },
+            { id: 'p4', caption: 'The loser gets a deterministic answer: 409 in progress, or the stored result once the winner finishes.', packets: [{ from: 'api', to: 'client', label: 'stored result / retry later' }], doneNodeIds: ['db'], activeNodeIds: ['api'] },
+            { id: 'p5', caption: 'Charge succeeded? The receipt is stored against the key — every replay returns it without charging again.', doneNodeIds: ['client', 'api', 'db'] },
+          ],
+        },
+      },
+      {
+        title: 'Redis locks vs database constraints',
+        body: `The tempting first design is a Redis lock: SET key NX EX 30, first request wins, others wait. It is fast and it demos well — and it is not correctness. A TTL can expire while the holder is paused in a GC cycle or a slow network call, and then two requests hold "the" lock at the exact moment that matters. A failed Redis node forgets the lock entirely; a failover can drop it. Locks are leases with an expiry date, and money cannot be protected by something that expires. The durable version puts the invariant in PostgreSQL: UNIQUE (idempotency_key) survives crashes, restarts, and failovers, and the loser of the race gets a deterministic duplicate-key error your tests can reproduce. The mature answer keeps both: Redis as the fast single-flight optimization to reduce pileups, Postgres as the source of truth that makes one charge unavoidable. Compare the panels — the difference is not speed, it is what happens at the worst possible moment.`,
+        animation: {
+          kind: 'before-after',
+          beforeLabel: 'Redis lock as the guard',
+          afterLabel: 'Database constraint as the guard',
+          before: [
+            { text: 'SET key NX EX 30 — one holder, elegant and fast', tone: 'neutral' },
+            { text: 'TTL expires while the holder pauses (GC, network) \u2192 two holders', tone: 'danger' },
+            { text: 'A failed or failed-over Redis node forgets the lock', tone: 'danger' },
+            { text: 'Two holders exist precisely in the dangerous moments', tone: 'danger' },
+          ],
+          after: [
+            { text: 'UNIQUE (idempotency_key) — the invariant lives in durable storage', tone: 'success' },
+            { text: 'The race loser gets a duplicate-key error: deterministic and testable', tone: 'success' },
+            { text: 'Survives crashes, restarts, and failovers — the row outlives the process', tone: 'success' },
+            { text: 'Redis stays as a single-flight optimization, never the source of truth', tone: 'success' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'Start with the tempting solution: a distributed lock.', beforeIndex: 0, afterIndex: 0 },
+            { id: 'f2', caption: 'It works until the TTL expires mid-flight — two lock holders at once.', beforeIndex: 1, afterIndex: 1 },
+            { id: 'f3', caption: 'Durability is the difference: a constraint cannot expire or fail over.', beforeIndex: 2, afterIndex: 2 },
+            { id: 'f4', caption: 'Keep Redis for speed, let Postgres own correctness.', beforeIndex: 3, afterIndex: 3 },
+          ],
+        },
+      },
+      {
+        title: 'The transactional outbox: closing the dual-write window',
+        body: `Even with idempotency keys, the original crash window still exists between the charge and your database write — and a second one opens between the database write and publishing "payment.captured" to the queue. Two systems, one business fact, and no transaction spans both: that is the dual-write problem. The transactional outbox closes it by refusing to do two writes. One PostgreSQL transaction records the payment row and an outbox event together; they commit or roll back as a unit, so the event exists exactly when the state exists. A relay then reads unpublished events, publishes to the queue, and retries until the broker acknowledges — at-least-once delivery, by design. If the API crashes before commit, nothing happened at all; if it crashes after, the committed event still ships. Watch the animation: the payment and its event are born in the same transaction, and the relay only ever moves durable facts. Consumers deduplicate by event id, which upgrades at-least-once delivery into exactly-once effects.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'api', label: 'Payment API' },
+            { id: 'pg', label: 'PostgreSQL', sublabel: 'payment + outbox, one transaction' },
+            { id: 'relay', label: 'Outbox relay', sublabel: 'poll, publish, retry' },
+            { id: 'queue', label: 'Message queue', sublabel: 'consumers are idempotent' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'One transaction records both the payment row and the outbox event — they commit or die together.', packets: [{ from: 'api', to: 'pg', label: 'TX: payment + outbox event' }], activeNodeIds: ['api'] },
+            { id: 'p2', caption: 'Commit succeeds: the event is as durable as the payment it describes.', doneNodeIds: ['api'], activeNodeIds: ['pg'] },
+            { id: 'p3', caption: 'The relay picks up unpublished events — nothing is lost if the API process died.', packets: [{ from: 'pg', to: 'relay', label: 'unpublished events' }], doneNodeIds: ['pg'], activeNodeIds: ['relay'] },
+            { id: 'p4', caption: 'It publishes and retries until the broker acknowledges. At-least-once delivery is the contract.', packets: [{ from: 'relay', to: 'queue', label: 'publish payment.captured' }], doneNodeIds: ['relay'], activeNodeIds: ['queue'] },
+            { id: 'p5', caption: 'Crash before commit: nothing happened. After commit: the event still ships. Consumers dedupe by id.', doneNodeIds: ['api', 'pg', 'relay', 'queue'] },
+          ],
+        },
+      },
+      {
+        title: 'Webhooks, reconciliation, and proving it under fire',
+        body: `The system is not done when the charge path is safe — it is done when the recovery path is boring. Provider webhooks will replay, arrive twice, or land during a deploy, so the endpoint does three things in order: verify the signature, persist the raw event durably, acknowledge, and only then process — idempotently, keyed by event id. Webhooks are also the authority on money movement: your API marks intent, but only the provider's events confirm capture, and a reconciliation job compares your ledger against the provider's settlement report to catch anything that slipped. Then you prove all of it: fire N concurrent identical requests and assert exactly one charge with N identical responses; kill the process between charge and DB write and assert recovery leaves a single charge; run controlled two-transaction interleavings and assert one wins while the other replays. The animation pairs the failure scenarios with the tests that pin each one — the senior signal is not knowing the patterns, it is being able to show they hold when the server dies.`,
+        animation: {
+          kind: 'before-after',
+          beforeLabel: 'Failure scenarios (they will happen)',
+          afterLabel: 'How you prove the design holds',
+          before: [
+            { text: 'Provider webhook arrives twice — replay, not an anomaly', tone: 'neutral' },
+            { text: 'Webhook lands mid-deploy on a dying process', tone: 'danger' },
+            { text: 'DB write fails after provider success — state drifts from reality', tone: 'danger' },
+            { text: 'Crash during recovery — the fix itself is interrupted', tone: 'danger' },
+          ],
+          after: [
+            { text: 'N concurrent identical requests \u2192 exactly one charge, N identical responses', tone: 'success' },
+            { text: 'Kill the server between charge and DB write \u2192 recovery leaves one charge', tone: 'success' },
+            { text: 'Controlled two-transaction interleavings \u2192 one wins, the loser replays safely', tone: 'success' },
+            { text: 'Reconciliation job: your ledger vs provider settlement, alert on drift', tone: 'success' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'Webhook replays are the weather: persist durably, ack, process idempotently by event id.', beforeIndex: 0, afterIndex: 0 },
+            { id: 'f2', caption: 'A deploy that eats a webhook is an outage you can test for.', beforeIndex: 1, afterIndex: 1 },
+            { id: 'f3', caption: 'The crash window between provider and database gets a chaos test, not a slogan.', beforeIndex: 2, afterIndex: 2 },
+            { id: 'f4', caption: 'And reconciliation is the net under everything: ledger vs settlement, alert on drift.', beforeIndex: 3, afterIndex: 3 },
+          ],
+        },
+      },
+    ],
+    edgeCases: [
+      'Idempotency keys must be scoped to the request payload: reuse of the same key with a different amount or cart is an attack or a bug — store a request hash and reject mismatches with 409.',
+      'In-flight duplicates need a state machine, not a lock: a second request hitting an in_progress key must get a deterministic "retry later" (or wait on the same row), never a second provider call.',
+      'The provider webhook is the authority on money: never mark "captured" from your own request path alone — capture, refund, and settlement all reconcile against provider events and reports.',
+      'Idempotency records cannot live forever or expire too soon: keys must outlive the provider\u2019s retry schedule (typically days), so sweep with a retention window and archive receipts instead of deleting them.',
+      'Redis locks expire mid-flight under GC pauses, network stalls, or failovers — two holders at the worst moment; any design where correctness depends on the lease surviving is a double charge waiting for load.',
+    ],
+    followUps: [
+      { q: 'What exactly is the transactional outbox pattern?', a: 'Write the business row and an event row in the same local transaction; a relay publishes pending events to the broker and retries until acked. It removes the dual-write window between your database and the queue without distributed transactions.' },
+      { q: 'At-least-once vs exactly-once delivery?', a: 'Exactly-once delivery over unreliable networks is a lie; exactly-once effects are real. Deliver at-least-once, make every consumer idempotent (event ids, upserts, state machines), and the duplicates become invisible.' },
+      { q: 'Why not just use a distributed lock for the whole flow?', a: 'Locks are leases, and leases expire: GC pauses, network partitions, and failovers create moments with two holders. A lock may optimize contention, but only a durable constraint can guarantee one charge.' },
+      { q: 'How do idempotency keys differ from a unique constraint?', a: 'The key is the semantic contract the client carries across retries; the constraint is the enforcement mechanism that makes the contract real in storage. You need both — the key without the constraint is theater.' },
+      { q: 'What should the user see while the outcome is unknown?', a: 'An explicit pending state, honestly surfaced: "payment processing", with the final state arriving via polling or webhook push. Never fake success, and never leave "failed" as a default for an unknown outcome — that invites a harmful retry.' },
+    ],
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+  },
+  {
+    slug: 'csv-pipeline-10m-rows-live-progress',
+    category: 'fullstack',
+    topic: 'Architecture',
+    title: 'Design a pipeline that ingests a 10-million-row CSV with live progress',
+    difficulty: 'advanced',
+    frequency: 'sometimes',
+    round: 'system-design',
+    type: 'design',
+    tags: ['streams', 'queues', 'idempotency', 'websockets', 'postgres'],
+    oneLiner:
+      'A 10M-row upload is not one job — it is tens of thousands of small idempotent chunks, with Postgres as the only source of truth for progress and the WebSocket as its fast path.',
+    whyAsked:
+      'Bulk ingestion is where senior actually gets tested: memory-safe streaming, work distribution, at-least-once delivery made harmless, and progress that never lies after a crash. Interviewers watch for the chunk-transaction insight — idempotency and progress are the same design problem, solved by committing results and the done-mark together — and for treating the WebSocket as a cache of Postgres rather than a database of its own.',
+    mentalModel:
+      'Nobody ships one giant job; you ship chunks. Each chunk is a single database transaction that is safe to replay: the rows and the "done" mark commit together, so a crash either happened before the chunk (redeliver, no trace) or after (nothing to replay). Progress is derived from committed chunks — never a drifting counter — and every realtime channel is allowed to lose messages, because the snapshot endpoint always heals.',
+    steps: [
+      {
+        title: 'Stream the upload — memory stays flat',
+        body: `The first failure mode is buffering: reading the file into memory, or worse, into a string, kills the Node process at a few gigabytes. The fix is to never hold the file at all — the browser slices it into multipart parts, and the API pipes each part straight through to object storage as it arrives. Backpressure does the flow control: when storage is slow, the stream pauses instead of growing a buffer. When the upload completes, the API holds only a pointer and a job id, inserts the job row, and enqueues the chunking task — then answers 202 immediately. Watch the animation: the HTTP request finishes in seconds regardless of file size, and the heavy work happens entirely off the request path. This is also what keeps the API responsive for everyone else: an endpoint that streams cannot be the endpoint that stalls under a large upload.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'client', label: 'Browser', sublabel: 'File API · multipart' },
+            { id: 'api', label: 'Node API', sublabel: 'streams · never buffers' },
+            { id: 's3', label: 'Object storage', sublabel: 'durable object' },
+            { id: 'queue', label: 'Queue', sublabel: 'chunking task' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'The browser slices the CSV into multipart chunks — no single giant request body to buffer.', packets: [{ from: 'client', to: 'api', label: 'part 1\u2026n \u00b7 stream' }], activeNodeIds: ['client'] },
+            { id: 'p2', caption: 'Each part flows to storage as it arrives; server memory stays flat no matter the file size.', packets: [{ from: 'api', to: 's3', label: 'streamed part' }], doneNodeIds: ['client'], activeNodeIds: ['api'] },
+            { id: 'p3', caption: 'The object is durable; the API now holds only a pointer, not the data.', doneNodeIds: ['client', 'api'], activeNodeIds: ['s3'] },
+            { id: 'p4', caption: 'The API inserts the job row (queued) and enqueues the chunking task — then answers 202 with the job id.', packets: [{ from: 'api', to: 'queue', label: 'job \u2192 chunk & process' }], doneNodeIds: ['s3'], activeNodeIds: ['queue'] },
+            { id: 'p5', caption: 'The request is over in seconds; the real work happens entirely off the request path.', doneNodeIds: ['client', 'api', 's3', 'queue'] },
+          ],
+        },
+      },
+      {
+        title: 'Chunk the job, protect the neighbors',
+        body: `The second classic failure: enqueuing the whole file as one queue message. A single 10-minute task cannot be parallelized, cannot be retried in parts, and a redelivery restarts it from zero. The design instead cuts the object into small chunks — tens of thousands of rows each, split on record boundaries so no row is torn — and every chunk becomes its own queue item carrying its job id and row range. That alone gives parallelism and partial retries. The fairness dimension: queue per tenant (or weighted lanes), so one customer's 10-million-row flood occupies their lane, not the pipe every other customer shares. Watch the animation: the chunker only ever streams and slices; workers pull chunks from lanes, round-robin across tenants, and each claim is a lease that expires if the worker dies. One job becomes tens of thousands of small, parallel, independently retryable units — and starvation is a scheduling decision you made, not an accident you discovered.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'job', label: 'CSV object', sublabel: '10M rows in storage' },
+            { id: 'chunker', label: 'Chunker', sublabel: 'record-boundary slicing' },
+            { id: 'queue', label: 'Per-tenant queue lanes', sublabel: 'fair scheduling' },
+            { id: 'workers', label: 'Worker pool', sublabel: 'stateless · horizontal' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'The object lands. One giant job would serialize everything — so it gets sliced instead.', doneNodeIds: [], activeNodeIds: ['chunker'] },
+            { id: 'p2', caption: 'The chunker streams the object and cuts ~50k-row chunks on record boundaries.', packets: [{ from: 'job', to: 'chunker', label: 'stream rows' }], activeNodeIds: ['chunker'] },
+            { id: 'p3', caption: 'Chunks land in the tenant\u2019s own lane — one customer\u2019s flood cannot bury another\u2019s.', packets: [{ from: 'chunker', to: 'queue', label: 'chunk 0042 \u00b7 job id \u00b7 rows 420k\u2013470k' }], doneNodeIds: ['job'], activeNodeIds: ['queue'] },
+            { id: 'p4', caption: 'Workers pull chunks as leases; round-robin across tenant lanes keeps any one customer bounded.', packets: [{ from: 'queue', to: 'workers', label: 'claim chunk (lease \u00b7 ack)' }], doneNodeIds: ['chunker'], activeNodeIds: ['workers'] },
+            { id: 'p5', caption: 'One job = tens of thousands of small, parallel, independently retryable units.', doneNodeIds: ['job', 'chunker', 'queue', 'workers'] },
+          ],
+        },
+      },
+      {
+        title: 'Exactly-once chunks: commit the work and the mark together',
+        body: `Here is the answer to the bonus question, stated as a design rule: never update progress separately from the work. Each chunk runs as one database transaction — insert the chunk's rows with a natural key, mark the chunk done, commit. Crash after 50,000 rows but before COMMIT? Those rows rolled back; the chunk never happened, and the queue redelivers it whole. On redelivery, ON CONFLICT makes the rows already committed by a partial earlier attempt a no-op — but there is nothing to detect and no offset to store, because the transaction boundary is the checkpoint. And progress? It is not a counter you increment; it is derived — COUNT the committed chunks, which can never drift from reality because it is computed from it. Read the code trace: the same BEGIN/COMMIT protects the rows, the done-mark, and therefore the progress number the user sees. Replay is not the failure path — it is the design.`,
+        animation: {
+          kind: 'code-trace',
+          language: 'sql',
+          code: `BEGIN;
+INSERT INTO records (job_id, row_no, payload)
+VALUES (...), (...), ...        -- this chunk's ~50k rows
+ON CONFLICT (job_id, row_no) DO NOTHING;
+
+UPDATE job_chunks SET status = 'done'
+WHERE id = 42;
+
+COMMIT;`,
+          frames: [
+            { id: 'f1', caption: 'One transaction per chunk: the rows and the done-mark commit together — never separately.', activeLines: [1], variables: [{ name: 'chunk', value: '42' }] },
+            { id: 'f2', caption: 'Crash after 50,000 rows but before COMMIT rolls all of it back — the queue redelivers the chunk whole.', activeLines: [3], variables: [{ name: 'on crash', value: 'uncommitted', changed: true }] },
+            { id: 'f3', caption: 'On replay, ON CONFLICT makes the already-written rows a no-op: no duplicate processing, no offset to detect.', activeLines: [4], variables: [{ name: 'replay inserts', value: '0 of 50k' }], output: 'INSERT 0 50000 \u2192 replay: INSERT 0 0' },
+            { id: 'f4', caption: 'Progress is derived from committed chunks — it cannot drift from reality because it is computed from it.', activeLines: [6, 7], variables: [{ name: 'progress', value: 'COUNT(done chunks)' }] },
+          ],
+        },
+      },
+      {
+        title: 'Realtime progress: WebSockets as a cache of Postgres',
+        body: `Progress has exactly one source of truth — the database — and the realtime channel is only its fast delivery. The worker that commits a chunk performs the progress update in the same transaction, then publishes a small event afterward (best-effort; lossy is acceptable precisely because Postgres holds the truth). Redis pub/sub fans the event to every WebSocket gateway instance, whichever one holds the user's connection, and the browser receives throttled updates — per second, never per row. Now the two hostile cases. Refresh or disconnect: the client re-fetches GET /jobs/:id for an authoritative snapshot, then resubscribes — missed events heal instantly, so the gateway can be stateless and disposable. Worker crash: the chunk's lease expires, the queue redelivers, and the replay is a no-op by construction from the previous step. Watch the animation: the database never moves, everything else is allowed to fail.`,
+        animation: {
+          kind: 'step-flow',
+          nodes: [
+            { id: 'worker', label: 'Worker' },
+            { id: 'pg', label: 'PostgreSQL', sublabel: 'jobs \u00b7 chunks \u2014 the truth' },
+            { id: 'pub', label: 'Redis pub/sub', sublabel: 'progress fan-out' },
+            { id: 'ws', label: 'WS gateway', sublabel: 'stateless \u00b7 any instance' },
+            { id: 'client', label: 'Browser', sublabel: 'snapshot + subscribe' },
+          ],
+          phases: [
+            { id: 'p1', caption: 'The transaction that commits the chunk also moves the job\u2019s progress — one writer, one truth.', packets: [{ from: 'worker', to: 'pg', label: 'chunk done + progress' }], activeNodeIds: ['worker'] },
+            { id: 'p2', caption: 'After commit, the worker publishes a small event — best-effort, because Postgres already recorded it.', packets: [{ from: 'pg', to: 'pub', label: '{ job, done, total }' }], doneNodeIds: ['worker'], activeNodeIds: ['pg'] },
+            { id: 'p3', caption: 'Pub/sub fans the event to every gateway instance; only subscribers of that job hear it.', packets: [{ from: 'pub', to: 'ws', label: 'job channel' }], doneNodeIds: ['pg'], activeNodeIds: ['pub'] },
+            { id: 'p4', caption: 'The browser gets live progress, throttled to per-second — never per-row chatter.', packets: [{ from: 'ws', to: 'client', label: 'progress 62%' }], doneNodeIds: ['pub'], activeNodeIds: ['ws'] },
+            { id: 'p5', caption: 'Refresh or disconnect? The client re-fetches the authoritative snapshot, then resubscribes.', packets: [{ from: 'client', to: 'pg', label: 'GET /jobs/:id \u2192 snapshot' }], doneNodeIds: ['ws'], activeNodeIds: ['client'] },
+            { id: 'p6', caption: 'Missed events heal, dead workers resume via lease expiry — the channel may fail, the truth cannot.', doneNodeIds: ['worker', 'pg', 'pub', 'ws', 'client'] },
+          ],
+        },
+      },
+      {
+        title: 'PostgreSQL when the table is 10 million rows deep',
+        body: `At this scale the database patterns change shape. Rows go in as multi-row batches or COPY — tens of thousands at a time — because per-row inserts are 10 million round trips of overhead. Progress queries stop scanning: chunk-level state is tiny and indexed, so "how far are we" is O(chunks), not O(rows). Tables partition by job or by time range, which keeps per-job working sets small and lets retention be DROP PARTITION instead of a mass DELETE that bloats and locks. Indexes are chosen for the queries that actually run — the natural key's UNIQUE index carries both idempotency and lookups — and built with the workload in mind rather than reflexively on every column. Compare the panels: the left column is what happens when each row is an event, the right is what happens when the table is treated as a bulk store with a few sharp queries.`,
+        animation: {
+          kind: 'before-after',
+          beforeLabel: 'Naive at scale',
+          afterLabel: 'Bulk-grade patterns',
+          before: [
+            { text: 'INSERT per row: 10M round trips and per-statement overhead', tone: 'danger' },
+            { text: 'COUNT(*) over rows for every progress poll: repeated heavy scans', tone: 'danger' },
+            { text: 'One huge table, one huge index, autovacuum permanently behind', tone: 'danger' },
+            { text: 'Row-by-row validation loops in application code', tone: 'danger' },
+          ],
+          after: [
+            { text: 'Multi-row batches or COPY, ~10k rows per statement', tone: 'success' },
+            { text: 'Progress derived from O(chunks) indexed state — cheap and exact', tone: 'success' },
+            { text: 'Partition by job or time range; retention is DROP PARTITION', tone: 'success' },
+            { text: 'Indexes chosen for real queries; UNIQUE natural key carries idempotency', tone: 'success' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'Start with the write path: per-row inserts versus batched COPY.', beforeIndex: 0, afterIndex: 0 },
+            { id: 'f2', caption: 'Progress reads move from row scans to tiny chunk-state lookups.', beforeIndex: 1, afterIndex: 1 },
+            { id: 'f3', caption: 'Big tables want partitions: small working sets and cheap retention.', beforeIndex: 2, afterIndex: 2 },
+            { id: 'f4', caption: 'Every index is justified by a query — and the unique key earns its place twice.', beforeIndex: 3, afterIndex: 3 },
+          ],
+        },
+      },
+    ],
+    edgeCases: [
+      'Byte-range chunking can split a quoted CSV row in half: slice on record boundaries (or carry the trailing partial line into the next chunk) or the parser fails on valid files.',
+      'Zombie workers originate from lease math: if the visibility timeout is shorter than a worst-case chunk, two workers can hold one chunk — the idempotent writes make it harmless, never the lease.',
+      'Per-row WebSocket events melt the gateway on a 10M-row job: throttle to per-second aggregates, use per-job channels, and let reconnecting clients rely on the snapshot, not a backlog of events.',
+      'Bounded queues per tenant are the fairness mechanism: without a cap on in-flight chunks per customer, one upload can saturate the entire worker pool even with separate lanes.',
+      'A job must never query another job\u2019s half-written data: stage rows per job and only publish results when the job completes, so readers see all-or-nothing.',
+    ],
+    followUps: [
+      { q: 'Why not process the whole file as one queue message?', a: 'One long-running message cannot parallelize, cannot be retried in parts, and redelivery restarts it from zero; queue item size limits and visibility timeouts make it worse — chunks are the unit of work for a reason.' },
+      { q: 'What makes a worker safe to run twice?', a: 'Idempotent effects, not exactly-once delivery: a natural key with ON CONFLICT DO NOTHING, chunk-scoped transactions, and progress derived from committed state — replaying a chunk or an event must be a measurable no-op.' },
+      { q: 'What happens if the WebSocket gateway dies mid-job?', a: 'Nothing durable: clients reconnect with backoff, re-fetch the snapshot endpoint, and resubscribe — gateways are stateless behind a load balancer, and pub/sub re-fans updates to whichever instance holds the new connection.' },
+      { q: 'Why Redis pub/sub and not the queue itself for progress?', a: 'Progress is ephemeral and lossy-by-design: Postgres holds the truth, so a lost progress event is a cosmetic delay, not a correctness bug. Reusing the durable queue for chatty progress would add retention and replay burden for data nobody needs to replay.' },
+      { q: 'How do you test a pipeline like this?', a: 'Chaos and invariants: kill workers mid-chunk and assert row counts and constraint violations; fire concurrent uploads from multiple tenants and assert fairness; replay every message twice and assert the outputs are bit-identical.' },
+    ],
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+  },
 ];
