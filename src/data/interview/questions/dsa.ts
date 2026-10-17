@@ -22,24 +22,17 @@ export const dsaQuestions: InterviewQuestion[] = [
         title: 'Brute force checks every pair',
         body: `Start with the honest solution so the improvement has something to beat. For each index i, scan every j greater than i and test whether nums[i] + nums[j] equals the target. The animation follows the loops on nums = [3, 2, 4, 3] with target 6: the first two probes miss, and the third finds 3 + 3. Every element is compared with every later element, so the work is (n-1) + (n-2) + ... + 1 = n(n-1)/2 comparisons, which is O(n²) time and O(1) extra space. On a ten-thousand-element array that is roughly fifty million additions, all to find a pair that a single organized pass could locate with ten thousand lookups. The brute force is the right baseline to say out loud: it proves you can solve the problem and isolates exactly what the faster solution must remove, namely the repeated rescanning.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `function twoSum(nums, target) {
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] + nums[j] === target) {
-        return [i, j];
-      }
-    }
-  }
-  return [];
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'host', icon: '🧑‍💼', label: 'Host' },
+            { id: 'cards', icon: '🃏', label: 'Cards: 3 2 4 3' },
+          ],
           frames: [
-            { id: 'f1', caption: 'i = 0, j = 1: 3 + 2 = 5 misses the target 6.', activeLines: [2, 3, 4], variables: [{ name: 'i', value: '0' }, { name: 'j', value: '1' }, { name: 'probe', value: '3 + 2 = 5' }, { name: 'comparisons', value: '1', changed: true }] },
-            { id: 'f2', caption: 'i = 0, j = 2: 3 + 4 = 7 also misses.', activeLines: [3, 4], variables: [{ name: 'i', value: '0' }, { name: 'j', value: '2' }, { name: 'probe', value: '3 + 4 = 7' }, { name: 'comparisons', value: '2', changed: true }] },
-            { id: 'f3', caption: 'i = 0, j = 3: 3 + 3 = 6 hits, so the pair is returned.', activeLines: [4, 5], variables: [{ name: 'i', value: '0' }, { name: 'j', value: '3' }, { name: 'probe', value: '3 + 3 = 6' }, { name: 'comparisons', value: '3', changed: true }], output: '[0, 3]' },
-            { id: 'f4', caption: 'A worst case keeps probing pairs that cannot match.', activeLines: [2, 3, 4], variables: [{ name: 'i', value: '...' }, { name: 'j', value: '...' }, { name: 'probe', value: 'no hit' }, { name: 'comparisons', value: 'n(n-1)/2', changed: true }] },
-            { id: 'f5', caption: 'The nested loops cost O(n²) time and O(1) extra space.', activeLines: [1, 9], variables: [{ name: 'time', value: 'O(n²)' }, { name: 'space', value: 'O(1)' }, { name: 'comparisons', value: 'n(n-1)/2' }] },
+            { id: 'f1', caption: 'Goal: find two cards that add up to 6. 🎯', shout: { text: 'MAKE SIX!', tone: 'info' }, cast: [{ id: 'host', state: 'working' }], tokens: [{ id: 'goal', icon: '🎯', label: 'sum = 6', at: 'host', effect: 'pop' }] },
+            { id: 'f2', caption: 'Try card 1 + card 2: 3 + 2 = 5. Miss! 🙅', shout: { text: '3 + 2 = 5', tone: 'info' }, cast: [{ id: 'cards', state: 'working' }], tokens: [{ id: 'p1', icon: '🃏', label: '3 + 2', at: 'host', effect: 'pop' }] },
+            { id: 'f3', caption: 'Try card 1 + card 3: 3 + 4 = 7. Miss again! 🙅', shout: { text: '3 + 4 = 7', tone: 'info' }, cast: [{ id: 'cards', state: 'working' }], tokens: [{ id: 'p2', icon: '🃏', label: '3 + 4', at: 'host', effect: 'pop' }] },
+            { id: 'f4', caption: 'Card 1 + card 4: 3 + 3 = 6. MATCH! 🎉', shout: { text: '3 + 3 = 6 ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'host', state: 'happy' }], tokens: [{ id: 'win', icon: '🎉', label: 'found it!', at: 'host', effect: 'pop' }] },
+            { id: 'f5', caption: 'But every pair needed a try — n×n tries as the pile grows. 😩', shout: { text: 'EVERY PAIR = SLOW', tone: 'bad' }, mood: 'bad', cast: [{ id: 'cards', state: 'crashed' }], tokens: [{ id: 'snail', icon: '🐌', label: 'n² tries', at: 'host', effect: 'pop' }] },
           ],
         },
       },
@@ -47,21 +40,18 @@ export const dsaQuestions: InterviewQuestion[] = [
         title: 'Ask for the complement',
         body: `Brute force asks whether any other element pairs with this one, and answering costs a full rescan. Flip the question: if nums[i] must pair with an already-seen element, that partner's value is determined, complement = target - nums[i]. So before processing index i, the only question that matters is whether the complement has been seen. A hash map keyed by value answers that in one lookup. The animation shows the invariant taking shape: after processing each index, the map contains every value from indices before i. For [3, 2, 4, 3] and target 6, index 0 needs a 3 and finds nothing; index 1 needs a 4 and finds nothing; index 2 needs a 2 and finds it stored from index 1. That is the whole trick: the pair is discovered from the second element's point of view, so the array is walked exactly once.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `// Invariant: after step i, seen holds nums[0..i] -> index.
-// At step i we need a value equal to target - nums[i].
-const complement = target - nums[i];
-if (seen.has(complement)) {
-  return [seen.get(complement), i];
-}
-// Otherwise store nums[i] so a later element can find it.
-seen.set(nums[i], i);`,
+          kind: 'story',
+          cast: [
+            { id: 'host', icon: '🧑‍💼', label: 'Host' },
+            { id: 'cards', icon: '🃏', label: 'Cards: 3 2 4 3' },
+            { id: 'shelf', icon: '🧤', label: 'Seen shelf' },
+          ],
           frames: [
-            { id: 'f1', caption: 'i = 0 needs 6 - 3 = 3, and nothing is stored yet.', activeLines: [3, 4], variables: [{ name: 'i', value: '0' }, { name: 'needed', value: '3' }, { name: 'seen', value: '{}' }] },
-            { id: 'f2', caption: 'Store 3 -> 0 so later elements can find a 3.', activeLines: [8], variables: [{ name: 'i', value: '0' }, { name: 'needed', value: '3' }, { name: 'seen', value: '{3: 0}', changed: true }] },
-            { id: 'f3', caption: 'i = 2 needs 6 - 4 = 2, and the map already holds 2 -> 1.', activeLines: [3, 4, 5], variables: [{ name: 'i', value: '2' }, { name: 'needed', value: '2' }, { name: 'seen', value: '{3: 0, 2: 1}', changed: true }], output: '[1, 2]' },
-            { id: 'f4', caption: 'The rescan is gone: each index is examined once.', activeLines: [1, 3, 8], variables: [{ name: 'time', value: 'O(n)' }, { name: 'seen', value: '{3: 0, 2: 1}' }] },
+            { id: 'f1', caption: 'Flip the question: “What partner would complete ME?” 🤔', shout: { text: 'ASK FOR THE PARTNER', tone: 'info' }, cast: [{ id: 'host', state: 'working' }], tokens: [{ id: 'flip', icon: '🔄', label: 'flipped', at: 'host', effect: 'pop' }] },
+            { id: 'f2', caption: 'Card 3 needs a 3. On the shelf? Not yet. ❌', shout: { text: 'NEED A 3…', tone: 'info' }, cast: [{ id: 'shelf', state: 'working' }], tokens: [{ id: 'need3', icon: '🔍', label: 'need 3', from: 'cards', to: 'shelf' }] },
+            { id: 'f3', caption: 'Card 2 needs a 4. On the shelf? No. ❌', shout: { text: 'NEED A 4…', tone: 'info' }, cast: [{ id: 'shelf', state: 'working' }], tokens: [{ id: 'need4', icon: '🔍', label: 'need 4', from: 'cards', to: 'shelf' }] },
+            { id: 'f4', caption: 'Card 4 needs a 2 — and a 2 is already on the shelf! ✅', shout: { text: 'NEED 2 → FOUND ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'host', state: 'happy' }], tokens: [{ id: 'found', icon: '🤝', label: '2 + 4 = 6', from: 'shelf', to: 'host' }] },
+            { id: 'f5', caption: 'One single walk through the cards, never twice. 🚶', shout: { text: 'ONE PASS', tone: 'good' }, mood: 'good', cast: [{ id: 'cards', state: 'done' }], tokens: [{ id: 'pass', icon: '🚶', label: 'walk once', at: 'cards', effect: 'pop' }] },
           ],
         },
       },
@@ -83,25 +73,17 @@ seen.set(nums[i], i);`,
 }`,
         },
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `function twoSum(nums, target) {
-  const seen = new Map();
-  for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i];
-    if (seen.has(complement)) {
-      return [seen.get(complement), i];
-    }
-    seen.set(nums[i], i);
-  }
-  return [];
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'guest', icon: '🧑', label: 'Cards walk in' },
+            { id: 'shelf', icon: '🧤', label: 'Seen shelf' },
+          ],
           frames: [
-            { id: 'f1', caption: 'i = 0: complement 3 is missing, so store 3 -> 0.', activeLines: [2, 3, 4, 5, 8], variables: [{ name: 'i', value: '0' }, { name: 'nums[i]', value: '3' }, { name: 'complement', value: '3' }, { name: 'seen', value: '{}' }] },
-            { id: 'f2', caption: 'i = 1: complement 4 is missing; the map now holds 2 -> 1 as well.', activeLines: [3, 4, 5, 8], variables: [{ name: 'i', value: '1' }, { name: 'nums[i]', value: '2' }, { name: 'complement', value: '4' }, { name: 'seen', value: '{3: 0, 2: 1}', changed: true }] },
-            { id: 'f3', caption: 'i = 2: complement 2 is in the map, so the pair is found.', activeLines: [5], variables: [{ name: 'i', value: '2' }, { name: 'nums[i]', value: '4' }, { name: 'complement', value: '2' }, { name: 'seen', value: '{3: 0, 2: 1}' }] },
-            { id: 'f4', caption: 'Return the stored index and the current index.', activeLines: [6], variables: [{ name: 'i', value: '2' }, { name: 'complement', value: '2' }, { name: 'result', value: '[1, 2]', changed: true }], output: '[1, 2]' },
-            { id: 'f5', caption: 'One evaluation per element: O(n) time bought with O(n) space.', activeLines: [2, 3, 8], variables: [{ name: 'time', value: 'O(n)' }, { name: 'space', value: 'O(n)' }, { name: 'result', value: '[1, 2]' }] },
+            { id: 'f1', caption: 'Card 3 arrives. Anyone need a 3? Check first, then store. 🧤', shout: { text: 'CHECK, THEN STORE', tone: 'info' }, cast: [{ id: 'guest', state: 'working' }], tokens: [{ id: 'c3', icon: '🎫', label: '3', from: 'guest', to: 'shelf' }] },
+            { id: 'f2', caption: 'Next card 2: needs a 4? Not on the shelf. Store it too. 📥', shout: { text: 'STORE 2', tone: 'info' }, cast: [{ id: 'shelf', state: 'working' }], tokens: [{ id: 'c2', icon: '🎫', label: '2', from: 'guest', to: 'shelf' }] },
+            { id: 'f3', caption: 'Card 4 arrives: needs a 2? YES — it is on the shelf! 🎯', shout: { text: 'MATCH! [1, 2] ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'shelf', state: 'done' }], tokens: [{ id: 'found', icon: '🎯', label: '2 + 4 = 6', at: 'shelf', effect: 'pop' }] },
+            { id: 'f4', caption: 'Order matters: check BEFORE storing, or a card finds itself. ⚠️', shout: { text: 'CHECK FIRST!', tone: 'info' }, cast: [{ id: 'guest', state: 'working' }], tokens: [{ id: 'order', icon: '⚠️', label: 'rule', at: 'guest', effect: 'pop' }] },
+            { id: 'f5', caption: 'One pass, one shelf, answer found. Done in a single walk. ✅', shout: { text: 'ONE WALK ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'guest', state: 'happy' }], tokens: [{ id: 'done', icon: '✅', label: 'O(n)', at: 'shelf', effect: 'pop' }] },
           ],
         },
       },
@@ -109,22 +91,17 @@ seen.set(nums[i], i);`,
         title: 'Why O(1) lookup pays',
         body: `A hash map is a time-for-space trade. The brute force spends O(1) memory and O(n²) time; the one-pass solution spends O(n) memory to buy O(1) average lookups. The map stores at most one entry per distinct value seen, so its footprint grows linearly with the input. Lookups are O(1) on average because a good hash function spreads keys across buckets; with many collisions, or a deliberately adversarial key set, operations can degrade toward O(n), which is why production hash maps randomize seeds to prevent hash-flooding attacks. Watch the animation: every insert lands in a bucket and every has/get probes that bucket instead of scanning the array. If memory were the tight constraint, sorting plus two pointers would give O(1) space at O(n log n) time. The trade is yours to defend, not a universal law.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `function twoSum(nums, target) {
-  const seen = new Map();               // O(n) extra space
-  for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i];
-    if (seen.has(complement)) return [seen.get(complement), i];
-    seen.set(nums[i], i);               // O(1) average insert
-  }
-  return [];
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'time', icon: '⏰', label: 'Time' },
+            { id: 'memory', icon: '👛', label: 'Memory' },
+          ],
           frames: [
-            { id: 'f1', caption: 'The map starts empty - we are buying speed with memory.', activeLines: [2], variables: [{ name: 'seenSize', value: '0' }, { name: 'space', value: 'O(n) reserved' }] },
-            { id: 'f2', caption: 'Each distinct value is inserted once: O(1) average, O(n) footprint.', activeLines: [6], variables: [{ name: 'seenSize', value: '1..n', changed: true }, { name: 'insert', value: 'O(1) average' }] },
-            { id: 'f3', caption: 'has and get probe one bucket instead of scanning the array.', activeLines: [5], variables: [{ name: 'lookup', value: 'O(1) average' }, { name: 'seenSize', value: '1..n' }] },
-            { id: 'f4', caption: 'Total: linear time bought with linear space; collisions are the caveat.', activeLines: [2, 5, 6], variables: [{ name: 'time', value: 'O(n) average' }, { name: 'space', value: 'O(n)' }, { name: 'worst', value: 'O(n) per op' }] },
+            { id: 'f1', caption: 'Speed costs a shelf: you buy fast lookups with memory. 🛒', shout: { text: 'SPEED COSTS MEMORY', tone: 'info' }, cast: [{ id: 'memory', state: 'working' }], tokens: [{ id: 'pay', icon: '🪙', label: 'pay here', at: 'memory', effect: 'pop' }] },
+            { id: 'f2', caption: 'The shelf grows one slot per new card. 📏', shout: { text: 'SHELF GROWS', tone: 'info' }, cast: [{ id: 'memory', state: 'working' }], tokens: [{ id: 'grow', icon: '📏', label: '1 per card', at: 'memory', effect: 'pop' }] },
+            { id: 'f3', caption: 'Lookups jump straight to the slot — no re-walking! ⚡', shout: { text: 'JUMP = FAST ⚡', tone: 'good' }, mood: 'good', cast: [{ id: 'time', state: 'happy' }], tokens: [{ id: 'jump', icon: '⚡', label: 'instant peek', at: 'time', effect: 'pop' }] },
+            { id: 'f4', caption: 'Bad luck with collisions? The shelf slows to a walk. 🐌', shout: { text: 'COLLISIONS SLOW IT', tone: 'bad' }, mood: 'bad', cast: [{ id: 'time', state: 'crashed' }], tokens: [{ id: 'snail', icon: '🐌', label: 'worst case', at: 'time', effect: 'pop' }] },
+            { id: 'f5', caption: 'Or sort the cards and use two hands: zero extra memory. ✋🤚', shout: { text: 'TWO HANDS, NO SHELF', tone: 'info' }, cast: [{ id: 'memory', state: 'idle', face: '😌' }], tokens: [{ id: 'hands', icon: '✋', label: 'small + big', at: 'memory', effect: 'pop' }] },
           ],
         },
       },
@@ -132,19 +109,18 @@ seen.set(nums[i], i);`,
         title: 'Duplicates and missing pairs',
         body: `Duplicate values are where candidates slip. With nums = [3, 3] and target 6, the correct output is [0, 1]. Check-then-insert handles it naturally: index 0 stores 3 -> 0, and index 1 finds the complement 3 at index 0 before it ever considers overwriting the entry. If you inserted first, index 0 would find itself and report [1, 1]. The map keeps only one index per value, so with many duplicates you get the most recent compatible partner, which is fine because the problem asks for any valid pair. Also decide what a missing pair returns: the standard contract returns an empty array, but some variants throw or guarantee exactly one answer, so state your assumption. Finally, complement arithmetic is safe with negative values and zeros, but fixed-width languages must watch for overflow when target - nums[i] crosses the integer bounds.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `// nums = [3, 3], target = 6
-const seen = new Map();
-// i = 0: complement 3 is absent, so store 3 -> 0.
-seen.set(3, 0);
-// i = 1: complement 3 is present at index 0.
-return [seen.get(3), 1]; // [0, 1] - never [1, 1]`,
+          kind: 'story',
+          cast: [
+            { id: 'first', icon: '🃏', label: 'First 3' },
+            { id: 'second', icon: '🃏', label: 'Second 3' },
+            { id: 'shelf', icon: '🧤', label: 'Seen shelf' },
+          ],
           frames: [
-            { id: 'f1', caption: 'i = 0: the complement 3 is absent and the map is empty.', activeLines: [1, 3], variables: [{ name: 'i', value: '0' }, { name: 'complement', value: '3' }, { name: 'seen', value: '{}' }] },
-            { id: 'f2', caption: 'Store 3 -> 0 before moving on.', activeLines: [4], variables: [{ name: 'i', value: '0' }, { name: 'complement', value: '3' }, { name: 'seen', value: '{3: 0}', changed: true }] },
-            { id: 'f3', caption: 'i = 1: the complement 3 is found at index 0.', activeLines: [5, 6], variables: [{ name: 'i', value: '1' }, { name: 'complement', value: '3' }, { name: 'seen', value: '{3: 0}' }], output: '[0, 1]' },
-            { id: 'f4', caption: 'Checking before inserting is what prevents returning the same index twice.', activeLines: [3, 5], variables: [{ name: 'ordering', value: 'check then insert' }, { name: 'result', value: '[0, 1]' }] },
+            { id: 'f1', caption: 'Twins! Two cards both say 3 — and the target is 6. 🎯', shout: { text: 'TWINS: 3 & 3', tone: 'info' }, cast: [{ id: 'first', state: 'working' }], tokens: [{ id: 'twin', icon: '🎯', label: '3 + 3 = 6', at: 'first', effect: 'pop' }] },
+            { id: 'f2', caption: 'The first 3 gets stored on the shelf. 📥', shout: { text: 'STORE THE FIRST', tone: 'info' }, cast: [{ id: 'shelf', state: 'working' }], tokens: [{ id: 'store', icon: '🎫', label: '3', from: 'first', to: 'shelf' }] },
+            { id: 'f3', caption: 'The second 3 checks first: finds the first — pair found! ✅', shout: { text: 'FOUND THE TWIN ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'second', state: 'happy' }], tokens: [{ id: 'match', icon: '✅', label: '[0, 1]', at: 'shelf', effect: 'pop' }] },
+            { id: 'f4', caption: 'Store first, check later? A card would match ITSELF. 🪞', shout: { text: 'NEVER SELF-MATCH!', tone: 'bad' }, mood: 'bad', cast: [{ id: 'shelf', state: 'crashed' }], tokens: [{ id: 'mirror', icon: '🪞', label: '[1, 1] ✗', at: 'shelf', effect: 'shake' }] },
+            { id: 'f5', caption: 'No pair at all? Hand back an empty basket. 🧺', shout: { text: 'NO PAIR → EMPTY', tone: 'info' }, cast: [{ id: 'first', state: 'idle' }], tokens: [{ id: 'basket', icon: '🧺', label: '[]', at: 'first', effect: 'pop' }] },
           ],
         },
       },
@@ -184,24 +160,18 @@ return [seen.get(3), 1]; // [0, 1] - never [1, 1]`,
         title: 'Naive search rechecks everything',
         body: `The naive algorithm slides the pattern one position at a time and compares characters from scratch at every alignment. When a partial match fails near the end, all of that matching work is thrown away and the text pointer is rewritten to the next start position. The animation runs pattern ABABAC against ABABAABABAC. At alignment 0 the first five characters match, then C fails against A, so alignment 1 restarts from scratch and immediately fails; alignment 2 matches three characters and fails again. The text positions around the failure were already examined, but the algorithm has no memory of what they contained. In the worst case - think pattern AAAAAB over a long run of A characters - each alignment compares almost m characters, giving O(n times m) character comparisons. The animation's comparison counter makes the repeated work visible: the same text characters are tested several times across adjacent alignments.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `function naiveSearch(text, pattern) {
-  for (let i = 0; i <= text.length - pattern.length; i++) {
-    let j = 0;
-    while (j < pattern.length && text[i + j] === pattern[j]) {
-      j++;
-    }
-    if (j === pattern.length) return i;
-  }
-  return -1;
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'reader', icon: '👀', label: 'Reader' },
+            { id: 'letter', icon: '📜', label: 'Long letter' },
+            { id: 'word', icon: '🧩', label: 'Word: ABABAC' },
+          ],
           frames: [
-            { id: 'f1', caption: 'Alignment i = 0 matches five characters: ABABA.', activeLines: [2, 3, 4], variables: [{ name: 'i', value: '0' }, { name: 'j', value: '5' }, { name: 'matched', value: 'ABABA' }, { name: 'comparisons', value: '5', changed: true }] },
-            { id: 'f2', caption: 'text[5] = A mismatches pattern[5] = C; the whole alignment dies.', activeLines: [4], variables: [{ name: 'i', value: '0' }, { name: 'j', value: '5' }, { name: 'compare', value: 'A vs C' }, { name: 'comparisons', value: '6', changed: true }] },
-            { id: 'f3', caption: 'Alignment 1 restarts from scratch and fails on the first character.', activeLines: [2], variables: [{ name: 'i', value: '1' }, { name: 'j', value: '0' }, { name: 'compare', value: 'B vs A' }, { name: 'comparisons', value: '7', changed: true }] },
-            { id: 'f4', caption: 'Alignment 4 rechecks characters the earlier attempt had already matched.', activeLines: [2, 3, 4], variables: [{ name: 'i', value: '4' }, { name: 'j', value: '1' }, { name: 'compare', value: 'A vs B' }, { name: 'comparisons', value: '14', changed: true }] },
-            { id: 'f5', caption: 'The match finally lands at index 5 after twenty comparisons.', activeLines: [7], variables: [{ name: 'i', value: '5' }, { name: 'j', value: '6' }, { name: 'matched', value: 'ABABAC' }, { name: 'comparisons', value: '20', changed: true }], output: '5' },
+            { id: 'f1', caption: 'Slide the word along the letter, comparing letter by letter. ➡️', shout: { text: 'SLIDE & CHECK', tone: 'info' }, cast: [{ id: 'word', state: 'working' }], tokens: [{ id: 'slide', icon: '➡️', label: 'one step', at: 'word', effect: 'pop' }] },
+            { id: 'f2', caption: 'Five letters match: A-B-A-B-A! 🎉', shout: { text: '5 MATCHED!', tone: 'good' }, mood: 'good', cast: [{ id: 'reader', state: 'working' }], tokens: [{ id: 'five', icon: '✅', label: 'ABABA', at: 'letter', effect: 'pop' }] },
+            { id: 'f3', caption: 'Then one letter fails: hoped for C, got A. 💥', shout: { text: 'MISMATCH!', tone: 'bad' }, mood: 'bad', cast: [{ id: 'letter', state: 'crashed' }], tokens: [{ id: 'boom', icon: '💥', label: 'C ≠ A', at: 'letter', effect: 'burst' }] },
+            { id: 'f4', caption: 'Restart the whole word from the very beginning — again. 🔁', shout: { text: 'RESTART. AGAIN.', tone: 'bad' }, mood: 'bad', cast: [{ id: 'reader', state: 'crashed' }], tokens: [{ id: 'restart', icon: '🔁', label: 'from zero', at: 'word', effect: 'shake' }] },
+            { id: 'f5', caption: 'Same letters, checked over and over — tortoise-slow. 🐌', shout: { text: 'RECHECKING IS SLOW', tone: 'bad' }, mood: 'bad', cast: [{ id: 'word', state: 'crashed' }], tokens: [{ id: 'snail', icon: '🐌', label: 'n×m checks', at: 'word', effect: 'pop' }] },
           ],
         },
       },
@@ -209,21 +179,17 @@ return [seen.get(3), 1]; // [0, 1] - never [1, 1]`,
         title: 'The prefix that is a suffix',
         body: `Define lps[i] as the length of the longest proper prefix of pattern[0..i] that is also a suffix of pattern[0..i]. Proper means strictly shorter than the substring itself, so lps describes an overlap you can reuse rather than the whole match. For ABABA the longest such overlap is ABA, length 3; for ABAB it is AB, length 2; for a fresh character with no overlap it is 0. The table exists because of a fact about mismatches: when you have just matched j characters, the text you consumed ends with pattern[0..j-1]. If the next character breaks the match, any alignment that could still succeed must start inside that window, and the longest prefix that is also a suffix is exactly the largest chunk of progress that survives. The animation highlights those overlapping chunks - the same characters serving as both prefix and suffix - before the next step turns them into table entries.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `// lps[i] = longest proper prefix of pattern[0..i]
-//          that is also a suffix of pattern[0..i].
-const pattern = 'ABABAC';
-// A  B  A  B  A  C   pattern prefix
-// A  B  A  B  A  C   text consumed so far
-// 0  0  1  2  3  0   lps
-const fallback = lps[4]; // 3 - the suffix "ABA" is already matched`,
+          kind: 'story',
+          cast: [
+            { id: 'word', icon: '🧩', label: 'Word ABABA' },
+            { id: 'mirror', icon: '🪞', label: 'Head ↔ Tail' },
+          ],
           frames: [
-            { id: 'f1', caption: 'For the window A the longest proper prefix-suffix is empty - length 0.', activeLines: [1, 2, 4, 5, 6], variables: [{ name: 'window', value: 'A' }, { name: 'overlap', value: 'none' }, { name: 'lps', value: '[0]' }] },
-            { id: 'f2', caption: 'For AB the overlap is still empty - length 0.', activeLines: [1, 2, 4, 5, 6], variables: [{ name: 'window', value: 'AB' }, { name: 'overlap', value: 'none' }, { name: 'lps', value: '[0, 0]' }] },
-            { id: 'f3', caption: 'For ABA the prefix A equals the suffix A - length 1.', activeLines: [1, 2, 4, 5, 6], variables: [{ name: 'window', value: 'ABA' }, { name: 'overlap', value: 'A' }, { name: 'lps', value: '[0, 0, 1]' }] },
-            { id: 'f4', caption: 'For ABAB the overlap grows to AB - length 2.', activeLines: [1, 2, 4, 5, 6], variables: [{ name: 'window', value: 'ABAB' }, { name: 'overlap', value: 'AB' }, { name: 'lps', value: '[0, 0, 1, 2]' }] },
-            { id: 'f5', caption: 'lps[4] = 3: after matching the full ABABA, ABA is already aligned again.', activeLines: [7], variables: [{ name: 'window', value: 'ABABA' }, { name: 'overlap', value: 'ABA' }, { name: 'lps', value: '[0, 0, 1, 2, 3]' }] },
+            { id: 'f1', caption: 'Look closely at the matched word: A-B-A-B-A. 🔍', shout: { text: 'LOOK AT THE WORD', tone: 'info' }, cast: [{ id: 'word', state: 'working' }], tokens: [{ id: 'word', icon: '🧩', label: 'ABABA', at: 'word', effect: 'pop' }] },
+            { id: 'f2', caption: 'Its HEAD “ABA” also fits its TAIL “ABA”! 🪞', shout: { text: 'HEAD FITS TAIL!', tone: 'good' }, mood: 'good', cast: [{ id: 'mirror', state: 'working' }], tokens: [{ id: 'fit', icon: '🪞', label: 'ABA = ABA', at: 'mirror', effect: 'pop' }] },
+            { id: 'f3', caption: 'That means three letters are already right — keep them! 3️⃣', shout: { text: 'KEEP 3 LETTERS', tone: 'good' }, mood: 'good', cast: [{ id: 'word', state: 'done' }], tokens: [{ id: 'keep', icon: '3️⃣', label: 'saved work', at: 'word', effect: 'pop' }] },
+            { id: 'f4', caption: 'No need to ever restart from zero! 🎉', shout: { text: 'NO FULL RESTART', tone: 'good' }, mood: 'good', cast: [{ id: 'mirror', state: 'happy' }], tokens: [{ id: 'party', icon: '🎉', label: 'skip ahead', at: 'mirror', effect: 'pop' }] },
+            { id: 'f5', caption: 'Write all the overlaps into a cheat table: 0,0,1,2,3,0. 📋', shout: { text: 'CHEAT TABLE (LPS)', tone: 'info' }, cast: [{ id: 'word', state: 'happy' }], tokens: [{ id: 'table', icon: '📋', label: '0 0 1 2 3 0', at: 'word', effect: 'pop' }] },
           ],
         },
       },
@@ -231,31 +197,18 @@ const fallback = lps[4]; // 3 - the suffix "ABA" is already matched`,
         title: 'Build the LPS table',
         body: `The construction code is a tiny matching problem against the pattern itself. Keep a candidate length len and a scan index i, both starting small. If pattern[i] extends the current candidate, the overlap grows: increment len, write lps[i], advance i. On a mismatch, do not reset len to zero - that is the whole subtlety. Instead fall back to lps[len-1], the longest overlap that still fits, and retry the same i. Only when len is zero do you write zero and advance. The animation builds the table for ABABAC: three matches grow run lengths 1, 2, then 3; the final C mismatches and triggers two fallbacks, 3 to 1 to 0, before recording lps[5] = 0. Each index either advances i or shrinks len, and len never exceeds i, so the total work is linear in the pattern length.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `function buildLps(pattern) {
-  const lps = new Array(pattern.length).fill(0);
-  let len = 0;
-  for (let i = 1; i < pattern.length; ) {
-    if (pattern[i] === pattern[len]) {
-      lps[i] = ++len;
-      i++;
-    } else if (len > 0) {
-      len = lps[len - 1];
-    } else {
-      lps[i] = 0;
-      i++;
-    }
-  }
-  return lps;
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'student', icon: '🧑‍🎓', label: 'The word' },
+            { id: 'tablet', icon: '📋', label: 'Cheat sheet' },
+          ],
           frames: [
-            { id: 'f1', caption: 'i = 1: B does not extend the empty candidate, so lps[1] = 0.', activeLines: [4, 5, 8, 10, 11, 12], variables: [{ name: 'i', value: '1' }, { name: 'len', value: '0' }, { name: 'lps', value: '[0, 0, 0, 0, 0, 0]' }, { name: 'compare', value: 'B vs A' }] },
-            { id: 'f2', caption: 'i = 2: A matches pattern[0], so len becomes 1 and lps[2] = 1.', activeLines: [5, 6, 7], variables: [{ name: 'i', value: '2' }, { name: 'len', value: '1', changed: true }, { name: 'lps', value: '[0, 0, 1, 0, 0, 0]', changed: true }, { name: 'compare', value: 'A vs A' }] },
-            { id: 'f3', caption: 'i = 3: B matches pattern[1], so the candidate grows to 2.', activeLines: [5, 6, 7], variables: [{ name: 'i', value: '3' }, { name: 'len', value: '2', changed: true }, { name: 'lps', value: '[0, 0, 1, 2, 0, 0]', changed: true }, { name: 'compare', value: 'B vs B' }] },
-            { id: 'f4', caption: 'i = 4: A matches pattern[2]; lps[4] = 3 is the longest overlap so far.', activeLines: [5, 6, 7], variables: [{ name: 'i', value: '4' }, { name: 'len', value: '3', changed: true }, { name: 'lps', value: '[0, 0, 1, 2, 3, 0]', changed: true }, { name: 'compare', value: 'A vs A' }] },
-            { id: 'f5', caption: 'i = 5: C mismatches pattern[3], so fall back to lps[2] = 1.', activeLines: [5, 8, 9], variables: [{ name: 'i', value: '5' }, { name: 'len', value: '1', changed: true }, { name: 'lps', value: '[0, 0, 1, 2, 3, 0]' }, { name: 'compare', value: 'C vs B' }] },
-            { id: 'f6', caption: 'The fallback shrinks to 0, lps[5] is written, and the table is done.', activeLines: [5, 8, 9, 10, 11, 12], variables: [{ name: 'i', value: '6' }, { name: 'len', value: '0', changed: true }, { name: 'lps', value: '[0, 0, 1, 2, 3, 0]' }, { name: 'compare', value: 'C vs A' }] },
+            { id: 'f1', caption: 'The word studies itself, letter by letter. 🔍', shout: { text: 'SELF STUDY', tone: 'info' }, cast: [{ id: 'student', state: 'working' }], tokens: [{ id: 'study', icon: '🔍', label: 'ABABAC', at: 'student', effect: 'pop' }] },
+            { id: 'f2', caption: '“A” alone → overlap 0. “AB” → still 0. 🔢', shout: { text: 'A:0  AB:0', tone: 'info' }, cast: [{ id: 'tablet', state: 'working' }], tokens: [{ id: 'zeros', icon: '0️⃣', label: 'nothing yet', at: 'tablet', effect: 'pop' }] },
+            { id: 'f3', caption: '“ABA” → “A” fits! 1. “ABAB” → “AB” fits! 2. 📈', shout: { text: 'IT GROWS: 1, 2…', tone: 'good' }, mood: 'good', cast: [{ id: 'student', state: 'working' }], tokens: [{ id: 'grow', icon: '📈', label: 'overlap up', at: 'tablet', effect: 'pop' }] },
+            { id: 'f4', caption: '“ABABA” → “ABA” fits! The best so far: 3. 3️⃣', shout: { text: 'BEST YET: 3', tone: 'good' }, mood: 'good', cast: [{ id: 'tablet', state: 'done' }], tokens: [{ id: 'three', icon: '3️⃣', label: 'keep 3', at: 'tablet', effect: 'pop' }] },
+            { id: 'f5', caption: 'Then “C” fails — the overlap shrinks step by step: 3 → 1 → 0. 📉', shout: { text: 'SHRINK, DON’T STOP', tone: 'info' }, cast: [{ id: 'student', state: 'working' }], tokens: [{ id: 'shrink', icon: '📉', label: 'fall back', at: 'student', effect: 'pop' }] },
+            { id: 'f6', caption: 'Table finished: 0, 0, 1, 2, 3, 0. Ready to match! ✅', shout: { text: 'TABLE READY ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'tablet', state: 'happy' }], tokens: [{ id: 'ready', icon: '✅', label: '0 0 1 2 3 0', at: 'tablet', effect: 'pop' }] },
           ],
         },
       },
@@ -263,31 +216,18 @@ const fallback = lps[4]; // 3 - the suffix "ABA" is already matched`,
         title: 'Match without moving backwards',
         body: `The search loop keeps one text pointer i and one pattern pointer j. On a character match both advance; when j reaches the pattern length, the match starts at i - j. On a mismatch the algorithm consults the table: if j is greater than zero, set j = lps[j - 1] and retry the same i; only when j is zero does i advance. That is the invariant that makes KMP linear - i is monotone, so the text is read once. The animation follows ABABAABABAC against ABABAC. At i = 5 the text has matched ABABA and fails on C; j falls back 5 to 3 to 1 to 0, and only then does i move to 6, where a fresh run matches all the way to i = 10 and returns 5. Notice the mismatch chain repeats a decision the naive algorithm would redo from scratch at several alignments.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `function kmpSearch(text, pattern, lps) {
-  let i = 0;
-  let j = 0;
-  while (i < text.length) {
-    if (text[i] === pattern[j]) {
-      i++;
-      j++;
-      if (j === pattern.length) return i - j;
-    } else if (j > 0) {
-      j = lps[j - 1];
-    } else {
-      i++;
-    }
-  }
-  return -1;
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'reader', icon: '🚶', label: 'The reader' },
+            { id: 'tablet', icon: '📋', label: 'Cheat sheet' },
+            { id: 'letter', icon: '📜', label: 'The letter' },
+          ],
           frames: [
-            { id: 'f1', caption: 'i = 5, j = 5: text and pattern agree on ABABA.', activeLines: [4, 5, 6, 7], variables: [{ name: 'i', value: '5' }, { name: 'j', value: '5' }, { name: 'matched', value: 'ABABA' }, { name: 'i moves back?', value: 'no' }] },
-            { id: 'f2', caption: 'text[5] = A mismatches pattern[5] = C; j is positive, so fall back.', activeLines: [5, 9], variables: [{ name: 'i', value: '5' }, { name: 'j', value: '5' }, { name: 'compare', value: 'A vs C' }, { name: 'i moves back?', value: 'no' }] },
-            { id: 'f3', caption: 'j = lps[4] = 3: the matched suffix ABA is reused without touching i.', activeLines: [10], variables: [{ name: 'i', value: '5' }, { name: 'j', value: '3', changed: true }, { name: 'compare', value: 'A vs B' }, { name: 'fallback', value: 'lps[4] = 3' }] },
-            { id: 'f4', caption: 'Two more fallbacks shrink j to 0; i is still 5.', activeLines: [5, 9, 10], variables: [{ name: 'i', value: '5' }, { name: 'j', value: '0', changed: true }, { name: 'compare', value: 'A vs B' }, { name: 'fallback', value: 'lps[0] = 0' }] },
-            { id: 'f5', caption: 'With j = 0 the mismatch is absorbed by advancing i; A matches pattern[0].', activeLines: [5, 6, 7], variables: [{ name: 'i', value: '6', changed: true }, { name: 'j', value: '1', changed: true }, { name: 'matched', value: 'A' }, { name: 'i moves back?', value: 'no' }] },
-            { id: 'f6', caption: 'The run continues through C; j reaches 6 and the match starts at i - j = 5.', activeLines: [5, 6, 7, 8], variables: [{ name: 'i', value: '11' }, { name: 'j', value: '6', changed: true }, { name: 'matched', value: 'ABABAC' }, { name: 'result', value: '5' }], output: '5' },
+            { id: 'f1', caption: 'Mismatch at “C” — but the reader does NOT walk backwards. 🚶', shout: { text: 'NEVER GO BACK', tone: 'info' }, cast: [{ id: 'reader', state: 'working' }], tokens: [{ id: 'stop', icon: '✋', label: 'stay put', at: 'letter', effect: 'pop' }] },
+            { id: 'f2', caption: 'The cheat sheet says: skip ahead to letter 3. 📋', shout: { text: 'TABLE SAYS: 3', tone: 'info' }, cast: [{ id: 'tablet', state: 'working' }], tokens: [{ id: 'skip', icon: '⏭️', label: 'skip to 3', at: 'tablet', effect: 'pop' }] },
+            { id: 'f3', caption: 'Those three letters were already checked — they stay! ✅✅✅', shout: { text: 'KEEP THE 3', tone: 'good' }, mood: 'good', cast: [{ id: 'reader', state: 'working' }], tokens: [{ id: 'keep', icon: '✅', label: 'still counted', at: 'reader', effect: 'pop' }] },
+            { id: 'f4', caption: 'A-B-A-B-A-C — found it at last! 🎯', shout: { text: 'FOUND IT!', tone: 'good' }, mood: 'good', cast: [{ id: 'letter', state: 'done' }], tokens: [{ id: 'found', icon: '🎯', label: 'position 5', at: 'letter', effect: 'pop' }] },
+            { id: 'f5', caption: 'The reader walked forward just once — fast like a hare. 🐇', shout: { text: 'ONE FORWARD WALK ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'reader', state: 'happy' }], tokens: [{ id: 'hare', icon: '🐇', label: 'no rewinding', at: 'reader', effect: 'pop' }] },
           ],
         },
       },
@@ -295,21 +235,18 @@ const fallback = lps[4]; // 3 - the suffix "ABA" is already matched`,
         title: 'Why the fallback is correct',
         body: `The failure function is correct because of what the failed attempt leaves behind. When text[i] mismatches with j matched characters, the text's last j characters already equal pattern[0..j-1] - that is guaranteed by the loop's own history, not by an assumption. A shift of k requires the pattern's first j−k characters to equal its last j−k characters — i.e. a border of length j−k. The longest border length is lps[j-1], so the smallest valid shift is j − lps[j-1] — no alignment is skipped — which is exactly j ← lps[j-1], the alignment that keeps the longest still-possible overlap and discards only alignments that cannot match. The animation makes the chain concrete: the window ABABA has the suffix ABA equal to the prefix ABA, so after falling back the A that ended the window is already covered again. Every fallback is like that, which is why KMP never misses a match - and why the text pointer never rewinds.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `// After matching j characters, the consumed text ends with pattern[0..j-1].
-// A shift of k requires the pattern's first j-k characters to equal
-// its last j-k characters: a border of length j-k.
-// The longest border is lps[j-1], so the smallest valid shift is
-// j - lps[j-1] (no alignment is skipped), which is exactly j = lps[j-1].
-j = lps[j - 1];
-// The text pointer i is untouched: the window already validated these chars.`,
+          kind: 'story',
+          cast: [
+            { id: 'detective', icon: '🕵️', label: 'Detective' },
+            { id: 'window', icon: '🪟', label: 'Matched window ABABA' },
+            { id: 'trash', icon: '🗑️', label: 'Skipped starts' },
+          ],
           frames: [
-            { id: 'f1', caption: 'Matched window ABABA: the suffix ABA equals the prefix ABA.', activeLines: [1, 2, 3], variables: [{ name: 'matched', value: 'ABABA' }, { name: 'overlap', value: 'ABA' }, { name: 'lps[j-1]', value: '3' }] },
-            { id: 'f2', caption: 'Setting j = 3 keeps the three overlap characters matched.', activeLines: [5, 6], variables: [{ name: 'matched', value: 'ABABA' }, { name: 'overlap', value: 'ABA' }, { name: 'j', value: '5 -> 3', changed: true }] },
-            { id: 'f3', caption: 'The next comparison resumes at pattern[3] instead of pattern[0].', activeLines: [3, 6], variables: [{ name: 'j', value: '3' }, { name: 'i', value: 'untouched' }, { name: 'compare', value: 'against pattern[3]' }] },
-            { id: 'f4', caption: 'If that fails too, the next fallback is the longest remaining overlap.', activeLines: [5, 6], variables: [{ name: 'matched', value: 'ABA' }, { name: 'overlap', value: 'A' }, { name: 'j', value: '3 -> 1', changed: true }] },
-            { id: 'f5', caption: 'Every fallback only removes alignments that cannot match, so none are missed.', activeLines: [5, 6, 7], variables: [{ name: 'i', value: 'never decreases' }, { name: 'total time', value: 'O(n + m)' }, { name: 'skips', value: '0 matches lost' }] },
+            { id: 'f1', caption: 'Why is skipping safe? No hidden match gets lost. 🕵️', shout: { text: 'PROVE SAFE', tone: 'info' }, cast: [{ id: 'detective', state: 'working' }], tokens: [{ id: 'case', icon: '🕵️', label: 'investigate', at: 'detective', effect: 'pop' }] },
+            { id: 'f2', caption: 'The kept letters were just checked — they cannot be wrong. ✅', shout: { text: 'JUST-CHECKED ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'window', state: 'done' }], tokens: [{ id: 'proof', icon: '✅', label: 'ABA re-verified', at: 'window', effect: 'pop' }] },
+            { id: 'f3', caption: 'Any skipped start would need an even longer overlap — impossible! 🚫', shout: { text: 'BIGGER OVERLAP? NO', tone: 'info' }, cast: [{ id: 'detective', state: 'working' }], tokens: [{ id: 'impossible', icon: '🚫', label: 'no longer fit', at: 'window', effect: 'pop' }] },
+            { id: 'f4', caption: 'So each skip drops only starts that could never match. 🗑️', shout: { text: 'ONLY DROP LOSERS', tone: 'info' }, cast: [{ id: 'trash', state: 'done' }], tokens: [{ id: 'waste', icon: '🗑️', label: 'safe skips', at: 'trash', effect: 'pop' }] },
+            { id: 'f5', caption: 'Result: the text is read once — the fastest possible. 🏁', shout: { text: 'ONE READ, FAST ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'detective', state: 'happy' }], tokens: [{ id: 'flag', icon: '🏁', label: 'O(n + m)', at: 'detective', effect: 'pop' }] },
           ],
         },
       },
@@ -349,22 +286,16 @@ j = lps[j - 1];
         title: 'One structure cannot do both',
         body: `Start by ruling out the obvious single structures. An array gives O(1) access by index, but a cache is keyed by arbitrary keys, so a get first has to find the key with a linear scan; even after that, removing an item from the middle shifts every later element, which is O(n) again. A plain object or dictionary gives O(1) keyed access, but it offers no supported move-to-front operation: deleting and re-adding a key is engine-dependent, integer-like keys iterate in numeric order rather than recency order, and nothing in the contract promises that iteration reflects access time. The animation shows each candidate operation and its cost: indexOf to locate, splice to unlink, unshift to promote. The pattern that emerges is the hint: one structure is good at lookup by key, another at reordering by position. Use one for each job and let node references connect them.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `// Naive: recency tracked in an array, MRU at index 0.
-const order = ['c', 'b', 'a']; // most recent first
-function get(key) {
-  const i = order.indexOf(key); // O(n) scan
-  if (i === -1) return -1;
-  order.splice(i, 1);           // O(n) shift left
-  order.unshift(key);           // O(n) shift right
-  return store.get(key);
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'shelf', icon: '🗂️', label: 'Plain shelf' },
+            { id: 'searcher', icon: '🔍', label: 'Cloakroom helper' },
+          ],
           frames: [
-            { id: 'f1', caption: "get('a') scans the array from the front; the key sits at index 2.", activeLines: [3, 4], variables: [{ name: 'order', value: "[c, b, a]" }, { name: 'key', value: 'a' }, { name: 'scan', value: '3 comparisons' }] },
-            { id: 'f2', caption: 'splice(2, 1) removes the key and shifts every later element left.', activeLines: [6], variables: [{ name: 'order', value: '[c, b]' }, { name: 'cost', value: 'O(n)', changed: true }] },
-            { id: 'f3', caption: 'unshift puts it back at the front and shifts everything right.', activeLines: [7], variables: [{ name: 'order', value: '[a, c, b]' }, { name: 'cost', value: 'O(n)' }] },
-            { id: 'f4', caption: 'Three linear steps for one get; a plain object has no recency contract at all.', activeLines: [1, 4, 6, 7], variables: [{ name: 'get', value: 'O(n)' }, { name: 'reorder', value: 'O(n)' }, { name: 'map alone', value: 'no order API' }] },
+            { id: 'f1', caption: 'The coats sit in one plain row — no labels, no order rules. 🗂️', shout: { text: 'PLAIN SHELF', tone: 'info' }, cast: [{ id: 'shelf', state: 'working' }], tokens: [{ id: 'coats', icon: '🧥', label: 'c b a', at: 'shelf', effect: 'pop' }] },
+            { id: 'f2', caption: 'Looking up coat “a” means scanning the whole row. 🚶', shout: { text: 'SCAN, SCAN, SCAN…', tone: 'bad' }, mood: 'bad', cast: [{ id: 'searcher', state: 'working' }], tokens: [{ id: 'scan', icon: '🔍', label: 'check, check…', from: 'searcher', to: 'shelf' }] },
+            { id: 'f3', caption: 'Pulling one coat out shifts every other coat over. 😩', shout: { text: 'EVERYTHING SHIFTS!', tone: 'bad' }, mood: 'bad', cast: [{ id: 'shelf', state: 'crashed' }], tokens: [{ id: 'shift', icon: '↔️', label: 'O(n) moves', at: 'shelf', effect: 'shake' }] },
+            { id: 'f4', caption: 'One structure cannot be both: finder AND order-keeper. 🤷', shout: { text: 'NEED BOTH JOBS!', tone: 'info' }, cast: [{ id: 'searcher', state: 'idle', face: '🤔' }], tokens: [{ id: 'think', icon: '🤔', label: 'two jobs', at: 'searcher', effect: 'pop' }] },
           ],
         },
       },
@@ -372,20 +303,17 @@ function get(key) {
         title: 'Hash map plus linked list',
         body: `The design splits responsibilities. A hash map stores key to node references, so lookup never scans - the map jumps straight to the node object. A doubly linked list stores recency, from the most recently used node at one end to the least recently used at the other, and because every node knows both neighbors, unlinking it and re-inserting it at the front are constant-time pointer updates. Two sentinel nodes, a dummy head and a dummy tail, bracket the list: head.next is always the MRU node and tail.prev is always the LRU node, so removing or inserting never special-cases an empty list. The animation lays out the wiring: map entries point at list nodes, nodes point at each other, and the two sentinels close the ends. Every operation now has a direct handle on the exact node it must move, which is the property neither structure has alone.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `// map: key -> node            O(1) node lookup
-// list: head <-> ... <-> tail O(1) unlink and re-insert
-this.map = new Map();
-this.head = { key: null, value: null, prev: null, next: null };
-this.tail = { key: null, value: null, prev: null, next: null };
-this.head.next = this.tail; // sentinels delete null checks
-this.tail.prev = this.head;`,
+          kind: 'story',
+          cast: [
+            { id: 'finder', icon: '🗺️', label: 'Name index (map)' },
+            { id: 'rope', icon: '🔗', label: 'Rope of coats' },
+            { id: 'hooks', icon: '🪝', label: 'End hooks' },
+          ],
           frames: [
-            { id: 'f1', caption: 'The map owns key lookup; the list owns recency order.', activeLines: [1, 2], variables: [{ name: 'map', value: 'key -> node' }, { name: 'list', value: 'head <-> ... <-> tail' }] },
-            { id: 'f2', caption: 'Only node references live in the map - no data is duplicated.', activeLines: [3], variables: [{ name: 'map', value: '{}' }, { name: 'nodes', value: '0' }] },
-            { id: 'f3', caption: 'Two sentinel nodes bracket the list so the ends need no null checks.', activeLines: [4, 5, 6, 7], variables: [{ name: 'head', value: 'dummy' }, { name: 'tail', value: 'dummy' }] },
-            { id: 'f4', caption: 'Invariant: head.next is the MRU node and tail.prev is the LRU node.', activeLines: [6, 7], variables: [{ name: 'MRU', value: 'head.next' }, { name: 'LRU', value: 'tail.prev' }] },
+            { id: 'f1', caption: 'Job one: the name index finds any coat instantly. 🗺️', shout: { text: 'INSTANT FIND', tone: 'info' }, cast: [{ id: 'finder', state: 'working' }], tokens: [{ id: 'find', icon: '⚡', label: 'no scanning', at: 'finder', effect: 'pop' }] },
+            { id: 'f2', caption: 'Job two: the rope keeps the coats in “last used” order. 🔗', shout: { text: 'ROPE KEEPS ORDER', tone: 'info' }, cast: [{ id: 'rope', state: 'working' }], tokens: [{ id: 'order', icon: '🔗', label: 'front = newest', at: 'rope', effect: 'pop' }] },
+            { id: 'f3', caption: 'Two end hooks make the rope easier to grab. 🪝', shout: { text: 'END HOOKS', tone: 'info' }, cast: [{ id: 'hooks', state: 'done' }], tokens: [{ id: 'hook', icon: '🪝', label: 'no special cases', at: 'hooks', effect: 'pop' }] },
+            { id: 'f4', caption: 'Newest coat at the front, oldest at the back. ✅', shout: { text: 'FRONT = NEW, BACK = OLD', tone: 'good' }, mood: 'good', cast: [{ id: 'rope', state: 'done' }], tokens: [{ id: 'ready', icon: '✅', label: 'the rule', at: 'rope', effect: 'pop' }] },
           ],
         },
       },
@@ -393,62 +321,16 @@ this.tail.prev = this.head;`,
         title: 'A get promotes a node',
         body: `A get does three things in constant time: look up the node in the map, unlink it from its current position, and insert it right after the dummy head. The animation warms the cache to c <-> b <-> a, with c most recent and a the next eviction victim, then calls get on a. The map finds a's node immediately; remove rewires a's neighbors to point at each other, splicing the node out; addFront reattaches it between the head sentinel and the previous first node. The return value comes from the node, not from a re-read of any structure. Unlink and insert have to happen before returning, because recency is part of the contract: a hit widens the gap between the touched node and eviction, while a miss returns -1 and touches nothing, so failed lookups cannot reshape the list.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `class LRUCache {
-  constructor(capacity) {
-    this.capacity = capacity;
-    this.map = new Map();
-    this.head = { key: null, value: null, prev: null, next: null };
-    this.tail = { key: null, value: null, prev: null, next: null };
-    this.head.next = this.tail;
-    this.tail.prev = this.head;
-  }
-
-  get(key) {
-    if (!this.map.has(key)) return -1;
-    const node = this.map.get(key);
-    this.remove(node);
-    this.addFront(node);
-    return node.value;
-  }
-
-  put(key, value) {
-    if (this.map.has(key)) {
-      const node = this.map.get(key);
-      node.value = value;
-      this.remove(node);
-      this.addFront(node);
-      return;
-    }
-    if (this.map.size === this.capacity) {
-      const lru = this.tail.prev;
-      this.remove(lru);
-      this.map.delete(lru.key);
-    }
-    const node = { key, value, prev: null, next: null };
-    this.addFront(node);
-    this.map.set(key, node);
-  }
-
-  remove(node) {
-    node.prev.next = node.next;
-    node.next.prev = node.prev;
-  }
-
-  addFront(node) {
-    node.next = this.head.next;
-    node.prev = this.head;
-    this.head.next.prev = node;
-    this.head.next = node;
-  }
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'you', icon: '👤', label: 'You' },
+            { id: 'rope', icon: '🔗', label: 'Rope: c b a' },
+          ],
           frames: [
-            { id: 'f1', caption: "get('a') finds the node in the map without walking the list.", activeLines: [12, 13], variables: [{ name: 'key', value: 'a' }, { name: 'map', value: '{a, b, c}' }, { name: 'list', value: 'c <-> b <-> a' }] },
-            { id: 'f2', caption: 'remove(a) splices the node out; its neighbors now point at each other.', activeLines: [14, 38, 39], variables: [{ name: 'list', value: 'c <-> b' }, { name: 'node', value: 'a unlinked', changed: true }] },
-            { id: 'f3', caption: 'addFront(a) inserts it between the head sentinel and c.', activeLines: [15, 43, 44, 45, 46], variables: [{ name: 'list', value: 'a <-> c <-> b', changed: true }, { name: 'MRU', value: 'a' }] },
-            { id: 'f4', caption: 'get returns the value; a is now the most recently used key.', activeLines: [16], variables: [{ name: 'return', value: 'a.value' }, { name: 'MRU', value: 'a' }, { name: 'LRU', value: 'b' }], output: 'a.value' },
-            { id: 'f5', caption: 'All of it was pointer work: O(1) regardless of cache size.', activeLines: [12, 14, 15, 16], variables: [{ name: 'get', value: 'O(1)' }, { name: 'pointers touched', value: '6 writes' }] },
+            { id: 'f1', caption: 'You ask for coat “a” by name. 🎫', shout: { text: 'GET “a”', tone: 'info' }, cast: [{ id: 'you', state: 'working' }], tokens: [{ id: 'ask', icon: '🎫', label: 'coat a', at: 'you', effect: 'pop' }] },
+            { id: 'f2', caption: 'The index finds it instantly — no walking the rope. ⚡', shout: { text: 'INSTANT LOOKUP', tone: 'good' }, mood: 'good', cast: [{ id: 'rope', state: 'working' }], tokens: [{ id: 'grab', icon: '🤏', label: 'found!', from: 'rope', to: 'you' }] },
+            { id: 'f3', caption: 'You wore it — so it moves to the FRONT of the rope. 🔗', shout: { text: 'TO THE FRONT!', tone: 'info' }, cast: [{ id: 'rope', state: 'working' }], tokens: [{ id: 'move', icon: '🔗', label: 'a first now', at: 'rope', effect: 'pop' }] },
+            { id: 'f4', caption: 'New order: a, c, b. The order changed, nothing was scanned. ✅', shout: { text: 'O(1) REORDER ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'rope', state: 'done' }], tokens: [{ id: 'neworder', icon: '✅', label: 'a c b', at: 'rope', effect: 'pop' }] },
           ],
         },
       },
@@ -456,63 +338,18 @@ this.tail.prev = this.head;`,
         title: 'Put inserts and evicts',
         body: `A put has two cases. If the key already exists, update the value and promote the node exactly like a get - no eviction, because the cache size did not change. If the key is new and the cache is at capacity, there is no room, so the least recently used node must leave first: it is exactly tail.prev, the sentinel's neighbor. The animation starts with capacity 3 and a full list b <-> c <-> a, then writes put(d, 4). The size check fires, the LRU node a is unlinked and its key is deleted from the map, and a fresh node is allocated, linked after the head, and registered in the map. Doing the eviction before the insertion is what keeps the cache from ever exceeding capacity, and using the tail sentinel means the victim costs no traversal - the structure already points at it.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `class LRUCache {
-  constructor(capacity) {
-    this.capacity = capacity;
-    this.map = new Map();
-    this.head = { key: null, value: null, prev: null, next: null };
-    this.tail = { key: null, value: null, prev: null, next: null };
-    this.head.next = this.tail;
-    this.tail.prev = this.head;
-  }
-
-  get(key) {
-    if (!this.map.has(key)) return -1;
-    const node = this.map.get(key);
-    this.remove(node);
-    this.addFront(node);
-    return node.value;
-  }
-
-  put(key, value) {
-    if (this.map.has(key)) {
-      const node = this.map.get(key);
-      node.value = value;
-      this.remove(node);
-      this.addFront(node);
-      return;
-    }
-    if (this.map.size === this.capacity) {
-      const lru = this.tail.prev;
-      this.remove(lru);
-      this.map.delete(lru.key);
-    }
-    const node = { key, value, prev: null, next: null };
-    this.addFront(node);
-    this.map.set(key, node);
-  }
-
-  remove(node) {
-    node.prev.next = node.next;
-    node.next.prev = node.prev;
-  }
-
-  addFront(node) {
-    node.next = this.head.next;
-    node.prev = this.head;
-    this.head.next.prev = node;
-    this.head.next = node;
-  }
-}`,
+          kind: 'story',
+          cast: [
+            { id: 'newcoat', icon: '🧥', label: 'New coat “d”' },
+            { id: 'rope', icon: '🔗', label: 'Rope: b c a (full!)' },
+            { id: 'old', icon: '🧣', label: 'Least recently used' },
+          ],
           frames: [
-            { id: 'f1', caption: "put('d', 4): the map has no entry for d, so this is an insertion.", activeLines: [19, 20], variables: [{ name: 'key', value: 'd' }, { name: 'map', value: '{a, b, c}' }, { name: 'capacity', value: '3' }] },
-            { id: 'f2', caption: 'The cache is full, so the victim is tail.prev - the LRU node a.', activeLines: [27, 28], variables: [{ name: 'size', value: '3' }, { name: 'victim', value: 'a', changed: true }] },
-            { id: 'f3', caption: "remove(a) unlinks it and map.delete('a') frees the entry.", activeLines: [29, 30], variables: [{ name: 'map', value: '{b, c}', changed: true }, { name: 'list', value: 'b <-> c' }] },
-            { id: 'f4', caption: 'A new node for d is linked directly behind the head sentinel.', activeLines: [32, 33], variables: [{ name: 'list', value: 'd <-> b <-> c', changed: true }, { name: 'map', value: '{b, c}' }] },
-            { id: 'f5', caption: "map.set('d', node) registers it; the cache is back at capacity.", activeLines: [34], variables: [{ name: 'map', value: '{b, c, d}', changed: true }, { name: 'size', value: '3' }] },
-            { id: 'f6', caption: 'Evict-first insertion: every operation touched a constant number of pointers.', activeLines: [27, 29, 30, 32, 33, 34], variables: [{ name: 'put', value: 'O(1)' }, { name: 'space', value: 'O(capacity)' }] },
+            { id: 'f1', caption: 'Coat “d” arrives — but the rope is FULL (3 of 3). 🧥', shout: { text: 'ROPE IS FULL!', tone: 'info' }, cast: [{ id: 'newcoat', state: 'working' }], tokens: [{ id: 'arrive', icon: '🧥', label: 'let me in!', at: 'newcoat', effect: 'pop' }] },
+            { id: 'f2', caption: 'One coat must leave first: the OLDEST one at the back. 🧣', shout: { text: 'OLDEST LEAVES FIRST', tone: 'info' }, cast: [{ id: 'old', state: 'crashed' }], tokens: [{ id: 'evict', icon: '👋', label: 'coat a', at: 'old', effect: 'pop' }] },
+            { id: 'f3', caption: 'The old coat is off the rope and out of the index. 🗑️', shout: { text: 'EVICTED', tone: 'info' }, cast: [{ id: 'rope', state: 'working' }], tokens: [{ id: 'gone', icon: '🗑️', label: 'a removed', at: 'rope', effect: 'pop' }] },
+            { id: 'f4', caption: 'New coat “d” goes right to the FRONT. 🔗', shout: { text: 'NEW COAT IN!', tone: 'good' }, mood: 'good', cast: [{ id: 'newcoat', state: 'happy' }], tokens: [{ id: 'front', icon: '🎉', label: 'd b c', at: 'rope', effect: 'pop' }] },
+            { id: 'f5', caption: 'Residents: d, b, c — always the latest three. ✅', shout: { text: 'ALWAYS THE LATEST 3', tone: 'good' }, mood: 'good', cast: [{ id: 'rope', state: 'done' }], tokens: [{ id: 'rule', icon: '✅', label: 'the rule', at: 'rope', effect: 'pop' }] },
           ],
         },
       },
@@ -520,18 +357,16 @@ this.tail.prev = this.head;`,
         title: 'Complexity and production notes',
         body: `The final accounting: get is O(1) average because the map lookup is the only hashing step and the two pointer operations are constant; put is O(1) average for the same reason, with eviction costing one unlink and one map delete; space is O(capacity) because each live key owns exactly one node and one map entry. The average qualifier matters: an adversarial key set that collides in the hash function can degrade lookups toward O(n), so production caches randomize hash seeds or accept the risk explicitly. Real systems rarely use exact LRU either. Redis, for example, samples a handful of keys and evicts the oldest among them, trading exactness for cheaper bookkeeping under concurrency. The animation tallies the pointer operations per call and shows the constant bound holding as the cache grows.`,
         animation: {
-          kind: 'code-trace',
-          language: 'javascript',
-          code: `// get(key):  map.get(node) O(1) + remove O(1) + addFront O(1) = O(1)
-// put(key):  map.has O(1) + remove O(1) + addFront O(1)
-//            + eviction (map.delete + remove) O(1)            = O(1)
-// space:     one node and one map entry per live key          = O(capacity)`,
+          kind: 'story',
+          cast: [
+            { id: 'stopwatch', icon: '⏱️', label: 'Speed check' },
+            { id: 'rope', icon: '🔗', label: 'The rope' },
+          ],
           frames: [
-            { id: 'f1', caption: 'get touches the map once and rewires six pointers.', activeLines: [1], variables: [{ name: 'get', value: 'O(1)' }, { name: 'pointers', value: '6 writes' }] },
-            { id: 'f2', caption: 'put on an existing key follows the same promotion path.', activeLines: [2], variables: [{ name: 'put', value: 'O(1)' }, { name: 'evictions', value: '0' }] },
-            { id: 'f3', caption: 'put on a new key adds one eviction: unlink and delete.', activeLines: [2, 3], variables: [{ name: 'put', value: 'O(1)' }, { name: 'evictions', value: '1', changed: true }] },
-            { id: 'f4', caption: 'An adversarial collision set can degrade the map toward O(n).', activeLines: [1, 3], variables: [{ name: 'hashing', value: 'average O(1)' }, { name: 'caveat', value: 'collisions' }] },
-            { id: 'f5', caption: 'Exact LRU here; Redis samples keys for an approximate LRU under load.', activeLines: [1, 2, 3, 4], variables: [{ name: 'space', value: 'O(capacity)' }, { name: 'policy', value: 'exact LRU' }] },
+            { id: 'f1', caption: 'Check any coat: find + move = a fixed tiny number of steps. ⏱️', shout: { text: 'ALWAYS FEW STEPS', tone: 'good' }, mood: 'good', cast: [{ id: 'stopwatch', state: 'done' }], tokens: [{ id: 'o1', icon: '1️⃣', label: 'O(1)', at: 'stopwatch', effect: 'pop' }] },
+            { id: 'f2', caption: 'Add a coat — same tiny cost, even when the rope is huge. 🧥', shout: { text: 'SIZE DOESN’T MATTER', tone: 'good' }, mood: 'good', cast: [{ id: 'rope', state: 'working' }], tokens: [{ id: 'huge', icon: '🪈', label: 'still O(1)', at: 'rope', effect: 'pop' }] },
+            { id: 'f3', caption: 'One warning: bad name-luck (collisions) can slow the INDEX. ⚠️', shout: { text: 'COLLISIONS? WATCH OUT', tone: 'bad' }, mood: 'bad', cast: [{ id: 'stopwatch', state: 'crashed' }], tokens: [{ id: 'warn', icon: '⚠️', label: 'rare slow case', at: 'stopwatch', effect: 'shake' }] },
+            { id: 'f4', caption: 'Giant cloakrooms (like Redis) shortcut: they check a few coats, not all. 🎯', shout: { text: 'GOOD ENOUGH LRU', tone: 'info' }, cast: [{ id: 'rope', state: 'done' }], tokens: [{ id: 'sample', icon: '🎯', label: 'sample & evict', at: 'rope', effect: 'pop' }] },
           ],
         },
       },
@@ -572,26 +407,16 @@ this.tail.prev = this.head;`,
         title: 'The loop that never ends',
         body: `Traversal code usually assumes the list ends: follow next until null. A cycle breaks that assumption, and the traversal spins forever without any error - the classic production hang in parsers, walkers, and garbage collectors. Before doing expensive work like reversing a list or serializing it, you need to know whether the structure terminates. The brute-force detector keeps a set of every visited node and flags the first repeated reference; it works, but it stores one entry per node, so it costs O(n) extra memory and cannot run where memory is tight. The animation shows a walk over 3 -> 2 -> 0 -> -4 -> 5 -> back to 0: after five steps the walk revisits node 0 and would keep repeating the same three nodes forever. That picture is the motivation for a detector that uses constant memory.`,
         animation: {
-          kind: 'memory-diagram',
-          regions: [
-            {
-              id: 'heap',
-              label: 'Linked list nodes (heap)',
-              kind: 'heap',
-              boxes: [
-                { id: 'n1', label: 'node 1', value: '3' },
-                { id: 'n2', label: 'node 2', value: '2' },
-                { id: 'n3', label: 'node 3', value: '0' },
-                { id: 'n4', label: 'node 4', value: '-4' },
-                { id: 'n5', label: 'node 5', value: '5' },
-              ],
-            },
+          kind: 'story',
+          cast: [
+            { id: 'track', icon: '🛤️', label: 'The path' },
+            { id: 'walker', icon: '🚶', label: 'Walker' },
           ],
           frames: [
-            { id: 'f1', caption: 'The list is 3 -> 2 -> 0 -> -4 -> 5, and node 5 points back to node 0: there is no null tail.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n1', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n1', tone: 'danger' }], highlightBoxIds: ['n1'] },
-            { id: 'f2', caption: 'A naive walk follows next through 3, then 2, then 0 ...', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n2', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n3', tone: 'danger' }] },
-            { id: 'f3', caption: '... then -4 and 5, and next brings the walk back to 0: the same three nodes repeat forever.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n3', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n5', tone: 'danger' }], highlightBoxIds: ['n3', 'n4', 'n5'] },
-            { id: 'f4', caption: 'Floyd starts both pointers at the head instead; no visited set and no node rewrites are needed.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n1', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n1', tone: 'danger' }], highlightBoxIds: ['n1'] },
+            { id: 'f1', caption: 'The path is 3 → 2 → 0 → -4 → 5… and then it LOOPS back to 0! 🛤️', shout: { text: 'IT LOOPS!', tone: 'info' }, cast: [{ id: 'track', state: 'working' }], tokens: [{ id: 'loop', icon: '🔁', label: 'no exit', at: 'track', effect: 'pop' }] },
+            { id: 'f2', caption: 'A normal walker follows the path: 3, 2, 0… 🚶', shout: { text: 'WALK, WALK…', tone: 'info' }, cast: [{ id: 'walker', state: 'working' }], tokens: [{ id: 'step', icon: '👣', label: 'step', from: 'track', to: 'walker' }] },
+            { id: 'f3', caption: '…-4, 5 — and back to 0. The same stones, forever. 😵', shout: { text: 'SAME STONES FOREVER', tone: 'bad' }, mood: 'bad', cast: [{ id: 'walker', state: 'crashed' }], tokens: [{ id: 'dizzy', icon: '😵', label: 'spinning', at: 'walker', effect: 'pop' }] },
+            { id: 'f4', caption: 'We need a memory-free way to notice the loop. 🤔', shout: { text: 'HOW TO DETECT IT?', tone: 'info' }, cast: [{ id: 'walker', state: 'idle', face: '🤔' }], tokens: [{ id: 'think', icon: '🤔', label: 'no stamps allowed', at: 'track', effect: 'pop' }] },
           ],
         },
       },
@@ -599,27 +424,18 @@ this.tail.prev = this.head;`,
         title: 'Slow and fast enter',
         body: `The algorithm is two pointers moving over the same list at different speeds. Slow advances one node per step; fast advances two. If the list ends, fast or fast.next becomes null and the answer is no cycle. If a cycle exists, both pointers are eventually trapped in it, because every next pointer inside the cycle stays inside. The animation follows the crossing point: head 3, then 2, then the entrance at 0. From then on fast keeps lapping the same three nodes. The key quantity is the forward distance from fast to slow inside the cycle. While moving, fast gains one position on slow per step, so that distance shrinks by exactly one each step - and once both pointers are on the cycle, a distance that starts below the cycle length must eventually reach zero. Fast can never jump over slow, because the gain is one node, not two.`,
         animation: {
-          kind: 'memory-diagram',
-          regions: [
-            {
-              id: 'heap',
-              label: 'Linked list nodes (heap)',
-              kind: 'heap',
-              boxes: [
-                { id: 'n1', label: 'node 1', value: '3' },
-                { id: 'n2', label: 'node 2', value: '2' },
-                { id: 'n3', label: 'node 3', value: '0' },
-                { id: 'n4', label: 'node 4', value: '-4' },
-                { id: 'n5', label: 'node 5', value: '5' },
-              ],
-            },
+          kind: 'story',
+          cast: [
+            { id: 'turtle', icon: '🐢', label: 'Slow' },
+            { id: 'hare', icon: '🐇', label: 'Fast' },
+            { id: 'track', icon: '🛤️', label: 'The looping path' },
           ],
           frames: [
-            { id: 'f1', caption: 'Both pointers start at the head: slow moves one node per step, fast moves two.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n1', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n1', tone: 'danger' }], highlightBoxIds: ['n1'] },
-            { id: 'f2', caption: 'After one step slow is at 2 and fast is at 0 - fast has entered the cycle first.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n2', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n3', tone: 'danger' }] },
-            { id: 'f3', caption: 'Both are inside the cycle now; the forward distance from fast to slow is one node.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n3', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n5', tone: 'danger' }], highlightBoxIds: ['n3', 'n4', 'n5'] },
-            { id: 'f4', caption: 'One more step closes the distance to zero - fast lands exactly on slow at -4.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n4', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n4', tone: 'danger' }], highlightBoxIds: ['n4'] },
-            { id: 'f5', caption: 'The gap shrinks by one every step and can never be jumped, so a meeting is unavoidable.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n4', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n4', tone: 'danger' }], highlightBoxIds: ['n3', 'n4', 'n5'] },
+            { id: 'f1', caption: 'Turtle walks 1 step; hare runs 2 steps. Same start! 🐢🐇', shout: { text: 'READY, SET, GO!', tone: 'info' }, cast: [{ id: 'turtle', state: 'working' }, { id: 'hare', state: 'working' }], tokens: [{ id: 'start', icon: '🚩', label: 'step 0', at: 'track', effect: 'pop' }] },
+            { id: 'f2', caption: 'The hare is already inside the loop — the turtle follows. 🐇', shout: { text: 'HARE ENTERS THE LOOP', tone: 'info' }, cast: [{ id: 'track', state: 'working' }], tokens: [{ id: 'inside', icon: '🔁', label: 'lap begins', at: 'track', effect: 'pop' }] },
+            { id: 'f3', caption: 'Both are on the loop. The hare gains 1 step on the turtle every turn. 📏', shout: { text: 'GAINING 1 EACH STEP', tone: 'info' }, cast: [{ id: 'hare', state: 'working' }], tokens: [{ id: 'gain', icon: '📏', label: 'gap -1', at: 'hare', effect: 'pop' }] },
+            { id: 'f4', caption: 'The gap becomes 2… 1… 0 — the hare lands right on the turtle. 💥', shout: { text: 'THEY MEET!', tone: 'good' }, mood: 'good', cast: [{ id: 'turtle', state: 'done' }, { id: 'hare', state: 'done' }], tokens: [{ id: 'meet', icon: '🤝', label: 'caught you!', at: 'track', effect: 'pop' }] },
+            { id: 'f5', caption: 'On a loop, catching is unavoidable — so a meeting proves the loop. ✅', shout: { text: 'MEETING = PROOF ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'turtle', state: 'happy' }], tokens: [{ id: 'proof', icon: '✅', label: 'cycle found', at: 'track', effect: 'pop' }] },
           ],
         },
       },
@@ -627,27 +443,18 @@ this.tail.prev = this.head;`,
         title: 'Meeting proves a cycle',
         body: `Trace the race from the top with the full sequence. Both pointers leave the head 3 together. After one step slow is at 2 and fast is at 0, already inside the loop. After two steps slow is at 0 and fast is at 5 - both are on the cycle, with a forward gap of one node. After three steps both land on -4, and that shared node is the meeting. The animation highlights the wrap: fast has no null to stop at, because node 5 points back to node 0. If fast reached null instead, the list would be acyclic and no meeting could occur, which is why the loop must also test fast.next for even-length lists. The meeting proves a cycle exists, but the meeting node depends on the head-to-entrance distance and usually is not the entrance itself.`,
         animation: {
-          kind: 'memory-diagram',
-          regions: [
-            {
-              id: 'heap',
-              label: 'Linked list nodes (heap)',
-              kind: 'heap',
-              boxes: [
-                { id: 'n1', label: 'node 1', value: '3' },
-                { id: 'n2', label: 'node 2', value: '2' },
-                { id: 'n3', label: 'node 3', value: '0' },
-                { id: 'n4', label: 'node 4', value: '-4' },
-                { id: 'n5', label: 'node 5', value: '5' },
-              ],
-            },
+          kind: 'story',
+          cast: [
+            { id: 'turtle', icon: '🐢', label: 'Slow' },
+            { id: 'hare', icon: '🐇', label: 'Fast' },
+            { id: 'track', icon: '🛤️', label: 'The looping path' },
           ],
           frames: [
-            { id: 'f1', caption: 'Both pointers leave the head 3 together at the start of the race.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n1', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n1', tone: 'danger' }], highlightBoxIds: ['n1'] },
-            { id: 'f2', caption: 'Slow reaches 2; fast reaches 0 and is already inside the cycle.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n2', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n3', tone: 'danger' }] },
-            { id: 'f3', caption: 'Slow enters at 0; fast is at 5, one step behind it in cycle order.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n3', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n5', tone: 'danger' }], highlightBoxIds: ['n3', 'n4', 'n5'] },
-            { id: 'f4', caption: 'They meet at -4. Two pointers can only share a node if some next pointer loops.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n4', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n4', tone: 'danger' }], highlightBoxIds: ['n4'] },
-            { id: 'f5', caption: 'A meeting inside the list is the proof: an acyclic list would send fast to null instead.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n4', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n4', tone: 'danger' }], highlightBoxIds: ['n3', 'n4', 'n5'] },
+            { id: 'f1', caption: 'The race starts at stone 3, both together. 🚩', shout: { text: 'GO!', tone: 'info' }, cast: [{ id: 'turtle', state: 'working' }, { id: 'hare', state: 'working' }], tokens: [{ id: 'gate', icon: '🚩', label: 'stone 3', at: 'track', effect: 'pop' }] },
+            { id: 'f2', caption: 'Turtle on 2; hare storms to 0 and enters the loop early. 🐇', shout: { text: 'HARE AHEAD', tone: 'info' }, cast: [{ id: 'hare', state: 'working' }], tokens: [{ id: 'fast', icon: '💨', label: 'zoom!', at: 'hare', effect: 'pop' }] },
+            { id: 'f3', caption: 'Turtle enters at 0; the hare is one speed-lap behind it. 🔁', shout: { text: 'TURTLE JOINS THE LOOP', tone: 'info' }, cast: [{ id: 'turtle', state: 'working' }], tokens: [{ id: 'enter', icon: '🔁', label: 'lap time', at: 'track', effect: 'pop' }] },
+            { id: 'f4', caption: 'MET at stone -4! Two racers share a stone only if the path loops. 💥', shout: { text: 'PROOF: IT LOOPS!', tone: 'good' }, mood: 'good', cast: [{ id: 'turtle', state: 'done' }, { id: 'hare', state: 'done' }], tokens: [{ id: 'meet', icon: '🤝', label: 'stone -4', at: 'track', effect: 'pop' }] },
+            { id: 'f5', caption: 'On a straight path the hare would just run off the end instead. 🏁', shout: { text: 'STRAIGHT = NO MEETING', tone: 'info' }, cast: [{ id: 'hare', state: 'idle', face: '😌' }], tokens: [{ id: 'straight', icon: '➡️', label: 'safe exit', at: 'hare', effect: 'pop' }] },
           ],
         },
       },
@@ -655,27 +462,18 @@ this.tail.prev = this.head;`,
         title: 'Reset to find the entrance',
         body: `A meeting proves a cycle exists but usually not where it begins - the meeting point depends on the head-to-entrance distance and the cycle length. The entrance is found with one elegant move: leave fast at the meeting point, reset slow to the head, and then advance both pointers one node at a time. They meet again, and this time the meeting node is the cycle entrance. The distance argument is short: when they first meet at index a + b, slow has walked a + b steps, fast has walked a + b + kL for some whole number k, and fast walked twice as far, so a + b = kL. That makes the distance from the head to the entrance equal to the distance from the meeting point to the entrance, modulo the cycle length - two equal-speed pointers leaving those positions must arrive together. The animation shows exactly that: reset to 3, advance to 2, advance to 0, entrance found.`,
         animation: {
-          kind: 'memory-diagram',
-          regions: [
-            {
-              id: 'heap',
-              label: 'Linked list nodes (heap)',
-              kind: 'heap',
-              boxes: [
-                { id: 'n1', label: 'node 1', value: '3' },
-                { id: 'n2', label: 'node 2', value: '2' },
-                { id: 'n3', label: 'node 3', value: '0' },
-                { id: 'n4', label: 'node 4', value: '-4' },
-                { id: 'n5', label: 'node 5', value: '5' },
-              ],
-            },
+          kind: 'story',
+          cast: [
+            { id: 'turtle', icon: '🐢', label: 'Slow (reset)' },
+            { id: 'hare', icon: '🐇', label: 'Fast (stays)' },
+            { id: 'track', icon: '🛤️', label: 'The path' },
           ],
           frames: [
-            { id: 'f1', caption: 'The first meeting is at -4: proof of a cycle, but not necessarily the entrance.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n4', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n4', tone: 'danger' }], highlightBoxIds: ['n4'] },
-            { id: 'f2', caption: 'Reset slow to the head (3) and leave fast at the meeting point.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n1', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n4', tone: 'danger' }], highlightBoxIds: ['n1', 'n4'] },
-            { id: 'f3', caption: 'Advance both one step: slow moves to 2, fast wraps from -4 to 5.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n2', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n5', tone: 'danger' }] },
-            { id: 'f4', caption: 'Advance again: both land on 0 - this meeting node is the cycle entrance.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n3', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n3', tone: 'danger' }], highlightBoxIds: ['n3'] },
-            { id: 'f5', caption: 'Head-to-entrance equals meeting-to-entrance, so equal-speed pointers must arrive together.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n3', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n3', tone: 'danger' }], highlightBoxIds: ['n3', 'n4', 'n5'] },
+            { id: 'f1', caption: 'Meeting at -4 found the loop — but not its ENTRANCE yet. 🤔', shout: { text: 'WHERE DOES IT START?', tone: 'info' }, cast: [{ id: 'track', state: 'working' }], tokens: [{ id: 'question', icon: '🤔', label: 'entrance?', at: 'track', effect: 'pop' }] },
+            { id: 'f2', caption: 'Turtle goes back to the start (stone 3). Hare stays put. 🐢', shout: { text: 'TURTLE RESETS', tone: 'info' }, cast: [{ id: 'turtle', state: 'working' }, { id: 'hare', state: 'idle' }], tokens: [{ id: 'reset', icon: '↩️', label: 'back to 3', at: 'turtle', effect: 'pop' }] },
+            { id: 'f3', caption: 'Now BOTH walk one step at a time, same speed. 🚶🚶', shout: { text: 'EQUAL SPEED NOW', tone: 'info' }, cast: [{ id: 'hare', state: 'working' }], tokens: [{ id: 'same', icon: '🤝', label: 'step by step', at: 'track', effect: 'pop' }] },
+            { id: 'f4', caption: 'They meet again — this time exactly at the loop’s entrance: stone 0! 🚪', shout: { text: 'ENTRANCE FOUND!', tone: 'good' }, mood: 'good', cast: [{ id: 'turtle', state: 'done' }, { id: 'hare', state: 'done' }], tokens: [{ id: 'door', icon: '🚪', label: 'stone 0', at: 'track', effect: 'pop' }] },
+            { id: 'f5', caption: 'Why? The distances balance out — like magic, but it is math. ✨', shout: { text: 'EQUAL DISTANCES ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'turtle', state: 'happy' }], tokens: [{ id: 'magic', icon: '✨', label: 'the math works', at: 'track', effect: 'pop' }] },
           ],
         },
       },
@@ -683,26 +481,17 @@ this.tail.prev = this.head;`,
         title: 'O(1) space beats a set',
         body: `The alternative detector is a visited set: walk the list, insert each node, and stop when a node repeats. It is simpler to reason about and reports the first repeated node immediately, but it allocates one entry per node, so it uses O(n) memory and cannot run where allocation is expensive or forbidden. Floyd uses two references and no allocation at all. Its cost is still O(n) time: the pointers traverse the list at most a few times before meeting, and the reset phase adds at most one more pass, so the constants are small even though the asymptotics match the set approach. The animation contrasts the two: the set version accumulates five entries for this list, while the pointer version carries only slow and fast. When memory is cheap the set is easier to defend; when it is not, the two pointers are the answer.`,
         animation: {
-          kind: 'memory-diagram',
-          regions: [
-            {
-              id: 'heap',
-              label: 'Linked list nodes (heap)',
-              kind: 'heap',
-              boxes: [
-                { id: 'n1', label: 'node 1', value: '3' },
-                { id: 'n2', label: 'node 2', value: '2' },
-                { id: 'n3', label: 'node 3', value: '0' },
-                { id: 'n4', label: 'node 4', value: '-4' },
-                { id: 'n5', label: 'node 5', value: '5' },
-              ],
-            },
+          kind: 'story',
+          cast: [
+            { id: 'stamper', icon: '🚶', label: 'Stamp collector' },
+            { id: 'turtle', icon: '🐢', label: 'Slow' },
+            { id: 'hare', icon: '🐇', label: 'Fast' },
           ],
           frames: [
-            { id: 'f1', caption: 'The visited-set detector stores every node it passes: one entry for node 3.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n1', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n1', tone: 'danger' }], highlightBoxIds: ['n1'] },
-            { id: 'f2', caption: 'The set keeps growing with the walk - O(n) extra memory for n nodes.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n2', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n3', tone: 'danger' }], highlightBoxIds: ['n1', 'n2', 'n3'] },
-            { id: 'f3', caption: 'Five entries for this list, and the cost scales with the input, not with the cycle.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n3', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n5', tone: 'danger' }], highlightBoxIds: ['n1', 'n2', 'n3', 'n4', 'n5'] },
-            { id: 'f4', caption: 'Floyd carries only two pointers: O(1) space and O(n) time, same asymptotics, tiny constant.', cursors: [{ id: 'slow', label: 'slow', targetBoxId: 'n3', tone: 'primary' }, { id: 'fast', label: 'fast', targetBoxId: 'n3', tone: 'danger' }], highlightBoxIds: ['n3', 'n4', 'n5'] },
+            { id: 'f1', caption: 'One plan: stamp every stone you pass. 📮', shout: { text: 'STAMP EVERYTHING', tone: 'info' }, cast: [{ id: 'stamper', state: 'working' }], tokens: [{ id: 'stamp', icon: '📮', label: 'visited!', at: 'stamper', effect: 'pop' }] },
+            { id: 'f2', caption: 'But the stamps pile up — one per stone, forever. 🗂️', shout: { text: 'STAMPS GROW…', tone: 'bad' }, mood: 'bad', cast: [{ id: 'stamper', state: 'crashed' }], tokens: [{ id: 'pile', icon: '🗂️', label: 'O(n) memory', at: 'stamper', effect: 'pop' }] },
+            { id: 'f3', caption: 'The racing pair carries NOTHING — just two racers. 🐢🐇', shout: { text: 'NO BAGS AT ALL', tone: 'good' }, mood: 'good', cast: [{ id: 'turtle', state: 'done' }, { id: 'hare', state: 'done' }], tokens: [{ id: 'light', icon: '🪶', label: 'weightless', at: 'hare', effect: 'pop' }] },
+            { id: 'f4', caption: 'Same speed of discovery, zero extra luggage. The racers win. 🏆', shout: { text: 'O(1) SPACE WINS ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'turtle', state: 'happy' }], tokens: [{ id: 'trophy', icon: '🏆', label: 'two pointers', at: 'turtle', effect: 'pop' }] },
           ],
         },
       },
