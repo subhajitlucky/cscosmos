@@ -46,6 +46,14 @@ When integrating a new standalone visualizer microsite:
 - When absorbing an external microsite, preserve its original layout structure, color branding, typography, interactive components, and content to maintain exact experience and design parity with the independent standalone site.
 - Seamlessly integrate the site's styling with CSCosmos theme controls (supporting both Light and Dark modes).
 
+### 5. Topic Uniqueness — Never Standardize
+- **Every topic MUST have its own unique page set, learning method, interactions, and tools. Sameness across topics is a bug, not a virtue.**
+- Do NOT force a shared template onto every topic (no mandatory `/path`, `/playground`, `/exercises`, `/about` for all). A `programviz`-style linear lesson path, an `htmlviz`-style editor + auto-graded problems, a `cssviz`-style slider-lab arena, and a `websecureviz`-style attack simulation are all correct — *because they differ*.
+- Each CS subject has a native way of being understood: CPU cycles want step-through animations, CSS wants tweakable labs, security wants live attack simulations, HTTP wants request/response playgrounds. Let the subject dictate the pages and the pedagogy.
+- The only thing every topic shares is the **core goal**: explaining its core subject better than a wall of text. Every page, tool, and interaction a topic ships must earn its place by serving that explanation — never by matching another topic's sitemap.
+- Reuse infrastructure only where it is invisible (routing pattern, theming, SSG safety, progress persistence). Keep every visible experience distinct to its subject.
+- When adding a new topic: study what the *subject* needs, then invent pages/tools for it freely. When improving an existing topic: deepen its own approach — do not copy features from sibling topics unless the subject itself calls for it.
+
 ---
 
 ## 🧪 Verification Commands

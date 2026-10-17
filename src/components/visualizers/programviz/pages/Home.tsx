@@ -15,7 +15,7 @@ function ProgressRing({ percent }: { percent: number }) {
   return (
     <div className="relative w-20 h-20 shrink-0" role="img" aria-label={`${percent}% of learning path completed`}>
       <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
-        <circle cx="40" cy="40" r={radius} fill="none" strokeWidth="6" className="text-muted stroke-current" opacity="0.25" />
+        <circle cx="40" cy="40" r={radius} fill="none" strokeWidth="6" className="stroke-border" opacity="0.4" />
         <circle
           cx="40"
           cy="40"

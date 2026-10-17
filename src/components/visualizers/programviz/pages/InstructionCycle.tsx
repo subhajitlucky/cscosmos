@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { AssemblySimulator } from '../components/AssemblySimulator';
+import { PredictCheck } from '../components/PredictCheck';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, Search, Cpu, Database, Save } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -134,6 +135,13 @@ export const InstructionCycle: React.FC = () => {
 
         {/* Interactive 8-Bit Machine Code & Hardware Stepper */}
         <AssemblySimulator />
+
+        <PredictCheck
+          question="In the simulator, R0 holds 15 and R1 holds 27. Right after “ADD R0, R1” executes, what does the accumulator hold?"
+          options={['15', '27', '42 — the sum', '0']}
+          correctIndex={2}
+          explanation="The ALU adds R0 + R1 = 15 + 27 = 42 and drops the result into the accumulator (and back into R0). You saw exactly this if you stepped the simulator above — the ACC card changed to 42."
+        />
 
         <div className={cn(
           "grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t transition-colors",

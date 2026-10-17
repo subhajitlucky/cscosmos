@@ -1,7 +1,9 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
+import { PredictCheck } from '../components/PredictCheck';
 import { motion } from 'framer-motion';
+import { ArrowRight, Pause, Play, RotateCcw, StepBack, StepForward } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -11,34 +13,68 @@ function cn(...inputs: ClassValue[]) {
 }
 
 const memorySegments = [
-  { 
-    name: 'Stack', 
-    color: 'bg-red-500', 
-    desc: 'Stores local variables and function call information. It grows and shrinks automatically.', 
+  {
+    name: 'Stack',
+    color: 'bg-red-500',
+    desc: 'Stores local variables and function call information. It grows and shrinks automatically.',
     details: 'LIFO (Last-In, First-Out)'
   },
-  { 
-    name: 'Heap', 
-    color: 'bg-orange-500', 
-    desc: 'Used for dynamic memory allocation. You (or your runtime) manage this space.', 
+  {
+    name: 'Heap',
+    color: 'bg-orange-500',
+    desc: 'Used for dynamic memory allocation. You (or your runtime) manage this space.',
     details: 'Flexible size'
   },
-  { 
-    name: 'Data', 
-    color: 'bg-blue-500', 
-    desc: 'Stores global and static variables that exist for the entire life of the program.', 
+  {
+    name: 'Data',
+    color: 'bg-blue-500',
+    desc: 'Stores global and static variables that exist for the entire life of the program.',
     details: 'Fixed size'
   },
-  { 
-    name: 'Code (Text)', 
-    color: 'bg-green-500', 
-    desc: 'The actual machine instructions of your program. Usually read-only.', 
+  {
+    name: 'Code (Text)',
+    color: 'bg-green-500',
+    desc: 'The actual machine instructions of your program. Usually read-only.',
     details: 'Read-Only'
   }
 ];
 
+const FRAME_INFO: Record<string, string> = {
+  'main()': 'x = 5',
+  'compute(x)': 'n = 5',
+  'square(n)': 'n = 5 → 25',
+};
+
+const CALL_TIMELINE: { stack: string[]; caption: string }[] = [
+  { stack: [], caption: 'No function is running yet — the stack is empty.' },
+  { stack: ['main()'], caption: 'main() starts → a frame is PUSHED onto the stack.' },
+  { stack: ['main()', 'compute(x)'], caption: 'compute(x) is called → a second frame is PUSHED on top of main’s.' },
+  { stack: ['main()', 'compute(x)', 'square(n)'], caption: 'square(n) runs now — and only the TOP frame ever executes.' },
+  { stack: ['main()', 'compute(x)'], caption: 'square returns 25 → its frame is POPPED. Last in, first out.' },
+  { stack: ['main()'], caption: 'compute returns → its frame is popped too.' },
+  { stack: [], caption: 'main returns → the stack is empty again. Every call is perfectly reversed.' },
+];
+
 export const MemoryLayout: React.FC = () => {
   const { theme } = useTheme();
+  const [frameIndex, setFrameIndex] = useState(0);
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    if (!playing) return;
+    const id = window.setInterval(() => {
+      setFrameIndex((f) => {
+        if (f >= CALL_TIMELINE.length - 1) {
+          setPlaying(false);
+          return f;
+        }
+        return f + 1;
+      });
+    }, 1700);
+    return () => window.clearInterval(id);
+  }, [playing]);
+
+  const current = CALL_TIMELINE[frameIndex];
 
   return (
     <TopicLayout stepNumber={5} title="Program Memory Layout">
@@ -114,6 +150,118 @@ export const MemoryLayout: React.FC = () => {
           </div>
         </div>
 
+        {/* Interactive: The Stack in Motion */}
+        <div className={cn(
+          "rounded-2xl p-8 border transition-colors",
+          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200 shadow-sm"
+        )}>
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+            <h3 className={cn(
+              "uppercase tracking-widest text-sm font-semibold",
+              theme === 'dark' ? "text-slate-400" : "text-slate-500"
+            )}>The Stack in Motion — Watch a Function Call</h3>
+            <span className={cn(
+              "text-[10px] font-mono px-2 py-0.5 rounded uppercase",
+              theme === 'dark' ? "bg-slate-800 text-slate-400" : "bg-slate-100 text-slate-500"
+            )}>
+              Frame {frameIndex + 1} / {CALL_TIMELINE.length}
+            </span>
+          </div>
+
+          <p className={cn(
+            "text-sm mb-4 min-h-[40px]",
+            theme === 'dark' ? "text-slate-300" : "text-slate-700"
+          )} aria-live="polite">
+            {current.caption}
+          </p>
+
+          <div className={cn(
+            "relative flex flex-col-reverse gap-2 p-4 rounded-xl border-2 min-h-[200px] justify-start transition-colors",
+            theme === 'dark' ? "border-red-900/60 bg-red-950/20" : "border-red-200 bg-red-50/60"
+          )}>
+            {current.stack.length === 0 && (
+              <p className={cn(
+                "text-center text-sm pt-16 font-mono",
+                theme === 'dark' ? "text-slate-600" : "text-slate-400"
+              )}>(stack is empty)</p>
+            )}
+            {current.stack.map((name, i) => {
+              const isTop = i === current.stack.length - 1;
+              return (
+                <motion.div
+                  key={name}
+                  layout
+                  initial={{ opacity: 0, y: -16, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  className={cn(
+                    "flex items-center justify-between gap-3 rounded-lg border-2 px-4 py-2.5 font-mono text-sm transition-colors",
+                    isTop
+                      ? "border-red-500 bg-red-500/10 shadow-lg shadow-red-500/10"
+                      : (theme === 'dark' ? "border-slate-700 bg-slate-900" : "border-slate-300 bg-white")
+                  )}
+                >
+                  <span className="font-bold">{name}</span>
+                  <span className={cn(
+                    "text-xs",
+                    theme === 'dark' ? "text-slate-400" : "text-slate-500"
+                  )}>{FRAME_INFO[name]}</span>
+                  {isTop && (
+                    <span className="text-[10px] uppercase font-extrabold text-red-500 whitespace-nowrap">
+                      ← top frame runs
+                    </span>
+                  )}
+                </motion.div>
+              );
+            })}
+            <span className={cn(
+              "text-center text-[10px] uppercase tracking-wider pt-2",
+              theme === 'dark' ? "text-slate-600" : "text-slate-400"
+            )}>
+              Stack base ↓ · grows upward ↑
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 mt-6">
+            <button
+              onClick={() => { setPlaying(false); setFrameIndex((f) => Math.max(0, f - 1)); }}
+              disabled={frameIndex === 0}
+              className={cn(
+                "px-3 py-2 rounded-lg text-xs font-bold transition-colors disabled:opacity-40 flex items-center gap-1.5",
+                theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+              )}
+            >
+              <StepBack className="w-3.5 h-3.5" /> Pop Step
+            </button>
+            <button
+              onClick={() => { setPlaying(false); setFrameIndex((f) => Math.min(CALL_TIMELINE.length - 1, f + 1)); }}
+              disabled={frameIndex === CALL_TIMELINE.length - 1}
+              className="px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-40 text-white text-xs font-bold transition-colors flex items-center gap-1.5 shadow-md shadow-red-500/20"
+            >
+              Push Step <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setPlaying((p) => !p)}
+              aria-pressed={playing}
+              className={cn(
+                "px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5",
+                theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+              )}
+            >
+              {playing ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+              {playing ? 'Pause' : 'Auto Play'}
+            </button>
+            <button
+              onClick={() => { setPlaying(false); setFrameIndex(0); }}
+              className={cn(
+                "px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5",
+                theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+              )}
+            >
+              <RotateCcw className="w-3.5 h-3.5" /> Reset
+            </button>
+          </div>
+        </div>
+
         <section className={cn(
           "p-6 border rounded-xl transition-colors",
           theme === 'dark' ? "bg-blue-900/20 border-blue-500/30" : "bg-blue-50 border-blue-200"
@@ -127,6 +275,13 @@ export const MemoryLayout: React.FC = () => {
             The <strong>Heap</strong> is for larger, more complex data that needs to stay around longer.
           </p>
         </section>
+
+        <PredictCheck
+          question="You call four functions one inside another — main → a → b → c. Which frame returns FIRST?"
+          options={['main()', 'a()', 'b()', 'c() — the last one called']}
+          correctIndex={3}
+          explanation="The stack is Last-In-First-Out: c() is the top frame, so it must return before b, then a, then main. That mirror-image order is exactly what the animation showed."
+        />
       </div>
     </TopicLayout>
   );

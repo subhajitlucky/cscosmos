@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useMemo } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
+import { PredictCheck } from '../components/PredictCheck';
 import { motion } from 'framer-motion';
 import { useTheme } from '../hooks/useTheme';
 import { clsx, type ClassValue } from 'clsx';
@@ -14,13 +15,20 @@ export const MemoryBasics: React.FC = () => {
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
   const { theme } = useTheme();
 
-  // Simulated memory cells
-  const cells = useMemo(() => Array.from({ length: 64 }, (_, i) => ({
-    address: `0x${i.toString(16).padStart(2, '0').toUpperCase()}`,
-    value: Math.floor(Math.random() * 256).toString(16).padStart(2, '0').toUpperCase()
-  })), []);
+  // Simulated memory cells — deterministic values so SSG and hydration agree.
+  const cells = useMemo(() => Array.from({ length: 64 }, (_, i) => {
+    const valueInt = (i * 53 + 7) % 256;
+    return {
+      address: `0x${i.toString(16).padStart(2, '0').toUpperCase()}`,
+      value: valueInt.toString(16).padStart(2, '0').toUpperCase(),
+      valueInt,
+    };
+  }), []);
 
-  const bits = useMemo(() => Array.from({ length: 8 }, () => Math.round(Math.random())), []);
+  const selectedBits =
+    selectedCell !== null
+      ? cells[selectedCell].valueInt.toString(2).padStart(8, '0').split('')
+      : null;
 
   return (
     <TopicLayout stepNumber={4} title="Memory Basics">
@@ -57,6 +65,16 @@ export const MemoryBasics: React.FC = () => {
                 key={i}
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setSelectedCell(i)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedCell(i);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedCell === i}
+                aria-label={`Memory cell at address ${cell.address}, value 0x${cell.value}`}
                 className={cn(
                   "p-2 rounded border cursor-pointer transition-all",
                   selectedCell === i 
@@ -89,7 +107,9 @@ export const MemoryBasics: React.FC = () => {
                 "text-sm",
                 theme === 'dark' ? "text-slate-300" : "text-slate-700"
               )}>
-                The CPU requested address <span className="font-mono text-blue-500 font-bold">{cells[selectedCell].address}</span> and found the hexadecimal value <span className="font-mono text-green-600 font-bold">0x{cells[selectedCell].value}</span>.
+                The CPU requested address <span className="font-mono text-blue-500 font-bold">{cells[selectedCell].address}</span> and found the hexadecimal value <span className="font-mono text-green-600 font-bold">0x{cells[selectedCell].value}</span>{' '}
+                — which is <span className="font-mono font-bold">{cells[selectedCell].valueInt}</span> in decimal and{' '}
+                <span className="font-mono text-purple-500 font-bold">0b{cells[selectedCell].valueInt.toString(2).padStart(8, '0')}</span> in binary.
                 This value could be a part of a program instruction, a piece of text, or a number.
               </p>
             </motion.div>
@@ -123,18 +143,31 @@ export const MemoryBasics: React.FC = () => {
               Modern CPUs often work with 64 bits (8 bytes) at a time, which we call a <strong>Word</strong>.
             </p>
             <div className="flex gap-1 mt-4">
-              {bits.map((bit, i) => (
+              {(selectedBits ?? '01001010'.split('')).map((bit, i) => (
                 <div key={i} className={cn(
                   "flex-1 h-8 border rounded flex items-center justify-center text-[10px] font-mono transition-colors",
-                  theme === 'dark' ? "bg-slate-800 border-slate-700" : "bg-white border-slate-200 shadow-inner"
+                  selectedCell !== null
+                    ? "bg-blue-600/20 border-blue-500 text-blue-600 dark:text-blue-300 font-bold"
+                    : (theme === 'dark' ? "bg-slate-800 border-slate-700" : "bg-white border-slate-200 shadow-inner")
                 )}>
                   {bit}
                 </div>
               ))}
             </div>
-            <span className="text-[10px] text-slate-500 text-center block uppercase tracking-wider">One Byte (8 Bits)</span>
+            <span className="text-[10px] text-slate-500 text-center block uppercase tracking-wider">
+              {selectedCell !== null
+                ? `The 8 bits of ${cells[selectedCell].address} = 0x${cells[selectedCell].value}`
+                : 'Example byte: 0x4A — click any cell above to see its real bits'}
+            </span>
           </div>
         </section>
+
+        <PredictCheck
+          question="How many bits live in one byte?"
+          options={['4 bits', '8 bits', '16 bits', '64 bits']}
+          correctIndex={1}
+          explanation="One byte = 8 bits. Some computers used to use other sizes, but 8 has been the standard for decades — and modern CPUs process 64 bits (8 bytes, a “word”) per operation."
+        />
       </div>
     </TopicLayout>
   );

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
+import { PredictCheck } from '../components/PredictCheck';
 import { motion } from 'framer-motion';
 import { Keyboard, HardDrive, Network, MousePointer2, Cpu, ArrowRight } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -147,6 +148,18 @@ export const IOBasics: React.FC = () => {
              </div>
           </div>
         </div>
+
+        <PredictCheck
+          question="While a blocking file read waits for the disk, what is the program doing?"
+          options={[
+            'Working on other tasks in parallel',
+            'Waiting — it is paused until the data arrives',
+            'Crashing with an error',
+            'Using the GPU instead',
+          ]}
+          correctIndex={1}
+          explanation="Blocking I/O parks the program until the data is ready — simple to reason about, but the CPU could be doing other work meanwhile. That is exactly why non-blocking I/O and async exist."
+        />
       </div>
     </TopicLayout>
   );

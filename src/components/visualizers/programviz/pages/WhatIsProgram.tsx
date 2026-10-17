@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { TopicLayout } from '../components/TopicLayout';
+import { PredictCheck } from '../components/PredictCheck';
 import { motion } from 'framer-motion';
 import { FileCode, Cpu, Database } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -131,6 +132,18 @@ export const WhatIsProgram: React.FC = () => {
             </p>
           </div>
         </section>
+
+        <PredictCheck
+          question="Before you press “Run”, where does the program actually live?"
+          options={[
+            'Inside the CPU, waiting',
+            'On disk (storage) as a file',
+            'In RAM already',
+            'On the network',
+          ]}
+          correctIndex={1}
+          explanation="Before running, a program is just bytes in a file on disk. The whole journey of this topic is what happens next: the OS loads it into RAM, and the CPU starts executing its instructions."
+        />
       </div>
     </TopicLayout>
   );

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
+import { PredictCheck } from '../components/PredictCheck';
 import { motion } from 'framer-motion';
 import { Play, Pause, RotateCcw, Cpu, Database, Keyboard, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
@@ -13,11 +14,11 @@ function cn(...inputs: ClassValue[]) {
 }
 
 const executionSteps = [
-  { id: 1, component: 'OS', action: 'Load Program', detail: 'The OS reads the program file from disk and places its code/data into RAM.', icon: Database, color: 'text-blue-500' },
-  { id: 2, component: 'CPU', action: 'Initialize PC', detail: 'The Program Counter (PC) is set to the address of the first instruction.', icon: Cpu, color: 'text-purple-500' },
-  { id: 3, component: 'CPU/RAM', action: 'Fetch Loop', detail: 'The CPU begins the Fetch-Decode-Execute cycle for each instruction.', icon: RotateCcw, color: 'text-red-500' },
-  { id: 4, component: 'CPU/IO', action: 'System Call', detail: 'A "print" instruction is reached. The CPU asks the OS to send data to the monitor.', icon: Keyboard, color: 'text-orange-500' },
-  { id: 5, component: 'OS', action: 'Terminate', detail: 'The last instruction is executed. The OS cleans up the memory used by the program.', icon: CheckCircle2, color: 'text-green-500' },
+  { id: 1, component: 'OS', action: 'Load Program', detail: 'The OS reads the program file — the same ROM listing from Step 3 (MOV 15, MOV 27, ADD, STORE, HALT) — and places its code and data into RAM.', icon: Database, color: 'text-blue-500' },
+  { id: 2, component: 'CPU', action: 'Initialize PC', detail: 'The Program Counter is set to 0x00, the address of the very first instruction.', icon: Cpu, color: 'text-purple-500' },
+  { id: 3, component: 'CPU/RAM', action: 'Fetch Loop', detail: 'The CPU repeats Fetch → Decode → Execute: R0 = 15, R1 = 27, the ALU computes 42, and RAM[0x10] = 42.', icon: RotateCcw, color: 'text-red-500' },
+  { id: 4, component: 'CPU/IO', action: 'System Call', detail: 'A print instruction calls the OS, which hands 42 to the monitor driver — the same system-call path from the I/O lesson.', icon: Keyboard, color: 'text-orange-500' },
+  { id: 5, component: 'OS', action: 'Terminate', detail: 'HALT ends the fetch cycle. The OS reclaims the memory block the program was using.', icon: CheckCircle2, color: 'text-green-500' },
 ];
 
 export const ExecutionSummary: React.FC = () => {
@@ -72,6 +73,23 @@ export const ExecutionSummary: React.FC = () => {
             You've seen the individual parts. Now, let's watch how they work in harmony during the life of a single program execution.
           </p>
         </section>
+
+        {/* The program from Step 3, now viewed at system level */}
+        <div className="rounded-xl border border-border bg-slate-950 text-slate-100 font-mono text-xs p-5 space-y-2 shadow-inner">
+          <span className="text-blue-400 font-bold block">
+            // The exact program you stepped through in Step 3 — now at system level:
+          </span>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 text-slate-300">
+            <span><span className="text-slate-500">0x00</span> MOV R0, 15</span>
+            <span><span className="text-slate-500">0x01</span> MOV R1, 27</span>
+            <span><span className="text-slate-500">0x02</span> ADD R0, R1</span>
+            <span><span className="text-slate-500">0x03</span> STORE [0x10], R0</span>
+            <span><span className="text-slate-500">0x04</span> HALT</span>
+          </div>
+          <p className="text-slate-400">
+            Everything below is the story of this tiny program: loaded by the OS, fetched and executed by the CPU, printed through a system call, and cleaned up.
+          </p>
+        </div>
 
         {/* Timeline Visualization */}
         <div
@@ -162,6 +180,13 @@ export const ExecutionSummary: React.FC = () => {
             </div>
           </div>
         </div>
+
+        <PredictCheck
+          question="When you double-click a program, WHO actually loads it into RAM?"
+          options={['The CPU', 'The operating system', 'The monitor', 'The program itself']}
+          correctIndex={1}
+          explanation="The OS is the loader: it reads the file from disk, allocates memory, points the CPU at the entry instruction — and reclaims everything when the program exits."
+        />
 
         <section className={cn(
           "text-center space-y-6 pt-12 border-t transition-colors",
