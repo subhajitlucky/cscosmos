@@ -165,12 +165,18 @@ export type StoryCastStateValue = 'idle' | 'working' | 'done' | 'crashed' | 'loc
 export interface StoryCastState {
   id: string;
   state: StoryCastStateValue;
+  /** Optional replacement emoji for this frame, e.g. 😵 😱 🤔 — reactions without words. */
+  face?: string;
 }
 
 export interface StoryFrame {
   id: string;
   /** Ultra-short caption, ideally under 8 words. */
   caption: string;
+  /** Comic-style shouted headline, 1-3 huge words. */
+  shout?: { text: string; tone: 'good' | 'bad' | 'info' };
+  /** Stage tint: green wash for good outcomes, red for bad. */
+  mood?: 'good' | 'bad';
   /** Actor states for this frame; unspecified actors fall back to idle. */
   cast?: StoryCastState[];
   tokens: StoryToken[];

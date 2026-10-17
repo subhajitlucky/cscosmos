@@ -8,7 +8,8 @@ import { FrameControls } from './FrameControls';
 import { useFramePlayer } from './useFramePlayer';
 
 const TOKEN_TRAVEL_MS = 1100;
-const TOKEN_STACK_GAP = 56;
+const TOKEN_STACK_GAP = 72;
+const TOKEN_ROWS_ABOVE = 92;
 
 type Center = { x: number; y: number };
 
@@ -46,15 +47,15 @@ function TokenChip({ token }: { token: StoryToken }) {
   return (
     <div
       className={cn(
-        'pointer-events-none flex items-center gap-1.5 rounded-2xl border border-border bg-card/95 px-2.5 py-1.5 shadow-lg backdrop-blur',
+        'pointer-events-none flex items-center gap-1.5 rounded-2xl border border-border bg-card/95 px-2.5 py-1.5 shadow-xl backdrop-blur',
         effectClass(token.effect),
       )}
     >
-      <span className="text-2xl leading-none" aria-hidden="true">
+      <span className="text-3xl leading-none" aria-hidden="true">
         {token.icon}
       </span>
       {token.label && (
-        <span className="whitespace-nowrap rounded-full bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-primary">
+        <span className="whitespace-nowrap rounded-full bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-primary">
           {token.label}
         </span>
       )}
@@ -65,7 +66,7 @@ function TokenChip({ token }: { token: StoryToken }) {
 function TravelingToken({ token, from, to }: { token: StoryToken; from: Center; to: Center }) {
   const ref = useRef<HTMLDivElement>(null);
   const start = `translate(${from.x}px, ${from.y}px) translate(-50%, -50%)`;
-  const hop = `translate(${(from.x + to.x) / 2}px, ${Math.min(from.y, to.y) - 36}px) translate(-50%, -50%)`;
+  const hop = `translate(${(from.x + to.x) / 2}px, ${Math.min(from.y, to.y) - 42}px) translate(-50%, -50%)`;
   const end = `translate(${to.x}px, ${to.y}px) translate(-50%, -50%)`;
 
   useEffect(() => {
@@ -78,7 +79,7 @@ function TravelingToken({ token, from, to }: { token: StoryToken; from: Center; 
     }
     const anim = el.animate(
       [
-        { transform: start, opacity: 0.35, offset: 0 },
+        { transform: start, opacity: 0.3, offset: 0 },
         { transform: hop, opacity: 1, offset: 0.5 },
         { transform: end, opacity: 1 },
       ],
@@ -133,31 +134,65 @@ export function Story({ spec }: { spec: StorySpec }) {
 
   if (!frame) return null;
 
-  const stateOf = (id: string): StoryCastStateValue =>
-    frame.cast?.find((entry) => entry.id === id)?.state ?? 'idle';
+  const stateOf = (id: string) => frame.cast?.find((entry) => entry.id === id);
+
+  const tokenIcons = new Set(frame.tokens.map((token) => token.icon));
 
   const staticCounts = new Map<string, number>();
+  const travelCounts = new Map<string, number>();
   for (const token of frame.tokens) {
     if (token.at && !token.from) staticCounts.set(token.at, (staticCounts.get(token.at) ?? 0) + 1);
+    if (token.from && token.to && token.from !== token.to) {
+      const key = `${token.from}->${token.to}`;
+      travelCounts.set(key, (travelCounts.get(key) ?? 0) + 1);
+    }
   }
   const staticSeen = new Map<string, number>();
+  const travelSeen = new Map<string, number>();
 
   const ready = spec.cast.every((member) => centers[member.id]);
 
-  const tokenIcons = new Set(frame.tokens.map((token) => token.icon));
+  const moodClass =
+    frame.mood === 'bad'
+      ? 'bg-red-500/[0.06] ring-1 ring-inset ring-red-500/20'
+      : frame.mood === 'good'
+        ? 'bg-green-500/[0.06] ring-1 ring-inset ring-green-500/20'
+        : 'bg-muted/30';
+
+  const shoutClass =
+    frame.shout?.tone === 'bad'
+      ? 'border-red-500 bg-red-500/15 text-red-500'
+      : frame.shout?.tone === 'good'
+        ? 'border-green-500 bg-green-500/15 text-green-600 dark:text-green-400'
+        : 'border-primary bg-primary/10 text-primary';
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
       <div
         ref={containerRef}
-        className="relative flex min-h-[210px] items-end justify-around gap-4 px-10 pb-6 pt-16"
+        className="relative flex min-h-[300px] items-end justify-around gap-6 px-8 pb-7 pt-20"
       >
         <div
-          className="pointer-events-none absolute inset-x-8 bottom-4 top-4 rounded-2xl bg-muted/30"
+          className={cn('pointer-events-none absolute inset-x-6 bottom-4 top-4 rounded-3xl transition-colors duration-500', moodClass)}
           aria-hidden="true"
         />
+
+        {frame.shout && (
+          <div
+            key={`${frame.id}-shout`}
+            className={cn(
+              'interview-pop absolute left-1/2 top-4 z-30 -translate-x-1/2 -rotate-2 whitespace-nowrap rounded-2xl border-4 px-4 py-1.5 text-lg font-black uppercase tracking-wider shadow-lg sm:text-xl',
+              shoutClass,
+            )}
+          >
+            {frame.shout.text}
+          </div>
+        )}
+
         {spec.cast.map((member) => {
-          const state = stateOf(member.id);
+          const entry = stateOf(member.id);
+          const state = entry?.state ?? 'idle';
+          const icon = entry?.face ?? member.icon;
           const rawBadge = stateBadge(state);
           const badge = rawBadge && !tokenIcons.has(rawBadge) ? rawBadge : null;
           return (
@@ -166,32 +201,35 @@ export function Story({ spec }: { spec: StorySpec }) {
               ref={(el) => {
                 castRefs.current[member.id] = el;
               }}
-              className="relative z-10 flex flex-col items-center gap-1.5"
+              className="relative z-10 flex flex-col items-center gap-2"
             >
               <div
                 className={cn(
-                  'relative flex h-20 w-20 items-center justify-center rounded-3xl border-2 bg-background/90 transition-all duration-500',
-                  state === 'idle' && 'border-transparent opacity-60',
+                  'relative flex h-24 w-24 items-center justify-center rounded-full border-2 bg-background/90 transition-all duration-500',
+                  state === 'idle' && 'border-transparent opacity-75',
                   state === 'working' && 'interview-breathe border-primary',
-                  state === 'done' && 'border-green-500/60',
-                  state === 'crashed' && 'border-red-500/70',
-                  state === 'locked' && 'border-amber-500/70',
-                  state === 'happy' && 'border-primary',
+                  state === 'done' && 'border-green-500/70 shadow-[0_0_28px_rgba(34,197,94,0.3)]',
+                  state === 'crashed' && 'interview-shake rotate-6 border-red-500/80 grayscale-[0.4]',
+                  state === 'locked' && 'border-amber-500/80 shadow-[0_0_26px_rgba(245,158,11,0.3)]',
+                  state === 'happy' && 'border-primary shadow-[0_0_28px_hsl(var(--primary)/0.35)]',
                 )}
               >
                 <span
-                  className={cn('text-5xl leading-none', state === 'crashed' && 'interview-shake')}
+                  key={`${frame.id}-${member.id}-${icon}`}
+                  className={cn('text-6xl leading-none', state === 'working' && 'interview-bob')}
                   aria-hidden="true"
                 >
-                  {member.icon}
+                  {icon}
                 </span>
                 {badge && (
-                  <span key={`${frame.id}-${member.id}-badge`} className="interview-pop absolute -right-2 -top-2 text-2xl">
+                  <span key={`${frame.id}-${member.id}-badge`} className="interview-pop absolute -right-2 -top-2 text-3xl">
                     {badge}
                   </span>
                 )}
               </div>
-              <span className="text-xs font-semibold text-foreground">{member.label}</span>
+              <span className="rounded-full bg-muted/70 px-2.5 py-0.5 text-xs font-semibold text-foreground">
+                {member.label}
+              </span>
             </div>
           );
         })}
@@ -201,12 +239,17 @@ export function Story({ spec }: { spec: StorySpec }) {
             const from = token.from ? centers[token.from] : undefined;
             const to = token.to ? centers[token.to] : undefined;
             if (token.from && token.to && from && to && token.from !== token.to) {
+              const key = `${token.from}->${token.to}`;
+              const total = travelCounts.get(key) ?? 1;
+              const seen = travelSeen.get(key) ?? 0;
+              travelSeen.set(key, seen + 1);
+              const offset = total > 1 ? (seen - (total - 1) / 2) * TOKEN_STACK_GAP : 0;
               return (
                 <TravelingToken
                   key={`${frame.id}-${token.id}-${i}`}
                   token={token}
-                  from={{ x: from.x, y: from.y - 64 }}
-                  to={{ x: to.x, y: to.y - 64 }}
+                  from={{ x: from.x + offset, y: from.y - TOKEN_ROWS_ABOVE }}
+                  to={{ x: to.x + offset, y: to.y - TOKEN_ROWS_ABOVE }}
                 />
               );
             }
@@ -223,7 +266,9 @@ export function Story({ spec }: { spec: StorySpec }) {
               <span
                 key={`${frame.id}-${token.id}-${i}`}
                 className="absolute left-0 top-0 z-20"
-                style={{ transform: `translate(${anchor.x + offset}px, ${anchor.y - 64}px) translate(-50%, -50%)` }}
+                style={{
+                  transform: `translate(${anchor.x + offset}px, ${anchor.y - TOKEN_ROWS_ABOVE}px) translate(-50%, -50%)`,
+                }}
               >
                 <TokenChip token={token} />
               </span>

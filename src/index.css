@@ -597,6 +597,12 @@
 }
 .interview-float { animation: interview-float 2.2s ease-in-out infinite; }
 
+@keyframes interview-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.interview-bob { animation: interview-bob 1.5s ease-in-out infinite; }
+
 @keyframes interview-caret {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
@@ -631,7 +637,8 @@
   .interview-caret,
   .interview-playhead,
   .interview-burst,
-  .interview-float {
+  .interview-float,
+  .interview-bob {
     animation: none !important;
   }
   .interview-dash {
