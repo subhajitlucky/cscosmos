@@ -19,6 +19,7 @@ const VALID_ANIMATION_KINDS = [
   'timeline',
   'before-after',
   'memory-diagram',
+  'story',
   'custom',
 ];
 

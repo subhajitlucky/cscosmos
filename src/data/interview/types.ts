@@ -134,12 +134,61 @@ export interface CustomAnimationSpec {
   key: 'attention-scaling';
 }
 
+/* ---------- Story (visual metaphor, explain-like-I'm-5) ---------- */
+
+export interface StoryCastMember {
+  id: string;
+  /** Big emoji shown as the character/object, e.g. 👤 🏦 🗄️. */
+  icon: string;
+  /** Short name under the icon, e.g. "You", "Bank". */
+  label: string;
+}
+
+export interface StoryToken {
+  id: string;
+  /** Emoji for the moving object: 💰 🎫 ✉️ 📄 💥 ✅. */
+  icon: string;
+  /** Optional tiny tag on the token, e.g. "₹5,000". */
+  label?: string;
+  /** Travels from this cast member to `to` during this frame. */
+  from?: string;
+  /** Destination cast member of the travel animation. */
+  to?: string;
+  /** Sits next to this cast member (static in this frame). */
+  at?: string;
+  /** Entrance/impact effect. */
+  effect?: 'pop' | 'burst' | 'shake' | 'drop' | 'float';
+}
+
+export type StoryCastStateValue = 'idle' | 'working' | 'done' | 'crashed' | 'locked' | 'happy';
+
+export interface StoryCastState {
+  id: string;
+  state: StoryCastStateValue;
+}
+
+export interface StoryFrame {
+  id: string;
+  /** Ultra-short caption, ideally under 8 words. */
+  caption: string;
+  /** Actor states for this frame; unspecified actors fall back to idle. */
+  cast?: StoryCastState[];
+  tokens: StoryToken[];
+}
+
+export interface StorySpec {
+  kind: 'story';
+  cast: StoryCastMember[];
+  frames: StoryFrame[];
+}
+
 export type AnimationSpec =
   | StepFlowSpec
   | CodeTraceSpec
   | TimelineSpec
   | BeforeAfterSpec
   | MemoryDiagramSpec
+  | StorySpec
   | CustomAnimationSpec;
 
 /* ---------- Content model ---------- */

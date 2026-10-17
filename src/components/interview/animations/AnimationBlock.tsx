@@ -7,6 +7,7 @@ import { CodeTrace } from './CodeTrace';
 import { Timeline } from './Timeline';
 import { BeforeAfter } from './BeforeAfter';
 import { MemoryDiagram } from './MemoryDiagram';
+import { Story } from './Story';
 import { AttentionScaling } from './custom/AttentionScaling';
 
 const CUSTOM_ANIMATIONS: Record<CustomAnimationSpec['key'], ComponentType> = {
@@ -25,6 +26,8 @@ export function AnimationBlock({ spec }: { spec: AnimationSpec }) {
       return <BeforeAfter spec={spec} />;
     case 'memory-diagram':
       return <MemoryDiagram spec={spec} />;
+    case 'story':
+      return <Story spec={spec} />;
     case 'custom': {
       const Custom = CUSTOM_ANIMATIONS[spec.key];
       return Custom ? <Custom /> : null;
