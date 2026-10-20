@@ -8,6 +8,7 @@ const EXPLORE_LINKS = [
     { href: "/about", label: "About" },
     { href: "/progress", label: "Progress" },
     { href: "/bookmarks", label: "Bookmarks" },
+    { href: "/developers", label: "API" },
     { href: "/support", label: "Support" },
 ]
 

@@ -46,6 +46,11 @@ progress, flashcard, or quiz layer across the platform.
 - [x] Company filter with URL state and search across company names.
 - [x] Company badges on question cards and detail pages, with a "signals, not guarantees" note.
 - [x] Tests extended: every question has at least one unique company tag (88 tests passing).
+- [x] **F03 continue learning**: recent-topic card on the home page.
+- [x] **F07 notes**: local per-topic notes with autosave on every topic route.
+- [x] **F14 daily challenge**: deterministic daily active-topic card on the home page.
+- [x] **F18 corrections**: "Suggest an edit" prefilled GitHub issue from every topic.
+- [x] **F19 public API**: `/api/topics`, `/api/domains`, `/api/interview` plus `/developers` docs.
 
 ## Principles
 

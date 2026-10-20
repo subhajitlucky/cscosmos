@@ -18,6 +18,8 @@ import { domains } from '@/data/domains';
 import { topics } from '@/data/topics';
 import { DomainCard } from '@/components/DomainCard';
 import { HomeSearchDeck } from '@/components/HomeSearchDeck';
+import { ContinueLearning } from '@/components/learning/ContinueLearning';
+import { DailyChallenge } from '@/components/learning/DailyChallenge';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -178,6 +180,11 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="page-container grid gap-3 md:grid-cols-2">
+        <ContinueLearning />
+        <DailyChallenge />
       </section>
 
       {/* 3-4. Interactive Command Deck & Search (+ conditional static sections) */}

@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         entry("/support", "monthly", 0.4),
         entry("/progress", "weekly", 0.4),
         entry("/bookmarks", "weekly", 0.3),
+        entry("/developers", "monthly", 0.4),
         ...domains.map((d) => entry(d.path, "weekly", 0.8)),
     ];
 

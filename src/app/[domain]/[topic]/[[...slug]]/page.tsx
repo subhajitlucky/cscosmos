@@ -8,6 +8,7 @@ import { legacyTopicRoutes } from '@/data/legacy-topic-routes';
 import type { DomainKey } from '@/data/domains';
 import { TopicInDevelopment } from '@/components/TopicInDevelopment';
 import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
+import { TopicNotes } from '@/components/learning/TopicNotes';
 
 export function generateStaticParams() {
   const modules = getAllTopicModules();
@@ -144,8 +145,9 @@ export default async function UniversalTopicPage({
 
     return (
       <div className="aicosmos-root min-h-screen">
-        <div className="page-container pt-6">
+        <div className="page-container space-y-2 pt-6">
           <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
+          <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
         </div>
         <Suspense
           fallback={
@@ -172,8 +174,9 @@ export default async function UniversalTopicPage({
 
     return (
       <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl space-y-2">
           <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
+          <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
         </div>
         <TopicInDevelopment
           topic={catalogTopic}
