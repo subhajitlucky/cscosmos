@@ -1,6 +1,6 @@
 # CSCosmos — What Remains
 
-Status snapshot: **14 of 20 planned features shipped**.
+Status snapshot: **15 of 20 planned features shipped**.
 
 ## Shipped
 
@@ -18,6 +18,7 @@ Status snapshot: **14 of 20 planned features shipped**.
 - Local spaced-repetition review queue at `/review`.
 - Timed, self-scored mock interviews at `/mock-interview`.
 - Bring-your-own-key AI tutor at `/tutor` with per-topic context.
+- Auto-graded exercises at `/exercises` with domain filters and explanations.
 
 ## Feature backlog
 
@@ -27,7 +28,6 @@ Status snapshot: **14 of 20 planned features shipped**.
 | F15 | Weekly leaderboards | P2 | F01 | Opt-in profiles and weekly aggregation. |
 | F16 | Certificates + verifiable badges | P2 | F01 | Open Badges / W3C VC with public verification. |
 | F17 | Community Q&A per topic | P2 | F01 + moderation | Threads, voting, reporting, moderator tools. |
-| F13 | Auto-graded exercises | P2 | Judge/runner | Start with client-side WASM; server judge only when proven. |
 | F20 | Embeddable visualizer widget | P1 | Public embed route | Needs standalone embed layout and share snippets. |
 
 ## Platform improvements
@@ -47,4 +47,4 @@ Status snapshot: **14 of 20 planned features shipped**.
 
 ## Next batch
 
-F01 → F15/F16/F17, then F13/F20.
+F01 → F15/F16/F17, then F20.

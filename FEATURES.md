@@ -59,6 +59,7 @@ progress, flashcard, or quiz layer across the platform.
 - [x] **F05 mock interview**: `/mock-interview` timed sessions with self-scoring.
 - [x] **F06 AI tutor**: `/tutor` BYO-key OpenAI-compatible tutor with topic context.
 - [x] Tutor shortcut added to every topic learning bar.
+- [x] **F13 exercises**: `/exercises` auto-graded question sets with instant explanations and domain filters.
 
 ## Principles
 

@@ -7,6 +7,7 @@ const EXPLORE_LINKS = [
     { href: "/interview", label: "Interview" },
     { href: "/roadmap", label: "Roadmap" },
     { href: "/review", label: "Review" },
+    { href: "/exercises", label: "Exercises" },
     { href: "/mock-interview", label: "Mock interview" },
     { href: "/tutor", label: "AI tutor" },
     { href: "/about", label: "About" },
