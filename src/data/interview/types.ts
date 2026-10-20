@@ -227,6 +227,8 @@ export interface InterviewQuestion {
   round: InterviewRound;
   type: QuestionType;
   tags: string[];
+  /** Companies that have asked this in public interview reports. */
+  companies?: string[];
   /** One-sentence pitch shown on cards. */
   oneLiner: string;
   /** "What interviewers are testing" — 1 short paragraph. */

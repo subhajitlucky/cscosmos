@@ -42,6 +42,10 @@ progress, flashcard, or quiz layer across the platform.
 - [x] **Topic learning bar**: bookmark + mark-complete + progress link on every topic route.
 - [x] Local-first storage layer (`src/lib/local-learning.ts`) — no server, no DB.
 - [x] Bookmarks/progress added to the sitemap.
+- [x] **F04 company tags**: every interview question has public-report company tags.
+- [x] Company filter with URL state and search across company names.
+- [x] Company badges on question cards and detail pages, with a "signals, not guarantees" note.
+- [x] Tests extended: every question has at least one unique company tag (88 tests passing).
 
 ## Principles
 

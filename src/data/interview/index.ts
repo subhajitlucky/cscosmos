@@ -1,4 +1,5 @@
 import { categories } from './categories';
+import { COMPANY_TAGS } from './companies';
 import type { InterviewCategory, InterviewCategoryKey, InterviewQuestion } from './types';
 import { fullstackQuestions } from './questions/fullstack';
 import { cybersecurityQuestions } from './questions/cybersecurity';
@@ -8,15 +9,33 @@ import { aiMlQuestions } from './questions/ai-ml';
 
 export * from './types';
 export { categories } from './categories';
+export { COMPANY_NOTE } from './companies';
 export * from './meta';
 
-export const interviewQuestions: InterviewQuestion[] = [
+const seededQuestions: InterviewQuestion[] = [
   ...fullstackQuestions,
   ...cybersecurityQuestions,
   ...dsaQuestions,
   ...systemDesignQuestions,
   ...aiMlQuestions,
 ];
+
+export const interviewQuestions: InterviewQuestion[] = seededQuestions.map((question) => ({
+  ...question,
+  companies: question.companies?.length ? question.companies : (COMPANY_TAGS[question.slug] ?? []),
+}));
+
+export function getCompanyOptions(): { value: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const question of interviewQuestions) {
+    for (const company of question.companies ?? []) {
+      counts.set(company, (counts.get(company) ?? 0) + 1);
+    }
+  }
+  return [...counts.entries()]
+    .map(([value, count]) => ({ value, count }))
+    .sort((a, b) => (a.value < b.value ? -1 : a.value > b.value ? 1 : 0));
+}
 
 export function getCategoryByKey(key: string): InterviewCategory | undefined {
   return categories.find((c) => c.key === key);

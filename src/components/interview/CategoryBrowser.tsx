@@ -133,6 +133,7 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
   const [frequency, setFrequency] = useState<FrequencyFilter>('all');
   const [round, setRound] = useState<RoundFilter>('all');
   const [type, setType] = useState<TypeFilter>('all');
+  const [company, setCompany] = useState('all');
   const [hydrated, setHydrated] = useState(false);
   const hydratedRef = useRef(false);
 
@@ -140,6 +141,11 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
 
   const topics = useMemo(() => {
     const unique = [...new Set(questions.map((q) => q.topic))];
+    return unique.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+  }, [questions]);
+
+  const companies = useMemo(() => {
+    const unique = [...new Set(questions.flatMap((q) => q.companies ?? []))];
     return unique.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   }, [questions]);
 
@@ -158,14 +164,16 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
     const f = params.get('frequency');
     const r = params.get('round');
     const ty = params.get('type');
+    const co = params.get('company');
     if (q) setSearch(q);
     if (t && topics.includes(t)) setTopic(t);
     if (d && DIFFICULTIES.includes(d as Difficulty)) setDifficulty(d as Difficulty);
     if (f && FREQUENCIES.includes(f as Frequency)) setFrequency(f as Frequency);
     if (r && ROUNDS.includes(r as InterviewRound)) setRound(r as InterviewRound);
     if (ty && QUESTION_TYPES.includes(ty as QuestionType)) setType(ty as QuestionType);
+    if (co && companies.includes(co)) setCompany(co);
     setHydrated(true);
-  }, [topics]);
+  }, [companies, topics]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -176,19 +184,21 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
     if (frequency !== 'all') params.set('frequency', frequency);
     if (round !== 'all') params.set('round', round);
     if (type !== 'all') params.set('type', type);
+    if (company !== 'all') params.set('company', company);
     const query = params.toString();
     window.history.replaceState(
       null,
       '',
       query ? `${window.location.pathname}?${query}` : window.location.pathname,
     );
-  }, [hydrated, search, topic, difficulty, frequency, round, type]);
+  }, [hydrated, search, topic, difficulty, frequency, round, type, company]);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     const matches = questions.filter((question) => {
       if (query) {
-        const haystack = `${question.title} ${question.topic} ${question.tags.join(' ')}`.toLowerCase();
+        const haystack =
+          `${question.title} ${question.topic} ${question.tags.join(' ')} ${(question.companies ?? []).join(' ')}`.toLowerCase();
         if (!haystack.includes(query)) return false;
       }
       if (topic !== 'all' && question.topic !== topic) return false;
@@ -196,6 +206,7 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
       if (frequency !== 'all' && question.frequency !== frequency) return false;
       if (round !== 'all' && question.round !== round) return false;
       if (type !== 'all' && question.type !== type) return false;
+      if (company !== 'all' && !(question.companies ?? []).includes(company)) return false;
       return true;
     });
     return matches.sort((a, b) => {
@@ -203,7 +214,7 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
       if (byFrequency !== 0) return byFrequency;
       return DIFFICULTY_ORDER[a.difficulty] - DIFFICULTY_ORDER[b.difficulty];
     });
-  }, [questions, search, topic, difficulty, frequency, round, type]);
+  }, [questions, search, topic, difficulty, frequency, round, type, company]);
 
   const clearFilters = () => {
     setSearch('');
@@ -212,6 +223,7 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
     setFrequency('all');
     setRound('all');
     setType('all');
+    setCompany('all');
   };
 
   return (
@@ -271,6 +283,27 @@ export function CategoryBrowser({ category, questions }: CategoryBrowserProps) {
             />
             <FilterRow label="Round" options={ROUND_OPTIONS} value={round} onChange={setRound} />
             <FilterRow label="Type" options={TYPE_OPTIONS} value={type} onChange={setType} />
+            <div className="flex items-center gap-2">
+              <label
+                htmlFor="interview-company-filter"
+                className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground"
+              >
+                Company
+              </label>
+              <select
+                id="interview-company-filter"
+                value={company}
+                onChange={(event) => setCompany(event.target.value)}
+                className="rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground focus:border-primary focus-ring"
+              >
+                <option value="all">All</option>
+                {companies.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </div>

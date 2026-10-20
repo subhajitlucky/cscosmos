@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { AlertTriangle, ArrowRight, Lightbulb, Target } from 'lucide-react';
 import {
+  COMPANY_NOTE,
   DIFFICULTY_META,
   FREQUENCY_META,
   ROUND_META,
@@ -70,11 +71,34 @@ export function QuestionView({
             {question.topic}
           </span>
         </div>
+        {(question.companies ?? []).length > 0 && (
+          <div className="mt-3 flex flex-wrap items-center gap-1.5">
+            <span
+              className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground"
+              title={COMPANY_NOTE}
+            >
+              Asked at
+            </span>
+            {(question.companies ?? []).map((company) => (
+              <span
+                key={company}
+                className="rounded-full border border-primary/30 bg-primary/5 px-2 py-0.5 text-[10px] font-medium text-primary"
+              >
+                {company}
+              </span>
+            ))}
+          </div>
+        )}
+
         <div className="mt-3 flex flex-wrap gap-2 font-mono text-[10px] text-muted-foreground/80">
           {question.tags.map((tag) => (
             <span key={tag}>#{tag}</span>
           ))}
         </div>
+
+        {(question.companies ?? []).length > 0 && (
+          <p className="mt-2 text-[10px] text-muted-foreground/70">{COMPANY_NOTE}</p>
+        )}
       </header>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">

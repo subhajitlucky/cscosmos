@@ -8,6 +8,7 @@ import {
   getAdjacentQuestions,
   getCategoryByKey,
   getCategoryFacets,
+  getCompanyOptions,
   getQuestion,
   getQuestionsByCategory,
   interviewQuestions,
@@ -59,6 +60,26 @@ describe('interview questions', () => {
       expect(q.followUps.length).toBeGreaterThanOrEqual(2);
       if (q.relatedEngine) expect(q.relatedEngine.href.startsWith('/')).toBe(true);
     }
+  });
+
+  it('every question has at least one company tag', () => {
+    for (const q of interviewQuestions) {
+      const companies = q.companies ?? [];
+      expect(companies.length, `${q.slug} company count`).toBeGreaterThan(0);
+      for (const company of companies) {
+        expect(company.trim().length, `${q.slug} empty company`).toBeGreaterThan(0);
+      }
+      expect(new Set(companies).size, `${q.slug} duplicate companies`).toBe(companies.length);
+    }
+  });
+
+  it('company options aggregate every question tag exactly once', () => {
+    const options = getCompanyOptions();
+    const total = options.reduce((sum, option) => sum + option.count, 0);
+    const expected = interviewQuestions.reduce((sum, q) => sum + (q.companies?.length ?? 0), 0);
+    expect(total).toBe(expected);
+    const values = options.map((option) => option.value);
+    expect([...values].sort()).toEqual(values);
   });
 
   it('every question topic belongs to its category taxonomy', () => {

@@ -40,8 +40,24 @@ export function QuestionCard({ question }: { question: InterviewQuestion }) {
       </h2>
       <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{question.oneLiner}</p>
 
+      {(question.companies ?? []).length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-1.5">
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            Asked at
+          </span>
+          {(question.companies ?? []).slice(0, 3).map((company) => (
+            <span
+              key={company}
+              className="rounded-full border border-primary/30 bg-primary/5 px-2 py-0.5 text-[10px] font-medium text-primary"
+            >
+              {company}
+            </span>
+          ))}
+        </div>
+      )}
+
       {question.tags.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        <div className="mt-2 flex flex-wrap gap-1.5">
           {question.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
