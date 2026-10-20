@@ -60,6 +60,11 @@ progress, flashcard, or quiz layer across the platform.
 - [x] **F06 AI tutor**: `/tutor` BYO-key OpenAI-compatible tutor with topic context.
 - [x] Tutor shortcut added to every topic learning bar.
 - [x] **F13 exercises**: `/exercises` auto-graded question sets with instant explanations and domain filters.
+- [x] **F01 accounts**: passwordless magic links, sessions, and cross-device learning sync.
+- [x] **F15 leaderboard**: opt-in completed-topic ranking.
+- [x] **F16 certificates**: claimable public certificate pages with verification IDs.
+- [x] **F17 community Q&A**: authenticated per-topic comments.
+- [x] **F20 embed widget**: chrome-free `/embed/topic/[slug]` routes with an embed snippet on `/developers`.
 
 ## Principles
 
@@ -342,34 +347,34 @@ Effort: **S** = 1–2 days, **M** = 3–5 days, **L** = 1–2 weeks.
 ## Build sequence
 
 ### Phase 0 — Foundation (week 1)
-- [ ] I01 CI, I06 analytics, I02 content quality
-- [ ] F08 local bookmarks
-- [ ] Verify all 72 active routes
+- [x] I01 CI, I06 analytics, I02 content quality
+- [x] F08 local bookmarks
+- [x] Verify all 72 active routes
 
 ### Phase 1 — Retention loop (weeks 2–4)
-- [ ] F02 local progress dashboard
-- [ ] F03 continue learning
-- [ ] F12 topic metadata + filters
-- [ ] F11 prerequisites/related
+- [x] F02 local progress dashboard
+- [x] F03 continue learning
+- [x] F12 topic metadata + filters
+- [x] F11 prerequisites/related
 
 ### Phase 2 — Accounts + learning bank (weeks 5–8)
-- [ ] F01 accounts + sync
-- [ ] F04 company-tagged bank
-- [ ] F10 roadmap generator
-- [ ] F07 notes
+- [x] F01 accounts + sync
+- [x] F04 company-tagged bank
+- [x] F10 roadmap generator
+- [x] F07 notes
 
 ### Phase 3 — Daily habit (weeks 9–12)
-- [ ] F14 daily challenge
-- [ ] F09 SRS flashcards
-- [ ] F06 AI tutor (BYO key)
-- [ ] F20 embed widget
+- [x] F14 daily challenge
+- [x] F09 SRS flashcards
+- [x] F06 AI tutor (BYO key)
+- [x] F20 embed widget
 
 ### Phase 4 — Community + scale (later)
-- [ ] F17 Q&A
-- [ ] F15 leaderboards
-- [ ] F05 mock interviews
-- [ ] F16 certificates
-- [ ] F19 public API
+- [x] F17 Q&A
+- [x] F15 leaderboards
+- [x] F05 mock interviews
+- [x] F16 certificates
+- [x] F19 public API
 
 ## Cost model — what runs for ₹0
 

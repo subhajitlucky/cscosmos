@@ -15,6 +15,12 @@
     --popover-foreground: 240 10% 3.9%;
     --primary: 240 5.9% 10%;
     --primary-foreground: 0 0% 98%;
+    /* A complete colour, not a triple, because it is only ever consumed directly as a shadow /
+       glow colour: `shadow-[0_0_15px_var(--primary-dim)]`. That is how ptopblockchain asks for
+       its neon glow; while the variable was undefined the whole box-shadow declaration was
+       invalid, so the glow never painted. Defined globally (not per-engine) because the
+       utility is written in the shared theme namespace. */
+    --primary-dim: hsl(240 5.9% 10% / 0.45);
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
@@ -46,8 +52,25 @@
     --accent-main-rgb: 0, 0, 0;
     --accent-secondary: #2563eb;
     --text-main: #09090b;
-    --text-muted: #71717a;
+    /* Was zinc-500 `#71717a`, which measures 4.83:1 on `--bg-main` (#ffffff) but only
+       **4.40:1 on `--bg-surface`** (#f4f4f5) and 3.81:1 on a #e4e4e7 inset — below AA for
+       normal text on the surfaces it is actually painted on. zinc-600 gives 7.73 / 7.03 /
+       6.09 respectively. All 37 consumers are `color:`/`text-[…]` in jsviz, so only text is
+       affected (FS-68); the dark value below is left as it is. */
+    --text-muted: #52525b;
     --text-inverse: #ffffff;
+
+    /* EvmInternals palette (FS-85). Space-separated HSL triples, because the
+       Tailwind entries are `hsl(var(--evm-*) / <alpha-value>)` — the triple form
+       is what makes opacity modifiers (`bg-evm-accent/10`) emit a rule at all in
+       Tailwind 3. Two roles on purpose: `--evm-accent` is the bright fill that
+       carries near-black `text-neutral-950`, `--evm-accent-text` is the darker
+       text role that stays readable on white and on the fill's 10–20% tints.
+       Contrast table + values: scratch/agents/fs85/contrast.mjs */
+    --evm-accent: 239 84% 70%; /* fill #7274f3 — 5.21:1 against #0a0a0a */
+    --evm-accent-text: 243 75% 56%; /* text #433be3 — 7.08:1 on white, 5.63:1 on the 20% tint */
+    --evm-gas: 26 90% 35%; /* gas #aa4f09 — 5.28:1 on neutral-50, 4.38:1 against the track */
+    --evm-bg: 0 0% 100%; /* page-background alias */
   }
 
   .dark {
@@ -60,6 +83,7 @@
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%; /* High contrast pure monochrome */
     --primary-foreground: 240 5.9% 10%;
+    --primary-dim: hsl(0 0% 98% / 0.35);
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
@@ -92,6 +116,15 @@
     --text-main: #e4e4e7;
     --text-muted: #a1a1aa;
     --text-inverse: #09090b;
+
+    /* EvmInternals palette, dark (FS-85) — see the light block above. Both the
+       fill and the text role get *lighter* here; the fill still has to carry
+       `text-neutral-950`, which is why it is a tint (indigo-400-ish) rather than
+       a deep indigo. */
+    --evm-accent: 234 89% 74%; /* fill #828df8 — 6.73:1 against #0a0a0a */
+    --evm-accent-text: 230 94% 82%; /* text #a6b4fc — 10.03:1 on the page background */
+    --evm-gas: 43 96% 56%; /* gas #fbbd23 — 11.78:1 on the gas card */
+    --evm-bg: 240 10% 3.9%; /* page-background alias (matches --background) */
   }
 
   /* BlockViz Standalone Scoped Colors (Pure Obsidian Black & Monochrome) */
@@ -511,6 +544,21 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+/* Hide a scrollbar while keeping the element scrollable. Nine sites across `evminternals`
+   (Opcode/Stack/Memory/Storage visualizers, Playground) and `blockchainviz` (DistributedLedger,
+   Fork, HashLinking, Chain visualizers) already ask for this class and it was defined nowhere,
+   so those scroll containers showed a scrollbar instead of hiding it (FS-90). This is the
+   standard cross-browser recipe; `.custom-scrollbar` below is a different intent (style the
+   bar) and is not a substitute. */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and legacy Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chromium and Safari */
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
@@ -662,4 +710,18 @@
     animation: none !important;
     stroke-dasharray: none;
   }
+}
+
+/* Embed mode: hide site chrome when ?embed=1 is present. */
+[data-embed="true"] nav,
+[data-embed="true"] footer {
+  display: none !important;
+}
+
+[data-embed="true"] main {
+  min-height: 100vh;
+}
+
+[data-embed="true"] body {
+  background: var(--background);
 }

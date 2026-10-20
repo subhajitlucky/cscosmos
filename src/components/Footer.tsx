@@ -14,6 +14,8 @@ const EXPLORE_LINKS = [
     { href: "/progress", label: "Progress" },
     { href: "/bookmarks", label: "Bookmarks" },
     { href: "/developers", label: "API" },
+    { href: "/login", label: "Account" },
+    { href: "/leaderboard", label: "Leaderboard" },
     { href: "/support", label: "Support" },
 ]
 

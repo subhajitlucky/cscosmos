@@ -11,7 +11,7 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 ## Proof
 
 - 245 curated computer science learning modules.
-- 55 live visualizer topics powered by 47 natively absorbed interactive engines (zero externally linked).
+- 72 live visualizer topics powered by 70 natively absorbed interactive engines (zero externally linked).
 - 8 major domains with dedicated routes.
 - 1,500+ statically pre-rendered pages via Next.js SSG.
 - Interview Prep: 17 deep-dive questions across 5 categories with step-by-step animated walkthroughs.
@@ -64,7 +64,7 @@ The authoritative list is defined in `src/data/topics.ts`.
 
 ```text
 src/app/
-  Next.js 15 App Router pages and catch-all routes for absorbed visualizers
+  Next.js App Router pages and catch-all routes for absorbed visualizers
 
 src/data/domains.ts
   Domain metadata: name, route, description, color, icons
@@ -114,7 +114,9 @@ To absorb a microsite natively:
 
 ## Routing And Deployment
 
-CSCosmos uses the Next.js 15 App Router for file-system based routing:
+CSCosmos uses the Next.js App Router for file-system based routing. Every absorbed visualizer
+follows one pattern, `/<engine>/[[...slug]]`, with `generateStaticParams()` supplying its sub-routes
+(70 such routes today):
 
 - `/` — Home page
 - `/topics` — Full topic catalog
@@ -123,7 +125,7 @@ CSCosmos uses the Next.js 15 App Router for file-system based routing:
 - `/interview/[category]` — Filterable question list (topic, difficulty, frequency, round, type)
 - `/interview/[category]/[question]` — Dedicated question page with step-by-step animated walkthrough
 - `/[domain]` — Domain-specific topic lists (e.g., `/fullstack`, `/ai`, `/dsa`)
-- `/learn/[slug]` — Universal player loading native visualizers or fallback registry
+- `/learn/[slug]` — permanent redirect alias to each topic's canonical `/<domain>/<slug>` URL
 - `/program-cosmos/[[...slug]]` — Absorbed visualizer routes
 - `/html-cosmos/[[...slug]]`
 - `/css-cosmos/[[...slug]]`
@@ -142,12 +144,25 @@ The platform includes:
 - Server-rendered HTML for all pages via Next.js SSG.
 - Proper title, description, canonical URL, robots metadata, OpenGraph, and Twitter metadata.
 - `public/robots.txt`.
-- `public/sitemap.xml`.
+- A generated sitemap at `src/app/sitemap.ts` (served as `/sitemap.xml`; there is no static file).
 - `public/llms.txt`.
+
+## Accounts And Sync
+
+Progress, bookmarks, notes, and streaks are local-first. Optional passwordless accounts
+sync them across devices.
+
+1. Use any Postgres free tier and set `DATABASE_URL` (and `DATABASE_SSL=disable` locally).
+2. Run [`db/auth.sql`](./db/auth.sql).
+3. Set `RESEND_API_KEY`, `ALERT_FROM_EMAIL`, and `NEXT_PUBLIC_SITE_URL`.
+4. Sign in at `/login`; push or pull state from `/progress`.
+
+If these variables are missing, the rest of the site works and the account APIs return an
+honest `503`.
 
 ## Tech Stack
 
-- Next.js 15 (App Router)
+- Next.js 16 (App Router)
 - React 19
 - TypeScript
 - Tailwind CSS

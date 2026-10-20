@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { LayoutWrapper } from '@/components/LayoutWrapper';
+import { EmbedFlag } from '@/components/EmbedFlag';
 import '@/index.css';
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <EmbedFlag />
         <ThemeProvider defaultTheme="dark" storageKey="cscosmos-ui-theme">
           <LayoutWrapper>{children}</LayoutWrapper>
         </ThemeProvider>

@@ -124,6 +124,24 @@ curl ${siteConfig.url}/api/interview`}
         </section>
 
         <section className="glass-card space-y-3 rounded-2xl p-6">
+          <h2 className="text-sm font-semibold text-foreground">Embed a visualizer</h2>
+          <p className="text-sm text-muted-foreground">
+            Every active topic has a chrome-free embed route. Replace the slug with any
+            active topic from <code className="font-mono text-xs">/api/topics</code>.
+          </p>
+          <pre className="overflow-x-auto rounded-lg border border-border bg-secondary/30 p-4 font-mono text-[11px] leading-relaxed text-muted-foreground">
+{`<iframe
+  src="${siteConfig.url}/embed/topic/program-cosmos"
+  width="1200"
+  height="800"
+  title="CSCosmos visualizer"
+  style="border:0"
+  allow="fullscreen"
+></iframe>`}
+          </pre>
+        </section>
+
+        <section className="glass-card space-y-3 rounded-2xl p-6">
           <h2 className="text-sm font-semibold text-foreground">Rules</h2>
           <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
             <li>Read-only. There are no write endpoints.</li>

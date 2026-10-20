@@ -10,6 +10,7 @@ import { TopicInDevelopment } from '@/components/TopicInDevelopment';
 import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
 import { TopicNotes } from '@/components/learning/TopicNotes';
 import { RelatedTopics } from '@/components/learning/RelatedTopics';
+import { TopicComments } from '@/components/learning/TopicComments';
 
 export function generateStaticParams() {
   const modules = getAllTopicModules();
@@ -150,6 +151,7 @@ export default async function UniversalTopicPage({
           <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
           <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
           <RelatedTopics slug={learningSlug} domain={learningDomain} />
+          <TopicComments slug={learningSlug} />
         </div>
         <Suspense
           fallback={
@@ -180,6 +182,7 @@ export default async function UniversalTopicPage({
           <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
           <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
           <RelatedTopics slug={learningSlug} domain={learningDomain} />
+          <TopicComments slug={learningSlug} />
         </div>
         <TopicInDevelopment
           topic={catalogTopic}
