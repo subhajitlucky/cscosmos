@@ -51,6 +51,14 @@ progress, flashcard, or quiz layer across the platform.
 - [x] **F14 daily challenge**: deterministic daily active-topic card on the home page.
 - [x] **F18 corrections**: "Suggest an edit" prefilled GitHub issue from every topic.
 - [x] **F19 public API**: `/api/topics`, `/api/domains`, `/api/interview` plus `/developers` docs.
+- [x] **F11/F12 metadata**: difficulty, estimated time, tags, prerequisites, related topics.
+- [x] **F12 catalog filters**: difficulty and max-time filters on `/topics`.
+- [x] **F10 roadmap generator**: `/roadmap` builds 4/8/12-week plans from goal, level, and hours.
+- [x] **F09 spaced repetition**: `/review` SM-2 queue built from the interview bank, stored locally.
+- [x] Learning graph surfaced on every topic page; metadata shown on cards.
+- [x] **F05 mock interview**: `/mock-interview` timed sessions with self-scoring.
+- [x] **F06 AI tutor**: `/tutor` BYO-key OpenAI-compatible tutor with topic context.
+- [x] Tutor shortcut added to every topic learning bar.
 
 ## Principles
 

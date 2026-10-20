@@ -5,13 +5,18 @@ import { SearchBar } from "@/components/SearchBar";
 import { TopicCard } from "@/components/TopicCard";
 import { topics } from "@/data/topics";
 import { domains, type DomainKey } from "@/data/domains";
+import type { TopicDifficulty } from "@/data/topic-meta";
 import { Button } from "@/components/ui/button";
 
 const allOption = "all" as const;
+type DifficultyFilter = TopicDifficulty | typeof allOption;
+type TimeFilter = "all" | "30" | "60" | "90";
 
 export default function AllTopicsPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedDomain, setSelectedDomain] = useState<DomainKey | typeof allOption>(allOption);
+    const [difficulty, setDifficulty] = useState<DifficultyFilter>(allOption);
+    const [maxMinutes, setMaxMinutes] = useState<TimeFilter>("all");
 
     const filteredTopics = useMemo(() => {
         return topics.filter((topic) => {
@@ -19,10 +24,14 @@ export default function AllTopicsPage() {
                 selectedDomain === allOption ||
                 topic.domain === selectedDomain ||
                 topic.aliases?.includes(selectedDomain);
-            const matchesQuery = topic.name.toLowerCase().includes(searchQuery.toLowerCase());
-            return matchesDomain && matchesQuery;
+            const matchesQuery =
+                topic.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                topic.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+            const matchesDifficulty = difficulty === allOption || topic.difficulty === difficulty;
+            const matchesTime = maxMinutes === "all" || topic.estimatedMinutes <= Number(maxMinutes);
+            return matchesDomain && matchesQuery && matchesDifficulty && matchesTime;
         });
-    }, [searchQuery, selectedDomain]);
+    }, [searchQuery, selectedDomain, difficulty, maxMinutes]);
 
     return (
         <div className="py-12">
@@ -67,6 +76,42 @@ export default function AllTopicsPage() {
                             ))}
                         </div>
                     </div>
+                    <div className="flex flex-col gap-3 border-t border-border/70 pt-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
+                                Difficulty
+                            </span>
+                            {([allOption, "beginner", "intermediate", "advanced"] as DifficultyFilter[]).map(
+                                (value) => (
+                                    <Button
+                                        key={value}
+                                        variant={difficulty === value ? "primary" : "ghost"}
+                                        size="sm"
+                                        onClick={() => setDifficulty(value)}
+                                    >
+                                        {value === allOption
+                                            ? "All"
+                                            : value.charAt(0).toUpperCase() + value.slice(1)}
+                                    </Button>
+                                )
+                            )}
+                        </div>
+
+                        <label className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
+                            Max time
+                            <select
+                                value={maxMinutes}
+                                onChange={(event) => setMaxMinutes(event.target.value as TimeFilter)}
+                                className="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground focus:border-foreground/30 focus:outline-none"
+                            >
+                                <option value="all">Any</option>
+                                <option value="30">30 min</option>
+                                <option value="60">60 min</option>
+                                <option value="90">90 min</option>
+                            </select>
+                        </label>
+                    </div>
+
                     <div className="text-sm text-muted-foreground">
                         Showing {filteredTopics.length} of {topics.length} topics
                     </div>

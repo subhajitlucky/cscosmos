@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Bookmark, BookmarkCheck, CheckCircle2, Circle, LineChart } from "lucide-react";
+import { Bookmark, BookmarkCheck, Bot, CheckCircle2, Circle, LineChart } from "lucide-react";
 import {
   LEARNING_EVENT,
   markVisited,
@@ -82,6 +82,14 @@ export function TopicLearningBar({ slug, name, domain }: TopicLearningBarProps) 
           )}
           {mounted && bookmarked ? "Bookmarked" : "Bookmark"}
         </button>
+
+        <Link
+          href={`/tutor?topic=${encodeURIComponent(slug)}`}
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <Bot className="h-4 w-4" aria-hidden="true" />
+          Tutor
+        </Link>
 
         <Link
           href="/progress"

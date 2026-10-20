@@ -9,6 +9,7 @@ import type { DomainKey } from '@/data/domains';
 import { TopicInDevelopment } from '@/components/TopicInDevelopment';
 import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
 import { TopicNotes } from '@/components/learning/TopicNotes';
+import { RelatedTopics } from '@/components/learning/RelatedTopics';
 
 export function generateStaticParams() {
   const modules = getAllTopicModules();
@@ -148,6 +149,7 @@ export default async function UniversalTopicPage({
         <div className="page-container space-y-2 pt-6">
           <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
           <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
+          <RelatedTopics slug={learningSlug} domain={learningDomain} />
         </div>
         <Suspense
           fallback={
@@ -177,6 +179,7 @@ export default async function UniversalTopicPage({
         <div className="mx-auto max-w-6xl space-y-2">
           <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
           <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
+          <RelatedTopics slug={learningSlug} domain={learningDomain} />
         </div>
         <TopicInDevelopment
           topic={catalogTopic}

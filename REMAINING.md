@@ -1,7 +1,6 @@
 # CSCosmos — What Remains
 
-Status snapshot: **8 of 20 planned features shipped**. The rest are grouped by dependency
-so the next batches do not build the same foundation twice.
+Status snapshot: **14 of 20 planned features shipped**.
 
 ## Shipped
 
@@ -13,17 +12,17 @@ so the next batches do not build the same foundation twice.
 - Daily challenge.
 - Suggest-an-edit workflow.
 - Public API (`/api/topics`, `/api/domains`, `/api/interview`) with `/developers` docs.
+- Topic metadata: difficulty, estimated time, tags, prerequisites, related topics.
+- Catalog filters for difficulty and time.
+- Personalized roadmap generator at `/roadmap`.
+- Local spaced-repetition review queue at `/review`.
+- Timed, self-scored mock interviews at `/mock-interview`.
+- Bring-your-own-key AI tutor at `/tutor` with per-topic context.
 
 ## Feature backlog
 
 | ID | Feature | Priority | Depends on | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| F11 | Prerequisite + related-topic graph | P1 | Topic metadata | Extend `Topic` with `prerequisites`, `related`, `difficulty`, `estimatedMinutes`; populate active topics. |
-| F12 | Difficulty/time metadata + filters | P1 | F11 metadata | Filter catalog by domain, difficulty, tag, and time. |
-| F10 | Personalized roadmap generator | P1 | F11, F12 | Generate 4/8/12-week plans from goals and metadata. |
-| F09 | Global spaced-repetition flashcards | P1 | Per-engine flashcards | Unify existing cards into one SM-2 review queue; local-first. |
-| F05 | Mock interview mode | P1 | Existing interview questions | Timer, hidden hints, self-score; no auth required for v1. |
-| F06 | AI tutor with BYO key | P1 | None | User supplies key; explain current topic and visualizer; no inference cost to CSCosmos. |
 | F01 | Accounts + cross-device sync | P0 for retention | Auth + Postgres free tier | Sync progress, bookmarks, notes, completions. |
 | F15 | Weekly leaderboards | P2 | F01 | Opt-in profiles and weekly aggregation. |
 | F16 | Certificates + verifiable badges | P2 | F01 | Open Badges / W3C VC with public verification. |
@@ -43,11 +42,9 @@ so the next batches do not build the same foundation twice.
 
 ## Critical path
 
-1. **Metadata** (F11/F12) unlocks roadmap, filters, and recommendations.
-2. **Local-first retention** (F09/F05/F06) ships without infrastructure.
-3. **Auth + Postgres** (F01) is required before leaderboards, certificates, and community.
-4. **Judge** (F13) and **embed layout** (F20) are separate tracks; do not block learning features on them.
+1. **Auth + Postgres** (F01) unlocks leaderboards, certificates, and community.
+2. **Judge** (F13) and **embed layout** (F20) are separate tracks; do not block learning features on them.
 
 ## Next batch
 
-F11 → F12 → F10 → F09, then F05 → F06, then F01.
+F01 → F15/F16/F17, then F13/F20.

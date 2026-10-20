@@ -5,6 +5,10 @@ import { siteConfig } from "../config/site"
 const EXPLORE_LINKS = [
     { href: "/topics", label: "Topics" },
     { href: "/interview", label: "Interview" },
+    { href: "/roadmap", label: "Roadmap" },
+    { href: "/review", label: "Review" },
+    { href: "/mock-interview", label: "Mock interview" },
+    { href: "/tutor", label: "AI tutor" },
     { href: "/about", label: "About" },
     { href: "/progress", label: "Progress" },
     { href: "/bookmarks", label: "Bookmarks" },

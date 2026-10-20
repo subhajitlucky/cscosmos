@@ -34,6 +34,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         entry("/progress", "weekly", 0.4),
         entry("/bookmarks", "weekly", 0.3),
         entry("/developers", "monthly", 0.4),
+        entry("/roadmap", "monthly", 0.5),
+        entry("/review", "weekly", 0.4),
+        entry("/mock-interview", "weekly", 0.5),
+        entry("/tutor", "monthly", 0.4),
         ...domains.map((d) => entry(d.path, "weekly", 0.8)),
     ];
 

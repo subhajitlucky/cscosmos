@@ -60,6 +60,12 @@ export function TopicCard({ topic, onClick, alsoInDomain }: TopicCardProps) {
                 )}
             </div>
 
+            <div className="relative z-10 mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                <span>{topic.difficulty}</span>
+                <span aria-hidden="true">·</span>
+                <span>{topic.estimatedMinutes} min</span>
+            </div>
+
             <p className="relative z-10 text-sm text-muted-foreground line-clamp-2 min-h-[40px] leading-relaxed">
                 {topic.shortDescription}
             </p>

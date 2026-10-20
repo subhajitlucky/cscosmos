@@ -1,4 +1,5 @@
 import type { DomainKey } from './domains';
+import { getTopicMeta, type TopicDifficulty } from './topic-meta';
 
 export interface Topic {
     id: number;
@@ -10,6 +11,11 @@ export interface Topic {
     slug: string;
     status: 'coming-soon' | 'active'; // Future proofing
     url?: string;
+    difficulty: TopicDifficulty;
+    estimatedMinutes: number;
+    tags: string[];
+    prerequisites: string[];
+    related: string[];
 }
 
 let idCounter = 1;
@@ -31,6 +37,7 @@ type TopicOptions = {
 const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): Topic => {
     const slug = options?.slug ?? slugify(name);
     const status = options?.status ?? 'coming-soon';
+    const meta = getTopicMeta(slug, domain, name);
     return {
         id: idCounter++,
         name,
@@ -40,6 +47,7 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
         shortDescription: `Interactive visualization and learning module for ${name}.`,
         status,
         url: `/${domain}/${slug}`,
+        ...meta,
     };
 };
 
