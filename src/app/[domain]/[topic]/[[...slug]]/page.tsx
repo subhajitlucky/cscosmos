@@ -7,6 +7,7 @@ import { topics } from '@/data/topics';
 import { legacyTopicRoutes } from '@/data/legacy-topic-routes';
 import type { DomainKey } from '@/data/domains';
 import { TopicInDevelopment } from '@/components/TopicInDevelopment';
+import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
 
 export function generateStaticParams() {
   const modules = getAllTopicModules();
@@ -108,6 +109,15 @@ export default async function UniversalTopicPage({
   const mod = getTopicModule(topic);
   const basePath = `/${domain}/${topic}`;
 
+  const catalogTopic = topics.find(
+    (t) => t.slug === topic && (t.domain === domain || t.aliases?.includes(domain as DomainKey))
+  );
+  const moduleTopic = mod ? topics.find((t) => t.slug === mod.id) : undefined;
+  const learningTopic = catalogTopic ?? moduleTopic;
+  const learningSlug = learningTopic?.slug ?? topic;
+  const learningName = learningTopic?.name ?? mod?.title ?? topic;
+  const learningDomain = learningTopic?.domain ?? (domain as DomainKey);
+
   if (mod && mod.domain === domain) {
     const first = slug && slug.length > 0 ? slug[0] : '';
     const second = slug && slug.length > 1 ? slug[1] : '';
@@ -134,6 +144,9 @@ export default async function UniversalTopicPage({
 
     return (
       <div className="aicosmos-root min-h-screen">
+        <div className="page-container pt-6">
+          <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
+        </div>
         <Suspense
           fallback={
             <div className="p-12 text-center font-mono text-xs text-muted-foreground">
@@ -147,10 +160,6 @@ export default async function UniversalTopicPage({
     );
   }
 
-  const catalogTopic = topics.find(
-    (t) => t.slug === topic && (t.domain === domain || t.aliases?.includes(domain as DomainKey))
-  );
-
   if (catalogTopic) {
     const activeDomainTopics = topics.filter(
       (t) =>
@@ -163,6 +172,9 @@ export default async function UniversalTopicPage({
 
     return (
       <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
+        </div>
         <TopicInDevelopment
           topic={catalogTopic}
           viewName={first}

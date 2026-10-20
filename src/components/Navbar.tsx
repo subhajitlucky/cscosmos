@@ -36,6 +36,12 @@ export function Navbar() {
                     <Link href="/about" className={getLinkClass("/about")}>
                         About
                     </Link>
+                    <Link href="/progress" className={getLinkClass("/progress")}>
+                        Progress
+                    </Link>
+                    <Link href="/support" className={getLinkClass("/support")}>
+                        Support
+                    </Link>
                     <a href={siteConfig.links.github} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                         <Github className="h-5 w-5" />
                         <span className="sr-only">GitHub</span>

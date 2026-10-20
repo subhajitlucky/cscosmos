@@ -6,6 +6,9 @@ const EXPLORE_LINKS = [
     { href: "/topics", label: "Topics" },
     { href: "/interview", label: "Interview" },
     { href: "/about", label: "About" },
+    { href: "/progress", label: "Progress" },
+    { href: "/bookmarks", label: "Bookmarks" },
+    { href: "/support", label: "Support" },
 ]
 
 const SOURCE_LINKS = [

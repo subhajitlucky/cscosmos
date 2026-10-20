@@ -30,6 +30,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         entry("/topics", "weekly", 0.9),
         entry("/interview", "weekly", 0.9),
         entry("/about", "monthly", 0.7),
+        entry("/support", "monthly", 0.4),
+        entry("/progress", "weekly", 0.4),
+        entry("/bookmarks", "weekly", 0.3),
         ...domains.map((d) => entry(d.path, "weekly", 0.8)),
     ];
 
@@ -42,8 +45,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         entries.push(entry(t.url, "weekly", 0.7));
     }
 
-    // Interview prep: hub, category pages, and every question page.
-    entries.push(entry("/interview", "weekly", 0.9));
+    // Interview prep: category pages and every question page. The `/interview` hub itself is
+    // already listed above — it used to be pushed a second time here, so the sitemap emitted
+    // that URL twice (FS-30).
     for (const c of interviewCategories) {
         entries.push(entry(`/interview/${c.key}`, "weekly", 0.8));
         for (const q of getQuestionsByCategory(c.key)) {
@@ -51,5 +55,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }
     }
 
-    return entries;
+    // Belt and braces: a sitemap must not contain the same URL twice. Deduplicating by URL
+    // here (keeping the first, highest-priority occurrence) means a future addition to any of
+    // the lists above cannot silently reintroduce the duplicate.
+    const emitted = new Set<string>();
+    return entries.filter((e) => {
+        if (emitted.has(e.url)) return false;
+        emitted.add(e.url);
+        return true;
+    });
 }
