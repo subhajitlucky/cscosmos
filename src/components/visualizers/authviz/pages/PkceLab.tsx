@@ -11,7 +11,7 @@ export default function PkceLab() {
           OAuth 2.0 PKCE Flow Lab
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base">
-          Interactive evaluation of Code Verifier generation, SHA-256 Code Challenge, and authorization code token exchange.
+          Interactive evaluation of Code Verifier generation, SHA-256 Code Challenge, browser-bound state validation, and authorization code token exchange.
         </p>
       </div>
 

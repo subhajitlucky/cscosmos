@@ -17,27 +17,32 @@ export const AUTH_TOPICS: AuthTopic[] = [
     title: 'OAuth 2.0 Authorization Code Flow with PKCE (Proof Key for Code Exchange)',
     category: 'oauth-oidc',
     difficulty: 'Advanced',
-    summary: 'PKCE eliminates the need for client secrets in public Single Page Apps (React/Next.js) and Mobile Apps. The client generates a random Code Verifier and sends its SHA-256 Code Challenge; the authorization server verifies the hash on token exchange.',
+    summary: 'PKCE eliminates the need for client secrets in public Single Page Apps (React/Next.js) and Mobile Apps. The client generates a random Code Verifier and sends its SHA-256 Code Challenge; the authorization server verifies the hash on token exchange. A browser-bound state value is still required to prevent login CSRF.',
     mentalModel: 'The Tamper-Evident Half-Ticket: Before sending a messenger to pick up your concert pass, you rip a ticket in half (Code Verifier) and give the box office a photo of the unique jagged rip line (Code Challenge). When the messenger arrives with the authorization code, only the person presenting the matching half-ticket can claim the real wristband.',
-    codeSnippet: `// 1. Client generates high-entropy random string (Code Verifier):
+    codeSnippet: `// 1. Client generates high-entropy random strings:
 const codeVerifier = generateRandomString(64);
+const state = generateRandomString(32);
 
-// 2. Client computes SHA-256 hash (Code Challenge):
-const codeChallenge = base64UrlEncode(sha256(codeVerifier));
+// 2. Store state in a short-lived, browser-bound cookie:
+// Set-Cookie: oauth_state=\${state}; HttpOnly; Secure; SameSite=Lax; Max-Age=300
 
-// 3. User redirects to Auth0/Google with challenge:
-// GET /authorize?response_type=code&client_id=...&code_challenge=\${codeChallenge}&code_challenge_method=S256
+// 3. Redirect to the IdP with challenge + state:
+// GET /authorize?response_type=code&client_id=...&redirect_uri=...&state=\${state}&code_challenge=\${codeChallenge}&code_challenge_method=S256
 
-// 4. Client exchanges received Auth Code + Verifier for Tokens:
+// 4. On /callback, verify state BEFORE exchanging the code:
+if (req.query.state !== req.cookies.oauth_state) return res.status(403).end();
+
+// 5. Exchange Auth Code + Verifier (PKCE) for Tokens:
 // POST /oauth/token { code: "auth_code_123", code_verifier: codeVerifier }`,
     takeaways: [
       'Eliminates Client Secrets in Browsers: Public web clients cannot safely store a client secret; PKCE prevents authorization code interception attacks.',
       'S256 Challenge Method: Always use SHA-256 hashing (code_challenge_method=S256) rather than plain text.',
+      'State prevents login CSRF: PKCE protects the code exchange, but a browser-bound, single-use state value proves the callback belongs to the browser that started the login.',
       'Industry Mandate: OAuth 2.1 officially deprecates the legacy Implicit Flow in favor of Authorization Code with PKCE.'
     ],
     commonPitfall: {
-      mistake: 'Using the legacy OAuth 2.0 Implicit Grant flow (tokens returned directly in URL hash fragments), exposing access tokens in browser history and Referer headers.',
-      fix: 'Always use Authorization Code Flow with PKCE for all Single Page Apps and mobile clients.'
+      mistake: 'Using PKCE but omitting the OAuth state parameter, or storing state only in server memory. An attacker can start a login for their own session and send the authorize URL to a victim; the callback then attaches the victim\'s token to the attacker\'s session.',
+      fix: 'Generate a random state, store it in a short-lived HttpOnly/Secure/SameSite=Lax cookie, compare it constant-time on the callback, make it single-use, and rotate the session ID after login.'
     },
     nextTopicId: 'jwt-structure-rs256-vs-hs256'
   },
@@ -314,7 +319,7 @@ async function isTokenRevoked(jti: string): Promise<boolean> {
     title: 'Cross-Site Request Forgery (CSRF): Synchronizer Tokens & SameSite Cookies',
     category: 'sessions-cookies',
     difficulty: 'Intermediate',
-    summary: 'CSRF tricks an authenticated user\'s browser into sending unauthorized POST requests to a vulnerable server. Mitigated via SameSite=Lax/Strict cookie attributes and Synchronizer CSRF Token headers (X-CSRF-Token).',
+    summary: 'CSRF tricks an authenticated user\'s browser into sending unauthorized requests. Classic CSRF abuses ambient cookies; login CSRF abuses a session ID the attacker already knows, such as a signed OAuth callback URL. Mitigated via SameSite, synchronizer tokens, and a browser-bound OAuth state value.',
     mentalModel: 'The Forged Delivery Check: A scammer mails an invoice pretending to be you because the post office automatically attaches your return address (session cookie). The bank demands a secret one-time transaction stamp (CSRF Token) that only your legitimate banking dashboard knows.',
     codeSnippet: `// Double Submit CSRF Cookie Pattern:
 app.use((req, res, next) => {
@@ -329,7 +334,8 @@ app.use((req, res, next) => {
 });`,
     takeaways: [
       'SameSite=Lax: Modern browser default that blocks cookies on cross-site POSTs, but permits top-level GET navigation.',
-      'Synchronizer Token: Random cryptographic token generated per session and verified on all state-changing HTTP mutations.'
+      'Synchronizer Token: Random cryptographic token generated per session and verified on all state-changing HTTP mutations.',
+      'Login CSRF: a signed session_id in an OAuth callback is not a CSRF defense. The attacker can obtain a signed URL for their own session; bind state to a browser cookie, make it single-use, and rotate the session after login.'
     ],
     commonPitfall: {
       mistake: 'Relying exclusively on SameSite cookies for CSRF defense on older browsers or mobile webviews that default to SameSite=None.',

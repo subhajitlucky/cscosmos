@@ -14,18 +14,22 @@ export function OAuthPkceVisualizer() {
     },
     {
       title: '2. Redirect to Authorization Server',
-      desc: 'Browser redirects user to IdP /authorize with client_id, redirect_uri, and code_challenge (method=S256).'
+      desc: 'Browser redirects user to IdP /authorize with client_id, redirect_uri, state, and code_challenge (method=S256).'
     },
     {
       title: '3. User Logs In & Gets Auth Code',
-      desc: 'IdP authenticates user (e.g. via MFA) and redirects back to client callback with a one-time Authorization Code.'
+      desc: 'IdP authenticates user (e.g. via MFA) and redirects back to the client callback with a one-time Authorization Code and the same state.'
     },
     {
-      title: '4. Token Exchange (POST /token)',
+      title: '4. Verify State on Callback',
+      desc: 'Before exchanging the code, the client compares the returned state with the value stored in a browser-bound cookie. A mismatch means login CSRF — abort.'
+    },
+    {
+      title: '5. Token Exchange (POST /token)',
       desc: 'Client sends Auth Code + original plain-text Code Verifier to IdP /oauth/token in a direct POST request.'
     },
     {
-      title: '5. PKCE Verification & Token Issue',
+      title: '6. PKCE Verification & Token Issue',
       desc: 'IdP hashes received Code Verifier. Hash matches stored Code Challenge! IdP issues signed JWT Access & ID tokens.'
     }
   ];
@@ -60,7 +64,7 @@ export function OAuthPkceVisualizer() {
         </div>
 
         <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-mono text-xs font-bold">
-          Step {Math.min(step, 5)} of 5
+          Step {Math.min(step, 6)} of 6
         </span>
       </div>
 
@@ -83,6 +87,12 @@ export function OAuthPkceVisualizer() {
               <span className="text-slate-500">Code Challenge (S256): </span>
               <span className={step >= 1 ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
                 {step >= 1 ? 'E9Melhoa2OwvFrGMTJguCH5rtG6479bPWSMN' : '[ Not computed ]'}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-500">State (CSRF binding): </span>
+              <span className={step >= 1 ? 'text-sky-300 font-bold' : 'text-slate-600'}>
+                {step >= 1 ? 'st_9f2c1a...' : '[ Not generated ]'}
               </span>
             </div>
           </div>
@@ -108,9 +118,21 @@ export function OAuthPkceVisualizer() {
               </span>
             </div>
             <div>
+              <span className="text-slate-500">Returned State: </span>
+              <span className={step >= 3 ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
+                {step >= 3 ? 'st_9f2c1a...' : '[ None ]'}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-500">State Check: </span>
+              <span className={step >= 4 ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
+                {step >= 4 ? '✅ matches browser cookie' : '[ Pending ]'}
+              </span>
+            </div>
+            <div>
               <span className="text-slate-500">Tokens Emitted: </span>
-              <span className={step >= 5 ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
-                {step >= 5 ? '✅ JWT Access Token + ID Token' : '[ Pending ]'}
+              <span className={step >= 6 ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
+                {step >= 6 ? '✅ JWT Access Token + ID Token' : '[ Pending ]'}
               </span>
             </div>
           </div>
@@ -135,11 +157,11 @@ export function OAuthPkceVisualizer() {
 
         <button
           onClick={handleNext}
-          disabled={step >= 5}
+          disabled={step >= 6}
           className="px-6 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-extrabold text-xs transition shadow-md flex items-center gap-1.5"
         >
           <Zap className="w-3.5 h-3.5 fill-current" />
-          <span>Execute Next Step ({step}/5)</span>
+          <span>Execute Next Step ({step}/6)</span>
         </button>
       </div>
     </div>

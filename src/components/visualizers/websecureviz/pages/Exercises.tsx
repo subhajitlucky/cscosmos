@@ -50,6 +50,18 @@ const questions = [
     ],
     correctIndex: 1,
     explanation: "The attacker cannot read the cookie from the victim's browser (due to SOP), so they cannot reproduce the value in the header/parameter, causing the check to fail."
+  },
+  {
+    id: 5,
+    question: "An OAuth callback completes the session named by a signed session_id in the URL. Why is that signature not a CSRF defense?",
+    options: [
+      "The signature proves the server generated the URL, but the attacker can legitimately obtain a signed URL for their own session.",
+      "The signature is too short to be secure.",
+      "The callback uses HTTPS, so CSRF is impossible.",
+      "The session_id is stored in a cookie, so the browser protects it."
+    ],
+    correctIndex: 0,
+    explanation: "A signature proves integrity, not intent. The attacker asks the server for a signed login URL for their own session and sends it to a victim; when the victim logs in, the callback attaches the victim's token to the attacker's session. The fix is a browser-bound state cookie/nonce, single-use state, and session rotation after login."
   }
 ];
 

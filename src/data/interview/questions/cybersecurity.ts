@@ -483,4 +483,141 @@ fetch('https://bank.com/transfer', {
     ],
     relatedEngine: { label: 'Explore the Web Security visualizer', href: '/fullstack/websecurity' },
   },
+  {
+    slug: 'login-csrf-oauth-state',
+    category: 'cybersecurity',
+    topic: 'Web Security',
+    title: 'How does login CSRF work in an OAuth callback?',
+    difficulty: 'advanced',
+    frequency: 'sometimes',
+    round: 'concept',
+    type: 'concept',
+    tags: ['login-csrf', 'oauth-state', 'session-fixation', 'callback-binding', 'csrf', 'oauth2'],
+    oneLiner:
+      'A signed session ID proves the server made the login URL, not that the browser finishing the login is the one that asked for it.',
+    whyAsked:
+      'Interviewers use this to separate "I add CSRF tokens" from "I understand binding". Classic CSRF abuses a cookie the browser attaches; login CSRF abuses a session identifier the attacker already knows. Strong answers explain why a signed callback URL, PKCE, and SameSite each miss the problem, then name the fix: a browser-bound, single-use state value and session rotation.',
+    mentalModel:
+      'Think of a coat-check ticket. The attacker asks the clerk for ticket #123 for their own hook, then hands the ticket to the victim. The victim gives the clerk their coat; the clerk hangs it on hook #123 — the attacker’s hook. The ticket was genuine. The clerk never checked who owned the hook.',
+    steps: [
+      {
+        title: 'A signed link is a claim ticket',
+        body: `The attacker starts a login in their own session. The server returns /authorize?session_id=ATTACKER with an HMAC over the session ID and timestamp. The signature proves the server generated the link. It does not prove who will open it. The attacker now holds a valid claim ticket for their own hook.`,
+        animation: {
+          kind: 'story',
+          cast: [
+            { id: 'attacker', icon: '😈', label: 'Attacker' },
+            { id: 'app', icon: '🧠', label: 'App / MCP server' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'The attacker asks for a login link. 😈', shout: { text: 'START LOGIN', tone: 'info' }, cast: [{ id: 'attacker', state: 'working' }], tokens: [{ id: 'ask', icon: '📨', label: 'login?', from: 'attacker', to: 'app' }] },
+            { id: 'f2', caption: 'The server signs the attacker’s session ID. 🔏', shout: { text: 'SIGNED FOR ATTACKER', tone: 'bad' }, mood: 'bad', cast: [{ id: 'app', state: 'working' }], tokens: [{ id: 'sign', icon: '🔏', label: 'session_id = ATTACKER', at: 'app', effect: 'pop' }] },
+            { id: 'f3', caption: 'The attacker now owns a valid claim ticket. 🎫', shout: { text: 'TICKET #ATTACKER', tone: 'bad' }, mood: 'bad', cast: [{ id: 'attacker', state: 'happy' }], tokens: [{ id: 'ticket', icon: '🎫', label: 'real signed link', from: 'app', to: 'attacker' }] },
+          ],
+        },
+      },
+      {
+        title: 'The ticket travels to the victim',
+        body: `The link points at the real service, so it looks trustworthy. The attacker sends it to the victim. The victim sees a legitimate domain, clicks, and starts a normal login. Nothing in the URL says the session belongs to the attacker.`,
+        animation: {
+          kind: 'story',
+          cast: [
+            { id: 'attacker', icon: '😈', label: 'Attacker' },
+            { id: 'victim', icon: '👤', label: 'Victim' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'The attacker forwards the real link. 📨', shout: { text: 'FORWARD THE TICKET', tone: 'bad' }, mood: 'bad', cast: [{ id: 'attacker', state: 'working' }], tokens: [{ id: 'send', icon: '🔗', label: 'real login link', from: 'attacker', to: 'victim' }] },
+            { id: 'f2', caption: 'The victim checks the domain — it looks real. 🔍', shout: { text: 'LOOKS LEGITIMATE', tone: 'info' }, cast: [{ id: 'victim', state: 'working' }], tokens: [{ id: 'check', icon: '🔍', label: 'trusted domain', at: 'victim', effect: 'pop' }] },
+            { id: 'f3', caption: 'The victim clicks and starts a normal login. 😬', shout: { text: 'CLICKS THE LINK', tone: 'bad' }, mood: 'bad', cast: [{ id: 'victim', state: 'working' }], tokens: [{ id: 'open', icon: '🖱️', label: 'opens /authorize', at: 'victim', effect: 'pop' }] },
+          ],
+        },
+      },
+      {
+        title: 'The victim completes the login',
+        body: `The victim authenticates with the identity provider. The provider redirects to /callback with a one-time request_token and the session_id that was forwarded as redirect_params. The app exchanges the request token and receives the victim’s access token.`,
+        animation: {
+          kind: 'story',
+          cast: [
+            { id: 'victim', icon: '👤', label: 'Victim' },
+            { id: 'idp', icon: '🏦', label: 'Identity provider' },
+            { id: 'app', icon: '🧠', label: 'App / MCP server' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'The victim logs in with real credentials and MFA. 🔐', shout: { text: 'REAL LOGIN', tone: 'info' }, cast: [{ id: 'victim', state: 'working' }, { id: 'idp', state: 'working' }], tokens: [{ id: 'creds', icon: '🔐', label: 'credentials + MFA', from: 'victim', to: 'idp' }] },
+            { id: 'f2', caption: 'The provider returns a code and the forwarded session_id. 📄', shout: { text: 'CODE + SESSION_ID', tone: 'bad' }, mood: 'bad', cast: [{ id: 'app', state: 'working' }], tokens: [{ id: 'code', icon: '📄', label: 'request_token + redirect_params', from: 'idp', to: 'app' }] },
+            { id: 'f3', caption: 'The app exchanges the code for the victim’s token. 🔑', shout: { text: 'VICTIM TOKEN ISSUED', tone: 'bad' }, mood: 'bad', cast: [{ id: 'app', state: 'done' }], tokens: [{ id: 'token', icon: '🔑', label: 'victim access token', at: 'app', effect: 'pop' }] },
+          ],
+        },
+      },
+      {
+        title: 'The token lands on the attacker’s hook',
+        body: `The callback verifies the HMAC, then attaches the victim’s access token to the session named in the URL. That session is the attacker’s. The server never checks that the browser finishing the login is the browser that started it. The attacker can now call every tool the app exposes.`,
+        animation: {
+          kind: 'story',
+          cast: [
+            { id: 'app', icon: '🧠', label: 'App / MCP server' },
+            { id: 'attacker', icon: '😈', label: 'Attacker' },
+            { id: 'victim', icon: '👤', label: 'Victim' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'The callback looks up the session named in the URL. 🔎', shout: { text: 'SESSION = ATTACKER', tone: 'bad' }, mood: 'bad', cast: [{ id: 'app', state: 'working' }], tokens: [{ id: 'lookup', icon: '🔎', label: 'session_id = ATTACKER', at: 'app', effect: 'pop' }] },
+            { id: 'f2', caption: 'The victim’s token is attached to the attacker’s session. 🔗', shout: { text: 'WRONG HOOK!', tone: 'bad' }, mood: 'bad', cast: [{ id: 'app', state: 'done' }, { id: 'victim', state: 'idle' }], tokens: [{ id: 'attach', icon: '🔗', label: 'victim token → ATTACKER', at: 'app', effect: 'burst' }] },
+            { id: 'f3', caption: 'The attacker reuses the session to read and trade. 💸', shout: { text: 'ATTACKER ACTS', tone: 'bad' }, mood: 'bad', cast: [{ id: 'attacker', state: 'happy' }], tokens: [{ id: 'act', icon: '💸', label: 'profile + holdings + order', from: 'attacker', to: 'app' }] },
+          ],
+        },
+      },
+      {
+        title: 'Fix: bind state to the browser',
+        body: `On /authorize, generate a random state, set it in a short-lived HttpOnly, Secure, SameSite=Lax cookie, and send the same value to the provider. On /callback, compare the returned state with the cookie before exchanging the code; reject on mismatch, make it single-use, and rotate the session ID after login. PKCE protects the code exchange, not the browser-to-session binding.`,
+        code: {
+          language: 'javascript',
+          source: `// /authorize
+res.cookie('oauth_state', state, {
+  httpOnly: true, secure: true, sameSite: 'lax', maxAge: 300000,
+});
+res.redirect('https://idp.example/authorize?...&state=' + encodeURIComponent(state));
+
+// /callback
+if (req.query.state !== req.cookies.oauth_state) {
+  return res.status(403).end();
+}`,
+        },
+        animation: {
+          kind: 'story',
+          cast: [
+            { id: 'victim', icon: '👤', label: 'Victim' },
+            { id: 'app', icon: '🧠', label: 'App / MCP server' },
+            { id: 'attacker', icon: '😈', label: 'Attacker' },
+          ],
+          frames: [
+            { id: 'f1', caption: 'The app stores a random state in the victim’s browser. 🍪', shout: { text: 'SET STATE COOKIE', tone: 'good' }, mood: 'good', cast: [{ id: 'app', state: 'working' }], tokens: [{ id: 'cookie', icon: '🍪', label: 'HttpOnly state', from: 'app', to: 'victim' }] },
+            { id: 'f2', caption: 'The victim returns with the same state. 📨', shout: { text: 'STATE RETURNS', tone: 'info' }, cast: [{ id: 'victim', state: 'working' }], tokens: [{ id: 'return', icon: '📨', label: 'state', from: 'victim', to: 'app' }] },
+            { id: 'f3', caption: 'The cookie and the returned state match. ✅', shout: { text: 'MATCH: ALLOWED ✓', tone: 'good' }, mood: 'good', cast: [{ id: 'app', state: 'done' }], tokens: [{ id: 'match', icon: '✅', label: 'binding verified', at: 'app', effect: 'pop' }] },
+            { id: 'f4', caption: 'The attacker’s stale link fails the state check. 🚫', shout: { text: 'MISMATCH: DENIED!', tone: 'bad' }, mood: 'good', cast: [{ id: 'attacker', state: 'crashed' }], tokens: [{ id: 'deny', icon: '🚫', label: 'no victim token', at: 'attacker', effect: 'shake' }] },
+          ],
+        },
+      },
+    ],
+    edgeCases: [
+      'A signed session_id is not a CSRF token: the attacker can legitimately obtain a signed URL for their own session. The signature proves integrity, not intent.',
+      'PKCE does not stop login CSRF: it protects the authorization code exchange, but the attacker can still start the flow and hand the authorize URL to a victim.',
+      'State stored only in server memory can still be fixed if the attacker initiates the flow; bind it to a browser cookie and make it single-use.',
+      'Magic links are bearer tokens too: a forwarded sign-in link logs the recipient into the sender’s account. Bind or confirm intent where the impact matters.',
+    ],
+    followUps: [
+      {
+        q: 'Why doesn’t PKCE prevent login CSRF?',
+        a: 'PKCE proves the client that started the code exchange is the one finishing it. It does not prove the browser finishing the login is the one that initiated it; the attacker can start the flow and send the authorize URL to a victim.',
+      },
+      {
+        q: 'Where should the OAuth state live?',
+        a: 'A short-lived HttpOnly, Secure, SameSite=Lax cookie, compared constant-time with the returned state. Make it single-use and rotate the session ID after login.',
+      },
+      {
+        q: 'Is a signed callback URL ever enough?',
+        a: 'No. A signature proves the server created the URL; it does not bind the callback to the browser. Treat the signed session ID as a routing hint, not as proof of user intent.',
+      },
+    ],
+    relatedEngine: { label: 'Explore the Web Security visualizer', href: '/fullstack/websecurity' },
+  },
 ];

@@ -42,13 +42,16 @@ export const learningPath = {
       step: 4,
       title: "Cross-Site Request Forgery (CSRF)",
       path: "/websecurity/csrf",
-      masteryGoal: "Understand cookie-based authentication risks and CSRF defenses",
-      estimatedTime: "20–25 minutes",
+      masteryGoal: "Understand cookie-based and OAuth-login CSRF, and why a callback must be bound to the browser",
+      estimatedTime: "25–30 minutes",
       topics: [
         "cookie attachment behavior",
         "forged requests",
         "CSRF tokens",
-        "SameSite cookies"
+        "SameSite cookies",
+        "login CSRF",
+        "OAuth state binding",
+        "callback session fixation"
       ]
     },
     {

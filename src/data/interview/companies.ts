@@ -20,6 +20,7 @@ export const COMPANY_TAGS: Record<string, string[]> = {
   "xss-attack-and-defense": ["Google", "Meta", "Cloudflare"],
   "jwt-localstorage-risk": ["Stripe", "Auth0", "PayPal"],
   "csrf-how-and-samesite": ["PayPal", "Stripe", "Google"],
+  "login-csrf-oauth-state": ["Stripe", "Google", "Okta"],
   "design-url-shortener": ["Google", "Amazon", "Microsoft"],
   "consistent-hashing-virtual-nodes": ["Amazon", "Google", "Cloudflare"],
   "rate-limiter-design": ["Cloudflare", "Stripe", "Amazon"],
