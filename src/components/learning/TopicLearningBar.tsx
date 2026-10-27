@@ -56,7 +56,7 @@ export function TopicLearningBar({ slug, name, domain }: TopicLearningBarProps) 
             setCompleted(next.completed.includes(slug));
           }}
           aria-pressed={completed}
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border px-3 text-xs font-semibold text-foreground transition-colors hover:bg-secondary/50"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border px-3 text-xs font-semibold text-foreground transition-colors hover:bg-secondary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           {completed ? (
             <CheckCircle2 className="h-4 w-4 text-emerald-500" aria-hidden="true" />
@@ -73,7 +73,7 @@ export function TopicLearningBar({ slug, name, domain }: TopicLearningBarProps) 
             setBookmarked(next.bookmarks.includes(slug));
           }}
           aria-pressed={bookmarked}
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border px-3 text-xs font-semibold text-foreground transition-colors hover:bg-secondary/50"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border px-3 text-xs font-semibold text-foreground transition-colors hover:bg-secondary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           {bookmarked ? (
             <BookmarkCheck className="h-4 w-4 text-primary" aria-hidden="true" />
@@ -85,7 +85,7 @@ export function TopicLearningBar({ slug, name, domain }: TopicLearningBarProps) 
 
         <Link
           href={`/tutor?topic=${encodeURIComponent(slug)}`}
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <Bot className="h-4 w-4" aria-hidden="true" />
           Tutor
@@ -93,7 +93,7 @@ export function TopicLearningBar({ slug, name, domain }: TopicLearningBarProps) 
 
         <Link
           href="/progress"
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <LineChart className="h-4 w-4" aria-hidden="true" />
           Progress

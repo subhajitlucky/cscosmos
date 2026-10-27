@@ -30,6 +30,50 @@ export const MemoryBasics: React.FC = () => {
       ? cells[selectedCell].valueInt.toString(2).padStart(8, '0').split('')
       : null;
 
+  const focusCell = (index: number) => {
+    const next = Math.max(0, Math.min(cells.length - 1, index));
+    setSelectedCell(next);
+    requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>(`[data-memory-cell="${next}"]`)?.focus();
+    });
+  };
+
+  const handleCellKeyDown = (event: React.KeyboardEvent, index: number) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setSelectedCell(index);
+      return;
+    }
+
+    const columns = window.matchMedia('(min-width: 640px)').matches ? 8 : 4;
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight':
+        next = index + 1;
+        break;
+      case 'ArrowLeft':
+        next = index - 1;
+        break;
+      case 'ArrowDown':
+        next = index + columns;
+        break;
+      case 'ArrowUp':
+        next = index - columns;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = cells.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    focusCell(next);
+  };
+
   return (
     <TopicLayout stepNumber={4} title="Memory Basics">
       <div className="space-y-12">
@@ -65,18 +109,14 @@ export const MemoryBasics: React.FC = () => {
                 key={i}
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setSelectedCell(i)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setSelectedCell(i);
-                  }
-                }}
+                onKeyDown={(event) => handleCellKeyDown(event, i)}
                 role="button"
-                tabIndex={0}
+                tabIndex={selectedCell === i || (selectedCell === null && i === 0) ? 0 : -1}
                 aria-pressed={selectedCell === i}
-                aria-label={`Memory cell at address ${cell.address}, value 0x${cell.value}`}
+                aria-label={`Memory cell at address ${cell.address}, value 0x${cell.value}. Press Enter to inspect.`}
+                data-memory-cell={i}
                 className={cn(
-                  "p-2 rounded border cursor-pointer transition-all",
+                  "p-2 rounded border cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                   selectedCell === i 
                     ? "bg-blue-600 border-blue-400 text-white" 
                     : (theme === 'dark' 
@@ -92,6 +132,9 @@ export const MemoryBasics: React.FC = () => {
               </motion.div>
             ))}
           </div>
+          <p className="mt-3 text-[10px] text-muted-foreground">
+            Tip: use the arrow keys, Home, and End to move through memory; press Enter to inspect a cell.
+          </p>
 
           {selectedCell !== null && (
             <motion.div 
@@ -125,7 +168,7 @@ export const MemoryBasics: React.FC = () => {
             )}>
               <li>
                 <strong className={cn("block mb-1", theme === 'dark' ? "text-slate-200" : "text-slate-900")}>Addressing</strong>
-                Every byte in RAM has a unique number (address) so the CPU can find it instantly.
+                Every byte in a process&apos;s address space has a number. The OS and memory-management unit translate that virtual address to a physical location in RAM.
               </li>
               <li>
                 <strong className={cn("block mb-1", theme === 'dark' ? "text-slate-200" : "text-slate-900")}>Volatile</strong>
@@ -139,8 +182,8 @@ export const MemoryBasics: React.FC = () => {
               "text-sm leading-relaxed",
               theme === 'dark' ? "text-slate-400" : "text-slate-600"
             )}>
-              Computers usually group 8 bits into a <strong>Byte</strong>. 
-              Modern CPUs often work with 64 bits (8 bytes) at a time, which we call a <strong>Word</strong>.
+              Computers usually group 8 bits into a <strong>Byte</strong>.
+              Most 64-bit CPUs work with 64 bits (8 bytes) at a time; the architecture defines its native <strong>word</strong> size.
             </p>
             <div className="flex gap-1 mt-4">
               {(selectedBits ?? '01001010'.split('')).map((bit, i) => (
@@ -166,7 +209,7 @@ export const MemoryBasics: React.FC = () => {
           question="How many bits live in one byte?"
           options={['4 bits', '8 bits', '16 bits', '64 bits']}
           correctIndex={1}
-          explanation="One byte = 8 bits. Some computers used to use other sizes, but 8 has been the standard for decades — and modern CPUs process 64 bits (8 bytes, a “word”) per operation."
+          explanation="One byte = 8 bits. Some computers used to use other sizes, but 8 has been the standard for decades — and most 64-bit CPUs process 64-bit words (8 bytes) per operation."
         />
       </div>
     </TopicLayout>

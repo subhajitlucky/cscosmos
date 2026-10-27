@@ -5,6 +5,7 @@ import { PredictCheck } from '../components/PredictCheck';
 import { motion } from 'framer-motion';
 import { ArrowRight, Pause, Play, RotateCcw, StepBack, StepForward } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -57,11 +58,16 @@ const CALL_TIMELINE: { stack: string[]; caption: string }[] = [
 
 export const MemoryLayout: React.FC = () => {
   const { theme } = useTheme();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [frameIndex, setFrameIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    if (!playing) return;
+    if (prefersReducedMotion) setPlaying(false);
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    if (!playing || prefersReducedMotion) return;
     const id = window.setInterval(() => {
       setFrameIndex((f) => {
         if (f >= CALL_TIMELINE.length - 1) {
@@ -72,7 +78,7 @@ export const MemoryLayout: React.FC = () => {
       });
     }, 1700);
     return () => window.clearInterval(id);
-  }, [playing]);
+  }, [playing, prefersReducedMotion]);
 
   const current = CALL_TIMELINE[frameIndex];
 
@@ -226,7 +232,7 @@ export const MemoryLayout: React.FC = () => {
               onClick={() => { setPlaying(false); setFrameIndex((f) => Math.max(0, f - 1)); }}
               disabled={frameIndex === 0}
               className={cn(
-                "px-3 py-2 rounded-lg text-xs font-bold transition-colors disabled:opacity-40 flex items-center gap-1.5",
+                "px-3 py-2 rounded-lg text-xs font-bold transition-colors disabled:opacity-40 flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                 theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
               )}
             >
@@ -235,25 +241,28 @@ export const MemoryLayout: React.FC = () => {
             <button
               onClick={() => { setPlaying(false); setFrameIndex((f) => Math.min(CALL_TIMELINE.length - 1, f + 1)); }}
               disabled={frameIndex === CALL_TIMELINE.length - 1}
-              className="px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-40 text-white text-xs font-bold transition-colors flex items-center gap-1.5 shadow-md shadow-red-500/20"
+              className="px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-40 text-white text-xs font-bold transition-colors flex items-center gap-1.5 shadow-md shadow-red-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
               Push Step <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <button
+              type="button"
               onClick={() => setPlaying((p) => !p)}
               aria-pressed={playing}
+              disabled={prefersReducedMotion}
+              title={prefersReducedMotion ? 'Auto-play is disabled by your reduced-motion preference' : undefined}
               className={cn(
-                "px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5",
+                "px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                 theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
               )}
             >
               {playing ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-              {playing ? 'Pause' : 'Auto Play'}
+              {prefersReducedMotion ? 'Auto-play off' : playing ? 'Pause' : 'Auto Play'}
             </button>
             <button
               onClick={() => { setPlaying(false); setFrameIndex(0); }}
               className={cn(
-                "px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5",
+                "px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                 theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
               )}
             >
@@ -271,8 +280,8 @@ export const MemoryLayout: React.FC = () => {
             "text-sm leading-relaxed",
             theme === 'dark' ? "text-slate-300" : "text-slate-700"
           )}>
-            The <strong>Stack</strong> is managed by the CPU and is extremely fast. Every time you call a function, a new "frame" is added to the stack. When the function returns, it's removed.
-            The <strong>Heap</strong> is for larger, more complex data that needs to stay around longer.
+            The <strong>Stack</strong> is managed by the compiler and runtime; the CPU provides the stack pointer and push/pop mechanics. Every function call pushes a frame, and returning pops it.
+            The <strong>Heap</strong> holds dynamically allocated data that can outlive the function that created it.
           </p>
         </section>
 

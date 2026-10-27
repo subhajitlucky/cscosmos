@@ -7,9 +7,9 @@ import { MotionConfig } from 'framer-motion';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
 import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
-import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
+import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_DOMAIN_NAME, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
 import { useTheme } from '../hooks/useTheme';
-import { CheckCircle2, Circle, Menu, ArrowLeft, Sun, Moon, X } from 'lucide-react';
+import { CheckCircle2, ChevronRight, Circle, Menu, ArrowLeft, Sun, Moon, X } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -19,17 +19,67 @@ function cn(...inputs: ClassValue[]) {
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const sidebarRef = React.useRef<HTMLElement>(null);
   const pathname = usePathname();
   const { isStepCompleted, resetProgress } = useProgress();
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
-    if (!isSidebarOpen) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsSidebarOpen(false);
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => {
+      if (desktop.matches) setIsSidebarOpen(false);
     };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
+
+  useEffect(() => {
+    if (!isSidebarOpen) return;
+
+    const sidebar = sidebarRef.current;
+    if (!sidebar) return;
+
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const getFocusable = () =>
+      Array.from(
+        sidebar.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((element) => element.offsetParent !== null);
+
+    const focusable = getFocusable();
+    focusable[0]?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsSidebarOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+
+      const items = getFocusable();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus?.();
+    };
   }, [isSidebarOpen]);
 
   return (
@@ -39,11 +89,17 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       theme === 'dark' ? "bg-slate-950 text-slate-50" : "bg-slate-50 text-slate-900"
     )}>
       {/* Sidebar for Desktop */}
-      <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0",
-        theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200",
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
+      <aside
+        ref={sidebarRef}
+        role={isSidebarOpen ? 'dialog' : undefined}
+        aria-modal={isSidebarOpen || undefined}
+        aria-label="ProgramViz navigation"
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:bottom-auto lg:h-screen lg:translate-x-0",
+          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200",
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
         <div className="h-full flex flex-col p-6">
           <div className="flex items-center justify-between mb-8">
             <Link href={TOPIC_BASE_PATH} className="text-xl font-bold flex items-center gap-2">
@@ -54,7 +110,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               <button 
                 onClick={toggleTheme}
                 className={cn(
-                  "p-1.5 rounded-lg transition-colors",
+                  "p-1.5 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                   theme === 'dark' ? "hover:bg-slate-800 text-yellow-400" : "hover:bg-slate-100 text-blue-600"
                 )}
                 aria-label="Toggle Theme"
@@ -64,6 +120,17 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               <Link href="/topics" aria-label="Back to all topics" className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
                 <ArrowLeft className="w-3.5 h-3.5" />
               </Link>
+              <button
+                type="button"
+                onClick={() => setIsSidebarOpen(false)}
+                aria-label="Close navigation menu"
+                className={cn(
+                  "rounded-lg p-1.5 lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  theme === 'dark' ? "hover:bg-slate-800 text-slate-300" : "hover:bg-slate-100 text-slate-600"
+                )}
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
           </div>
           
@@ -119,17 +186,39 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           "h-14 border-b flex items-center justify-between px-6 lg:hidden",
           theme === 'dark' ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-white"
         )}>
-          <button onClick={() => setIsSidebarOpen(true)} aria-label="Open navigation menu" aria-expanded={isSidebarOpen}>
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            aria-label="Open navigation menu"
+            aria-expanded={isSidebarOpen}
+            className="rounded-lg p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
             <Menu className="w-6 h-6" />
           </button>
           <span className="font-bold">ProgramViz</span>
-          <button onClick={toggleTheme} className="p-2" aria-label="Toggle Theme">
+          <button onClick={toggleTheme} className="rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Toggle Theme">
             {theme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-blue-600" />}
           </button>
         </header>
         
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-4xl mx-auto p-6 lg:p-12">
+            <nav
+              aria-label="Breadcrumb"
+              className="mb-3 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground"
+            >
+              <Link href="/" className="hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                CSCosmos
+              </Link>
+              <ChevronRight className="h-3 w-3" aria-hidden="true" />
+              <Link
+                href={`/${TOPIC_DOMAIN}`}
+                className="hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                {TOPIC_DOMAIN_NAME}
+              </Link>
+              <ChevronRight className="h-3 w-3" aria-hidden="true" />
+              <span aria-current="page" className="font-medium text-foreground">{TOPIC_NAME}</span>
+            </nav>
             <TopicLearningBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
             {children}
           </div>
@@ -143,20 +232,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           onClick={() => setIsSidebarOpen(false)}
           aria-hidden="true"
         />
-      )}
-
-      {/* Mobile sidebar close button */}
-      {isSidebarOpen && (
-        <button
-          onClick={() => setIsSidebarOpen(false)}
-          aria-label="Close navigation menu"
-          className={cn(
-            "fixed top-4 right-4 z-50 p-2 rounded-lg lg:hidden",
-            theme === 'dark' ? "bg-slate-900 text-slate-200" : "bg-white text-slate-700"
-          )}
-        >
-          <X className="w-5 h-5" />
-        </button>
       )}
     </div>
     </MotionConfig>

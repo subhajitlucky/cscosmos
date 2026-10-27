@@ -128,7 +128,7 @@ export const WhatIsProgram: React.FC = () => {
               Compiled vs Interpreted
             </h4>
             <p className={cn("text-sm leading-relaxed", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>
-              Some programs are translated to machine code ahead of time (Compiled), while others are translated on the fly as they run (Interpreted).
+              Some programs are translated to machine code ahead of time (compiled), while others are translated on the fly (interpreted). Many modern runtimes use both, compiling hot code at runtime with a JIT.
             </p>
           </div>
         </section>

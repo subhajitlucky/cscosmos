@@ -57,6 +57,7 @@ export function PredictCheck({ question, options, correctIndex, explanation }: P
       {selected !== null && (
         <div
           role="status"
+          aria-live="polite"
           className={cn(
             'flex items-start gap-3 rounded-xl border p-4 text-sm',
             isCorrect

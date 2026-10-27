@@ -56,7 +56,7 @@ export const InstructionCycle: React.FC = () => {
           theme === 'dark' ? "text-slate-300" : "text-slate-700"
         )}>
           <p>
-            The CPU runs in a continuous loop called the <strong>Instruction Cycle</strong>. Every single operation your computer performs goes through these four stages.
+            The CPU runs in a continuous loop called the <strong>Instruction Cycle</strong>. This four-stage model is the conceptual path every instruction follows. Real processors <strong>pipeline</strong> the stages and may overlap or reorder work, but the model is the right mental starting point.
           </p>
         </section>
 
@@ -67,13 +67,15 @@ export const InstructionCycle: React.FC = () => {
         )}>
           <div className="flex flex-col md:flex-row gap-8 items-center">
             {/* Stage Selector */}
-            <div className="flex flex-col gap-3 w-full md:w-48">
+            <div className="flex flex-col gap-3 w-full md:w-48" role="group" aria-label="Instruction cycle stages">
               {stages.map((stage, i) => (
                 <button
                   key={stage.id}
+                  type="button"
+                  aria-pressed={activeStage === i}
                   onClick={() => setActiveStage(i)}
                   className={cn(
-                    "flex items-center gap-3 p-3 rounded-lg transition-all text-left border-l-4",
+                    "flex items-center gap-3 p-3 rounded-lg transition-all text-left border-l-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                     activeStage === i 
                       ? (theme === 'dark' ? "bg-slate-800 border-blue-500" : "bg-slate-50 border-blue-600 shadow-sm")
                       : "border-transparent text-slate-500 hover:bg-slate-800/20"
@@ -88,10 +90,13 @@ export const InstructionCycle: React.FC = () => {
             </div>
 
             {/* Stage Detail */}
-            <div className={cn(
-              "flex-1 rounded-xl p-8 border min-h-[200px] flex flex-col justify-center transition-colors",
-              theme === 'dark' ? "bg-slate-800/50 border-slate-700" : "bg-slate-50 border-slate-100"
-            )}>
+            <div
+              aria-live="polite"
+              className={cn(
+                "flex-1 rounded-xl p-8 border min-h-[200px] flex flex-col justify-center transition-colors",
+                theme === 'dark' ? "bg-slate-800/50 border-slate-700" : "bg-slate-50 border-slate-100"
+              )}
+            >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={activeStage}
@@ -118,7 +123,7 @@ export const InstructionCycle: React.FC = () => {
             <button 
               onClick={() => setActiveStage(prev => (prev > 0 ? prev - 1 : stages.length - 1))}
               className={cn(
-                "px-4 py-2 rounded transition-colors text-sm font-medium",
+                "px-4 py-2 rounded transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                 theme === 'dark' ? "bg-slate-800 hover:bg-slate-700" : "bg-slate-100 hover:bg-slate-200"
               )}
             >
@@ -126,7 +131,7 @@ export const InstructionCycle: React.FC = () => {
             </button>
             <button 
               onClick={() => setActiveStage(prev => (prev < stages.length - 1 ? prev + 1 : 0))}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-bold shadow-md shadow-blue-500/20"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-bold shadow-md shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
               Next Phase
             </button>
@@ -162,7 +167,7 @@ export const InstructionCycle: React.FC = () => {
               Fetch vs Execute
             </h4>
             <p className={cn("text-sm leading-relaxed", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>
-              Fetch is about communicating with external RAM, while Execute happens entirely inside the CPU's own circuitry.
+              Fetch reads the next instruction through the memory hierarchy — usually L1/L2 cache, falling back to RAM. Execute happens inside the CPU's execution units.
             </p>
           </div>
         </div>

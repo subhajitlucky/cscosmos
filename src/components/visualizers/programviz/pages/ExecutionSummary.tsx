@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Play, Pause, RotateCcw, Cpu, Database, Keyboard, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { useTheme } from '../hooks/useTheme';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { TOPIC_BASE_PATH } from '../data/topic';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -15,7 +16,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 const executionSteps = [
-  { id: 1, component: 'OS', action: 'Load Program', detail: 'The OS reads the program file — the same ROM listing from Step 3 (MOV 15, MOV 27, ADD, STORE, HALT) — and places its code and data into RAM.', icon: Database, color: 'text-blue-500' },
+  { id: 1, component: 'OS', action: 'Load Program', detail: 'The OS loader maps the executable — the same ROM listing from Step 3 (MOV 15, MOV 27, ADD, STORE, HALT) — into the process address space. Pages are faulted in as the program touches them.', icon: Database, color: 'text-blue-500' },
   { id: 2, component: 'CPU', action: 'Initialize PC', detail: 'The Program Counter is set to 0x00, the address of the very first instruction.', icon: Cpu, color: 'text-purple-500' },
   { id: 3, component: 'CPU/RAM', action: 'Fetch Loop', detail: 'The CPU repeats Fetch → Decode → Execute: R0 = 15, R1 = 27, the ALU computes 42, and RAM[0x10] = 42.', icon: RotateCcw, color: 'text-red-500' },
   { id: 4, component: 'CPU/IO', action: 'System Call', detail: 'A print instruction calls the OS, which hands 42 to the monitor driver — the same system-call path from the I/O lesson.', icon: Keyboard, color: 'text-orange-500' },
@@ -26,10 +27,15 @@ export const ExecutionSummary: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const { theme } = useTheme();
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    if (prefersReducedMotion) setIsPlaying(false);
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     let interval: number | undefined;
-    if (isPlaying) {
+    if (isPlaying && !prefersReducedMotion) {
       interval = window.setInterval(() => {
         setCurrentStep(s => {
           if (s >= executionSteps.length - 1) {
@@ -41,7 +47,7 @@ export const ExecutionSummary: React.FC = () => {
       }, 3000);
     }
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, prefersReducedMotion]);
 
   const handleReset = () => {
     setCurrentStep(0);
@@ -51,7 +57,7 @@ export const ExecutionSummary: React.FC = () => {
   const handleStepKeyboard = (e: React.KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
-      setIsPlaying(p => !p);
+      if (!prefersReducedMotion) setIsPlaying(p => !p);
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
       setIsPlaying(false);
@@ -111,9 +117,12 @@ export const ExecutionSummary: React.FC = () => {
              )}>Execution Timeline</h3>
              <div className="flex gap-2">
                 <button
+                  type="button"
                   onClick={() => setIsPlaying(!isPlaying)}
-                  aria-label={isPlaying ? 'Pause timeline' : 'Play timeline'}
+                  aria-label={prefersReducedMotion ? 'Auto-play disabled by reduced-motion preference' : isPlaying ? 'Pause timeline' : 'Play timeline'}
                   aria-pressed={isPlaying}
+                  disabled={prefersReducedMotion}
+                  title={prefersReducedMotion ? 'Auto-play is disabled by your reduced-motion preference' : undefined}
                   className={cn(
                     "p-2 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                     theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 shadow-sm"

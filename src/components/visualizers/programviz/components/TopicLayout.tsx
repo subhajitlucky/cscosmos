@@ -63,7 +63,7 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
         {prevStep ? (
           <Link 
             href={prevStep.path}
-            className="flex items-center gap-2 transition-colors text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-2 transition-colors text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{prevStep.title}</span>

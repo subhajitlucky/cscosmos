@@ -94,14 +94,20 @@ export const IOBasics: React.FC = () => {
         {/* Blocking vs Non-Blocking Interaction */}
         <div className="space-y-6">
           <h3 className="text-xl font-bold">How Programs Wait</h3>
-          <div className={cn(
-            "flex p-1 rounded-lg w-fit transition-colors",
-            theme === 'dark' ? "bg-slate-900" : "bg-slate-100"
-          )}>
+          <div
+            role="group"
+            aria-label="I/O mode"
+            className={cn(
+              "flex p-1 rounded-lg w-fit transition-colors",
+              theme === 'dark' ? "bg-slate-900" : "bg-slate-100"
+            )}
+          >
             <button 
+              type="button"
+              aria-pressed={ioType === 'blocking'}
               onClick={() => setIoType('blocking')}
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-bold transition-all",
+                "px-4 py-2 rounded-md text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                 ioType === 'blocking' 
                   ? "bg-blue-600 text-white shadow-md shadow-blue-500/20" 
                   : (theme === 'dark' ? "text-slate-500 hover:text-white" : "text-slate-400 hover:text-slate-600")
@@ -110,9 +116,11 @@ export const IOBasics: React.FC = () => {
               Blocking
             </button>
             <button 
+              type="button"
+              aria-pressed={ioType === 'non-blocking'}
               onClick={() => setIoType('non-blocking')}
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-bold transition-all",
+                "px-4 py-2 rounded-md text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
                 ioType === 'non-blocking' 
                   ? "bg-blue-600 text-white shadow-md shadow-blue-500/20" 
                   : (theme === 'dark' ? "text-slate-500 hover:text-white" : "text-slate-400 hover:text-slate-600")
@@ -141,9 +149,9 @@ export const IOBasics: React.FC = () => {
                   </div>
                 </div>
                 <p className={cn("text-sm", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>
-                  {ioType === 'blocking' 
-                    ? "The program stops execution entirely until the I/O operation (like reading a file) is finished. It's simple but can feel slow."
-                    : "The program tells the OS what it wants, then continues doing other work. It checks back later to see if the data is ready."}
+                  {ioType === 'blocking'
+                    ? "The calling thread is parked until the I/O operation (like reading a file) completes. The OS may run other threads, but this code path cannot continue."
+                    : "The program asks the OS and continues doing other work. It checks back later or gets notified when the data is ready."}
                 </p>
              </div>
           </div>
