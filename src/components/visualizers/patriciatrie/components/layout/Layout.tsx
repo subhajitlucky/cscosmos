@@ -125,7 +125,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       className={cn(
                         "block px-4 py-3 rounded-2xl text-base font-bold transition-all",
                         isActive 
-                          ? "bg-primary text-white shadow-lg shadow-primary/20" 
+                          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
                           : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
                       )}
                     >
@@ -197,7 +197,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
 
           <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-neutral-500 text-xs font-medium">
+            {/* `new Date().getFullYear()` runs on the render path, so the pre-rendered HTML
+                pins the build year. It only disagrees with a visitor's clock once the year
+                rolls over on a stale build, and the fix that keeps the value correct (passing
+                `year` down from the server component) would change shell markup — so the
+                mismatch is suppressed rather than the year frozen. */}
+            <p className="text-neutral-500 text-xs font-medium" suppressHydrationWarning>
               © {new Date().getFullYear()} PatriciaTrie Visualizer. Open Source Educational Tool.
             </p>
             <div className="flex items-center gap-2">

@@ -36,7 +36,7 @@ const LearningPath = () => {
             >
               <div className="relative z-10">
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center border-4 border-background transition-colors ${
-                  index === 0 ? 'bg-primary text-white' : 'bg-card text-muted-foreground group-hover:border-primary/20'
+                  index === 0 ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground group-hover:border-primary/20'
                 }`}>
                   {index === 0 ? <BookOpen size={20} /> : <span className="font-bold">{index + 1}</span>}
                 </div>
@@ -66,7 +66,7 @@ const LearningPath = () => {
         <p className="text-muted-foreground mb-6">Complete all 12 modules to earn your mastery of HTTP headers and caching.</p>
         <Link 
           href={`/webprotocols${topics[0].path}`}
-          className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary/90 transition-all"
+          className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-bold hover:bg-primary/90 transition-all"
         >
           Start with "{topics[0].name}"
         </Link>

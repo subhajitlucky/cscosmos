@@ -173,7 +173,7 @@ export function OwnershipVisualizer() {
                   idx === currentStep
                     ? 'bg-[var(--rust-primary)]'
                     : idx < currentStep
-                    ? 'bg-[var(--rust-primary)]/40'
+                    ? 'bg-[var(--rust-primary-40)]'
                     : 'bg-[var(--rust-border)]'
                 }`}
               />
@@ -226,7 +226,7 @@ export function OwnershipVisualizer() {
                                 ? 'border-dashed border-red-500/40 bg-red-950/10 text-red-400 opacity-60'
                                 : isDropped
                                 ? 'border-dashed border-[var(--rust-border)] opacity-30'
-                                : 'border-[var(--rust-cyan)]/40 bg-[var(--rust-bg)] text-[var(--rust-text)] shadow-sm'
+                                : 'border-[var(--rust-cyan-40)] bg-[var(--rust-bg)] text-[var(--rust-text)] shadow-sm'
                             }`}
                           >
                             <div className="flex items-center justify-between mb-1">
@@ -271,7 +271,7 @@ export function OwnershipVisualizer() {
                     className={`rounded-md p-2.5 font-mono text-xs border transition-all ${
                       h.isFreed
                         ? 'border-dashed border-[var(--rust-border)] opacity-40 bg-[var(--rust-bg)]'
-                        : 'border-[var(--rust-amber)]/40 bg-[var(--rust-bg)] text-[var(--rust-text)]'
+                        : 'border-[var(--rust-amber-40)] bg-[var(--rust-bg)] text-[var(--rust-text)]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1 text-[10px]">

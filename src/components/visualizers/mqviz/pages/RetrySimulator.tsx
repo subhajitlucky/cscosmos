@@ -76,7 +76,7 @@ export function RetrySimulator() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--mq-rose)]/30 bg-[var(--mq-rose)]/10 text-[var(--mq-rose)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--mq-rose-30)] bg-[var(--mq-rose-10)] text-[var(--mq-rose)] text-xs font-mono">
           <ShieldAlert className="w-3.5 h-3.5" /> Resilience &amp; Fault Tolerance Lab
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--mq-text)]">
@@ -190,9 +190,9 @@ export function RetrySimulator() {
                     key={idx}
                     className={`p-3.5 rounded-lg border flex items-center justify-between transition-all ${
                       isDlq
-                        ? 'border-[var(--mq-rose)]/40 bg-[var(--mq-rose)]/10 text-[var(--mq-rose)]'
+                        ? 'border-[var(--mq-rose-40)] bg-[var(--mq-rose-10)] text-[var(--mq-rose)]'
                         : isSuccess
-                        ? 'border-[var(--mq-emerald)]/40 bg-[var(--mq-emerald)]/10 text-[var(--mq-emerald)]'
+                        ? 'border-[var(--mq-emerald-40)] bg-[var(--mq-emerald-10)] text-[var(--mq-emerald)]'
                         : 'border-[var(--mq-border-subtle)] bg-[var(--mq-bg)] text-[var(--mq-text)]'
                     }`}
                   >
@@ -221,7 +221,7 @@ export function RetrySimulator() {
           </div>
 
           {/* Dead-Letter Queue Bucket */}
-          <div className="rounded-2xl border border-[var(--mq-rose)]/30 bg-[var(--mq-surface)] p-6 space-y-4">
+          <div className="rounded-2xl border border-[var(--mq-rose-30)] bg-[var(--mq-surface)] p-6 space-y-4">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-[var(--mq-rose)] uppercase tracking-wider font-bold flex items-center gap-2">
                 <ShieldAlert className="w-3.5 h-3.5" /> Dead-Letter Storage (DLQ)
@@ -233,7 +233,7 @@ export function RetrySimulator() {
 
             <div className="space-y-2 font-mono text-xs">
               {dlqItems.map((item, idx) => (
-                <div key={idx} className="p-3 rounded-lg bg-[var(--mq-bg)] border border-[var(--mq-rose)]/20 space-y-1">
+                <div key={idx} className="p-3 rounded-lg bg-[var(--mq-bg)] border border-[var(--mq-rose-20)] space-y-1">
                   <div className="flex items-center justify-between text-[11px] text-[var(--mq-rose)]">
                     <span>ID: {item.id}</span>
                     <span>{item.timestamp}</span>

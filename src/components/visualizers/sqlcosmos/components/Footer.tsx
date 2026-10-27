@@ -13,7 +13,7 @@ export function Footer() {
             <Database className="w-3.5 h-3.5" />
           </div>
           <span className="font-semibold text-foreground">SQLCosmos by CSCosmos</span>
-          <span>• Relational Query Planner, B+ Tree Indexing &amp; Engine Visualizer</span>
+          <span>• Relational SQL, Query Plans, B+ Tree Indexing &amp; Engine Visualizers</span>
         </div>
 
         <div className="flex items-center gap-4">

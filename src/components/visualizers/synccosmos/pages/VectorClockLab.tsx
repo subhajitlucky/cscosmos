@@ -78,7 +78,7 @@ export function VectorClockLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--sync-amber)]/30 bg-[var(--sync-amber)]/10 text-[var(--sync-amber)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--sync-amber-30)] bg-[var(--sync-amber-10)] text-[var(--sync-amber)] text-xs font-mono">
           <Clock className="w-3.5 h-3.5" /> Vector Clock Causal Order Lab
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--sync-text)]">
@@ -118,13 +118,13 @@ export function VectorClockLab() {
                 <div className="flex flex-wrap gap-2 pt-1 border-t border-white/10">
                   <button
                     onClick={() => triggerLocalEvent(idx)}
-                    className="py-1.5 px-3 rounded bg-white/10 hover:bg-white/20 text-[10px] font-bold text-white transition-all"
+                    className="py-1.5 px-3 rounded bg-white/10 hover:bg-white/20 text-[10px] font-bold text-[var(--sync-text)] transition-all"
                   >
                     + Local Event
                   </button>
                   <button
                     onClick={() => sendMessage(idx, (idx + 1) % 3)}
-                    className="py-1.5 px-3 rounded bg-white/10 hover:bg-white/20 text-[10px] font-bold text-white transition-all flex items-center gap-1"
+                    className="py-1.5 px-3 rounded bg-white/10 hover:bg-white/20 text-[10px] font-bold text-[var(--sync-text)] transition-all flex items-center gap-1"
                   >
                     Send to {nodes[(idx + 1) % 3].name.split(' ')[0]} <Send className="w-3 h-3" />
                   </button>

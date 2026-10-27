@@ -38,7 +38,7 @@ const Learn = () => {
                                 placeholder="SEARCH_MODULES..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full md:w-80 border border-brand-border px-4 py-3 font-mono text-sm focus:outline-none focus:border-brand-lime placeholder-gray-500 transition-colors"
+                                className="w-full md:w-80 border border-brand-border px-4 py-3 font-mono text-sm focus:outline-none focus:border-brand-lime placeholder-gray-600 dark:placeholder-gray-400 transition-colors"
                                 style={{ color: 'var(--text-main)', backgroundColor: 'var(--bg-surface)' }}
                             />
                             <Search className="absolute right-3 top-3 text-gray-500" size={18} />
@@ -64,7 +64,7 @@ const Learn = () => {
                                             className="group neo-card p-6 relative flex flex-col h-full"
                                         >
                                             <div className="flex justify-between items-start mb-4">
-                                                <span className="font-mono text-xs text-gray-500">
+                                                <span className="font-mono text-xs text-gray-600 dark:text-gray-400">
                                                     {String(index + 1).padStart(2, '0')}
                                                 </span>
                                                 {isCompleted && (
@@ -89,7 +89,7 @@ const Learn = () => {
 
                     {filteredTopics.length === 0 && (
                         <div className="py-20 text-center border border-dashed border-brand-border">
-                            <p className="text-gray-500 font-mono">NO_MODULES_FOUND</p>
+                            <p className="text-gray-600 dark:text-gray-400 font-mono">NO_MODULES_FOUND</p>
                         </div>
                     )}
                 </div>

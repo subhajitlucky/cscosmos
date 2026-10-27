@@ -39,6 +39,17 @@ export const Playground: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="flex flex-col gap-8">
+        {/* FS-76: this page pre-rendered 41.9 KB of real content with no heading element at
+            all — its top heading was a small <h2> section label. "Algorithm Playground" is the
+            engine's own name for the page (the CTA on Home), not new copy. */}
+        <header className="flex flex-col gap-2">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-slate-100">
+            Algorithm Playground
+          </h1>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+            Step a matching algorithm over your own text and pattern, and inspect its state at every comparison.
+          </p>
+        </header>
         {/* Row 1: Config, Stats & History side-by-side */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="md:col-span-2 bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl">

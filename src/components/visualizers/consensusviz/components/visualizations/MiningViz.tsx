@@ -4,11 +4,18 @@ import { calculateBlockHash } from '../../utils/hash';
 import { Play, Pause, RefreshCw, CheckCircle, Settings, Zap, Hash, Database, Lock } from 'lucide-react';
 import { clsx } from 'clsx';
 
+// The demo block's header has to hash to the same value on the server and on the
+// client's first render. `Date.now()` in the `useState` initialiser below made
+// the rendered hash (and therefore the visible markup) differ between the two —
+// a hydration mismatch. A fixed timestamp also makes the puzzle reproducible,
+// which is what a teaching example wants; "Reset Block" still stamps a fresh one.
+const DEMO_BLOCK_TIMESTAMP = 1704067200; // 2024-01-01T00:00:00Z
+
 const MiningViz: React.FC = () => {
   // Block Header State
   const [blockHeight] = useState(1052);
   const [prevHash] = useState('0000a456b7c8d9e0f1...');
-  const [timestamp, setTimestamp] = useState(() => Math.floor(Date.now() / 1000));
+  const [timestamp, setTimestamp] = useState(DEMO_BLOCK_TIMESTAMP);
   const [data, setData] = useState('Transaction: Alice -> Bob 50 BTC');
   const [nonce, setNonce] = useState(0);
 

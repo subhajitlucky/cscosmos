@@ -43,7 +43,7 @@ const NotFound: React.FC = () => {
       >
         <Link 
           to="/" 
-          className="px-8 py-4 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-blue-600 transition-all shadow-xl shadow-primary/25 active:scale-95"
+          className="px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-blue-600 transition-all shadow-xl shadow-primary/25 active:scale-95"
         >
           <Home size={16} /> Return Home
         </Link>

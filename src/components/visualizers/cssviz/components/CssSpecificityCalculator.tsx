@@ -2,37 +2,26 @@
 
 import React, { useState, useMemo } from 'react';
 import { Calculator, CheckCircle2, Hash, Layers, Sparkles, Terminal } from 'lucide-react';
+import { computeSpecificity } from '@/components/visualizers/cssviz/utils/specificity';
 
 export function CssSpecificityCalculator() {
   const [selector, setSelector] = useState('nav#main-nav ul.menu li.active > a:hover');
 
   const specificity = useMemo(() => {
-    let ids = 0;
-    let classes = 0;
-    let elements = 0;
-
-    // Count IDs (#id)
-    const idMatches = selector.match(/#[a-zA-Z0-9_-]+/g) || [];
-    ids = idMatches.length;
-
-    // Count Classes (.class), Attributes ([attr]), and Pseudo-classes (:hover, not ::before)
-    const classMatches = selector.match(/\.[a-zA-Z0-9_-]+/g) || [];
-    const attrMatches = selector.match(/\[[^\]]+\]/g) || [];
-    const pseudoClassMatches = (selector.match(/:[a-zA-Z0-9_-]+/g) || []).filter((p) => !p.startsWith('::'));
-
-    classes = classMatches.length + attrMatches.length + pseudoClassMatches.length;
-
-    // Count Elements (div, p, a, nav, ul, li) & Pseudo-elements (::before, ::after)
-    const pseudoElemMatches = selector.match(/::[a-zA-Z0-9_-]+/g) || [];
-    const tokens = selector.replace(/[#.[:][^ >+~]*/g, ' ').trim().split(/\s+|[>+~]/).filter(Boolean);
-    elements = tokens.length + pseudoElemMatches.length;
+    // Real CSS specificity: ids / (classes, attributes, pseudo-classes) / (types, pseudo-elements).
+    // :where() counts zero; :is()/:not()/:has() take their most specific argument;
+    // :nth-child(An+B of S) adds S; ::slotted(S) and :host(S) add S.
+    //
+    // There used to be a `totalScore: ids * 100 + classes * 10 + elements` here. It was never
+    // rendered, which is fortunate: no single number can order specificity, because the
+    // comparison is a tuple. `(0,1,10)` and `(0,2,0)` both score 20, yet the second wins.
+    const { ids, classes, elements } = computeSpecificity(selector);
 
     return {
       inline: 0,
       ids,
       classes,
-      elements,
-      totalScore: ids * 100 + classes * 10 + elements
+      elements
     };
   }, [selector]);
 
@@ -54,7 +43,7 @@ export function CssSpecificityCalculator() {
         </div>
 
         <span className="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 font-mono text-xs font-bold">
-          Cascade Weight: ({specificity.inline}, {specificity.ids}, {specificity.classes}, {specificity.elements})
+          Specificity (inline, ids, classes, elements): ({specificity.inline}, {specificity.ids}, {specificity.classes}, {specificity.elements})
         </span>
       </div>
 

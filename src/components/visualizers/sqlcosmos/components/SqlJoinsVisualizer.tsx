@@ -83,7 +83,7 @@ export function SqlJoinsVisualizer() {
                 Streaming orders table and probing hash table:
                 <div className="p-2 rounded bg-slate-950 border border-slate-800 mt-1 space-y-1">
                   <div className="text-emerald-400">✅ Match: order #101 (user_id: 1) ➔ Alice</div>
-                  <div className="text-emerald-400">✅ Match: order #102 (user_id: 2) ➔ Bob</div>
+                  <div className="text-emerald-400">✅ Match: order #102 (user_id: 1) ➔ Alice</div>
                 </div>
               </div>
             </div>
@@ -94,7 +94,10 @@ export function SqlJoinsVisualizer() {
           <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
             <span className="text-indigo-400 font-bold block">Nested Loop Traversal:</span>
             <div className="text-[11px] text-slate-300 space-y-1">
-              <div>FOR each row in users (Outer Table, 100 rows):</div>
+              {/* Numbers must match the users/orders sample data in
+                  lib/sqlSubsetEvaluator.ts, which the playground on the same page
+                  uses: 4 users, and orders.user_id = [1, 1, 2, 3]. */}
+              <div>FOR each row in users (Outer Table, 4 rows):</div>
               <div className="pl-4 text-emerald-400">➔ Traverses B-Tree Index idx_orders_user_id (Inner Table) in O(log M)</div>
               <div className="pl-4 text-slate-400">➔ Matches instantly fetched without scanning entire orders table!</div>
             </div>
@@ -106,7 +109,7 @@ export function SqlJoinsVisualizer() {
             <span className="text-cyan-400 font-bold block">Merge Join Two-Pointer Walk:</span>
             <div className="text-[11px] text-slate-300 space-y-1">
               <div>Pointer 1 (users.id: [1, 2, 3, 4]) ➔ Walking sorted stream</div>
-              <div>Pointer 2 (orders.user_id: [1, 1, 2, 4]) ➔ Walking sorted stream</div>
+              <div>Pointer 2 (orders.user_id: [1, 1, 2, 3]) ➔ Walking sorted stream</div>
               <div className="text-emerald-400 pt-1">Both streams advance in single synchronized linear pass $O(N + M)$!</div>
             </div>
           </div>

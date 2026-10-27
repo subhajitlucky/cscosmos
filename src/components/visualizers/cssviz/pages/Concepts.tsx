@@ -22,6 +22,7 @@ const Concepts = () => {
     <PageTransition>
       <section className="space-y-4">
         <SectionHeader
+          level="h1"
           eyebrow="Learning path"
           title="CSS concepts from basics to advanced"
           subtitle="Follow this sequence to master CSS. Jump into any concept to view details or open its visualizer."

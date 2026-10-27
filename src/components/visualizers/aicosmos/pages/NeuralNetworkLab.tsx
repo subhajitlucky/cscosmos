@@ -312,12 +312,12 @@ export function NeuralNetworkLab() {
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--ai-border-subtle)] pb-6">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center space-x-2 rounded-full border border-[var(--ai-border)] bg-[var(--ai-primary)]/10 px-3 py-1 text-xs font-mono font-semibold text-[var(--ai-primary)]">
+          <div className="inline-flex items-center space-x-2 rounded-full border border-[var(--ai-border)] bg-[var(--ai-primary-10)] px-3 py-1 text-xs font-mono font-semibold text-[var(--ai-primary-text)]">
             <Sparkles className="h-3.5 w-3.5" />
             <span>Interactive Deep Learning Sandbox &bull; Real-Time Backpropagation</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ai-text)]">
-            Neural Network <span className="text-[var(--ai-primary)] ai-glow">Backpropagation Lab</span>
+            Neural Network <span className="text-[var(--ai-primary-text)] ai-glow">Backpropagation Lab</span>
           </h1>
           <p className="text-xs sm:text-sm text-[var(--ai-muted)] leading-relaxed">
             Observe the chain rule of calculus in action. Step through forward activation passes, compute binary cross-entropy loss, and propagate analytical partial derivatives &part;L/&part;W to update synaptic weights in real-time.
@@ -343,7 +343,7 @@ export function NeuralNetworkLab() {
             disabled={isPlaying}
             className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg border border-[var(--ai-border)] bg-[var(--ai-surface)] text-xs font-bold text-[var(--ai-text)] hover:bg-[var(--ai-surface-2)] disabled:opacity-50 transition-colors"
           >
-            <Activity className="h-3.5 w-3.5 text-[var(--ai-cyan)]" />
+            <Activity className="h-3.5 w-3.5 text-[var(--ai-cyan-text)]" />
             <span>Step (1 Epoch)</span>
           </button>
 
@@ -393,7 +393,7 @@ export function NeuralNetworkLab() {
         <div className="space-y-1.5">
           <div className="flex justify-between font-mono text-[10px] uppercase text-[var(--ai-muted)] font-bold">
             <span>Hidden Layer Neurons</span>
-            <span className="text-[var(--ai-primary)]">{hiddenNeurons}</span>
+            <span className="text-[var(--ai-primary-text)]">{hiddenNeurons}</span>
           </div>
           <input
             type="range"
@@ -410,7 +410,7 @@ export function NeuralNetworkLab() {
         <div className="space-y-1.5">
           <div className="flex justify-between font-mono text-[10px] uppercase text-[var(--ai-muted)] font-bold">
             <span>Learning Rate (&alpha;)</span>
-            <span className="text-[var(--ai-cyan)]">{learningRate.toFixed(2)}</span>
+            <span className="text-[var(--ai-cyan-text)]">{learningRate.toFixed(2)}</span>
           </div>
           <input
             type="range"
@@ -431,7 +431,7 @@ export function NeuralNetworkLab() {
         <div className="lg:col-span-7 rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6 space-y-6 flex flex-col justify-between">
           <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
             <div className="flex items-center gap-2">
-              <Network className="h-4 w-4 text-[var(--ai-primary)]" />
+              <Network className="h-4 w-4 text-[var(--ai-primary-text)]" />
               <span className="font-bold text-xs uppercase tracking-wider text-[var(--ai-text)]">
                 Feedforward &amp; Backpropagation Architecture
               </span>
@@ -565,22 +565,22 @@ export function NeuralNetworkLab() {
           <div className="rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] p-4 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold text-[var(--ai-text)]">
               <span className="flex items-center gap-1.5">
-                <Sliders className="h-3.5 w-3.5 text-[var(--ai-primary)]" />
+                <Sliders className="h-3.5 w-3.5 text-[var(--ai-primary-text)]" />
                 Analytical Chain Rule Equations:
               </span>
               <span className="font-mono text-[10px] text-[var(--ai-muted)]">BCE Loss + {activation.toUpperCase()}</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono text-[11px] text-[var(--ai-muted)]">
               <div className="bg-[var(--ai-bg)] p-2.5 rounded border border-[var(--ai-border-subtle)]">
-                <span className="text-[var(--ai-primary)] font-bold">1. Output Delta:</span>
+                <span className="text-[var(--ai-primary-text)] font-bold">1. Output Delta:</span>
                 <div className="text-[var(--ai-text)] mt-0.5">&delta;&sup2; = (&ycirc; &minus; y)</div>
               </div>
               <div className="bg-[var(--ai-bg)] p-2.5 rounded border border-[var(--ai-border-subtle)]">
-                <span className="text-[var(--ai-cyan)] font-bold">2. Hidden Delta:</span>
+                <span className="text-[var(--ai-cyan-text)] font-bold">2. Hidden Delta:</span>
                 <div className="text-[var(--ai-text)] mt-0.5">&delta;&sup1; = (W&sup2;&middot;&delta;&sup2;) &odot; &sigma;&apos;(z&sup1;)</div>
               </div>
               <div className="bg-[var(--ai-bg)] p-2.5 rounded border border-[var(--ai-border-subtle)]">
-                <span className="text-[var(--ai-emerald)] font-bold">3. Weight Update:</span>
+                <span className="text-[var(--ai-emerald-text)] font-bold">3. Weight Update:</span>
                 <div className="text-[var(--ai-text)] mt-0.5">W &larr; W &minus; &alpha; (&part;L/&part;W)</div>
               </div>
             </div>
@@ -595,7 +595,7 @@ export function NeuralNetworkLab() {
           <div className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6 space-y-4">
             <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-3">
               <div className="flex items-center gap-2">
-                <Activity className="h-4 w-4 text-[var(--ai-cyan)]" />
+                <Activity className="h-4 w-4 text-[var(--ai-cyan-text)]" />
                 <span className="font-bold text-xs uppercase tracking-wider text-[var(--ai-text)]">
                   2D Decision Boundary Space
                 </span>
@@ -642,7 +642,7 @@ export function NeuralNetworkLab() {
                     <div
                       key={idx}
                       style={{ height: `${heightPct}%` }}
-                      className="flex-1 bg-[var(--ai-rose)]/80 hover:bg-[var(--ai-rose)] rounded-t transition-all"
+                      className="flex-1 bg-[var(--ai-rose-80)] hover:bg-[var(--ai-rose)] rounded-t transition-all"
                       title={`Loss: ${val.toFixed(4)}`}
                     />
                   );
@@ -663,7 +663,7 @@ export function NeuralNetworkLab() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-[var(--ai-border-subtle)]">
         <div className="p-5 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-2">
           <h3 className="text-sm font-bold text-[var(--ai-text)] flex items-center gap-2">
-            <Zap className="h-4 w-4 text-[var(--ai-primary)]" />
+            <Zap className="h-4 w-4 text-[var(--ai-primary-text)]" />
             Universal Approximation
           </h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
@@ -673,7 +673,7 @@ export function NeuralNetworkLab() {
 
         <div className="p-5 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-2">
           <h3 className="text-sm font-bold text-[var(--ai-text)] flex items-center gap-2">
-            <TrendingDown className="h-4 w-4 text-[var(--ai-emerald)]" />
+            <TrendingDown className="h-4 w-4 text-[var(--ai-emerald-text)]" />
             Gradient Flow &amp; Vanishing
           </h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
@@ -683,7 +683,7 @@ export function NeuralNetworkLab() {
 
         <div className="p-5 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-2">
           <h3 className="text-sm font-bold text-[var(--ai-text)] flex items-center gap-2">
-            <Layers className="h-4 w-4 text-[var(--ai-cyan)]" />
+            <Layers className="h-4 w-4 text-[var(--ai-cyan-text)]" />
             Step vs Batch Optimization
           </h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">

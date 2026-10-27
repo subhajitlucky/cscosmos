@@ -48,12 +48,12 @@ function PyObjectMemoryWidget() {
     <div className="space-y-4 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5">
       <div className="flex items-center justify-between border-b border-[var(--ai-border)] pb-3">
         <div className="flex items-center gap-2">
-          <Cpu className="h-4 w-4 text-blue-400" />
+          <Cpu className="h-4 w-4 text-blue-700 dark:text-blue-400" />
           <span className="font-mono text-xs font-semibold text-[var(--ai-text)] uppercase tracking-wider">
             Live Memory Allocation Inspector: PyObject vs Contiguous Buffer
           </span>
         </div>
-        <span className="font-mono text-xs font-bold text-emerald-400">
+        <span className="font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400">
           {savingsFactor}x Memory Reduction
         </span>
       </div>
@@ -81,7 +81,7 @@ function PyObjectMemoryWidget() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
         <div className="rounded-lg border border-rose-500/30 bg-rose-500/5 p-3 space-y-1">
-          <div className="text-[11px] font-mono text-rose-400">Standard Python list[float]</div>
+          <div className="text-[11px] font-mono text-rose-700 dark:text-rose-400">Standard Python list[float]</div>
           <div className="text-xl font-bold font-mono text-[var(--ai-text)]">
             {formatBytes(pythonListBytes)}
           </div>
@@ -91,7 +91,7 @@ function PyObjectMemoryWidget() {
         </div>
 
         <div className="rounded-lg border border-blue-500/30 bg-blue-500/5 p-3 space-y-1">
-          <div className="text-[11px] font-mono text-blue-400">NumPy / PyTorch float32</div>
+          <div className="text-[11px] font-mono text-blue-700 dark:text-blue-400">NumPy / PyTorch float32</div>
           <div className="text-xl font-bold font-mono text-[var(--ai-text)]">
             {formatBytes(numpyFloat32Bytes)}
           </div>
@@ -101,7 +101,7 @@ function PyObjectMemoryWidget() {
         </div>
 
         <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-3 space-y-1">
-          <div className="text-[11px] font-mono text-emerald-400">Quantized int8 Tensor</div>
+          <div className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400">Quantized int8 Tensor</div>
           <div className="text-xl font-bold font-mono text-[var(--ai-text)]">
             {formatBytes(numpyInt8Bytes)}
           </div>
@@ -136,7 +136,7 @@ function VectorVsLoopWidget() {
     <div className="space-y-4 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5">
       <div className="flex items-center justify-between border-b border-[var(--ai-border)] pb-3">
         <div className="flex items-center gap-2">
-          <Zap className="h-4 w-4 text-amber-400" />
+          <Zap className="h-4 w-4 text-amber-700 dark:text-amber-400" />
           <span className="font-mono text-xs font-semibold text-[var(--ai-text)] uppercase tracking-wider">
             Vectorized SIMD Kernel vs Interpreted Bytecode Loop
           </span>
@@ -144,7 +144,7 @@ function VectorVsLoopWidget() {
         <button
           onClick={runBenchmark}
           disabled={running}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-blue-500 disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-blue-700 disabled:opacity-50"
         >
           <Play className="h-3 w-3" />
           {running ? 'Benchmarking...' : 'Simulate Benchmark'}
@@ -170,12 +170,12 @@ function VectorVsLoopWidget() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
         <div className="rounded-lg border border-rose-500/20 bg-rose-500/5 p-4 space-y-2">
           <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-rose-400">Pure Python for-loop</span>
+            <span className="text-rose-700 dark:text-rose-400">Pure Python for-loop</span>
             <span className="font-bold text-[var(--ai-text)]">
               {executed ? `~${pythonLoopTimeMs} ms` : '--'}
             </span>
           </div>
-          <div className="font-mono text-[11px] text-[var(--ai-muted)] bg-black/20 p-2 rounded">
+          <div className="font-mono text-[11px] text-zinc-700 dark:text-[var(--ai-muted)] bg-black/20 p-2 rounded">
             for x in array:<br />
             &nbsp;&nbsp;total += x * 2.0
           </div>
@@ -186,12 +186,12 @@ function VectorVsLoopWidget() {
 
         <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
           <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-emerald-400">NumPy Vectorized Kernel</span>
+            <span className="text-emerald-700 dark:text-emerald-400">NumPy Vectorized Kernel</span>
             <span className="font-bold text-[var(--ai-text)]">
               {executed ? `~${numpyVectorTimeMs} ms` : '--'}
             </span>
           </div>
-          <div className="font-mono text-[11px] text-[var(--ai-muted)] bg-black/20 p-2 rounded">
+          <div className="font-mono text-[11px] text-zinc-700 dark:text-[var(--ai-muted)] bg-black/20 p-2 rounded">
             total = array * 2.0 # AVX-512 SIMD
           </div>
           <div className="text-[10px] text-[var(--ai-muted)]">
@@ -201,7 +201,7 @@ function VectorVsLoopWidget() {
       </div>
 
       {executed && (
-        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 text-center font-mono text-xs text-emerald-400 font-semibold">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 text-center font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
           Hardware Speedup: ~{speedup}x Faster Execution
         </div>
       )}
@@ -216,7 +216,7 @@ function GilConcurrencyWidget() {
     <div className="space-y-4 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--ai-border)] pb-3">
         <div className="flex items-center gap-2">
-          <Layers className="h-4 w-4 text-purple-400" />
+          <Layers className="h-4 w-4 text-purple-700 dark:text-purple-400" />
           <span className="font-mono text-xs font-semibold text-[var(--ai-text)] uppercase tracking-wider">
             CPython Global Interpreter Lock (GIL) Concurrency Engine
           </span>
@@ -236,7 +236,7 @@ function GilConcurrencyWidget() {
             onClick={() => setMode('gemm')}
             className={`rounded-lg px-2.5 py-1 text-xs font-mono font-medium transition-all ${
               mode === 'gemm'
-                ? 'bg-emerald-600 text-white'
+                ? 'bg-emerald-700 text-white'
                 : 'border border-[var(--ai-border)] text-[var(--ai-muted)]'
             }`}
           >
@@ -260,17 +260,17 @@ function GilConcurrencyWidget() {
               {mode === 'cpu' ? (
                 // Only 1 thread active at once
                 t === 1 ? (
-                  <div className="h-full w-full bg-rose-500/80 text-[10px] text-white flex items-center justify-center font-bold">
+                  <div className="h-full w-full bg-rose-700 text-[10px] text-white flex items-center justify-center font-bold">
                     ACTIVE (Holding GIL)
                   </div>
                 ) : (
-                  <div className="h-full w-full bg-zinc-800/60 text-[10px] text-zinc-500 flex items-center justify-center">
+                  <div className="h-full w-full bg-zinc-800/60 text-[10px] text-zinc-950 dark:text-zinc-400 flex items-center justify-center">
                     BLOCKED (Waiting for GIL)
                   </div>
                 )
               ) : (
                 // All 4 threads running in parallel in C
-                <div className="h-full w-full bg-emerald-500/80 text-[10px] text-white flex items-center justify-center font-bold">
+                <div className="h-full w-full bg-emerald-700 text-[10px] text-white flex items-center justify-center font-bold">
                   ACTIVE 100% (OpenBLAS / CUDA Warp)
                 </div>
               )}
@@ -281,7 +281,7 @@ function GilConcurrencyWidget() {
 
       <div className="rounded-lg border border-[var(--ai-border)] bg-[var(--ai-bg)] p-3 text-xs font-mono flex items-center justify-between">
         <span className="text-[var(--ai-muted)]">Effective Multi-Core Scaling:</span>
-        <span className={mode === 'cpu' ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold'}>
+        <span className={mode === 'cpu' ? 'text-rose-700 dark:text-rose-400 font-bold' : 'text-emerald-700 dark:text-emerald-400 font-bold'}>
           {mode === 'cpu' ? '1.0x (No multi-core speedup)' : '4.0x (Linear hardware scaling)'}
         </span>
       </div>
@@ -296,7 +296,7 @@ function StridesMemoryWidget() {
     <div className="space-y-4 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--ai-border)] pb-3">
         <div className="flex items-center gap-2">
-          <Layers className="h-4 w-4 text-cyan-400" />
+          <Layers className="h-4 w-4 text-cyan-700 dark:text-cyan-400" />
           <span className="font-mono text-xs font-semibold text-[var(--ai-text)] uppercase tracking-wider">
             2D Array Memory Strides & Zero-Copy Transpose
           </span>
@@ -325,15 +325,15 @@ function StridesMemoryWidget() {
         <div className="flex items-center justify-between bg-[var(--ai-bg)] p-3 rounded border border-[var(--ai-border)]">
           <div>
             <span className="text-[var(--ai-muted)]">Shape: </span>
-            <span className="text-cyan-400 font-bold">{layout === 'trans' ? '(4, 3)' : '(3, 4)'}</span>
+            <span className="text-cyan-700 dark:text-cyan-400 font-bold">{layout === 'trans' ? '(4, 3)' : '(3, 4)'}</span>
           </div>
           <div>
             <span className="text-[var(--ai-muted)]">Strides (Bytes): </span>
-            <span className="text-purple-400 font-bold">{layout === 'trans' ? '(4, 16)' : '(16, 4)'}</span>
+            <span className="text-purple-700 dark:text-purple-400 font-bold">{layout === 'trans' ? '(4, 16)' : '(16, 4)'}</span>
           </div>
           <div>
             <span className="text-[var(--ai-muted)]">Zero Copy View: </span>
-            <span className="text-emerald-400 font-bold">YES (view.base is arr)</span>
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold">YES (view.base is arr)</span>
           </div>
         </div>
 
@@ -386,7 +386,7 @@ function AsyncStreamerWidget() {
     <div className="space-y-4 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5">
       <div className="flex items-center justify-between border-b border-[var(--ai-border)] pb-3">
         <div className="flex items-center gap-2">
-          <Terminal className="h-4 w-4 text-emerald-400" />
+          <Terminal className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
           <span className="font-mono text-xs font-semibold text-[var(--ai-text)] uppercase tracking-wider">
             Token Streaming via Async Generator (async for)
           </span>
@@ -394,21 +394,21 @@ function AsyncStreamerWidget() {
         <button
           onClick={triggerStream}
           disabled={streaming}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-emerald-500 disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-emerald-800 disabled:opacity-50"
         >
           <Play className="h-3 w-3" />
           {streaming ? 'Streaming Chunks...' : 'Emit Stream'}
         </button>
       </div>
 
-      <div className="rounded-lg border border-[var(--ai-border)] bg-black/40 p-4 font-mono text-sm text-emerald-400 min-h-[60px] flex items-center">
-        {output || <span className="text-zinc-600">// Click "Emit Stream" to test async generator yielding...</span>}
+      <div className="rounded-lg border border-[var(--ai-border)] bg-black/40 p-4 font-mono text-sm text-emerald-950 dark:text-emerald-400 min-h-[60px] flex items-center">
+        {output || <span className="text-zinc-800 dark:text-zinc-400">// Click "Emit Stream" to test async generator yielding...</span>}
         {streaming && <span className="inline-block w-2 h-4 bg-emerald-400 ml-1 animate-pulse" />}
       </div>
 
       <div className="flex items-center justify-between text-xs font-mono text-[var(--ai-muted)]">
         <span>Time to First Token (TTFT): <strong className="text-[var(--ai-text)]">~120ms</strong></span>
-        <span>Tokens Emitted: <strong className="text-emerald-400">{tokensEmitted} / {tokens.length}</strong></span>
+        <span>Tokens Emitted: <strong className="text-emerald-700 dark:text-emerald-400">{tokensEmitted} / {tokens.length}</strong></span>
       </div>
     </div>
   );
@@ -441,7 +441,7 @@ function PydanticValidatorWidget() {
     <div className="space-y-4 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--ai-border)] pb-3">
         <div className="flex items-center gap-2">
-          <ShieldAlert className="h-4 w-4 text-amber-400" />
+          <ShieldAlert className="h-4 w-4 text-amber-700 dark:text-amber-400" />
           <span className="font-mono text-xs font-semibold text-[var(--ai-text)] uppercase tracking-wider">
             Pydantic v2 Core Rust Validation & Error Recovery
           </span>
@@ -450,7 +450,7 @@ function PydanticValidatorWidget() {
           <button
             onClick={() => setSelectedCase('valid')}
             className={`rounded-lg px-2.5 py-1 text-xs font-mono font-medium ${
-              selectedCase === 'valid' ? 'bg-emerald-600 text-white' : 'border border-[var(--ai-border)] text-[var(--ai-muted)]'
+              selectedCase === 'valid' ? 'bg-emerald-700 text-white' : 'border border-[var(--ai-border)] text-[var(--ai-muted)]'
             }`}
           >
             Valid JSON
@@ -458,7 +458,7 @@ function PydanticValidatorWidget() {
           <button
             onClick={() => setSelectedCase('missing')}
             className={`rounded-lg px-2.5 py-1 text-xs font-mono font-medium ${
-              selectedCase === 'missing' ? 'bg-amber-600 text-white' : 'border border-[var(--ai-border)] text-[var(--ai-muted)]'
+              selectedCase === 'missing' ? 'bg-amber-700 text-white' : 'border border-[var(--ai-border)] text-[var(--ai-muted)]'
             }`}
           >
             Missing Key
@@ -486,13 +486,13 @@ function PydanticValidatorWidget() {
           <div className="text-[11px] font-mono text-[var(--ai-muted)]">Pydantic Core Parser Result:</div>
           <div className={`rounded-lg border p-3 font-mono text-xs space-y-2 ${
             activeCase.status === 'VALID'
-              ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
-              : 'border-rose-500/30 bg-rose-500/10 text-rose-400'
+              ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
+              : 'border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-400'
           }`}>
             <div className="font-bold">STATUS: {activeCase.status}</div>
             <div className="text-[11px] opacity-90">{activeCase.detail}</div>
             {activeCase.status !== 'VALID' && (
-              <div className="pt-2 border-t border-rose-500/20 text-[10px] text-zinc-400">
+              <div className="pt-2 border-t border-rose-500/20 text-[10px] text-zinc-700 dark:text-zinc-400">
                 Self-Healing Action: Dispatch error path back to LLM context window for automatic repair.
               </div>
             )}
@@ -508,25 +508,25 @@ function PydanticValidatorWidget() {
 /* -------------------------------------------------------------------------- */
 
 interface PythonAiTopicProps {
-  topicId: string;
+  subtopicSlug: string;
   basePath?: string;
 }
 
 export function PythonAiTopic({
-  topicId,
+  subtopicSlug,
   basePath = '/ai/python-for-ai-engineering',
 }: PythonAiTopicProps) {
   const [copied, setCopied] = useState(false);
-  const topic = getPythonAiSubtopic(topicId);
+  const topic = getPythonAiSubtopic(subtopicSlug);
 
   if (!topic) {
     return (
       <div className="p-12 text-center space-y-4">
-        <h1 className="text-2xl font-bold text-rose-400">Subtopic Not Found</h1>
-        <p className="text-sm text-[var(--ai-muted)]">No Python for AI Engineering subtopic matching ID: {topicId}</p>
+        <h1 className="text-2xl font-bold text-rose-700 dark:text-rose-400">Subtopic Not Found</h1>
+        <p className="text-sm text-[var(--ai-muted)]">No Python for AI Engineering subtopic matching ID: {subtopicSlug}</p>
         <Link
           href={basePath}
-          className="inline-flex items-center gap-2 text-sm text-blue-400 hover:underline"
+          className="inline-flex items-center gap-2 text-sm text-blue-700 dark:text-blue-400 hover:underline"
         >
           <ArrowLeft className="h-4 w-4" /> Back to Curriculum
         </Link>
@@ -556,7 +556,7 @@ export function PythonAiTopic({
         </Link>
         <div className="flex items-center gap-2 font-mono text-xs text-[var(--ai-muted)]">
           <span>Topic {topic.number} of {pythonAiSubtopics.length}</span>
-          <span className="rounded-full bg-blue-500/10 text-blue-400 px-2 py-0.5 border border-blue-500/20">
+          <span className="rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 px-2 py-0.5 border border-blue-500/20">
             {topic.category}
           </span>
         </div>
@@ -564,7 +564,7 @@ export function PythonAiTopic({
 
       {/* Title Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 font-mono text-xs font-semibold text-blue-400">
+        <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 font-mono text-xs font-semibold text-blue-700 dark:text-blue-400">
           <Cpu className="h-3.5 w-3.5" />
           Subtopic #{String(topic.number).padStart(2, '0')}
         </div>
@@ -579,7 +579,7 @@ export function PythonAiTopic({
       {/* Embedded Visualizer Widget */}
       <section className="space-y-2">
         <div className="text-xs font-mono text-[var(--ai-muted)] uppercase tracking-wider flex items-center gap-1.5">
-          <Sparkles className="h-3.5 w-3.5 text-blue-400" />
+          <Sparkles className="h-3.5 w-3.5 text-blue-700 dark:text-blue-400" />
           Interactive Systems Visualizer
         </div>
         {topic.category === 'CPython & Memory' && <PyObjectMemoryWidget />}
@@ -596,7 +596,7 @@ export function PythonAiTopic({
       {/* Key Architectural Takeaways */}
       <section className="rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-6 space-y-4">
         <h2 className="text-lg font-bold text-[var(--ai-text)] flex items-center gap-2">
-          <Layers className="h-4 w-4 text-blue-400" />
+          <Layers className="h-4 w-4 text-blue-700 dark:text-blue-400" />
           Key Systems Engineering Principles
         </h2>
         <ul className="space-y-2.5">
@@ -611,7 +611,7 @@ export function PythonAiTopic({
 
       {/* Mental Model Analogy */}
       <section className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 space-y-2">
-        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">
+        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
           <Lightbulb className="h-4 w-4" />
           Mental Model Analogy
         </div>
@@ -622,7 +622,7 @@ export function PythonAiTopic({
 
       {/* Production Pitfall Warning */}
       <section className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-6 space-y-2">
-        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-rose-400">
+        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-rose-700 dark:text-rose-400">
           <AlertTriangle className="h-4 w-4" />
           Production Pitfall to Avoid
         </div>
@@ -635,14 +635,14 @@ export function PythonAiTopic({
       <section className="rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] overflow-hidden space-y-0">
         <div className="flex items-center justify-between border-b border-[var(--ai-border)] bg-[var(--ai-bg)] px-4 py-2.5">
           <div className="flex items-center gap-2 font-mono text-xs text-[var(--ai-muted)]">
-            <Code2 className="h-3.5 w-3.5 text-blue-400" />
+            <Code2 className="h-3.5 w-3.5 text-blue-700 dark:text-blue-400" />
             <span>production_pattern.py</span>
           </div>
           <button
             onClick={copyCode}
             className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--ai-border)] bg-[var(--ai-card)] px-2.5 py-1 font-mono text-[11px] text-[var(--ai-muted)] transition-colors hover:text-[var(--ai-text)]"
           >
-            {copied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+            {copied ? <Check className="h-3 w-3 text-emerald-700 dark:text-emerald-400" /> : <Copy className="h-3 w-3" />}
             {copied ? 'Copied' : 'Copy Code'}
           </button>
         </div>
@@ -661,7 +661,7 @@ export function PythonAiTopic({
             <span className="font-mono text-[11px] text-[var(--ai-muted)] flex items-center gap-1">
               <ArrowLeft className="h-3 w-3" /> Previous Subtopic
             </span>
-            <span className="text-sm font-semibold text-[var(--ai-text)] group-hover:text-blue-400 transition-colors">
+            <span className="text-sm font-semibold text-[var(--ai-text)] group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
               #{previous.number} {previous.title}
             </span>
           </Link>
@@ -675,14 +675,14 @@ export function PythonAiTopic({
             <span className="font-mono text-[11px] text-[var(--ai-muted)] flex items-center gap-1">
               Next Subtopic <ArrowRight className="h-3 w-3" />
             </span>
-            <span className="text-sm font-semibold text-[var(--ai-text)] group-hover:text-blue-400 transition-colors">
+            <span className="text-sm font-semibold text-[var(--ai-text)] group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
               #{next.number} {next.title}
             </span>
           </Link>
         ) : (
           <Link
             href={`${basePath}/lab`}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700"
           >
             Enter Studio Lab <ArrowRight className="h-3.5 w-3.5" />
           </Link>

@@ -44,7 +44,7 @@ const StateUpdateVisualizer: React.FC = () => {
           
           <button 
             onClick={updateTrie}
-            className="group relative px-6 py-3 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-primary/25 active:scale-95 flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+            className="group relative px-6 py-3 bg-primary text-primary-foreground rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-primary/25 active:scale-95 flex items-center justify-center gap-2 shrink-0 cursor-pointer"
           >
             <Zap size={16} className="group-hover:animate-pulse" />
             Update 'car' State

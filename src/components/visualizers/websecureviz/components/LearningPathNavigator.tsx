@@ -14,7 +14,7 @@ export function LearningPathNavigator() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const { completedSteps } = useProgress();
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -24,11 +24,11 @@ export function LearningPathNavigator() {
     <>
       <div className="md:hidden fixed top-4 right-4 z-50 flex items-center gap-2">
         <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
           className="p-2.5 rounded-lg bg-card text-foreground border border-border shadow-md"
           title="Toggle theme"
         >
-          {mounted && (theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />)}
+          {mounted && (resolvedTheme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />)}
         </button>
         <Button variant="outline" size="icon" onClick={toggleOpen} className="bg-card text-foreground border-border shadow-md">
           {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -108,11 +108,11 @@ export function LearningPathNavigator() {
           <div className="p-4 border-t border-border dark:border-slate-800 bg-muted/30 dark:bg-slate-950/40 flex items-center justify-between">
             <span className="text-xs text-muted-foreground dark:text-slate-400 font-medium">Web Security Visualizer</span>
             <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
               className="p-2 rounded-lg hover:bg-muted dark:hover:bg-slate-800 text-muted-foreground hover:text-foreground transition-colors"
               title="Toggle theme"
             >
-              {mounted && (theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />)}
+              {mounted && (resolvedTheme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />)}
             </button>
           </div>
         </div>

@@ -68,7 +68,7 @@ export function SSRVisualizer() {
           <div className="flex flex-col items-center gap-4">
             <motion.div 
               animate={{ 
-                backgroundColor: status === 'rendering' ? 'oklch(var(--primary) / 0.1)' : 'transparent',
+                backgroundColor: status === 'rendering' ? 'hsl(var(--primary) / 0.1)' : 'transparent',
                 borderColor: status === 'rendering' ? 'var(--primary)' : 'rgba(0,0,0,0.1)'
               }}
               className="w-32 h-32 rounded-[2rem] border-2 bg-background flex flex-col items-center justify-center gap-2 relative shadow-2xl overflow-hidden"

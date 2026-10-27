@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Layers, Grid3X3, TrendingUp, Sparkles, 
@@ -581,8 +581,13 @@ function ProbabilityPlayground() {
     setSamples(prev => [...prev.slice(-200), sample]);
   };
 
-  // Auto sampling
-  useState(() => {
+  // Auto sampling. This was written as `useState(() => {...}, [deps])`: React ignores a
+  // dependency array on `useState`, the initialiser early-returns because `autoSample` starts
+  // `false`, and the returned cleanup was discarded — so auto-sampling never ran once (FS-87).
+  // As an effect the deps do what they say: the interval starts when the toggle is on and
+  // restarts when the distribution or the distribution's parameters change. `params` is state,
+  // so its identity only changes when a slider moves — the interval is not rebuilt per render.
+  useEffect(() => {
     if (!autoSample) return;
     const interval = setInterval(generateSample, 100);
     return () => clearInterval(interval);

@@ -3,14 +3,13 @@
 import { useTheme as useCSCosmosTheme } from "@/context/useTheme";
 
 export function useTheme() {
-  const { theme, setTheme } = useCSCosmosTheme();
-
-  const effectiveTheme = theme === 'system'
-    ? (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    : theme;
+  // `resolvedTheme` is already the concrete "light" | "dark" the provider painted
+  // onto <html>. Resolving "system" here with matchMedia would read the browser
+  // during render (server and dark-OS client would disagree) — see AGENTS.md §1.
+  const { resolvedTheme, setTheme } = useCSCosmosTheme();
 
   return {
-    theme: effectiveTheme,
-    toggleTheme: () => setTheme(effectiveTheme === 'dark' ? 'light' : 'dark'),
+    theme: resolvedTheme,
+    toggleTheme: () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark'),
   };
 }

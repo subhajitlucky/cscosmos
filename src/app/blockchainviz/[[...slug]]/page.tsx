@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import RouteClientShell from './RouteClientShell';
+import EngineMount from './EngineMount';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -38,7 +38,7 @@ export default async function BlockchainVizPage({
   const resolved = await params;
   return (
     <Suspense fallback={null}>
-      <RouteClientShell slug={resolved?.slug || []} />
+      <EngineMount slug={resolved?.slug || []} />
     </Suspense>
   );
 }

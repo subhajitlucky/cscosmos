@@ -20,13 +20,17 @@ export function ExplainPlanVisualizer() {
               PostgreSQL Cost-Based Optimizer (CBO)
             </div>
             <h3 className="text-xl font-bold text-foreground">
-              EXPLAIN (ANALYZE, BUFFERS) Plan Inspector
+              EXPLAIN (ANALYZE, BUFFERS) Plan Walkthrough
             </h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Example plans for a sample <code>orders</code> table (100,000 rows) — not output from a
+              query you ran.
+            </p>
           </div>
         </div>
 
         <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold">
-          Cost Estimation &amp; Execution Latency
+          Illustrative Example Plan
         </span>
       </div>
 
@@ -62,8 +66,8 @@ export function ExplainPlanVisualizer() {
       <div className="grid md:grid-cols-2 gap-6">
         <div className="rounded-2xl border border-border bg-slate-950 text-slate-100 p-5 font-mono text-xs shadow-inner space-y-2">
           <div className="flex items-center justify-between text-slate-400 text-[11px] border-b border-slate-800 pb-2">
-            <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5 text-indigo-400" /> psql explain output</span>
-            <span className="text-emerald-400 font-bold">100,000 Rows Table</span>
+            <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5 text-indigo-400" /> psql explain output (example)</span>
+            <span className="text-emerald-400 font-bold">Sample table: 100,000 rows</span>
           </div>
 
           <pre className="text-indigo-300 overflow-x-auto whitespace-pre-wrap leading-relaxed py-2">
@@ -95,6 +99,11 @@ Execution Time: 0.031 ms`}
 Planning Time: 0.145 ms
 Execution Time: 0.412 ms`}
           </pre>
+
+          <p className="text-[10px] text-slate-400 border-t border-slate-800 pt-2 leading-relaxed">
+            Timings are illustrative — they show where the cost sits in each plan, not measurements
+            from a live database.
+          </p>
         </div>
 
         {/* Diagnostics & Cost Breakdown */}

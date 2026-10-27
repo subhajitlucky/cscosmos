@@ -15,10 +15,10 @@ and discoverability — not on catalog size or live cohorts.
 ## Current state (verified)
 
 - Next.js 16 App Router, React 19, TypeScript, Tailwind, SSG.
-- 245 topics across 8 domains; 72 active visualizer topics; 1,500+ pre-rendered pages.
-- 17 interview questions across 5 categories with animated walkthroughs.
+- 245 topics across 8 domains; 72 active visualizer topics; 2,500+ pre-rendered pages.
+- 25 interview questions across 5 categories with animated walkthroughs.
 - Global search, dark/light theme, sitemap, `robots.txt`, `llms.txt`.
-- No auth, no database, no API routes, no payments.
+- Optional passwordless accounts, Postgres learning sync, and read-only public APIs are implemented. Payments are not.
 - Per-engine partials already exist (reuse these):
   - Flashcards: `apiviz`, `arrayviz`, `authviz`, `dockercosmos`, `golangviz`,
     `nextjscosmos`, `nodecosmos`, `patriciatrie`, `redisviz`, `rustviz`,
@@ -27,8 +27,9 @@ and discoverability — not on catalog size or live cohorts.
   - Progress: `golangviz`, `nextjscosmos`, `patriciatrie`, `programviz`,
     `websecureviz`, `k8scosmos`, `cloudcosmos`, `loadbalancing`, `jsviz`, `gitcosmos`.
 
-These are **isolated per-engine** implementations. There is no unified account,
-progress, flashcard, or quiz layer across the platform.
+The account, progress, bookmark, note, review, and exercise layers are unified
+platform features. Per-engine flashcards and quizzes remain isolated inside their
+own engines.
 
 ## Shipped (2026-10-20)
 
@@ -124,7 +125,7 @@ Effort: **S** = 1–2 days, **M** = 3–5 days, **L** = 1–2 weeks.
 - **Scope:** company, role, year, frequency, round filters on interview questions.
 - **Acceptance:** filter by company + difficulty + round and get a question list.
 - [ ] Extend `InterviewQuestion` schema with `companies: string[]`
-- [ ] Add company metadata to existing 17 questions
+- [ ] Add company metadata to existing 25 questions
 - [ ] Add 30+ original questions with company tags
 - [ ] Company filter UI + URL state
 - [ ] Legal review: original writeups only, public sources only

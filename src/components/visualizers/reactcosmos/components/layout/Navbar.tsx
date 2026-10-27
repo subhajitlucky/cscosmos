@@ -8,9 +8,9 @@ import { cn } from '../../utils/cn';
 
 const Navbar = () => {
   const pathname = usePathname();
-  const { theme, setTheme } = useCSCosmosTheme();
+  const { resolvedTheme, setTheme } = useCSCosmosTheme();
 
-  const isDark = theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const isDark = resolvedTheme === 'dark';
 
   const toggleTheme = () => {
     setTheme(isDark ? 'light' : 'dark');

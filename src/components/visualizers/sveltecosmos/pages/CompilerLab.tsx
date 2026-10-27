@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Cpu, Code2, Layers, Binary, CheckCircle2, Copy } from 'lucide-react';
 
 export function CompilerLab() {
-  const [templateCode, setTemplateCode] = useState(`<script>
+  const templateCode = `<script>
   let name = $state('Svelte');
   let count = $state(0);
   let double = $derived(count * 2);
@@ -19,12 +19,12 @@ export function CompilerLab() {
 
 <style>
   .card { padding: 1rem; border: 1px solid #ff3e00; }
-</style>`);
+</style>`;
 
   const [mode, setMode] = useState<'client' | 'ssr' | 'ast'>('client');
   const [copied, setCopied] = useState(false);
 
-  const clientOutput = `// Svelte 5 Client Compiler Output (ESM)
+  const clientOutput = `// Illustrative Svelte 5 client compiler output (ESM)
 import * as $ from "svelte/internal/client";
 
 export default function App($$anchor) {
@@ -56,7 +56,7 @@ export default function App($$anchor) {
   $.append($$anchor, div);
 }`;
 
-  const ssrOutput = `// Svelte 5 SSR Output (Zero Client JS payload required)
+  const ssrOutput = `// Illustrative Svelte 5 SSR output (zero client JS payload required)
 import * as $ from "svelte/internal/server";
 
 export default function App($$payload, $$props) {
@@ -111,14 +111,14 @@ export default function App($$payload, $$props) {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--svelte-primary)]/30 bg-[var(--svelte-primary)]/10 text-[var(--svelte-primary)] text-xs font-mono">
-          <Cpu className="w-3.5 h-3.5" /> Compiler AST Laboratory
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--svelte-primary-30)] bg-[var(--svelte-primary-10)] text-[var(--svelte-primary)] text-xs font-mono">
+          <Cpu className="w-3.5 h-3.5" /> Illustrative Compiler Walkthrough
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--svelte-text)]">
-          Compiler <span className="text-[var(--svelte-primary)] svelte-glow">AST &amp; CodeGen</span>
+          Inside the Svelte <span className="text-[var(--svelte-primary)] svelte-glow">Compiler</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--svelte-muted)] max-w-2xl leading-relaxed">
-          Inspect how the Svelte lexer, parser, and code generator compile your Single File Components into client DOM mutators or streaming server strings.
+          An illustrative walkthrough of how the Svelte lexer, parser, and code generator conceptually transform one fixed sample SFC — with representative client DOM code, an SSR string, and an AST for the same component. The sample is read-only and the outputs are fixed examples, not the result of compiling it live.
         </p>
       </div>
 
@@ -129,23 +129,24 @@ export default function App($$payload, $$props) {
           <div className="px-4 py-3 border-b border-[var(--svelte-border-subtle)] bg-[var(--svelte-surface-2)] flex items-center justify-between">
             <span className="text-xs font-mono text-[var(--svelte-muted)] flex items-center gap-2">
               <Code2 className="w-3.5 h-3.5 text-[var(--svelte-primary)]" />
-              Input: Component.svelte
+              Fixed sample: Component.svelte
             </span>
-            <span className="text-[10px] font-mono text-[var(--svelte-primary)] bg-[var(--svelte-primary)]/10 px-2 py-0.5 rounded border border-[var(--svelte-primary)]/20">
-              SVELTE_5_SYNTAX
+            <span className="text-[10px] font-mono text-[var(--svelte-primary)] bg-[var(--svelte-primary-10)] px-2 py-0.5 rounded border border-[var(--svelte-primary-20)]">
+              READ-ONLY
             </span>
           </div>
 
           <textarea
             value={templateCode}
-            onChange={(e) => setTemplateCode(e.target.value)}
-            className="w-full h-[450px] p-6 bg-transparent font-mono text-xs text-[var(--svelte-text)] leading-relaxed resize-none focus:outline-none focus:ring-1 focus:ring-[var(--svelte-primary)]"
+            readOnly
+            aria-label="Fixed Svelte component sample (read-only)"
+            className="w-full h-[450px] p-6 bg-transparent font-mono text-xs text-[var(--svelte-text)] leading-relaxed resize-none cursor-default focus:outline-none focus:ring-1 focus:ring-[var(--svelte-primary)]"
             spellCheck="false"
           />
 
           <div className="px-4 py-2.5 border-t border-[var(--svelte-border-subtle)] bg-[var(--svelte-surface-2)] flex items-center justify-between text-[10px] font-mono text-[var(--svelte-muted)]">
-            <span>Lexical Parser: Acorn + Svelte HTML Lexer</span>
-            <span>UTF-8</span>
+            <span>Read-only sample · outputs are fixed examples</span>
+            <span>Not a live compiler</span>
           </div>
         </div>
 

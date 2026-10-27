@@ -86,25 +86,31 @@ const CommandSimulator = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <Card className="border-2 shadow-xl bg-slate-950 text-slate-100 overflow-hidden">
                 <CardHeader className="border-b border-slate-800 bg-slate-900/50">
-                    <CardTitle className="flex items-center gap-2 text-sm font-mono text-redis">
+                    {/* `text-redis` (#d82c20) peaks at 4.32:1 against pure black, so it can
+                        never carry 14px text on this panel; the palette's own light member
+                        keeps the red identity at 5.59:1 on the composited header. */}
+                    <CardTitle className="flex items-center gap-2 text-sm font-mono text-redis-light">
                         <Terminal className="w-4 h-4" />
                         Command Processor
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="p-6 space-y-6">
                     <div className="space-y-2">
-                        <label className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Input Command</label>
+                        <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Input Command</label>
                         <div className="flex gap-2">
                             <input
                                 value={command}
                                 onChange={(e) => setCommand(e.target.value)}
-                                className="flex-1 bg-slate-900 border border-slate-800 rounded px-3 py-2 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-redis"
+                                className="flex-1 bg-slate-900 border border-slate-800 rounded px-3 py-2 font-mono text-sm text-slate-100 focus:outline-none focus:ring-1 focus:ring-redis"
                                 disabled={isPlaying}
                             />
-                            <Button size="sm" onClick={start} disabled={isPlaying} className="bg-redis hover:bg-redis-dark">
+                            <Button size="sm" onClick={start} disabled={isPlaying} className="bg-redis hover:bg-redis-dark text-white">
                                 <Play className="w-4 h-4 mr-1" /> Run
                             </Button>
-                            <Button size="sm" variant="outline" onClick={reset} className="border-slate-800 text-slate-400 hover:text-white">
+                            {/* bg-background/text-slate-400 came from the outline variant and
+                                inverted with the theme: 2.56:1 in light mode. Transparent over
+                                the panel + slate-500 border keeps the control in the terminal skin. */}
+                            <Button size="sm" variant="outline" onClick={reset} className="border-slate-500 bg-transparent text-slate-300 hover:bg-slate-800 hover:text-slate-100">
                                 <RotateCcw className="w-4 h-4" />
                             </Button>
                         </div>

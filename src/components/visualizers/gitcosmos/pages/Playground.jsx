@@ -60,7 +60,10 @@ function Playground() {
                     <Zap className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Git Studio</h2>
+                    {/* h1, not h2: /gitcosmos/playground and /gitcosmos/lab both
+                        render this component and are the page's top-level view,
+                        so those two routes previously shipped no heading at all. */}
+                    <h1 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Git Studio</h1>
                     <p className="text-[10px] font-medium text-slate-400">Interactive Simulation</p>
                   </div>
                 </div>

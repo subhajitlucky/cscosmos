@@ -209,11 +209,11 @@ export function SolidLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--lld-emerald)]/30 bg-[var(--lld-emerald)]/10 text-[var(--lld-emerald)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--lld-emerald-30)] bg-[var(--lld-emerald-10)] text-[var(--lld-emerald)] text-xs font-mono">
           <ShieldCheck className="w-3.5 h-3.5" /> Interactive SOLID Refactoring Lab
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--lld-text)]">
-          SOLID Principle <span className="text-[var(--lld-primary)] lld-glow">Refactoring Studio</span>
+          SOLID Principle <span className="text-[var(--lld-primary-text)] lld-glow">Refactoring Studio</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--lld-muted)] max-w-2xl leading-relaxed">
           Inspect legacy anti-pattern code smells and compare them with clean, decoupled SOLID refactorings side-by-side.
@@ -239,7 +239,7 @@ export function SolidLab() {
 
       {/* Principle Definition Banner */}
       <div className="p-6 rounded-2xl border border-[var(--lld-border)] bg-[var(--lld-surface)] font-mono text-xs space-y-2 shadow-xl">
-        <span className="text-[10px] text-[var(--lld-primary)] uppercase tracking-wider font-bold">
+        <span className="text-[10px] text-[var(--lld-primary-text)] uppercase tracking-wider font-bold">
           Principle Invariant:
         </span>
         <p className="text-base text-[var(--lld-text)] font-display font-bold">
@@ -251,42 +251,42 @@ export function SolidLab() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 font-mono text-xs">
         {/* Violation Code Card */}
         <div className="rounded-2xl border border-rose-500/40 bg-[var(--lld-surface)] overflow-hidden shadow-xl space-y-4">
-          <div className="px-4 py-3 border-b border-rose-500/20 bg-rose-500/10 flex items-center justify-between text-rose-300 font-bold">
+          <div className="px-4 py-3 border-b border-rose-500/20 bg-rose-500/10 flex items-center justify-between text-rose-700 dark:text-rose-300 font-bold">
             <span className="flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-rose-400" /> BAD: {selectedCase.violationTitle}
+              <AlertTriangle className="w-4 h-4 text-rose-700 dark:text-rose-400" /> BAD: {selectedCase.violationTitle}
             </span>
-            <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400">VIOLATION</span>
+            <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-800 dark:text-rose-400">VIOLATION</span>
           </div>
 
           <div className="p-6 overflow-x-auto">
-            <pre className="text-rose-200 leading-relaxed">
+            <pre className="text-rose-700 dark:text-rose-200 leading-relaxed">
               <code>{selectedCase.violationCode}</code>
             </pre>
           </div>
 
           <div className="p-4 border-t border-rose-500/20 bg-rose-500/5 text-[11px] text-[var(--lld-muted)] leading-relaxed space-y-1">
-            <span className="text-rose-400 font-bold text-[10px] uppercase tracking-wider block">Detected Code Smell:</span>
+            <span className="text-rose-700 dark:text-rose-400 font-bold text-[10px] uppercase tracking-wider block">Detected Code Smell:</span>
             <p>{selectedCase.violationSmell}</p>
           </div>
         </div>
 
         {/* Refactored Clean Code Card */}
         <div className="rounded-2xl border border-emerald-500/40 bg-[var(--lld-surface)] overflow-hidden shadow-xl space-y-4">
-          <div className="px-4 py-3 border-b border-emerald-500/20 bg-emerald-500/10 flex items-center justify-between text-emerald-300 font-bold">
+          <div className="px-4 py-3 border-b border-emerald-500/20 bg-emerald-500/10 flex items-center justify-between text-emerald-700 dark:text-emerald-300 font-bold">
             <span className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" /> CLEAN: {selectedCase.refactoredTitle}
+              <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" /> CLEAN: {selectedCase.refactoredTitle}
             </span>
-            <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">REFACTORED</span>
+            <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-800 dark:text-emerald-400">REFACTORED</span>
           </div>
 
           <div className="p-6 overflow-x-auto">
-            <pre className="text-emerald-200 leading-relaxed">
+            <pre className="text-emerald-700 dark:text-emerald-200 leading-relaxed">
               <code>{selectedCase.refactoredCode}</code>
             </pre>
           </div>
 
           <div className="p-4 border-t border-emerald-500/20 bg-emerald-500/5 text-[11px] text-[var(--lld-muted)] leading-relaxed space-y-1">
-            <span className="text-emerald-400 font-bold text-[10px] uppercase tracking-wider block">Architectural Advantage:</span>
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold text-[10px] uppercase tracking-wider block">Architectural Advantage:</span>
             <p>{selectedCase.refactoredBenefit}</p>
           </div>
         </div>

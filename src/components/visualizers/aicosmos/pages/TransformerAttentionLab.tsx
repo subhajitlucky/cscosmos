@@ -164,12 +164,12 @@ export function TransformerAttentionLab() {
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--ai-border-subtle)] pb-6">
         <div className="space-y-2 max-w-3xl">
-          <div className="inline-flex items-center space-x-2 rounded-full border border-[var(--ai-border)] bg-[var(--ai-primary)]/10 px-3 py-1 text-xs font-mono font-semibold text-[var(--ai-primary)]">
+          <div className="inline-flex items-center space-x-2 rounded-full border border-[var(--ai-border)] bg-[var(--ai-primary-10)] px-3 py-1 text-xs font-mono font-semibold text-[var(--ai-primary-text)]">
             <Sparkles className="h-3.5 w-3.5" />
             <span>Attention Is All You Need &bull; Scaled Dot-Product Engine</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ai-text)]">
-            Transformer <span className="text-[var(--ai-primary)] ai-glow">Self-Attention Lab</span>
+            Transformer <span className="text-[var(--ai-primary-text)] ai-glow">Self-Attention Lab</span>
           </h1>
           <p className="text-xs sm:text-sm text-[var(--ai-muted)] leading-relaxed">
             Deconstruct the core math that powers modern LLMs (GPT-4, Gemini, Claude). Step through linear Query (Q), Key (K), Value (V) projections, scaled dot products, softmax probability normalizations, multi-head attention decomposition, and causal autoregressive masking.
@@ -181,7 +181,7 @@ export function TransformerAttentionLab() {
             onClick={() => setIsCausalMasked(!isCausalMasked)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold transition-all border ${
               isCausalMasked
-                ? 'bg-[var(--ai-primary)]/15 border-[var(--ai-primary)] text-[var(--ai-primary)] shadow-sm'
+                ? 'bg-[var(--ai-primary-15)] border-[var(--ai-primary)] text-[var(--ai-primary-text)] shadow-sm'
                 : 'bg-[var(--ai-surface)] border-[var(--ai-border-subtle)] text-[var(--ai-muted)] hover:text-[var(--ai-text)]'
             }`}
           >
@@ -195,7 +195,7 @@ export function TransformerAttentionLab() {
       <div className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <label className="text-xs font-bold uppercase tracking-wider text-[var(--ai-text)] flex items-center gap-2">
-            <Hash className="h-4 w-4 text-[var(--ai-primary)]" />
+            <Hash className="h-4 w-4 text-[var(--ai-primary-text)]" />
             Input Token Sequence
           </label>
           <div className="flex items-center gap-2">
@@ -226,7 +226,7 @@ export function TransformerAttentionLab() {
                 onClick={() => setSelectedSentence(s)}
                 className={`p-3 rounded-xl border text-left text-xs transition-all ${
                   selectedSentence === s
-                    ? 'border-[var(--ai-primary)] bg-[var(--ai-primary)]/10 text-[var(--ai-text)] font-semibold shadow-sm'
+                    ? 'border-[var(--ai-primary)] bg-[var(--ai-primary-10)] text-[var(--ai-text)] font-semibold shadow-sm'
                     : 'border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] hover:text-[var(--ai-text)]'
                 }`}
               >
@@ -254,7 +254,7 @@ export function TransformerAttentionLab() {
               key={idx}
               className="px-2.5 py-1 rounded-lg bg-[var(--ai-bg)] border border-[var(--ai-border-subtle)] font-mono text-xs text-[var(--ai-text)] flex items-center gap-1.5"
             >
-              <span className="text-[10px] text-[var(--ai-primary)] font-bold">[{idx}]</span>
+              <span className="text-[10px] text-[var(--ai-primary-text)] font-bold">[{idx}]</span>
               <span>{t}</span>
             </span>
           ))}
@@ -265,7 +265,7 @@ export function TransformerAttentionLab() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-[var(--ai-text)] flex items-center gap-2">
-            <Layers className="h-4 w-4 text-[var(--ai-cyan)]" />
+            <Layers className="h-4 w-4 text-[var(--ai-cyan-text)]" />
             Multi-Head Attention (MHA) Projection Heads
           </span>
           <span className="text-[10px] font-mono text-[var(--ai-muted)]">d_k = 64 &bull; 8 Heads Parallel</span>
@@ -278,15 +278,15 @@ export function TransformerAttentionLab() {
               onClick={() => setActiveHeadIndex(idx)}
               className={`p-4 rounded-xl border text-left transition-all ${
                 activeHeadIndex === idx
-                  ? 'border-[var(--ai-cyan)] bg-[var(--ai-cyan)]/10 shadow-md ring-1 ring-[var(--ai-cyan)]/30'
+                  ? 'border-[var(--ai-cyan)] bg-[var(--ai-cyan-10)] shadow-md ring-1 ring-[var(--ai-cyan-30)]'
                   : 'border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] hover:bg-[var(--ai-surface-2)]'
               }`}
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-bold text-[var(--ai-text)]">{head.name}</span>
-                {activeHeadIndex === idx && <CheckCircle2 className="h-3.5 w-3.5 text-[var(--ai-cyan)]" />}
+                {activeHeadIndex === idx && <CheckCircle2 className="h-3.5 w-3.5 text-[var(--ai-cyan-text)]" />}
               </div>
-              <div className="text-[10px] font-mono font-bold text-[var(--ai-cyan)] mb-1.5">{head.focus}</div>
+              <div className="text-[10px] font-mono font-bold text-[var(--ai-cyan-text)] mb-1.5">{head.focus}</div>
               <p className="text-[11px] text-[var(--ai-muted)] leading-relaxed">{head.description}</p>
             </button>
           ))}
@@ -300,7 +300,7 @@ export function TransformerAttentionLab() {
         <div className="lg:col-span-7 rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6 space-y-6">
           <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
             <div className="flex items-center gap-2">
-              <Grid className="h-4 w-4 text-[var(--ai-primary)]" />
+              <Grid className="h-4 w-4 text-[var(--ai-primary-text)]" />
               <span className="font-bold text-xs uppercase tracking-wider text-[var(--ai-text)]">
                 Attention Weight Heatmap Softmax(Q &middot; K&#7488; / &radic;d_k)
               </span>
@@ -354,7 +354,7 @@ export function TransformerAttentionLab() {
                           isHovered
                             ? 'border-white scale-105 z-10 shadow-lg'
                             : isMasked
-                            ? 'border-dashed border-[var(--ai-border-subtle)] text-[var(--ai-muted)]/40'
+                            ? 'border-dashed border-[var(--ai-border-subtle)] text-[var(--ai-muted-40)]'
                             : 'border-[var(--ai-border-subtle)] text-[var(--ai-text)]'
                         }`}
                       >
@@ -390,12 +390,12 @@ export function TransformerAttentionLab() {
           <div className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-6 space-y-5">
             <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-3">
               <div className="flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-[var(--ai-primary)]" />
+                <Sliders className="h-4 w-4 text-[var(--ai-primary-text)]" />
                 <span className="font-bold text-xs uppercase tracking-wider text-[var(--ai-text)]">
                   Active Cell Math Inspector
                 </span>
               </div>
-              <span className="text-[10px] font-mono text-[var(--ai-cyan)] font-bold">
+              <span className="text-[10px] font-mono text-[var(--ai-cyan-text)] font-bold">
                 {hoveredCell ? `Q[${hoveredCell.queryIdx}] → K[${hoveredCell.keyIdx}]` : 'Hover matrix cell'}
               </span>
             </div>
@@ -404,7 +404,7 @@ export function TransformerAttentionLab() {
               <div className="space-y-4 text-xs font-mono">
                 {/* Step 1 */}
                 <div className="p-3 rounded-xl bg-[var(--ai-surface-2)] border border-[var(--ai-border-subtle)] space-y-1">
-                  <div className="text-[10px] font-bold text-[var(--ai-cyan)] uppercase">1. Raw Dot Product Score (Q &middot; K)</div>
+                  <div className="text-[10px] font-bold text-[var(--ai-cyan-text)] uppercase">1. Raw Dot Product Score (Q &middot; K)</div>
                   <div className="text-sm font-bold text-[var(--ai-text)]">
                     Score = {rawScores[hoveredCell.queryIdx]?.[hoveredCell.keyIdx]?.toFixed(3)}
                   </div>
@@ -415,7 +415,7 @@ export function TransformerAttentionLab() {
 
                 {/* Step 2 */}
                 <div className="p-3 rounded-xl bg-[var(--ai-surface-2)] border border-[var(--ai-border-subtle)] space-y-1">
-                  <div className="text-[10px] font-bold text-[var(--ai-primary)] uppercase">2. Scaling by 1 / &radic;d_k (&radic;64 = 8.0)</div>
+                  <div className="text-[10px] font-bold text-[var(--ai-primary-text)] uppercase">2. Scaling by 1 / &radic;d_k (&radic;64 = 8.0)</div>
                   <div className="text-sm font-bold text-[var(--ai-text)]">
                     Scaled = {scaledScores[hoveredCell.queryIdx]?.[hoveredCell.keyIdx]?.toFixed(3)}
                   </div>
@@ -426,8 +426,8 @@ export function TransformerAttentionLab() {
 
                 {/* Step 3 */}
                 <div className="p-3 rounded-xl bg-[var(--ai-surface-2)] border border-[var(--ai-border-subtle)] space-y-1">
-                  <div className="text-[10px] font-bold text-[var(--ai-emerald)] uppercase">3. Softmax Normalization P(K | Q)</div>
-                  <div className="text-base font-extrabold text-[var(--ai-emerald)]">
+                  <div className="text-[10px] font-bold text-[var(--ai-emerald-text)] uppercase">3. Softmax Normalization P(K | Q)</div>
+                  <div className="text-base font-extrabold text-[var(--ai-emerald-text)]">
                     Weight = {(attentionWeights[hoveredCell.queryIdx]?.[hoveredCell.keyIdx] * 100).toFixed(1)}% ({attentionWeights[hoveredCell.queryIdx]?.[hoveredCell.keyIdx]?.toFixed(4)})
                   </div>
                   <p className="text-[10px] text-[var(--ai-muted)] font-sans">
@@ -437,7 +437,7 @@ export function TransformerAttentionLab() {
               </div>
             ) : (
               <div className="p-8 text-center text-xs text-[var(--ai-muted)] font-mono border border-dashed border-[var(--ai-border-subtle)] rounded-xl space-y-2">
-                <Eye className="h-6 w-6 mx-auto text-[var(--ai-primary)] opacity-60" />
+                <Eye className="h-6 w-6 mx-auto text-[var(--ai-primary-text)] opacity-60" />
                 <p>Move your cursor over any matrix cell on the left to see the exact dot-product, scaling, and softmax computations.</p>
               </div>
             )}
@@ -446,10 +446,10 @@ export function TransformerAttentionLab() {
           {/* Attention Mechanism Formula Reference */}
           <div className="rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] p-5 space-y-3">
             <div className="text-xs font-bold uppercase tracking-wider text-[var(--ai-text)] flex items-center gap-2">
-              <Zap className="h-4 w-4 text-[var(--ai-amber)]" />
+              <Zap className="h-4 w-4 text-[var(--ai-amber-text)]" />
               Canonical Transformer Equation
             </div>
-            <div className="p-3.5 rounded-xl bg-[var(--ai-bg)] border border-[var(--ai-border-subtle)] font-mono text-xs text-[var(--ai-primary)] font-bold text-center">
+            <div className="p-3.5 rounded-xl bg-[var(--ai-bg)] border border-[var(--ai-border-subtle)] font-mono text-xs text-[var(--ai-primary-text)] font-bold text-center">
               Attention(Q, K, V) = Softmax(Q &middot; K&#7488; / &radic;d_k) &middot; V
             </div>
           </div>
@@ -462,7 +462,7 @@ export function TransformerAttentionLab() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-[var(--ai-border-subtle)]">
         <div className="p-5 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-2">
           <h3 className="text-sm font-bold text-[var(--ai-text)] flex items-center gap-2">
-            <Cpu className="h-4 w-4 text-[var(--ai-primary)]" />
+            <Cpu className="h-4 w-4 text-[var(--ai-primary-text)]" />
             Why Divide by &radic;d_k?
           </h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
@@ -472,7 +472,7 @@ export function TransformerAttentionLab() {
 
         <div className="p-5 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-2">
           <h3 className="text-sm font-bold text-[var(--ai-text)] flex items-center gap-2">
-            <Lock className="h-4 w-4 text-[var(--ai-cyan)]" />
+            <Lock className="h-4 w-4 text-[var(--ai-cyan-text)]" />
             Causal Masking in Autoregressive LLMs
           </h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
@@ -482,7 +482,7 @@ export function TransformerAttentionLab() {
 
         <div className="p-5 rounded-xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-2">
           <h3 className="text-sm font-bold text-[var(--ai-text)] flex items-center gap-2">
-            <Share2 className="h-4 w-4 text-[var(--ai-emerald)]" />
+            <Share2 className="h-4 w-4 text-[var(--ai-emerald-text)]" />
             Multi-Head Synergy
           </h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">

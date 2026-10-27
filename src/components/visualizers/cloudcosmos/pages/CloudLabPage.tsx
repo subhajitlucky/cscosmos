@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSimulationStore } from '@/components/visualizers/cloudcosmos/store/useSimulationStore';
 import { useInterval } from '@/components/visualizers/cloudcosmos/hooks/useInterval';
 import { 
@@ -57,6 +57,11 @@ export function CloudLabPage() {
 
   return (
     <div className="w-full flex flex-col min-h-[calc(100vh-80px)] px-4 md:px-8 lg:px-16 pb-10">
+      {/* The lab is a full-height control dashboard with no title bar, so it pre-rendered with
+          no heading element at all (FS-41/FS-76 class). "Cloud Lab" is the engine's own name
+          for this route (Layout.tsx nav), and it stays visually hidden so the tool layout is
+          untouched while the document still has a name for crawlers and screen readers. */}
+      <h1 className="sr-only">Cloud Lab</h1>
       <div className="flex-1 flex flex-col lg:flex-row gap-6 lg:gap-10">
         
         {/* Left Control Panel */}
@@ -248,7 +253,7 @@ export function CloudLabPage() {
                         log.type === 'success' ? 'bg-green-500/5 border-green-500/10 text-green-500' : 
                         'bg-slate-500/5 border-slate-500/10 text-slate-400'
                       )}>
-                         <span className="opacity-40 shrink-0">{new Date(log.timestamp).toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+                         <LogTime timestamp={log.timestamp} />
                          <span>{log.message}</span>
                       </div>
                     ))}
@@ -258,6 +263,33 @@ export function CloudLabPage() {
         </aside>
       </div>
     </div>
+  );
+}
+
+/**
+ * A log timestamp, rendered only after mount.
+ *
+ * `useSimulationStore` stamps its initial "Simulation initialized" entry with
+ * `Date.now()` at module-evaluation time, so the value baked into the static
+ * HTML is the build machine's clock while the browser's is the visitor's —
+ * formatting it during the first client render was a hydration mismatch (and
+ * showed the build server's timezone). Holding the text back until the effect
+ * runs keeps the server markup and the client's first render identical, then
+ * fills in the visitor's own local time.
+ */
+function LogTime({ timestamp }: { timestamp: number }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <span className="opacity-40 shrink-0">
+      {mounted
+        ? new Date(timestamp).toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        : null}
+    </span>
   );
 }
 

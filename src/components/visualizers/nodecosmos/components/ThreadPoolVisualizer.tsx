@@ -32,7 +32,7 @@ export function ThreadPoolVisualizer() {
 
     setTimeout(() => {
       setTasks((prev) => prev.map((t) => ({ ...t, status: 'completed' })));
-      setLog('✅ COMPLETED: All 4 threads finished in parallel (102ms total elapsed time).');
+      setLog('✅ COMPLETED: All 4 crypto jobs finished on their own thread-pool threads. The main thread stayed free the whole time.');
     }, 1500);
   };
 

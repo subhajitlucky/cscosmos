@@ -1,8 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import NextLink from 'next/link';
-import { useRouter as useNextRouter, usePathname, useSearchParams as useNextSearchParams } from 'next/navigation';
+import { useRouter as useNextRouter, usePathname } from 'next/navigation';
 
 export interface RouteContextType {
   basePath: string;
@@ -107,9 +107,31 @@ export function useNavigate() {
   };
 }
 
+/**
+ * Reads the query string WITHOUT calling Next's `useSearchParams()` during render.
+ *
+ * That hook makes Next.js bail out of static generation for the entire route and
+ * emit the nearest Suspense fallback in place of the page: /tsviz/problems and
+ * /vuecosmos/learn were pre-rendering as a bare "Loading..." with none of their
+ * content in the HTML. Reading `window.location.search` after mount keeps every
+ * consumer statically renderable, and deep links still apply once hydrated.
+ */
+function useClientSearch(): URLSearchParams {
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const sync = () => setSearch(window.location.search);
+    sync();
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
+
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
+
 export function useLocation() {
   const pathname = usePathname();
-  const searchParams = useNextSearchParams();
+  const searchParams = useClientSearch();
   return {
     pathname: pathname || '',
     search: searchParams?.toString() ? `?${searchParams.toString()}` : '',
@@ -125,10 +147,9 @@ export function useParams<T extends Record<string, string> = Record<string, stri
 }
 
 export function useSearchParams() {
-  const nextParams = useNextSearchParams();
   const router = useNextRouter();
   const pathname = usePathname();
-  const searchParams = useMemo(() => new URLSearchParams(nextParams?.toString() || ''), [nextParams]);
+  const searchParams = useClientSearch();
 
   const setSearchParams = (params: any) => {
     const sp = new URLSearchParams(params);

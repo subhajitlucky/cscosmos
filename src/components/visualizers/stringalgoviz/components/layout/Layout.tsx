@@ -1,18 +1,23 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from '@/components/visualizers/shared/RouterShim';
+import { useTheme } from '@/context/useTheme';
 import { Sun, Moon, Github, BookOpen, PlayCircle, Info, Menu, X } from 'lucide-react';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        return savedTheme === 'dark';
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
+  // This engine used to own its own theme. A `useState` initialiser read
+  // `localStorage.getItem('theme')` and `window.matchMedia` during render, which
+  // is unanswerable on the server and disagrees with the server HTML on
+  // hydration; a follow-up effect then painted `document.documentElement` and
+  // wrote `localStorage` itself. That second copy of the theme raced the
+  // site-wide provider, so this header's sun/moon button and the site toggle
+  // could disagree. It now reads the shared `resolvedTheme` — the concrete
+  // "light" | "dark" already painted on <html> — and writes through the shared
+  // `setTheme`. Nothing here touches `window`, `document` or storage any more.
+  const { resolvedTheme, setTheme } = useTheme();
+  const darkMode = resolvedTheme === 'dark';
+  const toggleDarkMode = () => setTheme(darkMode ? 'light' : 'dark');
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -20,18 +25,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (darkMode) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-    console.log('Theme changed:', darkMode ? 'dark' : 'light');
-  }, [darkMode]);
 
   const navItems = [
     { name: 'Learn', path: '/learn', icon: BookOpen },
@@ -69,7 +62,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-2"></div>
             
             <button
-              onClick={() => setDarkMode(!darkMode)}
+              onClick={toggleDarkMode}
               className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
             >
               {darkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -78,7 +71,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
           <div className="flex md:hidden items-center gap-2">
             <button
-              onClick={() => setDarkMode(!darkMode)}
+              onClick={toggleDarkMode}
               className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
             >
               {darkMode ? <Sun size={20} /> : <Moon size={20} />}

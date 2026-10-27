@@ -2,19 +2,24 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { ArrowUpRight, Search } from 'lucide-react';
 import { topicGroups, slugify } from '../data/topics';
 
 export function Learn() {
   const [filter, setFilter] = useState('All concepts');
-  const searchParams = useSearchParams();
-  const searchParamQuery = searchParams?.get('search') || '';
-  const [query, setQuery] = useState(searchParamQuery);
+
+  // Read ?search= AFTER mount, not during render. Calling useSearchParams() during
+  // render makes Next.js bail out of static generation for this route and ship the
+  // Suspense fallback instead of the page — /vuecosmos/learn pre-rendered as a bare
+  // "Loading Vue Visualizer..." with no content. Reading window.location.search in
+  // an effect keeps the page statically rendered; the deep link still applies on
+  // hydration.
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
-    setQuery(searchParamQuery);
-  }, [searchParamQuery]);
+    const searchParamQuery = new URLSearchParams(window.location.search).get('search') || '';
+    if (searchParamQuery) setQuery(searchParamQuery);
+  }, []);
 
   const visibleGroups = useMemo(() => {
     return topicGroups.reduce((groups: typeof topicGroups, group) => {

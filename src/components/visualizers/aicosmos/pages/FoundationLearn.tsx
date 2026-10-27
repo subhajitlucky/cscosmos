@@ -250,7 +250,7 @@ export function FoundationLearn({
                         </div>
 
                         <div className="pt-3 border-t border-border/50 flex items-center justify-between text-xs font-mono text-muted-foreground group-hover:text-foreground transition-colors">
-                          <span className="text-[11px] flex items-center gap-1.5 text-emerald-500">
+                          <span className="text-[11px] flex items-center gap-1.5 text-emerald-700 dark:text-emerald-500">
                             <Activity className="h-3 w-3" />
                             <span>{topic.visualization.replace(/-/g, ' ')}</span>
                           </span>
@@ -302,7 +302,7 @@ export function FoundationLearn({
                       <td className="py-3.5 px-4 text-muted-foreground hidden md:table-cell">
                         {topic.category}
                       </td>
-                      <td className="py-3.5 px-4 text-emerald-500 hidden sm:table-cell">
+                      <td className="py-3.5 px-4 text-emerald-700 dark:text-emerald-500 hidden sm:table-cell">
                         <span className="inline-flex items-center gap-1.5">
                           <Activity className="h-3 w-3" />
                           {topic.visualization.replace(/-/g, ' ')}

@@ -51,7 +51,7 @@ const Home: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           className="mb-8 p-3 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xl transition-colors duration-300"
         >
-          <Cpu size={48} className="text-evm-accent" />
+          <Cpu size={48} className="text-evm-accent-text" />
         </motion.div>
 
         <motion.h1
@@ -133,14 +133,14 @@ const Home: React.FC = () => {
       <section className="py-20">
         <div className="bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-[2.5rem] p-10 md:p-14 relative overflow-hidden">
            <div className="absolute top-0 right-0 p-6 opacity-10 dark:opacity-15">
-              <Code size={140} className="text-evm-accent" />
+              <Code size={140} className="text-evm-accent-text" />
            </div>
            <div className="relative z-10 max-w-xl">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-neutral-900 dark:text-white tracking-tight leading-tight">Interactive Execution. No RPC required.</h2>
               <p className="text-neutral-500 dark:text-neutral-400 text-sm mb-8 leading-relaxed">
                 Everything runs directly in your browser. We've built a custom EVM engine that mimics the Yellow Paper specifications, allowing you to inspect the stack, memory, and storage at every single step of execution.
               </p>
-              <Link to="/learn/intro" className="text-evm-accent font-medium flex items-center gap-2 hover:gap-3 transition-all text-sm">
+              <Link to="/learn/intro" className="text-evm-accent-text font-medium flex items-center gap-2 hover:gap-3 transition-all text-sm">
                 Learn how the engine works <ArrowRight size={16} />
               </Link>
            </div>

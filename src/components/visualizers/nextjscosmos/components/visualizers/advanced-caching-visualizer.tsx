@@ -57,8 +57,8 @@ export function AdvancedCachingVisualizer() {
             <div className="flex items-center gap-2 px-2 py-0.5 rounded bg-emerald-500/10 text-[8px] font-black uppercase text-emerald-600 border border-emerald-500/20">Level 1: Data Cache</div>
             <motion.div 
               animate={{ 
-                borderColor: status === 'cached' || status === 'memoized' ? 'var(--emerald-500)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'cached' || status === 'memoized' ? 'oklch(var(--emerald-500) / 0.05)' : 'transparent'
+                borderColor: status === 'cached' || status === 'memoized' ? '#10b981' : 'rgba(148, 163, 184, 0.4)',
+                backgroundColor: status === 'cached' || status === 'memoized' ? 'rgba(16, 185, 129, 0.05)' : 'transparent'
               }}
               className="w-28 h-28 rounded-full border-4 border-dashed bg-background flex flex-col items-center justify-center gap-2 shadow-2xl relative"
             >
@@ -77,8 +77,8 @@ export function AdvancedCachingVisualizer() {
             <div className="flex items-center gap-2 px-2 py-0.5 rounded bg-blue-500/10 text-[8px] font-black uppercase text-blue-600 border border-blue-500/20">Level 2: Memoization</div>
             <motion.div 
               animate={{ 
-                borderColor: status === 'memoized' ? 'var(--blue-500)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'memoized' ? 'oklch(var(--blue-500) / 0.05)' : 'transparent'
+                borderColor: status === 'memoized' ? '#3b82f6' : 'rgba(148, 163, 184, 0.4)',
+                backgroundColor: status === 'memoized' ? 'rgba(59, 130, 246, 0.05)' : 'transparent'
               }}
               className="w-24 h-24 rounded-3xl border-2 bg-background flex flex-col items-center justify-center gap-2 shadow-xl relative"
             >

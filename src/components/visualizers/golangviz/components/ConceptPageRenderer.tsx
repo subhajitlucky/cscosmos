@@ -157,7 +157,7 @@ export function ConceptPageRenderer({ concept }: ConceptPageRendererProps) {
             </h2>
             <ul className="grid gap-3">
               {concept.bullets.map((bullet, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-[var(--foreground)]/90 leading-relaxed">
+                <li key={idx} className="flex items-start gap-3 text-sm text-foreground/90 leading-relaxed">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                   <span>{bullet}</span>
                 </li>

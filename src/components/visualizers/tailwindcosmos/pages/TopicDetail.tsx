@@ -23,7 +23,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--twc-primary)]/10 text-[var(--twc-primary)] border border-[var(--twc-primary)]/30 font-bold">
+            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--twc-primary-10)] text-[var(--twc-primary)] border border-[var(--twc-primary-30)] font-bold">
               {topic.kicker}
             </span>
             <span className="text-xs font-mono text-[var(--twc-muted)]">
@@ -35,7 +35,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
             {topic.title}
           </h1>
 
-          <p className="text-base md:text-lg text-[var(--twc-muted)] leading-relaxed border-l-4 border-[var(--twc-primary)]/30 pl-6 italic">
+          <p className="text-base md:text-lg text-[var(--twc-muted)] leading-relaxed border-l-4 border-[var(--twc-primary-30)] pl-6 italic">
             &ldquo;{topic.definition}&rdquo;
           </p>
         </div>
@@ -83,7 +83,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
                 <Code2 className="w-3.5 h-3.5 text-[var(--twc-primary)]" />
                 Template.tsx
               </span>
-              <span className="text-[10px] font-mono text-[var(--twc-primary)] bg-[var(--twc-primary)]/10 px-2 py-0.5 rounded border border-[var(--twc-primary)]/20">
+              <span className="text-[10px] font-mono text-[var(--twc-primary)] bg-[var(--twc-primary-10)] px-2 py-0.5 rounded border border-[var(--twc-primary-20)]">
                 JSX_INPUT
               </span>
             </div>
@@ -96,13 +96,13 @@ export function TopicDetail({ topicId }: { topicId: string }) {
           </div>
 
           {/* Compiled Pure CSS */}
-          <div className="lg:col-span-6 rounded-2xl border border-[var(--twc-primary)]/30 bg-[var(--twc-surface-2)] overflow-hidden flex flex-col justify-between shadow-xl">
+          <div className="lg:col-span-6 rounded-2xl border border-[var(--twc-primary-30)] bg-[var(--twc-surface-2)] overflow-hidden flex flex-col justify-between shadow-xl">
             <div className="px-4 py-3 border-b border-[var(--twc-border-subtle)] bg-[var(--twc-surface)] flex items-center justify-between">
               <span className="text-xs font-mono text-[var(--twc-primary)] flex items-center gap-2">
                 <Wind className="w-3.5 h-3.5 text-[var(--twc-primary)]" />
                 compiled.css (JIT Output)
               </span>
-              <span className="text-[10px] font-mono text-[var(--twc-emerald)] bg-[var(--twc-emerald)]/10 px-2 py-0.5 rounded border border-[var(--twc-emerald)]/20">
+              <span className="text-[10px] font-mono text-[var(--twc-emerald)] bg-[var(--twc-emerald-10)] px-2 py-0.5 rounded border border-[var(--twc-emerald-20)]">
                 0 RUNTIME
               </span>
             </div>
@@ -134,7 +134,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
               className="p-4 rounded-xl border border-[var(--twc-border-subtle)] bg-[var(--twc-bg)] space-y-2 font-mono text-xs"
             >
               <div className="flex items-center gap-2 text-[var(--twc-primary)] font-bold">
-                <span className="px-1.5 py-0.5 rounded bg-[var(--twc-primary)]/10 border border-[var(--twc-primary)]/20 text-[10px]">
+                <span className="px-1.5 py-0.5 rounded bg-[var(--twc-primary-10)] border border-[var(--twc-primary-20)] text-[10px]">
                   0{idx + 1}
                 </span>
                 <span>STEP</span>

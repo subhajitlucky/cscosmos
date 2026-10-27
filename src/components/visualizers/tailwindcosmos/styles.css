@@ -16,7 +16,21 @@
   --twc-border-subtle: rgba(255, 255, 255, 0.08);
   --twc-text: #f1f5f9;
   --twc-muted: #8492a6;
-  
+
+  /* Pre-mixed translucent tokens.
+     Tailwind v3 cannot apply an opacity modifier to an arbitrary var() colour:
+     a `bg-[var(--twc-primary)]` class carrying a `/10` opacity suffix is not a
+     valid v3 utility and emits no CSS at all (verified against tailwindcss
+     3.4.17). These real custom properties are the supported way to get the same
+     tint. */
+  --twc-primary-10: rgba(6, 182, 212, 0.1);
+  --twc-primary-20: rgba(6, 182, 212, 0.2);
+  --twc-primary-30: rgba(6, 182, 212, 0.3);
+  --twc-primary-40: rgba(6, 182, 212, 0.4);
+  --twc-emerald-10: rgba(16, 185, 129, 0.1);
+  --twc-emerald-20: rgba(16, 185, 129, 0.2);
+  --twc-bg-80: rgba(7, 9, 14, 0.8);
+
   --twc-display: 'Syne', sans-serif;
   --twc-sans: 'Inter', sans-serif;
   --twc-mono: 'DM Mono', monospace;
@@ -39,6 +53,8 @@ html:not(.dark) .tailwindcosmos-root,
   --twc-border-subtle: rgba(0, 0, 0, 0.08);
   --twc-text: #0f172a;
   --twc-muted: #64748b;
+  /* --twc-bg flips to #f8fafc in light mode, so its pre-mixed tint must follow. */
+  --twc-bg-80: rgba(248, 250, 252, 0.8);
 }
 
 html.dark .tailwindcosmos-root,

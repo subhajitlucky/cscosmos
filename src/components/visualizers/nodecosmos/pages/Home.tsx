@@ -10,6 +10,7 @@ import { ClusterVsWorkerLab } from '../components/ClusterVsWorkerLab';
 import { V8MemoryVisualizer } from '../components/V8MemoryVisualizer';
 import { EventEmitterVisualizer } from '../components/EventEmitterVisualizer';
 import { NodePlayground } from '../components/NodePlayground';
+import { NODE_TOPICS } from '../data/topics';
 
 export default function Home() {
   return (
@@ -30,7 +31,7 @@ export default function Home() {
             href="/nodecosmos/concepts"
             className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-500/25 flex items-center gap-2"
           >
-            <BookOpen className="w-4 h-4" /> Explore 20 Concepts
+            <BookOpen className="w-4 h-4" /> Explore {NODE_TOPICS.length} Concepts
           </Link>
           <Link
             href="/nodecosmos/playground"
@@ -72,7 +73,7 @@ export default function Home() {
             <BookOpen className="w-5 h-5" />
           </div>
           <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-500 transition-colors">
-            20 In-Depth Lessons
+            {NODE_TOPICS.length} In-Depth Lessons
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
             V8 bindings, AsyncLocalStorage, Slab allocator, process signals, and graceful shutdown architectures.

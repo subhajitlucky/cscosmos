@@ -35,7 +35,7 @@ export function DailyChallenge() {
         </div>
       </div>
       <Link
-        href={challenge.url || "/topics"}
+        href={challenge.canonicalPath}
         className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-foreground px-3.5 text-xs font-semibold text-background transition-opacity hover:opacity-90"
       >
         Open challenge

@@ -47,7 +47,7 @@ export function MiddlewareVisualizer() {
             <motion.div 
               animate={{ 
                 borderColor: status === 'intercepting' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'intercepting' ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                backgroundColor: status === 'intercepting' ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="w-24 h-40 rounded-[2rem] border-4 border-dashed bg-background flex flex-col items-center justify-center gap-4 shadow-2xl relative"
             >

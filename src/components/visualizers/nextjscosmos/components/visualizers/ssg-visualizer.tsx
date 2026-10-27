@@ -50,7 +50,7 @@ export function SSGVisualizer() {
           <div className="flex flex-col items-center gap-4 relative">
             <motion.div 
               animate={{ 
-                borderColor: status === 'building' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
+                borderColor: status === 'building' ? 'var(--primary)' : 'rgba(148, 163, 184, 0.4)',
                 scale: status === 'building' ? 1.05 : 1
               }}
               className="w-24 h-24 rounded-3xl border-2 bg-background flex items-center justify-center shadow-xl relative overflow-hidden"
@@ -71,8 +71,8 @@ export function SSGVisualizer() {
           <div className="flex flex-col items-center gap-4 relative">
             <motion.div 
               animate={{ 
-                borderColor: status === 'stored' || status === 'instant' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'stored' || status === 'instant' ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                borderColor: status === 'stored' || status === 'instant' ? 'var(--primary)' : 'rgba(148, 163, 184, 0.4)',
+                backgroundColor: status === 'stored' || status === 'instant' ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="w-32 h-32 rounded-full border-2 bg-background flex items-center justify-center shadow-2xl relative"
             >
@@ -82,7 +82,7 @@ export function SSGVisualizer() {
                   <motion.div 
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-2 -right-2 h-8 w-8 bg-primary rounded-full flex items-center justify-center text-white border-2 border-background"
+                    className="absolute -top-2 -right-2 h-8 w-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground border-2 border-background"
                   >
                     <HardDrive className="h-4 w-4" />
                   </motion.div>
@@ -97,7 +97,7 @@ export function SSGVisualizer() {
             <motion.div 
               animate={{ 
                 scale: status === 'instant' ? 1.1 : 1,
-                borderColor: status === 'instant' ? 'var(--emerald-500)' : 'rgba(0,0,0,0.1)'
+                borderColor: status === 'instant' ? '#10b981' : 'rgba(148, 163, 184, 0.4)'
               }}
               className="w-24 h-24 rounded-3xl border-2 bg-background flex items-center justify-center shadow-xl"
             >

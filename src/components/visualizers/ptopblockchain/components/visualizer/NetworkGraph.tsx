@@ -187,8 +187,13 @@ const NetworkGraph: React.FC<Props> = ({ state, width: propWidth, height: propHe
                   strokeDasharray={isDeadLink ? `${4 * scale},${4 * scale}` : "none"}
                 />
                 <g transform={`translate(${midX}, ${midY})`}>
-                  <rect x={-22 * scale} y={-9 * scale} width={44 * scale} height={18 * scale} rx={4 * scale} fill="var(--surface)" fillOpacity="0.9" stroke="var(--primary)" strokeOpacity="0.2" />
-                  <text textAnchor="middle" dy={5 * scale} fontSize={Math.max(8, 10 * scale)} fontWeight="bold" fill="var(--primary)" style={{ opacity: isDeadLink ? 0.3 : 0.7 }} fontFamily="var(--font-mono)">
+                  {/* SVG paint values are not theme classes, so they have to be real colours:
+                      `var(--surface)` was undefined and `var(--primary)` is an HSL triple, so
+                      all four of these attributes were invalid and fell back to black — the
+                      label box and its text could render black-on-black. `hsl(...)` is the
+                      wrapper the rest of the repo uses for token-driven SVG paints. */}
+                  <rect x={-22 * scale} y={-9 * scale} width={44 * scale} height={18 * scale} rx={4 * scale} fill="hsl(var(--card))" fillOpacity="0.9" stroke="hsl(var(--primary))" strokeOpacity="0.2" />
+                  <text textAnchor="middle" dy={5 * scale} fontSize={Math.max(8, 10 * scale)} fontWeight="bold" fill="hsl(var(--primary))" style={{ opacity: isDeadLink ? 0.3 : 0.7 }} className="font-mono">
                     {conn.latency}ms
                   </text>
                 </g>
@@ -204,7 +209,7 @@ const NetworkGraph: React.FC<Props> = ({ state, width: propWidth, height: propHe
 
             return (
               <g key={node.id} transform={`translate(${node.x || 0},${node.y || 0})`} onClick={() => onNodeClick?.(node.id)} className="cursor-pointer group">
-                <circle r={radius} style={{ fill: 'var(--surface)', stroke: node.isDown ? '#ef4444' : nodeColor }} fillOpacity={0.8} strokeWidth={2 * scale} className="backdrop-blur-md" />
+                <circle r={radius} style={{ fill: 'hsl(var(--card))', stroke: node.isDown ? '#ef4444' : nodeColor }} fillOpacity={0.8} strokeWidth={2 * scale} className="backdrop-blur-md" />
                 <circle r={node.isDown ? 3 * scale : 4.5 * scale} fill={node.isDown ? '#ef4444' : nodeColor} />
 
                 {node.isReorging && (
@@ -216,8 +221,8 @@ const NetworkGraph: React.FC<Props> = ({ state, width: propWidth, height: propHe
 
                 {!node.isDown && node.hopCount !== undefined && node.hopCount > 0 && (
                   <g transform={`translate(${radius * 0.75}, ${-radius * 0.75})`}>
-                    <circle r={8 * scale} fill="var(--primary)" />
-                    <text dy={3 * scale} textAnchor="middle" fill="var(--bg-app)" fontSize={Math.max(7, 8 * scale)} fontWeight="bold">{node.hopCount}</text>
+                    <circle r={8 * scale} fill="hsl(var(--primary))" />
+                    <text dy={3 * scale} textAnchor="middle" fill="hsl(var(--background))" fontSize={Math.max(7, 8 * scale)} fontWeight="bold">{node.hopCount}</text>
                   </g>
                 )}
 
@@ -243,8 +248,8 @@ const NetworkGraph: React.FC<Props> = ({ state, width: propWidth, height: propHe
               <g key={packet.id}>
                 {topicId === 'network-latency' && (
                   <g transform={`translate(${x}, ${y - 22 * scale})`}>
-                    <rect x={-35 * scale} y={-7 * scale} width={70 * scale} height={14 * scale} rx={4 * scale} fill="var(--primary)" fillOpacity="0.2" stroke="var(--primary)" strokeOpacity="0.4" />
-                    <text textAnchor="middle" dy={4 * scale} fontSize={Math.max(7, 8 * scale)} fontWeight="bold" fill="var(--primary)" className="font-mono uppercase">{packet.from}→{packet.to}</text>
+                    <rect x={-35 * scale} y={-7 * scale} width={70 * scale} height={14 * scale} rx={4 * scale} fill="hsl(var(--primary))" fillOpacity="0.2" stroke="hsl(var(--primary))" strokeOpacity="0.4" />
+                    <text textAnchor="middle" dy={4 * scale} fontSize={Math.max(7, 8 * scale)} fontWeight="bold" fill="hsl(var(--primary))" className="font-mono uppercase">{packet.from}→{packet.to}</text>
                   </g>
                 )}
                 <circle cx={x} cy={y} r={5 * scale} fill={color} style={{ filter: target.isDown ? 'none' : 'url(#glow-p)' }} />

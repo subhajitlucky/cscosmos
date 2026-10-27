@@ -15,7 +15,7 @@ interface TopicCardProps {
 export function TopicCard({ topic, onClick, alsoInDomain }: TopicCardProps) {
     const isLive = topic.status === 'active';
     const cardAriaLabel = `${topic.name}${isLive ? " (Live)" : " (Coming soon)"}`;
-    const targetUrl = topic.url || `/${topic.domain}/${topic.slug}`;
+    const targetUrl = topic.canonicalPath;
 
     const CardContent = (
         <div
@@ -85,20 +85,6 @@ export function TopicCard({ topic, onClick, alsoInDomain }: TopicCardProps) {
             <div onClick={onClick} className="cursor-pointer">
                 {CardContent}
             </div>
-        )
-    }
-
-    if (targetUrl.startsWith('http')) {
-        return (
-            <a
-                href={targetUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="block focus-ring rounded-2xl h-full"
-                aria-label={cardAriaLabel}
-            >
-                {CardContent}
-            </a>
         )
     }
 

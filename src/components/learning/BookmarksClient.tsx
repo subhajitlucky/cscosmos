@@ -71,7 +71,7 @@ export function BookmarksClient() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {savedTopics.map((topic) => (
-          <div key={topic.id} className="space-y-2">
+          <div key={topic.catalogId} className="space-y-2">
             <TopicCard topic={topic} />
             <button
               type="button"

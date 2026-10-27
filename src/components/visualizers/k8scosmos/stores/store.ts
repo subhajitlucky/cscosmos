@@ -4,10 +4,6 @@ import type { Node, Pod, SchedulingDecision } from '../types/scheduler';
 import { SchedulerEngine as Engine } from '../lib/scheduler';
 
 interface AppState {
-  theme: 'light' | 'dark' | 'system';
-  setTheme: (theme: 'light' | 'dark' | 'system') => void;
-  toggleTheme: () => void;
-
   nodes: Node[];
   pods: Pod[];
   selectedNode: Node | null;
@@ -33,14 +29,6 @@ interface AppState {
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
-      theme: 'dark',
-      setTheme: (theme) => set({ theme }),
-      toggleTheme: () => set((state) => {
-        if (state.theme === 'light') return { theme: 'dark' };
-        if (state.theme === 'dark') return { theme: 'system' };
-        return { theme: 'light' };
-      }),
-
       nodes: [],
       pods: [],
       selectedNode: null,
@@ -144,7 +132,27 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'k8s-scheduler-storage',
-      partialize: (state) => ({ theme: state.theme }),
+      // FS-40: theme is owned by src/context/ThemeContext.tsx, so this store has
+      // nothing left to persist. The key and the wrapper stay, so the cluster
+      // state still behaves exactly as before and old payloads are harmless.
+      partialize: () => ({}),
+      // zustand's default merge is `{ ...currentState, ...persistedState }`, which
+      // would copy a pre-FS-40 `theme` key from old JSON straight back onto the
+      // store (the spread ignores TypeScript's view of the state shape). Restore
+      // only keys the live state actually defines, and stay inert for a payload
+      // that is not a plain object (`{"state":"oops"}` used to be spread as
+      // "oops" — spreading a string is a no-op, but `key in "oops"` throws).
+      merge: (persistedState, currentState) => {
+        const persisted =
+          persistedState !== null && typeof persistedState === 'object'
+            ? (persistedState as Record<string, unknown>)
+            : {};
+        const merged = { ...currentState } as Record<string, unknown>;
+        for (const key of Object.keys(merged)) {
+          if (Object.prototype.hasOwnProperty.call(persisted, key)) merged[key] = persisted[key];
+        }
+        return merged as unknown as AppState;
+      },
     }
   )
 );

@@ -6,7 +6,7 @@
 
 **Goal:** Add a 5-category interview preparation hub with filterable question lists and a dedicated page per question where every solution step pairs text with its own behind-the-scenes animation.
 
-**Architecture:** Pure-static App Router routes (`/interview`, `/interview/[category]`, `/interview/[category]/[question]`) backed by typed data in `src/data/interview/`. Question pages render a client step-walkthrough; each step's animation is data (`AnimationSpec`) resolved by an `AnimationBlock` component against a small library of reusable, theme-aware animation primitives (plus one custom component). Content drafted by the agent.
+**Architecture:** Pure-static App Router routes (`/interview`, `/interview/[category]`, `/interview/[category]/[questionSlug]`) backed by typed data in `src/data/interview/`. Question pages render a client step-walkthrough; each step's animation is data (`AnimationSpec`) resolved by an `AnimationBlock` component against a small library of reusable, theme-aware animation primitives (plus one custom component). Content drafted by the agent.
 
 **Tech Stack:** Next.js 16 App Router, React 19, TypeScript strict, Tailwind (class dark mode), lucide-react icons, no new dependencies.
 
@@ -16,7 +16,7 @@
 
 ---
 
-## Content Inventory (17 questions)
+## Content Inventory (25 questions)
 
 | # | Category | Slug | Topic | Difficulty | Frequency | Round | Type | Animation |
 |---|----------|------|-------|-----------|-----------|-------|------|-----------|
@@ -1237,7 +1237,7 @@ git commit -m "feat(interview): add category page with filters and question card
 ### Task 18: Question detail page with step walkthrough
 
 **Files:**
-- Create: `src/app/interview/[category]/[question]/page.tsx` (server)
+- Create: `src/app/interview/[category]/[questionSlug]/page.tsx` (server)
 - Create: `src/components/interview/QuestionView.tsx` (client)
 - Create: `src/components/interview/StepWalkthrough.tsx` (client)
 
@@ -1404,7 +1404,7 @@ git commit -m "feat(interview): link interview prep in navbar and sitemap"
 
 **Step 2:** `npm run lint` → 0 errors.
 
-**Step 3:** `npm run build` → must complete with SSG; confirm the build output lists `/interview`, all 5 `/interview/[category]` pages, and 17 `[category]/[question]` pages.
+**Step 3:** `npm run build` → must complete with SSG; confirm the build output lists `/interview`, all 5 `/interview/[category]` pages, and 25 `[category]/[questionSlug]` pages.
 
 **Step 4:** Manual smoke (`npm run dev`): hub → category → filter → question → step through every animation on at least one question per primitive → prev/next nav → both themes → mobile width.
 

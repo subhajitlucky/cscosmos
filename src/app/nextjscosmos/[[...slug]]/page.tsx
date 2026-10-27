@@ -1,5 +1,5 @@
 import { allConceptsFlat } from '@/components/visualizers/nextjscosmos/lib/concepts-data';
-import NextJSCosmosClientPage from './NextJSCosmosClientPage';
+import EngineMount from './EngineMount';
 
 export function generateStaticParams() {
   const routes = [
@@ -19,5 +19,5 @@ export default async function NextJSCosmosPage({ params }: { params: Promise<{ s
   const resolvedParams = await params;
   const slugArray = resolvedParams?.slug || [];
 
-  return <NextJSCosmosClientPage slug={slugArray} />;
+  return <EngineMount slug={slugArray} />;
 }

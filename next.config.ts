@@ -1,50 +1,93 @@
 import type { NextConfig } from 'next';
-import { legacyTopicRoutes } from './src/data/legacy-topic-routes';
+import { engineRoutes } from './src/data/engine-routes';
 
-// Build rewrites and redirects for universal URL routing:
-// Canonical URL: /[domain]/[topic]
-// Legacy URL: /[rootPath] -> 308 redirect to /[domain]/[topic]
-// Internal rewrite: /[domain]/[topic] -> /[rootPath] (serves legacy visualizer page)
-const legacyRewrites: { source: string; destination: string }[] = [];
-const legacyRedirects: { source: string; destination: string; permanent: boolean }[] = [];
-const seenRoots = new Set<string>();
+// Canonical URL: /[domain]/[topicSlug]
+// Engine URL:    /[enginePath]  (currently the same value as topicSlug)
+//
+// Requests to the canonical URL are internally rewritten to the engine route.
+// Requests to the engine route are 308-redirected to the canonical URL, so the
+// canonical URL is the only URL users and crawlers should ever see.
+const engineRewrites: { source: string; destination: string }[] = [];
+const canonicalRedirects: { source: string; destination: string; permanent: boolean }[] = [];
 
-for (const r of legacyTopicRoutes) {
-  // 1. Rewrite domain route to legacy visualizer root route
-  legacyRewrites.push({
-    source: `/${r.domain}/${r.slug}`,
-    destination: `/${r.rootPath}`,
+// Shared module pages live under the AI engine in the component tree but have
+// their own canonical topic URLs. Keep the old /aicosmos/... URLs working with a
+// direct redirect instead of serving duplicate content through the engine route.
+const moduleRedirects = [
+  {
+    source: '/aicosmos/ai-engineering-foundations',
+    destination: '/ai/ai-engineering-foundations',
+  },
+  {
+    source: '/aicosmos/ai-engineering-foundations/:path*',
+    destination: '/ai/ai-engineering-foundations/:path*',
+  },
+  {
+    source: '/aicosmos/python-for-ai-engineering',
+    destination: '/ai/python-for-ai-engineering',
+  },
+  {
+    source: '/aicosmos/python-for-ai-engineering/:path*',
+    destination: '/ai/python-for-ai-engineering/:path*',
+  },
+  {
+    source: '/aicosmos/learn/ai-engineering-foundations',
+    destination: '/ai/ai-engineering-foundations/learn',
+  },
+  {
+    source: '/aicosmos/learn/ai-engineering-foundations/:path*',
+    destination: '/ai/ai-engineering-foundations/learn/:path*',
+  },
+  {
+    source: '/aicosmos/learn/python-for-ai-engineering',
+    destination: '/ai/python-for-ai-engineering/learn',
+  },
+  {
+    source: '/aicosmos/learn/python-for-ai-engineering/:path*',
+    destination: '/ai/python-for-ai-engineering/learn/:path*',
+  },
+].map((redirect) => ({ ...redirect, permanent: true }));
+
+canonicalRedirects.push(...moduleRedirects);
+
+const seenEnginePaths = new Set<string>();
+
+for (const route of engineRoutes) {
+  const { domain, topicSlug } = route;
+
+  // 1. Rewrite the canonical topic URL to the engine route.
+  engineRewrites.push({
+    source: `/${domain}/${topicSlug}`,
+    destination: `/${topicSlug}`,
   });
-  legacyRewrites.push({
-    source: `/${r.domain}/${r.slug}/:path*`,
-    destination: `/${r.rootPath}/:path*`,
+  engineRewrites.push({
+    source: `/${domain}/${topicSlug}/:path*`,
+    destination: `/${topicSlug}/:path*`,
   });
 
-  // Support any domain aliases (e.g. /devops/dockercosmos -> /dockercosmos)
-  if (r.aliases) {
-    for (const alias of r.aliases) {
-      legacyRewrites.push({
-        source: `/${alias}/${r.slug}`,
-        destination: `/${r.rootPath}`,
-      });
-      legacyRewrites.push({
-        source: `/${alias}/${r.slug}/:path*`,
-        destination: `/${r.rootPath}/:path*`,
-      });
-    }
+  // Support any cross-listed domain aliases (e.g. /devops/dockercosmos -> /dockercosmos).
+  for (const alias of route.crossListedDomains ?? []) {
+    engineRewrites.push({
+      source: `/${alias}/${topicSlug}`,
+      destination: `/${topicSlug}`,
+    });
+    engineRewrites.push({
+      source: `/${alias}/${topicSlug}/:path*`,
+      destination: `/${topicSlug}/:path*`,
+    });
   }
 
-  // 2. Redirect legacy root visits to canonical domain route
-  if (!seenRoots.has(r.rootPath)) {
-    seenRoots.add(r.rootPath);
-    legacyRedirects.push({
-      source: `/${r.rootPath}`,
-      destination: `/${r.domain}/${r.slug}`,
+  // 2. Redirect direct engine-route visits to the canonical domain route.
+  if (!seenEnginePaths.has(topicSlug)) {
+    seenEnginePaths.add(topicSlug);
+    canonicalRedirects.push({
+      source: `/${topicSlug}`,
+      destination: `/${domain}/${topicSlug}`,
       permanent: true,
     });
-    legacyRedirects.push({
-      source: `/${r.rootPath}/:path*`,
-      destination: `/${r.domain}/${r.slug}/:path*`,
+    canonicalRedirects.push({
+      source: `/${topicSlug}/:path*`,
+      destination: `/${domain}/${topicSlug}/:path*`,
       permanent: true,
     });
   }
@@ -58,11 +101,11 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
   async redirects() {
-    return legacyRedirects;
+    return canonicalRedirects;
   },
   async rewrites() {
     return {
-      beforeFiles: legacyRewrites,
+      beforeFiles: engineRewrites,
       afterFiles: [],
       fallback: [],
     };

@@ -3,10 +3,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Box, Filter, Sparkles } from 'lucide-react';
-import { DOCKER_TOPICS, type DockerTopic } from '../data/topics';
+import { DOCKER_TOPICS } from '../data/topics';
 
 export default function Concepts() {
   const [filter, setFilter] = useState<string>('all');
+
+  const categories = ['all', ...Array.from(new Set(DOCKER_TOPICS.map((t) => t.category)))];
 
   const filtered = filter === 'all' ? DOCKER_TOPICS : DOCKER_TOPICS.filter((t) => t.category === filter);
 
@@ -20,13 +22,13 @@ export default function Concepts() {
           Docker &amp; Kubernetes Architecture Concepts
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base">
-          20 in-depth architectural topics from Linux kernel namespaces and cgroups to OverlayFS, Pod scheduling, and kube-proxy.
+          {DOCKER_TOPICS.length} in-depth architectural topics from Linux kernel namespaces and cgroups to OverlayFS, Pod scheduling, and kube-proxy.
         </p>
       </div>
 
       {/* Filter Tabs */}
       <div className="flex flex-wrap gap-2">
-        {['all', 'containers', 'storage', 'networking', 'k8s-core', 'k8s-advanced', 'security'].map((cat) => (
+        {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setFilter(cat)}

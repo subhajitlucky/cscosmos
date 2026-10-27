@@ -101,7 +101,7 @@ const NodeArchetypeVisualizer: React.FC = () => {
                   </Tooltip>
                   <div className="w-0.5 h-6 bg-neutral-200 dark:bg-neutral-800" />
                   <Tooltip content="Pointer to the next node">
-                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg cursor-help">
+                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg cursor-help">
                       <ChevronRight size={20} />
                     </div>
                   </Tooltip>

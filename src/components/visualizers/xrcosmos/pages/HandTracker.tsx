@@ -31,11 +31,11 @@ export function HandTracker() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--xr-teal)]/30 bg-[var(--xr-teal)]/10 text-[var(--xr-teal)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--xr-teal-30)] bg-[var(--xr-teal-10)] text-[var(--xr-teal-text)] text-xs font-mono">
           <Hand className="w-3.5 h-3.5" /> WebXR Hand Input &amp; Joint Skeleton
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--xr-text)]">
-          Spatial Hand Tracking <span className="text-[var(--xr-teal)] xr-glow">&amp; Pinch Raycast</span>
+          Spatial Hand Tracking <span className="text-[var(--xr-teal-text)] xr-glow">&amp; Pinch Raycast</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--xr-muted)] max-w-2xl leading-relaxed">
           Explore optical 25-joint anatomical hand tracking. Calculate Euclidean fingertip distances and fire spatial raycasts into interactive 3D UI panels with sub-10ms latency.
@@ -47,29 +47,39 @@ export function HandTracker() {
         {/* Left Skeleton Canvas */}
         <div className="lg:col-span-6 rounded-2xl border border-[var(--xr-border)] bg-[var(--xr-surface)] p-6 space-y-6 shadow-xl font-mono text-xs">
           <div className="flex items-center justify-between border-b border-[var(--xr-border-subtle)] pb-4">
-            <span className="text-[var(--xr-primary)] uppercase tracking-wider font-bold flex items-center gap-2">
+            <span className="text-[var(--xr-primary-text)] uppercase tracking-wider font-bold flex items-center gap-2">
               <Hand className="w-3.5 h-3.5" /> 25-Joint Anatomical Skeleton
             </span>
-            <span className={`text-[10px] px-2 py-0.5 rounded font-bold border ${isPinching ? 'bg-[var(--xr-teal)]/20 text-[var(--xr-teal)] border-[var(--xr-teal)]/40' : 'bg-slate-800 text-slate-400 border-slate-700'}`}>
+            <span className={`text-[10px] px-2 py-0.5 rounded font-bold border ${isPinching ? 'bg-[var(--xr-teal-20)] text-[var(--xr-teal-text)] border-[var(--xr-teal-40)]' : 'bg-slate-800 text-slate-400 border-slate-700'}`}>
               {isPinching ? 'PINCH ACTIVE (< 20mm)' : 'OPEN PALM'}
             </span>
           </div>
 
-          {/* SVG Hand Skeleton Visualization */}
+          {/* SVG Hand Skeleton Visualization.
+              Every paint below is a theme-aware token, not a literal. The engine
+              tokens are complete hex colours, so they are consumed directly
+              (`var(--xr-*)`), never through an `hsl()` wrapper - wrapping a hex
+              in hsl() is exactly the FS-85b invalid-value failure. The text-safe
+              shades are light-mode values that dark mode pins back to the
+              original bright fills, and the node outline uses `--xr-text`: dark
+              ink on the light --xr-bg (17.06:1), where the old literal #ffffff
+              measured 1.05:1 and vanished. */}
           <div className="relative h-64 bg-[var(--xr-bg)] rounded-xl border border-[var(--xr-border-subtle)] flex items-center justify-center overflow-hidden">
             <svg viewBox="0 0 300 280" className="w-full h-full">
               {/* Skeleton Connection Bones */}
-              <line x1="150" y1="250" x2="120" y2="200" stroke="#8b5cf6" strokeWidth="3" opacity="0.6" />
-              <line x1="120" y1="200" x2={isPinching ? '120' : '90'} y2={isPinching ? '105' : '140'} stroke="#8b5cf6" strokeWidth="3" opacity="0.8" />
-              <line x1="150" y1="250" x2="140" y2="160" stroke="#14b8a6" strokeWidth="3" opacity="0.6" />
-              <line x1="140" y1="160" x2="130" y2="90" stroke="#14b8a6" strokeWidth="3" opacity="0.8" />
-              <line x1="150" y1="250" x2="160" y2="80" stroke="#8b5cf6" strokeWidth="2" opacity="0.4" />
-              <line x1="150" y1="250" x2="185" y2="95" stroke="#8b5cf6" strokeWidth="2" opacity="0.4" />
-              <line x1="150" y1="250" x2="205" y2="120" stroke="#8b5cf6" strokeWidth="2" opacity="0.4" />
+              <line x1="150" y1="250" x2="120" y2="200" strokeWidth="3" opacity="0.6" className="stroke-[var(--xr-primary-text)]" />
+              <line x1="120" y1="200" x2={isPinching ? '120' : '90'} y2={isPinching ? '105' : '140'} strokeWidth="3" opacity="0.8" className="stroke-[var(--xr-primary-text)]" />
+              <line x1="150" y1="250" x2="140" y2="160" strokeWidth="3" opacity="0.6" className="stroke-[var(--xr-teal-text)]" />
+              <line x1="140" y1="160" x2="130" y2="90" strokeWidth="3" opacity="0.8" className="stroke-[var(--xr-teal-text)]" />
+              <line x1="150" y1="250" x2="160" y2="80" strokeWidth="2" opacity="0.4" className="stroke-[var(--xr-primary-text)]" />
+              <line x1="150" y1="250" x2="185" y2="95" strokeWidth="2" opacity="0.4" className="stroke-[var(--xr-primary-text)]" />
+              <line x1="150" y1="250" x2="205" y2="120" strokeWidth="2" opacity="0.4" className="stroke-[var(--xr-primary-text)]" />
 
-              {/* Dynamic Pinch Ray Indicator */}
+              {/* Dynamic Pinch Ray Indicator.
+                  --xr-cyan is a single dark-tuned value (2.32:1 on the light
+                  --xr-bg), so light mode takes cyan-700 and dark restores it. */}
               {isPinching && (
-                <line x1="125" y1="95" x2="280" y2="40" stroke="#06b6d4" strokeWidth="2" strokeDasharray="4 4" className="animate-pulse" />
+                <line x1="125" y1="95" x2="280" y2="40" strokeWidth="2" strokeDasharray="4 4" className="stroke-[#0e7490] dark:stroke-[var(--xr-cyan)] animate-pulse" />
               )}
 
               {/* Joint Nodes */}
@@ -85,9 +95,8 @@ export function HandTracker() {
                     cx={curX}
                     cy={curY}
                     r={isTip ? 6 : 4}
-                    fill={isTip ? '#14b8a6' : '#8b5cf6'}
-                    stroke="#ffffff"
                     strokeWidth="1.5"
+                    className={`${isTip ? 'fill-[var(--xr-teal-text)]' : 'fill-[var(--xr-primary-text)]'} stroke-[var(--xr-text)]`}
                   />
                 );
               })}
@@ -98,7 +107,7 @@ export function HandTracker() {
           <div className="space-y-2">
             <div className="flex justify-between text-[11px]">
               <span className="text-[var(--xr-muted)]">Thumb-Index Distance (&Delta;d)</span>
-              <span className={`font-bold ${isPinching ? 'text-[var(--xr-teal)]' : 'text-[var(--xr-primary)]'}`}>
+              <span className={`font-bold ${isPinching ? 'text-[var(--xr-teal-text)]' : 'text-[var(--xr-primary-text)]'}`}>
                 {pinchDistanceMm} mm
               </span>
             </div>
@@ -112,7 +121,7 @@ export function HandTracker() {
             />
             <div className="flex justify-between text-[9px] text-[var(--xr-muted)]">
               <span>8mm (Full Pinch)</span>
-              <span className="text-[var(--xr-teal)] font-bold">20mm Threshold</span>
+              <span className="text-[var(--xr-teal-text)] font-bold">20mm Threshold</span>
               <span>60mm (Open Hand)</span>
             </div>
           </div>
@@ -122,7 +131,7 @@ export function HandTracker() {
         <div className="lg:col-span-6 space-y-6 font-mono text-xs">
           <div className="rounded-2xl border border-[var(--xr-border-subtle)] bg-[var(--xr-surface)] p-6 space-y-6 shadow-xl">
             <div className="flex items-center justify-between border-b border-[var(--xr-border-subtle)] pb-4">
-              <span className="text-[var(--xr-primary)] uppercase tracking-wider font-bold flex items-center gap-2">
+              <span className="text-[var(--xr-primary-text)] uppercase tracking-wider font-bold flex items-center gap-2">
                 <Target className="w-3.5 h-3.5" /> Spatial Raycast Targets
               </span>
               <span className="text-[10px] text-[var(--xr-muted)]">
@@ -152,9 +161,9 @@ export function HandTracker() {
                     disabled={!isPinching}
                     className={`p-4 rounded-xl border text-left space-y-1.5 transition-all ${
                       isSelected
-                        ? 'border-[var(--xr-teal)] bg-[var(--xr-teal)]/20 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)]'
+                        ? 'border-[var(--xr-teal)] bg-[var(--xr-teal-20)] text-[var(--xr-text)] shadow-[0_0_20px_rgba(20,184,166,0.3)]'
                         : isPinching
-                        ? 'border-[var(--xr-border)] bg-[var(--xr-surface-2)] text-[var(--xr-text)] hover:border-[var(--xr-teal)] hover:bg-[var(--xr-teal)]/10 cursor-pointer'
+                        ? 'border-[var(--xr-border)] bg-[var(--xr-surface-2)] text-[var(--xr-text)] hover:border-[var(--xr-teal)] hover:bg-[var(--xr-teal-10)] cursor-pointer'
                         : 'border-[var(--xr-border-subtle)] bg-[var(--xr-bg)] text-[var(--xr-muted)] opacity-50 cursor-not-allowed'
                     }`}
                   >
@@ -173,11 +182,11 @@ export function HandTracker() {
           <div className="p-4 rounded-xl bg-[var(--xr-bg)] border border-[var(--xr-border-subtle)] flex items-center justify-between text-xs">
             <div className="space-y-0.5">
               <span className="text-[var(--xr-muted)] text-[10px]">Gesture Pipeline Latency</span>
-              <div className="font-bold text-[var(--xr-emerald)]">6.4 ms (Zero Jitter)</div>
+              <div className="font-bold text-[var(--xr-emerald-text)]">6.4 ms (Zero Jitter)</div>
             </div>
             <div className="space-y-0.5 text-right">
               <span className="text-[var(--xr-muted)] text-[10px]">Smoothing Filter</span>
-              <div className="font-bold text-[var(--xr-primary)]">1-Euro Adaptive Filter</div>
+              <div className="font-bold text-[var(--xr-primary-text)]">1-Euro Adaptive Filter</div>
             </div>
           </div>
         </div>

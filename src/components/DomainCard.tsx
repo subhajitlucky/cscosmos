@@ -13,7 +13,7 @@ import {
   Network,
   type LucideIcon,
 } from 'lucide-react';
-import type { Domain, DomainKey } from '../data/domains';
+import { domainPath, type Domain, type DomainKey } from '../data/domains';
 import { topics } from '../data/topics';
 
 interface DomainCardProps {
@@ -79,13 +79,13 @@ export function DomainCard({ domain }: DomainCardProps) {
   const Icon = meta.icon;
 
   const domainTopics = topics.filter(
-    (t) => t.domain === domain.domainKey || t.aliases?.includes(domain.domainKey)
+    (t) => t.domain === domain.domainKey || t.crossListedDomains?.includes(domain.domainKey)
   );
   const activeCount = domainTopics.filter((t) => t.status === 'active').length;
 
   return (
     <Link
-      href={domain.path}
+      href={domainPath(domain.domainKey)}
       className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-card p-6 transition-colors duration-200 hover:border-foreground/30 hover:bg-secondary/20 focus-ring"
     >
       <div className="flex flex-col h-full space-y-4">

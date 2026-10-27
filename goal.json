@@ -1,260 +1,64 @@
 {
   "projectName": "CSCosmos",
-  "description": "A central hub website that links to 126 upcoming Computer Science microsites. Each topic appears as a placeholder card with a 'Coming Soon' badge. The website is built using React + Vite + TailwindCSS/shadcn, includes light/dark theme, routing, search, and seven domain pages.",
+  "description": "A free, static-first computer science learning platform with 245 curated topics, 72 live interactive engines, animated interview walkthroughs, and a local-first learning layer with optional account sync.",
+  "status": "Live platform",
+  "url": "https://cscosmos.vercel.app",
+  "repository": "https://github.com/subhajitlucky/cscosmos",
   "techStack": {
-    "framework": "React",
-    "bundler": "Vite",
-    "styling": "TailwindCSS with optional shadcn/ui components",
-    "routing": "react-router-dom",
-    "theme": {
-      "supportsDarkMode": true,
-      "persistInLocalStorage": true
-    }
+    "framework": "Next.js 16 (App Router)",
+    "language": "TypeScript",
+    "ui": "React 19, Tailwind CSS, Radix UI, Framer Motion, Lucide",
+    "visualization": "Canvas, SVG, D3, Anime.js, Monaco Editor",
+    "state": "Zustand and React state",
+    "database": "Optional Postgres for accounts, learning sync, comments, and certificates",
+    "email": "Optional Resend magic links",
+    "testing": "Vitest",
+    "deployment": "Vercel"
   },
-  "pages": {
-    "home": {
-      "path": "/",
-      "sections": [
-        "hero",
-        "domainGrid",
-        "searchBar",
-        "featuredTopics"
-      ],
-      "hero": {
-        "title": "CSCosmos — Explore the Entire Universe of Computer Science",
-        "subtitle": "A hub of 126 interactive visual learning microsites across Full-Stack, DSA, Web3, AI, Core CS, DevOps, and Advanced Engineering.",
-        "primaryButton": "Explore Topics",
-        "secondaryButton": "About CSCosmos"
-      }
-    },
-    "domains": [
-      {
-        "name": "Full Stack Development",
-        "path": "/fullstack",
-        "domainKey": "fullstack"
-      },
-      {
-        "name": "Data Structures & Algorithms",
-        "path": "/dsa",
-        "domainKey": "dsa"
-      },
-      {
-        "name": "Web3 & Blockchain",
-        "path": "/web3",
-        "domainKey": "web3"
-      },
-      {
-        "name": "Artificial Intelligence",
-        "path": "/ai",
-        "domainKey": "ai"
-      },
-      {
-        "name": "Core Computer Science",
-        "path": "/corecs",
-        "domainKey": "corecs"
-      },
-      {
-        "name": "DevOps / Cloud / Engineering",
-        "path": "/devops",
-        "domainKey": "devops"
-      },
-      {
-        "name": "Advanced Engineering & Systems",
-        "path": "/advanced",
-        "domainKey": "advanced"
-      }
-    ],
-    "about": {
-      "path": "/about",
-      "contentBlocks": [
-        "mission",
-        "roadmap",
-        "contributing",
-        "contact"
-      ]
-    },
-    "comingSoon": {
-      "path": "/coming-soon",
-      "dynamicTopicSupport": true
-    }
+  "content": {
+    "domains": 8,
+    "topics": 245,
+    "liveTopics": 72,
+    "absorbedEngines": 70,
+    "curriculumModules": 2,
+    "interviewQuestions": 25,
+    "prerenderedPages": "2500+"
   },
-  "components": {
-    "Navbar": [
-      "navLinks",
-      "themeToggle"
-    ],
-    "Footer": [
-      "copyright",
-      "githubLink"
-    ],
-    "DomainCard": [
-      "title",
-      "description",
-      "link"
-    ],
-    "TopicCard": [
-      "name",
-      "domain",
-      "statusBadge",
-      "onClick"
-    ],
-    "SearchBar": [
-      "query",
-      "onChange"
-    ],
-    "ThemeToggle": [
-      "lightMode",
-      "darkMode"
-    ]
+  "domains": [
+    { "key": "fullstack", "name": "Full Stack Development", "activeTopics": 32 },
+    { "key": "dsa", "name": "Data Structures & Algorithms", "activeTopics": 2 },
+    { "key": "web3", "name": "Web3 & Blockchain", "activeTopics": 8 },
+    { "key": "security", "name": "Cybersecurity & Ethical Hacking", "activeTopics": 8 },
+    { "key": "ai", "name": "Artificial Intelligence", "activeTopics": 3 },
+    { "key": "corecs", "name": "Core Computer Science", "activeTopics": 15 },
+    { "key": "devops", "name": "DevOps, Cloud & Engineering", "activeTopics": 4 },
+    { "key": "advanced", "name": "Advanced Engineering & Systems", "activeTopics": 0 }
+  ],
+  "routing": {
+    "canonicalTopicUrl": "/[domain]/[topicSlug]",
+    "engineUrl": "/[enginePath]/[[...slug]]",
+    "learnAlias": "/learn/[topicSlug]",
+    "embed": "/embed/topic/[topicSlug]",
+    "engineMapping": "src/data/engine-routes.ts",
+    "moduleRegistry": "src/lib/module-registry.ts",
+    "note": "Canonical topic URLs are rewritten to engine paths. Direct visits to engine paths 308-redirect to the canonical URL."
   },
-  "dataModel": {
-    "topicObject": {
-      "id": "number",
-      "name": "string",
-      "domain": "fullstack | dsa | web3 | ai | corecs | devops | advanced",
-      "shortDescription": "string",
-      "status": "coming-soon"
-    }
+  "naming": {
+    "topicSlug": "Stable public topic identifier used by URLs, storage, analytics, and the API",
+    "catalogId": "Numeric internal id; never used in URLs",
+    "engineDir": "Folder under src/components/visualizers",
+    "enginePath": "Top-level engine route segment; currently equal to topicSlug",
+    "canonicalPath": "Public topic URL: /<domain>/<topicSlug>",
+    "module": "Multi-view curriculum package registered in src/lib/module-registry.ts",
+    "subtopicSlug": "Section slug inside a curriculum module",
+    "crossListedDomains": "Extra domains a topic is listed under",
+    "routeWrapper": "EngineMount.tsx"
   },
-  "globalFeatures": {
-    "search": true,
-    "filterByDomain": true,
-    "responsiveDesign": true,
-    "keyboardNavigation": true,
-    "ariaLabels": true,
-    "animations": "subtle"
-  },
-  "topics": {
-    "fullstack": [
-      "How Programs Execute (CPU, Memory, I/O)",
-      "HTML & Accessibility (Semantics, ARIA)",
-      "CSS Visualizer (Box Model, Flexbox, Grid)",
-      "JavaScript Visualizer (Execution, Async, Memory)",
-      "TypeScript Visualizer (Types, Inference, Compiler)",
-      "Browser Internals (DOM, Rendering, Storage)",
-      "Web Security (XSS, CSRF, CSP, CORS)",
-      "HTTP & Web Protocols (Headers, Caching)",
-      "API Design (REST, GraphQL)",
-      "Authentication & Authorization (JWT, OAuth2)",
-      "React Visualizer (Hooks, Reconciliation)",
-      "Next.js Visualizer (Routing, SSR, RSC)",
-      "Vue Visualizer (Reactivity, Templates)",
-      "Svelte / SvelteKit Visualizer (Compiler, Reactivity)",
-      "TailwindCSS Playground (Utility-First CSS)",
-      "Node.js Runtime (Event Loop, libuv)",
-      "Go Backend Internals (Goroutines, Memory)",
-      "Rust Backend Internals (Ownership, Concurrency)",
-      "Python FastAPI Backend (Async, Dependency Injection)",
-      "SQL Visualizer (Queries, Indexes)",
-      "MongoDB Visualizer (Documents, Aggregation)",
-      "Redis Visualizer (Caching, Data Structures)",
-      "Message Queues Visualizer (Pub/Sub, Retries)",
-      "Microservices Architecture (Services, Failures)",
-      "System Design & Scalability (Caching, Sharding)"
-    ],
-    "dsa": [
-      "Array Visualizer (Memory, Indexing)",
-      "String Algorithms (Encoding, Patterns)",
-      "Stack Visualizer (LIFO, Call Stack)",
-      "Queue Visualizer (FIFO, Scheduling)",
-      "Linked List Visualizer (Pointers, Nodes)",
-      "Sorting Algorithms (Stability, Complexity)",
-      "Binary Search (Monotonic Search)",
-      "Recursion Visualizer (Call Stack)",
-      "Amortized Analysis (Cost Models)",
-      "Hash Table (Hashing, Collisions)",
-      "Disjoint Set Union (Union-Find)",
-      "Binary Tree (Traversal, Structure)",
-      "Binary Search Tree (Ordering)",
-      "AVL Tree (Self-Balancing)",
-      "Red-Black Tree (Balancing Rules)",
-      "Heap & Priority Queue (Heap Property)",
-      "Graph Traversal BFS (Level Order)",
-      "Graph Traversal DFS (Depth Order)",
-      "Shortest Path Algorithms (Relaxation)",
-      "Minimum Spanning Tree (Greedy Cuts)",
-      "Strongly Connected Components (Graph Cycles)",
-      "Dynamic Programming (State Transitions)",
-      "Knapsack Problem (Constraints)",
-      "String Dynamic Programming (Patterns)",
-      "Segment Tree (Range Queries)",
-      "Fenwick Tree / BIT (Prefix Sums)",
-      "Trie (Prefix Tree)",
-      "Suffix Array (String Indexing)",
-      "Suffix Tree (Compressed Trie)",
-      "Number Theory (GCD, Modulo)",
-      "Matrix Exponentiation (Fast Power)",
-      "Computational Geometry (Points, Lines)",
-      "Randomized Algorithms (Probability)",
-      "Approximation Algorithms (Near-Optimal)",
-      "NP-Completeness (Reductions)"
-    ],
-    "web3": [
-      "Blockchain Fundamentals (Blocks, Transactions)",
-      "Cryptography Fundamentals (Hashing, Signatures)",
-      "Merkle Tree Visualizer (Integrity)",
-      "Patricia Trie Visualizer (State Storage)",
-      "Blockchain Consensus (PoW, PoS)",
-      "Blockchain P2P Networking (Gossip)",
-      "EVM Internals (Storage, Execution)",
-      "Solidity Smart Contracts (EVM Logic)",
-      "Solana / Rust Contracts (Parallel Execution)",
-      "Smart Contract Security (Attacks, Defenses)",
-      "MEV & Blockchain Attacks (Front-Running)",
-      "Layer-2 Rollups (Optimistic, ZK)",
-      "Zero-Knowledge Proofs (Privacy)",
-      "Account Abstraction (Smart Accounts)",
-      "Cross-Chain Bridges (Interoperability)",
-      "Light Clients (Verification)",
-      "DAOs & Tokenomics (Governance)"
-    ],
-    "ai": [
-      "Math for Machine Learning (Linear Algebra, Probability)",
-      "Optimization Algorithms (Gradient Descent)",
-      "Machine Learning Fundamentals (Bias-Variance)",
-      "Decision Trees (Splits)",
-      "Random Forests (Ensembles)",
-      "Support Vector Machines (Margins)",
-      "Neural Networks (Backpropagation)",
-      "Convolutional Neural Networks (Filters)",
-      "Recurrent Neural Networks (Sequences)",
-      "Generative Adversarial Networks (Adversarial Training)",
-      "Diffusion Models (Noise Removal)",
-      "Reinforcement Learning (Agents, Rewards)",
-      "Transformers & Attention (Self-Attention)",
-      "LLM Systems (Tokenizers, RAG, Vector DBs)",
-      "ML Engineering (Training, Deployment)"
-    ],
-    "corecs": [
-      "Operating Systems Internals (Processes, Memory)",
-      "Computer Architecture (CPU, Caches)",
-      "Computer Networks Internals (TCP/IP)",
-      "Database Internals (Indexes, Transactions)",
-      "Compilers & Runtime Internals (AST, Bytecode)"
-    ],
-    "devops": [
-      "Git & Version Control (Commits, Branches)",
-      "Docker & Containers (Isolation)",
-      "Kubernetes & Orchestration (Scheduling)",
-      "Cloud Architecture Visualizer (AWS, Scaling)",
-      "CI/CD Pipeline Visualizer (Build, Deploy)",
-      "Infrastructure as Code (Terraform)",
-      "Load Balancing (Traffic Distribution)",
-      "Rate Limiting (Throttling)",
-      "Observability Systems (Logs, Metrics)",
-      "Site Reliability Engineering (SLIs, SLOs)",
-      "Disaster Recovery (Backups)",
-      "Chaos Engineering (Failure Injection)"
-    ],
-    "advanced": [
-      "Distributed Systems Visualizer (Replication, Consistency)",
-      "Event Sourcing & CQRS (Write/Read Models)",
-      "Streaming Systems (Event Time)",
-      "Security Engineering (Threat Models)",
-      "Performance Engineering (Profiling)",
-      "Reverse Engineering & Assembly (Low-Level Code)",
-      "Bootloader & Kernel Boot Process (Startup)",
-      "Formal Verification (Program Correctness)"
-    ]
-  }
+  "principles": [
+    "Free forever for learning; no paywall on topics, visualizers, or interview prep.",
+    "Local-first by default; accounts are optional and only for sync.",
+    "Every topic keeps its own learning method and interactions; no forced shared template.",
+    "Static-first rendering with SSG for public content.",
+    "One authoritative topic-to-engine map; no duplicated naming tables."
+  ]
 }

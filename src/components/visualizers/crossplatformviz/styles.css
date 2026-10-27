@@ -16,7 +16,21 @@
   --cp-border-subtle: rgba(255, 255, 255, 0.08);
   --cp-text: #f8fafc;
   --cp-muted: #8b93af;
-  
+
+  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity
+     modifier to an arbitrary var() colour: `bg-[var(--cp-primary)]/10` is not
+     a valid v3 utility and emits no CSS at all (verified against tailwindcss
+     3.4.19). These real custom properties are the supported way to get the
+     same tint. Values are the base token's RGB at the requested alpha. */
+  --cp-primary-5: rgba(99, 102, 241, 0.05);
+  --cp-primary-10: rgba(99, 102, 241, 0.1);
+  --cp-primary-20: rgba(99, 102, 241, 0.2);
+  --cp-primary-30: rgba(99, 102, 241, 0.3);
+  --cp-primary-40: rgba(99, 102, 241, 0.4);
+  --cp-sky-10: rgba(14, 165, 233, 0.1);
+  --cp-sky-30: rgba(14, 165, 233, 0.3);
+  --cp-bg-80: rgba(9, 11, 20, 0.8);
+
   --cp-display: 'Syne', sans-serif;
   --cp-sans: 'Inter', sans-serif;
   --cp-mono: 'DM Mono', monospace;
@@ -39,6 +53,8 @@ html:not(.dark) .crossplatformviz-root,
   --cp-border-subtle: rgba(0, 0, 0, 0.08);
   --cp-text: #0f172a;
   --cp-muted: #64748b;
+  /* --cp-bg flips to #f8fafc in light mode, so its translucent mix must flip too. */
+  --cp-bg-80: rgba(248, 250, 252, 0.8);
 }
 
 html.dark .crossplatformviz-root,

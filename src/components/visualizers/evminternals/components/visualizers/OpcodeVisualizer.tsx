@@ -74,19 +74,19 @@ const OpcodeVisualizer: React.FC<OpcodeVisualizerProps> = ({ code, pc }) => {
                 {isActive && (
                   <motion.div 
                     layoutId="active-pointer"
-                    className="absolute -left-1 text-evm-accent"
+                    className="absolute -left-1 text-evm-accent-text"
                   >
                     <ChevronRight size={14} />
                   </motion.div>
                 )}
                 
-                <span className={`w-8 text-[10px] ${isActive ? 'text-evm-accent font-bold' : 'text-neutral-400 dark:text-neutral-600'}`}>
+                <span className={`w-8 text-[10px] ${isActive ? 'text-evm-accent-text font-bold' : 'text-neutral-400 dark:text-neutral-600'}`}>
                   {instr.offset.toString(16).padStart(4, '0')}
                 </span>
                 
                 <div className="flex flex-col flex-1 min-w-0">
                   <div className="flex items-baseline gap-2">
-                    <span className={`font-black uppercase tracking-tight ${isActive ? 'text-evm-accent' : 'text-neutral-600 dark:text-neutral-300'}`}>
+                    <span className={`font-black uppercase tracking-tight ${isActive ? 'text-evm-accent-text' : 'text-neutral-600 dark:text-neutral-300'}`}>
                       {instr.name}
                     </span>
                     {instr.args && (

@@ -40,8 +40,8 @@ export function DockerCliPlayground() {
       ]);
     } else {
       setOutput([
-        `Executed: ${command}`,
-        'Command succeeded with exit code 0.'
+        `No preset response recorded for: ${command}`,
+        'This terminal simulates output only — nothing is executed. Try the presets below (docker ps -a, kubectl get pods, kubectl get svc, docker run).'
       ]);
     }
   };
@@ -112,8 +112,8 @@ export function DockerCliPlayground() {
       {/* Terminal Output */}
       <div className="p-6 rounded-3xl bg-slate-950 border border-slate-800 space-y-2 font-mono text-xs shadow-inner">
         <div className="flex items-center justify-between text-slate-400 text-[11px] border-b border-slate-800 pb-2">
-          <span className="text-sky-400 font-bold">Terminal Output</span>
-          <span className="text-emerald-400 font-bold">Exit Code: 0</span>
+          <span className="text-sky-400 font-bold">Simulated Terminal Output</span>
+          <span className="text-slate-400">no command is executed</span>
         </div>
 
         <div className="space-y-1 py-1 overflow-x-auto whitespace-pre">

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Box, Activity, Layers, ArrowUpRight, CheckCircle2, RotateCcw, Play, Zap, Cpu, ShieldCheck, ArrowUp, ArrowDown } from 'lucide-react';
-import { lldTopics } from '../data/topics';
+import { ArrowRight, Box, ArrowUpRight, RotateCcw, Cpu, ShieldCheck } from 'lucide-react';
+import { lldTopicGroups, lldTopics } from '../data/topics';
 
 export function Home() {
   const [currentFloor, setCurrentFloor] = useState<number>(1);
@@ -78,14 +78,14 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--lld-primary)]/30 bg-[var(--lld-primary)]/10 text-[var(--lld-primary)] text-xs font-mono">
-              <Box className="w-3.5 h-3.5 animate-pulse text-[var(--lld-primary)]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--lld-primary-30)] bg-[var(--lld-primary-10)] text-[var(--lld-primary-text)] text-xs font-mono">
+              <Box className="w-3.5 h-3.5 animate-pulse text-[var(--lld-primary-text)]" />
               SOLID Principles &bull; Design Patterns &bull; Clean Architecture
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-[var(--lld-text)]">
               Clean Architecture.<br />
-              <span className="text-[var(--lld-primary)] lld-glow">SOLID Principles.</span> Design Patterns.
+              <span className="text-[var(--lld-primary-text)] lld-glow">SOLID Principles.</span> Design Patterns.
             </h1>
 
             <p className="text-base md:text-lg text-[var(--lld-muted)] max-w-xl leading-relaxed">
@@ -102,7 +102,7 @@ export function Home() {
               
               <Link
                 href="/lldcosmos/solid-lab"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--lld-border)] bg-[var(--lld-surface)] text-[var(--lld-text)] font-mono text-sm hover:border-[var(--lld-primary)] hover:text-[var(--lld-primary)] transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--lld-border)] bg-[var(--lld-surface)] text-[var(--lld-text)] font-mono text-sm hover:border-[var(--lld-primary)] hover:text-[var(--lld-primary-text)] transition-all"
               >
                 <ShieldCheck className="w-4 h-4 text-[var(--lld-emerald)]" />
                 SOLID Lab
@@ -130,7 +130,7 @@ export function Home() {
                 </div>
                 <button
                   onClick={resetElevator}
-                  className="text-[10px] text-[var(--lld-muted)] hover:text-[var(--lld-primary)]"
+                  className="text-[10px] text-[var(--lld-muted)] hover:text-[var(--lld-primary-text)]"
                   title="Reset"
                 >
                   <RotateCcw className="w-3 h-3" />
@@ -142,7 +142,7 @@ export function Home() {
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-[10px]">
                     <span className="text-[var(--lld-muted)]">Strategy Pattern (Scheduling):</span>
-                    <span className="text-[var(--lld-primary)] font-bold">{strategy}</span>
+                    <span className="text-[var(--lld-primary-text)] font-bold">{strategy}</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     {['SCAN', 'SSTF', 'FCFS'].map((s) => (
@@ -172,7 +172,7 @@ export function Home() {
                           key={floor}
                           className={`h-8 rounded-lg border flex items-center justify-between px-2 text-[10px] font-bold transition-all ${
                             isCarHere
-                              ? 'border-[var(--lld-primary)] bg-[var(--lld-primary)]/20 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+                              ? 'border-[var(--lld-primary)] bg-[var(--lld-primary-20)] text-[var(--lld-text)] shadow-[0_0_15px_rgba(59,130,246,0.3)]'
                               : 'border-white/5 bg-white/[0.02] text-[var(--lld-muted)]'
                           }`}
                         >
@@ -198,7 +198,7 @@ export function Home() {
                           disabled={elevatorState !== 'IDLE'}
                           className={`h-9 rounded-lg border font-bold text-xs transition-all ${
                             currentFloor === f
-                              ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-300'
+                              ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                               : 'border-[var(--lld-border-subtle)] bg-[var(--lld-surface-2)] text-[var(--lld-text)] hover:border-[var(--lld-primary)]'
                           }`}
                         >
@@ -207,14 +207,14 @@ export function Home() {
                       ))}
                     </div>
                     <div className="text-[9px] text-[var(--lld-muted)] pt-1">
-                      State Pattern: <strong className="text-[var(--lld-primary)]">{elevatorState}</strong>
+                      State Pattern: <strong className="text-[var(--lld-primary-text)]">{elevatorState}</strong>
                     </div>
                   </div>
                 </div>
 
                 {/* Observer Notification Logs */}
                 <div className="p-3 rounded-xl bg-[var(--lld-bg)] border border-[var(--lld-border-subtle)] space-y-1 text-[10px]">
-                  <div className="text-[var(--lld-primary)] uppercase tracking-wider font-bold text-[9px]">
+                  <div className="text-[var(--lld-primary-text)] uppercase tracking-wider font-bold text-[9px]">
                     Observer Pattern (Active Subscribers):
                   </div>
                   {observersNotified.map((obs, idx) => (
@@ -232,7 +232,7 @@ export function Home() {
       {/* SOLID Principles Grid */}
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--lld-primary)] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--lld-primary-text)] uppercase tracking-wider">
             <ShieldCheck className="w-4 h-4" /> Architectural Pillars
           </div>
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--lld-text)]">
@@ -245,11 +245,11 @@ export function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 font-mono text-xs">
           {[
-            { letter: 'S', name: 'Single Responsibility', rule: 'One class, one reason to change', color: 'border-blue-500/30 text-blue-400 bg-blue-500/10' },
-            { letter: 'O', name: 'Open/Closed', rule: 'Open for extension, closed for modification', color: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' },
-            { letter: 'L', name: 'Liskov Substitution', rule: 'Subtypes must be substitutable for base types', color: 'border-amber-500/30 text-amber-400 bg-amber-500/10' },
-            { letter: 'I', name: 'Interface Segregation', rule: 'Clients should not depend on unused methods', color: 'border-purple-500/30 text-purple-400 bg-purple-500/10' },
-            { letter: 'D', name: 'Dependency Inversion', rule: 'Depend on abstractions, not concrete classes', color: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10' },
+            { letter: 'S', name: 'Single Responsibility', rule: 'One class, one reason to change', color: 'border-blue-500/30 text-blue-700 dark:text-blue-400 bg-blue-500/10' },
+            { letter: 'O', name: 'Open/Closed', rule: 'Open for extension, closed for modification', color: 'border-emerald-500/30 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10' },
+            { letter: 'L', name: 'Liskov Substitution', rule: 'Subtypes must be substitutable for base types', color: 'border-amber-500/30 text-amber-700 dark:text-amber-400 bg-amber-500/10' },
+            { letter: 'I', name: 'Interface Segregation', rule: 'Clients should not depend on unused methods', color: 'border-purple-500/30 text-purple-700 dark:text-purple-400 bg-purple-500/10' },
+            { letter: 'D', name: 'Dependency Inversion', rule: 'Depend on abstractions, not concrete classes', color: 'border-cyan-500/30 text-cyan-700 dark:text-cyan-400 bg-cyan-500/10' },
           ].map((item) => (
             <div key={item.letter} className="p-6 rounded-xl border border-[var(--lld-border-subtle)] bg-[var(--lld-surface)] space-y-3">
               <div className={`w-8 h-8 rounded-lg border flex items-center justify-center font-bold text-sm ${item.color}`}>
@@ -262,58 +262,88 @@ export function Home() {
         </div>
       </section>
 
-      {/* Featured Topics Grid */}
-      <section className="max-w-7xl mx-auto px-6 space-y-12">
+      {/* Design Ladder: the five tracks in the order they should be learned */}
+      <section className="max-w-7xl mx-auto px-6 space-y-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--lld-border-subtle)] pb-6">
-          <div>
-            <div className="text-xs font-mono text-[var(--lld-primary)] uppercase tracking-wider">
-              Architecture Tracks
+          <div className="space-y-2 max-w-2xl">
+            <div className="text-xs font-mono text-[var(--lld-primary-text)] uppercase tracking-wider">
+              Design ladder &bull; {lldTopicGroups.length} rungs
             </div>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--lld-text)] mt-1">
-              LLD &amp; Design Pattern Modules
+            <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--lld-text)]">
+              From one reason to change to a full machine-coding system
             </h2>
+            <p className="text-xs text-[var(--lld-muted)] leading-relaxed">
+              Read the ladder downwards: each rung assumes the abstraction habits of the rung above
+              it. Every rung links to one topic with its ordered steps, its recurring pitfalls and
+              the code that pays for them.
+            </p>
           </div>
           <Link
             href="/lldcosmos/learn"
-            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--lld-primary)] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--lld-primary-text)] hover:underline whitespace-nowrap"
           >
-            View all 5 topics <ArrowRight className="w-3.5 h-3.5" />
+            Open the concept map <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {lldTopics.map((topic) => (
-            <Link
-              key={topic.id}
-              href={`/lldcosmos/learn/${topic.id}`}
-              className="lld-card p-6 rounded-xl space-y-4 group"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--lld-primary)]">
-                  {topic.kicker}
-                </span>
-                <ArrowUpRight className="w-4 h-4 text-[var(--lld-muted)] group-hover:text-[var(--lld-primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-              </div>
+        <ol className="lld-ladder">
+          {lldTopicGroups.map((group, index) => {
+            const topic = group.topics[0];
+            if (!topic) return null;
+            return (
+              <li key={group.id} className="lld-rung">
+                <div className="lld-rung-node" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+                <div className="lld-rung-body">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
+                    <div className="lg:col-span-5 space-y-1.5">
+                      <h3 className="font-display font-bold text-lg text-[var(--lld-text)]">
+                        {group.name}
+                      </h3>
+                      <p className="text-[11px] text-[var(--lld-muted)] leading-relaxed">
+                        {group.description}
+                      </p>
+                    </div>
 
-              <h3 className="font-display font-bold text-lg text-[var(--lld-text)] group-hover:text-[var(--lld-primary)] transition-colors">
-                {topic.title}
-              </h3>
+                    <Link
+                      href={`/lldcosmos/learn/${topic.id}`}
+                      className="lg:col-span-7 block space-y-2.5 pt-4 lg:pt-0 border-t lg:border-t-0 lg:border-l border-[var(--lld-border-subtle)] lg:pl-6 group"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--lld-primary-text)]">
+                          {topic.kicker}
+                        </span>
+                        <ArrowUpRight className="w-4 h-4 text-[var(--lld-muted)] group-hover:text-[var(--lld-primary-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      </div>
 
-              <p className="text-xs text-[var(--lld-muted)] leading-relaxed line-clamp-2">
-                {topic.summary}
-              </p>
+                      <h4 className="font-display font-bold text-base text-[var(--lld-text)] group-hover:text-[var(--lld-primary-text)] transition-colors">
+                        {topic.title}
+                      </h4>
 
-              <div className="pt-2 flex items-center gap-2">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-[var(--lld-border-subtle)] text-[var(--lld-muted)]">
-                  {topic.difficulty}
-                </span>
-                <span className="text-[10px] font-mono text-[var(--lld-muted)]">
-                  {topic.group}
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
+                      <p className="text-xs text-[var(--lld-muted)] leading-relaxed line-clamp-2">
+                        {topic.summary}
+                      </p>
+
+                      <div className="flex flex-wrap items-center gap-2 pt-1 font-mono text-[10px] text-[var(--lld-muted)]">
+                        <span className="px-2 py-0.5 rounded border border-[var(--lld-border-subtle)]">
+                          {topic.difficulty}
+                        </span>
+                        <span className="px-2 py-0.5 rounded border border-[var(--lld-border-subtle)]">
+                          {topic.steps.length} ordered steps
+                        </span>
+                        <span className="px-2 py-0.5 rounded border border-[var(--lld-border-subtle)]">
+                          {topic.mistakes.length} pitfalls
+                        </span>
+                        <span>{lldTopics.length} topics in the full map</span>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </section>
     </div>
   );

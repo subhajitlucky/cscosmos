@@ -1,22 +1,17 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from '@/components/visualizers/shared/RouterShim';
 import Home from './pages/Home';
 import Concepts from './pages/Concepts';
 import ConceptDetail from './pages/ConceptDetail';
 import Lab from './pages/Lab';
-import { useStore } from './store/useStore';
 
+// FS-40: this file's theme effect used to write the <html> class from the
+// engine's store, duplicating the shared provider. The effect and the store read
+// are gone; src/context/ThemeContext.tsx is the only theme owner.
+// NOTE: this file has no importers —
+// src/app/loadbalancing/[[...slug]]/EngineMount.tsx imports pages/* directly
+// — so nothing here is mounted at runtime. It is left in place (reported, not
+// deleted) because removing it is outside the FS-40 scope.
 function App() {
-  const theme = useStore(state => state.theme);
-
-  React.useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
-
   return (
     <Router>
       <Routes>

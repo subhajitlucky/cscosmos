@@ -211,13 +211,13 @@ export function RuleVsLearnedInteractiveWidget() {
         <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Execution Pattern: Deterministic If/Else Matching</span>
-            <span className={`px-2.5 py-1 rounded font-bold ${hasSpamKeyword ? 'bg-rose-500/10 text-rose-500 border border-rose-500/30' : 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/30'}`}>
+            <span className={`px-2.5 py-1 rounded font-bold ${hasSpamKeyword ? 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/30' : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 border border-emerald-500/30'}`}>
               {hasSpamKeyword ? 'MATCHED SPAM FILTER' : 'PASSED (HAM)'}
             </span>
           </div>
 
           <div className="p-3 rounded border border-border/60 bg-secondary/40 space-y-1 text-[11px]">
-            <div className="text-muted-foreground">// Hardcoded Logic</div>
+            <div className="text-zinc-600 dark:text-zinc-400">// Hardcoded Logic</div>
             <div className="text-foreground">
               if (payload.containsAny([&quot;urgent&quot;, &quot;lottery&quot;, &quot;prize&quot;])) return SPAM;
             </div>
@@ -231,7 +231,7 @@ export function RuleVsLearnedInteractiveWidget() {
         <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 space-y-4 font-mono text-xs">
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Execution Pattern: Continuous Embedding Dot-Product</span>
-            <span className={`px-2.5 py-1 rounded font-bold ${clampedScore > 0.65 ? 'bg-rose-500/10 text-rose-500 border border-rose-500/30' : 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/30'}`}>
+            <span className={`px-2.5 py-1 rounded font-bold ${clampedScore > 0.65 ? 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/30' : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 border border-emerald-500/30'}`}>
               {clampedScore > 0.65 ? 'SPAM PREDICTED' : 'INBOX (HAM)'}
             </span>
           </div>
@@ -304,9 +304,9 @@ export function RepresentationLearningWidget() {
               <p className="text-[11px] text-muted-foreground">Images / Raw Text</p>
             </div>
             <div className="p-4 rounded-lg border border-amber-500/40 bg-amber-500/10 space-y-1">
-              <span className="text-[10px] text-amber-500 font-bold">HUMAN BOTTLENECK</span>
+              <span className="text-[10px] text-amber-700 dark:text-amber-500 font-bold">HUMAN BOTTLENECK</span>
               <div className="font-bold text-foreground">Manual Feature Eng.</div>
-              <p className="text-[11px] text-muted-foreground">SIFT, HOG, TF-IDF, Regex</p>
+              <p className="text-[11px] text-zinc-600 dark:text-zinc-400">SIFT, HOG, TF-IDF, Regex</p>
             </div>
             <div className="p-4 rounded-lg border border-border/60 bg-secondary/40 space-y-1">
               <span className="text-[10px] text-muted-foreground">STAGE 03</span>
@@ -322,7 +322,7 @@ export function RepresentationLearningWidget() {
         <div className="rounded-xl border border-border/80 bg-secondary/20 p-6 space-y-5 font-mono text-xs">
           <div className="flex items-center justify-between">
             <span className="text-foreground font-bold">End-to-End Deep Representation Hierarchy</span>
-            <span className="text-xs text-emerald-500 font-mono">Hierarchical Abstraction</span>
+            <span className="text-xs text-emerald-700 dark:text-emerald-500 font-mono">Hierarchical Abstraction</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
@@ -420,7 +420,7 @@ export function GenerativeSamplingWidget() {
           </div>
           <div className="text-left sm:text-right">
             <span className="text-muted-foreground">Probability Density P(z):</span>
-            <div className="text-sm font-bold text-emerald-500">{(density * 100).toFixed(2)}%</div>
+            <div className="text-sm font-bold text-emerald-700 dark:text-emerald-500">{(density * 100).toFixed(2)}%</div>
           </div>
         </div>
 
@@ -544,7 +544,7 @@ export function ModelMathFunctionWidget() {
           <div>
             Affine Sum (z) = ({weightW.toFixed(1)} &times; {inputX.toFixed(1)}) + ({biasB.toFixed(1)}) = <strong>{linearZ.toFixed(2)}</strong>
           </div>
-          <div className="px-4 py-2 rounded-lg border border-border bg-secondary/50 font-bold text-emerald-500">
+          <div className="px-4 py-2 rounded-lg border border-border bg-secondary/50 font-bold text-emerald-700 dark:text-emerald-500">
             Output y = {outputY.toFixed(3)}
           </div>
         </div>
@@ -608,12 +608,12 @@ export function GeneralizationCurveWidget() {
       <div className="rounded-xl border border-border/80 bg-secondary/20 p-6 space-y-4 font-mono text-xs">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
           <h3 className="font-display font-bold text-lg text-foreground">{curr.title}</h3>
-          <span className={`px-2.5 py-1 rounded font-bold text-xs ${complexity === 'optimal' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-500 border border-rose-500/30'}`}>
+          <span className={`px-2.5 py-1 rounded font-bold text-xs ${complexity === 'optimal' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/30'}`}>
             {curr.verdict}
           </span>
         </div>
 
-        <p className="font-sans text-xs sm:text-sm text-muted-foreground leading-relaxed">
+        <p className="font-sans text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
           {curr.desc}
         </p>
 
@@ -624,7 +624,7 @@ export function GeneralizationCurveWidget() {
           </div>
           <div className="p-4 rounded-lg border border-border/60 bg-secondary/40 space-y-1 text-center">
             <span className="text-muted-foreground text-[10px] uppercase">Validation Set Loss</span>
-            <div className={`text-2xl font-bold ${complexity === 'optimal' ? 'text-emerald-500' : 'text-rose-500'}`}>
+            <div className={`text-2xl font-bold ${complexity === 'optimal' ? 'text-emerald-700 dark:text-emerald-500' : 'text-rose-700 dark:text-rose-500'}`}>
               {curr.valError}
             </div>
           </div>

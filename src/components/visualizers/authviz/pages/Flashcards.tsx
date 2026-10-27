@@ -9,11 +9,21 @@ export default function Flashcards() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [selectedCat, setSelectedCat] = useState<string>('All');
 
+  // FS-17: the chip list used to be hardcoded and included "Authorization & Access Control",
+  // which no card in the deck carries. Selecting it filtered to zero cards, `currentCard` came
+  // back undefined, and `currentCard.category` below threw during render. Deriving the chips
+  // from the deck means a chip can never point at an empty set, and the empty state below
+  // covers the case anyway (a deck can legitimately be filtered to nothing).
+  const categories = React.useMemo(
+    () => ['All', ...Array.from(new Set(AUTH_FLASHCARDS.map((c) => c.category)))],
+    [],
+  );
+
   const filteredCards = selectedCat === 'All'
     ? AUTH_FLASHCARDS
     : AUTH_FLASHCARDS.filter((c) => c.category === selectedCat);
 
-  const currentCard = filteredCards[currentIndex] || filteredCards[0];
+  const currentCard: AuthFlashcard | undefined = filteredCards[currentIndex] || filteredCards[0];
 
   const handleNext = () => {
     setIsFlipped(false);
@@ -41,7 +51,7 @@ export default function Flashcards() {
 
       {/* Category Chips */}
       <div className="flex flex-wrap justify-center gap-2">
-        {['All', 'OAuth & OIDC', 'JWT & Cryptography', 'Web Storage & Cookies', 'Authorization & Access Control'].map((cat) => (
+        {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => {
@@ -60,6 +70,22 @@ export default function Flashcards() {
         ))}
       </div>
 
+      {!currentCard ? (
+        <div className="min-h-[200px] p-8 rounded-3xl border border-dashed border-border bg-card flex flex-col items-center justify-center gap-3 text-center">
+          <HelpCircle className="w-8 h-8 text-muted-foreground" />
+          <p className="font-bold text-foreground">No flashcards in this category yet.</p>
+          <p className="text-sm text-muted-foreground">
+            This deck has {AUTH_FLASHCARDS.length} cards. Pick another category to keep going.
+          </p>
+          <button
+            onClick={() => { setSelectedCat('All'); setCurrentIndex(0); setIsFlipped(false); }}
+            className="mt-2 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition-colors"
+          >
+            Show all cards
+          </button>
+        </div>
+      ) : (
+      <>
       {/* Interactive Card */}
       <div
         onClick={() => setIsFlipped((prev) => !prev)}
@@ -141,6 +167,8 @@ export default function Flashcards() {
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
+      </>
+      )}
     </div>
   );
 }

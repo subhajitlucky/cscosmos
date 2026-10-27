@@ -69,14 +69,14 @@ export function Playground() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--twc-primary)]/30 bg-[var(--twc-primary)]/10 text-[var(--twc-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--twc-primary-30)] bg-[var(--twc-primary-10)] text-[var(--twc-primary)] text-xs font-mono">
           <Activity className="w-3.5 h-3.5" /> Interactive Sandbox
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--twc-text)]">
-          Live Tailwind <span className="text-[var(--twc-primary)] twc-glow">JIT Playground</span>
+          Live Tailwind <span className="text-[var(--twc-primary)] twc-glow">Utility Sandbox</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--twc-muted)] max-w-2xl leading-relaxed">
-          Experiment with utility compositions in real-time. Test responsive viewport bounds, inspect Box Model dimensions, and copy production class tokens.
+          Compose with the utility classes this project already ships. Test responsive viewport bounds, inspect Box Model dimensions, and copy production class tokens. The preview reacts instantly, but the stylesheet is generated at build time.
         </p>
       </div>
 
@@ -116,13 +116,19 @@ export function Playground() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[var(--twc-muted)] text-[11px]">Class Names (edit in real-time):</label>
+            <label className="text-[var(--twc-muted)] text-[11px]">Class Names (applied to the preview live):</label>
             <textarea
               value={customClasses}
               onChange={(e) => setCustomClasses(e.target.value)}
               rows={5}
               className="w-full p-3 rounded-xl border border-[var(--twc-border-subtle)] bg-[var(--twc-bg)] text-[var(--twc-text)] focus:border-[var(--twc-primary)] focus:outline-none text-xs leading-relaxed"
             />
+            <p className="text-[10px] leading-relaxed text-[var(--twc-muted)]">
+              This box swaps the class string on the preview element; it does not run Tailwind in the browser.
+              Utilities already present in the project build (every preset and Quick Token on this page) render
+              here, while a class that appears nowhere in the source needs a project rebuild before it can
+              produce any CSS.
+            </p>
           </div>
 
           {/* Quick Utility Helpers */}

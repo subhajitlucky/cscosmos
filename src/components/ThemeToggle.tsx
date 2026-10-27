@@ -2,14 +2,16 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "../context/useTheme"
 
 export function ThemeToggle() {
-    const { theme, setTheme } = useTheme()
+    // Branch on the RESOLVED theme, not the stored preference: a "system"
+    // preference would otherwise always toggle as if the site were light.
+    const { resolvedTheme, setTheme } = useTheme()
 
     return (
         <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             className="relative inline-flex items-center justify-center rounded-full p-2.5 hover:bg-muted/60 transition-colors border border-border bg-background focus-ring"
             aria-label="Toggle theme"
-            aria-pressed={theme === "dark"}
+            aria-pressed={resolvedTheme === "dark"}
         >
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-yellow-500" />
             <Moon className="absolute inset-0 m-auto h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-blue-400" />

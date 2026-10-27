@@ -69,7 +69,7 @@ export function ServerActionVisualizer() {
             <motion.div 
               animate={{ 
                 borderColor: status === 'executing' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'executing' ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                backgroundColor: status === 'executing' ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="relative w-full max-w-[240px] p-6 rounded-3xl border-2 bg-background shadow-2xl overflow-hidden"
             >

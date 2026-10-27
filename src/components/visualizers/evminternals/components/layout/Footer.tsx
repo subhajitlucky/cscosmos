@@ -9,18 +9,18 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-1 md:col-span-1">
             <Link to="/" className="flex items-center gap-2 group mb-4">
-              <div className="p-1.5 rounded-md bg-evm-accent/10 text-evm-accent group-hover:bg-evm-accent/20 transition-colors">
+              <div className="p-1.5 rounded-md bg-evm-accent/10 text-evm-accent-text group-hover:bg-evm-accent/20 transition-colors">
                 <Cpu size={16} />
               </div>
               <span className="font-bold text-base tracking-tight text-neutral-900 dark:text-white">
-                EVM<span className="text-evm-accent">Viz</span>
+                EVM<span className="text-evm-accent-text">Viz</span>
               </span>
             </Link>
             <p className="text-xs text-neutral-500 dark:text-neutral-500 leading-relaxed mb-4">
               A high-fidelity visual simulator for Ethereum Virtual Machine internals. Master the stack, memory, and storage through interactive execution.
             </p>
             <div className="flex items-center gap-3">
-              <a href="#" className="p-1.5 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-400 hover:text-evm-accent hover:border-evm-accent transition-all">
+              <a href="#" className="p-1.5 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-400 hover:text-evm-accent-text hover:border-evm-accent transition-all">
                 <Github size={14} />
               </a>
               <a href="#" className="p-1.5 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-400 hover:text-blue-500 hover:border-blue-500 transition-all">
@@ -32,21 +32,21 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold text-neutral-900 dark:text-white mb-4 uppercase text-[10px] tracking-widest">Learning</h4>
             <ul className="space-y-2.5 text-xs text-neutral-500">
-              <li><Link to="/learn/intro" className="hover:text-evm-accent transition-colors">What is the EVM?</Link></li>
-              <li><Link to="/learn/stack" className="hover:text-evm-accent transition-colors">Stack Machine Model</Link></li>
-              <li><Link to="/learn/memory" className="hover:text-evm-accent transition-colors">Memory Layout</Link></li>
-              <li><Link to="/learn/storage" className="hover:text-evm-accent transition-colors">Storage Persistence</Link></li>
+              <li><Link to="/learn/intro" className="hover:text-evm-accent-text transition-colors">What is the EVM?</Link></li>
+              <li><Link to="/learn/stack" className="hover:text-evm-accent-text transition-colors">Stack Machine Model</Link></li>
+              <li><Link to="/learn/memory" className="hover:text-evm-accent-text transition-colors">Memory Layout</Link></li>
+              <li><Link to="/learn/storage" className="hover:text-evm-accent-text transition-colors">Storage Persistence</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-semibold text-neutral-900 dark:text-white mb-4 uppercase text-[10px] tracking-widest">Tools</h4>
             <ul className="space-y-2.5 text-xs text-neutral-500">
-              <li><Link to="/playground" className="hover:text-evm-accent transition-colors">EVM Playground</Link></li>
-              <li><a href="https://ethereum.org/en/developers/docs/evm/" target="_blank" rel="noopener noreferrer" className="hover:text-evm-accent transition-colors flex items-center gap-1.5">
+              <li><Link to="/playground" className="hover:text-evm-accent-text transition-colors">EVM Playground</Link></li>
+              <li><a href="https://ethereum.org/en/developers/docs/evm/" target="_blank" rel="noopener noreferrer" className="hover:text-evm-accent-text transition-colors flex items-center gap-1.5">
                 EVM Docs <ExternalLink size={10} />
               </a></li>
-              <li><a href="https://www.evm.codes/" target="_blank" rel="noopener noreferrer" className="hover:text-evm-accent transition-colors flex items-center gap-1.5">
+              <li><a href="https://www.evm.codes/" target="_blank" rel="noopener noreferrer" className="hover:text-evm-accent-text transition-colors flex items-center gap-1.5">
                 Opcodes Reference <ExternalLink size={10} />
               </a></li>
             </ul>

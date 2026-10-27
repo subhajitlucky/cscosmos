@@ -53,7 +53,7 @@ export function Navbar() {
   const isToolsActive = toolsLinks.some((link) => pathname === link.href);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--rust-border)] bg-[var(--rust-surface)]/95 backdrop-blur-md transition-colors">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--rust-border)] bg-[var(--rust-surface-95)] backdrop-blur-md transition-colors">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Brand & CSCosmos Hub Link */}

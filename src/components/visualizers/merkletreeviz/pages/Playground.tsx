@@ -185,7 +185,7 @@ const Playground = () => {
               <button 
                 onClick={addItem}
                 onMouseEnter={playHover}
-                className="p-2 bg-primary text-white rounded-xl hover:scale-105 active:scale-95 transition-all shadow-md shadow-primary/20"
+                className="p-2 bg-primary text-primary-foreground rounded-xl hover:scale-105 active:scale-95 transition-all shadow-md shadow-primary/20"
                 title="Add New Entry"
               >
                 <Plus className="w-5 h-5" />

@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="border-t border-[var(--sync-border-subtle)] bg-[var(--sync-surface)] mt-24 py-12">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[var(--sync-primary)]/10 border border-[var(--sync-primary)]/30 flex items-center justify-center text-[var(--sync-primary)]">
+          <div className="w-8 h-8 rounded-lg bg-[var(--sync-primary-10)] border border-[var(--sync-primary-30)] flex items-center justify-center text-[var(--sync-primary)]">
             <RefreshCw className="w-4 h-4 text-[var(--sync-primary)]" />
           </div>
           <div>

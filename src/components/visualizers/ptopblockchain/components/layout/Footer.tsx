@@ -38,7 +38,9 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-border-dim flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono text-muted uppercase tracking-[0.2em]">
-          <p>© {new Date().getFullYear()} P2P_VISUALIZER. [SYSTEM_ID: REDACTED]</p>
+          {/* Render-path clock, same as FS-88 elsewhere: suppress the mismatch rather than
+              baking the build year into every page. */}
+          <p suppressHydrationWarning>© {new Date().getFullYear()} P2P_VISUALIZER. [SYSTEM_ID: REDACTED]</p>
           
           <div className="flex items-center gap-8">
             <span className="flex items-center gap-2 text-emerald-500 font-bold cursor-default">

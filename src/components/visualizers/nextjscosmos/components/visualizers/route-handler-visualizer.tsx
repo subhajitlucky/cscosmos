@@ -46,8 +46,8 @@ export function RouteHandlerVisualizer() {
           <div className="flex flex-col items-center gap-4 relative">
             <motion.div 
               animate={{ 
-                borderColor: status === 'calling' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'calling' ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                borderColor: status === 'calling' ? 'var(--primary)' : 'rgba(148, 163, 184, 0.4)',
+                backgroundColor: status === 'calling' ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="w-32 h-32 rounded-3xl border-2 bg-background flex flex-col items-center justify-center gap-2 shadow-2xl relative"
             >
@@ -67,7 +67,7 @@ export function RouteHandlerVisualizer() {
               animate={{ 
                 opacity: status === 'complete' ? 1 : 0.2,
                 scale: status === 'complete' ? 1 : 0.9,
-                borderColor: status === 'complete' ? 'var(--emerald-500)' : 'rgba(0,0,0,0.1)'
+                borderColor: status === 'complete' ? '#10b981' : 'rgba(148, 163, 184, 0.4)'
               }}
               className="w-48 h-32 rounded-2xl border-2 border-emerald-500/30 bg-zinc-950 p-4 shadow-xl overflow-hidden font-mono"
             >

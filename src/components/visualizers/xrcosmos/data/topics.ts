@@ -19,6 +19,15 @@ export interface XrTopicGroup {
   id: string;
   name: string;
   description: string;
+  /**
+   * Border + 10 % tint + label colour for the group badge.
+   *
+   * The label needs BOTH halves (FS-66): a `text-*-400` on its own 10 % tint
+   * measures 1.58-2.30:1 on the light page canvas, so light mode paints the
+   * lightest shade of the same hue that clears 4.5:1 there (see the table in
+   * scratch/agents/xrcosmos/) and `dark:` restores the bright 400. The border
+   * and tint stay on the 500 shade - they are not text.
+   */
   badgeColor: string;
   topics: XrTopic[];
 }
@@ -291,35 +300,35 @@ export const xrTopicGroups: XrTopicGroup[] = [
     id: 'fundamentals',
     name: 'Spatial Fundamentals & 6-DoF',
     description: 'Cartesian coordinate systems, 3-DoF vs 6-DoF, and hypercomplex quaternion transforms.',
-    badgeColor: 'border-violet-500/30 text-violet-400 bg-violet-500/10',
+    badgeColor: 'border-violet-500/30 text-violet-600 dark:text-violet-400 bg-violet-500/10',
     topics: xrTopics.filter(t => t.group === 'Spatial Fundamentals')
   },
   {
     id: 'webxr-api',
     name: 'WebXR Device API',
     description: 'XRSession lifecycle, reference space coordinates, and high-frequency render loops.',
-    badgeColor: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10',
+    badgeColor: 'border-cyan-500/30 text-cyan-700 dark:text-cyan-400 bg-cyan-500/10',
     topics: xrTopics.filter(t => t.group === 'WebXR Device API')
   },
   {
     id: 'stereoscopic',
     name: 'Stereoscopic Dual-Eye Rendering',
     description: 'Inter-pupillary distance, dual-view projection matrices, and fixed foveated rendering.',
-    badgeColor: 'border-teal-500/30 text-teal-400 bg-teal-500/10',
+    badgeColor: 'border-teal-500/30 text-teal-700 dark:text-teal-400 bg-teal-500/10',
     topics: xrTopics.filter(t => t.group === 'Stereoscopic Rendering')
   },
   {
     id: 'hands',
     name: 'Input & Spatial Hand Tracking',
     description: '25-joint anatomical hand skeletons, pinch gesture recognition, and spatial raycasting.',
-    badgeColor: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10',
+    badgeColor: 'border-emerald-500/30 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10',
     topics: xrTopics.filter(t => t.group === 'Input & Hand Tracking')
   },
   {
     id: 'volumetric-ux',
     name: 'Volumetric UI & Spatial Audio',
     description: 'World-locked panels, cylindrical billboarding ergonomics, and HRTF binaural sound.',
-    badgeColor: 'border-pink-500/30 text-pink-400 bg-pink-500/10',
+    badgeColor: 'border-pink-500/30 text-pink-700 dark:text-pink-400 bg-pink-500/10',
     topics: xrTopics.filter(t => t.group === 'Volumetric UI & Audio')
   }
 ];

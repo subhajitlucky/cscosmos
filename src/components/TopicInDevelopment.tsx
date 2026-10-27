@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, BookOpen, Clock, Cpu, FlaskConical, HelpCircle, Layers, Sparkles } from 'lucide-react';
-import type { Topic } from '@/data/topics';
+import { topics, type Topic } from '@/data/topics';
 import { domains } from '@/data/domains';
 
 interface TopicInDevelopmentProps {
@@ -66,7 +66,7 @@ export function TopicInDevelopment({ topic, viewName, activeTopics = [] }: Topic
               href="/topics"
               className="inline-flex items-center gap-2 rounded-xl border border-border bg-secondary/40 px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-secondary transition-colors"
             >
-              <Layers className="w-4 h-4" /> View All 100 Topics
+              <Layers className="w-4 h-4" /> View All {topics.length} Topics
             </Link>
           </div>
         </div>
@@ -161,8 +161,8 @@ export function TopicInDevelopment({ topic, viewName, activeTopics = [] }: Topic
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {activeTopics.slice(0, 4).map((live) => (
               <Link
-                key={live.id}
-                href={live.url || `/${live.domain}/${live.slug}`}
+                key={live.catalogId}
+                href={live.canonicalPath}
                 className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-5 hover:border-primary/50 hover:shadow-md transition-all"
               >
                 <div className="space-y-2">

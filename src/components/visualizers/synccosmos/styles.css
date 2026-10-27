@@ -16,6 +16,19 @@
   --sync-text: #f8fafc;
   --sync-muted: #8c95b3;
   
+  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity
+     modifier to an arbitrary var() colour: `bg-[var(--sync-bg)]/80` is not a
+     valid v3 utility and emits no CSS at all (verified against tailwindcss
+     3.4.19). These real custom properties are the supported way to get the
+     same tint. */
+  --sync-primary-10: rgba(6, 182, 212, 0.1);
+  --sync-primary-20: rgba(6, 182, 212, 0.2);
+  --sync-primary-30: rgba(6, 182, 212, 0.3);
+  --sync-primary-40: rgba(6, 182, 212, 0.4);
+  --sync-amber-10: rgba(245, 158, 11, 0.1);
+  --sync-amber-30: rgba(245, 158, 11, 0.3);
+  --sync-bg-80: rgba(7, 10, 20, 0.8);
+  
   --sync-display: 'Syne', sans-serif;
   --sync-sans: 'Inter', sans-serif;
   --sync-mono: 'DM Mono', monospace;
@@ -38,6 +51,9 @@ html:not(.dark) .synccosmos-root,
   --sync-border-subtle: rgba(0, 0, 0, 0.08);
   --sync-text: #0f172a;
   --sync-muted: #64748b;
+  /* --sync-bg flips to a near-white surface in light mode, so its pre-mixed
+     translucent twin has to flip with it. */
+  --sync-bg-80: rgba(248, 250, 252, 0.8);
 }
 
 html.dark .synccosmos-root,

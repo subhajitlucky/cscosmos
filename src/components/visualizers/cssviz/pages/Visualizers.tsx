@@ -15,6 +15,7 @@ const Visualizers = () => {
     <PageTransition>
       <section className="space-y-4">
         <SectionHeader
+          level="h1"
           eyebrow="Interactive labs"
           title="All visualizers in one place"
           subtitle="Jump straight into any lab. Each one streams live CSS you can copy."

@@ -2,22 +2,17 @@ import { useParams, Link } from '@/components/visualizers/shared/RouterShim'
 import { getConceptById, conceptGroups } from '../data/concepts'
 import { ArrowLeft, ChevronRight, Terminal, BookOpen, GitBranch, Tag, RefreshCw, Save, Layout as LayoutIcon } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useTheme } from '../context/ThemeProvider'
 
 function ConceptPage() {
   const { id } = useParams()
   const concept = getConceptById(id)
-  const [isDark, setIsDark] = useState(() => 
-    typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : false
-  )
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDark(document.documentElement.classList.contains('dark'))
-    })
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-    return () => observer.disconnect()
-  }, [])
+  // Read the shared resolved theme instead of sniffing the DOM class. The old
+  // useState initialiser + MutationObserver read `document` during render, which
+  // made the route un-renderable on the server (hence `ssr: false`, hence 36
+  // pages with no pre-rendered content) and mismatched on hydration.
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
 
   if (!concept) {
     return (

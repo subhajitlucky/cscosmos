@@ -88,7 +88,7 @@ export function RenderingVisualizer({
             <motion.div 
               animate={{ 
                 borderColor: step >= 2 && step < steps.length - 1 ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: step >= 2 && step < steps.length - 1 ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                backgroundColor: step >= 2 && step < steps.length - 1 ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="w-24 h-24 md:w-32 md:h-32 rounded-[1.5rem] md:rounded-[2rem] border-2 flex flex-col items-center justify-center gap-2 relative shadow-2xl bg-background"
             >
@@ -136,7 +136,7 @@ export function RenderingVisualizer({
             <motion.div 
               animate={{ 
                 borderColor: step === steps.length - 1 ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: step === steps.length - 1 ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                backgroundColor: step === steps.length - 1 ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="w-24 h-24 md:w-32 md:h-32 rounded-[1.5rem] md:rounded-[2rem] border-2 flex flex-col items-center justify-center gap-2 relative shadow-2xl bg-background"
             >

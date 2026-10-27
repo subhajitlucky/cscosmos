@@ -4,8 +4,17 @@ import { hashData, generateId } from '../lib/utils';
 import { BlockchainContext } from './BlockchainContextDefinition';
 
 // Initial Genesis Block
+//
+// A genesis block is the one block whose header never changes — every chain is
+// defined by it — and its hash is rendered on the playground. `Date.now()` here
+// ran while rendering, so the pre-rendered HTML carried a different genesis hash
+// than the client's first render (hydration mismatch) and the "genesis" block
+// was different on every visit. Blocks mined later still stamp `Date.now()`,
+// but they are only ever created from event handlers, after hydration.
+const GENESIS_TIMESTAMP = 1231006505000; // Bitcoin's genesis block time
+
 const createGenesisBlock = (): Block => {
-  const timestamp = Date.now();
+  const timestamp = GENESIS_TIMESTAMP;
   const header = {
     index: 0,
     previousHash: "0",

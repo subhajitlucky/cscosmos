@@ -19,17 +19,21 @@ export function BridgeSim() {
     setSimulating(true);
     let count = 0;
     let dropped = 0;
+    // The gesture sample rate is the load on the bridge: 120Hz pushes twice as
+    // many payloads per frame into the legacy JSON queue as 60Hz, 30Hz half.
+    // JSI/Flutter bypass the queue, so a higher rate does not degrade them.
+    const rateFactor = eventRateHz / 60;
 
     const interval = setInterval(() => {
       count += 1;
-      const queue = engine === 'legacy' ? Math.min(45, count * 4) : 0;
-      const latency = engine === 'legacy' ? 16.6 + count * 2.5 : engine === 'jsi' ? 0.2 : 0.05;
+      const queue = engine === 'legacy' ? Math.min(45, Math.round(count * 4 * rateFactor)) : 0;
+      const latency = engine === 'legacy' ? 16.6 + count * 2.5 * rateFactor : engine === 'jsi' ? 0.2 : 0.05;
       
       if (engine === 'legacy') {
-        dropped += Math.floor(Math.random() * 2) + 1;
+        dropped += Math.max(1, Math.round((Math.floor(Math.random() * 2) + 1) * rateFactor));
       }
 
-      const currentFps = engine === 'legacy' ? Math.max(28, 60 - count * 3) : engine === 'jsi' ? 60 : 120;
+      const currentFps = engine === 'legacy' ? Math.max(28, Math.round(60 - count * 3 * rateFactor)) : engine === 'jsi' ? 60 : 120;
 
       setMetrics({
         sentPackets: count * (eventRateHz / 10),
@@ -61,7 +65,7 @@ export function BridgeSim() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--cp-primary)]/30 bg-[var(--cp-primary)]/10 text-[var(--cp-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--cp-primary-30)] bg-[var(--cp-primary-10)] text-[var(--cp-primary)] text-xs font-mono">
           <Activity className="w-3.5 h-3.5" /> High-Frequency Gesture &amp; Sensor Simulator
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--cp-text)]">
@@ -128,6 +132,7 @@ export function BridgeSim() {
               <div className="flex justify-between text-[9px] text-[var(--cp-muted)]">
                 <span>30Hz (Touch tap)</span>
                 <span>60Hz (Pan Drag)</span>
+                <span>90Hz (Fast swipe)</span>
                 <span>120Hz (ProMotion)</span>
               </div>
             </div>
@@ -153,7 +158,14 @@ export function BridgeSim() {
         {/* Right Telemetry & Queue Monitor */}
         <div className="lg:col-span-7 space-y-6">
           {/* Real-Time Metrics Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 text-center">
+            <div className="p-4 rounded-xl bg-[var(--cp-surface)] border border-[var(--cp-border-subtle)] space-y-1">
+              <span className="text-[10px] text-[var(--cp-muted)]">Events Emitted</span>
+              <div className="text-xl font-bold text-[var(--cp-primary)]">
+                {metrics.sentPackets} pkts
+              </div>
+            </div>
+
             <div className="p-4 rounded-xl bg-[var(--cp-surface)] border border-[var(--cp-border-subtle)] space-y-1">
               <span className="text-[10px] text-[var(--cp-muted)]">Frame Rate</span>
               <div className={`text-xl font-bold ${metrics.fps >= 60 ? 'text-emerald-400' : 'text-rose-400'}`}>

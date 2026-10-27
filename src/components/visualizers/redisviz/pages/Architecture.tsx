@@ -40,9 +40,9 @@ const Architecture = () => {
                             <div className="rounded-2xl border border-border/40 bg-slate-950/40 p-1">
                                 <DiagramCanvas title="Redis Internal Flow" height={450}>
                                     {/* Clients */}
-                                    <DiagramNode x={50} y={50} width={150} height={60} label="Client A" icon={<Globe className="w-4 h-4" />} color="bg-blue-500" delay={0.1} />
-                                    <DiagramNode x={50} y={150} width={150} height={60} label="Client B" icon={<Globe className="w-4 h-4" />} color="bg-blue-500" delay={0.2} />
-                                    <DiagramNode x={50} y={250} width={150} height={60} label="Client C" icon={<Globe className="w-4 h-4" />} color="bg-blue-500" delay={0.3} />
+                                    <DiagramNode x={50} y={50} width={150} height={60} label="Client A" icon={<Globe className="w-4 h-4" />} color="fill-blue-500" delay={0.1} />
+                                    <DiagramNode x={50} y={150} width={150} height={60} label="Client B" icon={<Globe className="w-4 h-4" />} color="fill-blue-500" delay={0.2} />
+                                    <DiagramNode x={50} y={250} width={150} height={60} label="Client C" icon={<Globe className="w-4 h-4" />} color="fill-blue-500" delay={0.3} />
 
                                     {/* Edges from Clients to Multiplexer */}
                                     <DiagramEdge fromX={200} fromY={80} toX={300} toY={180} animated={true} delay={1} />
@@ -50,18 +50,18 @@ const Architecture = () => {
                                     <DiagramEdge fromX={200} fromY={280} toX={300} toY={180} animated={true} delay={1.4} />
 
                                     {/* Multiplexer */}
-                                    <DiagramNode x={300} y={150} width={180} height={60} label="I/O Multiplexing" icon={<List className="w-4 h-4" />} color="bg-purple-500" delay={0.5} />
+                                    <DiagramNode x={300} y={150} width={180} height={60} label="I/O Multiplexing" icon={<List className="w-4 h-4" />} color="fill-purple-500" delay={0.5} />
                                     <DiagramEdge fromX={480} fromY={180} toX={550} toY={180} label="Command Queue" delay={2} />
 
                                     {/* Execution Engine */}
-                                    <DiagramNode x={550} y={100} width={200} height={160} label="Single Threaded Engine" icon={<Zap className="w-4 h-4" />} color="bg-redis" delay={0.8} />
+                                    <DiagramNode x={550} y={100} width={200} height={160} label="Single Threaded Engine" icon={<Zap className="w-4 h-4" />} color="fill-redis" delay={0.8} />
 
                                     {/* Internal components of Engine */}
-                                    <rect x={570} y={140} width={160} height={40} rx={8} className="fill-white/5 stroke-white/10 stroke-1" />
-                                    <text x={585} y={165} className="text-[10px] font-mono fill-white opacity-80 uppercase tracking-tighter">Atomic Execution</text>
+                                    <rect x={570} y={140} width={160} height={40} rx={8} className="fill-foreground/5 stroke-foreground/10 stroke-1" />
+                                    <text x={585} y={165} className="text-[10px] font-mono fill-foreground opacity-80 uppercase tracking-tighter">Atomic Execution</text>
 
-                                    <rect x={570} y={190} width={160} height={40} rx={8} className="fill-white/5 stroke-white/10 stroke-1" />
-                                    <text x={585} y={215} className="text-[10px] font-mono fill-white opacity-80 uppercase tracking-tighter">In-Memory Store</text>
+                                    <rect x={570} y={190} width={160} height={40} rx={8} className="fill-foreground/5 stroke-foreground/10 stroke-1" />
+                                    <text x={585} y={215} className="text-[10px] font-mono fill-foreground opacity-80 uppercase tracking-tighter">In-Memory Store</text>
                                 </DiagramCanvas>
                             </div>
                         </CardContent>

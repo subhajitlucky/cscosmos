@@ -9,12 +9,12 @@ export function About() {
     <div className="max-w-5xl mx-auto px-6 py-12 space-y-16">
       {/* Header */}
       <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ai-primary)]/30 bg-[var(--ai-primary)]/10 text-[var(--ai-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ai-primary-30)] bg-[var(--ai-primary-10)] text-[var(--ai-primary-text)] text-xs font-mono">
           <Sparkles className="w-3.5 h-3.5" /> AI::COSMOS Systems Architecture
         </div>
 
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--ai-text)]">
-          The Architecture of <span className="text-[var(--ai-primary)] ai-glow">Reliable, Grounded</span> AI Systems
+          The Architecture of <span className="text-[var(--ai-primary-text)] ai-glow">Reliable, Grounded</span> AI Systems
         </h1>
 
         <p className="text-base md:text-lg text-[var(--ai-muted)] max-w-3xl leading-relaxed">
@@ -25,7 +25,7 @@ export function About() {
       {/* Core Principles */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="p-8 rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-4">
-          <span className="font-mono text-xs text-[var(--ai-cyan)] font-bold">01 / DENSE &amp; SPARSE HYBRID</span>
+          <span className="font-mono text-xs text-[var(--ai-cyan-text)] font-bold">01 / DENSE &amp; SPARSE HYBRID</span>
           <h3 className="font-display font-bold text-xl text-[var(--ai-text)]">Hybrid Retrieval</h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
             Combining HNSW vector embeddings with BM25 keyword inverted indexes guarantees both high semantic understanding and exact keyword/ID retrieval recall.
@@ -33,7 +33,7 @@ export function About() {
         </div>
 
         <div className="p-8 rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-4">
-          <span className="font-mono text-xs text-[var(--ai-amber)] font-bold">02 / STRUCTURED AGENTS</span>
+          <span className="font-mono text-xs text-[var(--ai-amber-text)] font-bold">02 / STRUCTURED AGENTS</span>
           <h3 className="font-display font-bold text-xl text-[var(--ai-text)]">ReAct Tool Calling</h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
             Grammar-constrained JSON schema outputs allow autonomous agents to reliably invoke production APIs, query SQL databases, and self-correct with observations.
@@ -41,7 +41,7 @@ export function About() {
         </div>
 
         <div className="p-8 rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-4">
-          <span className="font-mono text-xs text-[var(--ai-emerald)] font-bold">03 / CONTINUOUS EVALUATION</span>
+          <span className="font-mono text-xs text-[var(--ai-emerald-text)] font-bold">03 / CONTINUOUS EVALUATION</span>
           <h3 className="font-display font-bold text-xl text-[var(--ai-text)]">The RAG Triad</h3>
           <p className="text-xs text-[var(--ai-muted)] leading-relaxed">
             Automated CI/CD evaluation of Context Relevance, Groundedness, and Answer Relevance ensures production models maintain &gt;95% factual accuracy.

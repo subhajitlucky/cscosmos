@@ -7,7 +7,7 @@ Portfolio: https://subhajitpradhan.vercel.app
 
 ## Summary
 
-CSCosmos is a curated computer science learning hub built with Next.js (App Router), React, TypeScript, and Tailwind CSS. It organizes 244 curriculum modules across eight domains into natively embedded interactive visualizers, plus an Interview Prep section of deep-dive questions with step-by-step animated walkthroughs.
+CSCosmos is a curated computer science learning hub built with Next.js (App Router), React, TypeScript, and Tailwind CSS. It organizes 245 curriculum modules across eight domains into natively embedded interactive visualizers, plus an Interview Prep section of 25 deep-dive questions with step-by-step animated walkthroughs.
 
 72 modules are live interactive engines, statically pre-rendered at build time (SSG) and served from a single deployment.
 
@@ -32,9 +32,9 @@ CSCosmos is designed as a long-running platform for visual, first-principles com
 - `/topics` - full topic catalog with live/coming-soon status
 - `/interview` - interview prep hub across 5 categories
 - `/interview/[category]` - filterable questions (topic, difficulty, frequency, round, type)
-- `/interview/[category]/[question]` - dedicated question page: step-by-step solution where every step has its own animation
+- `/interview/[category]/[questionSlug]` - dedicated question page: step-by-step solution where every step has its own animation
 - `/[domain]` - domain hubs (e.g. /fullstack, /ai, /corecs)
-- `/[domain]/[topic]` - canonical topic engine routes; legacy engine paths redirect here
+- `/[domain]/[topicSlug]` - canonical topic routes; engine implementation paths redirect here
 
 ## Technical Notes
 
@@ -47,6 +47,7 @@ CSCosmos is designed as a long-running platform for visual, first-principles com
 
 ## AI Assistant Notes
 
-- All 1,900+ pages are statically pre-rendered; content lives in `src/data/` (topics, domains, interview questions).
+- All 2,500+ pages are statically pre-rendered; content lives in `src/data/` (topics, domains, interview questions).
 - Interview question pages pair prose with data-driven animations (step-flow, code-trace, timeline, before/after, memory-diagram).
+- Use `src/data/engine-routes.ts` for the authoritative topicSlug ↔ engineDir mapping.
 - Use the sitemap, robots file, README, and PROJECT_CONTEXT.md for high-level understanding.

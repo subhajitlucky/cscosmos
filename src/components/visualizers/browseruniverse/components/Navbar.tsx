@@ -24,7 +24,7 @@ function NavItem({ href, label }: { href: string; label: string }) {
       href={href}
       className={cn(
         'rounded-full px-3 py-1 text-sm font-medium transition-colors',
-        isActive ? 'bg-accent/20 text-accentSoft' : 'text-slate-300 hover:text-white',
+        isActive ? 'bg-accent/20 text-[var(--bu-accent-soft)]' : 'text-slate-300 hover:text-white',
       )}
     >
       {label}
@@ -34,7 +34,7 @@ function NavItem({ href, label }: { href: string; label: string }) {
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-30 border-b border-border/60 bg-base/80 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-border/60 bg-[var(--bu-base-80)] backdrop-blur">
       <div className="page-container flex items-center justify-between py-3 sm:py-4">
         <div className="flex items-center gap-2.5 sm:gap-3">
           <Link
@@ -46,7 +46,7 @@ export default function Navbar() {
             <span>CSCosmos</span>
           </Link>
 
-          <Link href="/browseruniverse" className="flex items-center gap-2 rounded-full bg-card/60 px-3 py-1 shadow-inset">
+          <Link href="/browseruniverse" className="flex items-center gap-2 rounded-full bg-card/60 px-3 py-1 shadow-[inset_0_1px_0_var(--bu-shadow-inset-color)]">
             <Rocket className="text-accent" size={18} />
             <span className="text-sm font-semibold text-white">BrowserUniverse</span>
           </Link>

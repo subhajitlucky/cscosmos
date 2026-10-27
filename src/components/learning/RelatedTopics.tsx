@@ -45,7 +45,7 @@ export function RelatedTopics({ slug, domain }: { slug: string; domain: string }
             {prerequisites.map((topic) => (
               <Link
                 key={topic!.slug}
-                href={topic!.url || `/topics`}
+                href={topic!.canonicalPath}
                 className="rounded-md border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
               >
                 {topic!.name}
@@ -63,7 +63,7 @@ export function RelatedTopics({ slug, domain }: { slug: string; domain: string }
           {related.map((topic) => (
             <Link
               key={topic!.slug}
-              href={topic!.url || `/topics`}
+              href={topic!.canonicalPath}
               className="group flex items-center justify-between gap-2 rounded-md border border-border px-3 py-2 transition-colors hover:border-foreground/30 hover:bg-secondary/40"
             >
               <span className="min-w-0">

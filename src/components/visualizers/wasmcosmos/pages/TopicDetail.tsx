@@ -23,7 +23,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--wasm-primary)]/10 text-[var(--wasm-primary)] border border-[var(--wasm-primary)]/30 font-bold">
+            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--wasm-primary-10)] text-[var(--wasm-primary)] border border-[var(--wasm-primary-30)] font-bold">
               {topic.kicker}
             </span>
             <span className="text-xs font-mono text-[var(--wasm-muted)]">
@@ -35,7 +35,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
             {topic.title}
           </h1>
 
-          <p className="text-base md:text-lg text-[var(--wasm-muted)] leading-relaxed border-l-4 border-[var(--wasm-primary)]/30 pl-6 italic">
+          <p className="text-base md:text-lg text-[var(--wasm-muted)] leading-relaxed border-l-4 border-[var(--wasm-primary-30)] pl-6 italic">
             &ldquo;{topic.definition}&rdquo;
           </p>
         </div>
@@ -83,7 +83,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
                 <Binary className="w-3.5 h-3.5 text-[var(--wasm-primary)]" />
                 module.wat (S-Expressions)
               </span>
-              <span className="text-[10px] font-mono text-[var(--wasm-primary)] bg-[var(--wasm-primary)]/10 px-2 py-0.5 rounded border border-[var(--wasm-primary)]/20">
+              <span className="text-[10px] font-mono text-[var(--wasm-primary)] bg-[var(--wasm-primary-10)] px-2 py-0.5 rounded border border-[var(--wasm-primary-20)]">
                 WAT_SOURCE
               </span>
             </div>
@@ -96,13 +96,13 @@ export function TopicDetail({ topicId }: { topicId: string }) {
           </div>
 
           {/* JS Host Bridge */}
-          <div className="lg:col-span-6 rounded-2xl border border-[var(--wasm-primary)]/30 bg-[var(--wasm-surface-2)] overflow-hidden flex flex-col justify-between shadow-xl">
+          <div className="lg:col-span-6 rounded-2xl border border-[var(--wasm-primary-30)] bg-[var(--wasm-surface-2)] overflow-hidden flex flex-col justify-between shadow-xl">
             <div className="px-4 py-3 border-b border-[var(--wasm-border-subtle)] bg-[var(--wasm-surface)] flex items-center justify-between">
               <span className="text-xs font-mono text-[var(--wasm-primary)] flex items-center gap-2">
                 <Code2 className="w-3.5 h-3.5 text-[var(--wasm-primary)]" />
                 bridge.js (Host FFI)
               </span>
-              <span className="text-[10px] font-mono text-[var(--wasm-emerald)] bg-[var(--wasm-emerald)]/10 px-2 py-0.5 rounded border border-[var(--wasm-emerald)]/20">
+              <span className="text-[10px] font-mono text-[var(--wasm-emerald)] bg-[var(--wasm-emerald-10)] px-2 py-0.5 rounded border border-[var(--wasm-emerald-20)]">
                 0 JIT DEOPT
               </span>
             </div>
@@ -138,7 +138,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
               className="p-4 rounded-xl border border-[var(--wasm-border-subtle)] bg-[var(--wasm-bg)] space-y-2 font-mono text-xs"
             >
               <div className="flex items-center gap-2 text-[var(--wasm-primary)] font-bold">
-                <span className="px-1.5 py-0.5 rounded bg-[var(--wasm-primary)]/10 border border-[var(--wasm-primary)]/20 text-[10px]">
+                <span className="px-1.5 py-0.5 rounded bg-[var(--wasm-primary-10)] border border-[var(--wasm-primary-20)] text-[10px]">
                   0{idx + 1}
                 </span>
                 <span>STATE</span>

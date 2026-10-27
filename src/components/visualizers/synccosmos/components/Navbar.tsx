@@ -18,7 +18,7 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--sync-border-subtle)] bg-[var(--sync-bg)]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--sync-border-subtle)] bg-[var(--sync-bg-80)] backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Left branding */}
         <div className="flex items-center gap-6">
@@ -30,7 +30,7 @@ export function Navbar() {
           </Link>
           
           <Link href="/synccosmos" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[var(--sync-primary)]/10 border border-[var(--sync-primary)]/30 flex items-center justify-center text-[var(--sync-primary)] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(6,182,212,0.25)]">
+            <div className="w-8 h-8 rounded-lg bg-[var(--sync-primary-10)] border border-[var(--sync-primary-30)] flex items-center justify-center text-[var(--sync-primary)] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(6,182,212,0.25)]">
               <RefreshCw className="w-4 h-4 text-[var(--sync-primary)]" />
             </div>
             <div className="flex flex-col">
@@ -55,7 +55,7 @@ export function Navbar() {
                 href={item.href}
                 className={`flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-[var(--sync-primary)]/10 text-[var(--sync-primary)] border border-[var(--sync-border)]'
+                    ? 'bg-[var(--sync-primary-10)] text-[var(--sync-primary)] border border-[var(--sync-border)]'
                     : 'text-[var(--sync-muted)] hover:text-[var(--sync-text)] hover:bg-[var(--sync-surface)]'
                 }`}
               >

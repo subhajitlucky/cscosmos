@@ -31,7 +31,7 @@ export function RunesSandbox() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--svelte-primary)]/30 bg-[var(--svelte-primary)]/10 text-[var(--svelte-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--svelte-primary-30)] bg-[var(--svelte-primary-10)] text-[var(--svelte-primary)] text-xs font-mono">
           <Sparkles className="w-3.5 h-3.5" /> Svelte 5 Runes Laboratory
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--svelte-text)]">
@@ -142,7 +142,7 @@ export function RunesSandbox() {
           </div>
 
           {/* Derived Values Readout */}
-          <div className="p-5 rounded-xl border border-[var(--svelte-mint)]/30 bg-[var(--svelte-mint)]/5 space-y-3">
+          <div className="p-5 rounded-xl border border-[var(--svelte-mint-30)] bg-[var(--svelte-mint-5)] space-y-3">
             <span className="text-xs font-mono text-[var(--svelte-mint)] uppercase tracking-wider font-bold flex items-center gap-1.5">
               <Zap className="w-3.5 h-3.5" /> $derived() Reactive Values
             </span>
@@ -167,18 +167,18 @@ export function RunesSandbox() {
               <span className="font-mono text-xs text-[var(--svelte-primary)] uppercase tracking-wider font-bold flex items-center gap-2">
                 <Layers className="w-3.5 h-3.5" /> Live Signal Dependency Graph
               </span>
-              <span className="text-[10px] font-mono text-[var(--svelte-mint)] px-2 py-0.5 rounded bg-[var(--svelte-mint)]/10 border border-[var(--svelte-mint)]/30">
+              <span className="text-[10px] font-mono text-[var(--svelte-mint)] px-2 py-0.5 rounded bg-[var(--svelte-mint-10)] border border-[var(--svelte-mint-30)]">
                 ACTIVE_SUBSCRIBERS: 3
               </span>
             </div>
 
             <div className="p-4 rounded-xl bg-[var(--svelte-bg)] border border-[var(--svelte-border-subtle)] space-y-4">
               <div className="flex items-center justify-between text-xs font-mono">
-                <div className="p-2 rounded bg-[var(--svelte-primary)]/10 text-[var(--svelte-primary)] border border-[var(--svelte-primary)]/30">
+                <div className="p-2 rounded bg-[var(--svelte-primary-10)] text-[var(--svelte-primary)] border border-[var(--svelte-primary-30)]">
                   [Source] score: {score}
                 </div>
                 <div className="text-[var(--svelte-muted)]">──&gt; (push dirty) ──&gt;</div>
-                <div className="p-2 rounded bg-[var(--svelte-mint)]/10 text-[var(--svelte-mint)] border border-[var(--svelte-mint)]/30">
+                <div className="p-2 rounded bg-[var(--svelte-mint-10)] text-[var(--svelte-mint)] border border-[var(--svelte-mint-30)]">
                   [Derived] rank: {rank}
                 </div>
               </div>

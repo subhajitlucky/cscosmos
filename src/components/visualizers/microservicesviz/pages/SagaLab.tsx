@@ -96,7 +96,7 @@ export function SagaLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ms-amber)]/30 bg-[var(--ms-amber)]/10 text-[var(--ms-amber)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ms-amber-30)] bg-[var(--ms-amber-10)] text-[var(--ms-amber)] text-xs font-mono">
           <GitPullRequest className="w-3.5 h-3.5" /> Distributed Transactions &amp; Eventual Consistency
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--ms-text)]">
@@ -162,7 +162,7 @@ export function SagaLab() {
                       : status === 'COMPENSATED'
                       ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
                       : isCurrent
-                      ? 'border-[var(--ms-primary)] bg-[var(--ms-primary)]/10 text-white'
+                      ? 'border-[var(--ms-primary)] bg-[var(--ms-primary-10)] text-white'
                       : 'border-[var(--ms-border-subtle)] bg-[var(--ms-bg)] text-[var(--ms-muted)]'
                   }`}
                 >

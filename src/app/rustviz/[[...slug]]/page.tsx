@@ -1,5 +1,5 @@
 import React from 'react';
-import RustVizClientPage from './RustVizClientPage';
+import EngineMount from './EngineMount';
 import { rustConcepts } from '@/components/visualizers/rustviz/data/concepts';
 
 export function generateStaticParams() {
@@ -30,5 +30,5 @@ export default async function RustVizPage({
   const resolvedParams = await params;
   const slug = resolvedParams?.slug || [];
 
-  return <RustVizClientPage slug={slug} />;
+  return <EngineMount slug={slug} />;
 }

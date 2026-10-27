@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Flame, Trophy } from "lucide-react";
-import { domains } from "@/data/domains";
+import { domains, domainPath } from "@/data/domains";
 import { topics } from "@/data/topics";
 import {
   LEARNING_EVENT,
@@ -92,7 +92,7 @@ export function ProgressDashboard() {
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <span className={`h-2.5 w-2.5 rounded-full ${domain.color}`} aria-hidden="true" />
-                    <Link href={domain.path} className="text-sm font-semibold text-foreground hover:underline">
+                    <Link href={domainPath(domain.domainKey)} className="text-sm font-semibold text-foreground hover:underline">
                       {domain.name}
                     </Link>
                   </div>
@@ -131,7 +131,7 @@ export function ProgressDashboard() {
             {recent.map(({ topic, timestamp }) => (
               <li key={topic!.slug} className="flex flex-wrap items-center justify-between gap-2 px-5 py-3">
                 <div>
-                  <Link href={topic!.url || "/topics"} className="text-sm font-semibold text-foreground hover:underline">
+                  <Link href={topic!.canonicalPath} className="text-sm font-semibold text-foreground hover:underline">
                     {topic!.name}
                   </Link>
                   <p className="text-xs uppercase tracking-wider text-muted-foreground">{topic!.domain}</p>

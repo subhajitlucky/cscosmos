@@ -8,14 +8,13 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useTheme = () => {
-  const { theme, setTheme } = useCSCosmosTheme();
-  const effectiveTheme = theme === 'system'
-    ? (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    : theme;
+  // `resolvedTheme` is already the concrete theme applied to <html>; resolving
+  // "system" here would read matchMedia during render (AGENTS.md §1).
+  const { resolvedTheme, setTheme } = useCSCosmosTheme();
 
   return {
-    theme: effectiveTheme as 'light' | 'dark',
-    toggleTheme: () => setTheme(effectiveTheme === 'dark' ? 'light' : 'dark'),
+    theme: resolvedTheme,
+    toggleTheme: () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark'),
     setTheme: (t: 'light' | 'dark') => setTheme(t),
   };
 };

@@ -86,7 +86,7 @@ export function InputFlowStepperWidget() {
           <div className="font-bold text-sm text-foreground">
             Step {steps[activeStep].num}: {steps[activeStep].title}
           </div>
-          <span className="text-[11px] text-emerald-500 font-semibold">Active State</span>
+          <span className="text-[11px] text-emerald-700 dark:text-emerald-500 font-semibold">Active State</span>
         </div>
 
         <p className="text-xs font-sans text-muted-foreground leading-relaxed">
@@ -164,7 +164,7 @@ export function ProbabilisticSimulatorDeepWidget() {
           {history.map((item, i) => (
             <div key={i} className="flex justify-between items-center text-foreground">
               <span>Run #{history.length - i} Output:</span>
-              <strong className={temp === 0 ? 'text-emerald-500' : 'text-foreground'}>{item}</strong>
+              <strong className={temp === 0 ? 'text-emerald-700 dark:text-emerald-500' : 'text-foreground'}>{item}</strong>
             </div>
           ))}
         </div>
@@ -229,18 +229,18 @@ export function FailureModeDiagnosticWidget() {
       <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/60 pb-3">
           <h3 className="font-display font-bold text-base sm:text-lg text-foreground">{curr.name}</h3>
-          <span className="text-[11px] px-2.5 py-0.5 rounded border border-rose-500/30 bg-rose-500/10 text-rose-500 font-semibold">
+          <span className="text-[11px] px-2.5 py-0.5 rounded border border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-500 font-semibold">
             {curr.riskLevel}
           </span>
         </div>
 
         <div className="space-y-1">
-          <span className="text-[10px] text-muted-foreground uppercase font-bold">Root Engineering Cause:</span>
+          <span className="text-[10px] text-zinc-600 dark:text-zinc-400 uppercase font-bold">Root Engineering Cause:</span>
           <p className="text-xs font-sans text-muted-foreground leading-relaxed">{curr.cause}</p>
         </div>
 
         <div className="p-3 rounded-lg border border-border/60 bg-secondary/40 space-y-1">
-          <span className="text-[10px] text-emerald-500 uppercase font-bold">Production Mitigation:</span>
+          <span className="text-[10px] text-emerald-700 dark:text-emerald-500 uppercase font-bold">Production Mitigation:</span>
           <p className="text-xs font-sans text-foreground leading-relaxed">{curr.mitigation}</p>
         </div>
       </div>
@@ -336,7 +336,7 @@ export function AiToolsStackWidget() {
           </div>
           <div className="p-3 rounded-lg border border-border/60 bg-secondary/40 space-y-1 sm:col-span-2">
             <span className="text-[10px] text-muted-foreground uppercase font-bold">5. Production Observability</span>
-            <div className="text-emerald-500 font-semibold">{curr.observability}</div>
+            <div className="text-emerald-700 dark:text-emerald-500 font-semibold">{curr.observability}</div>
           </div>
         </div>
       </div>
@@ -406,9 +406,9 @@ export function LocalVsCloudTradeoffWidget() {
         <div className="p-5 rounded-xl border border-border/80 bg-secondary/20 space-y-3">
           <div className="flex items-center justify-between border-b border-border/60 pb-2">
             <span className="font-bold text-foreground flex items-center gap-1.5">
-              <Laptop className="h-4 w-4 text-emerald-500" /> Local Model (Ollama / vLLM)
+              <Laptop className="h-4 w-4 text-emerald-700 dark:text-emerald-500" /> Local Model (Ollama / vLLM)
             </span>
-            <span className="text-emerald-500 font-bold">${localCostMonthly}/mo</span>
+            <span className="text-emerald-700 dark:text-emerald-500 font-bold">${localCostMonthly}/mo</span>
           </div>
           <div className="space-y-1.5 text-[11px] text-muted-foreground">
             <div>&bull; Privacy: 100% On-Premise, zero external packets</div>
@@ -421,7 +421,7 @@ export function LocalVsCloudTradeoffWidget() {
         <div className="p-5 rounded-xl border border-border/80 bg-secondary/20 space-y-3">
           <div className="flex items-center justify-between border-b border-border/60 pb-2">
             <span className="font-bold text-foreground flex items-center gap-1.5">
-              <Cloud className="h-4 w-4 text-blue-500" /> Cloud API (OpenAI / Anthropic)
+              <Cloud className="h-4 w-4 text-blue-700 dark:text-blue-500" /> Cloud API (OpenAI / Anthropic)
             </span>
             <span className="text-foreground font-bold">${cloudCostMonthly.toFixed(0)}/mo</span>
           </div>

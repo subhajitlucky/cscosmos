@@ -12,6 +12,7 @@ import { K8sServiceRoutingVisualizer } from '../components/K8sServiceRoutingVisu
 import { IngressRouterVisualizer } from '../components/IngressRouterVisualizer';
 import { CniPacketFlowVisualizer } from '../components/CniPacketFlowVisualizer';
 import { DockerCliPlayground } from '../components/DockerCliPlayground';
+import { DOCKER_TOPICS } from '../data/topics';
 
 export default function Home() {
   return (
@@ -32,7 +33,7 @@ export default function Home() {
             href="/dockercosmos/concepts"
             className="px-6 py-3 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-sky-500/25 flex items-center gap-2"
           >
-            <BookOpen className="w-4 h-4" /> Explore 20 Concepts
+            <BookOpen className="w-4 h-4" /> Explore {DOCKER_TOPICS.length} Concepts
           </Link>
           <Link
             href="/dockercosmos/playground"
@@ -80,10 +81,10 @@ export default function Home() {
             <BookOpen className="w-5 h-5" />
           </div>
           <h3 className="text-lg font-bold text-foreground group-hover:text-sky-500 transition-colors">
-            20 In-Depth Lessons
+            {DOCKER_TOPICS.length} In-Depth Lessons
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Linux capabilities, multi-stage builds, rootless containers, Ingress controllers, and HPA autoscaling.
+            Linux namespaces, cgroups v2 limits, OverlayFS layers, container networking, and the Kubernetes control plane, Pod lifecycle, Services, and Ingress.
           </p>
         </Link>
 

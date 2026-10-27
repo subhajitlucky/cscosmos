@@ -4,19 +4,16 @@ import { useEffect, useState } from "react";
 import { useTheme as useCSCosmosTheme } from "@/context/useTheme";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useCSCosmosTheme();
+  // `resolvedTheme` is already the concrete theme painted on <html>, so no
+  // matchMedia read is needed here (it would read the browser during render).
+  const { resolvedTheme, setTheme } = useCSCosmosTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const isDark = mounted
-    ? theme === "dark" ||
-      (theme === "system" &&
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    : false;
+  const isDark = mounted ? resolvedTheme === "dark" : false;
 
   const toggle = () => {
     setTheme(isDark ? "light" : "dark");

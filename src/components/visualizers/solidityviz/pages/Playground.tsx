@@ -98,11 +98,13 @@ contract SimpleStore {
 
     return (
         <div className="flex flex-col h-[calc(100vh-8rem)] gap-4">
-            {/* Header */}
+            {/* Header. The badge was a plain <div>, so this route pre-rendered with no heading
+                element at all (FS-41/FS-76 class). It is the page's own title, so the wrapper
+                becomes the <h1>: same markup and classes, a real document heading. */}
             <div className="flex items-center gap-3">
-                <div className="flex items-center px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-semibold uppercase tracking-wider">
+                <h1 className="flex items-center px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-semibold uppercase tracking-wider">
                     <Terminal className="w-4 h-4 mr-2" /> EVM Playground
-                </div>
+                </h1>
                 <span className="text-muted-foreground text-sm">Execute and visualize EVM bytecode in real-time</span>
             </div>
 

@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-1 space-y-4">
           <Link href="/webprotocols" className="flex items-center gap-2 font-bold text-xl text-primary">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground">
               <BookOpen size={20} />
             </div>
             <span className="text-foreground">Web Protocols</span>
@@ -49,7 +49,7 @@ const Footer = () => {
               <span className="font-bold text-sm uppercase tracking-tighter">Ready to play?</span>
            </div>
            <p className="text-xs text-muted-foreground mb-4">Jump into the interactive playground and experiment with real HTTP flows.</p>
-           <Link href="/webprotocols/playground" className="block text-center bg-primary text-white py-2 rounded-xl text-xs font-bold hover:bg-primary/90 transition-all">
+           <Link href="/webprotocols/playground" className="block text-center bg-primary text-primary-foreground py-2 rounded-xl text-xs font-bold hover:bg-primary/90 transition-all">
              Open Playground
            </Link>
         </div>

@@ -57,11 +57,11 @@ export function PatternsLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--lld-purple)]/30 bg-[var(--lld-purple)]/10 text-[var(--lld-purple)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--lld-purple-30)] bg-[var(--lld-purple-10)] text-[var(--lld-purple)] text-xs font-mono">
           <Cpu className="w-3.5 h-3.5" /> Gang of Four (GoF) Interactive Studio
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--lld-text)]">
-          Design Pattern <span className="text-[var(--lld-primary)] lld-glow">Interactive Lab</span>
+          Design Pattern <span className="text-[var(--lld-primary-text)] lld-glow">Interactive Lab</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--lld-muted)] max-w-2xl leading-relaxed">
           Test runtime behavioral and structural patterns in action: Strategy discounts, Decorator coffee wrappers, and Observer event broadcasters.
@@ -95,7 +95,7 @@ export function PatternsLab() {
         {activePattern === 'strategy' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-6 space-y-4">
-              <div className="text-[var(--lld-primary)] font-bold uppercase tracking-wider text-[10px]">
+              <div className="text-[var(--lld-primary-text)] font-bold uppercase tracking-wider text-[10px]">
                 Strategy Pattern: Interchangeable Pricing Algorithms
               </div>
               <h3 className="font-display text-2xl font-bold text-[var(--lld-text)]">
@@ -119,7 +119,7 @@ export function PatternsLab() {
                       onClick={() => setStrategy(sId as 'NONE' | 'FLAT10' | 'BOGO' | 'VIP25')}
                       className={`p-2.5 rounded-lg border text-left transition-all ${
                         strategy === sId
-                          ? 'border-[var(--lld-primary)] bg-[var(--lld-primary)]/15 text-white font-bold'
+                          ? 'border-[var(--lld-primary)] bg-[var(--lld-primary-15)] text-blue-800 dark:text-white font-bold'
                           : 'border-[var(--lld-border-subtle)] bg-[var(--lld-bg)] text-[var(--lld-muted)]'
                       }`}
                     >
@@ -132,7 +132,7 @@ export function PatternsLab() {
 
             <div className="lg:col-span-6 p-6 rounded-2xl bg-[var(--lld-bg)] border border-[var(--lld-border-subtle)] space-y-4 text-center">
               <span className="text-[10px] text-[var(--lld-muted)] uppercase tracking-wider">Computed Cart Total</span>
-              <div className="text-4xl font-bold text-emerald-400 font-display">
+              <div className="text-4xl font-bold text-emerald-700 dark:text-emerald-400 font-display">
                 ${calculateTotal().toFixed(2)}
               </div>
               <p className="text-[10px] text-[var(--lld-muted)]">
@@ -146,7 +146,7 @@ export function PatternsLab() {
         {activePattern === 'decorator' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-6 space-y-4">
-              <div className="text-[var(--lld-primary)] font-bold uppercase tracking-wider text-[10px]">
+              <div className="text-[var(--lld-primary-text)] font-bold uppercase tracking-wider text-[10px]">
                 Decorator Pattern: Dynamic Object Wrapping
               </div>
               <h3 className="font-display text-2xl font-bold text-[var(--lld-text)]">
@@ -169,7 +169,7 @@ export function PatternsLab() {
                       onClick={() => setAddons(a => ({ ...a, [addId]: !a[addId] }))}
                       className={`w-full p-2.5 rounded-lg border text-left flex items-center justify-between transition-all ${
                         addons[addId]
-                          ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-bold'
+                          ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-bold'
                           : 'border-[var(--lld-border-subtle)] bg-[var(--lld-bg)] text-[var(--lld-muted)]'
                       }`}
                     >
@@ -183,7 +183,7 @@ export function PatternsLab() {
 
             <div className="lg:col-span-6 p-6 rounded-2xl bg-[var(--lld-bg)] border border-[var(--lld-border-subtle)] space-y-4 text-center">
               <span className="text-[10px] text-[var(--lld-muted)] uppercase tracking-wider">Final Wrapped Beverage Cost</span>
-              <div className="text-4xl font-bold text-[var(--lld-primary)] font-display">
+              <div className="text-4xl font-bold text-[var(--lld-primary-text)] font-display">
                 ${calculateCoffee().cost}
               </div>
               <p className="text-[11px] text-[var(--lld-muted)] leading-relaxed">
@@ -197,7 +197,7 @@ export function PatternsLab() {
         {activePattern === 'observer' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-6 space-y-4">
-              <div className="text-[var(--lld-primary)] font-bold uppercase tracking-wider text-[10px]">
+              <div className="text-[var(--lld-primary-text)] font-bold uppercase tracking-wider text-[10px]">
                 Observer Pattern: 1-to-Many Pub/Sub Event Broadcast
               </div>
               <h3 className="font-display text-2xl font-bold text-[var(--lld-text)]">
@@ -224,12 +224,12 @@ export function PatternsLab() {
 
               <div className="p-4 rounded-xl bg-[var(--lld-bg)] border border-[var(--lld-border-subtle)] text-center space-y-1">
                 <span className="text-[10px] text-[var(--lld-muted)]">Subject Price (NASDAQ:COSMOS)</span>
-                <div className="text-3xl font-bold text-white font-display">${stockPrice}</div>
+                <div className="text-3xl font-bold text-[var(--lld-text)] font-display">${stockPrice}</div>
               </div>
             </div>
 
             <div className="lg:col-span-6 space-y-4">
-              <span className="text-[10px] text-[var(--lld-primary)] uppercase tracking-wider font-bold">
+              <span className="text-[10px] text-[var(--lld-primary-text)] uppercase tracking-wider font-bold">
                 Observer Notification Log
               </span>
               <div className="p-4 rounded-xl bg-[var(--lld-bg)] border border-[var(--lld-border-subtle)] space-y-1.5 text-[11px] max-h-56 overflow-y-auto">

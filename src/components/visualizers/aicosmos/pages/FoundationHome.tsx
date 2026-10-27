@@ -116,7 +116,7 @@ export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: 
               href={`${basePath}/lab`}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-border/80 bg-secondary/40 px-8 py-4 text-sm font-mono font-bold text-foreground hover:bg-secondary/70 transition-colors"
             >
-              <Sliders className="h-4 w-4 text-emerald-500" />
+              <Sliders className="h-4 w-4 text-emerald-700 dark:text-emerald-500" />
               Open Micro-Model Studio
             </Link>
           </div>
@@ -146,7 +146,7 @@ export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: 
             </div>
 
             <div className="p-6 sm:p-8 space-y-1">
-              <div className="text-3xl sm:text-4xl font-black font-display text-emerald-500">
+              <div className="text-3xl sm:text-4xl font-black font-display text-emerald-700 dark:text-emerald-500">
                 100%
               </div>
               <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
@@ -205,7 +205,7 @@ export function FoundationHome({ basePath = '/ai/ai-engineering-foundations' }: 
               className="group rounded-xl border border-border/80 bg-card p-6 sm:p-8 flex flex-col justify-between hover:border-foreground/40 transition-colors space-y-6"
             >
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-lg border border-border/80 bg-secondary/40 flex items-center justify-center text-emerald-500 group-hover:border-foreground/40 transition-colors">
+                <div className="w-12 h-12 rounded-lg border border-border/80 bg-secondary/40 flex items-center justify-center text-emerald-700 dark:text-emerald-500 group-hover:border-foreground/40 transition-colors">
                   <Sliders className="h-6 w-6" />
                 </div>
                 <h3 className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">

@@ -1,18 +1,22 @@
 import { Link, useLocation } from '@/components/visualizers/shared/RouterShim';
 import { Moon, Sun } from 'lucide-react';
-import { useStore } from '../../stores/store';
+import { useTheme } from '@/context/useTheme';
 
 export function Navbar() {
   const location = useLocation();
-  const { theme, setTheme } = useStore();
+  // FS-40: the engine's persisted store no longer keeps a second theme
+  // preference. Branch on `resolvedTheme` — the concrete "light" | "dark" the
+  // shared provider already painted on <html>, never on `theme`, which can be
+  // the raw "system" preference.
+  const { resolvedTheme, setTheme } = useTheme();
 
   const isActive = (path: string) => location.pathname === path;
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 
-  const CurrentIcon = theme === 'dark' ? Sun : Moon;
+  const CurrentIcon = resolvedTheme === 'dark' ? Sun : Moon;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">

@@ -29,6 +29,15 @@ const Playground = () => {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [showGuide, setShowGuide] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  // The "System_Clock" label used to call `new Date()` while rendering, so the
+  // pre-rendered HTML (build time) could never agree with the client's first
+  // render (visit time) — a hydration mismatch. It shows a placeholder until
+  // mount and the real time from then on.
+  const [systemClock, setSystemClock] = useState('--:--:--');
+
+  useEffect(() => {
+    setSystemClock(new Date().toLocaleTimeString());
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -199,7 +208,7 @@ const Playground = () => {
         <div className="lg:col-span-6 relative flex flex-col h-[450px] sm:h-[600px] lg:h-auto order-1 lg:order-2">
           <div className="flex-grow premium-panel bg-[#02040a] relative shadow-[inset_0_0_40px_rgba(0,0,0,0.8)] border-primary/10">
             <div className="absolute top-3 sm:top-4 left-4 sm:left-6 tech-label opacity-40 text-[7px] sm:text-[9px]">Tactical_Display_01</div>
-            <div className="absolute bottom-3 sm:bottom-4 right-4 sm:right-6 tech-label opacity-40 text-[7px] sm:text-[9px] hidden xs:block">System_Clock: {new Date().toLocaleTimeString()}</div>
+            <div className="absolute bottom-3 sm:bottom-4 right-4 sm:right-6 tech-label opacity-40 text-[7px] sm:text-[9px] hidden xs:block">System_Clock: {systemClock}</div>
             
             <NetworkGraph 
               state={state} 

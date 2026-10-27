@@ -64,7 +64,7 @@ export function ISRVisualizer() {
           <div className="flex flex-col items-center gap-4 relative">
             <motion.div 
               animate={{ 
-                borderColor: status === 'fresh' ? 'var(--emerald-500)' : 'var(--amber-500)',
+                borderColor: status === 'fresh' ? '#10b981' : '#f59e0b',
                 scale: status === 'updating' ? [1, 1.05, 1] : 1
               }}
               className="w-32 h-32 rounded-full border-4 border-dashed bg-background flex flex-col items-center justify-center gap-2 shadow-2xl relative"
@@ -80,7 +80,7 @@ export function ISRVisualizer() {
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="absolute -bottom-2 px-2 py-0.5 bg-primary text-white text-[8px] font-black rounded uppercase"
+                  className="absolute -bottom-2 px-2 py-0.5 bg-primary text-primary-foreground text-[8px] font-black rounded uppercase"
                 >
                   Regenerating...
                 </motion.div>
@@ -93,7 +93,7 @@ export function ISRVisualizer() {
             <motion.div 
               animate={{ 
                 opacity: status === 'revalidating' || status === 'updating' ? 1 : 0.2,
-                backgroundColor: status === 'revalidating' ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                backgroundColor: status === 'revalidating' ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="w-24 h-24 rounded-3xl border-2 bg-background flex flex-col items-center justify-center gap-2 shadow-xl"
             >

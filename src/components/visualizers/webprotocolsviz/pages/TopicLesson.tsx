@@ -1,36 +1,29 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Info, Code, Play, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Lightbulb, Play, Terminal } from 'lucide-react';
 import { topics } from '../data/topics';
-import type { Topic } from '../data/topics';
 import FlowVisualizer from '../components/visualizations/FlowVisualizer';
 
-export default function TopicLesson({ topicId: propTopicId }: { topicId?: string }) {
-  const params = useParams();
-  const router = useRouter();
-  const topicId = propTopicId || (params?.topicId as string);
-  const [topic, setTopic] = useState<Topic | null>(null);
+export default function TopicLesson({ topicId }: { topicId: string }) {
+  // Resolve during render, NOT in an effect. `topics` is a static import, so this
+  // is safe on the server — and it is what puts the lesson into the pre-rendered
+  // HTML. The previous useState+useEffect lookup meant every /webprotocols/topics/*
+  // page shipped with an empty body and was filled in only after hydration
+  // (AGENTS.md §1/§3). The route validates the id and 404s for unknown topics.
+  const topic = topics.find((t) => t.id === topicId);
 
   useEffect(() => {
-    const foundTopic = topics.find(t => t.id === topicId);
-    if (foundTopic) {
-      setTopic(foundTopic);
-      if (typeof window !== 'undefined') {
-        window.scrollTo(0, 0);
-      }
-    } else if (topicId) {
-      router.push('/webprotocols/path');
-    }
-  }, [topicId, router]);
+    window.scrollTo(0, 0);
+  }, [topicId]);
 
   if (!topic) return null;
 
-  const currentIndex = topics.findIndex(t => t.id === topic.id);
+  const currentIndex = topics.findIndex((t) => t.id === topic.id);
   const prevTopic = currentIndex > 0 ? topics[currentIndex - 1] : null;
   const nextTopic = currentIndex < topics.length - 1 ? topics[currentIndex + 1] : null;
+  const { analogy, syntax, example, detailedSections } = topic.content;
 
   return (
     <div className="max-w-[1700px] mx-auto w-full flex flex-col gap-8">
@@ -56,6 +49,17 @@ export default function TopicLesson({ topicId: propTopicId }: { topicId?: string
         <p className="text-xl text-muted-foreground leading-relaxed">{topic.content.definition}</p>
       </div>
 
+      {/* Analogy */}
+      {analogy && (
+        <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 flex gap-3">
+          <Lightbulb size={18} className="text-primary shrink-0 mt-0.5" />
+          <p className="text-sm text-foreground/90 leading-relaxed">
+            <span className="font-bold text-primary">Think of it like this: </span>
+            {analogy}
+          </p>
+        </div>
+      )}
+
       {/* Interactive Visualizer Canvas */}
       <div className="bg-card border border-border/80 rounded-3xl p-6 md:p-8 shadow-xl">
         <div className="flex items-center justify-between mb-6 border-b border-border/80 pb-4">
@@ -66,13 +70,73 @@ export default function TopicLesson({ topicId: propTopicId }: { topicId?: string
         <FlowVisualizer type={topic.content.visualizationType} topicId={topic.id} />
       </div>
 
+      {/* Syntax */}
+      {syntax && (
+        <div className="bg-card border border-border/80 rounded-2xl p-6 space-y-3">
+          <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+            <Terminal size={16} className="text-primary" /> Syntax
+          </h3>
+          <pre className="bg-slate-900 text-green-400 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-slate-800">
+            <code>{syntax}</code>
+          </pre>
+        </div>
+      )}
+
+      {/* Worked request / response example */}
+      {example && (
+        <div className="bg-card border border-border/80 rounded-2xl p-6 space-y-4">
+          <h3 className="text-lg font-bold text-foreground">Worked example</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {example.request && (
+              <div className="space-y-2">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Request</p>
+                <pre className="bg-slate-900 text-green-400 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-slate-800">
+                  <code>{example.request}</code>
+                </pre>
+              </div>
+            )}
+            {example.response && (
+              <div className="space-y-2">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Response</p>
+                <pre className="bg-slate-900 text-sky-300 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-slate-800">
+                  <code>{example.response}</code>
+                </pre>
+              </div>
+            )}
+          </div>
+          {example.explanation && (
+            <p className="text-sm text-muted-foreground leading-relaxed">{example.explanation}</p>
+          )}
+          {example.highlights && example.highlights.length > 0 && (
+            <ul className="space-y-1.5">
+              {example.highlights.map((highlight, i) => (
+                <li key={i} className="text-sm text-foreground/90 flex gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
       {/* Lesson Details & Sections */}
-      {topic.content.detailedSections && (
+      {detailedSections && detailedSections.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          {topic.content.detailedSections.map((sec, i) => (
+          {detailedSections.map((sec, i) => (
             <div key={i} className="bg-card border border-border/80 rounded-2xl p-6 shadow-sm space-y-3">
               <h3 className="text-lg font-bold text-foreground">{sec.title}</h3>
               {sec.content && <p className="text-sm text-muted-foreground leading-relaxed">{sec.content}</p>}
+              {sec.subItems && sec.subItems.length > 0 && (
+                <ul className="space-y-2">
+                  {sec.subItems.map((item, j) => (
+                    <li key={j} className="text-sm leading-relaxed">
+                      <span className="font-semibold text-foreground">{item.label}</span>
+                      <span className="text-muted-foreground"> — {item.description}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
               {sec.code && (
                 <pre className="bg-slate-900 text-green-400 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-slate-800">
                   <code>{sec.code}</code>
@@ -97,7 +161,7 @@ export default function TopicLesson({ topicId: propTopicId }: { topicId?: string
         {nextTopic ? (
           <Link 
             href={`/webprotocols${nextTopic.path}`}
-            className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+            className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-2xl font-bold text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
           >
             Next: {nextTopic.name} <ChevronRight size={18} />
           </Link>

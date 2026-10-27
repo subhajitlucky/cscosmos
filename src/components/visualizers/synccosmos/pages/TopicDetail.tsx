@@ -22,7 +22,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--sync-primary)]/10 text-[var(--sync-primary)] border border-[var(--sync-primary)]/30 font-bold">
+            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--sync-primary-10)] text-[var(--sync-primary)] border border-[var(--sync-primary-30)] font-bold">
               {topic.kicker}
             </span>
             <span className="text-xs font-mono text-[var(--sync-muted)]">
@@ -34,7 +34,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
             {topic.title}
           </h1>
 
-          <p className="text-base md:text-lg text-[var(--sync-muted)] leading-relaxed border-l-4 border-[var(--sync-primary)]/30 pl-6 italic">
+          <p className="text-base md:text-lg text-[var(--sync-muted)] leading-relaxed border-l-4 border-[var(--sync-primary-30)] pl-6 italic">
             &ldquo;{topic.definition}&rdquo;
           </p>
         </div>
@@ -115,7 +115,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
               className="p-4 rounded-xl border border-[var(--sync-border-subtle)] bg-[var(--sync-bg)] space-y-2 font-mono text-xs"
             >
               <div className="flex items-center gap-2 text-[var(--sync-primary)] font-bold">
-                <span className="px-1.5 py-0.5 rounded bg-[var(--sync-primary)]/10 border border-[var(--sync-primary)]/20 text-[10px]">
+                <span className="px-1.5 py-0.5 rounded bg-[var(--sync-primary-10)] border border-[var(--sync-primary-20)] text-[10px]">
                   0{idx + 1}
                 </span>
                 <span>STEP</span>

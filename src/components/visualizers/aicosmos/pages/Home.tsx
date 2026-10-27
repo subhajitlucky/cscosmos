@@ -86,14 +86,14 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--ai-primary)]/30 bg-[var(--ai-primary)]/10 text-[var(--ai-primary)] text-xs font-mono">
-              <Sparkles className="w-3.5 h-3.5 animate-pulse text-[var(--ai-primary)]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--ai-primary-30)] bg-[var(--ai-primary-10)] text-[var(--ai-primary-text)] text-xs font-mono">
+              <Sparkles className="w-3.5 h-3.5 animate-pulse text-[var(--ai-primary-text)]" />
               Neural Networks &bull; Attention &bull; RAG &bull; Autonomous Agents
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-[var(--ai-text)]">
               Deep Learning.<br />
-              <span className="text-[var(--ai-primary)] ai-glow">Transformers &amp;</span> Agentic AI.
+              <span className="text-[var(--ai-primary-text)] ai-glow">Transformers &amp;</span> Agentic AI.
             </h1>
 
             <p className="text-base md:text-lg text-[var(--ai-muted)] max-w-xl leading-relaxed">
@@ -111,9 +111,9 @@ export function Home() {
               
               <Link
                 href="/aicosmos/attention-lab"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-lg border border-[var(--ai-border)] bg-[var(--ai-surface)] text-[var(--ai-text)] font-mono text-xs sm:text-sm hover:border-[var(--ai-cyan)] hover:text-[var(--ai-cyan)] transition-all"
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-lg border border-[var(--ai-border)] bg-[var(--ai-surface)] text-[var(--ai-text)] font-mono text-xs sm:text-sm hover:border-[var(--ai-cyan)] hover:text-[var(--ai-cyan-text)] transition-all"
               >
-                <Cpu className="w-4 h-4 text-[var(--ai-cyan)]" />
+                <Cpu className="w-4 h-4 text-[var(--ai-cyan-text)]" />
                 <span>Transformer Attention</span>
               </Link>
 
@@ -121,7 +121,7 @@ export function Home() {
                 href="/aicosmos/rag-lab"
                 className="inline-flex items-center gap-2 px-4 py-3.5 rounded-lg border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] font-mono text-xs sm:text-sm hover:text-[var(--ai-text)] transition-all"
               >
-                <Network className="w-4 h-4 text-[var(--ai-emerald)]" />
+                <Network className="w-4 h-4 text-[var(--ai-emerald-text)]" />
                 <span>RAG Lab</span>
               </Link>
 
@@ -129,7 +129,7 @@ export function Home() {
                 href="/aicosmos/agent-lab"
                 className="inline-flex items-center gap-2 px-4 py-3.5 rounded-lg border border-[var(--ai-border-subtle)] bg-[var(--ai-surface-2)] text-[var(--ai-muted)] font-mono text-xs sm:text-sm hover:text-[var(--ai-text)] transition-all"
               >
-                <Bot className="w-4 h-4 text-[var(--ai-amber)]" />
+                <Bot className="w-4 h-4 text-[var(--ai-amber-text)]" />
                 <span>Agent Lab</span>
               </Link>
             </div>
@@ -147,7 +147,7 @@ export function Home() {
                 </div>
                 <button
                   onClick={resetAll}
-                  className="text-[10px] text-[var(--ai-muted)] hover:text-[var(--ai-primary)]"
+                  className="text-[10px] text-[var(--ai-muted)] hover:text-[var(--ai-primary-text)]"
                   title="Reset"
                 >
                   <RotateCcw className="w-3 h-3" />
@@ -165,8 +165,8 @@ export function Home() {
                         onClick={() => { setSelectedQuery(sq); setActiveStep(0); }}
                         className={`w-full p-2.5 rounded-lg border text-left transition-all ${
                           selectedQuery.id === sq.id
-                            ? 'border-[var(--ai-primary)] bg-[var(--ai-primary)]/15 text-white font-bold'
-                            : 'border-[var(--ai-border-subtle)] bg-[var(--bu-bg)] text-[var(--ai-muted)]'
+                            ? 'border-[var(--ai-primary)] bg-[var(--ai-primary-15)] text-[var(--ai-text)] font-bold'
+                            : 'border-[var(--ai-border-subtle)] bg-[var(--ai-bg)] text-[var(--ai-muted)]'
                         }`}
                       >
                         {sq.query}
@@ -189,8 +189,8 @@ export function Home() {
                         key={label as string}
                         className={`p-1.5 rounded border transition-all ${
                           isDone
-                            ? 'border-[var(--ai-primary)] bg-[var(--ai-primary)]/20 text-indigo-300 font-bold'
-                            : 'border-[var(--ai-border-subtle)] bg-black/20 text-[var(--ai-muted)]'
+                            ? 'border-[var(--ai-primary)] bg-[var(--ai-primary-20)] text-[var(--ai-text)] font-bold'
+                            : 'border-[var(--ai-border-subtle)] bg-black/20 text-zinc-700 dark:text-[var(--ai-muted)]'
                         }`}
                       >
                         {label}
@@ -202,14 +202,14 @@ export function Home() {
                 {/* Retrieved Chunks Preview */}
                 {activeStep >= 3 && (
                   <div className="p-3 rounded-xl bg-[var(--ai-bg)] border border-[var(--ai-border-subtle)] space-y-2 text-[10px]">
-                    <span className="text-[var(--ai-cyan)] font-bold uppercase tracking-wider block">
+                    <span className="text-[var(--ai-cyan-text)] font-bold uppercase tracking-wider block">
                       Retrieved Context ({selectedQuery.chunks.length} chunks)
                     </span>
                     {selectedQuery.chunks.map((c, i) => (
                       <div key={i} className="p-2 rounded border border-white/5 bg-white/[0.02] space-y-1">
                         <div className="flex justify-between text-[9px] text-[var(--ai-muted)]">
                           <span>{c.source}</span>
-                          <span className="text-emerald-400 font-bold">Cosine: {c.score}</span>
+                          <span className="text-emerald-700 dark:text-emerald-400 font-bold">Cosine: {c.score}</span>
                         </div>
                         <p className="text-[var(--ai-muted)] leading-relaxed">{c.text}</p>
                       </div>
@@ -220,10 +220,10 @@ export function Home() {
                 {/* LLM Synthesis Output */}
                 {activeStep === 4 && (
                   <div className="p-4 rounded-xl border border-emerald-500/40 bg-emerald-500/10 space-y-2">
-                    <span className="text-emerald-400 font-bold uppercase text-[9px] tracking-wider block">
+                    <span className="text-emerald-700 dark:text-emerald-400 font-bold uppercase text-[9px] tracking-wider block">
                       ✓ Grounded LLM Response (Zero Hallucination)
                     </span>
-                    <p className="text-[11px] text-emerald-200 leading-relaxed font-sans">
+                    <p className="text-[11px] text-emerald-700 dark:text-emerald-200 leading-relaxed font-sans">
                       {selectedQuery.answer}
                     </p>
                   </div>
@@ -248,7 +248,7 @@ export function Home() {
       <section className="max-w-7xl mx-auto px-6 space-y-8">
         <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
           <div>
-            <span className="text-xs font-mono text-[var(--ai-primary)] uppercase tracking-wider">Live Simulators</span>
+            <span className="text-xs font-mono text-[var(--ai-primary-text)] uppercase tracking-wider">Live Simulators</span>
             <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ai-text)]">
               Explore Interactive AI Simulators
             </h2>
@@ -260,10 +260,10 @@ export function Home() {
             href="/aicosmos/nn-lab"
             className="ai-card p-6 rounded-2xl space-y-4 group block"
           >
-            <div className="w-10 h-10 rounded-xl bg-[var(--ai-primary)]/10 border border-[var(--ai-primary)]/30 flex items-center justify-center text-[var(--ai-primary)] group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-[var(--ai-primary-10)] border border-[var(--ai-primary-30)] flex items-center justify-center text-[var(--ai-primary-text)] group-hover:scale-105 transition-transform">
               <BrainCircuit className="w-5 h-5" />
             </div>
-            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-[var(--ai-primary)] transition-colors flex items-center justify-between">
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-[var(--ai-primary-text)] transition-colors flex items-center justify-between">
               <span>Neural Net Backprop</span>
               <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
             </h3>
@@ -276,10 +276,10 @@ export function Home() {
             href="/aicosmos/attention-lab"
             className="ai-card p-6 rounded-2xl space-y-4 group block"
           >
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-700 dark:text-cyan-400 group-hover:scale-105 transition-transform">
               <Cpu className="w-5 h-5" />
             </div>
-            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-cyan-400 transition-colors flex items-center justify-between">
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-cyan-700 dark:group-hover:text-cyan-400 transition-colors flex items-center justify-between">
               <span>Transformer Attention</span>
               <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
             </h3>
@@ -292,10 +292,10 @@ export function Home() {
             href="/aicosmos/rag-lab"
             className="ai-card p-6 rounded-2xl space-y-4 group block"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400 group-hover:scale-105 transition-transform">
               <Network className="w-5 h-5" />
             </div>
-            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-emerald-400 transition-colors flex items-center justify-between">
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors flex items-center justify-between">
               <span>Enterprise RAG Lab</span>
               <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
             </h3>
@@ -308,10 +308,10 @@ export function Home() {
             href="/aicosmos/agent-lab"
             className="ai-card p-6 rounded-2xl space-y-4 group block"
           >
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-700 dark:text-amber-400 group-hover:scale-105 transition-transform">
               <Bot className="w-5 h-5" />
             </div>
-            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-amber-400 transition-colors flex items-center justify-between">
+            <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors flex items-center justify-between">
               <span>ReAct Agent Loop</span>
               <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
             </h3>
@@ -325,7 +325,7 @@ export function Home() {
       {/* RAG Triad Evaluation Grid */}
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-primary)] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-primary-text)] uppercase tracking-wider">
             <ShieldCheck className="w-4 h-4" /> Production Quality Assurance
           </div>
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--ai-text)]">
@@ -341,15 +341,15 @@ export function Home() {
           <div className="p-8 rounded-2xl border border-cyan-500/30 bg-[var(--ai-surface)] space-y-6">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--ai-text)]">1. Context Relevance</span>
-              <span className="text-[10px] px-2 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">
+              <span className="text-[10px] px-2 py-1 rounded bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20 font-bold">
                 RETRIEVAL
               </span>
             </div>
-            <p className="text-xs text-[var(--ai-muted)] leading-relaxed font-sans">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
               Measures the precision of the vector retriever: does the retrieved document context contain the necessary facts while eliminating noise?
             </p>
             <div className="p-4 rounded-lg bg-[var(--ai-bg)] space-y-1 text-[10px] text-[var(--ai-muted)] border border-cyan-500/20">
-              <span className="text-cyan-400 font-bold">Target Metric: &gt; 0.90 Relevance</span>
+              <span className="text-cyan-700 dark:text-cyan-400 font-bold">Target Metric: &gt; 0.90 Relevance</span>
               <div>• Evaluated via Cross-Encoder score</div>
             </div>
           </div>
@@ -358,15 +358,15 @@ export function Home() {
           <div className="p-8 rounded-2xl border border-emerald-500/30 bg-[var(--ai-surface)] space-y-6">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--ai-text)]">2. Groundedness</span>
-              <span className="text-[10px] px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+              <span className="text-[10px] px-2 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-bold">
                 NO HALLUCINATION
               </span>
             </div>
-            <p className="text-xs text-[var(--ai-muted)] leading-relaxed font-sans">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
               Verifies that every single atomic claim in the LLM answer is strictly backed by the retrieved context chunks without fabrication.
             </p>
             <div className="p-4 rounded-lg bg-[var(--ai-bg)] space-y-1 text-[10px] text-[var(--ai-muted)] border border-emerald-500/20">
-              <span className="text-emerald-400 font-bold">Target Metric: &gt; 0.98 Grounded</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-bold">Target Metric: &gt; 0.98 Grounded</span>
               <div>• Zero hallucinated claims allowed</div>
             </div>
           </div>
@@ -375,7 +375,7 @@ export function Home() {
           <div className="p-8 rounded-2xl border border-indigo-500/30 bg-[var(--ai-surface)] space-y-6">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--ai-text)]">3. Answer Relevance</span>
-              <span className="text-[10px] px-2 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-bold">
+              <span className="text-[10px] px-2 py-1 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-500/20 font-bold">
                 INTENT MATCH
               </span>
             </div>
@@ -383,7 +383,7 @@ export function Home() {
               Ensures the final response directly satisfies the user original intent without evasion, excessive verbosity, or irrelevant digressions.
             </p>
             <div className="p-4 rounded-lg bg-[var(--ai-bg)] space-y-1 text-[10px] text-[var(--ai-muted)] border border-indigo-500/20">
-              <span className="text-indigo-400 font-bold">Target Metric: &gt; 0.92 Relevance</span>
+              <span className="text-indigo-700 dark:text-indigo-400 font-bold">Target Metric: &gt; 0.92 Relevance</span>
               <div>• Semantic embedding query alignment</div>
             </div>
           </div>
@@ -394,7 +394,7 @@ export function Home() {
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--ai-border-subtle)] pb-6">
           <div>
-            <div className="text-xs font-mono text-[var(--ai-primary)] uppercase tracking-wider">
+            <div className="text-xs font-mono text-[var(--ai-primary-text)] uppercase tracking-wider">
               Architecture Tracks
             </div>
             <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--ai-text)] mt-1">
@@ -403,7 +403,7 @@ export function Home() {
           </div>
           <Link
             href="/aicosmos/learn"
-            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-primary)] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ai-primary-text)] hover:underline"
           >
             View all 5 topics <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -417,13 +417,13 @@ export function Home() {
               className="ai-card p-6 rounded-xl space-y-4 group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--ai-primary)]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--ai-primary-text)]">
                   {topic.kicker}
                 </span>
-                <ArrowUpRight className="w-4 h-4 text-[var(--ai-muted)] group-hover:text-[var(--ai-primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                <ArrowUpRight className="w-4 h-4 text-[var(--ai-muted)] group-hover:text-[var(--ai-primary-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </div>
 
-              <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-[var(--ai-primary)] transition-colors">
+              <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-[var(--ai-primary-text)] transition-colors">
                 {topic.title}
               </h3>
 

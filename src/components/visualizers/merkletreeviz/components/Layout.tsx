@@ -128,7 +128,22 @@ const Navbar = () => {
   );
 };
 
-export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+/**
+ * The footer's copyright year used to be `new Date().getFullYear()` evaluated
+ * during render. The server (build clock) and the browser's first render (the
+ * visitor's clock) can therefore produce different numbers, which is a hydration
+ * mismatch for a day every New Year. The route's server component computes it
+ * once and serialises it into the RSC payload — see
+ * `src/app/merkletreeviz/[[...slug]]/page.tsx` — so both sides render the same
+ * number. The constant is only the fallback for the browser-only standalone
+ * entry (`App.tsx`), which no Next route mounts.
+ */
+const DEFAULT_FOOTER_YEAR = 2025;
+
+export const Layout: React.FC<{ children: React.ReactNode; year?: number }> = ({
+  children,
+  year = DEFAULT_FOOTER_YEAR,
+}) => {
   return (
     <div className="merkletree-theme min-h-screen bg-background text-foreground flex flex-col transition-colors duration-500 font-sans">
       <Navbar />
@@ -137,7 +152,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       </main>
       <footer className="border-t border-muted/20 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-muted text-sm">
-          <p>© {new Date().getFullYear()} MerkleTreeViz. Built for educational purposes.</p>
+          <p>© {year} MerkleTreeViz. Built for educational purposes.</p>
         </div>
       </footer>
     </div>

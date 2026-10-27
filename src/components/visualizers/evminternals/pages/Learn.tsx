@@ -11,7 +11,7 @@ const Learn: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="inline-block p-2.5 rounded-xl bg-evm-accent/10 text-evm-accent mb-5"
+          className="inline-block p-2.5 rounded-xl bg-evm-accent/10 text-evm-accent-text mb-5"
         >
           <Book size={24} />
         </motion.div>
@@ -39,7 +39,7 @@ const Learn: React.FC = () => {
                 className="group flex flex-col md:flex-row items-start gap-4 p-1.5 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all"
               >
                 <div className="hidden md:flex items-center justify-center w-12 h-12 shrink-0 rounded-full bg-white dark:bg-neutral-950 border-2 border-neutral-100 dark:border-neutral-900 z-10 shadow-sm transition-colors">
-                  <span className="text-xs font-bold text-neutral-400 dark:text-neutral-700 group-hover:text-evm-accent transition-colors">
+                  <span className="text-xs font-bold text-neutral-400 dark:text-neutral-700 group-hover:text-evm-accent-text transition-colors">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
@@ -47,7 +47,7 @@ const Learn: React.FC = () => {
                 <div className="flex-1 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-5 rounded-xl group-hover:border-neutral-300 dark:group-hover:border-neutral-700 transition-all flex items-center justify-between">
                   <div className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2.5">
-                       <h3 className="text-base font-bold text-neutral-900 dark:text-white group-hover:text-evm-accent transition-colors">{topic.title}</h3>
+                       <h3 className="text-base font-bold text-neutral-900 dark:text-white group-hover:text-evm-accent-text transition-colors">{topic.title}</h3>
                        {topic.bytecode && (
                          <span className="px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[9px] font-semibold uppercase tracking-wider">Interactive</span>
                        )}

@@ -8,16 +8,11 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Server, Search, Cpu } from 'lucide-react';
 import { cn } from "@/lib/utils";
+import { keyHashSlot } from "@/components/visualizers/redisviz/lib/hashSlot";
 
-// CRC16 simulation
-const getHashSlot = (key: string) => {
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-        hash = (hash << 5) - hash + key.charCodeAt(i);
-        hash |= 0;
-    }
-    return Math.abs(hash % 16384);
-};
+// Slots come from the real Redis algorithm — CRC16(key) % 16384, with `{hash
+// tags}` honoured — so the number shown here matches `CLUSTER KEYSLOT <key>`
+// and the lesson below it. Implementation + reference vectors: lib/hashSlot.ts.
 
 const ClusterSimulator = () => {
     const [nodes] = useState([
@@ -28,7 +23,7 @@ const ClusterSimulator = () => {
     const [searchKey, setSearchKey] = useState("user:42");
     const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
 
-    const currentSlot = useMemo(() => getHashSlot(searchKey), [searchKey]);
+    const currentSlot = useMemo(() => keyHashSlot(searchKey), [searchKey]);
 
     const targetNode = useMemo(() => {
         return nodes.find(n => currentSlot >= n.slots[0] && currentSlot <= n.slots[1]);
@@ -78,9 +73,13 @@ const ClusterSimulator = () => {
                                         key={node.id}
                                         className={cn(
                                             "h-full flex items-center justify-center text-[10px] font-bold border-r border-border last:border-0 transition-all",
-                                            i === 0 ? "bg-blue-500/10 text-blue-500" :
-                                                i === 1 ? "bg-purple-500/10 text-purple-500" :
-                                                    "bg-amber-500/10 text-amber-500",
+                                            // Same hue as the node tiles below, but the text shade is
+                                            // per-theme: -500 is the *fill* shade and only clears AA on
+                                            // the dark track (light mode: blue 3.20, purple 3.41, amber
+                                            // 1.94:1). Same remedy as pages/Cluster.tsx's amber callout.
+                                            i === 0 ? "bg-blue-500/10 text-blue-700 dark:text-blue-400" :
+                                                i === 1 ? "bg-purple-500/10 text-purple-700 dark:text-purple-400" :
+                                                    "bg-amber-500/10 text-amber-700 dark:text-amber-400",
                                             targetNode?.id === node.id ? "opacity-100 ring-2 ring-inset ring-redis/50" : "opacity-50"
                                         )}
                                         style={{ width: `${(node.slots[1] - node.slots[0]) / 163.83}%` }}

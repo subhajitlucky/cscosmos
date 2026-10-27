@@ -76,7 +76,7 @@ export function FormHandlingVisualizer() {
             </div>
             <motion.div 
               animate={{ 
-                borderColor: status === 'processing' ? 'var(--emerald-500)' : 'rgba(0,0,0,0.1)',
+                borderColor: status === 'processing' ? '#10b981' : 'rgba(148, 163, 184, 0.4)',
                 scale: status === 'processing' ? 1.02 : 1
               }}
               className="w-full max-w-[280px] p-6 rounded-[2rem] border-2 bg-background shadow-2xl flex flex-col gap-4 relative overflow-hidden"
@@ -120,7 +120,7 @@ export function FormHandlingVisualizer() {
             <motion.div 
               initial={{ left: '30%', top: '50%' }}
               animate={{ left: '60%' }}
-              className="absolute z-30 p-2 bg-primary text-white rounded-lg shadow-2xl flex items-center gap-2"
+              className="absolute z-30 p-2 bg-primary text-primary-foreground rounded-lg shadow-2xl flex items-center gap-2"
             >
                <Send className="h-3 w-3" />
                <span className="text-[8px] font-black uppercase">FormData</span>

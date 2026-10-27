@@ -48,6 +48,9 @@ const Playground = () => {
             <div className="flex items-center gap-2 text-xs font-black text-foreground uppercase tracking-[0.2em]">
                 <Box className="w-4 h-4 text-cyan-400" /> React 19 Interactive Lab
             </div>
+            {/* This page previously had no heading element (the only h1 in the
+                file is inside the DEFAULT_CODE sample string). */}
+            <h1 className="sr-only">React 19 Interactive Playground</h1>
             <div className="h-4 w-px bg-border" />
             <span className="text-xs text-foreground font-mono bg-muted px-2.5 py-1 rounded border border-border">Counter.jsx</span>
           </div>

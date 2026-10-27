@@ -59,7 +59,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
-              <Link href="/topics" className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+              <Link href="/topics" aria-label="Back to all topics" className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
                 <ArrowLeft className="w-3.5 h-3.5" />
               </Link>
             </div>

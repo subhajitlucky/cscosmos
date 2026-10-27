@@ -106,7 +106,7 @@ async function handlePaymentEvent(event) {
     definition: 'Instead of deleting messages upon read, systems like Apache Kafka and Redpanda store events in an immutable, append-only commit log on disk. Topics are split into multiple partitions for horizontal scaling.',
     analogy: 'An immutable courtroom transcript ledger: stenographers only append new lines to the end of the page. Readers can reread past testimony at any speed simply by remembering their bookmark page number.',
     steps: [
-      'Producer hashes message key: Partition = MurmurHash(key) % numPartitions',
+      'Producer hashes message key: Partition = toPositive(MurmurHash2(key)) % numPartitions',
       'Broker appends record to the end of partition segment file on disk',
       'Operating system buffers write in memory via Kernel PageCache',
       'Zero-Copy (sendfile system call) streams bytes directly from disk cache to network socket',

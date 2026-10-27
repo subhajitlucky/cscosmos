@@ -13,12 +13,16 @@ interface DependencyNode {
   color: string;
 }
 
+// `text-*-300` is only legible on the dark surface; on the 10% tints over the
+// near-white light surface it measures 1.3-1.7:1, so each node carries a
+// light-mode shade and keeps the original -300 under `dark:`. amber needs -800
+// (amber-700 on its own 10% tint is 4.46:1, just under AA).
 const NODES: DependencyNode[] = [
-  { id: 'db', name: 'get_db_session()', type: 'generator', dependsOn: [], output: 'AsyncSession (Pool Conn)', teardown: 'await session.close()', color: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300' },
-  { id: 'token', name: 'oauth2_scheme()', type: 'function', dependsOn: [], output: 'Bearer eyJhbGciOi...', color: 'border-sky-500/40 bg-sky-500/10 text-sky-300' },
-  { id: 'user', name: 'get_current_user()', type: 'function', dependsOn: ['db', 'token'], output: 'User(id=42, role="admin")', color: 'border-purple-500/40 bg-purple-500/10 text-purple-300' },
-  { id: 'admin', name: 'require_admin_role()', type: 'function', dependsOn: ['user'], output: 'Authorized: True', color: 'border-amber-500/40 bg-amber-500/10 text-amber-300' },
-  { id: 'endpoint', name: 'POST /api/v1/admin/users', type: 'function', dependsOn: ['db', 'admin'], output: 'HTTP 200 OK Response', color: 'border-teal-500/40 bg-teal-500/10 text-teal-300' },
+  { id: 'db', name: 'get_db_session()', type: 'generator', dependsOn: [], output: 'AsyncSession (Pool Conn)', teardown: 'await session.close()', color: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' },
+  { id: 'token', name: 'oauth2_scheme()', type: 'function', dependsOn: [], output: 'Bearer eyJhbGciOi...', color: 'border-sky-500/40 bg-sky-500/10 text-sky-700 dark:text-sky-300' },
+  { id: 'user', name: 'get_current_user()', type: 'function', dependsOn: ['db', 'token'], output: 'User(id=42, role="admin")', color: 'border-purple-500/40 bg-purple-500/10 text-purple-700 dark:text-purple-300' },
+  { id: 'admin', name: 'require_admin_role()', type: 'function', dependsOn: ['user'], output: 'Authorized: True', color: 'border-amber-500/40 bg-amber-500/10 text-amber-800 dark:text-amber-300' },
+  { id: 'endpoint', name: 'POST /api/v1/admin/users', type: 'function', dependsOn: ['db', 'admin'], output: 'HTTP 200 OK Response', color: 'border-teal-500/40 bg-teal-500/10 text-teal-700 dark:text-teal-300' },
 ];
 
 export function DiGraph() {
@@ -71,11 +75,11 @@ export function DiGraph() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--fastapi-teal)]/30 bg-[var(--fastapi-teal)]/10 text-[var(--fastapi-teal)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--fastapi-teal-30)] bg-[var(--fastapi-teal-10)] text-[var(--fastapi-teal-text)] text-xs font-mono">
           <GitFork className="w-3.5 h-3.5" /> Directed Acyclic Graph (DAG) Resolver
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--fastapi-text)]">
-          Dependency Injection <span className="text-[var(--fastapi-teal)] fastapi-glow">&amp; Yield Teardown</span>
+          Dependency Injection <span className="text-[var(--fastapi-teal-text)] fastapi-glow">&amp; Yield Teardown</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--fastapi-muted)] max-w-2xl leading-relaxed">
           Trace how FastAPI computes topological sort dependency trees, memoizes sub-dependency calls with <code>use_cache=True</code>, and guarantees context teardowns.
@@ -87,18 +91,24 @@ export function DiGraph() {
         {/* Left DAG Tree Visualizer */}
         <div className="lg:col-span-7 rounded-2xl border border-[var(--fastapi-border)] bg-[var(--fastapi-surface)] p-6 space-y-6 shadow-xl">
           <div className="flex items-center justify-between border-b border-[var(--fastapi-border-subtle)] pb-4">
-            <span className="text-[var(--fastapi-teal)] uppercase tracking-wider font-bold flex items-center gap-2">
+            <span className="text-[var(--fastapi-teal-text)] uppercase tracking-wider font-bold flex items-center gap-2">
               <GitFork className="w-3.5 h-3.5" /> Dependency Resolution Graph
             </span>
             <button
               onClick={resetAll}
-              className="text-[10px] text-[var(--fastapi-muted)] hover:text-[var(--fastapi-teal)] flex items-center gap-1"
+              className="text-[10px] text-[var(--fastapi-muted)] hover:text-[var(--fastapi-teal-text)] flex items-center gap-1"
             >
               <RotateCcw className="w-3 h-3" /> Reset
             </button>
           </div>
 
-          {/* Hierarchical Node Flow */}
+          {/* Hierarchical Node Flow. Pending vs resolved is carried by border
+              STYLE, never by card-wide `opacity`: the lab loads in the pending
+              state, and at opacity-50 these labels composite to 3.21-3.29:1
+              (names) and 2.05-2.36:1 (status) in light mode, while the old
+              resolved state (opacity-90) still left emerald/teal/sky status
+              text at 4.15-4.44:1 - below AA, and unfixable by any colour choice.
+              Dashed = pending, solid = resolved; both keep full contrast. */}
           <div className="space-y-3">
             {NODES.map((node, idx) => {
               const isCurrent = activeNodeIdx === idx;
@@ -110,13 +120,13 @@ export function DiGraph() {
                     isCurrent
                       ? 'ring-2 ring-[var(--fastapi-teal)] shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-[1.01]'
                       : isResolved
-                      ? 'opacity-90'
-                      : 'opacity-50'
+                      ? 'border-solid'
+                      : 'border-dashed'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <span className="px-1.5 py-0.5 rounded bg-black/40 text-[9px] font-bold">
+                      <span className="px-1.5 py-0.5 rounded bg-black/40 text-[9px] font-bold text-[var(--fastapi-text)] dark:text-inherit">
                         {node.type.toUpperCase()}
                       </span>
                       <span className="font-bold text-sm text-[var(--fastapi-text)]">{node.name}</span>
@@ -134,9 +144,9 @@ export function DiGraph() {
                   </div>
 
                   <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-[10px]">
-                    <span>Injected: <code className="text-white">{node.output}</code></span>
+                    <span>Injected: <code className="text-[var(--fastapi-text)]">{node.output}</code></span>
                     {node.teardown && (
-                      <span className="text-amber-300">Teardown: {node.teardown}</span>
+                      <span className="text-amber-800 dark:text-amber-300">Teardown: {node.teardown}</span>
                     )}
                   </div>
                 </div>
@@ -146,7 +156,7 @@ export function DiGraph() {
 
           <button
             onClick={runResolution}
-            className="w-full py-3 rounded-lg bg-[var(--fastapi-primary)] text-white font-bold hover:bg-[var(--fastapi-primary-hover)] transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-lg bg-[var(--fastapi-primary-solid)] text-[var(--fastapi-on-accent)] font-bold hover:bg-[var(--fastapi-primary-solid-hover)] transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
           >
             <Play className="w-3.5 h-3.5 fill-white" /> Resolve Dependency Tree
           </button>
@@ -157,17 +167,17 @@ export function DiGraph() {
           {/* Memoization Cache Box */}
           <div className="p-6 rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] space-y-4">
             <div className="flex items-center justify-between border-b border-[var(--fastapi-border-subtle)] pb-3">
-              <span className="text-[var(--fastapi-teal)] uppercase tracking-wider font-bold">
+              <span className="text-[var(--fastapi-teal-text)] uppercase tracking-wider font-bold">
                 Dependency Cache (use_cache=True)
               </span>
-              <span className="text-[10px] text-emerald-400 font-bold">O(1) REUSE</span>
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">O(1) REUSE</span>
             </div>
 
             <div className="space-y-2 text-[11px]">
               {Object.keys(memoizedCache).map((nodeId) => (
                 <div key={nodeId} className="p-2 rounded bg-[var(--fastapi-bg)] border border-[var(--fastapi-border-subtle)] flex items-center justify-between">
                   <span className="text-[var(--fastapi-muted)]">{nodeId}()</span>
-                  <span className="text-emerald-400 font-bold">Cached (1 lookup)</span>
+                  <span className="text-emerald-700 dark:text-emerald-400 font-bold">Cached (1 lookup)</span>
                 </div>
               ))}
               {Object.keys(memoizedCache).length === 0 && (

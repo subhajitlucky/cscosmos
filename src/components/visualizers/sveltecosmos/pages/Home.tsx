@@ -21,7 +21,7 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--svelte-primary)]/30 bg-[var(--svelte-primary)]/10 text-[var(--svelte-primary)] text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--svelte-primary-30)] bg-[var(--svelte-primary-10)] text-[var(--svelte-primary)] text-xs font-mono">
               <Sparkles className="w-3.5 h-3.5 animate-spin text-[var(--svelte-primary)]" />
               Svelte 5 Runes & Signals Compiler
             </div>
@@ -163,7 +163,7 @@ export function Home() {
                   </div>
 
                   {/* Derived Result Output Banner */}
-                  <div className="p-3 rounded-lg border border-[var(--svelte-mint)]/30 bg-[var(--svelte-mint)]/10 flex items-center justify-between">
+                  <div className="p-3 rounded-lg border border-[var(--svelte-mint-30)] bg-[var(--svelte-mint-10)] flex items-center justify-between">
                     <span className="text-xs font-mono text-[var(--svelte-mint)] flex items-center gap-1.5">
                       <Zap className="w-3.5 h-3.5" /> $derived(count × multiplier):
                     </span>
@@ -214,17 +214,17 @@ export function Home() {
           </div>
 
           {/* Svelte Compiler card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--svelte-primary)]/40 bg-[var(--svelte-surface)] space-y-6 shadow-[0_0_30px_rgba(255,62,0,0.1)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--svelte-primary-40)] bg-[var(--svelte-surface)] space-y-6 shadow-[0_0_30px_rgba(255,62,0,0.1)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--svelte-text)]">Svelte 5 Signals Engine</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--svelte-primary)]/10 text-[var(--svelte-primary)] border border-[var(--svelte-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--svelte-primary-10)] text-[var(--svelte-primary)] border border-[var(--svelte-primary-30)] font-bold">
                 Zero VDOM
               </span>
             </div>
             <p className="text-xs text-[var(--svelte-muted)] leading-relaxed">
               The Svelte compiler transforms templates into pinpoint DOM updates at build time. When state changes, only the exact text node pointer is updated directly.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--svelte-bg)] font-mono text-[11px] text-[var(--svelte-muted)] space-y-2 border border-[var(--svelte-primary)]/20">
+            <div className="p-4 rounded-lg bg-[var(--svelte-bg)] font-mono text-[11px] text-[var(--svelte-muted)] space-y-2 border border-[var(--svelte-primary-20)]">
               <div>1. State mutation: <span className="text-[var(--svelte-primary)]">count.set(4)</span></div>
               <div>2. Signal notifies exact consumer effect</div>
               <div className="text-[var(--svelte-mint)]">3. Direct mutate: count_text_node.data = 4</div>

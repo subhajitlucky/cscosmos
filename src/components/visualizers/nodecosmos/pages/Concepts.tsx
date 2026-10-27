@@ -20,7 +20,7 @@ export default function Concepts() {
           Node.js &amp; Libuv Architecture Concepts
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base">
-          20 in-depth architectural topics from the 6-phase Libuv event loop to streams backpressure and V8 memory slabs.
+          {NODE_TOPICS.length} in-depth architectural topics from the 6-phase Libuv event loop to streams backpressure and V8 memory slabs.
         </p>
       </div>
 

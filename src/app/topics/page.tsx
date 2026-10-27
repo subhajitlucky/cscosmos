@@ -23,7 +23,7 @@ export default function AllTopicsPage() {
             const matchesDomain =
                 selectedDomain === allOption ||
                 topic.domain === selectedDomain ||
-                topic.aliases?.includes(selectedDomain);
+                topic.crossListedDomains?.includes(selectedDomain);
             const matchesQuery =
                 topic.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 topic.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -123,10 +123,10 @@ export default function AllTopicsPage() {
                             const matchedViaAlias =
                                 selectedDomain !== allOption &&
                                 topic.domain !== selectedDomain &&
-                                Boolean(topic.aliases?.includes(selectedDomain));
+                                Boolean(topic.crossListedDomains?.includes(selectedDomain));
                             return (
                                 <TopicCard
-                                    key={topic.id}
+                                    key={topic.catalogId}
                                     topic={topic}
                                     alsoInDomain={
                                         matchedViaAlias

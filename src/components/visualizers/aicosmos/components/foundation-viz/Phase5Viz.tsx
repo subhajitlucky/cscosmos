@@ -120,12 +120,12 @@ export function FirstTinyPipelineWidget() {
           <div className="space-y-3">
             <div className="flex items-center justify-between border-b border-border/60 pb-2">
               <span className="text-[10px] text-muted-foreground uppercase font-bold">Stage 4: Non-Linear Sigmoid &sigma;(z) Output</span>
-              <span className={`px-2.5 py-0.5 rounded font-bold ${isPositive ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-500 border border-rose-500/30'}`}>
+              <span className={`px-2.5 py-0.5 rounded font-bold ${isPositive ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/30'}`}>
                 {isPositive ? 'SENTIMENT: POSITIVE' : 'SENTIMENT: NEGATIVE'}
               </span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-muted-foreground">Class Confidence:</span>
+              <span className="text-zinc-600 dark:text-zinc-400">Class Confidence:</span>
               <span className="text-foreground font-bold">{(probability * 100).toFixed(1)}%</span>
             </div>
             <div className="h-2 w-full rounded bg-secondary overflow-hidden">
@@ -221,7 +221,7 @@ export function PipelineCapstoneWidget() {
               {probability >= 0.5 ? 'VALIDATED // HIGH CONFIDENCE' : 'REJECTED // LOW CONFIDENCE'}
             </div>
           </div>
-          <span className="text-lg font-bold text-emerald-500 font-mono">
+          <span className="text-lg font-bold text-emerald-700 dark:text-emerald-500 font-mono">
             {(probability * 100).toFixed(1)}% Score
           </span>
         </div>
@@ -241,7 +241,7 @@ export function PipelineCapstoneWidget() {
           </div>
           <div className="p-3 rounded-lg border border-border/60 bg-secondary/40 space-y-0.5">
             <span className="text-[10px] text-muted-foreground">Execution Latency</span>
-            <div className="text-base font-bold text-emerald-500">{simulatedLatencyMs} ms</div>
+            <div className="text-base font-bold text-emerald-700 dark:text-emerald-500">{simulatedLatencyMs} ms</div>
           </div>
         </div>
       </div>

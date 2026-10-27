@@ -2,7 +2,7 @@ import { useParams, Link } from '@/components/visualizers/shared/RouterShim'
 import { topics } from "../data/topics"
 import { ArrowLeft, CheckCircle2, Code2, Sparkles, BookOpen, Layers, Lightbulb, Database, Zap, Lock } from "lucide-react"
 import { CodeEditor } from "../components/editor/CodeEditor"
-import { getVisualizerForTopic } from "../components/visualizer/TopicVisualizerRegistry"
+import { getVisualizerForTopic } from "../components/visualizer/TopicVisualizerMap"
 
 export function TopicPage() {
     const { topicId } = useParams()

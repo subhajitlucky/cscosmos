@@ -44,7 +44,7 @@ const WhyBlockchainStateVisualizer: React.FC = () => {
           
           <button 
             onClick={() => { setShowSolution(true); setIsExploding(false); }}
-            className="px-6 py-3 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-primary/25 active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+            className="px-6 py-3 bg-primary text-primary-foreground rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-primary/25 active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
           >
             <Shield size={16} />
             Apply Trie Solution
@@ -121,7 +121,7 @@ const WhyBlockchainStateVisualizer: React.FC = () => {
              In a flat database, verifying the entire state requires reading every single entry. As users grow, the time to reach consensus explodes.
            </p>
         </div>
-        <div className="p-6 bg-primary text-white rounded-[32px] shadow-xl shadow-primary/20">
+        <div className="p-6 bg-primary text-primary-foreground rounded-[32px] shadow-xl shadow-primary/20">
            <h4 className="text-xs font-black opacity-60 uppercase tracking-widest mb-4 text-white">The Trie Solution</h4>
            <p className="text-sm leading-relaxed font-medium">
              The Merkle Patricia Trie creates a structural dependency between all data points, allowing us to represent the global state with a single hash.

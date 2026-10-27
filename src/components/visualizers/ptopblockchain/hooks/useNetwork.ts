@@ -9,13 +9,20 @@ export const useNetwork = (initialState: NetworkState) => {
   const [speed, setSpeedState] = useState(1);
   const [isPaused, setIsPausedState] = useState(false);
   const managerRef = useRef<NetworkManager | null>(null);
+  // The manager is created in an effect, not while rendering. Its constructor
+  // appends a "Network initialized" log stamped with `Date.now()`, which the
+  // playground renders — so building it during render put the build machine's
+  // clock into the pre-rendered HTML and guaranteed a hydration mismatch. The
+  // first render is driven by `initialState` either way.
+  const initialStateRef = useRef(initialState);
 
-  if (managerRef.current == null) {
-    managerRef.current = new NetworkManager(initialState, (s: NetworkState, l: NetworkLog[]) => {
+  useEffect(() => {
+    if (managerRef.current) return;
+    managerRef.current = new NetworkManager(initialStateRef.current, (s: NetworkState, l: NetworkLog[]) => {
       setState(s);
       setLogs(l);
     });
-  }
+  }, []);
 
   const addNode = useCallback((node: Node) => {
     managerRef.current?.addNode(node);

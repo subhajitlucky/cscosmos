@@ -49,7 +49,7 @@ const Home = () => {
         >
           <Link 
             href="/webprotocols/path" 
-            className="bg-primary text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+            className="bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-bold text-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
           >
             Start Learning <ArrowRight size={20} />
           </Link>

@@ -31,12 +31,12 @@ export function Learn() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
       {/* Header */}
       <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--fastapi-teal)]/30 bg-[var(--fastapi-teal)]/10 text-[var(--fastapi-teal)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--fastapi-teal-30)] bg-[var(--fastapi-teal-10)] text-[var(--fastapi-teal-text)] text-xs font-mono">
           <BookOpen className="w-3.5 h-3.5" /> Python Backend Architecture Curriculum
         </div>
 
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--fastapi-text)]">
-          The FastAPI <span className="text-[var(--fastapi-teal)] fastapi-glow">Architecture Map</span>
+          The FastAPI <span className="text-[var(--fastapi-teal-text)] fastapi-glow">Architecture Map</span>
         </h1>
 
         <p className="text-sm md:text-base text-[var(--fastapi-muted)] max-w-2xl leading-relaxed">
@@ -61,7 +61,7 @@ export function Learn() {
               onClick={() => setSelectedGroup('all')}
               className={`px-3 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-colors ${
                 selectedGroup === 'all'
-                  ? 'bg-[var(--fastapi-primary)] text-white font-semibold'
+                  ? 'bg-[var(--fastapi-primary-solid)] text-[var(--fastapi-on-accent)] font-semibold'
                   : 'border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] text-[var(--fastapi-muted)] hover:text-[var(--fastapi-text)]'
               }`}
             >
@@ -73,7 +73,7 @@ export function Learn() {
                 onClick={() => setSelectedGroup(g.id)}
                 className={`px-3 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-colors ${
                   selectedGroup === g.id
-                    ? 'bg-[var(--fastapi-primary)] text-white font-semibold'
+                    ? 'bg-[var(--fastapi-primary-solid)] text-[var(--fastapi-on-accent)] font-semibold'
                     : 'border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] text-[var(--fastapi-muted)] hover:text-[var(--fastapi-text)]'
                 }`}
               >
@@ -91,7 +91,7 @@ export function Learn() {
             <div className="flex items-center justify-between border-b border-[var(--fastapi-border-subtle)] pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs font-bold text-[var(--fastapi-teal)]">
+                  <span className="font-mono text-xs font-bold text-[var(--fastapi-teal-text)]">
                     TRACK_0{groupIdx + 1}
                   </span>
                   <h2 className="font-display text-2xl font-bold text-[var(--fastapi-text)]">
@@ -117,13 +117,13 @@ export function Learn() {
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-[var(--fastapi-teal)]">
+                      <span className="text-[10px] font-mono text-[var(--fastapi-teal-text)]">
                         {topic.kicker}
                       </span>
-                      <ArrowUpRight className="w-4 h-4 text-[var(--fastapi-muted)] group-hover:text-[var(--fastapi-teal)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      <ArrowUpRight className="w-4 h-4 text-[var(--fastapi-muted)] group-hover:text-[var(--fastapi-teal-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                     </div>
 
-                    <h3 className="font-display font-bold text-lg text-[var(--fastapi-text)] group-hover:text-[var(--fastapi-teal)] transition-colors">
+                    <h3 className="font-display font-bold text-lg text-[var(--fastapi-text)] group-hover:text-[var(--fastapi-teal-text)] transition-colors">
                       {topic.title}
                     </h3>
 
@@ -136,7 +136,7 @@ export function Learn() {
                     <span className="text-[10px] font-mono text-[var(--fastapi-muted)]">
                       {topic.difficulty}
                     </span>
-                    <span className="text-[10px] font-mono text-[var(--fastapi-teal)] flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-[var(--fastapi-teal-text)] flex items-center gap-1">
                       Deep dive <ArrowUpRight className="w-3 h-3" />
                     </span>
                   </div>

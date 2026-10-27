@@ -2,7 +2,6 @@
 
 import React, { useMemo, useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { problems, type Problem, type ProblemDifficulty } from "../data/problems";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,18 +10,24 @@ import { cn } from "@/lib/utils";
 const difficulties: ProblemDifficulty[] = ["Easy", "Medium", "Hard"];
 
 function ProblemsContent() {
-    const searchParams = useSearchParams();
-    const initialConcept = searchParams?.get("concept") || "";
-    const [search, setSearch] = useState(initialConcept);
+    // Read the deep-link filter AFTER mount, not during render. Calling
+    // useSearchParams() during render makes Next.js bail out of static generation
+    // for this route and ship the Suspense fallback in place of the page —
+    // /tsviz/problems pre-rendered as a bare "Loading..." with none of the 50
+    // problems in the HTML. Reading window.location.search in an effect keeps the
+    // page statically rendered while the ?concept= deep link still applies on
+    // hydration.
+    const [search, setSearch] = useState("");
     const [difficulty, setDifficulty] = useState<ProblemDifficulty | "All">("All");
-    const [conceptFilter, setConceptFilter] = useState(initialConcept);
+    const [conceptFilter, setConceptFilter] = useState("");
 
     useEffect(() => {
+        const initialConcept = new URLSearchParams(window.location.search).get("concept") || "";
         if (initialConcept) {
             setConceptFilter(initialConcept);
             setSearch(initialConcept);
         }
-    }, [initialConcept]);
+    }, []);
 
     const filtered = useMemo(() => {
         const term = search.toLowerCase().trim();

@@ -28,7 +28,7 @@ const Problem = ({ problemId: propProblemId }) => {
     }, [problem]);
 
     if (!problem) {
-        return <div className="p-20 text-center text-white font-mono">ERROR: PROBLEM_NOT_FOUND</div>;
+        return <div className="p-20 text-center text-[var(--text-main)] font-mono">ERROR: PROBLEM_NOT_FOUND</div>;
     }
 
     const runTests = (userCode) => {
@@ -88,19 +88,22 @@ const Problem = ({ problemId: propProblemId }) => {
             <div className="border-b border-brand-border bg-brand-black px-4 py-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                        <Link href="/jsviz/practice" className="text-gray-400 hover:text-white p-1 rounded transition-colors">
+                        <Link href="/jsviz/practice" className="text-[var(--text-muted)] hover:text-[var(--text-main)] p-1 rounded transition-colors">
                             <ArrowLeft size={20} />
                         </Link>
                         <div>
                             <span className="text-xs font-mono text-brand-lime uppercase tracking-widest">
                                 PRACTICE_CHALLENGE // {problem.difficulty}
                             </span>
-                            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">{problem.title}</h1>
+                            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-main)]">{problem.title}</h1>
                         </div>
                     </div>
 
                     {allPassed && (
-                        <div className="flex items-center space-x-2 text-brand-lime font-bold text-sm bg-brand-lime/10 px-3 py-1 border border-brand-lime">
+                        // Tint/border use the engine's accent tokens. The previous
+                        // "bg-brand-lime/10" emitted no CSS and "border-brand-lime" is not
+                        // defined anywhere, so both classes were dead.
+                        <div className="flex items-center space-x-2 text-brand-lime font-bold text-sm bg-[rgba(var(--accent-main-rgb),0.1)] px-3 py-1 border border-[color:var(--accent-main)]">
                             <CheckSquare size={16} />
                             <span>PASSED</span>
                         </div>
@@ -113,7 +116,7 @@ const Problem = ({ problemId: propProblemId }) => {
                 {/* Left: Problem Details & Test Output */}
                 <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
                     <div className="neo-card p-6" style={{ backgroundColor: 'var(--bg-surface)' }}>
-                        <h3 className="text-sm font-mono text-gray-500 uppercase tracking-widest mb-2">Description</h3>
+                        <h3 className="text-sm font-mono text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-2">Description</h3>
                         <p className="font-mono text-sm leading-relaxed" style={{ color: 'var(--text-main)' }}>
                             {problem.description}
                         </p>
@@ -130,15 +133,15 @@ const Problem = ({ problemId: propProblemId }) => {
                                 {testResults.map((res, i) => (
                                     <div
                                         key={i}
-                                        className={`p-3 border ${res.passed ? 'border-green-500/30 bg-green-500/10 text-green-400' : 'border-red-500/30 bg-red-500/10 text-red-400'}`}
+                                        className={`p-3 border ${res.passed ? 'border-green-500/30 bg-green-500/10 text-green-800 dark:text-green-400' : 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300'}`}
                                     >
                                         <div className="flex items-center justify-between font-bold mb-1">
                                             <span>TEST_CASE #{i + 1}</span>
                                             <span>{res.passed ? 'PASSED' : 'FAILED'}</span>
                                         </div>
-                                        <div>Input: <span className="text-gray-300">{res.input}</span></div>
-                                        <div>Expected: <span className="text-gray-300">{res.expected}</span></div>
-                                        <div>Output: <span className="text-gray-300">{res.actual}</span></div>
+                                        <div>Input: <span className="text-gray-600 dark:text-gray-300">{res.input}</span></div>
+                                        <div>Expected: <span className="text-gray-600 dark:text-gray-300">{res.expected}</span></div>
+                                        <div>Output: <span className="text-gray-600 dark:text-gray-300">{res.actual}</span></div>
                                     </div>
                                 ))}
                             </div>

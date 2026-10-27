@@ -78,7 +78,7 @@ export function EngineMatrix() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--cp-sky)]/30 bg-[var(--cp-sky)]/10 text-[var(--cp-sky)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--cp-sky-30)] bg-[var(--cp-sky-10)] text-[var(--cp-sky)] text-xs font-mono">
           <Table className="w-3.5 h-3.5" /> Comprehensive Architecture Matrix
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--cp-text)]">
@@ -110,7 +110,7 @@ export function EngineMatrix() {
                   <tr
                     key={idx}
                     className={`transition-colors ${
-                      isFeatured ? 'bg-[var(--cp-primary)]/5 hover:bg-[var(--cp-primary)]/10' : 'hover:bg-[var(--cp-surface-2)]'
+                      isFeatured ? 'bg-[var(--cp-primary-5)] hover:bg-[var(--cp-primary-10)]' : 'hover:bg-[var(--cp-surface-2)]'
                     }`}
                   >
                     <td className="p-4 font-bold text-[var(--cp-text)] space-y-1">

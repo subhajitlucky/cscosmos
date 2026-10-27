@@ -16,7 +16,22 @@
   --ms-border-subtle: rgba(255, 255, 255, 0.08);
   --ms-text: #f8fafc;
   --ms-muted: #8e98b0;
-  
+
+  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity
+     modifier to an arbitrary var() colour: `bg-[var(--ms-primary)]/10` is not
+     a valid v3 utility and emits no CSS at all (verified against tailwindcss
+     3.4.19). These real custom properties are the supported way to get the
+     same tint. Values are the base token's RGB at the requested alpha. */
+  --ms-primary-10: rgba(139, 92, 246, 0.1);
+  --ms-primary-20: rgba(139, 92, 246, 0.2);
+  --ms-primary-30: rgba(139, 92, 246, 0.3);
+  --ms-primary-40: rgba(139, 92, 246, 0.4);
+  --ms-rose-10: rgba(244, 63, 94, 0.1);
+  --ms-rose-30: rgba(244, 63, 94, 0.3);
+  --ms-amber-10: rgba(245, 158, 11, 0.1);
+  --ms-amber-30: rgba(245, 158, 11, 0.3);
+  --ms-bg-80: rgba(7, 9, 19, 0.8);
+
   --ms-display: 'Syne', sans-serif;
   --ms-sans: 'Inter', sans-serif;
   --ms-mono: 'DM Mono', monospace;
@@ -39,6 +54,8 @@ html:not(.dark) .microservicesviz-root,
   --ms-border-subtle: rgba(0, 0, 0, 0.08);
   --ms-text: #0f172a;
   --ms-muted: #64748b;
+  /* --ms-bg flips to #f8fafc in light mode, so its translucent mix must flip too. */
+  --ms-bg-80: rgba(248, 250, 252, 0.8);
 }
 
 html.dark .microservicesviz-root,
@@ -83,4 +100,67 @@ html[data-theme='dark'] .microservicesviz-root,
     linear-gradient(to right, rgba(139, 92, 246, 0.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
   background-size: 38px 38px;
+}
+
+/* Architecture path (home page): the five stages as a request path, drawn as a
+   chain of hop nodes joined by lit segments. Vertical under 1280px, horizontal
+   above. Structural only — the lit edge and the connector gradient reuse
+   --ms-primary / --ms-border / --ms-border-subtle, so no new colour enters the
+   palette and both themes keep the engine's existing token contrast. */
+.microservicesviz-root .ms-path {
+  display: flex;
+  flex-direction: column;
+}
+
+.microservicesviz-root .ms-path-hop {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.microservicesviz-root .ms-path-node {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--ms-surface);
+  border: 1px solid var(--ms-border-subtle);
+  border-left: 2px solid var(--ms-primary);
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.microservicesviz-root .ms-path-node:hover {
+  border-color: var(--ms-border);
+  border-left-color: var(--ms-primary);
+  transform: translateY(-2px);
+}
+
+.microservicesviz-root .ms-path-link {
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 1.5rem;
+  background: linear-gradient(to bottom, var(--ms-primary), var(--ms-border-subtle));
+}
+
+@media (min-width: 1280px) {
+  .microservicesviz-root .ms-path {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .microservicesviz-root .ms-path-hop {
+    flex: 1 1 0%;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .microservicesviz-root .ms-path-link {
+    width: 1.5rem;
+    height: 1px;
+    background: linear-gradient(to right, var(--ms-primary), var(--ms-border-subtle));
+  }
 }

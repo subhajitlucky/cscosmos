@@ -23,11 +23,11 @@ const Navbar: React.FC = () => {
     <nav className="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300">
       <div className="container mx-auto px-5 md:px-10 h-14 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="p-1.5 rounded-md bg-evm-accent/10 text-evm-accent group-hover:bg-evm-accent/20 transition-colors">
+          <div className="p-1.5 rounded-md bg-evm-accent/10 text-evm-accent-text group-hover:bg-evm-accent/20 transition-colors">
             <Cpu size={18} />
           </div>
           <span className="font-bold text-lg tracking-tight hidden sm:inline-block text-neutral-900 dark:text-white">
-            EVM<span className="text-evm-accent">Viz</span>
+            EVM<span className="text-evm-accent-text">Viz</span>
           </span>
         </Link>
 
@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
                       : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-900"
                   )}
                 >
-                  <Icon size={14} className={isActive ? "text-evm-accent" : ""} />
+                  <Icon size={14} className={isActive ? "text-evm-accent-text" : ""} />
                   <span className="hidden md:inline">{item.label}</span>
                 </Link>
               );

@@ -8,7 +8,7 @@ const coreFeatures = [
   {
     title: "Interactive memory maps",
     description:
-      "See stack vs heap, pointers, escape analysis hints, and interface fat pointers updated as code executes.",
+      "See stack vs heap, pointers, escape analysis hints, and interface fat pointers updated as you step through the code.",
   },
   {
     title: "Stepper like Python Tutor",

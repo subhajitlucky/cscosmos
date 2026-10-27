@@ -3,12 +3,48 @@
 .fastapicosmos-root {
   --fastapi-primary: #059669;
   --fastapi-primary-hover: #047857;
+  /* Solid accent fills that carry on-accent labels. --fastapi-primary (#059669)
+     only reaches 3.77:1 against white, so it cannot host the 10-14px labels
+     these buttons use; #047857 - the engine's own hover shade - reaches 5.48:1
+     and #065f46 reaches 7.68:1 on hover. --fastapi-on-accent is the text colour
+     for any solid accent fill, so a fill change never has to be re-paired with
+     a text change. --fastapi-primary was fill-only (8 `bg-*` sites, 0 text and
+     0 border sites) and all 8 moved to --fastapi-primary-solid; the token
+     itself is kept so that a future non-label use still gets the brand green
+     rather than this darker solid shade. */
+  --fastapi-primary-solid: #047857;
+  --fastapi-primary-solid-hover: #065f46;
+  --fastapi-on-accent: #ffffff;
   --fastapi-teal: #10b981;
+  /* Text-safe companion to --fastapi-teal. --fastapi-teal doubles as a solid
+     fill (`bg-[var(--fastapi-teal)]`), a border, a focus ring and a slider
+     accent - 6 non-text call sites - so its value must stay the brand green in
+     every theme; brand-coloured TEXT points at this token instead. Dark mode
+     keeps it byte-identical to --fastapi-teal, so the dark palette is
+     untouched - only the light block re-tunes it. */
+  --fastapi-teal-text: #10b981;
   --fastapi-sky: #38bdf8;
+  /* Text-safe companion to --fastapi-sky, same split as --fastapi-teal /
+     --fastapi-teal-text. --fastapi-sky keeps the brand value: it is a brand
+     accent, and the sky-10 / sky-30 tints are separate literal rgba() values
+     rather than references to it, so no fill or border reads this token.
+     Brand-coloured TEXT points here instead. Dark mode keeps it byte-identical
+     to --fastapi-sky, so the dark palette is untouched - only the light block
+     re-tunes it. */
+  --fastapi-sky-text: #38bdf8;
   --fastapi-amber: #f59e0b;
   --fastapi-gold: #fbbf24;
   --fastapi-purple: #a855f7;
+  /* Text-safe companion to --fastapi-purple (see --fastapi-sky-text). Dark mode
+     keeps it byte-identical to --fastapi-purple. */
+  --fastapi-purple-text: #a855f7;
   --fastapi-rose: #f43f5e;
+  /* Text-safe companion to --fastapi-rose (see --fastapi-sky-text).
+     --fastapi-rose keeps its brand value for the one FILL site it still has -
+     the h-1.5 mistake bullet at TopicDetail.tsx:140, which carries no label and
+     is left alone so the bullet keeps its brand colour. Dark mode keeps this
+     one byte-identical to --fastapi-rose too. */
+  --fastapi-rose-text: #f43f5e;
   
   --fastapi-bg: #070c18;
   --fastapi-surface: #0f172a;
@@ -17,6 +53,20 @@
   --fastapi-border-subtle: rgba(255, 255, 255, 0.08);
   --fastapi-text: #f8fafc;
   --fastapi-muted: #94a3b8;
+  
+  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity
+     modifier to an arbitrary var() colour: `bg-[var(--fastapi-bg)]/80` is not
+     a valid v3 utility and emits no CSS at all (verified against tailwindcss
+     3.4.19). These real custom properties are the supported way to get the
+     same tint. */
+  --fastapi-teal-10: rgba(16, 185, 129, 0.1);
+  --fastapi-teal-15: rgba(16, 185, 129, 0.15);
+  --fastapi-teal-20: rgba(16, 185, 129, 0.2);
+  --fastapi-teal-30: rgba(16, 185, 129, 0.3);
+  --fastapi-teal-40: rgba(16, 185, 129, 0.4);
+  --fastapi-sky-10: rgba(56, 189, 248, 0.1);
+  --fastapi-sky-30: rgba(56, 189, 248, 0.3);
+  --fastapi-bg-80: rgba(7, 12, 24, 0.8);
   
   --fastapi-display: 'Syne', sans-serif;
   --fastapi-sans: 'Inter', sans-serif;
@@ -39,7 +89,59 @@ html:not(.dark) .fastapicosmos-root,
   --fastapi-border: rgba(16, 185, 129, 0.28);
   --fastapi-border-subtle: rgba(0, 0, 0, 0.08);
   --fastapi-text: #0f172a;
-  --fastapi-muted: #64748b;
+  /* Was #64748b, which measured 4.34:1 on --fastapi-surface-2 - below AA for the
+     9-18px labels these call sites use. The 62 `text-[var(--fastapi-muted)]`
+     sites (60 pre-existing text sites plus the two FS-72 disabled-button labels)
+     paint on four distinct backdrops, not one: 31 on --fastapi-surface
+     (#ffffff), 19 on --fastapi-bg (#f8fafc), 8 on --fastapi-surface-2
+     (#f1f5f9) and 4 in the bg-80 navbar, which composites back to --fastapi-bg
+     because it sits over this root's own --fastapi-bg. --fastapi-surface-2 is
+     the darkest of them and therefore the binding constraint. #5b6a80 - the
+     same value lldcosmos settled on - is the lightest shade that clears 4.5:1
+     on every one of them: 5.50:1 on --fastapi-surface, 5.26:1 on --fastapi-bg
+     and on the navbar, 5.09:1 on a 1px fastapi-grid-bg line over --fastapi-bg
+     (the hero paragraph is the only site that can see one) and 5.02:1 on the
+     worst case, --fastapi-surface-2. Dark mode keeps #94a3b8, which already
+     measures 5.71-7.62:1. Table: scratch/agents/fastapicosmos/contrast.mjs */
+  --fastapi-muted: #5b6a80;
+  /* #10b981 as TEXT measures 2.21-2.54:1 on the light surfaces across 56
+     `text-[var(--fastapi-teal-text)]` call sites (8 of them on
+     `bg-[var(--fastapi-teal-10)]` pills, where the pill is composited over the
+     page first). Re-tuned to the lightest shade of the SAME hue that clears
+     4.5:1 on every backdrop those sites actually paint on: 5.24:1 on
+     --fastapi-bg, 5.48:1 on --fastapi-surface, 5.01:1 on --fastapi-surface-2,
+     4.79:1 on a teal-10 pill over --fastapi-bg, 4.99:1 on a teal-10 pill over
+     --fastapi-surface (4.59:1 is the conservative bound on a teal-10 pill over
+     --fastapi-surface-2, which no site reaches today). #047857 is also the
+     engine's own `--fastapi-primary-hover` shade, so no new hue enters the
+     palette. --fastapi-teal itself keeps its brand value for the 6 non-text
+     consumers (3 borders, 1 fill, 1 ring, 1 slider accent). */
+  --fastapi-teal-text: #047857;
+  /* #38bdf8 as TEXT measured 1.90-2.14:1 on the light backdrops across its 6
+     call sites (1 badge on its own sky-10 pill, 1 icon inside the "AsyncIO Lab"
+     link, 3 12px labels and 1 20px metric, which needs only 3:1 as large text);
+     all 6 colour glyphs or icon strokes, so all 6 moved here. #0369a1
+     (sky-700) is the lightest sky shade clearing 4.5:1 on every backdrop those
+     sites reach: 5.93:1 on --fastapi-surface, 5.67:1 on --fastapi-bg, 5.42:1 on
+     --fastapi-surface-2 and 5.27:1 on the sky-10 pill composited over
+     --fastapi-bg. */
+  --fastapi-sky-text: #0369a1;
+  /* #a855f7 as TEXT measured 3.61:1 on --fastapi-surface-2 and 3.96:1 on the
+     --fastapi-surface its one site actually paints on (the "03 / DEPENDENCY
+     DAG" kicker) - a fail in light mode, though 4.51-4.94:1 in dark. #7e22ce
+     (purple-700) clears 4.5:1 on every light surface: 6.98:1 on
+     --fastapi-surface, 6.67:1 on --fastapi-bg, 6.37:1 on --fastapi-surface-2. */
+  --fastapi-purple-text: #7e22ce;
+  /* #f43f5e as TEXT measured 3.35:1 on --fastapi-surface-2 and 3.67:1 on the
+     --fastapi-surface its one text site paints on (the "Concurrency Traps"
+     heading), so it fails light mode (4.86:1 in dark). #be123c (rose-700)
+     clears 4.5:1 on every light surface: 6.29:1 on --fastapi-surface, 6.01:1 on
+     --fastapi-bg, 5.74:1 on --fastapi-surface-2. Table:
+     scratch/agents/fastapicosmos/contrast.mjs */
+  --fastapi-rose-text: #be123c;
+  /* --fastapi-bg flips to a near-white surface in light mode, so its pre-mixed
+     translucent twin has to flip with it. */
+  --fastapi-bg-80: rgba(248, 250, 252, 0.8);
 }
 
 html.dark .fastapicosmos-root,
@@ -53,6 +155,14 @@ html[data-theme='dark'] .fastapicosmos-root,
   --fastapi-border-subtle: rgba(255, 255, 255, 0.08);
   --fastapi-text: #f8fafc;
   --fastapi-muted: #94a3b8;
+  /* Pinned so dark mode is identical wherever the light block also matches.
+     --fastapi-sky-text / --fastapi-purple-text / --fastapi-rose-text are the
+     brand values here, so every site that moved to a *-text token renders
+     byte-identically to before in dark mode. */
+  --fastapi-teal-text: #10b981;
+  --fastapi-sky-text: #38bdf8;
+  --fastapi-purple-text: #a855f7;
+  --fastapi-rose-text: #f43f5e;
 }
 
 .fastapicosmos-root .font-display {

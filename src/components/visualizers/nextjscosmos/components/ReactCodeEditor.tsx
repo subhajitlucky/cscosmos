@@ -20,7 +20,7 @@ export default function ReactCodeEditor({ code, onChange, readOnly = false }: Re
           <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
           <span className="ml-2 font-bold text-zinc-300">page.tsx</span>
         </div>
-        <span className="text-[10px] uppercase font-bold text-primary">Live Code Editor</span>
+        <span className="text-[10px] uppercase font-bold text-primary">Editable Code Example</span>
       </div>
 
       <div className="grid grid-cols-1 relative flex-1 min-h-[360px]">

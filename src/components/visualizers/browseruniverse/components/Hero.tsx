@@ -18,7 +18,7 @@ export default function Hero({ title, subtitle, primaryCta, secondaryCta }: Prop
       <div className="absolute inset-0 grid-accent opacity-60" aria-hidden />
       <div className="relative z-10 grid gap-6 lg:grid-cols-[1.2fr,0.8fr] lg:items-center">
         <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.3rem] text-accentSoft">BrowserLab</p>
+          <p className="text-xs uppercase tracking-[0.3rem] text-[var(--bu-accent-soft)]">BrowserLab</p>
           <motion.h1
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight"
             initial={{ opacity: 0, y: 14 }}
@@ -31,13 +31,13 @@ export default function Hero({ title, subtitle, primaryCta, secondaryCta }: Prop
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
               href="/browseruniverse/tour"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:bg-accentSoft"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:bg-[var(--bu-accent-soft)]"
             >
               <Play size={16} /> {primaryCta}
             </Link>
             <Link
               href="/browseruniverse/sandbox"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-3 text-sm font-semibold text-white transition hover:border-accent/50 hover:text-accentSoft"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-3 text-sm font-semibold text-white transition hover:border-accent/50 hover:text-[var(--bu-accent-soft)]"
             >
               <ArrowRight size={16} /> {secondaryCta}
             </Link>
@@ -65,7 +65,7 @@ export default function Hero({ title, subtitle, primaryCta, secondaryCta }: Prop
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-xl border border-border bg-base/70 px-3 py-2 text-slate-200"
+                className="rounded-xl border border-border bg-[var(--bu-base-70)] px-3 py-2 text-slate-200"
               >
                 {item}
               </div>

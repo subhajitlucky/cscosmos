@@ -48,7 +48,7 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--cp-primary)]/30 bg-[var(--cp-primary)]/10 text-[var(--cp-primary)] text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--cp-primary-30)] bg-[var(--cp-primary-10)] text-[var(--cp-primary)] text-xs font-mono">
               <Smartphone className="w-3.5 h-3.5 animate-pulse text-[var(--cp-primary)]" />
               Cross-Platform Internals &bull; React Native &bull; Flutter &bull; KMP
             </div>
@@ -240,17 +240,17 @@ export function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* React Native Card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--cp-primary)]/40 bg-[var(--cp-surface)] space-y-6 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--cp-primary-40)] bg-[var(--cp-surface)] space-y-6 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--cp-text)]">React Native JSI</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--cp-primary)]/10 text-[var(--cp-primary)] border border-[var(--cp-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--cp-primary-10)] text-[var(--cp-primary)] border border-[var(--cp-primary-30)] font-bold">
                 Native Widgets
               </span>
             </div>
             <p className="text-xs text-[var(--cp-muted)] leading-relaxed">
               JSX compiles to real OEM platform widgets (UIViews / Android Views). Direct C++ JSI bindings eliminate bridge latency, powered by Hermes AOT bytecode.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--cp-bg)] font-mono text-[11px] text-[var(--cp-muted)] space-y-2 border border-[var(--cp-primary)]/20">
+            <div className="p-4 rounded-lg bg-[var(--cp-bg)] font-mono text-[11px] text-[var(--cp-muted)] space-y-2 border border-[var(--cp-primary-20)]">
               <div className="text-[var(--cp-primary)]">• 100% Real OEM Native Widgets</div>
               <div className="text-emerald-400">• JSI C++ HostObjects (0 JSON serialization)</div>
               <div>• Immutable Fabric Shadow Tree Layout</div>

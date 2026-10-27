@@ -1,4 +1,4 @@
-import GolangVizClientPage from './GolangVizClientPage';
+import EngineMount from './EngineMount';
 import { allConcepts } from '@/components/visualizers/golangviz/data/concepts-data';
 
 export function generateStaticParams() {
@@ -22,5 +22,5 @@ export default async function GolangVizPage({ params }: { params: Promise<{ slug
   const resolvedParams = await params;
   const slug = resolvedParams?.slug || [];
 
-  return <GolangVizClientPage slug={slug} />;
+  return <EngineMount slug={slug} />;
 }

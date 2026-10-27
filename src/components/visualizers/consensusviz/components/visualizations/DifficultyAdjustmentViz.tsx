@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Gauge, TrendingUp, Activity, Crosshair, Zap } from 'lucide-react';
 import { clsx } from 'clsx';
+
+interface HashAttempt {
+  id: number;
+  x: number;
+  y: number;
+  delay: number;
+}
 
 const DifficultyAdjustmentViz: React.FC = () => {
   const [hashrate, setHashrate] = useState(50);
@@ -9,14 +16,24 @@ const DifficultyAdjustmentViz: React.FC = () => {
   const targetSize = Math.max(8, 100 - (hashrate * 0.85));
   const attemptsCount = 150;
 
-  const [hashAttempts] = useState(() => {
-    return Array.from({ length: attemptsCount }).map((_, i) => ({
-      id: i,
-      x: (Math.random() - 0.5) * 350,
-      y: (Math.random() - 0.5) * 220,
-      delay: Math.random() * 2
-    }));
-  });
+  // The scattered "hash attempts" used to be generated in a `useState`
+  // initialiser — i.e. with `Math.random()` on the render path — and their
+  // coordinates are rendered as inline styles, so the pre-rendered HTML could
+  // never match the client's first render (hydration mismatch). They are
+  // scattered after mount instead: the server and the client's first render both
+  // start from an empty field, which is also what the animation starts from.
+  const [hashAttempts, setHashAttempts] = useState<HashAttempt[]>([]);
+
+  useEffect(() => {
+    setHashAttempts(
+      Array.from({ length: attemptsCount }).map((_, i) => ({
+        id: i,
+        x: (Math.random() - 0.5) * 350,
+        y: (Math.random() - 0.5) * 220,
+        delay: Math.random() * 2
+      }))
+    );
+  }, [attemptsCount]);
 
   const visibleAttempts = hashAttempts.slice(0, Math.floor(hashrate * 1.5));
 

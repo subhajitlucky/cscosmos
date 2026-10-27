@@ -12,7 +12,16 @@ interface TooltipProps {
 const Tooltip: React.FC<TooltipProps> = ({ content, children, delay = 0.2, className }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
+  // `createPortal(..., document.body)` evaluates `document.body` while
+  // rendering, which throws on the server. The portal is only created after
+  // mount, so the server markup and the client's first render both emit just the
+  // trigger (they are identical), and the tooltip behaviour is unchanged.
+  const [mounted, setMounted] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const updatePosition = () => {
     if (triggerRef.current) {
@@ -57,7 +66,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, delay = 0.2, class
       >
         {children}
       </div>
-      {createPortal(
+      {mounted && createPortal(
         <AnimatePresence>
           {isVisible && (
             <motion.div

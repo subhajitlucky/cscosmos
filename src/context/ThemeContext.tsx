@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from "react"
-import { ThemeProviderContext, combineTheme, type Theme } from "./theme-context"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { ThemeProviderContext, combineTheme, type ResolvedTheme, type Theme } from "./theme-context"
 
 type ThemeProviderProps = {
     children: React.ReactNode
@@ -14,37 +14,60 @@ export function ThemeProvider({
     defaultTheme = "system",
     storageKey = "cscosmos-ui-theme",
 }: ThemeProviderProps) {
-    const [theme, setTheme] = useState<Theme>(() => {
-        if (typeof window !== "undefined") {
-            const stored = localStorage.getItem(storageKey) as Theme;
-            if (stored) return combineTheme(stored) || defaultTheme;
-        }
-        return defaultTheme;
-    });
+    // The server cannot know the visitor's stored preference, so both the server
+    // render and the client's FIRST render must use `defaultTheme`. Reading
+    // localStorage here instead would make the client's first pass disagree with
+    // the server HTML and raise a React hydration mismatch (AGENTS.md §1).
+    // The pre-paint script in src/app/layout.tsx has already applied the stored
+    // theme to <html>, so this provider only has to agree with it after mount.
+    const fallbackResolved: ResolvedTheme = defaultTheme === "light" ? "light" : "dark";
 
+    const [theme, setTheme] = useState<Theme>(defaultTheme)
+    const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(fallbackResolved)
+    const [mounted, setMounted] = useState(false)
+
+    // Adopt the persisted preference once we are on the client.
     useEffect(() => {
-        const root = window.document.documentElement
+        const stored = combineTheme(window.localStorage.getItem(storageKey) as Theme | null)
+        if (stored) setTheme((current) => (current === stored ? current : stored))
+    }, [storageKey])
 
-        root.classList.remove("light", "dark")
+    // Paint the resolved theme onto <html> and keep "system" in step with the OS.
+    useEffect(() => {
+        const query = window.matchMedia("(prefers-color-scheme: dark)")
 
-        const effectiveTheme = theme === "system"
-            ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-            : theme;
+        const apply = () => {
+            const next: ResolvedTheme =
+                theme === "system" ? (query.matches ? "dark" : "light") : theme
+            const root = window.document.documentElement
 
-        root.classList.add(effectiveTheme)
-        root.setAttribute("data-theme", effectiveTheme)
-        root.setAttribute("data-mode", effectiveTheme)
+            root.classList.remove("light", "dark")
+            root.classList.add(next)
+            root.setAttribute("data-theme", next)
+            root.setAttribute("data-mode", next)
+            setResolvedTheme(next)
+        }
+
+        apply()
+        setMounted(true)
+
+        if (theme !== "system") return
+        query.addEventListener("change", apply)
+        return () => query.removeEventListener("change", apply)
     }, [theme])
 
-    const value = {
-        theme,
-        setTheme: (nextTheme: Theme) => {
-            if (typeof window !== "undefined") {
-                localStorage.setItem(storageKey, nextTheme)
-            }
+    const setThemePreference = useCallback(
+        (nextTheme: Theme) => {
+            window.localStorage.setItem(storageKey, nextTheme)
             setTheme(nextTheme)
         },
-    }
+        [storageKey],
+    )
+
+    const value = useMemo(
+        () => ({ theme, resolvedTheme, mounted, setTheme: setThemePreference }),
+        [theme, resolvedTheme, mounted, setThemePreference],
+    )
 
     return (
         <ThemeProviderContext.Provider value={value}>

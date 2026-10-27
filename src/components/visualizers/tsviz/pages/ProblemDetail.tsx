@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import Editor from "@monaco-editor/react";
 import { problems, type Problem } from "../data/problems";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { checkTypeScriptSyntax, formatError } from "../lib/playground-utils";
@@ -78,7 +78,10 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
             <div className="grid gap-6 lg:grid-cols-2">
                 <Card className="h-full">
                     <CardHeader>
-                        <CardTitle className="text-xl">{problem.title}</CardTitle>
+                        {/* A real heading, not CardTitle (a div): all 50
+                            /tsviz/problems/<id> pages pre-rendered with no
+                            heading element at all. Same classes as CardTitle. */}
+                        <h1 className="text-xl font-semibold leading-none tracking-tight">{problem.title}</h1>
                     </CardHeader>
                     <CardContent className="space-y-4 text-sm text-muted-foreground">
                         <p className="leading-relaxed text-foreground">{problem.description || problem.summary}</p>
@@ -125,7 +128,8 @@ export function ProblemDetail({ problemId: propProblemId }: { problemId?: string
 
                 <Card className="h-full">
                     <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle className="text-lg">Solution</CardTitle>
+                        {/* h2, not CardTitle (a div) — the problem title above is the h1. */}
+                        <h2 className="text-lg font-semibold leading-none tracking-tight">Solution</h2>
                         <div className="flex gap-2">
                             <Button variant="outline" size="sm" onClick={handleReset}>
                                 <RotateCcw className="h-4 w-4 mr-1" />

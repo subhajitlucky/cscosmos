@@ -64,11 +64,11 @@ export function AgentLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ai-amber)]/30 bg-[var(--ai-amber)]/10 text-[var(--ai-amber)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ai-amber-30)] bg-[var(--ai-amber-10)] text-[var(--ai-amber-text)] text-xs font-mono">
           <Bot className="w-3.5 h-3.5" /> ReAct Autonomous Agent &amp; Tool Execution Lab
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--ai-text)]">
-          Autonomous Agent <span className="text-[var(--ai-amber)] ai-glow">ReAct Loop Studio</span>
+          Autonomous Agent <span className="text-[var(--ai-amber-text)] ai-glow">ReAct Loop Studio</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--ai-muted)] max-w-2xl leading-relaxed">
           Step through Reasoning + Acting (ReAct) execution loops with live JSON function calling, tool observations, and self-correcting deductions.
@@ -97,12 +97,12 @@ export function AgentLab() {
         {/* Left Agent Prompt & Controls */}
         <div className="lg:col-span-5 rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-surface)] p-6 space-y-6 shadow-xl">
           <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
-            <span className="text-[var(--ai-amber)] uppercase tracking-wider font-bold flex items-center gap-2">
+            <span className="text-[var(--ai-amber-text)] uppercase tracking-wider font-bold flex items-center gap-2">
               <Bot className="w-3.5 h-3.5" /> Agent Goal &amp; Tools
             </span>
             <button
               onClick={() => resetAgent()}
-              className="text-[10px] text-[var(--ai-muted)] hover:text-[var(--ai-primary)] flex items-center gap-1"
+              className="text-[10px] text-[var(--ai-muted)] hover:text-[var(--ai-primary-text)] flex items-center gap-1"
             >
               <RotateCcw className="w-3 h-3" /> Reset
             </button>
@@ -118,10 +118,10 @@ export function AgentLab() {
               <span className="text-[10px] text-[var(--ai-muted)] uppercase tracking-wider block">Available Function Tools:</span>
               <div className="grid grid-cols-2 gap-2 text-[10px]">
                 <div className="p-2 rounded border border-white/5 bg-white/[0.02] flex items-center gap-1.5">
-                  <Database className="w-3.5 h-3.5 text-blue-400" /> sql_executor
+                  <Database className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" /> sql_executor
                 </div>
                 <div className="p-2 rounded border border-white/5 bg-white/[0.02] flex items-center gap-1.5">
-                  <Terminal className="w-3.5 h-3.5 text-amber-400" /> k8s_api
+                  <Terminal className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" /> k8s_api
                 </div>
               </div>
             </div>
@@ -141,7 +141,7 @@ export function AgentLab() {
         <div className="lg:col-span-7 space-y-4">
           <div className="p-6 rounded-2xl border border-[var(--ai-border-subtle)] bg-[var(--ai-surface)] space-y-4">
             <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
-              <span className="text-[var(--ai-amber)] uppercase tracking-wider font-bold text-[10px]">
+              <span className="text-[var(--ai-amber-text)] uppercase tracking-wider font-bold text-[10px]">
                 ReAct Agent Trace (Thought &rarr; Action &rarr; Observation)
               </span>
               <span className="text-[10px] text-[var(--ai-muted)]">
@@ -158,17 +158,17 @@ export function AgentLab() {
                 {selectedTask.steps.slice(0, currentStepIndex).map((step, idx) => {
                   if (step.type === 'thought') {
                     return (
-                      <div key={idx} className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-200 space-y-1">
-                        <span className="text-[9px] font-bold text-purple-400 uppercase tracking-wider block">💭 Thought:</span>
+                      <div key={idx} className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-700 dark:text-purple-200 space-y-1">
+                        <span className="text-[9px] font-bold text-purple-700 dark:text-purple-400 uppercase tracking-wider block">💭 Thought:</span>
                         <p className="leading-relaxed">{step.content}</p>
                       </div>
                     );
                   }
                   if (step.type === 'action') {
                     return (
-                      <div key={idx} className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-200 space-y-1.5">
-                        <span className="text-[9px] font-bold text-blue-400 uppercase tracking-wider block">⚡ Action (Tool Call):</span>
-                        <div className="p-2 rounded bg-black/40 text-[10px] text-cyan-300">
+                      <div key={idx} className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-700 dark:text-blue-200 space-y-1.5">
+                        <span className="text-[9px] font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider block">⚡ Action (Tool Call):</span>
+                        <div className="p-2 rounded bg-black/80 dark:bg-black/40 text-[10px] text-cyan-300">
                           <code>{step.tool}({JSON.stringify(step.args, null, 2)})</code>
                         </div>
                       </div>
@@ -176,16 +176,16 @@ export function AgentLab() {
                   }
                   if (step.type === 'observation') {
                     return (
-                      <div key={idx} className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 space-y-1">
-                        <span className="text-[9px] font-bold text-amber-400 uppercase tracking-wider block">👁 Observation:</span>
+                      <div key={idx} className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-200 space-y-1">
+                        <span className="text-[9px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider block">👁 Observation:</span>
                         <p className="leading-relaxed font-mono text-[10px]">{step.content}</p>
                       </div>
                     );
                   }
                   if (step.type === 'final_answer') {
                     return (
-                      <div key={idx} className="p-4 rounded-xl bg-emerald-500/15 border-2 border-emerald-500/40 text-emerald-100 space-y-2">
-                        <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">🎯 Final Answer:</span>
+                      <div key={idx} className="p-4 rounded-xl bg-emerald-500/15 border-2 border-emerald-500/40 text-emerald-700 dark:text-emerald-100 space-y-2">
+                        <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider block">🎯 Final Answer:</span>
                         <p className="leading-relaxed font-sans text-xs">{step.content}</p>
                       </div>
                     );

@@ -235,40 +235,47 @@ async def stream_tokens():
   }
 ];
 
+// Group badge colours. Each is 10px text on its own 10% tint over the page
+// background, so the palette value is shaded for light mode and the original
+// bright value restored under `dark:` - the same shape DiGraph's node cards use.
+// The audit's FS-71 list counted these as `text-emerald-400` / `text-sky-400` /
+// `text-amber-400`; `purple` and `teal` were the same defect and are fixed here
+// too (2.53:1 and 1.78:1 light before). Fill/border halves of each badge
+// (border-<hue>-500/30, bg-<hue>-500/10) are untouched.
 export const fastApiTopicGroups: FastApiTopicGroup[] = [
   {
     id: 'asgi-core',
     name: 'ASGI & Starlette Core',
     description: 'Non-blocking I/O architectures, Uvicorn uvloop, and low-level ASGI scope handling.',
-    badgeColor: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10',
+    badgeColor: 'border-emerald-500/30 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10',
     topics: fastApiTopics.filter(t => t.group === 'ASGI & Starlette Core')
   },
   {
     id: 'async-concurrency',
     name: 'AsyncIO & Event Loop',
     description: 'Cooperative async/await multitasking and automatic ThreadPool routing for sync def.',
-    badgeColor: 'border-sky-500/30 text-sky-400 bg-sky-500/10',
+    badgeColor: 'border-sky-500/30 text-sky-700 dark:text-sky-400 bg-sky-500/10',
     topics: fastApiTopics.filter(t => t.group === 'AsyncIO & Event Loop')
   },
   {
     id: 'pydantic-validation',
     name: 'Pydantic V2 & Validation',
     description: 'Rust pydantic-core serialization speedups and OpenAPI 3.1 JSON schema generation.',
-    badgeColor: 'border-amber-500/30 text-amber-400 bg-amber-500/10',
+    badgeColor: 'border-amber-500/30 text-amber-800 dark:text-amber-400 bg-amber-500/10',
     topics: fastApiTopics.filter(t => t.group === 'Pydantic V2 & Validation')
   },
   {
     id: 'dependency-injection',
     name: 'Dependency Injection (DAG)',
     description: 'Hierarchical Depends() tree resolution, memoization cache, and yield context cleanup.',
-    badgeColor: 'border-purple-500/30 text-purple-400 bg-purple-500/10',
+    badgeColor: 'border-purple-500/30 text-purple-700 dark:text-purple-400 bg-purple-500/10',
     topics: fastApiTopics.filter(t => t.group === 'Dependency Injection')
   },
   {
     id: 'realtime-tasks',
     name: 'Real-Time & Background Tasks',
     description: 'Post-response BackgroundTasks queues, SSE streaming token generators, and WebSockets.',
-    badgeColor: 'border-teal-500/30 text-teal-400 bg-teal-500/10',
+    badgeColor: 'border-teal-500/30 text-teal-700 dark:text-teal-400 bg-teal-500/10',
     topics: fastApiTopics.filter(t => t.group === 'Real-Time & Background Tasks')
   }
 ];

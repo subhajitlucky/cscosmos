@@ -6,6 +6,12 @@ export interface Topic {
   status: 'active' | 'coming-soon';
   description: string;
   analogy: string;
+  /**
+   * Optional per-topic technical tradeoffs. When absent, `TopicDetail` shows the two general
+   * MongoDB tradeoffs under a heading that says they are general (FS-13) — previously they
+   * rendered as though they belonged to every topic.
+   */
+  tradeoffs?: string[];
 }
 
 export interface Path {

@@ -14,15 +14,17 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const { theme, setTheme } = useCosmosTheme();
+  // Use the resolved theme so a "system" preference maps to the theme that is
+  // actually painted, rather than silently falling back to dark.
+  const { resolvedTheme, setTheme } = useCosmosTheme();
 
   const value = useMemo(
     () => ({
-      theme: (theme === 'light' ? 'light' : 'dark') as Theme,
+      theme: resolvedTheme,
       setTheme: (val: Theme) => setTheme(val),
-      toggleTheme: () => setTheme(theme === 'dark' ? 'light' : 'dark'),
+      toggleTheme: () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark'),
     }),
-    [theme, setTheme],
+    [resolvedTheme, setTheme],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

@@ -130,7 +130,11 @@ const Layout: React.FC = () => {
                   <span className="text-[9px] font-black text-gray-500 dark:text-slate-400 uppercase tracking-widest">Protocol_Integrity: Verified</span>
                </div>
                <div className="w-[1px] h-3 bg-gray-200 dark:bg-slate-800" />
-               <p className="text-[9px] font-bold text-gray-600 dark:text-slate-300 uppercase tracking-tighter">
+               {/* `new Date().getFullYear()` runs during render, so the pre-rendered HTML pins the
+                  build year and would disagree with a visitor's clock after a year rollover on a
+                  stale build. Suppressed on the element that owns the text rather than freezing
+                  the year; FS-88. No markup change. */}
+              <p suppressHydrationWarning className="text-[9px] font-bold text-gray-600 dark:text-slate-300 uppercase tracking-tighter">
                  © {new Date().getFullYear()} ConsensusTerm_LTS. Built for cryptographic education.
                </p>
             </div>

@@ -27,10 +27,8 @@ console.log('1.5. Sync End');`
     '4. setImmediate (Check Phase)',
   ]);
 
-  const [execTime, setExecTime] = useState<number>(0.04);
-
   const handleRun = () => {
-    // Client-side simulation
+    // Client-side simulation: picks the preset trace that matches keywords in the text
     const logs: string[] = [];
     if (code.includes('nextTick') && code.includes('Promise')) {
       logs.push('1. Sync Start');
@@ -44,11 +42,10 @@ console.log('1.5. Sync End');`
       logs.push('[Stream] Writable buffer full (highWaterMark reached)!');
       logs.push('[Stream] Emitted "drain" event -> Resumed reading.');
     } else {
-      logs.push('Node.js V8 execution completed successfully.');
-      logs.push('Event loop idle. Exited with code 0.');
+      logs.push('No preset trace matched this text.');
+      logs.push('Available traces: "Event Loop Order" (nextTick + Promise) and "Stream Pipeline" (highWaterMark).');
     }
     setOutput(logs);
-    setExecTime(Number((Math.random() * 0.05 + 0.02).toFixed(3)));
   };
 
   return (
@@ -60,16 +57,16 @@ console.log('1.5. Sync End');`
           </div>
           <div>
             <div className="text-xs uppercase font-extrabold tracking-wider text-emerald-600 dark:text-emerald-400">
-              Interactive Node.js Sandbox
+              Guided Node.js Walkthrough
             </div>
             <h3 className="text-xl font-bold text-foreground">
-              Node.js Script Runner &amp; Event Loop Execution Tracer
+              Node.js Event Loop Trace Walkthrough
             </h3>
           </div>
         </div>
 
         <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-mono text-xs font-bold">
-          Node v22 LTS Engine • V8 + Libuv
+          Node v22 LTS semantics • simulated trace
         </span>
       </div>
 
@@ -77,7 +74,7 @@ console.log('1.5. Sync End');`
       <div className="space-y-3">
         <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
           <span>JavaScript Code (Node.js API):</span>
-          <span>Click &ldquo;Execute Script&rdquo; to simulate</span>
+          <span>Click &ldquo;Show Preset Trace&rdquo; to simulate</span>
         </div>
 
         <textarea
@@ -117,7 +114,7 @@ console.log('1.5. Sync End');`
             className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition shadow-md flex items-center gap-1.5"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span>Execute Script</span>
+            <span>Show Preset Trace</span>
           </button>
         </div>
       </div>
@@ -126,9 +123,9 @@ console.log('1.5. Sync End');`
       <div className="p-6 rounded-3xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-xs shadow-inner">
         <div className="flex items-center justify-between text-slate-400 text-[11px] border-b border-slate-800 pb-2">
           <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
-            <Terminal className="w-3.5 h-3.5" /> node script.js stdout:
+            <Terminal className="w-3.5 h-3.5" /> Simulated trace (node script.js stdout):
           </span>
-          <span className="text-slate-400">Execution: {execTime} ms</span>
+          <span className="text-slate-400">{output.length} simulated log lines</span>
         </div>
 
         <div className="space-y-1 py-1">

@@ -16,7 +16,24 @@
   --wasm-border-subtle: rgba(255, 255, 255, 0.08);
   --wasm-text: #f8fafc;
   --wasm-muted: #8b92af;
-  
+
+  /* Pre-mixed translucent tokens.
+     Tailwind v3 cannot apply an opacity modifier to an arbitrary var() colour:
+     a `bg-[var(--wasm-primary)]` class carrying a `/10` opacity suffix is not a
+     valid v3 utility and emits no CSS at all (verified against tailwindcss
+     3.4.17). These real custom properties are the supported way to get the same
+     tint. */
+  --wasm-primary-10: rgba(101, 79, 240, 0.1);
+  --wasm-primary-20: rgba(101, 79, 240, 0.2);
+  --wasm-primary-30: rgba(101, 79, 240, 0.3);
+  --wasm-primary-40: rgba(101, 79, 240, 0.4);
+  --wasm-magenta-10: rgba(217, 70, 239, 0.1);
+  --wasm-magenta-30: rgba(217, 70, 239, 0.3);
+  --wasm-emerald-10: rgba(16, 185, 129, 0.1);
+  --wasm-emerald-20: rgba(16, 185, 129, 0.2);
+  --wasm-emerald-50: rgba(16, 185, 129, 0.5);
+  --wasm-bg-80: rgba(9, 10, 18, 0.8);
+
   --wasm-display: 'Syne', sans-serif;
   --wasm-sans: 'Inter', sans-serif;
   --wasm-mono: 'DM Mono', monospace;
@@ -39,6 +56,8 @@ html:not(.dark) .wasmcosmos-root,
   --wasm-border-subtle: rgba(0, 0, 0, 0.08);
   --wasm-text: #0f172a;
   --wasm-muted: #64748b;
+  /* --wasm-bg flips to #f8fafc in light mode, so its pre-mixed tint must follow. */
+  --wasm-bg-80: rgba(248, 250, 252, 0.8);
 }
 
 html.dark .wasmcosmos-root,

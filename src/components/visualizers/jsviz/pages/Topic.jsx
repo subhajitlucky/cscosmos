@@ -95,7 +95,7 @@ const Topic = ({ topicId: propTopicId }) => {
 
                         <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
-                            className="p-2 rounded-lg border text-brand-lime hover:bg-brand-lime/10 transition-colors flex items-center gap-1.5 text-xs font-mono font-bold"
+                            className="p-2 rounded-lg border text-brand-lime hover:bg-[rgba(var(--accent-main-rgb),0.1)] transition-colors flex items-center gap-1.5 text-xs font-mono font-bold"
                             style={{ borderColor: 'var(--border-main)' }}
                             title="Toggle All Topics Menu"
                         >
@@ -120,7 +120,7 @@ const Topic = ({ topicId: propTopicId }) => {
                             onClick={() => markTopicCompleted(topic.id)}
                             className={`neo-btn-secondary px-4 py-2 text-xs font-mono font-bold flex items-center gap-2 transition-all ${
                                 progress.completedTopics.includes(topic.id) 
-                                    ? 'border-brand-lime text-brand-lime bg-brand-lime/10' 
+                                    ? 'border-brand-lime text-brand-lime bg-[rgba(var(--accent-main-rgb),0.1)]' 
                                     : ''
                             }`}
                         >
@@ -143,7 +143,7 @@ const Topic = ({ topicId: propTopicId }) => {
                             <span className="text-xs font-bold font-mono text-brand-lime uppercase tracking-widest">
                                 Topics Catalog
                             </span>
-                            <button onClick={() => setSidebarOpen(false)} className="p-1 rounded text-gray-400 hover:text-white">
+                            <button onClick={() => setSidebarOpen(false)} className="p-1 rounded text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">
                                 <X size={18} />
                             </button>
                         </div>
@@ -175,7 +175,7 @@ const Topic = ({ topicId: propTopicId }) => {
                         <h3 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
                             <Layers size={18} className="text-brand-lime" /> Mental Model Realtime Simulation
                         </h3>
-                        <span className="text-xs font-mono px-3 py-1 rounded bg-brand-lime/10 text-brand-lime font-bold">
+                        <span className="text-xs font-mono px-3 py-1 rounded bg-[rgba(var(--accent-main-rgb),0.1)] text-brand-lime font-bold">
                             INTERACTIVE_CANVAS
                         </span>
                     </div>
@@ -223,7 +223,7 @@ const Topic = ({ topicId: propTopicId }) => {
                                         </span>
                                         <button
                                             onClick={() => handleCopy(ex.code, index)}
-                                            className="text-xs font-mono font-bold text-brand-lime hover:opacity-80 flex items-center gap-1.5 transition-opacity bg-brand-lime/10 px-3 py-1.5 border border-brand-lime/30 rounded"
+                                            className="text-xs font-mono font-bold text-brand-lime hover:opacity-80 flex items-center gap-1.5 transition-opacity bg-[rgba(var(--accent-main-rgb),0.1)] px-3 py-1.5 border border-brand-lime/30 rounded"
                                         >
                                             {copiedIndex === index ? <Check size={14} /> : <Copy size={14} />}
                                             {copiedIndex === index ? 'COPIED & LOADED' : 'LOAD TO EDITOR'}
@@ -271,7 +271,7 @@ const Topic = ({ topicId: propTopicId }) => {
                             className="neo-card p-5 flex flex-col items-start group text-left max-w-[48%] transition-transform hover:-translate-y-1"
                             style={{ backgroundColor: 'var(--bg-surface)' }}
                         >
-                            <span className="text-xs font-mono text-gray-400 flex items-center gap-1 group-hover:text-brand-lime transition-colors">
+                            <span className="text-xs font-mono text-[var(--text-muted)] flex items-center gap-1 group-hover:text-brand-lime transition-colors">
                                 <ArrowLeft size={12} /> PREVIOUS_MODULE
                             </span>
                             <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5" style={{ color: 'var(--text-main)' }}>
@@ -286,7 +286,7 @@ const Topic = ({ topicId: propTopicId }) => {
                             className="neo-card p-5 flex flex-col items-end group text-right max-w-[48%] transition-transform hover:-translate-y-1"
                             style={{ backgroundColor: 'var(--bg-surface)' }}
                         >
-                            <span className="text-xs font-mono text-gray-400 flex items-center gap-1 group-hover:text-brand-lime transition-colors">
+                            <span className="text-xs font-mono text-[var(--text-muted)] flex items-center gap-1 group-hover:text-brand-lime transition-colors">
                                 NEXT_MODULE <ArrowRight size={12} />
                             </span>
                             <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5" style={{ color: 'var(--text-main)' }}>

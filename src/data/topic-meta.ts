@@ -191,7 +191,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     difficulty: 'advanced',
     estimatedMinutes: 60,
     tags: ['ai', 'transformers', 'backprop'],
-    related: ['aimathviz', 'rag-end-to-end-pipeline'],
+    related: ['aimathviz', 'ai-engineering-foundations'],
   },
   aimathviz: {
     difficulty: 'intermediate',
@@ -216,14 +216,14 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     difficulty: 'beginner',
     estimatedMinutes: 35,
     tags: ['arrays', 'cache', 'sliding-window'],
-    related: ['stringalgoviz', 'two-sum-brute-force-to-hashmap'],
+    related: ['stringalgoviz', 'computer-architecture-cpu-caches'],
   },
   stringalgoviz: {
     difficulty: 'advanced',
     estimatedMinutes: 60,
     tags: ['strings', 'kmp', 'trie', 'suffix-array'],
     prerequisites: ['arrayviz'],
-    related: ['arrayviz', 'lru-cache-hashmap-doubly-linked-list'],
+    related: ['arrayviz', 'compilers-and-runtime-internals-ast-bytecode'],
   },
   lldcosmos: {
     difficulty: 'intermediate',
@@ -231,7 +231,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     tags: ['solid', 'design-patterns', 'lld'],
     related: ['systemdesignviz', 'microservicesviz', 'apiviz'],
   },
-  computerarchitecture: {
+  'computer-architecture-cpu-caches': {
     difficulty: 'advanced',
     estimatedMinutes: 60,
     tags: ['cpu', 'cache', 'architecture'],

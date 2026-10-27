@@ -67,7 +67,7 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--wasm-primary)]/30 bg-[var(--wasm-primary)]/10 text-[var(--wasm-primary)] text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--wasm-primary-30)] bg-[var(--wasm-primary-10)] text-[var(--wasm-primary)] text-xs font-mono">
               <Cpu className="w-3.5 h-3.5 animate-pulse text-[var(--wasm-primary)]" />
               Stack Machine &amp; Linear Memory Engine
             </div>
@@ -141,7 +141,7 @@ export function Home() {
                           key={idx}
                           className={`w-full max-w-[200px] py-1.5 px-4 rounded-lg text-center font-bold border transition-all ${
                             isTop
-                              ? 'border-[var(--wasm-primary)] bg-[var(--wasm-primary)]/20 text-[var(--wasm-text)] shadow-[0_0_15px_rgba(101,79,240,0.3)] animate-pulse'
+                              ? 'border-[var(--wasm-primary)] bg-[var(--wasm-primary-20)] text-[var(--wasm-text)] shadow-[0_0_15px_rgba(101,79,240,0.3)] animate-pulse'
                               : 'border-[var(--wasm-border-subtle)] bg-[var(--wasm-surface-2)] text-[var(--wasm-muted)]'
                           }`}
                         >
@@ -239,17 +239,17 @@ export function Home() {
           </div>
 
           {/* WebAssembly card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--wasm-primary)]/40 bg-[var(--wasm-surface)] space-y-6 shadow-[0_0_30px_rgba(101,79,240,0.15)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--wasm-primary-40)] bg-[var(--wasm-surface)] space-y-6 shadow-[0_0_30px_rgba(101,79,240,0.15)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--wasm-text)]">WebAssembly (AOT Compiled Wasm)</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--wasm-primary)]/10 text-[var(--wasm-primary)] border border-[var(--wasm-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--wasm-primary-10)] text-[var(--wasm-primary)] border border-[var(--wasm-primary-30)] font-bold">
                 Near-Native AOT
               </span>
             </div>
             <p className="text-xs text-[var(--wasm-muted)] leading-relaxed">
               Compact binary format with direct single-pass streaming compilation. Types are statically checked, guaranteeing deterministic CPU performance with zero runtime deoptimizations.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--wasm-bg)] font-mono text-[11px] text-[var(--wasm-muted)] space-y-2 border border-[var(--wasm-primary)]/20">
+            <div className="p-4 rounded-lg bg-[var(--wasm-bg)] font-mono text-[11px] text-[var(--wasm-muted)] space-y-2 border border-[var(--wasm-primary-20)]">
               <div className="text-[var(--wasm-primary)]">• Instant linear streaming compilation from network stream</div>
               <div className="text-[var(--wasm-cyan)]">• Static types eliminate all JIT deoptimization bails</div>
               <div className="text-[var(--wasm-emerald)]">• Explicit linear memory management (0 Garbage Collection pauses)</div>

@@ -21,7 +21,7 @@ export default function TourPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3rem] text-accentSoft">Interactive Tour</p>
+        <p className="text-xs uppercase tracking-[0.3rem] text-[var(--bu-accent-soft)]">Interactive Tour</p>
         <h1 className="section-title">Critical Rendering Path, animated</h1>
         <p className="text-sm text-slate-300">
           Step through the journey from network to pixels. Each stage links to its corresponding visualizer.
@@ -60,14 +60,14 @@ export default function TourPage() {
                 'rounded-xl border px-3 py-2 text-xs text-slate-300 transition',
                 i === index
                   ? 'border-accent bg-accent/15 text-white shadow-glow'
-                  : 'border-border bg-base/70',
+                  : 'border-border bg-[var(--bu-base-70)]',
               )}
             >
               <p className="font-semibold">{item.title}</p>
             </div>
           ))}
         </div>
-        <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-base/70">
+        <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-[var(--bu-base-70)]">
           <div
             className="h-2 bg-accent transition-all"
             style={{ width: `${((index + 1) / steps.length) * 100}%` }}

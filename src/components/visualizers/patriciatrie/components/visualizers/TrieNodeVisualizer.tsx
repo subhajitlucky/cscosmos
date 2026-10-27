@@ -147,7 +147,7 @@ const TrieNodeVisualizer: React.FC<TrieNodeVisualizerProps> = ({
                       className={`
                         w-3.5 h-3.5 sm:w-4 sm:h-4 rounded flex items-center justify-center text-[7px] sm:text-[8px] font-mono border transition-all
                         ${hasChild 
-                          ? 'bg-primary text-white font-bold border-primary shadow-sm' 
+                          ? 'bg-primary text-primary-foreground font-bold border-primary shadow-sm' 
                           : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 border-neutral-200 dark:border-neutral-700'}
                       `}
                     >
@@ -179,7 +179,7 @@ const TrieNodeVisualizer: React.FC<TrieNodeVisualizerProps> = ({
                        <div className={`
                          w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-mono font-bold border z-20 transition-all
                          ${affectedNodes?.has(branchHash) 
-                           ? 'bg-primary text-white border-primary shadow-lg' 
+                           ? 'bg-primary text-primary-foreground border-primary shadow-lg' 
                            : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 border-neutral-200 dark:border-neutral-700'}
                        `}>
                           {i.toString(16).toUpperCase()}

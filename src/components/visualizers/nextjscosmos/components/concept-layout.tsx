@@ -143,7 +143,7 @@ export function ConceptLayout({
 
       <div className="max-w-[1700px] mx-auto px-4 sm:px-6 mt-8 space-y-8">
         
-        {/* Row 1: Interactive Visualizer & Live Code Execution Workbench */}
+        {/* Row 1: Interactive Concept Walkthrough & Editable Code Example */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           
           {/* Visualizer Card */}
@@ -153,17 +153,18 @@ export function ConceptLayout({
                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
                      <Sparkles className="h-4 w-4 text-primary" />
                    </div>
-                   Interactive Simulation Engine
+                   Interactive Concept Walkthrough
                 </CardTitle>
                 <Button
                   onClick={handleExecute}
+                  title="Replays this card's 2-second animation. Step through the concept with the controls inside the visualizer."
                   className={cn(
                     "flex items-center gap-2 font-bold text-xs uppercase tracking-widest transition-all shadow-md",
-                    isExecuting ? "bg-emerald-600 text-white" : "bg-primary text-primary-foreground"
+                    isExecuting ? "bg-emerald-600 text-primary-foreground" : "bg-primary text-primary-foreground"
                   )}
                 >
                   <Play className={cn("h-3.5 w-3.5 fill-current", isExecuting && "animate-pulse")} />
-                  {isExecuting ? 'Simulating Update...' : 'Execute Code'}
+                  {isExecuting ? 'Replaying Walkthrough…' : 'Replay Walkthrough'}
                 </Button>
              </CardHeader>
              <CardContent className="p-4 flex-1 bg-background flex flex-col justify-center min-h-[440px]">
@@ -205,21 +206,22 @@ export function ConceptLayout({
              </CardContent>
           </Card>
 
-          {/* Editable Live Code Implementation Card */}
+          {/* Editable Code Example Card */}
           <Card className="flex flex-col border-border bg-card shadow-xl min-h-[520px]">
              <CardHeader className="bg-muted/40 pb-4 border-b border-border flex flex-row items-center justify-between">
                 <CardTitle className="flex items-center gap-2.5 text-base font-bold text-foreground">
                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Code className="h-4 w-4 text-primary" />
                    </div>
-                   Executable Code Workbench
+                   Editable Code Example
                 </CardTitle>
                 <Button 
                   size="sm"
                   onClick={handleExecute}
+                  title="Replays the walkthrough animation on the visualizer card. This code is an editable example — it is not run."
                   className="bg-primary hover:bg-primary/90 font-bold text-xs uppercase tracking-wider"
                 >
-                  <Play className="h-3 w-3 mr-1.5 fill-current" /> Execute Code
+                  <Play className="h-3 w-3 mr-1.5 fill-current" /> Replay Walkthrough
                 </Button>
              </CardHeader>
              <CardContent className="p-0 flex-1 min-h-[440px]">
@@ -273,7 +275,7 @@ export function ConceptLayout({
                  </CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-red-700/80 dark:text-red-400/80 leading-relaxed italic">
-                 "{misconception || "Developers often confuse this pattern with traditional client React. Use the Live Code Workbench above to simulate execution."}"
+                 "{misconception || "Developers often confuse this pattern with traditional client React. Use the editable code example above to follow the walkthrough."}"
               </CardContent>
            </Card>
 

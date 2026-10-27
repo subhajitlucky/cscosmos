@@ -55,7 +55,7 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--twc-primary)]/30 bg-[var(--twc-primary)]/10 text-[var(--twc-primary)] text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--twc-primary-30)] bg-[var(--twc-primary-10)] text-[var(--twc-primary)] text-xs font-mono">
               <Wind className="w-3.5 h-3.5 animate-pulse text-[var(--twc-primary)]" />
               Utility-First Design System Engine
             </div>
@@ -82,7 +82,7 @@ export function Home() {
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--twc-border)] bg-[var(--twc-surface)] text-[var(--twc-text)] font-mono text-sm hover:border-[var(--twc-primary)] hover:text-[var(--twc-primary)] transition-all"
               >
                 <Activity className="w-4 h-4 text-[var(--twc-primary)]" />
-                Live JIT Playground
+                Live Utility Sandbox
               </Link>
 
               <Link
@@ -133,7 +133,8 @@ export function Home() {
                     </div>
 
                     <p className="text-xs text-slate-300 leading-relaxed">
-                      Instant JIT utility compiler generating zero runtime overhead.
+                      Utility classes are compiled to real CSS at build time, so there is
+                      zero runtime styling overhead.
                     </p>
 
                     <div className="pt-2 flex items-center gap-3">
@@ -147,7 +148,7 @@ export function Home() {
 
                 {/* Generated Class String Display */}
                 <div className="space-y-1.5">
-                  <span className="text-[10px] text-[var(--twc-muted)] uppercase tracking-wider">Compiled Class String</span>
+                  <span className="text-[10px] text-[var(--twc-muted)] uppercase tracking-wider">Applied Class String</span>
                   <div className="p-3 rounded-lg bg-[var(--twc-bg)] border border-[var(--twc-border-subtle)] text-[11px] text-[var(--twc-primary)] break-all select-all">
                     class=&quot;{classListString}&quot;
                   </div>
@@ -228,17 +229,17 @@ export function Home() {
           </div>
 
           {/* Utility-First card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--twc-primary)]/40 bg-[var(--twc-surface)] space-y-6 shadow-[0_0_30px_rgba(6,182,212,0.1)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--twc-primary-40)] bg-[var(--twc-surface)] space-y-6 shadow-[0_0_30px_rgba(6,182,212,0.1)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--twc-text)]">Utility-First Tailwind CSS</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--twc-primary)]/10 text-[var(--twc-primary)] border border-[var(--twc-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--twc-primary-10)] text-[var(--twc-primary)] border border-[var(--twc-primary-30)] font-bold">
                 O(1) Flat Size
               </span>
             </div>
             <p className="text-xs text-[var(--twc-muted)] leading-relaxed">
               Components are composed using standardized atomic design tokens directly in HTML. Global CSS size plateaus at ~10kB and is cached across every route.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--twc-bg)] font-mono text-[11px] text-[var(--twc-muted)] space-y-2 border border-[var(--twc-primary)]/20">
+            <div className="p-4 rounded-lg bg-[var(--twc-bg)] font-mono text-[11px] text-[var(--twc-muted)] space-y-2 border border-[var(--twc-primary-20)]">
               <div className="text-[var(--twc-primary)]">• Global CSS bundle size remains strictly constant</div>
               <div className="text-[var(--twc-sky)]">• Zero mental effort inventing arbitrary class names</div>
               <div className="text-[var(--twc-emerald)]">• Safe refactoring: change markup without global regressions</div>

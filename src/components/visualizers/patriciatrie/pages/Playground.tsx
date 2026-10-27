@@ -56,6 +56,10 @@ const Playground: React.FC = () => {
 
   return (
     <div className="relative flex flex-col lg:grid lg:grid-cols-[320px_1fr_300px] gap-6 lg:h-[calc(100vh-160px)] min-h-screen lg:min-h-0">
+      {/* A full-height three-column tool with no title bar, so this route pre-rendered with no
+          heading element (FS-41/FS-76 class). "Playground" is the engine's own label for the
+          route (Layout.tsx nav); keeping it visually hidden preserves the tool layout. */}
+      <h1 className="sr-only">Playground</h1>
       {/* Sidebar Controls */}
       <div className="bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 flex flex-col gap-6 lg:overflow-hidden shadow-sm">
         <div>
@@ -86,7 +90,7 @@ const Playground: React.FC = () => {
           </div>
           <button 
             type="submit"
-            className="w-full bg-primary text-white py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-lg shadow-primary/20 cursor-pointer"
+            className="w-full bg-primary text-primary-foreground py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-lg shadow-primary/20 cursor-pointer"
           >
             <Plus size={16} /> Insert
           </button>

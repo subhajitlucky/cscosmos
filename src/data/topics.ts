@@ -2,15 +2,18 @@ import type { DomainKey } from './domains';
 import { getTopicMeta, type TopicDifficulty } from './topic-meta';
 
 export interface Topic {
-    id: number;
+    /** Numeric catalog id. Routing and storage use `slug`, never this value. */
+    catalogId: number;
     name: string;
     domain: DomainKey;
     /** Extra domains this topic is cross-listed under (tag-based cross-listing). */
-    aliases?: DomainKey[];
+    crossListedDomains?: DomainKey[];
     shortDescription: string;
+    /** Stable public identifier used by routes, storage, analytics, and the API. */
     slug: string;
-    status: 'coming-soon' | 'active'; // Future proofing
-    url?: string;
+    status: 'coming-soon' | 'active';
+    /** Internal canonical URL path, always `/<domain>/<slug>`. */
+    canonicalPath: string;
     difficulty: TopicDifficulty;
     estimatedMinutes: number;
     tags: string[];
@@ -18,7 +21,7 @@ export interface Topic {
     related: string[];
 }
 
-let idCounter = 1;
+let catalogIdCounter = 1;
 
 const slugify = (name: string) =>
     name
@@ -31,7 +34,7 @@ const slugify = (name: string) =>
 type TopicOptions = {
     status?: Topic['status'];
     slug?: string;
-    aliases?: DomainKey[];
+    crossListedDomains?: DomainKey[];
 }
 
 const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): Topic => {
@@ -39,14 +42,14 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
     const status = options?.status ?? 'coming-soon';
     const meta = getTopicMeta(slug, domain, name);
     return {
-        id: idCounter++,
+        catalogId: catalogIdCounter++,
         name,
         domain,
-        aliases: options?.aliases,
+        crossListedDomains: options?.crossListedDomains,
         slug,
         shortDescription: `Interactive visualization and learning module for ${name}.`,
         status,
-        url: `/${domain}/${slug}`,
+        canonicalPath: `/${domain}/${slug}`,
         ...meta,
     };
 };
@@ -88,7 +91,7 @@ export const topics: Topic[] = [
     createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack", { status: 'active', slug: 'synccosmos' }),
 
     // 5. Architecture & Scale
-    createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', aliases: ['devops'] }),
+    createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', crossListedDomains: ['devops'] }),
     createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack", { status: 'active', slug: 'mqviz' }),
     createTopic("Microservices Architecture (Services, Failures)", "fullstack", { status: 'active', slug: 'microservicesviz' }),
     createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack", { status: 'active', slug: 'lldcosmos' }),
@@ -140,7 +143,7 @@ export const topics: Topic[] = [
 
     // Web3 & Blockchain
     createTopic("Blockchain Fundamentals (Blocks, Transactions)", "web3" , { status: 'active', slug: 'blockchainviz' }),
-    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3", { status: 'active', slug: 'cryptviz', aliases: ['security'] }),
+    createTopic("Cryptography Fundamentals (Hashing, Signatures)", "web3", { status: 'active', slug: 'cryptviz', crossListedDomains: ['security'] }),
     createTopic("Merkle Tree Visualizer (Integrity)", "web3" , { status: 'active', slug: 'merkletreeviz' }),
     createTopic("Patricia Trie Visualizer (State Storage)", "web3" , { status: 'active', slug: 'patriciatrie' }),
     createTopic("Blockchain Consensus (PoW, PoS)", "web3" , { status: 'active', slug: 'consensusviz' }),
@@ -167,11 +170,11 @@ export const topics: Topic[] = [
     createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security", { status: 'active', slug: 'penetration-testing-and-red-teaming-exploits-c2' }),
     createTopic("Digital Forensics & Incident Response (DFIR)", "security", { status: 'active', slug: 'digital-forensics-and-incident-response-dfir' }),
     createTopic("Malware Analysis & Sandbox Internals", "security", { status: 'active', slug: 'malware-analysis-and-sandbox-internals' }),
-    createTopic("Reverse Engineering & Assembly (Low-Level Code)", "security", { status: 'active', slug: 'reverse-engineering-and-assembly-low-level-code', aliases: ['advanced'] }),
-    createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "security", { status: 'active', slug: 'hardware-security-and-side-channel-attacks-spectre-meltdown', aliases: ['advanced'] }),
+    createTopic("Reverse Engineering & Assembly (Low-Level Code)", "security", { status: 'active', slug: 'reverse-engineering-and-assembly-low-level-code', crossListedDomains: ['advanced'] }),
+    createTopic("Hardware Security & Side-Channel Attacks (Spectre, Meltdown)", "security", { status: 'active', slug: 'hardware-security-and-side-channel-attacks-spectre-meltdown', crossListedDomains: ['advanced'] }),
     createTopic("Zero Trust Architecture & IAM", "security", { status: 'active', slug: 'zero-trust-architecture-and-iam' }),
-    createTopic("Software Supply Chain Security (SBOM, Sigstore, SLSA)", "security", { aliases: ['devops'] }),
-    createTopic("Security Engineering (Threat Models)", "security", { status: 'active', slug: 'security-engineering-threat-models', aliases: ['advanced'] }),
+    createTopic("Software Supply Chain Security (SBOM, Sigstore, SLSA)", "security", { crossListedDomains: ['devops'] }),
+    createTopic("Security Engineering (Threat Models)", "security", { status: 'active', slug: 'security-engineering-threat-models', crossListedDomains: ['advanced'] }),
 
     // Artificial Intelligence
     // 1. AI Engineering Foundations

@@ -75,7 +75,7 @@ export function FetchOptionsVisualizer() {
            <div className="flex flex-col items-center gap-4">
               <motion.div 
                 animate={{ 
-                  borderColor: status === 'executing' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
+                  borderColor: status === 'executing' ? 'var(--primary)' : 'rgba(148, 163, 184, 0.4)',
                   rotate: status === 'executing' ? 360 : 0
                 }}
                 transition={{ duration: 1.5, repeat: status === 'executing' ? Infinity : 0 }}
@@ -92,7 +92,7 @@ export function FetchOptionsVisualizer() {
                 animate={{ 
                   opacity: status === 'result' ? 1 : 0.2,
                   scale: status === 'result' ? 1 : 0.9,
-                  borderColor: status === 'result' ? 'var(--emerald-500)' : 'rgba(0,0,0,0.1)'
+                  borderColor: status === 'result' ? '#10b981' : 'rgba(148, 163, 184, 0.4)'
                 }}
                 className="w-24 h-24 rounded-2xl border-2 bg-background flex flex-col items-center justify-center gap-2 shadow-xl"
               >

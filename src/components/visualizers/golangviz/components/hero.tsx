@@ -34,7 +34,7 @@ export function Hero() {
         <div className="flex flex-wrap gap-4 text-xs text-[var(--muted)]">
           <div className="flex items-center gap-2 rounded-full border border-[var(--panel-border)] bg-[var(--panel)] px-3 py-1">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
-            Step-through execution
+            Step-through traces
           </div>
           <div className="flex items-center gap-2 rounded-full border border-[var(--panel-border)] bg-[var(--panel)] px-3 py-1">
             <span className="h-2 w-2 rounded-full bg-blue-500" />
@@ -92,7 +92,7 @@ export function Hero() {
               </div>
             </div>
             <p className="mt-3 text-[var(--muted)]">
-              See each line update the visual model in real time.
+              See each line update the visual model as you step through it.
             </p>
           </div>
         </div>

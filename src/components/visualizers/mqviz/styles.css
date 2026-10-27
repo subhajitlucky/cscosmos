@@ -16,6 +16,27 @@
   --mq-text: #f1f5f9;
   --mq-muted: #84899b;
   
+  /* Pre-mixed translucent tokens.
+     Tailwind v3 cannot apply an opacity modifier to an arbitrary var() colour:
+     `bg-[var(--mq-primary)]/10` is not a valid v3 utility and emits no CSS at
+     all (verified against this repo's tailwindcss 3.4.19). These real custom
+     properties are the supported way to get the same tint. */
+  --mq-primary-10: rgba(245, 158, 11, 0.1);
+  --mq-primary-20: rgba(245, 158, 11, 0.2);
+  --mq-primary-30: rgba(245, 158, 11, 0.3);
+  --mq-primary-40: rgba(245, 158, 11, 0.4);
+  --mq-emerald-10: rgba(16, 185, 129, 0.1);
+  --mq-emerald-30: rgba(16, 185, 129, 0.3);
+  --mq-emerald-40: rgba(16, 185, 129, 0.4);
+  --mq-cyan-10: rgba(6, 182, 212, 0.1);
+  --mq-cyan-20: rgba(6, 182, 212, 0.2);
+  --mq-cyan-30: rgba(6, 182, 212, 0.3);
+  --mq-rose-10: rgba(244, 63, 94, 0.1);
+  --mq-rose-20: rgba(244, 63, 94, 0.2);
+  --mq-rose-30: rgba(244, 63, 94, 0.3);
+  --mq-rose-40: rgba(244, 63, 94, 0.4);
+  --mq-bg-80: rgba(9, 10, 15, 0.8);
+
   --mq-display: 'Syne', sans-serif;
   --mq-sans: 'Inter', sans-serif;
   --mq-mono: 'DM Mono', monospace;
@@ -32,6 +53,7 @@ html:not(.dark) .mqviz-root,
 .mqviz-root[data-theme='light'],
 .mqviz-root.light-mode {
   --mq-bg: #f8fafc;
+  --mq-bg-80: rgba(248, 250, 252, 0.8);
   --mq-surface: #ffffff;
   --mq-surface-2: #f1f5f9;
   --mq-border: rgba(245, 158, 11, 0.28);

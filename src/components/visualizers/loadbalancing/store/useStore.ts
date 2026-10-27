@@ -4,8 +4,6 @@ import type { Node, Request, LBAlgorithm, SimulationState, SimulationMode } from
 import { selectNode } from '../engine/algorithms';
 
 interface AppState extends SimulationState {
-  theme: 'light' | 'dark';
-  setTheme: (theme: 'light' | 'dark') => void;
   setAlgorithm: (algo: LBAlgorithm) => void;
   setSimulationMode: (mode: SimulationMode) => void;
   togglePause: () => void;
@@ -29,7 +27,6 @@ const DEFAULT_NODES: Node[] = [
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
-      theme: 'light',
       nodes: [...DEFAULT_NODES],
       algorithm: 'round-robin',
       mode: 'default',
@@ -40,14 +37,6 @@ export const useStore = create<AppState>()(
       circuitBreakerStatus: 'closed',
       consecutiveFailures: 0,
 
-      setTheme: (theme) => {
-        set({ theme });
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      },
       setAlgorithm: (algo: LBAlgorithm) => {
           set({ algorithm: algo });
           if (algo === 'weighted-round-robin') {
@@ -306,7 +295,27 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'loadbalancer-lab-storage',
-      partialize: (state) => ({ theme: state.theme }),
+      // FS-40: theme is owned by src/context/ThemeContext.tsx, so this store has
+      // nothing left to persist. The key and the wrapper stay, so the simulation
+      // state still behaves exactly as before and old payloads are harmless.
+      partialize: () => ({}),
+      // zustand's default merge is `{ ...currentState, ...persistedState }`, which
+      // would copy a pre-FS-40 `theme` key from old JSON straight back onto the
+      // store (the spread ignores TypeScript's view of the state shape). Restore
+      // only keys the live state actually defines, and stay inert for a payload
+      // that is not a plain object (`{"state":"oops"}` used to be spread as
+      // "oops" — spreading a string is a no-op, but `key in "oops"` throws).
+      merge: (persistedState, currentState) => {
+        const persisted =
+          persistedState !== null && typeof persistedState === 'object'
+            ? (persistedState as Record<string, unknown>)
+            : {};
+        const merged = { ...currentState } as Record<string, unknown>;
+        for (const key of Object.keys(merged)) {
+          if (Object.prototype.hasOwnProperty.call(persisted, key)) merged[key] = persisted[key];
+        }
+        return merged as unknown as AppState;
+      },
     }
   )
 );

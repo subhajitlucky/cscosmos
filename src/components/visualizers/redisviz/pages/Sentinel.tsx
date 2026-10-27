@@ -29,21 +29,24 @@ const Sentinel = () => {
                         <CardContent className="p-6">
                             <DiagramCanvas title="Sentinel Cluster View" height={400}>
                                 {/* Sentinels */}
-                                <DiagramNode x={100} y={50} width={150} height={60} label="Sentinel 1" icon={<Shield className="w-4 h-4" />} color="bg-blue-500" delay={0.1} />
-                                <DiagramNode x={325} y={50} width={150} height={60} label="Sentinel 2" icon={<Shield className="w-4 h-4" />} color="bg-blue-500" delay={0.2} />
-                                <DiagramNode x={550} y={50} width={150} height={60} label="Sentinel 3" icon={<Shield className="w-4 h-4" />} color="bg-blue-500" delay={0.3} />
+                                <DiagramNode x={100} y={50} width={150} height={60} label="Sentinel 1" icon={<Shield className="w-4 h-4" />} color="fill-blue-500" delay={0.1} />
+                                <DiagramNode x={325} y={50} width={150} height={60} label="Sentinel 2" icon={<Shield className="w-4 h-4" />} color="fill-blue-500" delay={0.2} />
+                                <DiagramNode x={550} y={50} width={150} height={60} label="Sentinel 3" icon={<Shield className="w-4 h-4" />} color="fill-blue-500" delay={0.3} />
 
                                 {/* Master */}
-                                <DiagramNode x={325} y={250} width={150} height={80} label="MASTER (Node A)" icon={<Search className="w-4 h-4" />} color="bg-redis" delay={0.5} />
+                                <DiagramNode x={325} y={250} width={150} height={80} label="MASTER (Node A)" icon={<Search className="w-4 h-4" />} color="fill-redis" delay={0.5} />
 
                                 {/* Edges */}
                                 <DiagramEdge fromX={175} fromY={110} toX={325} toY={250} label="Heartbeat" animated={true} delay={1} />
                                 <DiagramEdge fromX={400} fromY={110} toX={400} toY={250} label="Heartbeat" animated={true} delay={1.2} />
                                 <DiagramEdge fromX={625} fromY={110} toX={475} toY={250} label="Heartbeat" animated={true} delay={1.4} />
 
-                                {/* Quorum Info */}
-                                <rect x={10} y={350} width={780} height={40} rx={8} className="fill-blue-500/5 stroke-blue-500/20" />
-                                <text x={400} y={375} textAnchor="middle" className="text-xs font-bold fill-blue-600">QUORUM = 2 (At least 2 Sentinels must agree the Master is down)</text>
+                                {/* Quorum Info. The callout's tint is decorative, but this sentence
+                                    is the only place the quorum rule is stated: fill-blue-600 is
+                                    theme-invariant and reaches only 3.45:1 on the dark canvas
+                                    (4.80:1 in light mode), so dark mode gets blue-400 (7.02:1). */}
+                                <rect x={10} y={350} width={780} height={40} rx={8} className="fill-blue-500/5 stroke-blue-500/20" aria-hidden="true" />
+                                <text x={400} y={375} textAnchor="middle" className="text-xs font-bold fill-blue-600 dark:fill-blue-400">QUORUM = 2 (At least 2 Sentinels must agree the Master is down)</text>
                             </DiagramCanvas>
                         </CardContent>
                     </Card>

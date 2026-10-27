@@ -52,14 +52,14 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--fastapi-teal)]/30 bg-[var(--fastapi-teal)]/10 text-[var(--fastapi-teal)] text-xs font-mono">
-              <Server className="w-3.5 h-3.5 animate-pulse text-[var(--fastapi-teal)]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--fastapi-teal-30)] bg-[var(--fastapi-teal-10)] text-[var(--fastapi-teal-text)] text-xs font-mono">
+              <Server className="w-3.5 h-3.5 animate-pulse text-[var(--fastapi-teal-text)]" />
               Python AsyncIO &bull; Pydantic V2 &bull; Dependency Injection
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-[var(--fastapi-text)]">
               50,000+ Req/Sec.<br />
-              <span className="text-[var(--fastapi-teal)] fastapi-glow">Non-Blocking Async.</span> Rust Validation.
+              <span className="text-[var(--fastapi-teal-text)] fastapi-glow">Non-Blocking Async.</span> Rust Validation.
             </h1>
 
             <p className="text-base md:text-lg text-[var(--fastapi-muted)] max-w-xl leading-relaxed">
@@ -69,16 +69,16 @@ export function Home() {
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <Link
                 href="/fastapicosmos/learn"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[var(--fastapi-primary)] text-white font-semibold text-sm hover:bg-[var(--fastapi-primary-hover)] transition-all shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-95"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[var(--fastapi-primary-solid)] text-[var(--fastapi-on-accent)] font-semibold text-sm hover:bg-[var(--fastapi-primary-solid-hover)] transition-all shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-95"
               >
                 Explore Concept Map <ArrowRight className="w-4 h-4" />
               </Link>
               
               <Link
                 href="/fastapicosmos/di-graph"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--fastapi-border)] bg-[var(--fastapi-surface)] text-[var(--fastapi-text)] font-mono text-sm hover:border-[var(--fastapi-teal)] hover:text-[var(--fastapi-teal)] transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--fastapi-border)] bg-[var(--fastapi-surface)] text-[var(--fastapi-text)] font-mono text-sm hover:border-[var(--fastapi-teal)] hover:text-[var(--fastapi-teal-text)] transition-all"
               >
-                <GitFork className="w-4 h-4 text-[var(--fastapi-teal)]" />
+                <GitFork className="w-4 h-4 text-[var(--fastapi-teal-text)]" />
                 DI Graph Lab
               </Link>
 
@@ -86,7 +86,7 @@ export function Home() {
                 href="/fastapicosmos/async-lab"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface-2)] text-[var(--fastapi-muted)] font-mono text-sm hover:text-[var(--fastapi-text)] transition-all"
               >
-                <Activity className="w-4 h-4 text-[var(--fastapi-sky)]" />
+                <Activity className="w-4 h-4 text-[var(--fastapi-sky-text)]" />
                 AsyncIO Lab
               </Link>
             </div>
@@ -102,7 +102,7 @@ export function Home() {
                   <div className="w-3 h-3 rounded-full bg-green-500/80" />
                   <span className="text-xs text-[var(--fastapi-muted)] ml-2">FastAPI::ASGIPipeline</span>
                 </div>
-                <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 font-bold">
+                <span className="text-[10px] text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 font-bold">
                   2.32 ms TOTAL
                 </span>
               </div>
@@ -118,9 +118,9 @@ export function Home() {
                         key={stage.id}
                         className={`p-2.5 rounded-lg border flex items-center justify-between transition-all ${
                           isActive
-                            ? 'border-[var(--fastapi-teal)] bg-[var(--fastapi-teal)]/15 text-[var(--fastapi-text)] shadow-[0_0_15px_rgba(16,185,129,0.25)]'
+                            ? 'border-[var(--fastapi-teal)] bg-[var(--fastapi-teal-15)] text-[var(--fastapi-text)] shadow-[0_0_15px_rgba(16,185,129,0.25)]'
                             : isDone
-                            ? 'border-emerald-500/30 bg-[var(--fastapi-bg)] text-emerald-400 opacity-90'
+                            ? 'border-emerald-500/30 bg-[var(--fastapi-bg)] text-emerald-700 dark:text-emerald-400 opacity-90'
                             : 'border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface-2)] text-[var(--fastapi-muted)]'
                         }`}
                       >
@@ -137,12 +137,24 @@ export function Home() {
                 </div>
 
                 {/* Dispatch Trigger */}
+                {/* Dispatch Trigger. WCAG 1.4.3 exempts INACTIVE controls, so the
+                    disabled state below is a legibility fix rather than a
+                    compliance one: `disabled:opacity-40` composited this 12px
+                    bold white label against the 40%-opacity fill at 1.83:1 in
+                    light mode (11.91:1 in dark). It now uses an explicit
+                    disabled palette built from tokens that already exist - a
+                    surface-2 fill, the muted label, no glow - which still reads
+                    as disabled while measuring 5.02:1 light / 5.71:1 dark.
+                    `fill-current` keeps the Play glyph white while enabled
+                    (--fastapi-on-accent is #ffffff) and lets it follow the label
+                    into the muted disabled colour instead of staying white on
+                    grey. */}
                 <button
                   onClick={dispatchRequest}
                   disabled={isProcessing}
-                  className="w-full py-3 rounded-lg bg-[var(--fastapi-primary)] text-white font-bold hover:bg-[var(--fastapi-primary-hover)] transition-all shadow-md active:scale-95 disabled:opacity-40 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-lg bg-[var(--fastapi-primary-solid)] text-[var(--fastapi-on-accent)] font-bold hover:bg-[var(--fastapi-primary-solid-hover)] transition-all shadow-md active:scale-95 disabled:bg-[var(--fastapi-surface-2)] disabled:text-[var(--fastapi-muted)] disabled:shadow-none disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <Play className="w-3.5 h-3.5 fill-current" />
                   {isProcessing ? 'Processing ASGI Scope...' : 'Dispatch HTTP POST /orders'}
                 </button>
               </div>
@@ -154,7 +166,7 @@ export function Home() {
       {/* Comparison: Sync WSGI vs Async ASGI */}
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--fastapi-teal)] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--fastapi-teal-text)] uppercase tracking-wider">
             <Layers className="w-4 h-4" /> Python Concurrency Comparison
           </div>
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--fastapi-text)]">
@@ -170,7 +182,7 @@ export function Home() {
           <div className="p-8 rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] space-y-6">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--fastapi-text)]">Sync WSGI (Thread Worker)</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/20">
                 1 Thread per Conn
               </span>
             </div>
@@ -186,20 +198,20 @@ export function Home() {
           </div>
 
           {/* Async ASGI Card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--fastapi-teal)]/40 bg-[var(--fastapi-surface)] space-y-6 shadow-[0_0_30px_rgba(16,185,129,0.15)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--fastapi-teal-40)] bg-[var(--fastapi-surface)] space-y-6 shadow-[0_0_30px_rgba(16,185,129,0.15)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--fastapi-text)]">Async ASGI (FastAPI + uvloop)</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 font-bold">
                 50,000+ Conns
               </span>
             </div>
             <p className="text-xs text-[var(--fastapi-muted)] leading-relaxed">
               Single-thread event loop using cooperative coroutines. When a request awaits I/O (database, external API), the loop immediately processes hundreds of other requests without blocking.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--fastapi-bg)] font-mono text-[11px] text-[var(--fastapi-muted)] space-y-2 border border-[var(--fastapi-teal)]/20">
-              <div className="text-[var(--fastapi-teal)]">• Cooperative async/await suspension on I/O boundaries</div>
-              <div className="text-[var(--fastapi-sky)]">• Auto-offload sync "def" to ThreadPool without loop starvation</div>
-              <div className="text-emerald-400">• Rust pydantic-core serialization at 20x faster speeds</div>
+            <div className="p-4 rounded-lg bg-[var(--fastapi-bg)] font-mono text-[11px] text-[var(--fastapi-muted)] space-y-2 border border-[var(--fastapi-teal-20)]">
+              <div className="text-[var(--fastapi-teal-text)]">• Cooperative async/await suspension on I/O boundaries</div>
+              <div className="text-[var(--fastapi-sky-text)]">• Auto-offload sync "def" to ThreadPool without loop starvation</div>
+              <div className="text-emerald-700 dark:text-emerald-400">• Rust pydantic-core serialization at 20x faster speeds</div>
               <div className="text-[var(--fastapi-text)]">• Native Server-Sent Events (SSE) &amp; WebSocket support</div>
             </div>
           </div>
@@ -210,7 +222,7 @@ export function Home() {
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--fastapi-border-subtle)] pb-6">
           <div>
-            <div className="text-xs font-mono text-[var(--fastapi-teal)] uppercase tracking-wider">
+            <div className="text-xs font-mono text-[var(--fastapi-teal-text)] uppercase tracking-wider">
               Architecture Tracks
             </div>
             <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--fastapi-text)] mt-1">
@@ -219,7 +231,7 @@ export function Home() {
           </div>
           <Link
             href="/fastapicosmos/learn"
-            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--fastapi-teal)] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--fastapi-teal-text)] hover:underline"
           >
             View all 5 topics <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -233,13 +245,13 @@ export function Home() {
               className="fastapi-card p-6 rounded-xl space-y-4 group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--fastapi-teal)]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--fastapi-teal-text)]">
                   {topic.kicker}
                 </span>
-                <ArrowUpRight className="w-4 h-4 text-[var(--fastapi-muted)] group-hover:text-[var(--fastapi-teal)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                <ArrowUpRight className="w-4 h-4 text-[var(--fastapi-muted)] group-hover:text-[var(--fastapi-teal-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </div>
 
-              <h3 className="font-display font-bold text-lg text-[var(--fastapi-text)] group-hover:text-[var(--fastapi-teal)] transition-colors">
+              <h3 className="font-display font-bold text-lg text-[var(--fastapi-text)] group-hover:text-[var(--fastapi-teal-text)] transition-colors">
                 {topic.title}
               </h3>
 

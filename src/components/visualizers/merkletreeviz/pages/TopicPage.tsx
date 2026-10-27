@@ -309,7 +309,7 @@ const TopicPage: FC = () => {
                 to={`/learn/${nextTopic}`} 
                 onClick={() => { playSuccess(); }}
                 onMouseEnter={playHover}
-                className="flex items-center gap-4 font-black bg-primary px-10 py-5 rounded-[2rem] text-white text-xs uppercase tracking-[0.2em] hover:scale-105 shadow-2xl shadow-primary/20 transition-all"
+                className="flex items-center gap-4 font-black bg-primary px-10 py-5 rounded-[2rem] text-primary-foreground text-xs uppercase tracking-[0.2em] hover:scale-105 shadow-2xl shadow-primary/20 transition-all"
             >
                 Continue Path
                 <ArrowRight className="w-4 h-4" />

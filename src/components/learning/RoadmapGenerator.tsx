@@ -65,7 +65,7 @@ export function RoadmapGenerator() {
         (topic) =>
           topic.status === "active" &&
           (goalConfig.domains.includes(topic.domain) ||
-            topic.aliases?.some((alias) => goalConfig.domains.includes(alias)))
+            topic.crossListedDomains?.some((crossListedDomain) => goalConfig.domains.includes(crossListedDomain)))
       )
       .sort((a, b) => {
         const byDifficulty =
@@ -215,7 +215,7 @@ export function RoadmapGenerator() {
                 {week.topics.map((topic) => (
                   <Link
                     key={topic.slug}
-                    href={topic.url || "/topics"}
+                    href={topic.canonicalPath}
                     className="group flex items-center justify-between gap-3 py-2.5"
                   >
                     <span className="min-w-0">

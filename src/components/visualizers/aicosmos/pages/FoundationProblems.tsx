@@ -225,7 +225,7 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
         <div className="space-y-1 text-center sm:text-left">
           <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Audit Progress:</div>
           <div className="text-base font-bold font-mono text-foreground">
-            Answered: <span>{answeredCount}</span> / {QUESTIONS.length} &bull; Correct: <span className="text-emerald-500">{correctCount}</span>
+            Answered: <span>{answeredCount}</span> / {QUESTIONS.length} &bull; Correct: <span className="text-emerald-700 dark:text-emerald-500">{correctCount}</span>
           </div>
         </div>
 
@@ -308,7 +308,7 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
                         'border-rose-500 text-foreground font-semibold bg-rose-500/10';
                     } else {
                       styleClass =
-                        'border-transparent bg-secondary/10 text-muted-foreground opacity-40';
+                        'border-transparent bg-secondary/10 text-zinc-600 dark:text-zinc-400 opacity-40';
                     }
                   }
 
@@ -326,10 +326,10 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
                       </span>
                       <span className="flex-1 leading-relaxed">{option}</span>
                       {isAnswered && isThisCorrect && (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-4 w-4 text-emerald-700 dark:text-emerald-500 shrink-0 mt-0.5" />
                       )}
                       {isAnswered && isThisSelected && !isThisCorrect && (
-                        <XCircle className="h-4 w-4 text-rose-500 shrink-0 mt-0.5" />
+                        <XCircle className="h-4 w-4 text-rose-700 dark:text-rose-500 shrink-0 mt-0.5" />
                       )}
                     </button>
                   );
@@ -360,7 +360,7 @@ export function FoundationProblems({ basePath = '/ai/ai-engineering-foundations'
       {answeredCount === QUESTIONS.length && (
         <section className="rounded-xl border border-border/80 bg-card p-8 text-center space-y-4">
           <div className="space-y-2">
-            <span className="text-xs font-mono font-bold text-emerald-500 uppercase tracking-widest">
+            <span className="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-500 uppercase tracking-widest">
               CERTIFICATION COMPLETE
             </span>
             <h2 className="font-display font-black text-2xl text-foreground">

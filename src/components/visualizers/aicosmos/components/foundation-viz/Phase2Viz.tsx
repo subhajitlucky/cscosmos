@@ -116,7 +116,7 @@ export function RolesMatrixWidget() {
           </div>
           <div className="p-3 rounded-lg border border-border/60 bg-secondary/40 space-y-1 sm:col-span-2">
             <span className="text-muted-foreground text-[10px] uppercase font-bold">North Star Evaluation Metrics</span>
-            <div className="text-emerald-500 text-[11px] font-semibold">{active.metrics}</div>
+            <div className="text-emerald-700 dark:text-emerald-500 text-[11px] font-semibold">{active.metrics}</div>
           </div>
         </div>
       </div>
@@ -189,7 +189,7 @@ export function PipelineLifecycleWidget() {
           <div className="font-bold text-sm sm:text-base text-foreground">
             Stage {stages[activeStage].num}: {stages[activeStage].title}
           </div>
-          <span className="text-[11px] text-emerald-500 font-semibold">Active Milestone</span>
+          <span className="text-[11px] text-emerald-700 dark:text-emerald-500 font-semibold">Active Milestone</span>
         </div>
 
         <p className="font-sans text-xs sm:text-sm text-muted-foreground leading-relaxed">
@@ -264,7 +264,7 @@ export function DataModelInferenceWidget() {
         <div className="p-4 rounded-xl border border-border/80 bg-secondary/20 space-y-1.5">
           <span className="text-[10px] text-muted-foreground font-bold">STAGE 03: CONTEXT</span>
           <div className="font-bold text-foreground text-xs">Top-1 Retrieved Chunk</div>
-          <div className="text-[11px] text-emerald-500 font-semibold">
+          <div className="text-[11px] text-emerald-700 dark:text-emerald-500 font-semibold">
             Similarity: 94.2% Match
           </div>
         </div>

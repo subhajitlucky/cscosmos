@@ -15,6 +15,20 @@
   --svelte-border-subtle: rgba(255, 255, 255, 0.08);
   --svelte-text: #f4f4f8;
   --svelte-muted: #8b8f9f;
+
+  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity
+     modifier to an arbitrary var() colour: `bg-[var(--svelte-bg)]/80` is not
+     a valid v3 utility and emits no CSS at all (verified against tailwindcss
+     3.4.19). These real custom properties are the supported way to get the
+     same tint. */
+  --svelte-primary-10: rgba(255, 62, 0, 0.1);
+  --svelte-primary-20: rgba(255, 62, 0, 0.2);
+  --svelte-primary-30: rgba(255, 62, 0, 0.3);
+  --svelte-primary-40: rgba(255, 62, 0, 0.4);
+  --svelte-mint-5: rgba(0, 240, 144, 0.05);
+  --svelte-mint-10: rgba(0, 240, 144, 0.1);
+  --svelte-mint-30: rgba(0, 240, 144, 0.3);
+  --svelte-bg-80: rgba(12, 13, 18, 0.8);
   
   --svelte-display: 'Syne', sans-serif;
   --svelte-sans: 'Inter', sans-serif;
@@ -38,6 +52,7 @@ html:not(.dark) .sveltecosmos-root,
   --svelte-border-subtle: rgba(0, 0, 0, 0.1);
   --svelte-text: #1a1b23;
   --svelte-muted: #5a5f73;
+  --svelte-bg-80: rgba(248, 249, 250, 0.8);
 }
 
 html.dark .sveltecosmos-root,

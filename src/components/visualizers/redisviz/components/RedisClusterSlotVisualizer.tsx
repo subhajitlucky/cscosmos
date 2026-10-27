@@ -1,23 +1,17 @@
 'use client';
 
-'use client';
-
 import React, { useState } from 'react';
 import { Database, Network, Search, Server, Sparkles, Terminal, Zap } from 'lucide-react';
+import { keyHashSlot } from '../lib/hashSlot';
 
-// Simplified deterministic CRC16-CCITT implementation for visualizer
-function getCrc16HashSlot(key: string): number {
-  // Extract hash tag if present: e.g. {user:100}.profile -> user:100
-  const match = key.match(/\{([^}]+)\}/);
-  const effectiveKey = match ? match[1] : key;
-
-  let hash = 0;
-  for (let i = 0; i < effectiveKey.length; i++) {
-    hash = (hash << 5) - hash + effectiveKey.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash) % 16384;
-}
+// Was a local "CRC16-CCITT" that was actually a 31-multiplier Java-style string
+// hash (`hash = hash << 5 - hash + charCodeAt(i)`) — the same fake hash already
+// removed from ClusterSimulator. It is now the real Redis Cluster slot function
+// (CRC-16/XMODEM over the key bytes, with `{hash tag}` support), so this
+// component can no longer disagree with the lesson it illustrates. It is
+// currently unmounted, but it is 193 lines of usable work and would have taught
+// the wrong slot the moment anyone wired it up.
+const getCrc16HashSlot = keyHashSlot;
 
 export function RedisClusterSlotVisualizer() {
   const [testKey, setTestKey] = useState<string>('{user:100}.profile');

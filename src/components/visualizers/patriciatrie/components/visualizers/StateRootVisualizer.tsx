@@ -99,7 +99,7 @@ const StateRootVisualizer: React.FC = () => {
            </button>
         </div>
 
-        <div className="p-8 bg-primary text-white rounded-[40px] shadow-xl shadow-primary/20 relative overflow-hidden">
+        <div className="p-8 bg-primary text-primary-foreground rounded-[40px] shadow-xl shadow-primary/20 relative overflow-hidden">
            <div className="absolute inset-0 bg-white/5"></div>
            <div className="relative z-10 h-full flex flex-col justify-center">
               <h5 className="font-black text-sm mb-4 uppercase tracking-widest opacity-80">The Result</h5>

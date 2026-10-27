@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import RouteClientShell from './RouteClientShell';
+import EngineMount from './EngineMount';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -10,6 +10,12 @@ export function generateStaticParams() {
     { slug: ['lab'] },
   ];
 
+  // Checked against the engine's own data: all nine ids below exist as keys of
+  // `topicData` in components/visualizers/merkletreeviz/pages/TopicPage.tsx and in
+  // that file's `topics` array, so `TopicPage` never falls back to its default
+  // chapter and every concept is pre-rendered. (This is the check that caught a
+  // real mismatch in stringalgoviz and gitcosmos; here the hand-written list is
+  // already in sync.)
   const topicIds = ["why-integrity","hashing-recap","leaf-nodes","internal-nodes","merkle-root","binary-tree-structure","merkle-proofs","efficiency","blockchains"];
   topicIds.forEach((id: string) => {
     params.push({ slug: ['learn', id] });
@@ -27,9 +33,17 @@ export default async function MerkletreevizPage({
   params: Promise<{ slug?: string[] }>;
 }) {
   const resolved = await params;
+
+  // `new Date()` inside a client component runs on the server (build/request
+  // clock) and again in the browser (visitor clock), which is a hydration
+  // mismatch whenever the two disagree. Compute it once here, in the server
+  // component, and serialise it into the RSC payload: the pre-rendered HTML and
+  // the hydrating client both receive this exact number.
+  const year = new Date().getFullYear();
+
   return (
     <Suspense fallback={null}>
-      <RouteClientShell slug={resolved?.slug || []} />
+      <EngineMount slug={resolved?.slug || []} year={year} />
     </Suspense>
   );
 }

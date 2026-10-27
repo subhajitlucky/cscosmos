@@ -31,12 +31,12 @@ export function Learn() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
       {/* Header */}
       <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ai-primary)]/30 bg-[var(--ai-primary)]/10 text-[var(--ai-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ai-primary-30)] bg-[var(--ai-primary-10)] text-[var(--ai-primary-text)] text-xs font-mono">
           <BookOpen className="w-3.5 h-3.5" /> AI Application Engineering Curriculum
         </div>
 
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--ai-text)]">
-          The AI Systems <span className="text-[var(--ai-primary)] ai-glow">Architecture Map</span>
+          The AI Systems <span className="text-[var(--ai-primary-text)] ai-glow">Architecture Map</span>
         </h1>
 
         <p className="text-sm md:text-base text-[var(--ai-muted)] max-w-2xl leading-relaxed">
@@ -91,7 +91,7 @@ export function Learn() {
             <div className="flex items-center justify-between border-b border-[var(--ai-border-subtle)] pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs font-bold text-[var(--ai-primary)]">
+                  <span className="font-mono text-xs font-bold text-[var(--ai-primary-text)]">
                     TRACK_0{groupIdx + 1}
                   </span>
                   <h2 className="font-display text-2xl font-bold text-[var(--ai-text)]">
@@ -117,13 +117,13 @@ export function Learn() {
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-[var(--ai-primary)]">
+                      <span className="text-[10px] font-mono text-[var(--ai-primary-text)]">
                         {topic.kicker}
                       </span>
-                      <ArrowUpRight className="w-4 h-4 text-[var(--ai-muted)] group-hover:text-[var(--ai-primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      <ArrowUpRight className="w-4 h-4 text-[var(--ai-muted)] group-hover:text-[var(--ai-primary-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                     </div>
 
-                    <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-[var(--ai-primary)] transition-colors">
+                    <h3 className="font-display font-bold text-lg text-[var(--ai-text)] group-hover:text-[var(--ai-primary-text)] transition-colors">
                       {topic.title}
                     </h3>
 
@@ -136,7 +136,7 @@ export function Learn() {
                     <span className="text-[10px] font-mono text-[var(--ai-muted)]">
                       {topic.difficulty}
                     </span>
-                    <span className="text-[10px] font-mono text-[var(--ai-primary)] flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-[var(--ai-primary-text)] flex items-center gap-1">
                       Deep dive <ArrowUpRight className="w-3 h-3" />
                     </span>
                   </div>

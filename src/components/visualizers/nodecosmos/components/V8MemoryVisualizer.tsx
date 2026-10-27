@@ -22,11 +22,13 @@ export function V8MemoryVisualizer() {
   const [log, setLog] = useState<string>('Allocate objects or run Minor Scavenger GC to see Cheney semi-space copy and Old Gen promotion.');
 
   const handleAllocate = () => {
-    const isGarbage = Math.random() > 0.4;
+    // Deterministic illustrative pattern (no randomness): 2 of every 3 allocations
+    // die young, and sizes cycle 16/32/48/64KB to show churn in Eden Space.
+    const isGarbage = counter % 3 !== 0;
     const newObj: HeapObject = {
       id: counter,
       name: isGarbage ? `temp_var_${counter}` : `session_${counter}`,
-      sizeKb: Math.floor(Math.random() * 32) + 16,
+      sizeKb: 16 + (counter % 4) * 16,
       age: 0,
       generation: 'Young',
       status: isGarbage ? 'garbage' : 'alive'
@@ -51,7 +53,7 @@ export function V8MemoryVisualizer() {
           return o;
         })
     );
-    setLog('🧹 MINOR GC (Scavenger): Young Generation garbage swept in 1.2ms! Surviving objects aged & promoted to Old Gen.');
+    setLog('🧹 MINOR GC (Scavenger): Young Generation garbage collected. Surviving objects aged & promoted to Old Gen.');
   };
 
   const handleMajorGC = () => {
@@ -172,7 +174,7 @@ export function V8MemoryVisualizer() {
 
       {/* Log Output */}
       <div className="p-4 rounded-2xl bg-slate-950 text-slate-100 font-mono text-xs border border-slate-800 space-y-1">
-        <span className="text-emerald-400 font-bold">V8 Memory Log:</span>
+        <span className="text-emerald-400 font-bold">V8 Memory Log (simulated heap):</span>
         <p className="text-slate-300 leading-relaxed">{log}</p>
       </div>
 
@@ -191,7 +193,7 @@ export function V8MemoryVisualizer() {
           className="px-5 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs transition shadow-md flex items-center gap-1.5"
         >
           <Trash2 className="w-4 h-4" />
-          <span>Run Minor Scavenger GC (&lt; 2ms)</span>
+          <span>Run Minor Scavenger GC</span>
         </button>
 
         <button

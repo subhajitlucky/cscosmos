@@ -18,14 +18,18 @@ const ConsensusIntroViz: React.FC = () => {
   const [hasTraitor, setHasTraitor] = useState(false);
   const [consensus, setConsensus] = useState<boolean | null>(null);
   const [distance, setDistance] = useState(110);
+  // The viewport is measured in the effect below, never while rendering: the
+  // server and the client's first pass both start from the wide layout, and the
+  // narrow-screen variant is adopted after mount. Reading `window.innerWidth`
+  // during render (as `getBubbleStyle` used to) made this engine unrenderable on
+  // the server.
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 480) {
-        setDistance(80);
-      } else {
-        setDistance(110);
-      }
+      const small = window.innerWidth < 480;
+      setIsSmallScreen(small);
+      setDistance(small ? 80 : 110);
     };
     
     const rafHandle = requestAnimationFrame(() => {
@@ -59,8 +63,7 @@ const ConsensusIntroViz: React.FC = () => {
   };
 
   const getBubbleStyle = (id: 'N' | 'E' | 'S' | 'W') => {
-    const isSmall = window.innerWidth < 480;
-    const offset = isSmall ? "12" : "14";
+    const offset = isSmallScreen ? "12" : "14";
     switch (id) {
       case 'N': return `-top-${offset} left-1/2 -translate-x-1/2`; 
       case 'S': return `-bottom-${offset} left-1/2 -translate-x-1/2`; 

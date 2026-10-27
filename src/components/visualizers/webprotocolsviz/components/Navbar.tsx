@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { theme, setTheme } = useCSCosmosTheme();
+  const { resolvedTheme, setTheme } = useCSCosmosTheme();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-colors duration-300">
@@ -80,11 +80,11 @@ export default function Navbar() {
         {/* Right: Theme Switcher */}
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
             className="p-2 rounded-lg border border-border bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
             title="Toggle Light/Dark Theme"
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+            {resolvedTheme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
           </button>
         </div>
       </div>

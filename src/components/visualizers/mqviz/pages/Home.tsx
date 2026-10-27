@@ -31,7 +31,7 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--mq-primary)]/30 bg-[var(--mq-primary)]/10 text-[var(--mq-primary)] text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--mq-primary-30)] bg-[var(--mq-primary-10)] text-[var(--mq-primary)] text-xs font-mono">
               <Radio className="w-3.5 h-3.5 animate-pulse text-[var(--mq-primary)]" />
               Event Streaming &amp; Commit Log Engine
             </div>
@@ -81,7 +81,7 @@ export function Home() {
                   <div className="w-3 h-3 rounded-full bg-green-500/80" />
                   <span className="text-xs font-mono text-[var(--mq-muted)] ml-2">KafkaTopic::orders-v1</span>
                 </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--mq-emerald)]/10 text-[var(--mq-emerald)] border border-[var(--mq-emerald)]/30">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--mq-emerald-10)] text-[var(--mq-emerald)] border border-[var(--mq-emerald-30)]">
                   LEADER_UP
                 </span>
               </div>
@@ -90,7 +90,7 @@ export function Home() {
                 {/* Partition Pipeline */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-[11px] text-[var(--mq-muted)]">
-                    <span>Partitions (Murmur2 Hash)</span>
+                    <span>Partitions (key hash)</span>
                     <span className="text-[var(--mq-primary)] font-bold">Total Events: {producedCount}</span>
                   </div>
 
@@ -102,7 +102,7 @@ export function Home() {
                           key={pId}
                           className={`p-3 rounded-lg border flex items-center justify-between transition-all ${
                             isTarget
-                              ? 'border-[var(--mq-primary)] bg-[var(--mq-primary)]/10 shadow-[0_0_15px_rgba(245,158,11,0.15)]'
+                              ? 'border-[var(--mq-primary)] bg-[var(--mq-primary-10)] shadow-[0_0_15px_rgba(245,158,11,0.15)]'
                               : 'border-[var(--mq-border-subtle)] bg-[var(--mq-bg)] opacity-70'
                           }`}
                         >
@@ -149,7 +149,7 @@ export function Home() {
                   </button>
                   <button
                     onClick={consumeMessage}
-                    className="px-4 py-2.5 rounded-lg border border-[var(--mq-cyan)] bg-[var(--mq-cyan)]/10 text-[var(--mq-cyan)] font-mono text-xs hover:bg-[var(--mq-cyan)]/20 transition-all"
+                    className="px-4 py-2.5 rounded-lg border border-[var(--mq-cyan)] bg-[var(--mq-cyan-10)] text-[var(--mq-cyan)] font-mono text-xs hover:bg-[var(--mq-cyan-20)] transition-all"
                   >
                     ✓ Consume &amp; Commit
                   </button>
@@ -195,17 +195,17 @@ export function Home() {
           </div>
 
           {/* Append-Only Commit Log card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--mq-primary)]/40 bg-[var(--mq-surface)] space-y-6 shadow-[0_0_30px_rgba(245,158,11,0.1)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--mq-primary-40)] bg-[var(--mq-surface)] space-y-6 shadow-[0_0_30px_rgba(245,158,11,0.1)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--mq-text)]">Distributed Commit Log</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--mq-primary)]/10 text-[var(--mq-primary)] border border-[var(--mq-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--mq-primary-10)] text-[var(--mq-primary)] border border-[var(--mq-primary-30)] font-bold">
                 Apache Kafka / Redpanda
               </span>
             </div>
             <p className="text-xs text-[var(--mq-muted)] leading-relaxed">
               Messages are written to an immutable sequential on-disk ledger. Multiple independent consumer groups read at their own pace and can rewind to replay history.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--mq-bg)] font-mono text-[11px] text-[var(--mq-muted)] space-y-2 border border-[var(--mq-primary)]/20">
+            <div className="p-4 rounded-lg bg-[var(--mq-bg)] font-mono text-[11px] text-[var(--mq-muted)] space-y-2 border border-[var(--mq-primary-20)]">
               <div className="text-[var(--mq-primary)]">• Immutable append-only sequential disk writes</div>
               <div className="text-[var(--mq-cyan)]">• Millions of ops/sec via OS PageCache &amp; Zero-Copy</div>
               <div className="text-[var(--mq-emerald)]">• Time-travel offset replay &amp; event sourcing</div>

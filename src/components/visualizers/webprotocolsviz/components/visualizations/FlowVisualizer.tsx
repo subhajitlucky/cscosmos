@@ -1,12 +1,43 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Laptop, Server, RefreshCw, HardDrive, Globe, AlertCircle, CheckCircle2, Search, Zap } from 'lucide-react';
+import { Laptop, Server, RefreshCw, HardDrive, Globe, AlertCircle, CheckCircle2, Search, Zap, Lock, ShieldCheck } from 'lucide-react';
 
 interface FlowVisualizerProps {
-  type: 'flow' | 'cycle' | 'methods' | 'headers' | 'status' | 'caching' | 'validation' | 'cdn' | 'performance';
+  type: 'flow' | 'cycle' | 'methods' | 'headers' | 'status' | 'caching' | 'validation' | 'cdn' | 'performance' | 'tls';
   topicId?: string;
 }
+
+const TLS_STEPS = [
+  {
+    from: 'client',
+    label: '1 · ClientHello',
+    detail: 'The browser offers the TLS versions and cipher suites it supports, plus a random nonce.',
+    tone: 'text-primary',
+    dot: 'bg-primary',
+  },
+  {
+    from: 'server',
+    label: '2 · ServerHello + Certificate',
+    detail: 'The server chooses a cipher suite and returns its X.509 certificate, containing its public key.',
+    tone: 'text-sky-500',
+    dot: 'bg-sky-500',
+  },
+  {
+    from: 'client',
+    label: '3 · Certificate verified, key exchanged',
+    detail: 'The browser checks the certificate against a trusted CA, then both sides derive the same session key.',
+    tone: 'text-amber-500',
+    dot: 'bg-amber-500',
+  },
+  {
+    from: 'server',
+    label: '4 · Encrypted tunnel',
+    detail: 'Everything after this point is symmetrically encrypted. A plain GET now returns 200 OK over TLS.',
+    tone: 'text-green-500',
+    dot: 'bg-green-500',
+  },
+];
 
 const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
   const [step, setStep] = useState(0);
@@ -142,7 +173,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
             <div className="relative grid grid-cols-2 gap-12">
                {[1, 2, 3, 4].map((id) => (
                  <div key={id} className="relative flex flex-col items-center">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg border-2 transition-all ${step % 2 === 0 ? 'bg-primary border-primary text-white' : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-300'}`}>
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg border-2 transition-all ${step % 2 === 0 ? 'bg-primary border-primary text-primary-foreground' : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-300'}`}>
                        <Globe size={28} />
                     </div>
                     <span className="text-[8px] font-bold uppercase mt-1 text-slate-400">Edge Node {id}</span>
@@ -299,7 +330,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
                >
                   <HardDrive size={32} className={step % 2 === 0 ? "text-primary" : "text-slate-300 dark:text-slate-700"} />
                </motion.div>
-               <div className={`absolute -top-2 -right-2 ${step % 2 === 0 ? 'bg-primary' : 'bg-slate-400 dark:bg-slate-600'} text-white text-[10px] px-2 py-0.5 rounded-full font-bold transition-colors`}>CACHE</div>
+               <div className={`absolute -top-2 -right-2 ${step % 2 === 0 ? 'bg-primary text-primary-foreground' : 'bg-slate-400 dark:bg-slate-600 text-white'} text-[10px] px-2 py-0.5 rounded-full font-bold transition-colors`}>CACHE</div>
             </div>
   
             <div className="flex flex-col items-center gap-2">
@@ -362,6 +393,67 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
          </p>
       </div>
     );
+    // Four-stage TLS 1.3-style handshake. The /webprotocols/topics/https lesson
+    // previously rendered the ETag/304 validation animation, which taught cache
+    // revalidation on a page about encryption and certificates.
+    const renderTLS = () => {
+      const current = TLS_STEPS[step % TLS_STEPS.length];
+      const toServer = current.from === 'client';
+
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-center p-8">
+          <div className="flex items-center justify-between w-full max-w-md relative">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-2">
+              <div className="w-20 h-20 bg-white dark:bg-slate-900 shadow-lg rounded-2xl flex items-center justify-center border-2 border-primary/20 z-10 transition-colors">
+                <Laptop size={40} className="text-primary" />
+              </div>
+              <span className="text-xs font-bold uppercase tracking-tighter text-slate-400">Browser</span>
+            </motion.div>
+
+            <div className="flex-1 h-1 bg-slate-200 dark:bg-slate-800 relative mx-4 rounded-full overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={step}
+                  initial={{ left: toServer ? '-10%' : '110%' }}
+                  animate={{ left: toServer ? '110%' : '-10%' }}
+                  transition={{ duration: 1.5, ease: 'easeInOut' }}
+                  className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full ${current.dot}`}
+                />
+              </AnimatePresence>
+            </div>
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-2">
+              <div className="w-20 h-20 bg-white dark:bg-slate-900 shadow-lg rounded-2xl flex items-center justify-center border-2 border-slate-200 dark:border-slate-800 z-10 relative transition-colors">
+                <Server size={40} className="text-slate-700 dark:text-slate-300" />
+                {step >= 2 && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full p-1"
+                  >
+                    <ShieldCheck size={14} />
+                  </motion.div>
+                )}
+              </div>
+              <span className="text-xs font-bold uppercase tracking-tighter text-slate-400">Server</span>
+            </motion.div>
+          </div>
+
+          <div className="mt-8 text-center bg-white dark:bg-slate-900 px-4 py-3 rounded-xl border dark:border-slate-800 max-w-lg space-y-1 transition-colors">
+            <p className={`text-sm font-bold ${current.tone}`}>{current.label}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{current.detail}</p>
+          </div>
+
+          <div className="mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
+            <Lock size={14} className={step >= 3 ? 'text-green-500' : 'text-slate-300 dark:text-slate-700'} />
+            <span className={step >= 3 ? 'text-green-500' : 'text-slate-400'}>
+              {step >= 3 ? 'TLS tunnel established — traffic encrypted' : 'Handshake in progress — traffic still in the clear'}
+            </span>
+          </div>
+        </div>
+      );
+    };
+
     switch (type) {
     case 'cycle': return renderCycle();
     case 'status': return renderStatus();
@@ -371,6 +463,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
     case 'methods': return renderMethods();
     case 'caching': return renderCaching();
     case 'performance': return renderPerformance();
+    case 'tls': return renderTLS();
     case 'flow': return renderCycle();
     default: return renderCycle();
   }

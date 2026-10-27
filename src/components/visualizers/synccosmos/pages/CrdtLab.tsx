@@ -76,7 +76,7 @@ export function CrdtLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--sync-primary)]/30 bg-[var(--sync-primary)]/10 text-[var(--sync-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--sync-primary-30)] bg-[var(--sync-primary-10)] text-[var(--sync-primary)] text-xs font-mono">
           <GitCommit className="w-3.5 h-3.5" /> Replicated Growable Array (RGA) Simulator
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--sync-text)]">
@@ -116,7 +116,7 @@ export function CrdtLab() {
                   maxLength={1}
                   value={aliceInput}
                   onChange={(e) => setAliceInput(e.target.value)}
-                  className="w-12 p-2 text-center rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-white font-bold"
+                  className="w-12 p-2 text-center rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-[var(--sync-text)] font-bold"
                 />
                 <button
                   onClick={() => insertChar('alice', aliceInput)}
@@ -139,7 +139,7 @@ export function CrdtLab() {
                   maxLength={1}
                   value={bobInput}
                   onChange={(e) => setBobInput(e.target.value)}
-                  className="w-12 p-2 text-center rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-white font-bold"
+                  className="w-12 p-2 text-center rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-[var(--sync-text)] font-bold"
                 />
                 <button
                   onClick={() => insertChar('bob', bobInput)}
@@ -162,7 +162,7 @@ export function CrdtLab() {
                   maxLength={1}
                   value={charlieInput}
                   onChange={(e) => setCharlieInput(e.target.value)}
-                  className="w-12 p-2 text-center rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-white font-bold"
+                  className="w-12 p-2 text-center rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-[var(--sync-text)] font-bold"
                 />
                 <button
                   onClick={() => insertChar('charlie', charlieInput)}
@@ -185,7 +185,7 @@ export function CrdtLab() {
               </span>
               <span className="text-[var(--sync-muted)]">{nodes.length} nodes ({nodes.filter(n => n.deleted).length} tombstones)</span>
             </div>
-            <div className="p-4 rounded-xl bg-[var(--sync-bg)] text-2xl font-bold text-white border border-[var(--sync-border-subtle)] tracking-wider">
+            <div className="p-4 rounded-xl bg-[var(--sync-bg)] text-2xl font-bold text-[var(--sync-text)] border border-[var(--sync-border-subtle)] tracking-wider">
               {renderedText || <span className="text-slate-600">(empty document)</span>}
             </div>
           </div>

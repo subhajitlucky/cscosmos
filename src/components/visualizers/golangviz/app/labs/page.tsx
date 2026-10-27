@@ -29,15 +29,15 @@ export default function LabsPage() {
 
     setTimeout(() => {
       setIsRunning(false);
-      setTestOutput(`=== RUN   TestChallenge
-=== RUN   TestChallenge/${selectedLab.testCases[0]?.name || 'Test 1'}
-    --- PASS: TestChallenge/${selectedLab.testCases[0]?.name || 'Test 1'} (0.00s)
-=== RUN   TestChallenge/${selectedLab.testCases[1]?.name || 'Test 2'}
-    --- PASS: TestChallenge/${selectedLab.testCases[1]?.name || 'Test 2'} (0.00s)
-PASS
-ok      golangviz/labs/challenge 0.012s
+      setTestOutput(`📋 Preset go test trace — recorded reference output for this challenge; your edits are not compiled or run.
 
-🎉 ALL UNIT TESTS PASSED! Memory allocations: 0 B/op (Optimal)`);
+=== RUN   TestChallenge
+=== RUN   TestChallenge/${selectedLab.testCases[0]?.name || 'Test 1'}
+    --- PASS: TestChallenge/${selectedLab.testCases[0]?.name || 'Test 1'}
+=== RUN   TestChallenge/${selectedLab.testCases[1]?.name || 'Test 2'}
+    --- PASS: TestChallenge/${selectedLab.testCases[1]?.name || 'Test 2'}
+PASS
+ok      golangviz/labs/challenge  (preset trace)`);
       setPassedLabs((prev) => ({ ...prev, [selectedLab.id]: true }));
     }, 600);
   };
@@ -54,20 +54,20 @@ ok      golangviz/labs/challenge 0.012s
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="space-y-2 max-w-xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" /> Hands-On Test-Driven Labs
+                <Sparkles className="w-3.5 h-3.5" /> Guided Walkthrough Labs
               </div>
               <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--foreground)]">
                 Interactive Go Coding Labs
               </h1>
               <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed">
-                Write real Go code directly in the browser and pass automated test suites with instant feedback.
+                Write Go code in the browser, then reveal the preset test output for each challenge. Nothing here is compiled or executed — the trace is a reference walkthrough.
               </p>
             </div>
 
             <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[var(--panel)] border border-[var(--panel-border)]">
               <Trophy className="w-5 h-5 text-amber-500" />
               <span className="text-xs font-bold text-[var(--foreground)]">
-                Completed: {Object.keys(passedLabs).length} / {CODING_LABS.length} Labs
+                Walkthroughs viewed: {Object.keys(passedLabs).length} / {CODING_LABS.length} Labs
               </span>
             </div>
           </div>
@@ -156,7 +156,7 @@ ok      golangviz/labs/challenge 0.012s
               {showHints && (
                 <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/30 text-xs space-y-1.5 animate-in fade-in">
                   <span className="font-bold text-amber-600 dark:text-amber-400 block">💡 Hints:</span>
-                  <ul className="list-disc pl-4 space-y-1 text-[var(--foreground)]/90">
+                  <ul className="list-disc pl-4 space-y-1 text-foreground/90">
                     {selectedLab.hints.map((h, i) => (
                       <li key={i}>{h}</li>
                     ))}
@@ -200,14 +200,14 @@ ok      golangviz/labs/challenge 0.012s
               />
 
               <div className="p-3 bg-slate-900 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[11px] font-mono text-slate-400">Go 1.24 Test Runner</span>
+                <span className="text-[11px] font-mono text-slate-400">Preset Test Output (no compiler)</span>
                 <button
                   onClick={runTests}
                   disabled={isRunning}
                   className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold transition shadow-md flex items-center gap-2"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>{isRunning ? 'Running Test Suite...' : 'Run Test Suite'}</span>
+                  <span>{isRunning ? 'Loading Preset Output...' : 'Show Preset Test Output'}</span>
                 </button>
               </div>
             </div>
@@ -215,19 +215,19 @@ ok      golangviz/labs/challenge 0.012s
             {/* Test Results Terminal */}
             <div className="rounded-3xl border border-[var(--panel-border)] bg-slate-950 text-slate-100 overflow-hidden shadow-xl p-4 font-mono text-xs space-y-2">
               <div className="flex items-center justify-between border-b border-slate-800 pb-2 text-[11px] text-slate-400">
-                <span>Test Suite Console (go test)</span>
-                {isCurrentLabPassed && <span className="text-emerald-400 font-bold">PASSED ✅</span>}
+                <span>Preset Test Console (recorded go test trace)</span>
+                {isCurrentLabPassed && <span className="text-emerald-400 font-bold">PRESET OUTPUT ✅</span>}
               </div>
               <div className="h-32 overflow-y-auto leading-relaxed">
                 {isRunning ? (
                   <div className="text-blue-400 flex items-center gap-2 pt-2">
-                    <span className="animate-spin">⚙️</span> Compiling tests and benchmarking memory allocations...
+                    <span className="animate-spin">⚙️</span> Loading the preset test output...
                   </div>
                 ) : testOutput ? (
                   <pre className="text-emerald-300 whitespace-pre-wrap">{testOutput}</pre>
                 ) : (
                   <div className="text-slate-500 italic pt-2">
-                    Click &ldquo;Run Test Suite&rdquo; to execute the verification tests against your solution.
+                    Click &ldquo;Show Preset Test Output&rdquo; to display the recorded trace for this challenge.
                   </div>
                 )}
               </div>

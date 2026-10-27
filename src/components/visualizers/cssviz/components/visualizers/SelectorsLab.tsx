@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react'
 import VisualizerPanel from './VisualizerPanel'
+import { computeSpecificity } from '@/components/visualizers/cssviz/utils/specificity'
 
 type SelectorOption = {
   label: string
@@ -15,16 +16,6 @@ const options: SelectorOption[] = [
   { label: 'Relational :has (.card:has(.badge))', selector: '.card:has(.badge)' },
   { label: 'Low specificity :where (.nav :where(a))', selector: '.nav :where(a)' },
 ]
-
-const computeSpecificity = (sel: string) => {
-  // Very rough: ids, classes/attributes/pseudo-classes, elements/pseudo-elements
-  const ids = (sel.match(/#/g) || []).length
-  const classes = (sel.match(/\./g) || []).length + (sel.match(/\[/g) || []).length
-  const pseudosClass = (sel.match(/:(?!:)/g) || []).length
-  const pseudosElement = (sel.match(/::/g) || []).length
-  const elements = (sel.match(/\b[a-zA-Z]+\b/g) || []).length
-  return { a: ids, b: classes + pseudosClass, c: elements + pseudosElement }
-}
 
 const SelectorsLab = () => {
   const [selector, setSelector] = useState(options[0].selector)
@@ -92,7 +83,7 @@ const SelectorsLab = () => {
             />
           </label>
           <div className="text-xs text-slate-500 dark:text-slate-400">
-            Specificity: ({specificity.a}, {specificity.b}, {specificity.c}) — ids, classes/pseudo-classes, elements.
+            Specificity: ({specificity.ids}, {specificity.classes}, {specificity.elements}) — ids, classes/pseudo-classes, elements.
           </div>
         </div>
       }

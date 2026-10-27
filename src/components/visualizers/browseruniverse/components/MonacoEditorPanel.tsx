@@ -15,7 +15,7 @@ type MonacoEditorPanelProps = {
 export default function MonacoEditorPanel({ html, css, js, onChange, onRun }: MonacoEditorPanelProps) {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
-      <EditorCard title="HTML" accent="text-accentSoft">
+      <EditorCard title="HTML" accent="text-[var(--bu-accent-soft)]">
         <Editor
           height="240px"
           defaultLanguage="html"
@@ -25,7 +25,7 @@ export default function MonacoEditorPanel({ html, css, js, onChange, onRun }: Mo
           options={{ minimap: { enabled: false }, fontSize: 13, lineNumbers: 'on' }}
         />
       </EditorCard>
-      <EditorCard title="CSS" accent="text-accentBlue">
+      <EditorCard title="CSS" accent="text-[var(--bu-accent-blue)]">
         <Editor
           height="240px"
           defaultLanguage="css"
@@ -35,7 +35,7 @@ export default function MonacoEditorPanel({ html, css, js, onChange, onRun }: Mo
           options={{ minimap: { enabled: false }, fontSize: 13, lineNumbers: 'on' }}
         />
       </EditorCard>
-      <EditorCard title="JavaScript" accent="text-accentGreen">
+      <EditorCard title="JavaScript" accent="text-[var(--bu-accent-green)]">
         <Editor
           height="240px"
           defaultLanguage="javascript"
@@ -72,7 +72,7 @@ function EditorCard({
         <p className="text-sm font-semibold text-white">{title}</p>
         <span className={cn('text-xs uppercase tracking-[0.2rem]', accent)}>live</span>
       </div>
-      <div className="min-h-[240px] overflow-hidden rounded-xl border border-border bg-base/80">
+      <div className="min-h-[240px] overflow-hidden rounded-xl border border-border bg-[var(--bu-base-80)]">
         {children}
       </div>
     </div>

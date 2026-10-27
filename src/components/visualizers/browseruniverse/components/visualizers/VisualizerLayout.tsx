@@ -28,16 +28,16 @@ export function VisualizerLayout({
           <h3 className="text-xl font-semibold text-white">{title}</h3>
           <p className="text-sm text-slate-300 max-w-2xl">{description}</p>
         </div>
-        <div className="rounded-full bg-accent/10 px-3 py-1 text-xs text-accentSoft border border-border">
+        <div className="rounded-full bg-accent/10 px-3 py-1 text-xs text-[var(--bu-accent-soft)] border border-border">
           live
         </div>
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-[320px,1fr]">
-        <div className="rounded-2xl border border-border bg-muted/70 p-3 sm:p-4 shadow-inset">
+        <div className="rounded-2xl border border-border bg-muted/70 p-3 sm:p-4 shadow-[inset_0_1px_0_var(--bu-shadow-inset-color)]">
           <p className="text-xs font-semibold uppercase text-slate-400 mb-2">Controls</p>
           {controls}
         </div>
-        <div className="rounded-2xl border border-border bg-base/60 p-3 sm:p-4">
+        <div className="rounded-2xl border border-border bg-[var(--bu-base-60)] p-3 sm:p-4">
           <p className="text-xs font-semibold uppercase text-slate-400 mb-2">Visualization</p>
           {canvas}
         </div>

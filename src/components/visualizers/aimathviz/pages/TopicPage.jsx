@@ -1126,14 +1126,28 @@ function ExpectationVarianceViz() {
 // Covariance Visualization
 function CovarianceViz() {
   const [correlation, setCorrelation] = useState(0.7);
+  // The scatter draw is randomised. Drawing it with `Math.random()` during
+  // render gave the server and the client's first render different point sets —
+  // a hydration mismatch. The points are generated after mount instead, so both
+  // renders agree on the empty plot and the cloud then fills in. `correlation`
+  // stays a dependency so dragging the slider re-rolls the cloud exactly as
+  // before.
+  const [scatter, setScatter] = useState([]);
+
+  useEffect(() => {
+    setScatter(Array.from({ length: 50 }, () => ({
+      x: Math.random(),
+      noise: Math.random(),
+    })));
+  }, [correlation]);
 
   return (
     <div className="space-y-4">
       <div className="h-64 bg-slate-50 dark:bg-slate-800 rounded-xl p-4 relative overflow-hidden">
         {/* Scatter plot simulation */}
-        {Array.from({ length: 50 }).map((_, i) => {
-          const x = Math.random() * 2 - 1;
-          const noise = (Math.random() - 0.5) * 2 * (1 - Math.abs(correlation));
+        {scatter.map((point, i) => {
+          const x = point.x * 2 - 1;
+          const noise = (point.noise - 0.5) * 2 * (1 - Math.abs(correlation));
           const y = x * correlation + noise;
           return (
             <div

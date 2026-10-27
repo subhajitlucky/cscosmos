@@ -101,7 +101,7 @@ export const MemoryLayout: React.FC = () => {
             {memorySegments.map((seg, i) => (
               <motion.div
                 key={seg.name}
-                initial={{ height: 0 }}
+                initial={false}
                 animate={{ height: i === 0 || i === 1 ? 100 : 60 }}
                 className={cn(
                   seg.color,
@@ -191,7 +191,7 @@ export const MemoryLayout: React.FC = () => {
                 <motion.div
                   key={name}
                   layout
-                  initial={{ opacity: 0, y: -16, scale: 0.96 }}
+                  initial={false}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   className={cn(
                     "flex items-center justify-between gap-3 rounded-lg border-2 px-4 py-2.5 font-mono text-sm transition-colors",

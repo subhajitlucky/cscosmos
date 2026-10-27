@@ -42,6 +42,21 @@ const DiagramCanvas: React.FC<DiagramCanvasProps> = ({
     );
 };
 
+/**
+ * `color` is a Tailwind **paint** utility (`fill-*`) applied to the decorative
+ * colour strip on the node's left edge — it is rendered on an SVG `<rect>`, so
+ * it has to be a paint.
+ *
+ * It must never be a `bg-*` utility: `bg-blue-500` sets `background-color`,
+ * which SVG shapes ignore, so the shape falls back to the initial
+ * `fill: black` — invisible against the dark `fill-background` node body and
+ * plain black against the light one (that is the FS-53 bug: every strip in
+ * Architecture and Sentinel shipped as `bg-blue-500`/`bg-purple-500`/
+ * `bg-redis`). `fill-*` emits `fill: …` instead, and `fill-primary` follows the
+ * theme exactly like `background-color: hsl(var(--primary))` would. Emission of
+ * every value used here is verified against the repo's own Tailwind build in
+ * `scratch/agents/redisviz/fs53.test.tsx`.
+ */
 export const DiagramNode: React.FC<{
     x: number;
     y: number;
@@ -52,7 +67,7 @@ export const DiagramNode: React.FC<{
     color?: string;
     className?: string;
     delay?: number;
-}> = ({ x, y, width, height, label, icon, color = "bg-primary", className, delay = 0 }) => {
+}> = ({ x, y, width, height, label, icon, color = "fill-primary", className, delay = 0 }) => {
     return (
         <motion.g
             initial={{ opacity: 0, scale: 0.8 }}
@@ -74,6 +89,7 @@ export const DiagramNode: React.FC<{
                 width={8}
                 height={height}
                 rx={4}
+                aria-hidden="true"
                 className={color}
             />
             <foreignObject x={x + 15} y={y} width={width - 20} height={height}>

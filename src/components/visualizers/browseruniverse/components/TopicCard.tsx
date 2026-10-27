@@ -19,7 +19,7 @@ export default function TopicCard({ topic, className }: Props) {
           <p className="text-xs uppercase tracking-[0.25rem] text-slate-400">Topic</p>
           <h3 className="text-lg font-semibold text-white">{topic.title}</h3>
         </div>
-        <span className="rounded-full border border-border bg-accent/10 px-3 py-1 text-[11px] font-medium text-accentSoft">
+        <span className="rounded-full border border-border bg-accent/10 px-3 py-1 text-[11px] font-medium text-[var(--bu-accent-soft)]">
           {topic.slug}
         </span>
       </div>
@@ -28,7 +28,7 @@ export default function TopicCard({ topic, className }: Props) {
         {topic.tags?.map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-border/80 bg-base/60 px-3 py-1 text-xs text-slate-300"
+            className="rounded-full border border-border/80 bg-[var(--bu-base-60)] px-3 py-1 text-xs text-slate-300"
           >
             {tag}
           </span>

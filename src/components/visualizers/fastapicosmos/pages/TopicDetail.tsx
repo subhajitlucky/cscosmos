@@ -13,7 +13,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       {/* Back Link */}
       <Link
         href="/fastapicosmos/learn"
-        className="inline-flex items-center gap-2 text-xs font-mono text-[var(--fastapi-muted)] hover:text-[var(--fastapi-teal)] transition-colors"
+        className="inline-flex items-center gap-2 text-xs font-mono text-[var(--fastapi-muted)] hover:text-[var(--fastapi-teal-text)] transition-colors"
       >
         <ArrowLeft className="w-4 h-4" /> Back to Architecture Map
       </Link>
@@ -22,7 +22,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--fastapi-teal)]/10 text-[var(--fastapi-teal)] border border-[var(--fastapi-teal)]/30 font-bold">
+            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--fastapi-teal-10)] text-[var(--fastapi-teal-text)] border border-[var(--fastapi-teal-30)] font-bold">
               {topic.kicker}
             </span>
             <span className="text-xs font-mono text-[var(--fastapi-muted)]">
@@ -34,14 +34,14 @@ export function TopicDetail({ topicId }: { topicId: string }) {
             {topic.title}
           </h1>
 
-          <p className="text-base md:text-lg text-[var(--fastapi-muted)] leading-relaxed border-l-4 border-[var(--fastapi-teal)]/30 pl-6 italic">
+          <p className="text-base md:text-lg text-[var(--fastapi-muted)] leading-relaxed border-l-4 border-[var(--fastapi-teal-30)] pl-6 italic">
             &ldquo;{topic.definition}&rdquo;
           </p>
         </div>
 
         {/* Quick Info Box */}
         <div className="lg:col-span-4 p-6 rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] space-y-4">
-          <span className="text-xs font-mono text-[var(--fastapi-teal)] uppercase tracking-wider flex items-center gap-2">
+          <span className="text-xs font-mono text-[var(--fastapi-teal-text)] uppercase tracking-wider flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5" /> Domain Category
           </span>
           <div className="font-display font-bold text-lg text-[var(--fastapi-text)]">
@@ -55,7 +55,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
 
       {/* Physical World Analogy */}
       <section className="p-8 rounded-2xl border border-[var(--fastapi-border)] bg-[var(--fastapi-surface)] space-y-4">
-        <div className="flex items-center gap-2 text-xs font-mono text-[var(--fastapi-teal)]">
+        <div className="flex items-center gap-2 text-xs font-mono text-[var(--fastapi-teal-text)]">
           <Repeat className="w-4 h-4" /> Physical World Analogy
         </div>
         <h2 className="font-display text-2xl md:text-3xl font-bold text-[var(--fastapi-text)]">
@@ -66,7 +66,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       {/* Code Contract Implementation */}
       <section className="space-y-6">
         <div>
-          <div className="text-xs font-mono text-[var(--fastapi-teal)] uppercase tracking-wider">
+          <div className="text-xs font-mono text-[var(--fastapi-teal-text)] uppercase tracking-wider">
             FastAPI Implementation Contract
           </div>
           <h2 className="font-display text-2xl font-bold text-[var(--fastapi-text)]">
@@ -77,10 +77,10 @@ export function TopicDetail({ topicId }: { topicId: string }) {
         <div className="rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] overflow-hidden shadow-xl font-mono text-xs">
           <div className="px-4 py-3 border-b border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface-2)] flex items-center justify-between">
             <span className="text-xs text-[var(--fastapi-muted)] flex items-center gap-2">
-              <Code2 className="w-3.5 h-3.5 text-[var(--fastapi-teal)]" />
+              <Code2 className="w-3.5 h-3.5 text-[var(--fastapi-teal-text)]" />
               main.py (FastAPI 0.110+)
             </span>
-            <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+            <span className="text-[10px] text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
               RUST PYDANTIC V2
             </span>
           </div>
@@ -100,7 +100,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       {/* Step Sequence */}
       <section className="p-8 rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] space-y-6">
         <div className="space-y-1">
-          <span className="text-[10px] font-mono text-[var(--fastapi-teal)] uppercase tracking-wider">
+          <span className="text-[10px] font-mono text-[var(--fastapi-teal-text)] uppercase tracking-wider">
             Execution Lifecycle
           </span>
           <h3 className="font-display font-bold text-xl text-[var(--fastapi-text)]">
@@ -114,8 +114,8 @@ export function TopicDetail({ topicId }: { topicId: string }) {
               key={idx}
               className="p-4 rounded-xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-bg)] space-y-2 font-mono text-xs"
             >
-              <div className="flex items-center gap-2 text-[var(--fastapi-teal)] font-bold">
-                <span className="px-1.5 py-0.5 rounded bg-[var(--fastapi-teal)]/10 border border-[var(--fastapi-teal)]/20 text-[10px]">
+              <div className="flex items-center gap-2 text-[var(--fastapi-teal-text)] font-bold">
+                <span className="px-1.5 py-0.5 rounded bg-[var(--fastapi-teal-10)] border border-[var(--fastapi-teal-20)] text-[10px]">
                   0{idx + 1}
                 </span>
                 <span>STEP</span>
@@ -131,12 +131,15 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       {/* Pitfalls & Performance Notes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <section className="p-8 rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] space-y-6">
-          <div className="flex items-center gap-2 text-xs font-mono text-[var(--fastapi-rose)] font-bold">
+          <div className="flex items-center gap-2 text-xs font-mono text-[var(--fastapi-rose-text)] font-bold">
             <AlertTriangle className="w-4 h-4" /> Concurrency Traps &amp; Loop Starvation
           </div>
           <div className="space-y-4">
             {topic.mistakes.map((mistake, idx) => (
               <div key={idx} className="flex items-start gap-3 text-xs text-[var(--fastapi-muted)] leading-relaxed">
+                {/* Fill-only use of the brand token: the bullet carries no label,
+                    so --fastapi-rose keeps its brand value here (3.67:1 light /
+                    4.86:1 dark) rather than moving to --fastapi-rose-text. */}
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--fastapi-rose)] mt-1.5 flex-shrink-0" />
                 <span>{mistake}</span>
               </div>
@@ -145,7 +148,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
         </section>
 
         <section className="p-8 rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] space-y-6">
-          <div className="flex items-center gap-2 text-xs font-mono text-[var(--fastapi-sky)] font-bold">
+          <div className="flex items-center gap-2 text-xs font-mono text-[var(--fastapi-sky-text)] font-bold">
             <Cpu className="w-4 h-4" /> Systems Engineering Optimization
           </div>
           <p className="text-xs text-[var(--fastapi-muted)] leading-relaxed">
@@ -169,13 +172,13 @@ export function TopicDetail({ topicId }: { topicId: string }) {
                 href={`/fastapicosmos/learn/${relTopic.id}`}
                 className="fastapi-card p-5 rounded-xl space-y-2 group"
               >
-                <span className="text-[10px] font-mono text-[var(--fastapi-teal)]">
+                <span className="text-[10px] font-mono text-[var(--fastapi-teal-text)]">
                   {relTopic.kicker}
                 </span>
-                <h4 className="font-display font-bold text-base text-[var(--fastapi-text)] group-hover:text-[var(--fastapi-teal)] transition-colors">
+                <h4 className="font-display font-bold text-base text-[var(--fastapi-text)] group-hover:text-[var(--fastapi-teal-text)] transition-colors">
                   {relTopic.title}
                 </h4>
-                <span className="text-xs font-mono text-[var(--fastapi-teal)] flex items-center gap-1 pt-2">
+                <span className="text-xs font-mono text-[var(--fastapi-teal-text)] flex items-center gap-1 pt-2">
                   View concept <ArrowUpRight className="w-3 h-3" />
                 </span>
               </Link>

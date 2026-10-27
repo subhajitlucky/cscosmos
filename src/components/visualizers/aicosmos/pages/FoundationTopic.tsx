@@ -62,16 +62,16 @@ import {
 } from '../components/foundation-viz/Phase5Viz';
 
 interface FoundationTopicProps {
-  topicId: string;
+  subtopicSlug: string;
   basePath?: string;
 }
 
 export function FoundationTopic({
-  topicId,
+  subtopicSlug,
   basePath = '/ai/ai-engineering-foundations',
 }: FoundationTopicProps) {
   const router = useRouter();
-  const topic = getFoundationSubtopic(topicId) || foundationSubtopics[0];
+  const topic = getFoundationSubtopic(subtopicSlug) || foundationSubtopics[0];
   const index = foundationSubtopics.findIndex((t) => t.id === topic.id);
   const previous = foundationSubtopics[index - 1];
   const next = foundationSubtopics[index + 1];
@@ -170,7 +170,7 @@ export function FoundationTopic({
             <Terminal className="h-3.5 w-3.5 text-foreground" />
             <span>INTERACTIVE ENGINE: {topic.visualization.toUpperCase().replace(/-/g, ' ')}</span>
           </div>
-          <span className="text-[11px] text-emerald-500 dark:text-emerald-400 flex items-center gap-1.5 font-mono">
+          <span className="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 font-mono">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Live Reactive
           </span>
         </div>
@@ -191,7 +191,7 @@ export function FoundationTopic({
         <div className="space-y-3">
           {topic.keyPoints.map((point, i) => (
             <div key={i} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-500" />
               <span>{point}</span>
             </div>
           ))}
@@ -211,7 +211,7 @@ export function FoundationTopic({
             >
               {copied ? (
                 <>
-                  <Check className="h-3.5 w-3.5 text-emerald-500" /> Copied
+                  <Check className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-500" /> Copied
                 </>
               ) : (
                 <>
@@ -229,8 +229,8 @@ export function FoundationTopic({
       {/* Common Pitfall Warning */}
       {topic.pitfall && (
         <section className="rounded-xl border border-border/80 bg-secondary/20 p-6 space-y-2">
-          <div className="flex items-center gap-2 text-xs font-mono text-amber-500 uppercase tracking-wider font-semibold">
-            <AlertTriangle className="h-4 w-4 text-amber-500" /> Production Failure Mode
+          <div className="flex items-center gap-2 text-xs font-mono text-amber-700 dark:text-amber-500 uppercase tracking-wider font-semibold">
+            <AlertTriangle className="h-4 w-4 text-amber-700 dark:text-amber-500" /> Production Failure Mode
           </div>
           <p className="text-sm leading-relaxed text-muted-foreground">
             {topic.pitfall}
@@ -274,10 +274,10 @@ export function FoundationTopic({
               href={`${basePath}/lab`}
               className="group rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between text-right sm:items-end hover:border-foreground/40 transition-colors"
             >
-              <span className="text-[10px] font-mono text-emerald-500 uppercase font-semibold">
+              <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-500 uppercase font-semibold">
                 Curriculum Complete &rarr;
               </span>
-              <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-emerald-500 transition-colors">
+              <div className="mt-2 font-display font-bold text-base text-foreground group-hover:text-emerald-700 dark:group-hover:text-emerald-500 transition-colors">
                 Launch The Micro-Model Studio
               </div>
             </Link>

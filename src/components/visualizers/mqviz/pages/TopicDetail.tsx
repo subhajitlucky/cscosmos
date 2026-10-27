@@ -23,7 +23,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--mq-primary)]/10 text-[var(--mq-primary)] border border-[var(--mq-primary)]/30 font-bold">
+            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--mq-primary-10)] text-[var(--mq-primary)] border border-[var(--mq-primary-30)] font-bold">
               {topic.kicker}
             </span>
             <span className="text-xs font-mono text-[var(--mq-muted)]">
@@ -35,7 +35,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
             {topic.title}
           </h1>
 
-          <p className="text-base md:text-lg text-[var(--mq-muted)] leading-relaxed border-l-4 border-[var(--mq-primary)]/30 pl-6 italic">
+          <p className="text-base md:text-lg text-[var(--mq-muted)] leading-relaxed border-l-4 border-[var(--mq-primary-30)] pl-6 italic">
             &ldquo;{topic.definition}&rdquo;
           </p>
         </div>
@@ -83,7 +83,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
                 <Code2 className="w-3.5 h-3.5 text-[var(--mq-primary)]" />
                 {topic.id}.ts
               </span>
-              <span className="text-[10px] font-mono text-[var(--mq-cyan)] bg-[var(--mq-cyan)]/10 px-2 py-0.5 rounded border border-[var(--mq-cyan)]/20">
+              <span className="text-[10px] font-mono text-[var(--mq-cyan)] bg-[var(--mq-cyan-10)] px-2 py-0.5 rounded border border-[var(--mq-cyan-20)]">
                 PROD_VERIFIED
               </span>
             </div>
@@ -119,7 +119,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
                     onClick={() => setActiveStep(idx)}
                     className={`w-full text-left p-3 rounded-lg border text-xs font-mono transition-all flex items-start gap-3 ${
                       isActive
-                        ? 'border-[var(--mq-primary)] bg-[var(--mq-primary)]/10 text-[var(--mq-text)] shadow-md'
+                        ? 'border-[var(--mq-primary)] bg-[var(--mq-primary-10)] text-[var(--mq-text)] shadow-md'
                         : 'border-[var(--mq-border-subtle)] bg-[var(--mq-surface)] text-[var(--mq-muted)] hover:text-[var(--mq-text)]'
                     }`}
                   >
@@ -134,7 +134,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
               })}
             </div>
 
-            <div className="p-3 rounded-lg bg-[var(--mq-emerald)]/10 border border-[var(--mq-emerald)]/30 text-[11px] font-mono text-[var(--mq-emerald)] flex items-center gap-2">
+            <div className="p-3 rounded-lg bg-[var(--mq-emerald-10)] border border-[var(--mq-emerald-30)] text-[11px] font-mono text-[var(--mq-emerald)] flex items-center gap-2">
               <Zap className="w-3.5 h-3.5" />
               Workflow step 0{activeStep + 1} selected.
             </div>

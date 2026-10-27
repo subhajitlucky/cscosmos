@@ -3,6 +3,12 @@
 .lldcosmos-root {
   --lld-primary: #3b82f6;
   --lld-primary-hover: #2563eb;
+  /* Text-safe companion to --lld-primary. --lld-primary doubles as a solid
+     fill behind white labels (`bg-[var(--lld-primary)] text-white`), so its
+     value must stay the brand blue in every theme; brand-coloured TEXT points
+     at this token instead. Dark mode keeps it byte-identical to --lld-primary,
+     so the dark palette is untouched — only the light block re-tunes it. */
+  --lld-primary-text: #3b82f6;
   --lld-indigo: #6366f1;
   --lld-emerald: #10b981;
   --lld-amber: #f59e0b;
@@ -17,7 +23,22 @@
   --lld-border-subtle: rgba(255, 255, 255, 0.08);
   --lld-text: #f8fafc;
   --lld-muted: #8d97b0;
-  
+
+  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity
+     modifier to an arbitrary var() colour: `bg-[var(--lld-primary)]/10` is not
+     a valid v3 utility and emits no CSS at all (verified against the repo's
+     tailwindcss 3.4.19). These real custom properties are the supported way to
+     get the same tint. */
+  --lld-primary-10: rgba(59, 130, 246, 0.1);
+  --lld-primary-15: rgba(59, 130, 246, 0.15);
+  --lld-primary-20: rgba(59, 130, 246, 0.2);
+  --lld-primary-30: rgba(59, 130, 246, 0.3);
+  --lld-emerald-10: rgba(16, 185, 129, 0.1);
+  --lld-emerald-30: rgba(16, 185, 129, 0.3);
+  --lld-purple-10: rgba(168, 85, 247, 0.1);
+  --lld-purple-30: rgba(168, 85, 247, 0.3);
+  --lld-bg-80: rgba(7, 9, 20, 0.8);
+
   --lld-display: 'Syne', sans-serif;
   --lld-sans: 'Inter', sans-serif;
   --lld-mono: 'DM Mono', monospace;
@@ -39,7 +60,35 @@ html:not(.dark) .lldcosmos-root,
   --lld-border: rgba(59, 130, 246, 0.28);
   --lld-border-subtle: rgba(0, 0, 0, 0.08);
   --lld-text: #0f172a;
-  --lld-muted: #64748b;
+
+  /* Brand hues are tuned for the dark surfaces. As TEXT on the light surfaces
+     they measure 1.96–4.08:1, i.e. every one of them fails WCAG AA, over ~70
+     call sites. AGENTS.md §2 requires high text contrast in BOTH themes, so
+     each brand token is re-tuned here to the lightest shade of the SAME hue
+     that clears 4.5:1 against the WORST of the three light surfaces
+     (--lld-bg #f8fafc / --lld-surface #ffffff / --lld-surface-2 #f1f5f9) and
+     also against its own 10–20% tinted pill, where these tokens are used as
+     text on `bg-[var(--lld-<hue>-10)]` badges.
+
+     --lld-primary is deliberately NOT re-tuned: it is a solid fill behind
+     white labels, so it keeps its brand value and text uses the separate
+     --lld-primary-text token. --lld-indigo, --lld-amber and --lld-cyan have no
+     call sites in this engine today; they are re-tuned anyway so the token
+     layer is correct by construction rather than only where it is currently
+     reached. Worst-case ratio quoted per line. */
+  --lld-primary-text: #1d4ed8; /* 6.12:1 (blue-700)    */
+  --lld-indigo: #4f46e5;       /* 5.74:1 (indigo-600)  */
+  --lld-emerald: #047857;      /* 5.01:1 (emerald-700) */
+  --lld-amber: #92400e;        /* 6.47:1 (amber-800)   */
+  --lld-cyan: #155e75;         /* 6.63:1 (cyan-800)    */
+  --lld-purple: #7e22ce;       /* 6.37:1 (purple-700)  */
+  --lld-rose: #be123c;         /* 5.74:1 (rose-700)    */
+
+  /* Was #64748b, which measured 4.34:1 on --lld-surface-2 (the worst light
+     surface) across 66 text call sites, several of them 9–10px. */
+  --lld-muted: #5b6a80;
+  /* --lld-bg flips to a light colour, so its pre-mixed tint must flip too. */
+  --lld-bg-80: rgba(248, 250, 252, 0.8);
 }
 
 html.dark .lldcosmos-root,
@@ -53,6 +102,8 @@ html[data-theme='dark'] .lldcosmos-root,
   --lld-border-subtle: rgba(255, 255, 255, 0.08);
   --lld-text: #f8fafc;
   --lld-muted: #8d97b0;
+  /* Pinned so dark mode is identical wherever the light block also matches. */
+  --lld-primary-text: #3b82f6;
 }
 
 .lldcosmos-root .font-display {
@@ -84,4 +135,63 @@ html[data-theme='dark'] .lldcosmos-root,
     linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
   background-size: 38px 38px;
+}
+
+/* Design ladder (home page): the five tracks as inheritance rungs. A rung
+   assumes the abstraction habits of the rung above it, so the rail is drawn as
+   a single descending line through numbered class nodes. Structural only —
+   every colour comes from the existing --lld-* tokens, so both themes keep the
+   contrast ratios the token layer already guarantees. */
+.lldcosmos-root .lld-ladder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lldcosmos-root .lld-ladder::before {
+  content: '';
+  position: absolute;
+  left: 1.375rem;
+  top: 1.75rem;
+  bottom: 1.75rem;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--lld-border), var(--lld-border-subtle));
+}
+
+.lldcosmos-root .lld-rung {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.lldcosmos-root .lld-rung-node {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lld-surface);
+  border: 1px solid var(--lld-border);
+  color: var(--lld-primary-text);
+  font-family: var(--lld-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.lldcosmos-root .lld-rung-body {
+  flex: 1 1 0%;
+  min-width: 0;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: var(--lld-surface);
+  border: 1px solid var(--lld-border-subtle);
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lldcosmos-root .lld-rung:hover .lld-rung-body {
+  border-color: var(--lld-border);
 }

@@ -27,7 +27,7 @@ const About = () => {
           { 
             icon: ShieldCheck, 
             title: "Accuracy First", 
-            desc: "All visualizations are derived from the official React Fiber source code. No 'fake' magic—just the actual logic simulated." 
+            desc: "Every walkthrough illustrates the documented React Fiber model — an animated re-enactment of reconciliation, not the real engine running in your browser." 
           },
           { 
             icon: Zap, 
@@ -63,11 +63,11 @@ const About = () => {
         <div className="flex gap-8 text-[11px] font-mono text-muted-foreground">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            VIRTUAL DOM: ACTIVE
+            WALKTHROUGHS: PLAYABLE
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            FIBER ENGINE: NOMINAL
+            FIBER MODEL: ANIMATED
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-amber-500" />

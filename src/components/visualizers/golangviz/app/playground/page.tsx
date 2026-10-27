@@ -12,6 +12,8 @@ export default function PlaygroundPage() {
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-blue-500/30">
       <Navigation />
       <main className="max-w-6xl mx-auto px-4 space-y-10 pb-20 pt-6">
+        {/* This page previously had no heading element at all. */}
+        <h1 className="text-2xl font-black tracking-tight">Go Runtime Playground</h1>
         {/* Top Feature: In-Browser Live Code Runner */}
         <LiveGoRunner />
 

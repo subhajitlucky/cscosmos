@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="border-t border-[var(--svelte-border-subtle)] bg-[var(--svelte-surface)] mt-24 py-12">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[var(--svelte-primary)]/10 border border-[var(--svelte-primary)]/30 flex items-center justify-center text-[var(--svelte-primary)]">
+          <div className="w-8 h-8 rounded-lg bg-[var(--svelte-primary-10)] border border-[var(--svelte-primary-30)] flex items-center justify-center text-[var(--svelte-primary)]">
             <Flame className="w-4 h-4 fill-[var(--svelte-primary)]" />
           </div>
           <div>

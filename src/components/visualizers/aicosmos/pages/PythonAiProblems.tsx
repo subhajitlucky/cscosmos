@@ -71,7 +71,7 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
         </Link>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-xs font-semibold text-emerald-400">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
               <ShieldCheck className="h-3.5 w-3.5" />
               Certification Arena // Subject 02
             </div>
@@ -82,7 +82,7 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
 
           {/* Score Badge */}
           <div className="flex items-center gap-3 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-3 px-4">
-            <Award className="h-5 w-5 text-amber-400" />
+            <Award className="h-5 w-5 text-amber-700 dark:text-amber-400" />
             <div className="font-mono text-xs">
               <div className="text-[var(--ai-muted)]">Verified Score:</div>
               <div className="text-sm font-bold text-[var(--ai-text)]">
@@ -107,12 +107,12 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
               onClick={() => setCurrentIdx(idx)}
               className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border font-mono text-xs font-bold transition-all ${
                 isCurrent
-                  ? 'border-blue-500 bg-blue-500 text-white shadow-md shadow-blue-500/20'
+                  ? 'border-blue-500 bg-blue-600 text-white shadow-md shadow-blue-500/20'
                   : isCorrect
-                  ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-400'
+                  ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
                   : isWrong
-                  ? 'border-rose-500/40 bg-rose-500/15 text-rose-400'
-                  : 'border-[var(--ai-border)] bg-[var(--ai-card)] text-[var(--ai-muted)] hover:border-blue-500/30 hover:text-[var(--ai-text)]'
+                  ? 'border-rose-500/40 bg-rose-500/15 text-rose-700 dark:text-rose-400'
+                  : 'border-[var(--ai-border)] bg-[var(--ai-card)] text-zinc-600 dark:text-zinc-400 hover:border-blue-500/30 hover:text-[var(--ai-text)]'
               }`}
             >
               {idx + 1}
@@ -124,15 +124,15 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
       {/* Active Question Box */}
       <section className="rounded-2xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-6 md:p-8 space-y-6">
         <div className="flex items-center justify-between border-b border-[var(--ai-border)] pb-4">
-          <span className="font-mono text-xs font-semibold text-blue-400">
+          <span className="font-mono text-xs font-semibold text-blue-700 dark:text-blue-400">
             QUESTION {currentIdx + 1} OF {pythonAiQuizQuestions.length}
           </span>
           <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-mono font-semibold ${
             currentQ.difficulty === 'Easy'
-              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+              ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20'
               : currentQ.difficulty === 'Medium'
-              ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-              : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+              ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20'
+              : 'bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20'
           }`}>
             {currentQ.difficulty}
           </span>
@@ -151,14 +151,14 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
 
             if (isSubmitted) {
               if (isCorrect) {
-                optionStyles = 'border-emerald-500 bg-emerald-500/10 text-emerald-300 font-semibold';
+                optionStyles = 'border-emerald-500 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-semibold';
               } else if (isSelected && !isCorrect) {
-                optionStyles = 'border-rose-500 bg-rose-500/10 text-rose-300';
+                optionStyles = 'border-rose-500 bg-rose-500/10 text-rose-700 dark:text-rose-300';
               } else {
-                optionStyles = 'border-[var(--ai-border)] bg-[var(--ai-bg)] opacity-40 text-[var(--ai-muted)]';
+                optionStyles = 'border-[var(--ai-border)] bg-[var(--ai-bg)] opacity-40 text-zinc-600 dark:text-zinc-400';
               }
             } else if (isSelected) {
-              optionStyles = 'border-blue-500 bg-blue-500/10 text-blue-300 font-semibold ring-1 ring-blue-500';
+              optionStyles = 'border-blue-500 bg-blue-500/10 text-blue-700 dark:text-blue-300 font-semibold ring-1 ring-blue-500';
             }
 
             return (
@@ -172,8 +172,8 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
                   {String.fromCharCode(65 + idx)}
                 </span>
                 <span className="flex-1 leading-relaxed">{option}</span>
-                {isSubmitted && isCorrect && <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />}
-                {isSubmitted && isSelected && !isCorrect && <XCircle className="h-4 w-4 shrink-0 text-rose-400" />}
+                {isSubmitted && isCorrect && <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />}
+                {isSubmitted && isSelected && !isCorrect && <XCircle className="h-4 w-4 shrink-0 text-rose-700 dark:text-rose-400" />}
               </button>
             );
           })}
@@ -193,7 +193,7 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
             <button
               onClick={handleSubmit}
               disabled={selectedAnswer === undefined}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2 text-xs font-mono font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:bg-blue-500 disabled:opacity-40"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2 text-xs font-mono font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:bg-blue-700 disabled:opacity-40"
             >
               Submit Answer
             </button>
@@ -201,7 +201,7 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
             <button
               onClick={() => setCurrentIdx((prev) => Math.min(pythonAiQuizQuestions.length - 1, prev + 1))}
               disabled={currentIdx === pythonAiQuizQuestions.length - 1}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-5 py-2 text-xs font-mono font-semibold text-white shadow-lg shadow-emerald-600/25 transition-all hover:bg-emerald-500 disabled:opacity-40"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-700 px-5 py-2 text-xs font-mono font-semibold text-white shadow-lg shadow-emerald-600/25 transition-all hover:bg-emerald-800 disabled:opacity-40"
             >
               Next Question <ArrowRight className="h-3 w-3" />
             </button>
@@ -211,7 +211,7 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
         {/* Detailed Engineering Rationale */}
         {isSubmitted && (
           <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4 space-y-2 animate-in fade-in">
-            <div className="flex items-center gap-2 font-mono text-xs font-semibold text-blue-400">
+            <div className="flex items-center gap-2 font-mono text-xs font-semibold text-blue-700 dark:text-blue-400">
               <Sparkles className="h-3.5 w-3.5" />
               Systems Engineering Rationale
             </div>
@@ -225,11 +225,17 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
       {/* Completion Banner */}
       {totalAnswered === pythonAiQuizQuestions.length && (
         <section className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-8 text-center space-y-4">
-          <Award className="h-12 w-12 text-emerald-400 mx-auto" />
+          <Award className="h-12 w-12 text-emerald-800 dark:text-emerald-400 mx-auto" />
           <h2 className="text-2xl font-bold text-[var(--ai-text)]">
             Certification Assessment Complete!
           </h2>
-          <p className="text-sm text-[var(--ai-muted)] max-w-lg mx-auto">
+          {/* FS-78: `text-zinc-600 dark:text-zinc-400` is 4.83:1 on white but only **3.23:1** on this
+              `bg-emerald-950/20` banner, because any accent tint eats the muted token's whole
+              margin. Measured alternatives: a lighter tint (`emerald-500/10`) still lands at
+              4.40:1, so the token is the problem, not the background. zinc-600 is the least
+              darkening that clears 4.5:1 on the worst tinted background (5.16:1 here), paired
+              with zinc-400 in dark, which is the dark muted value and measures 7.34:1. */}
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto">
             You scored {correctCount} out of {pythonAiQuizQuestions.length} ({scorePercent}%).
             You have verified your comprehension of CPython memory mechanics, vectorization, asyncio LLM streaming, and Pydantic validation!
           </p>
@@ -242,7 +248,7 @@ export function PythonAiProblems({ basePath = '/ai/python-for-ai-engineering' }:
             </button>
             <Link
               href={basePath}
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2 text-xs font-mono font-semibold text-white hover:bg-emerald-500"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-5 py-2 text-xs font-mono font-semibold text-white hover:bg-emerald-800"
             >
               Review Curriculum Map <ArrowRight className="h-3.5 w-3.5" />
             </Link>

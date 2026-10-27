@@ -1,5 +1,5 @@
 import React from 'react';
-import RouteClientShell from './RouteClientShell';
+import EngineMount from './EngineMount';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
@@ -12,5 +12,5 @@ export function generateStaticParams() {
 
 export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
   const resolved = await params;
-  return <RouteClientShell slug={resolved?.slug || []} />;
+  return <EngineMount slug={resolved?.slug || []} />;
 }

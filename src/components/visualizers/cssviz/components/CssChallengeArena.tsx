@@ -1,7 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Award, CheckCircle2, Play, RefreshCw, RotateCcw, Sparkles, Trophy, Wand2 } from 'lucide-react';
+import { CheckCircle2, Trophy } from 'lucide-react';
+
+interface LayoutProps {
+  display: string;
+  justifyContent: string;
+  alignItems: string;
+  flexDirection: string;
+  gap: string;
+}
 
 interface Challenge {
   id: string;
@@ -9,18 +17,9 @@ interface Challenge {
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   instructions: string;
   targetDescription: string;
-  initialProps: {
-    display: string;
-    justifyContent: string;
-    alignItems: string;
-    flexDirection: string;
-    gap: string;
-  };
-  solution: {
-    display: string;
-    justifyContent: string;
-    alignItems: string;
-  };
+  initialProps: LayoutProps;
+  /** Only the properties this challenge claims are graded; everything else is free to explore. */
+  solution: Partial<LayoutProps>;
 }
 
 const CHALLENGES: Challenge[] = [
@@ -77,7 +76,7 @@ const CHALLENGES: Challenge[] = [
     },
     solution: {
       display: 'flex',
-      justifyContent: 'center',
+      flexDirection: 'column',
       alignItems: 'center'
     }
   }
@@ -100,10 +99,12 @@ export function CssChallengeArena() {
     setGap(ch.initialProps.gap);
   };
 
-  const isSolved =
-    display === selectedChallenge.solution.display &&
-    justifyContent === selectedChallenge.solution.justifyContent &&
-    alignItems === selectedChallenge.solution.alignItems;
+  const currentProps: LayoutProps = { display, justifyContent, alignItems, flexDirection, gap };
+
+  // Grade exactly the properties the selected challenge claims in its target.
+  const isSolved = (Object.keys(selectedChallenge.solution) as (keyof LayoutProps)[]).every(
+    (prop) => currentProps[prop] === selectedChallenge.solution[prop]
+  );
 
   return (
     <div className="rounded-3xl border border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10 p-6 sm:p-8 space-y-6 shadow-xl my-8">
@@ -208,6 +209,40 @@ export function CssChallengeArena() {
                 ))}
               </div>
             </div>
+
+            <div>
+              <label className="text-[11px] text-muted-foreground block mb-1">flex-direction:</label>
+              <div className="grid grid-cols-2 gap-2">
+                {['row', 'column', 'row-reverse', 'column-reverse'].map((dir) => (
+                  <button
+                    key={dir}
+                    onClick={() => setFlexDirection(dir)}
+                    className={`py-1.5 rounded-lg border text-center text-[11px] transition ${
+                      flexDirection === dir ? 'bg-amber-500 text-slate-950 font-bold border-amber-500' : 'border-border hover:bg-muted'
+                    }`}
+                  >
+                    {dir}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="text-[11px] text-muted-foreground block mb-1">gap:</label>
+              <div className="grid grid-cols-4 gap-2">
+                {['0px', '8px', '12px', '24px'].map((g) => (
+                  <button
+                    key={g}
+                    onClick={() => setGap(g)}
+                    className={`py-1.5 rounded-lg border text-center text-[11px] transition ${
+                      gap === g ? 'bg-amber-500 text-slate-950 font-bold border-amber-500' : 'border-border hover:bg-muted'
+                    }`}
+                  >
+                    {g}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -226,7 +261,7 @@ export function CssChallengeArena() {
             <div className="w-16 h-16 rounded-2xl bg-amber-500 text-slate-950 font-bold flex items-center justify-center shadow-lg transition-all">
               Box 1
             </div>
-            {selectedChallenge.id === 'space-between' && (
+            {(selectedChallenge.id === 'space-between' || selectedChallenge.id === 'column-center') && (
               <div className="w-16 h-16 rounded-2xl bg-cyan-400 text-slate-950 font-bold flex items-center justify-center shadow-lg transition-all">
                 Box 2
               </div>
@@ -234,7 +269,7 @@ export function CssChallengeArena() {
           </div>
 
           <div className="p-3 rounded-2xl bg-slate-950 text-slate-100 font-mono text-xs border border-slate-800">
-            <span className="text-amber-400 font-bold">Live CSS:</span> <code>{`{ display: ${display}; justify-content: ${justifyContent}; align-items: ${alignItems}; }`}</code>
+            <span className="text-amber-400 font-bold">Live CSS:</span> <code>{`{ display: ${display}; flex-direction: ${flexDirection}; justify-content: ${justifyContent}; align-items: ${alignItems}; gap: ${gap}; }`}</code>
           </div>
         </div>
       </div>

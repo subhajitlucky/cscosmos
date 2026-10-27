@@ -2,8 +2,17 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Network, Activity, Layers, ArrowUpRight, CheckCircle2, RotateCcw, Play, Zap, Cpu, ShieldAlert, GitPullRequest, AlertTriangle, ShieldCheck } from 'lucide-react';
-import { microserviceTopics } from '../data/topics';
+import { ArrowRight, Network, Layers, RotateCcw, Play, ShieldAlert, GitPullRequest } from 'lucide-react';
+import { microserviceTopicGroups } from '../data/topics';
+
+/** Short names for the five architecture stages, keyed by topic group id. */
+const STAGE_NAMES: Record<string, { phase: string; name: string }> = {
+  decomposition: { phase: 'MAP', name: 'Decompose' },
+  resilience: { phase: 'CONTAIN', name: 'Contain' },
+  'transactions-sagas': { phase: 'RECOVER', name: 'Settle' },
+  observability: { phase: 'OBSERVE', name: 'Observe' },
+  'service-mesh': { phase: 'TRANSPORT', name: 'Secure' },
+};
 
 interface ServiceNode {
   id: string;
@@ -89,6 +98,12 @@ export function Home() {
     setLogs(['[RESET] All circuit breakers closed; telemetry normalized.']);
   };
 
+  const meshStatus: ServiceNode['status'] = services.some((svc) => svc.status === 'tripped')
+    ? 'tripped'
+    : services.some((svc) => svc.status === 'degraded')
+    ? 'degraded'
+    : 'healthy';
+
   return (
     <div className="space-y-24 pb-20">
       {/* Hero Section */}
@@ -98,7 +113,7 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--ms-primary)]/30 bg-[var(--ms-primary)]/10 text-[var(--ms-primary)] text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--ms-primary-30)] bg-[var(--ms-primary-10)] text-[var(--ms-primary)] text-xs font-mono">
               <Network className="w-3.5 h-3.5 animate-pulse text-[var(--ms-primary)]" />
               Circuit Breakers &bull; Distributed Sagas &bull; OpenTelemetry
             </div>
@@ -112,12 +127,44 @@ export function Home() {
               Deconstruct distributed microservices architectures. Explore Domain-Driven Bounded Contexts, Circuit Breaker state machines, Saga compensations, and OpenTelemetry trace waterfalls.
             </p>
 
+            {/* Live topology strip: the same four services the mesh panel drives */}
+            <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] text-[var(--ms-muted)]">
+              <span className="uppercase tracking-[0.18em]">Topology</span>
+              {services.map((svc, index) => (
+                <React.Fragment key={svc.id}>
+                  {index > 0 && (
+                    <span className="text-[var(--ms-muted)]" aria-hidden="true">
+                      &rarr;
+                    </span>
+                  )}
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-[var(--ms-border-subtle)] text-[var(--ms-text)]">
+                    {/* This dot is the ONLY carrier of svc.status in this strip:
+                        the adjacent label is the service name, not its state.
+                        --ms-emerald/--ms-amber are dark-tuned (2.42 / 2.05:1 on
+                        the light --ms-bg), so the light mode gets a shade of the
+                        same hue that clears 3:1 and dark restores the token. */}
+                    <span
+                      aria-hidden="true"
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        svc.status === 'healthy'
+                          ? 'bg-emerald-600 dark:bg-[var(--ms-emerald)]'
+                          : svc.status === 'degraded'
+                          ? 'bg-amber-700 dark:bg-[var(--ms-amber)]'
+                          : 'bg-[var(--ms-rose)]'
+                      }`}
+                    />
+                    {svc.name}
+                  </span>
+                </React.Fragment>
+              ))}
+            </div>
+
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <Link
                 href="/microservicesviz/learn"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[var(--ms-primary)] text-white font-semibold text-sm hover:bg-[var(--ms-primary-hover)] transition-all shadow-[0_0_20px_rgba(139,92,246,0.35)] active:scale-95"
               >
-                Explore Concept Map <ArrowRight className="w-4 h-4" />
+                Open the Domain Map <ArrowRight className="w-4 h-4" />
               </Link>
               
               <Link
@@ -143,10 +190,20 @@ export function Home() {
             <div className="rounded-2xl border border-[var(--ms-border)] bg-[var(--ms-surface)] shadow-2xl overflow-hidden font-mono text-xs">
               <div className="px-4 py-3 border-b border-[var(--ms-border-subtle)] bg-[var(--ms-surface-2)] flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                  <span className="text-xs text-[var(--ms-muted)] ml-2">ServiceMesh::EnvoyControlPlane</span>
+                  <span
+                    aria-hidden="true"
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      meshStatus === 'healthy'
+                        ? 'bg-[var(--ms-emerald)]'
+                        : meshStatus === 'degraded'
+                        ? 'bg-[var(--ms-amber)] animate-pulse'
+                        : 'bg-[var(--ms-rose)] animate-pulse'
+                    }`}
+                  />
+                  <span className="text-[9px] uppercase tracking-[0.18em] text-[var(--ms-text)]">
+                    mesh {meshStatus}
+                  </span>
+                  <span className="text-xs text-[var(--ms-muted)]">ServiceMesh::EnvoyControlPlane</span>
                 </div>
                 <button
                   onClick={resetAll}
@@ -288,17 +345,17 @@ export function Home() {
           </div>
 
           {/* Service Mesh Card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--ms-primary)]/40 bg-[var(--ms-surface)] space-y-6 shadow-[0_0_30px_rgba(139,92,246,0.15)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--ms-primary-40)] bg-[var(--ms-surface)] space-y-6 shadow-[0_0_30px_rgba(139,92,246,0.15)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--ms-text)]">Service Mesh</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--ms-primary)]/10 text-[var(--ms-primary)] border border-[var(--ms-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--ms-primary-10)] text-[var(--ms-primary)] border border-[var(--ms-primary-30)] font-bold">
                 Envoy Sidecars
               </span>
             </div>
             <p className="text-xs text-[var(--ms-muted)] leading-relaxed">
               Envoy sidecar proxies manage all networking out-of-process. Provides transparent mTLS encryption, canary traffic shifting, automatic circuit breaking, and zero-code telemetry.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--ms-bg)] font-mono text-[11px] text-[var(--ms-muted)] space-y-1.5 border border-[var(--ms-primary)]/20">
+            <div className="p-4 rounded-lg bg-[var(--ms-bg)] font-mono text-[11px] text-[var(--ms-muted)] space-y-1.5 border border-[var(--ms-primary-20)]">
               <div className="text-[var(--ms-primary)]">• Zero-code mTLS &amp; access control</div>
               <div className="text-emerald-400">• Out-of-process circuit breakers</div>
               <div className="text-[var(--ms-sky)]">• Automated OpenTelemetry trace injection</div>
@@ -307,58 +364,86 @@ export function Home() {
         </div>
       </section>
 
-      {/* Featured Topics Grid */}
-      <section className="max-w-7xl mx-auto px-6 space-y-12">
+      {/* Architecture path: the five stages a request passes through */}
+      <section className="max-w-7xl mx-auto px-6 space-y-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--ms-border-subtle)] pb-6">
-          <div>
-            <div className="text-xs font-mono text-[var(--ms-primary)] uppercase tracking-wider">
-              Architecture Tracks
+          <div className="space-y-2 max-w-2xl">
+            <div className="text-xs font-mono text-[var(--ms-text)] uppercase tracking-wider">
+              Architecture path &bull; {microserviceTopicGroups.length} stages
             </div>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--ms-text)] mt-1">
-              Microservices Core Modules
+            <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--ms-text)]">
+              From bounded context to encrypted hop
             </h2>
+            <p className="text-xs text-[var(--ms-muted)] leading-relaxed">
+              The modules are ordered as a request travels the architecture: find the boundary,
+              contain the failure, settle the transaction, observe the outcome, secure the
+              transport. Every stage names the failure mode it owns.
+            </p>
           </div>
           <Link
             href="/microservicesviz/learn"
-            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ms-primary)] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--ms-text)] hover:underline whitespace-nowrap"
           >
-            View all 5 topics <ArrowRight className="w-3.5 h-3.5" />
+            Open the domain map <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {microserviceTopics.map((topic) => (
-            <Link
-              key={topic.id}
-              href={`/microservicesviz/learn/${topic.id}`}
-              className="ms-card p-6 rounded-xl space-y-4 group"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--ms-primary)]">
-                  {topic.kicker}
-                </span>
-                <ArrowUpRight className="w-4 h-4 text-[var(--ms-muted)] group-hover:text-[var(--ms-primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-              </div>
+        <ol className="ms-path">
+          {microserviceTopicGroups.map((group, index) => {
+            const topic = group.topics[0];
+            if (!topic) return null;
+            const stage = STAGE_NAMES[group.id] ?? { phase: 'STAGE', name: group.name };
+            return (
+              <li key={group.id} className="ms-path-hop">
+                <Link
+                  href={`/microservicesviz/learn/${topic.id}`}
+                  className="ms-path-node group"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-[10px] text-[var(--ms-muted)]">
+                      STAGE {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="font-mono text-[9px] px-1.5 py-0.5 rounded border border-[var(--ms-border-subtle)] text-[var(--ms-muted)] uppercase tracking-[0.14em]">
+                      {stage.phase}
+                    </span>
+                  </div>
 
-              <h3 className="font-display font-bold text-lg text-[var(--ms-text)] group-hover:text-[var(--ms-primary)] transition-colors">
-                {topic.title}
-              </h3>
+                  <h3 className="font-display font-bold text-lg text-[var(--ms-text)] mt-3 group-hover:underline">
+                    {stage.name}
+                  </h3>
+                  <p className="font-mono text-[10px] text-[var(--ms-muted)] mt-0.5">
+                    {topic.kicker}
+                  </p>
 
-              <p className="text-xs text-[var(--ms-muted)] leading-relaxed line-clamp-2">
-                {topic.summary}
-              </p>
+                  <p className="text-xs text-[var(--ms-text)] leading-relaxed mt-3">
+                    {topic.title}
+                  </p>
+                  <p className="text-[11px] text-[var(--ms-muted)] leading-relaxed mt-2 line-clamp-2">
+                    {topic.summary}
+                  </p>
 
-              <div className="pt-2 flex items-center gap-2">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-[var(--ms-border-subtle)] text-[var(--ms-muted)]">
-                  {topic.difficulty}
-                </span>
-                <span className="text-[10px] font-mono text-[var(--ms-muted)]">
-                  {topic.group}
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
+                  <div className="mt-3 pt-3 border-t border-[var(--ms-border-subtle)] space-y-1">
+                    <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--ms-muted)]">
+                      Failure it owns
+                    </span>
+                    <p className="text-[11px] text-[var(--ms-muted)] leading-relaxed line-clamp-3">
+                      {topic.mistakes[0]}
+                    </p>
+                  </div>
+
+                  <div className="mt-3 flex items-center gap-1.5 font-mono text-[10px] text-[var(--ms-text)]">
+                    {topic.steps.length} moves &bull; {topic.difficulty}
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                </Link>
+
+                {index < microserviceTopicGroups.length - 1 && (
+                  <span className="ms-path-link" aria-hidden="true" />
+                )}
+              </li>
+            );
+          })}
+        </ol>
       </section>
     </div>
   );

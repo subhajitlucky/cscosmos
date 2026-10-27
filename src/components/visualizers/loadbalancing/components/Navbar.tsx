@@ -3,25 +3,24 @@ import { Link } from '@/components/visualizers/shared/RouterShim';
 import { Network, Moon, Sun } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '../lib/utils';
-import { useStore } from '../store/useStore';
+import { useTheme } from '@/context/useTheme';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = React.useState(false);
-  const { theme, setTheme } = useStore();
-  
+  // FS-40: the engine's persisted store no longer keeps a second theme
+  // preference, and nothing here writes the <html> class — the shared provider
+  // owns it. Branch on `resolvedTheme` (the concrete "light" | "dark" already
+  // painted), never on `theme`, which can be the raw "system" preference.
+  const { resolvedTheme, setTheme } = useTheme();
+
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    // Apply theme class on mount if it's already set in store
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    }
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [theme]);
+  }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 
   return (
@@ -53,7 +52,7 @@ export const Navbar = () => {
             onClick={toggleTheme} 
             className="rounded-full w-9 h-9 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
-            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {resolvedTheme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
           <div className="h-4 w-[1px] bg-zinc-200 dark:bg-zinc-800 mx-1 hidden sm:block" />
           <Button size="sm" asChild className="rounded-full px-5 h-9 font-medium shadow-xl shadow-zinc-200 dark:shadow-none transition-all hover:scale-[1.02] active:scale-[0.98]">

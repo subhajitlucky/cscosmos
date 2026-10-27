@@ -1,29 +1,60 @@
 'use client';
 
-'use client';
-
 import { learningPath } from '../data/learning-path';
 import { ArrowLeft, Repeat, AlertTriangle, Binary } from 'lucide-react';
 import { BTreeSim } from '../components/visualizers/BTreeSim';
 import Link from 'next/link';
+
+/**
+ * Two statements that are true of MongoDB in general, shown when a topic has no authored
+ * tradeoffs of its own. They used to render under a per-topic "Technical_Tradeoffs" heading on
+ * all ten topics, which claimed they were specific to whichever topic you were reading (FS-13).
+ * They are now labelled as general, and `Topic.tradeoffs` is the seam for real per-topic ones.
+ */
+const GENERAL_MONGODB_TRADEOFFS = [
+  'Excessive indexing increases storage overhead and write latency.',
+  'Schema flexibility can lead to data fragmentation if not governed.',
+];
 
 export function TopicDetail({ topicId }: { topicId: string }) {
   // Find topic in data
   const allTopics = learningPath.flatMap(d => d.topics);
   const topic = allTopics.find(t => t.id === topicId) || allTopics[0];
 
+  const tradeoffs = topic.tradeoffs?.length ? topic.tradeoffs : GENERAL_MONGODB_TRADEOFFS;
+  const tradeoffsHeading = topic.tradeoffs?.length ? 'Technical_Tradeoffs' : 'General_MongoDB_Tradeoffs';
+
   const renderVisualization = () => {
     switch (topic.id) {
       case 'btree':
         return <BTreeSim />;
       default:
+        // This used to be a permanently pulsing "Diagnostic_Sim_Loading" panel, which reads as
+        // "still loading" forever — the topic looked broken rather than unimplemented. Only
+        // `btree` has a simulator, so say so plainly and point at the one that exists, using
+        // the topic's own `status` from the data (four topics are marked `coming-soon`).
         return (
-          <div className="flex flex-col items-center justify-center h-full p-12 space-y-12 relative overflow-hidden">
+          <div className="flex flex-col items-center justify-center h-full p-12 space-y-8 relative overflow-hidden">
             <div className="absolute inset-0 grid-bg opacity-10" />
-            <Binary className="w-20 h-20 text-emerald-400 opacity-10 animate-pulse" />
-            <div className="text-center space-y-4 relative z-10">
-              <span className="text-[10px] font-black text-emerald-400/40 uppercase tracking-[0.5em]">Diagnostic_Sim_Loading</span>
-              <p className="text-sm font-bold text-emerald-400/20 uppercase tracking-widest">Protocol::{topic.id.toUpperCase()}</p>
+            <Binary className="w-20 h-20 text-emerald-400 opacity-10" />
+            <div className="text-center space-y-4 relative z-10 max-w-md">
+              <span className="text-[10px] font-black text-emerald-400/60 uppercase tracking-[0.5em]">
+                {topic.status === 'coming-soon' ? 'Module_Not_Available_Yet' : 'No_Interactive_Simulator'}
+              </span>
+              <p className="text-sm font-bold text-emerald-400/40 uppercase tracking-widest">
+                {topic.name}
+              </p>
+              <p className="text-[11px] leading-relaxed text-emerald-400/50 normal-case tracking-normal">
+                {topic.status === 'coming-soon'
+                  ? 'This topic is planned but not written yet. The theory on the left is the authored content that exists for it.'
+                  : 'This topic has no interactive simulator yet — the written material on the left is the whole of it. The B-Tree index topic is the one with a working simulator.'}
+              </p>
+              <Link
+                href="/mongocosmos/learn/btree"
+                className="inline-block text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 hover:text-emerald-300 transition-colors"
+              >
+                Open_the_B-Tree_simulator →
+              </Link>
             </div>
           </div>
         );
@@ -81,13 +112,10 @@ export function TopicDetail({ topicId }: { topicId: string }) {
               <div className="w-10 h-10 border-2 border-amber-500/20 flex items-center justify-center bg-amber-500/5">
                 <AlertTriangle className="w-5 h-5" />
               </div>
-              <h2 className="text-xs font-black uppercase tracking-[0.3em] text-amber-500/40">Technical_Tradeoffs</h2>
+              <h2 className="text-xs font-black uppercase tracking-[0.3em] text-amber-500/40">{tradeoffsHeading}</h2>
             </div>
             <ul className="space-y-6">
-              {[
-                "Excessive indexing increases storage overhead and write latency.",
-                "Schema flexibility can lead to data fragmentation if not governed."
-              ].map((m, i) => (
+              {tradeoffs.map((m, i) => (
                 <li key={i} className="flex items-start gap-6 text-[11px] font-black text-emerald-400/40 uppercase leading-relaxed italic">
                   <div className="w-2 h-2 bg-amber-500 mt-1.5 flex-shrink-0 rotate-45 shadow-[0_0_10px_rgba(249,115,22,0.5)]" />
                   {m}

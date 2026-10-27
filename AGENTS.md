@@ -6,8 +6,8 @@ Welcome agent! This file defines the guidelines, architecture conventions, and v
 
 ## 📌 Project Overview
 - **Repository**: CSCosmos (Computer Science Learning & Visualizer Hub)
-- **Tech Stack**: Next.js 15 (App Router), TypeScript, React 19, Tailwind CSS, Radix UI, Lucide Icons, Framer Motion, Monaco Editor, Anime.js, D3.js.
-- **Main Goal**: Absorb 30+ interactive computer science microsites into native Next.js routes within CSCosmos with full Dark/Light theme support, SSG static pre-rendering, and seamless client-side routing.
+- **Tech Stack**: Next.js 16 (App Router), TypeScript, React 19, Tailwind CSS, Radix UI, Lucide Icons, Framer Motion, Monaco Editor, Anime.js, D3.js.
+- **Main Goal**: Maintain 72 live computer science topics (70 absorbed engines + 2 curriculum modules) as native Next.js routes within CSCosmos, with full dark/light theme support, SSG pre-rendering, and seamless client-side routing.
 
 ---
 
@@ -15,7 +15,9 @@ Welcome agent! This file defines the guidelines, architecture conventions, and v
 
 | Path | Purpose |
 | :--- | :--- |
-| [`src/data/topics.ts`](file:///home/subhajit/project/cscosmos/src/data/topics.ts) | Authoritative topic list (id, name, domain, slug, status, url) |
+| [`src/data/topics.ts`](file:///home/subhajit/project/cscosmos/src/data/topics.ts) | Authoritative topic list (id, name, domain, slug, status, canonicalPath) |
+| [`src/data/engine-routes.ts`](file:///home/subhajit/project/cscosmos/src/data/engine-routes.ts) | Authoritative topicSlug ↔ engineDir ↔ engine path mapping |
+| [`src/lib/module-registry.ts`](file:///home/subhajit/project/cscosmos/src/lib/module-registry.ts) | Registered multi-view curriculum modules |
 | [`src/data/domains.ts`](file:///home/subhajit/project/cscosmos/src/data/domains.ts) | 8 CS domain definitions, routes, icons & color accents |
 | [`src/app/`](file:///home/subhajit/project/cscosmos/src/app) | App Router pages & catch-all routes for absorbed visualizers |
 | [`src/components/visualizers/`](file:///home/subhajit/project/cscosmos/src/components/visualizers) | Native visualizer engine implementations (`jsviz`, `cssviz`, etc.) |
@@ -35,18 +37,41 @@ Welcome agent! This file defines the guidelines, architecture conventions, and v
 - Use Tailwind dark variants (`dark:bg-slate-900`, `dark:text-slate-100`) or theme CSS variables (`bg-background text-foreground`).
 - Ensure high text contrast ratio in both themes.
 
-### 3. Absorbing External Microsites
-When integrating a new standalone visualizer microsite:
-1. Place source components in `src/components/visualizers/<site_name>/`.
-2. Create the route in `src/app/<site_name>/[[...slug]]/page.tsx`.
+### 3. Absorbing Engines
+When integrating a new standalone visualizer engine:
+1. Place source components in `src/components/visualizers/<engineDir>/`.
+2. Create the engine route in `src/app/<enginePath>/[[...slug]]/page.tsx`, mounting it through `EngineMount.tsx`.
 3. Provide `generateStaticParams()` returning all sub-routes to enable static pre-rendering.
-4. Update `src/data/topics.ts` for matching topic IDs: set `status: 'active'`.
+4. Add `{ domain, topicSlug, engineDir }` to `src/data/engine-routes.ts`.
+5. In `src/data/topics.ts`, set the matching `topicSlug` to `status: 'active'`.
 
 ### 4. Visual Identity & Original Layout Preservation
-- When absorbing an external microsite, preserve its original layout structure, color branding, typography, interactive components, and content to maintain exact experience and design parity with the independent standalone site.
+- When absorbing an external engine, preserve its original layout structure, color branding, typography, interactive components, and content to maintain exact experience and design parity with the independent standalone engine.
 - Seamlessly integrate the site's styling with CSCosmos theme controls (supporting both Light and Dark modes).
 
-### 5. Topic Uniqueness — Never Standardize
+### 5. Naming Conventions — Use These Terms Exactly
+
+| Term | Meaning |
+| :--- | :--- |
+| `topicSlug` / `slug` | Stable public topic identifier; used in URLs, storage, analytics, API |
+| `engineDir` | Folder under `src/components/visualizers/` |
+| `enginePath` | Top-level engine route segment (currently equal to `topicSlug`) |
+| `canonicalPath` | Public topic URL: `/[domain]/[topicSlug]` |
+| `module` | Multi-view curriculum package registered in `src/lib/module-registry.ts` |
+| `subtopicSlug` | Section slug inside a curriculum module |
+| `crossListedDomains` | Extra domains a topic appears under (not URL aliases) |
+| `EngineMount` | The thin client component that mounts an engine for a route |
+
+Rules:
+
+- Never call a string slug `id`. Reserve `id` for numeric catalog identifiers.
+- Never call `TopicModule.topicSlug` an id.
+- Use `EngineRoute` in `src/data/engine-routes.ts` as the only topic↔engine mapping.
+- Route wrappers are named `EngineMount.tsx`, not `RouteClientShell` or `*ClientPage`.
+- Keep public URLs canonical: `/[domain]/[topicSlug]`; engine paths are implementation details.
+- If an engine directory must differ from its topic slug, update `engineDir` in `engine-routes.ts` and add the route in `src/app/<enginePath>/[[...slug]]/`.
+
+### 6. Topic Uniqueness — Never Standardize
 - **Every topic MUST have its own unique page set, learning method, interactions, and tools. Sameness across topics is a bug, not a virtue.**
 - Do NOT force a shared template onto every topic (no mandatory `/path`, `/playground`, `/exercises`, `/about` for all). A `programviz`-style linear lesson path, an `htmlviz`-style editor + auto-graded problems, a `cssviz`-style slider-lab arena, and a `websecureviz`-style attack simulation are all correct — *because they differ*.
 - Each CS subject has a native way of being understood: CPU cycles want step-through animations, CSS wants tweakable labs, security wants live attack simulations, HTTP wants request/response playgrounds. Let the subject dictate the pages and the pedagogy.
@@ -71,6 +96,7 @@ npm run build
 ---
 
 ## 🔗 Related Documentation
+- [`docs/NAMING.md`](file:///home/subhajit/project/cscosmos/docs/NAMING.md)
 - [`README.md`](file:///home/subhajit/project/cscosmos/README.md)
 - [`PROJECT_CONTEXT.md`](file:///home/subhajit/project/cscosmos/PROJECT_CONTEXT.md)
 - [`goal.json`](file:///home/subhajit/project/cscosmos/goal.json)

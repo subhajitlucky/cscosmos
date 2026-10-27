@@ -68,7 +68,7 @@ export function HomeSearchDeck({ totalTopics, children }: HomeSearchDeckProps) {
       const matchesDomain =
         selectedDomain === 'all' ||
         topic.domain === selectedDomain ||
-        topic.aliases?.includes(selectedDomain);
+        topic.crossListedDomains?.includes(selectedDomain);
 
       if (!searchQuery.trim()) {
         return matchesDomain;
@@ -151,7 +151,7 @@ export function HomeSearchDeck({ totalTopics, children }: HomeSearchDeckProps) {
                   : topics.filter(
                       (t) =>
                         t.domain === opt.key ||
-                        (t.aliases as readonly string[] | undefined)?.includes(opt.key)
+                        (t.crossListedDomains as readonly string[] | undefined)?.includes(opt.key)
                     ).length;
 
               const isSelected = selectedDomain === opt.key;
@@ -205,7 +205,7 @@ export function HomeSearchDeck({ totalTopics, children }: HomeSearchDeckProps) {
           {filteredTopics.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredTopics.map((topic) => (
-                <TopicCard key={topic.id} topic={topic} />
+                <TopicCard key={topic.catalogId} topic={topic} />
               ))}
             </div>
           ) : (

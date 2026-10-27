@@ -70,11 +70,11 @@ export function AsyncLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--fastapi-sky)]/30 bg-[var(--fastapi-sky)]/10 text-[var(--fastapi-sky)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--fastapi-sky-30)] bg-[var(--fastapi-sky-10)] text-[var(--fastapi-sky-text)] text-xs font-mono">
           <Activity className="w-3.5 h-3.5" /> AsyncIO Concurrency Benchmark
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--fastapi-text)]">
-          Async Event Loop <span className="text-[var(--fastapi-teal)] fastapi-glow">vs ThreadPool Offload</span>
+          Async Event Loop <span className="text-[var(--fastapi-teal-text)] fastapi-glow">vs ThreadPool Offload</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--fastapi-muted)] max-w-2xl leading-relaxed">
           Simulate 20 concurrent I/O-bound requests. Observe the speed of cooperative coroutines (<code>async def</code>) vs worker threadpool queues (<code>def</code>) vs event loop starvation bugs.
@@ -94,7 +94,7 @@ export function AsyncLab() {
             onClick={() => resetAll(mId as 'async' | 'threadpool' | 'blocking')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-all ${
               mode === mId
-                ? 'bg-[var(--fastapi-primary)] text-white font-bold shadow-md'
+                ? 'bg-[var(--fastapi-primary-solid)] text-[var(--fastapi-on-accent)] font-bold shadow-md'
                 : 'border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] text-[var(--fastapi-muted)] hover:text-[var(--fastapi-text)]'
             }`}
           >
@@ -108,12 +108,12 @@ export function AsyncLab() {
         {/* Left Telemetry & Controls */}
         <div className="lg:col-span-5 rounded-2xl border border-[var(--fastapi-border)] bg-[var(--fastapi-surface)] p-6 space-y-6 shadow-xl">
           <div className="flex items-center justify-between border-b border-[var(--fastapi-border-subtle)] pb-4">
-            <span className="text-[var(--fastapi-teal)] uppercase tracking-wider font-bold">
+            <span className="text-[var(--fastapi-teal-text)] uppercase tracking-wider font-bold">
               Benchmark Controls
             </span>
             <button
               onClick={() => resetAll()}
-              className="text-[10px] text-[var(--fastapi-muted)] hover:text-[var(--fastapi-teal)] flex items-center gap-1"
+              className="text-[10px] text-[var(--fastapi-muted)] hover:text-[var(--fastapi-teal-text)] flex items-center gap-1"
             >
               <RotateCcw className="w-3 h-3" /> Reset
             </button>
@@ -123,7 +123,7 @@ export function AsyncLab() {
             <div className="space-y-1.5">
               <div className="flex justify-between text-[11px]">
                 <span className="text-[var(--fastapi-muted)]">Concurrent Requests</span>
-                <span className="font-bold text-[var(--fastapi-teal)]">{taskCount} requests</span>
+                <span className="font-bold text-[var(--fastapi-teal-text)]">{taskCount} requests</span>
               </div>
               <input
                 type="range"
@@ -136,31 +136,44 @@ export function AsyncLab() {
               />
             </div>
 
-            {/* Strategy Explanations */}
+            {/* Strategy Explanations. Palette text is shaded for the light-mode
+                tint it sits on and restored to the original bright value under
+                `dark:` - the same shape DiGraph's node cards use - so dark mode
+                keeps exactly the colours it had. */}
             <div className="p-4 rounded-xl bg-[var(--fastapi-bg)] border border-[var(--fastapi-border-subtle)] space-y-2 text-[10px] leading-relaxed">
               {mode === 'async' && (
-                <span className="text-emerald-400">
+                <span className="text-emerald-700 dark:text-emerald-400">
                   ✓ <strong>Cooperative Coroutine</strong>: When coroutines await I/O, the event loop switches instantly with zero thread context-switch overhead. All {taskCount} tasks complete in ~1.05 seconds.
                 </span>
               )}
               {mode === 'threadpool' && (
-                <span className="text-sky-400">
+                <span className="text-sky-700 dark:text-sky-400">
                   ℹ <strong>ThreadPool Offload</strong>: FastAPI safely runs sync <code>def</code> in an AnyIO thread pool (pool size: 5). Tasks queue up in batches, taking ~{(taskCount / 5) * 0.75}s.
                 </span>
               )}
               {mode === 'blocking' && (
-                <span className="text-rose-400">
+                <span className="text-rose-700 dark:text-rose-400">
                   ⚠ <strong>Event Loop Starvation</strong>: Calling synchronous blocking functions inside <code>async def</code> freezes the single event loop thread, locking all incoming requests!
                 </span>
               )}
             </div>
 
+            {/* WCAG 1.4.3 exempts INACTIVE controls, so this disabled state is a
+                legibility fix, not a compliance one: `disabled:opacity-40`
+                composited the 12px bold white label against the 40%-opacity
+                fill at 1.83:1 in light mode (11.91:1 in dark). The explicit
+                disabled palette below reuses existing tokens - surface-2 fill,
+                muted label, no glow - so it still looks disabled while
+                measuring 5.02:1 light / 5.71:1 dark. `fill-current` keeps the
+                Play glyph white while enabled (--fastapi-on-accent is #ffffff)
+                and lets it follow the label into the muted colour instead of
+                staying white on grey. */}
             <button
               onClick={runBenchmark}
               disabled={running}
-              className="w-full py-3 rounded-lg bg-[var(--fastapi-primary)] text-white font-bold hover:bg-[var(--fastapi-primary-hover)] transition-all shadow-md active:scale-95 disabled:opacity-40 flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-lg bg-[var(--fastapi-primary-solid)] text-[var(--fastapi-on-accent)] font-bold hover:bg-[var(--fastapi-primary-solid-hover)] transition-all shadow-md active:scale-95 disabled:bg-[var(--fastapi-surface-2)] disabled:text-[var(--fastapi-muted)] disabled:shadow-none disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              <Play className="w-3.5 h-3.5 fill-white" />
+              <Play className="w-3.5 h-3.5 fill-current" />
               {running ? 'Running Benchmark...' : `Execute ${taskCount} Concurrent Requests`}
             </button>
           </div>
@@ -172,21 +185,21 @@ export function AsyncLab() {
           <div className="grid grid-cols-3 gap-3 text-center">
             <div className="p-4 rounded-xl bg-[var(--fastapi-surface)] border border-[var(--fastapi-border-subtle)] space-y-1">
               <span className="text-[10px] text-[var(--fastapi-muted)]">Completed Tasks</span>
-              <div className="text-xl font-bold text-emerald-400">
+              <div className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
                 {completedTasks} / {taskCount}
               </div>
             </div>
 
             <div className="p-4 rounded-xl bg-[var(--fastapi-surface)] border border-[var(--fastapi-border-subtle)] space-y-1">
               <span className="text-[10px] text-[var(--fastapi-muted)]">Elapsed Wall Clock</span>
-              <div className="text-xl font-bold text-[var(--fastapi-sky)]">
+              <div className="text-xl font-bold text-[var(--fastapi-sky-text)]">
                 {(elapsedMs / 1000).toFixed(2)} s
               </div>
             </div>
 
             <div className="p-4 rounded-xl bg-[var(--fastapi-surface)] border border-[var(--fastapi-border-subtle)] space-y-1">
               <span className="text-[10px] text-[var(--fastapi-muted)]">Loop Starvation</span>
-              <div className={`text-xl font-bold ${mode === 'blocking' ? 'text-rose-400' : 'text-emerald-400'}`}>
+              <div className={`text-xl font-bold ${mode === 'blocking' ? 'text-rose-700 dark:text-rose-400' : 'text-emerald-700 dark:text-emerald-400'}`}>
                 {mode === 'blocking' ? 'STARVED' : 'HEALTHY'}
               </div>
             </div>
@@ -195,7 +208,7 @@ export function AsyncLab() {
           {/* Task Grid Visualizer */}
           <div className="p-6 rounded-2xl border border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-[var(--fastapi-teal)] uppercase tracking-wider font-bold">
+              <span className="text-[var(--fastapi-teal-text)] uppercase tracking-wider font-bold">
                 Concurrent Task Execution Matrix
               </span>
               <span className="text-[10px] text-[var(--fastapi-muted)]">
@@ -203,6 +216,13 @@ export function AsyncLab() {
               </span>
             </div>
 
+            {/* Task cells. The /20 tints here are twice as deep as the /10 tints
+                elsewhere in the engine, so emerald needs -800 rather than the
+                -700 used on a /10 tint; each cell keeps its original bright
+                value under `dark:`. `animate-pulse` still fades the whole cell
+                to opacity .5 at its midpoint, which no text colour can rescue
+                (measured 2.43-2.50:1 there) - noted rather than changed, since
+                the steady state is what a reader actually reads. */}
             <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
               {Array.from({ length: taskCount }).map((_, idx) => {
                 const isDone = idx < completedTasks;
@@ -213,9 +233,9 @@ export function AsyncLab() {
                     key={idx}
                     className={`h-10 rounded-lg border flex flex-col items-center justify-center text-[9px] font-bold transition-all ${
                       isDone
-                        ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-300'
+                        ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                         : isCurrent
-                        ? 'border-amber-500/50 bg-amber-500/20 text-amber-300 animate-pulse'
+                        ? 'border-amber-500/50 bg-amber-500/20 text-amber-800 dark:text-amber-300 animate-pulse'
                         : 'border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-bg)] text-[var(--fastapi-muted)]'
                     }`}
                   >

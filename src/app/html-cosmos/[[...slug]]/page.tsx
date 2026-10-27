@@ -9,18 +9,25 @@ import ProblemList from '@/components/visualizers/htmlviz/features/problems/Prob
 import ProblemSolver from '@/components/visualizers/htmlviz/features/problems/ProblemSolver';
 import About from '@/components/visualizers/htmlviz/features/about/About';
 import { htmlTags } from '@/components/visualizers/htmlviz/data/html-tags';
+import { problems } from '@/components/visualizers/htmlviz/data/problems';
+
+/** The lookup `ProblemSolver` performs, used here so the params cannot drift from the data. */
+type HtmlProblem = { id: number | string };
 
 export function generateStaticParams() {
     const learnParams = htmlTags.map(tag => ({ slug: ['learn', tag.id] }));
+    // FS-18: this listed `problems/1`–`problems/3` by hand while `ProblemList` links every one
+    // of the 50 problems in `data/problems.js`, so 47 challenge routes were never pre-rendered.
+    const problemParams = (problems as HtmlProblem[]).map(problem => ({
+        slug: ['problems', String(problem.id)],
+    }));
     return [
         { slug: [] },
         { slug: ['learn'] },
         ...learnParams,
         { slug: ['playground'] },
         { slug: ['problems'] },
-        { slug: ['problems', '1'] },
-        { slug: ['problems', '2'] },
-        { slug: ['problems', '3'] },
+        ...problemParams,
         { slug: ['about'] },
     ];
 }

@@ -36,8 +36,8 @@ const PRESETS: Preset[] = [
     activation: 'sigmoid',
     labelFormat: (p) =>
       p
-        ? { text: 'POSITIVE REVIEW', color: 'text-emerald-500 border-emerald-500/40 bg-emerald-500/10' }
-        : { text: 'NEGATIVE REVIEW', color: 'text-rose-500 border-rose-500/40 bg-rose-500/10' },
+        ? { text: 'POSITIVE REVIEW', color: 'text-emerald-700 dark:text-emerald-500 border-emerald-500/40 bg-emerald-500/10' }
+        : { text: 'NEGATIVE REVIEW', color: 'text-rose-700 dark:text-rose-500 border-rose-500/40 bg-rose-500/10' },
   },
   {
     id: 'credit',
@@ -49,8 +49,8 @@ const PRESETS: Preset[] = [
     activation: 'sigmoid',
     labelFormat: (p) =>
       p
-        ? { text: 'LOAN APPROVED', color: 'text-emerald-500 border-emerald-500/40 bg-emerald-500/10' }
-        : { text: 'REJECTED / HIGH RISK', color: 'text-rose-500 border-rose-500/40 bg-rose-500/10' },
+        ? { text: 'LOAN APPROVED', color: 'text-emerald-700 dark:text-emerald-500 border-emerald-500/40 bg-emerald-500/10' }
+        : { text: 'REJECTED / HIGH RISK', color: 'text-rose-700 dark:text-rose-500 border-rose-500/40 bg-rose-500/10' },
   },
   {
     id: 'spam',
@@ -62,8 +62,8 @@ const PRESETS: Preset[] = [
     activation: 'step',
     labelFormat: (p) =>
       p
-        ? { text: 'SPAM DETECTED', color: 'text-rose-500 border-rose-500/40 bg-rose-500/10' }
-        : { text: 'LEGITIMATE (HAM)', color: 'text-emerald-500 border-emerald-500/40 bg-emerald-500/10' },
+        ? { text: 'SPAM DETECTED', color: 'text-rose-700 dark:text-rose-500 border-rose-500/40 bg-rose-500/10' }
+        : { text: 'LEGITIMATE (HAM)', color: 'text-emerald-700 dark:text-emerald-500 border-emerald-500/40 bg-emerald-500/10' },
   },
 ];
 
@@ -329,7 +329,7 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
               >
                 <div className="flex items-center justify-between font-mono text-xs">
                   <span className="font-bold text-foreground">01 / FEATURE INGESTION</span>
-                  {activeStep >= 0 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
+                  {activeStep >= 0 && <CheckCircle2 className="h-4 w-4 text-emerald-700 dark:text-emerald-500" />}
                 </div>
                 <div className="mt-2 text-2xl font-bold font-mono text-foreground">
                   x = {inputVal.toFixed(2)}
@@ -349,7 +349,7 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
               >
                 <div className="flex items-center justify-between font-mono text-xs">
                   <span className="font-bold text-foreground">02 / LINEAR COMBINATION (z)</span>
-                  {activeStep >= 1 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
+                  {activeStep >= 1 && <CheckCircle2 className="h-4 w-4 text-emerald-700 dark:text-emerald-500" />}
                 </div>
                 <div className="mt-2 text-2xl font-bold font-mono text-foreground">
                   z = {z.toFixed(2)}
@@ -369,7 +369,7 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
               >
                 <div className="flex items-center justify-between font-mono text-xs">
                   <span className="font-bold text-foreground">03 / ACTIVATION &sigma;(z)</span>
-                  {activeStep >= 2 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
+                  {activeStep >= 2 && <CheckCircle2 className="h-4 w-4 text-emerald-700 dark:text-emerald-500" />}
                 </div>
                 <div className="mt-2 text-2xl font-bold font-mono text-foreground">
                   a = {activatedOutput.toFixed(3)}
@@ -389,7 +389,7 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
               >
                 <div className="flex items-center justify-between font-mono text-xs">
                   <span className="font-bold text-foreground">04 / DECISION VERDICT</span>
-                  {activeStep >= 3 && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
+                  {activeStep >= 3 && <CheckCircle2 className="h-4 w-4 text-emerald-700 dark:text-emerald-500" />}
                 </div>
                 <div className="mt-2.5">
                   <span className={`inline-block px-3 py-1 rounded text-xs font-mono font-bold border ${verdict.color}`}>
@@ -409,7 +409,7 @@ export function FoundationLab({ basePath = '/ai/ai-engineering-foundations' }: F
                 <div>Input x: <span className="font-bold">{inputVal.toFixed(2)}</span></div>
                 <div>Weighted w&middot;x: <span className="font-bold">{(weight * inputVal).toFixed(2)}</span></div>
                 <div>Linear z: <span className="font-bold">{z.toFixed(2)}</span></div>
-                <div>Probability: <span className="font-bold text-emerald-500">{(activatedOutput * 100).toFixed(1)}%</span></div>
+                <div>Probability: <span className="font-bold text-emerald-700 dark:text-emerald-500">{(activatedOutput * 100).toFixed(1)}%</span></div>
               </div>
             </div>
           </div>

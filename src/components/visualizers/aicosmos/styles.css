@@ -1,21 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 .aicosmos-root {
-  --ai-primary: hsl(var(--foreground));
-  --ai-primary-hover: hsl(var(--foreground) / 0.85);
+  /* Brand indigo, declared explicitly (never derived from --foreground, which is
+     near-white in dark mode). Every solid --ai-primary surface carries a white
+     label, so both themes must stay >= 4.5:1 against #ffffff. Brand-coloured
+     TEXT never uses this fill token — it points at --ai-primary-text below. */
+  --ai-primary: #4f46e5; /* indigo-600 — 6.29:1 vs white */
+  --ai-primary-hover: #4338ca; /* indigo-700 — 7.90:1 vs white */
   --ai-accent: hsl(var(--primary));
   --ai-emerald: #10b981;
   --ai-cyan: #0284c7;
   --ai-amber: #d97706;
   --ai-rose: #e11d48;
+
+  /* Text-safe companions to the accent tokens above. Those accent values also
+     serve as SOLID FILLS (`bg-[var(--ai-amber)] text-black`,
+     `bg-[var(--ai-rose)] text-white`), so they must keep the shade the dark
+     palette was designed around; brand-coloured TEXT points at these tokens
+     instead. Each light value is the lightest shade of the same hue that clears
+     4.5:1 on the worst light surface its labels paint on (white, --ai-surface-2
+     or the accent's own 10% chip). Dark mode restores the accent value exactly,
+     so every text consumer is byte-identical there. --ai-rose is not split:
+     its only text consumers sit on --ai-surface, where 4.70:1 already passes.
+     --ai-primary is the one accent split in BOTH themes: its dark value is a
+     fill (4.66:1 against its own white CTA label) and only reaches 4.27:1 as
+     text on the canvas, so dark text moves to indigo-300 while light text can
+     stay on the already text-safe indigo-600. */
+  --ai-primary-text: #4f46e5; /* 6.29:1 on white, 5.01:1 on the 15% chip     */
+  --ai-emerald-text: #047857; /* 5.48:1 on white, 4.99:1 on emerald-500/10 */
+  --ai-cyan-text: #0e7490;    /* 5.36:1 on white, 4.89:1 on cyan-500/10    */
+  --ai-amber-text: #b45309;   /* 5.02:1 on white, 4.65:1 on amber-500/10  */
   
   --ai-bg: hsl(var(--background));
   --ai-surface: hsl(var(--card));
   --ai-surface-2: hsl(var(--secondary) / 0.5);
+  /* Card background alias used by the PythonAi* pages via `bg-[var(--ai-card)]`.
+     It is exactly the surface painted by the `.ai-card` class below, and is
+     theme-bound through --ai-surface (hsl(var(--card))): this base block is the
+     light theme and the dark block only overrides the brand indigo, so no
+     separate dark/light literal is needed here. */
+  --ai-card: var(--ai-surface);
   --ai-border: hsl(var(--border));
   --ai-border-subtle: hsl(var(--border) / 0.6);
   --ai-text: hsl(var(--foreground));
   --ai-muted: hsl(var(--muted-foreground));
+
+  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity modifier
+     to an arbitrary var() colour: `bg-[var(--ai-primary)]/15` is not a valid v3
+     utility and emits no CSS at all (verified against the repo's tailwindcss
+     3.4.19). These real custom properties are the supported way to get the
+     same tint. The --ai-primary-* values are re-declared in the dark block
+     below because the brand indigo itself changes there. The theme-bound
+     tokens derive from the same HSL channel variables, so they follow light
+     and dark mode without duplicating literals. */
+  --ai-primary-10: rgba(79, 70, 229, 0.1);
+  --ai-primary-15: rgba(79, 70, 229, 0.15);
+  --ai-primary-20: rgba(79, 70, 229, 0.2);
+  --ai-primary-30: rgba(79, 70, 229, 0.3);
+  --ai-cyan-10: rgba(2, 132, 199, 0.1);
+  --ai-cyan-30: rgba(2, 132, 199, 0.3);
+  --ai-amber-10: rgba(217, 119, 6, 0.1);
+  --ai-amber-30: rgba(217, 119, 6, 0.3);
+  --ai-rose-80: rgba(225, 29, 72, 0.8);
+  --ai-bg-80: hsl(var(--background) / 0.8);
+  --ai-muted-40: hsl(var(--muted-foreground) / 0.4);
   
   --ai-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   --ai-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -24,6 +72,29 @@
   font-family: var(--ai-sans);
   background-color: transparent;
   color: var(--ai-text);
+}
+
+/* Dark theme keeps a lighter brand indigo so the accent still reads on the obsidian
+   canvas, while still holding >= 4.5:1 against the white CTA label. */
+html.dark .aicosmos-root,
+html[data-theme='dark'] .aicosmos-root,
+.aicosmos-root[data-theme='dark'],
+.aicosmos-root.dark-mode {
+  --ai-primary: #6d5ef0; /* 4.66:1 vs white */
+  --ai-primary-hover: #5b4ee8; /* 5.68:1 vs white */
+  /* Tints must be mixed from the dark-mode indigo, not the light #4f46e5. */
+  --ai-primary-10: rgba(109, 94, 240, 0.1);
+  --ai-primary-15: rgba(109, 94, 240, 0.15);
+  --ai-primary-20: rgba(109, 94, 240, 0.2);
+  --ai-primary-30: rgba(109, 94, 240, 0.3);
+  /* Text companions pinned to the accent value: dark text is unchanged from
+     the pre-fix palette. --ai-primary-text is the exception and cannot be
+     pinned: the dark fill indigo only reaches 4.27:1 on the obsidian canvas,
+     so brand text moves to indigo-300 while the fill stays put. */
+  --ai-primary-text: #a5b4fc; /* 9.98:1 on the canvas, 8.57:1 on the 15% chip */
+  --ai-emerald-text: #10b981;
+  --ai-cyan-text: #0284c7;
+  --ai-amber-text: #d97706;
 }
 
 .aicosmos-root .font-display {
@@ -116,4 +187,28 @@
 
 .aicosmos-root ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground));
+}
+
+/* ---------------------------------------------------------------------------
+   FS-91: two utility classes the pages have always referenced were defined
+   nowhere, so eight headings lost their glow and the hero grid never painted.
+
+   `.ai-glow` uses `currentColor`, because the class is applied to spans that set
+   their own text colour (`--ai-primary-text` in six places, `--ai-amber-text` in
+   one) — a single hard-coded glow colour would be wrong for at least one of them.
+   --------------------------------------------------------------------------- */
+.ai-glow {
+  text-shadow: 0 0 16px currentColor;
+}
+
+.dark .ai-glow {
+  text-shadow: 0 0 20px currentColor;
+}
+
+/* Subtle blueprint grid used behind the hero (`absolute inset-0 -z-10`). */
+.ai-grid-bg {
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+  background-size: 32px 32px;
 }

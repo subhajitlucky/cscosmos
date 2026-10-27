@@ -5,7 +5,7 @@ import React from 'react';
 export default function AboutPage() {
   return (
     <div className="space-y-4">
-      <p className="text-xs uppercase tracking-[0.3rem] text-accentSoft">About</p>
+      <p className="text-xs uppercase tracking-[0.3rem] text-[var(--bu-accent-soft)]">About</p>
       <h1 className="section-title">BrowserUniverse</h1>
       <p className="text-sm text-slate-300">
         An interactive lab to learn how browsers turn bytes into pixels. Built with React +

@@ -52,7 +52,7 @@ export function Playground() {
             onClick={() => setUseIndex(!useIndex)}
             className={cn(
               "px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all",
-              useIndex ? "bg-primary text-black shadow-[0_0_20px_rgba(0,237,100,0.4)]" : "dark:bg-black/40 bg-white/60 text-primary/40 border border-primary/20 hover:text-primary"
+              useIndex ? "bg-primary text-primary-foreground shadow-[0_0_20px_rgba(0,237,100,0.4)]" : "dark:bg-black/40 bg-white/60 text-primary/40 border border-primary/20 hover:text-primary"
             )}
           >
             {useIndex ? 'IXSCAN_ACTIVE' : 'COLLSCAN_ONLY'}
@@ -95,7 +95,7 @@ export function Playground() {
             <button 
               onClick={runQuery}
               disabled={status === 'executing'}
-              className="w-full h-20 bg-primary text-black font-black text-sm tracking-[0.4em] uppercase transition-all hover:bg-primary/80 shadow-[0_0_30px_rgba(0,237,100,0.3)] disabled:opacity-20 flex items-center justify-center gap-4 italic active:scale-95"
+              className="w-full h-20 bg-primary text-primary-foreground font-black text-sm tracking-[0.4em] uppercase transition-all hover:bg-primary/80 shadow-[0_0_30px_rgba(0,237,100,0.3)] disabled:opacity-20 flex items-center justify-center gap-4 italic active:scale-95"
             >
               <Zap className="w-6 h-6 fill-current" />
               EXEC_PLAN
@@ -150,7 +150,7 @@ export function Playground() {
                 <div className="flex flex-col items-center gap-6">
                   <div className="w-32 h-32 border-4 border-primary/40 dark:bg-black bg-white flex items-center justify-center relative shadow-brutal active:scale-95 transition-transform">
                     <Globe className="w-12 h-12 text-primary" />
-                    <div className="absolute -top-4 -left-4 px-3 py-1 bg-primary text-black text-[9px] font-black uppercase italic tracking-widest shadow-brutal">APP_01</div>
+                    <div className="absolute -top-4 -left-4 px-3 py-1 bg-primary text-primary-foreground text-[9px] font-black uppercase italic tracking-widest shadow-brutal">APP_01</div>
                   </div>
                   <span className="text-xs font-black text-primary uppercase tracking-[0.3em] italic">Driver_Node</span>
                 </div>
@@ -169,7 +169,7 @@ export function Playground() {
                 <div className="flex flex-col items-center gap-6">
                   <div className="w-32 h-32 border-4 border-primary/40 dark:bg-black bg-white flex items-center justify-center relative group-hover:border-primary transition-colors duration-500 shadow-brutal">
                     <Database className={cn("w-12 h-12 transition-colors duration-500", status === 'executing' ? "text-primary text-glow" : "text-primary/40")} />
-                    <div className="absolute -bottom-4 -right-4 px-3 py-1 bg-primary text-black text-[9px] font-black uppercase italic tracking-widest shadow-brutal">PRIMARY</div>
+                    <div className="absolute -bottom-4 -right-4 px-3 py-1 bg-primary text-primary-foreground text-[9px] font-black uppercase italic tracking-widest shadow-brutal">PRIMARY</div>
                   </div>
                   <span className="text-xs font-black text-primary uppercase tracking-[0.3em] italic">Mongo_Daemon</span>
                 </div>

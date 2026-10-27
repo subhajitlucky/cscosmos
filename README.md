@@ -6,6 +6,8 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 - Repo: https://github.com/subhajitlucky/cscosmos
 - Creator: https://subhajitpradhan.vercel.app
 - Portfolio case study: https://subhajitpradhan.vercel.app/projects/cscosmos
+- Architecture: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+- Naming: [docs/NAMING.md](./docs/NAMING.md)
 - Status: Live platform
 
 ## Proof
@@ -13,8 +15,8 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 - 245 curated computer science learning modules.
 - 72 live visualizer topics powered by 70 natively absorbed interactive engines (zero externally linked).
 - 8 major domains with dedicated routes.
-- 1,500+ statically pre-rendered pages via Next.js SSG.
-- Interview Prep: 17 deep-dive questions across 5 categories with step-by-step animated walkthroughs.
+- 2,500+ statically pre-rendered pages via Next.js SSG.
+- Interview Prep: 25 deep-dive questions across 5 categories with step-by-step animated walkthroughs.
 - Search, domain browsing, topic detail pages, live/coming-soon states, and dark/light theme support.
 - Vercel deployment with SSG pre-rendering and App Router.
 
@@ -22,7 +24,7 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 
 Computer science topics are usually scattered across separate articles, demos, videos, and one-off visualizers. CSCosmos organizes them into one navigable map so learners can move from fundamentals to advanced systems without losing context.
 
-The goal is not to publish a static list. The hub acts as an index for a growing set of focused microsites where each topic can eventually become an interactive visual learning module — natively absorbed into the platform.
+The goal is not to publish a static list. The hub acts as an index for a growing set of focused engines where each topic can eventually become an interactive visual learning module — natively absorbed into the platform.
 
 ## Current Domains
 
@@ -37,24 +39,31 @@ The goal is not to publish a static list. The hub acts as an index for a growing
 
 ## Natively Absorbed Visualizers
 
-All 47 microsites and interactive visualizer engines have been fully absorbed and integrated as native Next.js routes within CSCosmos with 1,500+ statically pre-rendered SSG pages:
+All 70 interactive visualizer engines are absorbed as native Next.js routes within CSCosmos. The authoritative topic-to-engine mapping lives in `src/data/engine-routes.ts`; the last static build produced 2,500+ pre-rendered pages. Canonical topic URLs are `/[domain]/[topicSlug]`; each engine is served from its `/[enginePath]` route and rewritten behind the canonical URL.
 
-| Domain | Absorbed Visualizer Routes |
-|:-------|:---------------------------|
-| **Full Stack & Core Web** | `/program-cosmos`, `/html-cosmos`, `/css-cosmos`, `/webprotocols`, `/websecurity`, `/jsviz`, `/tsviz`, `/browseruniverse`, `/reactcosmos`, `/nextjscosmos`, `/vuecosmos`, `/sveltecosmos`, `/tailwindcosmos`, `/wasmcosmos`, `/xrcosmos`, `/crossplatformviz` |
-| **Backend & Systems** | `/nodecosmos`, `/golangviz`, `/rustviz`, `/fastapicosmos`, `/apiviz`, `/authviz`, `/sqlcosmos`, `/mongocosmos`, `/redisviz`, `/synccosmos` |
-| **Architecture & DevOps** | `/dockercosmos`, `/k8scosmos`, `/gitcosmos`, `/cloudcosmos`, `/loadbalancing`, `/mqviz`, `/microservicesviz`, `/lldcosmos`, `/systemdesignviz` |
-| **Web3 & Blockchain** | `/blockchainviz`, `/cryptviz`, `/merkletreeviz`, `/patriciatrie`, `/consensusviz`, `/ptopblockchain`, `/evminternals`, `/solidityviz` |
-| **DSA & AI** | `/arrayviz`, `/stringalgoviz`, `/aimathviz`, `/aicosmos` |
+| Domain | Active topics | Example canonical URLs |
+|:-------|:--------------|:----------------------|
+| **Full Stack Development** | 32 | `/fullstack/program-cosmos`, `/fullstack/html-cosmos`, `/fullstack/jsviz`, `/fullstack/reactcosmos` |
+| **Data Structures & Algorithms** | 2 | `/dsa/arrayviz`, `/dsa/stringalgoviz` |
+| **Web3 & Blockchain** | 8 | `/web3/blockchainviz`, `/web3/cryptviz`, `/web3/patriciatrie`, `/web3/solidityviz` |
+| **Cybersecurity & Ethical Hacking** | 8 | `/security/zero-trust-architecture-and-iam`, `/security/security-engineering-threat-models` |
+| **Artificial Intelligence** | 3 | `/ai/aimathviz`, `/ai/ai-engineering-foundations`, `/ai/python-for-ai-engineering` |
+| **Core Computer Science** | 15 | `/corecs/computer-architecture-cpu-caches`, `/corecs/operating-systems-internals-processes-memory` |
+| **DevOps, Cloud & Engineering** | 4 | `/devops/gitcosmos`, `/devops/k8scosmos`, `/devops/cloudcosmos`, `/devops/loadbalancing` |
+| **Advanced Engineering & Systems** | 0 | Planned |
 
-The authoritative list is defined in `src/data/topics.ts`.
+The full 70-row engine mapping is in `src/data/engine-routes.ts`. The two
+curriculum modules (`ai-engineering-foundations`, `python-for-ai-engineering`)
+are registered in `src/lib/module-registry.ts`. The authoritative topic catalog is
+`src/data/topics.ts`.
+
 
 ## Product Features
 
 - Browse topics by domain.
 - Search across the full topic catalog.
 - Open topic detail pages with status and domain context.
-- Launch live microsites directly from topic cards or detail pages.
+- Launch live engines directly from topic cards or detail pages.
 - Distinguish `active` modules from `coming-soon` modules.
 - Persist light/dark theme preference with local storage.
 - Full SSG pre-rendering for fast page loads and SEO.
@@ -64,13 +73,19 @@ The authoritative list is defined in `src/data/topics.ts`.
 
 ```text
 src/app/
-  Next.js App Router pages and catch-all routes for absorbed visualizers
+  Next.js App Router pages and catch-all engine routes
 
 src/data/domains.ts
-  Domain metadata: name, route, description, color, icons
+  Domain metadata: domainKey, name, description, color
 
 src/data/topics.ts
-  Topic catalog: id, name, domain, slug, status, optional URL
+  Topic catalog: id, name, domain, slug, status, canonicalPath, metadata
+
+src/data/engine-routes.ts
+  Authoritative topicSlug -> engineDir/enginePath mapping used by next.config.ts
+
+src/lib/module-registry.ts
+  Registered multi-view curriculum modules (currently the two AI modules)
 
 src/components/visualizers/
   Native visualizer engine implementations (jsviz, cssviz, reactcosmos, etc.)
@@ -79,7 +94,7 @@ src/components/
   Navbar, footer, search, domain cards, topic cards, theme toggle
 
 public/
-  robots.txt, sitemap.xml, llms.txt, static public assets
+  robots.txt, llms.txt, static public assets (the sitemap is generated by src/app/sitemap.ts)
 ```
 
 ## Data Model
@@ -88,52 +103,49 @@ Each topic is modeled with:
 
 ```ts
 type Topic = {
-  id: number;
+  catalogId: number;          // internal catalog id; never used in URLs
   name: string;
   domain: DomainKey;
+  crossListedDomains?: DomainKey[];
   shortDescription: string;
-  slug: string;
+  slug: string;               // stable public topicSlug
   status: 'coming-soon' | 'active';
-  url?: string;
+  canonicalPath: string;      // /<domain>/<slug>
+  difficulty, estimatedMinutes, tags, prerequisites, related
 };
 ```
 
-To publish a new live microsite:
+To publish a new live topic:
 
 1. Add or update the topic in `src/data/topics.ts`.
-2. Set `status: 'active'`.
-3. Add the deployed `url` (for external links) or an internal route path.
-4. The home page, topic index, domain page, counts, badges, and launch links update from the same data source.
+2. Set `status: 'active'`; `canonicalPath` is derived automatically.
+3. For an absorbed engine, add its mapping to `src/data/engine-routes.ts`.
+4. The home page, topic index, domain page, counts, badges, sitemap, and launch links update from the same data source.
 
-To absorb a microsite natively:
+To absorb an engine natively:
 
-1. Place source components in `src/components/visualizers/<site_name>/`.
-2. Create the route in `src/app/<site_name>/[[...slug]]/page.tsx`.
+1. Place source components in `src/components/visualizers/<engineDir>/`.
+2. Create the engine route at `src/app/<enginePath>/[[...slug]]/page.tsx` and mount it through `EngineMount.tsx`.
 3. Provide `generateStaticParams()` returning all sub-routes for SSG.
-4. Update `src/data/topics.ts` matching topic IDs: set `status: 'active'`.
+4. Add `{ domain, topicSlug, engineDir }` to `src/data/engine-routes.ts`; the canonical URL is generated automatically.
 
 ## Routing And Deployment
 
-CSCosmos uses the Next.js App Router for file-system based routing. Every absorbed visualizer
-follows one pattern, `/<engine>/[[...slug]]`, with `generateStaticParams()` supplying its sub-routes
-(70 such routes today):
+CSCosmos uses the Next.js App Router for file-system based routing. The public URL is always
+the canonical topic URL `/[domain]/[topicSlug]`. Internally that URL is rewritten to the
+engine implementation at `/<enginePath>/[[...slug]]` (70 engine paths today):
 
 - `/` — Home page
 - `/topics` — Full topic catalog
 - `/about` — About page
 - `/interview` — Interview preparation hub across 5 categories
 - `/interview/[category]` — Filterable question list (topic, difficulty, frequency, round, type)
-- `/interview/[category]/[question]` — Dedicated question page with step-by-step animated walkthrough
+- `/interview/[category]/[questionSlug]` — Dedicated question page with step-by-step animated walkthrough
 - `/[domain]` — Domain-specific topic lists (e.g., `/fullstack`, `/ai`, `/dsa`)
-- `/learn/[slug]` — permanent redirect alias to each topic's canonical `/<domain>/<slug>` URL
-- `/program-cosmos/[[...slug]]` — Absorbed visualizer routes
-- `/html-cosmos/[[...slug]]`
-- `/css-cosmos/[[...slug]]`
-- `/jsviz/[[...slug]]`
-- `/webprotocols/[[...slug]]`
-- `/websecurity/[[...slug]]`
-- `/reactcosmos/[[...slug]]`
-- `/nextjscosmos/[[...slug]]`
+- `/[domain]/[topicSlug]` — Canonical topic URL (rewritten to the engine route)
+- `/learn/[topicSlug]` — permanent redirect alias to the canonical topic URL
+- `/embed/topic/[topicSlug]` — chrome-free visualizer embed
+- `/<enginePath>/[[...slug]]` — engine implementation route (e.g. `/program-cosmos`, `/jsviz`)
 
 All routes are statically pre-rendered at build time via `generateStaticParams()` for optimal performance and SEO.
 
@@ -202,25 +214,24 @@ npm run lint
 
 - Next.js App Router provides SSG pre-rendering and SEO out of the box, but adds build complexity compared to a plain SPA.
 - The topic catalog is stored in TypeScript for simplicity, but a larger version could move to MDX, JSON, a CMS, or a database.
-- Absorbing microsites natively keeps the user experience seamless but increases the monorepo surface area.
-- All former external microsites now run as native routes, so every topic shares one deployment pipeline and one SEO surface.
+- Absorbing engines natively keeps the user experience seamless but increases the monorepo surface area.
+- All former external engines now run as native routes, so every topic shares one deployment pipeline and one SEO surface.
 
 ## Roadmap
 
-- Expand the DSA domain (40 planned algorithm modules).
-- Build the Core Computer Science domain (OS internals, networks, database internals).
-- Add screenshots and short previews for live microsites.
-- Tag-based cross-listing for topics shared between domains.
+- Expand the DSA domain (40 topics; 2 live today).
+- Build the Advanced Engineering & Systems domain (10 topics; 0 live today).
+- Add screenshots and short previews for live engines.
 - Add progress filters for active versus planned modules.
-- Add richer topic metadata: difficulty, estimated reading time, prerequisites, and related topics.
+- Deepen the two registered curriculum modules and add more multi-view modules.
 
 ## Contributing
 
 PRs and issues are welcome.
 
-To add or update a microsite:
+To add or update an engine:
 
 1. Edit `src/data/topics.ts`.
-2. Set `status: 'active'` and provide `url` for live items.
-3. Leave planned modules as `status: 'coming-soon'`.
-4. Run `npm run build` before submitting.
+2. Set `status: 'active'` for live topics.
+3. Add the topic-to-engine mapping in `src/data/engine-routes.ts`.
+4. Run `npm test`, `npm run lint`, and `npm run build` before submitting.

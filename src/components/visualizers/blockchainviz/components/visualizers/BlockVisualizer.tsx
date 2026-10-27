@@ -135,7 +135,12 @@ export const BlockVisualizer: React.FC<BlockProps> = ({ block, index }) => {
         <div className="mt-6 flex justify-between items-center opacity-40">
             <div className="flex items-center gap-1.5 font-mono text-[9px] font-black">
                 <Clock className="w-3 h-3" />
-                {new Date(block.header.timestamp).toLocaleTimeString()}
+                {/* `toLocaleTimeString()` formats against the runtime's locale and
+                    time zone, so the pre-rendered HTML and the browser's first
+                    render would show different text for the same block
+                    (hydration mismatch). UTC is explicit and identical on both
+                    sides — and it is the convention block explorers use. */}
+                {new Date(block.header.timestamp).toISOString().slice(11, 19)} UTC
             </div>
             <div className="text-[9px] font-black uppercase tracking-widest">
                 Height: {block.header.index}

@@ -12,13 +12,13 @@ export function Navbar() {
 
   const navLinks = [
     { label: 'Concept Map', href: '/tailwindcosmos/learn', icon: BookOpen },
-    { label: 'JIT Playground', href: '/tailwindcosmos/playground', icon: Activity },
+    { label: 'Utility Sandbox', href: '/tailwindcosmos/playground', icon: Activity },
     { label: 'Design Tokens', href: '/tailwindcosmos/token-matrix', icon: Palette },
     { label: 'Architecture', href: '/tailwindcosmos/about', icon: Layers },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--twc-border-subtle)] bg-[var(--twc-bg)]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--twc-border-subtle)] bg-[var(--twc-bg-80)] backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Left branding */}
         <div className="flex items-center gap-6">
@@ -30,7 +30,7 @@ export function Navbar() {
           </Link>
           
           <Link href="/tailwindcosmos" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[var(--twc-primary)]/10 border border-[var(--twc-primary)]/30 flex items-center justify-center text-[var(--twc-primary)] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+            <div className="w-8 h-8 rounded-lg bg-[var(--twc-primary-10)] border border-[var(--twc-primary-30)] flex items-center justify-center text-[var(--twc-primary)] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(6,182,212,0.2)]">
               <Wind className="w-4 h-4 text-[var(--twc-primary)]" />
             </div>
             <div className="flex flex-col">
@@ -55,7 +55,7 @@ export function Navbar() {
                 href={item.href}
                 className={`flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-[var(--twc-primary)]/10 text-[var(--twc-primary)] border border-[var(--twc-border)]'
+                    ? 'bg-[var(--twc-primary-10)] text-[var(--twc-primary)] border border-[var(--twc-border)]'
                     : 'text-[var(--twc-muted)] hover:text-[var(--twc-text)] hover:bg-[var(--twc-surface)]'
                 }`}
               >

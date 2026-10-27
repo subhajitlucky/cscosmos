@@ -41,12 +41,12 @@ const Home = () => {
 
   return (
     <PageTransition>
-      <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-white px-6 py-12 shadow-glow transition-colors duration-300 dark:bg-surface sm:px-10">
+      <section className="relative overflow-hidden rounded-3xl border border-glass bg-surface px-6 py-12 shadow-glow transition-colors duration-300 sm:px-10">
         <div className="absolute inset-0 bg-indigo-500/10" />
         <div className="absolute -right-6 top-10 h-40 w-40 rounded-full bg-white/10 blur-[80px]" />
         <div className="relative z-10 grid gap-10 lg:grid-cols-[1.2fr,1fr]">
           <div className="space-y-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/70">CSS Universe</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-primary">CSS Universe</p>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-5xl">
               Master every CSS concept visually, with interactive labs.
             </h1>
@@ -88,7 +88,7 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-200">
-                  <div className="rounded-lg bg-primary/15 text-primary/90 px-3 py-2 dark:bg-primary/20 dark:text-white">
+                  <div className="rounded-lg bg-primary/15 text-primary/90 px-3 py-2 dark:bg-primary/20 dark:text-primary-foreground">
                     container queries
                   </div>
                   <div className="rounded-lg bg-secondary/15 text-secondary/90 px-3 py-2 dark:bg-secondary/20 dark:text-white">

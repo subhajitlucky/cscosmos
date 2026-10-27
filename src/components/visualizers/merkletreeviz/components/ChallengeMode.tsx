@@ -147,7 +147,7 @@ export const ChallengeMode: React.FC<ChallengeModeProps> = ({ onClose }) => {
                             <div className="flex gap-4">
                                 <button 
                                     onClick={initChallenge}
-                                    className="flex-1 py-4 bg-primary text-white rounded-2xl font-bold uppercase text-xs tracking-widest hover:scale-105 transition-all"
+                                    className="flex-1 py-4 bg-primary text-primary-foreground rounded-2xl font-bold uppercase text-xs tracking-widest hover:scale-105 transition-all"
                                 >
                                     Play Again
                                 </button>

@@ -96,7 +96,7 @@ function HtmlParsingVisualizer() {
           <label className="flex flex-col gap-2">
             <span className="text-xs font-semibold text-slate-400">HTML Input</span>
             <textarea
-              className="h-32 rounded-xl border border-border bg-base/70 p-3 text-xs text-white focus:outline-none focus:ring-2 focus:ring-accent/60"
+              className="h-32 rounded-xl border border-border bg-[var(--bu-base-70)] p-3 text-xs text-white focus:outline-none focus:ring-2 focus:ring-accent/60"
               value={html}
               onChange={(e) => setHtml(e.target.value)}
             />
@@ -161,15 +161,15 @@ function HtmlParsingVisualizer() {
       }
       inspector={
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 text-xs">
-          <div className="rounded-lg border border-border bg-base/70 p-3">
+          <div className="rounded-lg border border-border bg-[var(--bu-base-70)] p-3">
             <p className="font-semibold text-white">Byte stream</p>
             <p className="text-slate-300">Streamed incrementally; tokenizer can pause for scripts.</p>
           </div>
-          <div className="rounded-lg border border-border bg-base/70 p-3">
+          <div className="rounded-lg border border-border bg-[var(--bu-base-70)] p-3">
             <p className="font-semibold text-white">Error recovery</p>
             <p className="text-slate-300">Stray end tags get foster parenting; parser stays resilient.</p>
           </div>
-          <div className="rounded-lg border border-border bg-base/70 p-3">
+          <div className="rounded-lg border border-border bg-[var(--bu-base-70)] p-3">
             <p className="font-semibold text-white">Tree builder</p>
             <p className="text-slate-300">Tokens feed the tree builder which manages the DOM stack.</p>
           </div>
@@ -207,7 +207,7 @@ button.cta:hover { transform: translateY(-1px); }
           <label className="flex flex-col gap-2">
             <span className="text-xs font-semibold text-slate-400">CSS Source</span>
             <textarea
-              className="h-32 rounded-xl border border-border bg-base/70 p-3 text-xs text-white focus:outline-none focus:ring-2 focus:ring-accent/60"
+              className="h-32 rounded-xl border border-border bg-[var(--bu-base-70)] p-3 text-xs text-white focus:outline-none focus:ring-2 focus:ring-accent/60"
               value={css}
               onChange={(e) => setCss(e.target.value)}
             />
@@ -246,7 +246,7 @@ button.cta:hover { transform: translateY(-1px); }
               Cascade: origin (author) → importance (normal) → specificity → source order.
             </p>
           </div>
-          <div className="rounded-xl border border-border bg-base/70 p-3 text-sm text-slate-200">
+          <div className="rounded-xl border border-border bg-[var(--bu-base-70)] p-3 text-sm text-slate-200">
             <p className="text-xs font-semibold uppercase text-slate-400">Computed style (sample)</p>
             <ul className="space-y-1 font-mono text-xs">
               {(activeRule?.body?.split(';') || [])
@@ -343,7 +343,7 @@ function DomConstructionVisualizer() {
             <p className="text-xs font-semibold uppercase text-slate-400">Mutation log</p>
             <ul className="mt-2 space-y-1 text-xs text-slate-200">
               {log.map((entry, idx) => (
-                <li key={idx} className="rounded bg-base/70 px-2 py-1">
+                <li key={idx} className="rounded bg-[var(--bu-base-70)] px-2 py-1">
                   {entry}
                 </li>
               ))}
@@ -361,7 +361,7 @@ function RenderTree({ nodes, depth }: { nodes: { id: number; name: string; child
       {nodes.map((node) => (
         <div key={node.id}>
           <div
-            className="rounded-lg border border-border bg-base/70 px-2 py-1 text-xs text-white"
+            className="rounded-lg border border-border bg-[var(--bu-base-70)] px-2 py-1 text-xs text-white"
             style={{ marginLeft: depth * 14 }}
           >
             {node.name}
@@ -432,7 +432,7 @@ function RenderLayoutVisualizer() {
         </div>
       }
       canvas={
-        <div className="rounded-xl border border-border bg-base/70 p-3">
+        <div className="rounded-xl border border-border bg-[var(--bu-base-70)] p-3">
           <div
             className="grid gap-3"
             style={{
@@ -505,7 +505,7 @@ function PaintCompositeVisualizer() {
                 'rounded-xl border px-3 py-3',
                 layer.gpu
                   ? 'border-accent bg-accent/15 text-white shadow-glow'
-                  : 'border-border bg-base/70 text-slate-200',
+                  : 'border-border bg-[var(--bu-base-70)] text-slate-200',
               )}
             >
               <div className="flex items-center justify-between">
@@ -550,7 +550,7 @@ function GpuPipelineVisualizer() {
           <button className="w-full rounded-lg bg-accent px-3 py-2 text-white" onClick={simulate}>
             Simulate heavy GPU task
           </button>
-          <div className="rounded-lg border border-border bg-base/70 p-3 text-xs">
+          <div className="rounded-lg border border-border bg-[var(--bu-base-70)] p-3 text-xs">
             <p className="text-slate-300">Memory usage</p>
             <p className="text-lg font-semibold text-white">{memory} MB</p>
             <p className="text-[11px] text-slate-400">Textures + tile cache</p>
@@ -653,7 +653,7 @@ function StackList({ title, items }: { title: string; items: string[] }) {
       <ul className="mt-2 space-y-1 text-xs text-slate-200">
         {items.length === 0 ? <li className="text-slate-500">empty</li> : null}
         {items.map((item, idx) => (
-          <li key={idx} className="rounded bg-base/70 px-2 py-1">
+          <li key={idx} className="rounded bg-[var(--bu-base-70)] px-2 py-1">
             {item}
           </li>
         ))}
@@ -709,7 +709,7 @@ function JsEngineVisualizer() {
                 'rounded-xl border px-3 py-2',
                 idx <= 2 || optimized
                   ? 'border-accent bg-accent/15 text-white'
-                  : 'border-border bg-base/70 text-slate-200',
+                  : 'border-border bg-[var(--bu-base-70)] text-slate-200',
               )}
             >
               {step}
@@ -766,7 +766,7 @@ function GarbageCollectorVisualizer() {
                 'rounded-xl border px-3 py-2 text-sm',
                 obj.gen === 'old'
                   ? 'border-accent bg-accent/15 text-white'
-                  : 'border-border bg-base/70 text-slate-200',
+                  : 'border-border bg-[var(--bu-base-70)] text-slate-200',
               )}
             >
               <p className="font-semibold">obj-{obj.id}</p>
@@ -885,13 +885,13 @@ function ShadowDomVisualizer() {
             <p className="text-xs font-semibold uppercase text-slate-400">Shadow root ({mode})</p>
             <ul className="mt-2 space-y-1 text-xs text-slate-200">
               {slots.map((slot) => (
-                <li key={slot} className="rounded bg-base/70 px-2 py-1">
+                <li key={slot} className="rounded bg-[var(--bu-base-70)] px-2 py-1">
                   &lt;slot name=&quot;{slot}&quot;&gt;
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl border border-border bg-base/70 p-3 text-xs text-slate-200">
+          <div className="rounded-xl border border-border bg-[var(--bu-base-70)] p-3 text-xs text-slate-200">
             Composed tree merges light DOM nodes into slots; events retarget at the shadow boundary.
           </div>
         </div>
@@ -936,7 +936,7 @@ function WebIDLVisualizer() {
             <p className="font-semibold text-white">{selected}</p>
             <p className="text-xs text-slate-300">{signatures[selected as keyof typeof signatures]}</p>
           </div>
-          <div className="rounded-xl border border-border bg-base/70 p-3 text-xs text-slate-200">
+          <div className="rounded-xl border border-border bg-[var(--bu-base-70)] p-3 text-xs text-slate-200">
             IDL conversions (e.g., USVString) sanitize input; brand checks ensure correct receiver.
           </div>
         </div>
@@ -971,7 +971,7 @@ function SecuritySandboxVisualizer() {
           <label className="flex flex-col gap-1 text-xs text-slate-200">
             CSP
             <textarea
-              className="rounded-lg border border-border bg-base/70 p-2 text-xs"
+              className="rounded-lg border border-border bg-[var(--bu-base-70)] p-2 text-xs"
               value={csp}
               onChange={(e) => setCsp(e.target.value)}
             />
@@ -987,7 +987,7 @@ function SecuritySandboxVisualizer() {
               {allowSameOrigin ? 'allow-same-origin' : ''}&quot;
             </p>
           </div>
-          <div className="rounded-xl border border-border bg-base/70 p-3 text-xs text-slate-200">
+          <div className="rounded-xl border border-border bg-[var(--bu-base-70)] p-3 text-xs text-slate-200">
             Always validate <code>postMessage</code> origins and keep execution inside sandboxed
             iframes or workers.
           </div>
@@ -1025,7 +1025,7 @@ function PerformanceVisualizer() {
             <p className="text-3xl font-bold text-white">{fps}</p>
             <p className="text-xs text-slate-400">RAIL: aim for 60fps; offload to workers.</p>
           </div>
-          <div className="rounded-xl border border-border bg-base/70 p-3 text-xs text-slate-200">
+          <div className="rounded-xl border border-border bg-[var(--bu-base-70)] p-3 text-xs text-slate-200">
             Use <code>requestIdleCallback</code> for background work and <code>postMessage</code> to
             workers to keep the main thread free for rendering.
           </div>
@@ -1121,7 +1121,7 @@ export function visualizerMeta(slug: TopicSlug) {
 
 function InspectorCard({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-lg border border-border bg-base/70 p-3">
+    <div className="rounded-lg border border-border bg-[var(--bu-base-70)] p-3">
       <p className="font-semibold text-white">{title}</p>
       <p className="text-slate-300">{body}</p>
     </div>

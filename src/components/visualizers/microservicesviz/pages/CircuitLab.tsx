@@ -79,7 +79,7 @@ export function CircuitLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ms-rose)]/30 bg-[var(--ms-rose)]/10 text-[var(--ms-rose)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--ms-rose-30)] bg-[var(--ms-rose-10)] text-[var(--ms-rose)] text-xs font-mono">
           <ShieldAlert className="w-3.5 h-3.5" /> Fault Tolerance &amp; Blast Radius Control
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--ms-text)]">

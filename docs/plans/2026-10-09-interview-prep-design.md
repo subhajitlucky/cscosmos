@@ -24,7 +24,7 @@ behind-the-scenes animation**.
 | :--- | :--- | :--- |
 | `/interview` | SSG server page | Hub with 5 category cards (counts, difficulty spread) |
 | `/interview/[category]` | SSG + client filters | Filterable question list |
-| `/interview/[category]/[question]` | SSG server page | Dedicated question page |
+| `/interview/[category]/[questionSlug]` | SSG server page | Dedicated question page |
 
 - Categories: `fullstack`, `cybersecurity`, `dsa`, `system-design`, `ai-ml`.
 - Topic is a filter, not a URL segment; URLs stay stable.
@@ -83,7 +83,7 @@ Enums:
 - Result count, question cards with badges, empty state.
 - Filters synced to URL query params, client-side only.
 
-### Question page (`/interview/[category]/[question]`)
+### Question page (`/interview/[category]/[questionSlug]`)
 
 1. Breadcrumb + title + badges (difficulty, frequency, round, type, topic)
 2. "What interviewers are testing" + mental model TL;DR

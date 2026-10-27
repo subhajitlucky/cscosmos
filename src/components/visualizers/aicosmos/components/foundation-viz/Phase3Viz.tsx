@@ -85,7 +85,7 @@ export function TensorInspectorWidget() {
           </div>
           <div className="text-left sm:text-right">
             <span className="text-muted-foreground">Unified Memory Required:</span>
-            <div className="text-sm font-bold text-emerald-500">~{macRamRecommended} GB RAM</div>
+            <div className="text-sm font-bold text-emerald-700 dark:text-emerald-500">~{macRamRecommended} GB RAM</div>
           </div>
         </div>
 
@@ -178,7 +178,7 @@ export function HyperparameterTuningWidget() {
           </div>
           <div className="space-y-0.5 sm:text-right">
             <span className="text-muted-foreground">Objective Loss L(w) = w&sup2;:</span>
-            <div className="text-xl font-bold text-emerald-500">{currentLoss}</div>
+            <div className="text-xl font-bold text-emerald-700 dark:text-emerald-500">{currentLoss}</div>
           </div>
         </div>
 
@@ -198,7 +198,7 @@ export function HyperparameterTuningWidget() {
         </div>
 
         {Math.abs(positionW) > 20 && (
-          <div className="p-3 rounded-lg border border-rose-500/40 bg-rose-500/10 text-rose-500 font-semibold">
+          <div className="p-3 rounded-lg border border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-500 font-semibold">
             WARNING: GRADIENT EXPLOSION / DIVERGENCE! The learning rate &eta; = {learningRate} is too large.
           </div>
         )}
@@ -341,12 +341,12 @@ export function BiasOffsetWidget() {
       <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 space-y-3">
         <div className="flex items-center justify-between border-b border-border/60 pb-3">
           <span className="text-muted-foreground">Threshold Equation: z = (2.0 &times; 1.0) + ({bias.toFixed(1)}) = {rawZ.toFixed(1)}</span>
-          <span className={`px-3 py-1 rounded font-bold ${isActivated ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-500 border border-rose-500/30'}`}>
+          <span className={`px-3 py-1 rounded font-bold ${isActivated ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-700 dark:text-rose-500 border border-rose-500/30'}`}>
             {isActivated ? 'STATE: FIRED (1)' : 'STATE: INHIBITED (0)'}
           </span>
         </div>
 
-        <p className="text-xs font-sans text-muted-foreground leading-relaxed">
+        <p className="text-xs font-sans text-zinc-600 dark:text-zinc-400 leading-relaxed">
           <strong>Key Mental Model:</strong> Bias enables the neuron to output non-zero values even when all input features x are exactly zero, shifting the hyper-plane decision boundary across space.
         </p>
       </div>
@@ -486,7 +486,7 @@ export function LabelsLossWidget() {
       <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 space-y-3">
         <div className="flex items-center justify-between border-b border-border/60 pb-3">
           <span className="text-muted-foreground">Binary Cross-Entropy Loss:</span>
-          <span className={`text-2xl font-bold ${bceLoss > 1.5 ? 'text-rose-500' : 'text-emerald-500'}`}>
+          <span className={`text-2xl font-bold ${bceLoss > 1.5 ? 'text-rose-700 dark:text-rose-500' : 'text-emerald-700 dark:text-emerald-500'}`}>
             {bceLoss.toFixed(4)}
           </span>
         </div>
@@ -574,7 +574,7 @@ export function SoftmaxDistributionWidget() {
       <div className="rounded-xl border border-border/80 bg-secondary/20 p-5 space-y-4">
         <div className="flex items-center justify-between border-b border-border/60 pb-2">
           <span className="text-muted-foreground">Normalized Probability Distribution: &Sigma; p = 1.00 (100%)</span>
-          <span className="text-emerald-500 font-bold">ArgMax: {p1 > p2 && p1 > p3 ? 'Class A' : p2 > p3 ? 'Class B' : 'Class C'}</span>
+          <span className="text-emerald-700 dark:text-emerald-500 font-bold">ArgMax: {p1 > p2 && p1 > p3 ? 'Class A' : p2 > p3 ? 'Class B' : 'Class C'}</span>
         </div>
 
         <div className="space-y-3">

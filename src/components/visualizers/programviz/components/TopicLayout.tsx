@@ -46,8 +46,12 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
         <h1 className="text-3xl font-bold">{title}</h1>
       </header>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 10 }}
+      {/* initial={false} matters for SSG: framer-motion serialises `initial` into
+          the pre-rendered HTML, so `initial={{ opacity: 0 }}` shipped every lesson
+          body invisible until JS hydrated (5 opacity:0 occurrences per page). The
+          content is the lesson — it must be readable without JS. */}
+      <motion.div
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         className="prose max-w-none transition-colors duration-300 dark:prose-invert text-foreground"
       >

@@ -1,3 +1,5 @@
+import tailwindcssAnimate from 'tailwindcss-animate';
+
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["class"],
@@ -103,6 +105,18 @@ export default {
                     calldata: '#a78bfa',
                     success: '#10b981',
                     error: '#ef4444',
+                    // FS-85: the EvmInternals engine styles itself with these. The
+                    // `/ <alpha-value>` placeholder is load-bearing: Tailwind 3 leaves
+                    // an opacity modifier such as `bg-evm-accent/10` with *no rule at
+                    // all* when the colour is a bare `hsl(var(--x))`, which is how all
+                    // 79 of this engine's palette classes shipped dead. The custom
+                    // properties are HSL triples defined in src/index.css (:root and
+                    // .dark). `accent` is the bright fill (near-black text sits on
+                    // it); `accent-text` is the readable text role on white / tints.
+                    accent: 'hsl(var(--evm-accent) / <alpha-value>)',
+                    'accent-text': 'hsl(var(--evm-accent-text) / <alpha-value>)',
+                    gas: 'hsl(var(--evm-gas) / <alpha-value>)',
+                    bg: 'hsl(var(--evm-bg) / <alpha-value>)',
                 },
             },
             boxShadow: {
@@ -136,5 +150,12 @@ export default {
             },
         },
     },
-    plugins: [],
+    // FS-51: 62 `animate-in` / `animate-out` utilities were already written across 40 files
+    // (including the shared `ui/dropdown-menu` primitive) but emitted nothing, because the
+    // plugin that defines them was never installed. This plugin adds only utilities — no base
+    // or global styles — so nothing that did not already ask for one of these classes can
+    // change. `@tailwindcss/typography` (`prose`, 22 usages in 9 engines) is deliberately
+    // still absent: it *does* set its own text colours, so it needs a contrast pass rather
+    // than an install, and it is recorded as such in the audit.
+    plugins: [tailwindcssAnimate],
 }

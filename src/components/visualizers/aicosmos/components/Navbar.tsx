@@ -20,24 +20,24 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--ai-border-subtle)] bg-[var(--ai-bg)]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--ai-border-subtle)] bg-[var(--ai-bg-80)] backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Left branding */}
         <div className="flex items-center gap-4 sm:gap-6">
           <Link
             href="/topics"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary)] border border-transparent hover:border-[var(--ai-border)] transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono text-[var(--ai-muted)] hover:text-[var(--ai-primary-text)] border border-transparent hover:border-[var(--ai-border)] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> CSCosmos
           </Link>
           
           <Link href="/aicosmos" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[var(--ai-primary)]/10 border border-[var(--ai-primary)]/30 flex items-center justify-center text-[var(--ai-primary)] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(99,102,241,0.25)]">
-              <Sparkles className="w-4 h-4 text-[var(--ai-primary)]" />
+            <div className="w-8 h-8 rounded-lg bg-[var(--ai-primary-10)] border border-[var(--ai-primary-30)] flex items-center justify-center text-[var(--ai-primary-text)] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(99,102,241,0.25)]">
+              <Sparkles className="w-4 h-4 text-[var(--ai-primary-text)]" />
             </div>
             <div className="flex flex-col">
               <span className="font-display font-bold text-base sm:text-lg tracking-tight text-[var(--ai-text)] flex items-center gap-1">
-                AI<span className="text-[var(--ai-primary)] font-mono">::COSMOS</span>
+                AI<span className="text-[var(--ai-primary-text)] font-mono">::COSMOS</span>
               </span>
               <span className="text-[9px] font-mono text-[var(--ai-muted)] tracking-wider uppercase -mt-1 hidden sm:block">
                 Neural Networks &bull; Transformers &bull; RAG &bull; Agents
@@ -57,7 +57,7 @@ export function Navbar() {
                 href={item.href}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-[var(--ai-primary)]/15 text-[var(--ai-primary)] border border-[var(--ai-border)] font-semibold shadow-sm'
+                    ? 'bg-[var(--ai-primary-15)] text-[var(--ai-primary-text)] border border-[var(--ai-border)] font-semibold shadow-sm'
                     : 'text-[var(--ai-muted)] hover:text-[var(--ai-text)] hover:bg-[var(--ai-surface)]'
                 }`}
               >
@@ -94,7 +94,7 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                   isActive
-                    ? 'bg-[var(--ai-primary)]/15 text-[var(--ai-primary)] border border-[var(--ai-border)]'
+                    ? 'bg-[var(--ai-primary-15)] text-[var(--ai-primary-text)] border border-[var(--ai-border)]'
                     : 'text-[var(--ai-muted)] hover:text-[var(--ai-text)] hover:bg-[var(--ai-surface-2)]'
                 }`}
               >

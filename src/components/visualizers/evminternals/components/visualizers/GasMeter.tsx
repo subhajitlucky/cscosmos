@@ -45,14 +45,14 @@ const GasMeter: React.FC<GasMeterProps> = ({ totalUsed, lastCost, remaining, ref
               key={lastCost}
               initial={{ scale: 1.1 }}
               animate={{ scale: 1 }}
-              className="text-sm font-mono font-bold text-[var(--color-viz-active)]"
+              className="text-sm font-mono font-bold text-evm-accent-text"
             >
               -{lastCost}
             </motion.div>
           </div>
           <div className="p-2 rounded bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700/50 shadow-sm">
             <div className="text-[9px] text-neutral-400 dark:text-neutral-500 uppercase font-bold">Refund</div>
-            <div className="flex items-center gap-1 text-sm font-mono font-bold text-[var(--color-viz-secondary)]">
+            <div className="flex items-center gap-1 text-sm font-mono font-bold text-evm-gas">
               <RefreshCcw size={10} /> {refund}
             </div>
           </div>

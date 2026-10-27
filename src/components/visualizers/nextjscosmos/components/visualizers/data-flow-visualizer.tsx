@@ -50,7 +50,7 @@ export function DataFlowVisualizer({ mode }: DataFlowVisualizerProps) {
           <div className="flex flex-col items-center gap-4">
             <motion.div 
               animate={{ 
-                borderColor: status === 'fetching' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
+                borderColor: status === 'fetching' ? 'var(--primary)' : 'rgba(148, 163, 184, 0.4)',
                 scale: status === 'fetching' ? 1.1 : 1
               }}
               className="w-20 h-20 rounded-2xl border-2 bg-background flex items-center justify-center shadow-xl"
@@ -64,8 +64,8 @@ export function DataFlowVisualizer({ mode }: DataFlowVisualizerProps) {
           <div className="flex flex-col items-center gap-4">
             <motion.div 
               animate={{ 
-                borderColor: status === 'received' || status === 'streaming' ? 'var(--primary)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'received' ? 'oklch(var(--primary) / 0.05)' : 'transparent'
+                borderColor: status === 'received' || status === 'streaming' ? 'var(--primary)' : 'rgba(148, 163, 184, 0.4)',
+                backgroundColor: status === 'received' ? 'hsl(var(--primary) / 0.05)' : 'transparent'
               }}
               className="w-32 h-32 rounded-[2rem] border-2 bg-background flex flex-col items-center justify-center gap-2 relative shadow-2xl"
             >
@@ -93,7 +93,7 @@ export function DataFlowVisualizer({ mode }: DataFlowVisualizerProps) {
               animate={{ 
                 opacity: status === 'complete' ? 1 : 0.2,
                 scale: status === 'complete' ? 1 : 0.9,
-                borderColor: status === 'complete' ? 'var(--emerald-500)' : 'rgba(0,0,0,0.1)'
+                borderColor: status === 'complete' ? '#10b981' : 'rgba(148, 163, 184, 0.4)'
               }}
               className="w-24 h-24 rounded-2xl border-2 border-emerald-500/30 bg-emerald-500/5 flex flex-col p-3 gap-2 overflow-hidden shadow-xl"
             >

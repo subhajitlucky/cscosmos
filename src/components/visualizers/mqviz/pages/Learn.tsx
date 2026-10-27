@@ -31,7 +31,7 @@ export function Learn() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
       {/* Header */}
       <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--mq-primary)]/30 bg-[var(--mq-primary)]/10 text-[var(--mq-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--mq-primary-30)] bg-[var(--mq-primary-10)] text-[var(--mq-primary)] text-xs font-mono">
           <BookOpen className="w-3.5 h-3.5" /> Message Queues &amp; Streaming Curriculum
         </div>
 

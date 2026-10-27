@@ -112,7 +112,7 @@ export function StackLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--wasm-primary)]/30 bg-[var(--wasm-primary)]/10 text-[var(--wasm-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--wasm-primary-30)] bg-[var(--wasm-primary-10)] text-[var(--wasm-primary)] text-xs font-mono">
           <Activity className="w-3.5 h-3.5" /> Virtual Stack Machine Emulator
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--wasm-text)]">
@@ -164,7 +164,7 @@ export function StackLab() {
                   key={idx}
                   className={`p-3 rounded-lg border flex items-center justify-between transition-all ${
                     isCurrent
-                      ? 'border-[var(--wasm-primary)] bg-[var(--wasm-primary)]/10 text-[var(--wasm-text)] shadow-md'
+                      ? 'border-[var(--wasm-primary)] bg-[var(--wasm-primary-10)] text-[var(--wasm-text)] shadow-md'
                       : isPast
                       ? 'border-[var(--wasm-border-subtle)] bg-[var(--wasm-bg)] text-[var(--wasm-muted)] opacity-60'
                       : 'border-[var(--wasm-border-subtle)] bg-[var(--wasm-surface-2)] text-[var(--wasm-muted)]'
@@ -227,7 +227,7 @@ export function StackLab() {
                     key={idx}
                     className={`w-full max-w-sm py-2 px-6 rounded-lg text-center font-bold border transition-all flex items-center justify-between ${
                       isTop
-                        ? 'border-[var(--wasm-primary)] bg-[var(--wasm-primary)]/20 text-[var(--wasm-text)] shadow-[0_0_20px_rgba(101,79,240,0.3)] animate-pulse'
+                        ? 'border-[var(--wasm-primary)] bg-[var(--wasm-primary-20)] text-[var(--wasm-text)] shadow-[0_0_20px_rgba(101,79,240,0.3)] animate-pulse'
                         : 'border-[var(--wasm-border-subtle)] bg-[var(--wasm-surface-2)] text-[var(--wasm-muted)]'
                     }`}
                   >
@@ -265,7 +265,7 @@ export function StackLab() {
                     key={addr}
                     className={`p-2.5 rounded-lg border transition-all ${
                       hasValue
-                        ? 'border-[var(--wasm-emerald)]/50 bg-[var(--wasm-emerald)]/10 text-[var(--wasm-emerald)] font-bold shadow-sm'
+                        ? 'border-[var(--wasm-emerald-50)] bg-[var(--wasm-emerald-10)] text-[var(--wasm-emerald)] font-bold shadow-sm'
                         : 'border-[var(--wasm-border-subtle)] bg-[var(--wasm-bg)] text-[var(--wasm-muted)]'
                     }`}
                   >

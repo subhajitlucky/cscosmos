@@ -37,7 +37,7 @@ const LearningPath = () => {
                 <div className="font-mono text-4xl font-black text-primary/10 group-hover:text-primary/20 transition-colors tracking-tighter">
                   {(index + 1).toString().padStart(2, '0')}
                 </div>
-                <div className="p-3 rounded-xl bg-primary/5 border border-primary/10 text-primary group-hover:bg-primary group-hover:text-white group-hover:shadow-[0_0_20px_var(--primary-dim)] transition-all">
+                <div className="p-3 rounded-xl bg-primary/5 border border-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-[0_0_20px_var(--primary-dim)] transition-all">
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>

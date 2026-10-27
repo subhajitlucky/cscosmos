@@ -42,7 +42,7 @@ export function ContinueLearning() {
         </div>
       </div>
       <Link
-        href={topic.url || `/topics`}
+        href={topic.canonicalPath}
         className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-border px-3.5 text-xs font-semibold text-foreground transition-colors hover:border-foreground/30 hover:bg-secondary/40"
       >
         Resume topic

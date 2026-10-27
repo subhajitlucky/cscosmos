@@ -9,7 +9,7 @@ export default function TopicsPage() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.3rem] text-accentSoft">Topics</p>
+          <p className="text-xs uppercase tracking-[0.3rem] text-[var(--bu-accent-soft)]">Topics</p>
           <h1 className="section-title">Browser internals catalog</h1>
           <p className="text-sm text-slate-300">
             Jump into any visualizer with preloaded snippets and guided steps.

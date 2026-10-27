@@ -59,7 +59,7 @@ const Practice = () => {
                             placeholder="SEARCH_PROBLEMS..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full border border-brand-border px-4 pl-10 py-2 font-mono text-sm focus:outline-none focus:border-brand-lime placeholder-gray-500 transition-colors"
+                            className="w-full border border-brand-border px-4 pl-10 py-2 font-mono text-sm focus:outline-none focus:border-brand-lime placeholder-gray-600 dark:placeholder-gray-400 transition-colors"
                             style={{ color: 'var(--text-main)', backgroundColor: 'var(--bg-surface)' }}
                         />
                     </div>
@@ -84,7 +84,7 @@ const Practice = () => {
                                             {isSolved ? (
                                                 <CheckSquare size={20} className="text-brand-lime" />
                                             ) : (
-                                                <div className="w-5 h-5 border border-gray-600 rounded-sm"></div>
+                                                <div className="w-5 h-5 border border-gray-600 dark:border-gray-500 rounded-sm"></div>
                                             )}
                                         </div>
 
@@ -98,16 +98,16 @@ const Practice = () => {
                                         </div>
 
                                         <div className="col-span-3 md:col-span-2">
-                                            <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 border ${problem.difficulty === 'Easy' ? 'text-green-500 border-green-500/30' :
-                                                    problem.difficulty === 'Intermediate' ? 'text-blue-500 border-blue-500/30' :
-                                                        problem.difficulty === 'Advanced' ? 'text-orange-500 border-orange-500/30' :
-                                                            'text-red-500 border-red-500/30'}`}>
+                                            <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 border ${problem.difficulty === 'Easy' ? 'text-green-700 dark:text-green-500 border-green-500/30' :
+                                                    problem.difficulty === 'Intermediate' ? 'text-blue-700 dark:text-blue-500 border-blue-500/30' :
+                                                        problem.difficulty === 'Advanced' ? 'text-orange-700 dark:text-orange-500 border-orange-500/30' :
+                                                            'text-red-700 dark:text-red-500 border-red-500/30'}`}>
                                                 {problem.difficulty}
                                             </span>
                                         </div>
 
                                         <div className="col-span-2 text-right">
-                                            <span className="text-gray-500 group-hover:text-white transition-colors">
+                                            <span className="text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors">
                                                 <Terminal size={20} className="ml-auto" />
                                             </span>
                                         </div>
@@ -118,7 +118,7 @@ const Practice = () => {
                     </ul>
 
                     {filteredProblems.length === 0 && (
-                        <div className="p-12 text-center text-gray-500 font-mono">
+                        <div className="p-12 text-center text-gray-600 dark:text-gray-400 font-mono">
                             NO_DATA_FOUND
                         </div>
                     )}

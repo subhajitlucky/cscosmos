@@ -31,12 +31,12 @@ export function Learn() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
       {/* Header */}
       <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--xr-primary)]/30 bg-[var(--xr-primary)]/10 text-[var(--xr-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--xr-primary-30)] bg-[var(--xr-primary-10)] text-[var(--xr-primary-text)] text-xs font-mono">
           <BookOpen className="w-3.5 h-3.5" /> Spatial Computing Curriculum
         </div>
 
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--xr-text)]">
-          The WebXR <span className="text-[var(--xr-primary)] xr-glow">Architecture Map</span>
+          The WebXR <span className="text-[var(--xr-primary-text)] xr-glow">Architecture Map</span>
         </h1>
 
         <p className="text-sm md:text-base text-[var(--xr-muted)] max-w-2xl leading-relaxed">
@@ -61,7 +61,7 @@ export function Learn() {
               onClick={() => setSelectedGroup('all')}
               className={`px-3 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-colors ${
                 selectedGroup === 'all'
-                  ? 'bg-[var(--xr-primary)] text-white font-semibold'
+                  ? 'bg-[var(--xr-primary-solid)] text-[var(--xr-on-accent)] font-semibold'
                   : 'border border-[var(--xr-border-subtle)] bg-[var(--xr-surface)] text-[var(--xr-muted)] hover:text-[var(--xr-text)]'
               }`}
             >
@@ -73,7 +73,7 @@ export function Learn() {
                 onClick={() => setSelectedGroup(g.id)}
                 className={`px-3 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-colors ${
                   selectedGroup === g.id
-                    ? 'bg-[var(--xr-primary)] text-white font-semibold'
+                    ? 'bg-[var(--xr-primary-solid)] text-[var(--xr-on-accent)] font-semibold'
                     : 'border border-[var(--xr-border-subtle)] bg-[var(--xr-surface)] text-[var(--xr-muted)] hover:text-[var(--xr-text)]'
                 }`}
               >
@@ -91,7 +91,7 @@ export function Learn() {
             <div className="flex items-center justify-between border-b border-[var(--xr-border-subtle)] pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs font-bold text-[var(--xr-primary)]">
+                  <span className="font-mono text-xs font-bold text-[var(--xr-primary-text)]">
                     TRACK_0{groupIdx + 1}
                   </span>
                   <h2 className="font-display text-2xl font-bold text-[var(--xr-text)]">
@@ -117,13 +117,13 @@ export function Learn() {
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-[var(--xr-primary)]">
+                      <span className="text-[10px] font-mono text-[var(--xr-primary-text)]">
                         {topic.kicker}
                       </span>
-                      <ArrowUpRight className="w-4 h-4 text-[var(--xr-muted)] group-hover:text-[var(--xr-primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      <ArrowUpRight className="w-4 h-4 text-[var(--xr-muted)] group-hover:text-[var(--xr-primary-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                     </div>
 
-                    <h3 className="font-display font-bold text-lg text-[var(--xr-text)] group-hover:text-[var(--xr-primary)] transition-colors">
+                    <h3 className="font-display font-bold text-lg text-[var(--xr-text)] group-hover:text-[var(--xr-primary-text)] transition-colors">
                       {topic.title}
                     </h3>
 
@@ -136,7 +136,7 @@ export function Learn() {
                     <span className="text-[10px] font-mono text-[var(--xr-muted)]">
                       {topic.difficulty}
                     </span>
-                    <span className="text-[10px] font-mono text-[var(--xr-primary)] flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-[var(--xr-primary-text)] flex items-center gap-1">
                       Deep dive <ArrowUpRight className="w-3 h-3" />
                     </span>
                   </div>

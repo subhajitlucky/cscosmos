@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="border-t border-[var(--mq-border-subtle)] bg-[var(--mq-surface)] mt-24 py-12">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[var(--mq-primary)]/10 border border-[var(--mq-primary)]/30 flex items-center justify-center text-[var(--mq-primary)]">
+          <div className="w-8 h-8 rounded-lg bg-[var(--mq-primary-10)] border border-[var(--mq-primary-30)] flex items-center justify-center text-[var(--mq-primary)]">
             <Radio className="w-4 h-4 text-[var(--mq-primary)]" />
           </div>
           <div>

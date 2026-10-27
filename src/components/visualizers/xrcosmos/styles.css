@@ -3,6 +3,28 @@
 .xrcosmos-root {
   --xr-primary: #8b5cf6;
   --xr-primary-hover: #7c3aed;
+  /* Text-safe companion to --xr-primary. --xr-primary is primarily a fill (69
+     var() consumers plus the -10..-40 tints and the -solid/-on-accent pair),
+     and as TEXT it measures only 4.05:1 on --xr-bg in light mode - below AA.
+     It is deliberately NOT re-tuned here: it is also brand text on --xr-bg in
+     dark mode, where darkening it to #7c3aed would drop contrast from 4.72:1
+     to 3.51:1. Brand-coloured TEXT points at this token instead. Dark mode
+     keeps it byte-identical to --xr-primary (#8b5cf6), so the dark rendering
+     is untouched; only the light block below re-tunes it. */
+  --xr-primary-text: #8b5cf6;
+  /* Text-safe companions to the sibling brand hues (FS-65), added the same way
+     --xr-primary-text was: the FILLS are not re-tuned (each is also a real
+     background - `bg-[var(--xr-teal)]` carries `text-black`, the teal/rose
+     tokens are 10..40% tint bases, accents and glows), and brand-coloured TEXT
+     points here instead. As TEXT in light mode --xr-teal (#14b8a6) measures
+     2.27-2.49:1 on the opaque surfaces it labels (2.07-2.27:1 inside its own
+     tints), --xr-rose (#f43f5e) 3.35-3.67:1 and --xr-emerald (#10b981)
+     2.32-2.54:1 - all below AA. Dark mode keeps all three byte-identical to
+     their fill token (see the dark block), so only the light block below
+     re-tunes them. Contrast table: scratch/agents/xrcosmos/. */
+  --xr-teal-text: #14b8a6;
+  --xr-rose-text: #f43f5e;
+  --xr-emerald-text: #10b981;
   --xr-teal: #14b8a6;
   --xr-cyan: #06b6d4;
   --xr-rose: #f43f5e;
@@ -16,7 +38,35 @@
   --xr-border-subtle: rgba(255, 255, 255, 0.08);
   --xr-text: #f8fafc;
   --xr-muted: #8a91ad;
-  
+
+  /* Pre-mixed translucent tokens.
+     Tailwind v3 cannot apply an opacity modifier to an arbitrary var() colour:
+     `bg-[var(--xr-primary)]/10` is not a valid v3 utility and emits no CSS at
+     all (verified against tailwindcss 3.4.17). These real custom properties are
+     the supported way to get the same tint. */
+  --xr-primary-10: rgba(139, 92, 246, 0.1);
+  --xr-primary-20: rgba(139, 92, 246, 0.2);
+  --xr-primary-30: rgba(139, 92, 246, 0.3);
+  --xr-primary-40: rgba(139, 92, 246, 0.4);
+  --xr-teal-10: rgba(20, 184, 166, 0.1);
+  --xr-teal-20: rgba(20, 184, 166, 0.2);
+  --xr-teal-30: rgba(20, 184, 166, 0.3);
+  --xr-teal-40: rgba(20, 184, 166, 0.4);
+  --xr-bg-80: rgba(6, 8, 16, 0.8);
+
+  /* Solid accent fills that carry small on-accent labels.
+     --xr-primary (#8b5cf6) only reaches 4.23:1 against white, so it cannot
+     host the 10-14px labels these buttons use; #7c3aed - the engine's own
+     hover shade - reaches 5.70:1. --xr-on-accent is the text colour for any
+     solid accent fill (violet or cyan), so a fill change never has to be
+     re-paired with a text change. --xr-primary itself is deliberately NOT
+     re-tuned: it has 69 var() consumers and is also used as *text* on
+     --xr-bg, where darkening it to #7c3aed would drop dark-mode text
+     contrast from 4.72:1 to 3.51:1 (below AA). */
+  --xr-primary-solid: #7c3aed;
+  --xr-primary-solid-hover: #6d28d9;
+  --xr-on-accent: #ffffff;
+
   --xr-display: 'Syne', sans-serif;
   --xr-sans: 'Inter', sans-serif;
   --xr-mono: 'DM Mono', monospace;
@@ -39,6 +89,38 @@ html:not(.dark) .xrcosmos-root,
   --xr-border-subtle: rgba(0, 0, 0, 0.08);
   --xr-text: #0f172a;
   --xr-muted: #64748b;
+  --xr-bg-80: rgba(248, 250, 252, 0.8);
+
+  /* As TEXT, #8b5cf6 measures 4.05:1 on --xr-bg, 3.87:1 on --xr-surface-2 and
+     3.58:1 on the --xr-primary-10 tinted pills - i.e. it fails AA on every
+     light surface it sits on. Re-tuned to the lightest shade of the SAME violet
+     hue that clears 4.5:1 against the WORST of those surfaces, not just the
+     page background. The worst observed surface is the --xr-primary-10 pill
+     over --xr-bg (#edeafb): #7c3aed = 4.82:1 there; --xr-surface-2 5.20:1,
+     --xr-bg 5.45:1, --xr-surface 5.70:1, tint over --xr-surface 5.04:1, and
+     the hypothetical tint over --xr-surface-2 (#e7e6f9) still clears 4.64:1.
+     violet-500 (#8b5cf6) fails that last case at 3.44:1, so violet-600 is the
+     lightest passing shade of the hue (violet-700 is darker than necessary). */
+  --xr-primary-text: #7c3aed;
+
+  /* Sibling brand-text shades (FS-65), picked by the same rule as
+     --xr-primary-text above: the LIGHTEST shade of the SAME hue that clears
+     4.5:1 against the WORST surface that hue's text actually paints on in this
+     engine, not merely against the page background.
+       --xr-teal-text #0f766e (teal-700): worst case is the --xr-teal-20 "PINCH
+       ACTIVE" chip over --xr-surface (#d0f1ed) at 4.56:1; also 4.77:1 on the
+       --xr-teal-10 pill over --xr-bg, 5.00:1 on that tint over --xr-surface and
+       on --xr-surface-2, 5.23:1 on --xr-bg, 5.47:1 on --xr-surface. teal-600
+       (#0d9488) fails every one of those at 3.12-3.74:1.
+       --xr-rose-text #be123c (rose-700): 6.01:1 on --xr-bg, 6.29:1 on
+       --xr-surface, 5.74:1 on --xr-surface-2. rose-600 (#e11d48) misses the
+       --xr-bg case at 4.49:1.
+       --xr-emerald-text #047857 (emerald-700): 5.01:1 on --xr-surface-2,
+       5.24:1 on --xr-bg, 5.48:1 on --xr-surface. emerald-600 (#059669) is
+       3.14-3.77:1 on those. */
+  --xr-teal-text: #0f766e;
+  --xr-rose-text: #be123c;
+  --xr-emerald-text: #047857;
 }
 
 html.dark .xrcosmos-root,
@@ -52,6 +134,14 @@ html[data-theme='dark'] .xrcosmos-root,
   --xr-border-subtle: rgba(255, 255, 255, 0.08);
   --xr-text: #f8fafc;
   --xr-muted: #8a91ad;
+  /* Pinned so dark mode is byte-identical to --xr-primary (#8b5cf6). */
+  --xr-primary-text: #8b5cf6;
+  /* Same pin for the sibling hues: dark mode text is the original fill value,
+     which already clears AA here (teal 7.01-8.04:1, rose 4.75-5.45:1, emerald
+     6.88-7.88:1 across --xr-bg / --xr-surface / --xr-surface-2). */
+  --xr-teal-text: #14b8a6;
+  --xr-rose-text: #f43f5e;
+  --xr-emerald-text: #10b981;
 }
 
 .xrcosmos-root .font-display {

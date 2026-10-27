@@ -74,7 +74,7 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-cyan-400" />
             <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
-              Interactive Engine Simulation
+              Interactive Engine Walkthrough
             </h3>
           </div>
           <button 
@@ -87,7 +87,7 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
             )}
           >
             <Play className={cn("w-3.5 h-3.5 fill-current", isExecuting && "animate-pulse")} /> 
-            {isExecuting ? 'Simulating Update...' : 'Execute Code'}
+            {isExecuting ? 'Animating Update...' : 'Animate Update'}
           </button>
         </div>
 
@@ -137,10 +137,10 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
                     <Play className={cn("w-6 h-6 text-cyan-400 fill-current", isExecuting && "animate-pulse")} />
                   </div>
                   <div className="text-foreground font-bold mb-2 uppercase tracking-[0.2em] text-xs">
-                    {isExecuting ? 'Simulation Active' : 'Simulation Engine'}
+                    {isExecuting ? 'Animating Update' : 'Walkthrough Idle'}
                   </div>
                   <div className="text-muted-foreground text-sm italic max-w-sm leading-relaxed">
-                    {isExecuting ? 'Reconciling virtual DOM and committing changes to real DOM...' : 'Execute code to initialize the render cycle visualization.'}
+                    {isExecuting ? 'Animating how virtual DOM changes are reconciled and committed...' : 'Click "Animate Update" to play the render cycle walkthrough.'}
                   </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@ const TopicDetail = ({ topicId }: { topicId?: string }) => {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
-            Executable React 19 Code Snippet
+            Reference React 19 Code Snippet
           </h3>
           <span className="text-[11px] font-mono text-muted-foreground">Editable Sandbox</span>
         </div>

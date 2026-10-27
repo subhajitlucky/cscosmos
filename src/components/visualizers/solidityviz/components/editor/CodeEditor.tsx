@@ -29,7 +29,7 @@ export function CodeEditor({ value, onChange }: CodeEditorProps) {
                 defaultValue="// Write your Solidity code here..."
                 value={value}
                 onChange={onChange}
-                theme={theme === "dark" || theme === "system" ? "vs-dark" : "light"}
+                theme={theme === "dark" ? "vs-dark" : "light"}
                 options={{
                     minimap: { enabled: false },
                     fontSize: 14,

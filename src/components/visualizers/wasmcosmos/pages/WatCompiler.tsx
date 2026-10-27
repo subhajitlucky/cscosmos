@@ -72,7 +72,7 @@ export function WatCompiler() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--wasm-magenta)]/30 bg-[var(--wasm-magenta)]/10 text-[var(--wasm-magenta)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--wasm-magenta-30)] bg-[var(--wasm-magenta-10)] text-[var(--wasm-magenta)] text-xs font-mono">
           <Binary className="w-3.5 h-3.5" /> Binary Bytecode &amp; Section Tables
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--wasm-text)]">

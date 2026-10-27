@@ -30,14 +30,14 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--xr-primary)]/30 bg-[var(--xr-primary)]/10 text-[var(--xr-primary)] text-xs font-mono">
-              <Glasses className="w-3.5 h-3.5 animate-pulse text-[var(--xr-primary)]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--xr-primary-30)] bg-[var(--xr-primary-10)] text-[var(--xr-primary-text)] text-xs font-mono">
+              <Glasses className="w-3.5 h-3.5 animate-pulse text-[var(--xr-primary-text)]" />
               Spatial Computing &amp; WebXR Engine
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-[var(--xr-text)]">
               Infinite Canvas.<br />
-              <span className="text-[var(--xr-primary)] xr-glow">6-DoF Freedom.</span> Volumetric Reality.
+              <span className="text-[var(--xr-primary-text)] xr-glow">6-DoF Freedom.</span> Volumetric Reality.
             </h1>
 
             <p className="text-base md:text-lg text-[var(--xr-muted)] max-w-xl leading-relaxed">
@@ -47,16 +47,16 @@ export function Home() {
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <Link
                 href="/xrcosmos/learn"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[var(--xr-primary)] text-white font-semibold text-sm hover:bg-[var(--xr-primary-hover)] transition-all shadow-[0_0_20px_rgba(139,92,246,0.35)] active:scale-95"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[var(--xr-primary-solid)] text-[var(--xr-on-accent)] font-semibold text-sm hover:bg-[var(--xr-primary-solid-hover)] transition-all shadow-[0_0_20px_rgba(139,92,246,0.35)] active:scale-95"
               >
                 Explore Concept Map <ArrowRight className="w-4 h-4" />
               </Link>
               
               <Link
                 href="/xrcosmos/spatial-lab"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--xr-border)] bg-[var(--xr-surface)] text-[var(--xr-text)] font-mono text-sm hover:border-[var(--xr-primary)] hover:text-[var(--xr-primary)] transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--xr-border)] bg-[var(--xr-surface)] text-[var(--xr-text)] font-mono text-sm hover:border-[var(--xr-primary)] hover:text-[var(--xr-primary-text)] transition-all"
               >
-                <Box className="w-4 h-4 text-[var(--xr-primary)]" />
+                <Box className="w-4 h-4 text-[var(--xr-primary-text)]" />
                 3D Spatial Lab
               </Link>
 
@@ -64,7 +64,7 @@ export function Home() {
                 href="/xrcosmos/hand-tracker"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--xr-border-subtle)] bg-[var(--xr-surface-2)] text-[var(--xr-muted)] font-mono text-sm hover:text-[var(--xr-text)] transition-all"
               >
-                <Hand className="w-4 h-4 text-[var(--xr-teal)]" />
+                <Hand className="w-4 h-4 text-[var(--xr-teal-text)]" />
                 Hand Tracking
               </Link>
             </div>
@@ -93,7 +93,7 @@ export function Home() {
                   </button>
                   <button
                     onClick={resetPose}
-                    className="text-[10px] font-mono text-[var(--xr-muted)] hover:text-[var(--xr-primary)]"
+                    className="text-[10px] font-mono text-[var(--xr-muted)] hover:text-[var(--xr-primary-text)]"
                     title="Reset Pose"
                   >
                     <RotateCcw className="w-3 h-3" />
@@ -102,33 +102,39 @@ export function Home() {
               </div>
 
               <div className="p-6 font-mono text-xs space-y-6">
-                {/* 3D Spatial Viewport */}
-                <div className="relative rounded-xl bg-[var(--xr-bg)] border border-[var(--xr-border-subtle)] h-48 overflow-hidden flex items-center justify-center perspective-[600px]">
+                {/* 3D Spatial Viewport.
+                    `perspective-[600px]` is not a Tailwind v3 utility (v3 has no
+                    `perspective-*` scale), so it emitted no CSS and the children's
+                    translateZ() depth was flattened. Perspective is applied inline. */}
+                <div
+                  className="relative rounded-xl bg-[var(--xr-bg)] border border-[var(--xr-border-subtle)] h-48 overflow-hidden flex items-center justify-center"
+                  style={{ perspective: '600px' }}
+                >
                   <div className="absolute inset-0 xr-grid-bg opacity-30 pointer-events-none" />
 
                   {/* Rendered 3D Mesh Prism */}
                   <div className={`flex items-center justify-center gap-6 w-full ${stereoMode === 'stereo' ? 'px-4' : ''}`}>
                     {/* Left Eye View */}
                     <div
-                      className="w-24 h-24 rounded-2xl bg-cyan-600 border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(6,182,212,0.35)] flex flex-col items-center justify-center text-white transition-all"
+                      className="w-24 h-24 rounded-2xl bg-cyan-700 border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(6,182,212,0.35)] flex flex-col items-center justify-center text-[var(--xr-on-accent)] transition-all"
                       style={{
                         transform: `translate3d(${posX * 30 - (stereoMode === 'stereo' ? 10 : 0)}px, ${-posY * 30}px, ${(posZ + 1.5) * 50}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,
                       }}
                     >
                       <span className="font-display font-bold text-xs">XR::PRISM</span>
-                      <span className="text-[9px] font-mono opacity-80">{stereoMode === 'stereo' ? 'L-Eye' : '6-DoF'}</span>
+                      <span className="text-[9px] font-mono">{stereoMode === 'stereo' ? 'L-Eye' : '6-DoF'}</span>
                     </div>
 
                     {/* Right Eye View (Stereo Mode Only) */}
                     {stereoMode === 'stereo' && (
                       <div
-                        className="w-24 h-24 rounded-2xl bg-cyan-600 border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(6,182,212,0.35)] flex flex-col items-center justify-center text-white transition-all"
+                        className="w-24 h-24 rounded-2xl bg-cyan-700 border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(6,182,212,0.35)] flex flex-col items-center justify-center text-[var(--xr-on-accent)] transition-all"
                         style={{
                           transform: `translate3d(${posX * 30 + 10}px, ${-posY * 30}px, ${(posZ + 1.5) * 50}px) rotateX(${rotX}deg) rotateY(${rotY + 4}deg)`,
                         }}
                       >
                         <span className="font-display font-bold text-xs">XR::PRISM</span>
-                        <span className="text-[9px] font-mono opacity-80">R-Eye (IPD)</span>
+                        <span className="text-[9px] font-mono">R-Eye (IPD)</span>
                       </div>
                     )}
                   </div>
@@ -138,7 +144,7 @@ export function Home() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-[10px] text-[var(--xr-muted)]">
                     <span>6-DoF Spatial Pose Matrix</span>
-                    <span className="text-[var(--xr-primary)] font-bold">
+                    <span className="text-[var(--xr-primary-text)] font-bold">
                       X:{posX.toFixed(1)} Y:{posY.toFixed(1)} Z:{posZ.toFixed(1)}m | RotY:{rotY}°
                     </span>
                   </div>
@@ -178,7 +184,7 @@ export function Home() {
       {/* Comparison: Flat 2D Screen vs Stereoscopic WebXR */}
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--xr-primary)] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--xr-primary-text)] uppercase tracking-wider">
             <Layers className="w-4 h-4" /> Spatial Paradigm Shift
           </div>
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--xr-text)]">
@@ -194,7 +200,7 @@ export function Home() {
           <div className="p-8 rounded-2xl border border-[var(--xr-border-subtle)] bg-[var(--xr-surface)] space-y-6">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--xr-text)]">Flat 2D DOM / Canvas</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
                 2D Pixels
               </span>
             </div>
@@ -210,20 +216,20 @@ export function Home() {
           </div>
 
           {/* WebXR Volumetric Card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--xr-primary)]/40 bg-[var(--xr-surface)] space-y-6 shadow-[0_0_30px_rgba(139,92,246,0.15)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--xr-primary-40)] bg-[var(--xr-surface)] space-y-6 shadow-[0_0_30px_rgba(139,92,246,0.15)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--xr-text)]">WebXR Volumetric 6-DoF</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--xr-primary)]/10 text-[var(--xr-primary)] border border-[var(--xr-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--xr-primary-10)] text-[var(--xr-primary-text)] border border-[var(--xr-primary-30)] font-bold">
                 6-DoF Room Scale
               </span>
             </div>
             <p className="text-xs text-[var(--xr-muted)] leading-relaxed">
               Objects exist in physical meters in your room. Dual-eye rendering generates genuine optical depth parallax with optical hand-tracking pinch gestures.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--xr-bg)] font-mono text-[11px] text-[var(--xr-muted)] space-y-2 border border-[var(--xr-primary)]/20">
-              <div className="text-[var(--xr-primary)]">• Metric 3D Cartesian coordinates [X, Y, Z, Quaternions]</div>
-              <div className="text-[var(--xr-teal)]">• Dual stereoscopic viewports at ultra-smooth 90–120Hz</div>
-              <div className="text-[var(--xr-rose)]">• HRTF binaural 3D spatial acoustics</div>
+            <div className="p-4 rounded-lg bg-[var(--xr-bg)] font-mono text-[11px] text-[var(--xr-muted)] space-y-2 border border-[var(--xr-primary-20)]">
+              <div className="text-[var(--xr-primary-text)]">• Metric 3D Cartesian coordinates [X, Y, Z, Quaternions]</div>
+              <div className="text-[var(--xr-teal-text)]">• Dual stereoscopic viewports at ultra-smooth 90–120Hz</div>
+              <div className="text-[var(--xr-rose-text)]">• HRTF binaural 3D spatial acoustics</div>
               <div className="text-[var(--xr-text)]">• 25-joint anatomical optical hand tracking and raycasts</div>
             </div>
           </div>
@@ -234,7 +240,7 @@ export function Home() {
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--xr-border-subtle)] pb-6">
           <div>
-            <div className="text-xs font-mono text-[var(--xr-primary)] uppercase tracking-wider">
+            <div className="text-xs font-mono text-[var(--xr-primary-text)] uppercase tracking-wider">
               Architecture Tracks
             </div>
             <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--xr-text)] mt-1">
@@ -243,7 +249,7 @@ export function Home() {
           </div>
           <Link
             href="/xrcosmos/learn"
-            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--xr-primary)] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--xr-primary-text)] hover:underline"
           >
             View all 6 topics <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -257,13 +263,13 @@ export function Home() {
               className="xr-card p-6 rounded-xl space-y-4 group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--xr-primary)]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--xr-primary-text)]">
                   {topic.kicker}
                 </span>
-                <ArrowUpRight className="w-4 h-4 text-[var(--xr-muted)] group-hover:text-[var(--xr-primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                <ArrowUpRight className="w-4 h-4 text-[var(--xr-muted)] group-hover:text-[var(--xr-primary-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </div>
 
-              <h3 className="font-display font-bold text-lg text-[var(--xr-text)] group-hover:text-[var(--xr-primary)] transition-colors">
+              <h3 className="font-display font-bold text-lg text-[var(--xr-text)] group-hover:text-[var(--xr-primary-text)] transition-colors">
                 {topic.title}
               </h3>
 

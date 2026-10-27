@@ -54,7 +54,7 @@ export function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--sync-primary)]/30 bg-[var(--sync-primary)]/10 text-[var(--sync-primary)] text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--sync-primary-30)] bg-[var(--sync-primary-10)] text-[var(--sync-primary)] text-xs font-mono">
               <RefreshCw className="w-3.5 h-3.5 animate-spin text-[var(--sync-primary)]" />
               Conflict-Free Replicated Data Types &bull; OT &bull; Vector Clocks
             </div>
@@ -161,7 +161,7 @@ export function Home() {
                       type="text"
                       value={aliceText}
                       onChange={(e) => setAliceText(e.target.value)}
-                      className="w-full p-2 rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-white text-xs font-bold focus:outline-none focus:border-cyan-400"
+                      className="w-full p-2 rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-[var(--sync-text)] text-xs font-bold focus:outline-none focus:border-cyan-400"
                     />
                   </div>
 
@@ -175,7 +175,7 @@ export function Home() {
                       type="text"
                       value={bobText}
                       onChange={(e) => setBobText(e.target.value)}
-                      className="w-full p-2 rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-white text-xs font-bold focus:outline-none focus:border-indigo-400"
+                      className="w-full p-2 rounded bg-[var(--sync-surface-2)] border border-[var(--sync-border-subtle)] text-[var(--sync-text)] text-xs font-bold focus:outline-none focus:border-indigo-400"
                     />
                   </div>
                 </div>
@@ -188,7 +188,7 @@ export function Home() {
                     </span>
                     <span className="text-[var(--sync-muted)]">STRONG CONSISTENCY</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-[var(--sync-surface-2)] text-base font-bold text-white border border-[var(--sync-border-subtle)]">
+                  <div className="p-3 rounded-lg bg-[var(--sync-surface-2)] text-base font-bold text-[var(--sync-text)] border border-[var(--sync-border-subtle)]">
                     &ldquo;{mergedDoc}&rdquo;
                   </div>
                 </div>
@@ -242,17 +242,17 @@ export function Home() {
           </div>
 
           {/* CRDT Card */}
-          <div className="p-8 rounded-2xl border-2 border-[var(--sync-primary)]/40 bg-[var(--sync-surface)] space-y-6 shadow-[0_0_30px_rgba(6,182,212,0.15)]">
+          <div className="p-8 rounded-2xl border-2 border-[var(--sync-primary-40)] bg-[var(--sync-surface)] space-y-6 shadow-[0_0_30px_rgba(6,182,212,0.15)]">
             <div className="flex items-center justify-between">
               <span className="font-display font-bold text-xl text-[var(--sync-text)]">Conflict-Free Replicated Data Types</span>
-              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--sync-primary)]/10 text-[var(--sync-primary)] border border-[var(--sync-primary)]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--sync-primary-10)] text-[var(--sync-primary)] border border-[var(--sync-primary-30)] font-bold">
                 Local-First P2P
               </span>
             </div>
             <p className="text-xs text-[var(--sync-muted)] leading-relaxed">
               Used by Figma, Notion, Yjs, and Automerge. Edits attach immutable identifiers. Mutations form a Bounded Join-Semilattice where merge operations (&sqcup; join) are mathematically guaranteed to converge anywhere.
             </p>
-            <div className="p-4 rounded-lg bg-[var(--sync-bg)] font-mono text-[11px] text-[var(--sync-muted)] space-y-2 border border-[var(--sync-primary)]/20">
+            <div className="p-4 rounded-lg bg-[var(--sync-bg)] font-mono text-[11px] text-[var(--sync-muted)] space-y-2 border border-[var(--sync-primary-20)]">
               <div className="text-[var(--sync-primary)]">• Mathematical Strong Eventual Consistency (SEC)</div>
               <div className="text-emerald-400">• Commutative, Associative, Idempotent merge functions</div>
               <div>• 100% Offline capability with instant local writes</div>

@@ -1,20 +1,24 @@
 import Link from "next/link";
 
+// FS-16: these hrefs had lost their `/golangviz` prefix, so every footer link resolved against
+// the site root instead of this engine — `/playground`, `/path`, `/#start` and
+// `/concepts/introduction-to-go` all hit the `[domain]` catch-all and 404'd. The engine's own
+// `lib/curriculum.ts` already used the prefixed form, which is what these now match.
 const footerLinks = [
   {
     title: "Product",
     items: [
-      { label: "Playground", href: "/playground" },
-      { label: "Concept map", href: "/path" },
-      { label: "Roadmap", href: "/path#roadmap" },
+      { label: "Playground", href: "/golangviz/playground" },
+      { label: "Concept map", href: "/golangviz/path" },
+      { label: "Roadmap", href: "/golangviz/path#roadmap" },
     ],
   },
   {
     title: "Learn",
     items: [
-      { label: "Start here", href: "/#start" },
-      { label: "Features", href: "/#features" },
-      { label: "Intro to Go", href: "/concepts/introduction-to-go" },
+      { label: "Start here", href: "/golangviz#start" },
+      { label: "Features", href: "/golangviz#features" },
+      { label: "Intro to Go", href: "/golangviz/concepts/introduction-to-go" },
     ],
   },
   {

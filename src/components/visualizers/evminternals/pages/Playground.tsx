@@ -117,7 +117,7 @@ const Playground: React.FC = () => {
                 "{agentResponse?.thought}"
               </div>
               {agentResponse?.suggestion && (
-                <div className="text-[10px] bg-evm-accent/10 dark:bg-evm-accent/20 text-evm-accent p-2 rounded border border-evm-accent/20 dark:border-evm-accent/30">
+                <div className="text-[10px] bg-evm-accent/10 dark:bg-evm-accent/20 text-evm-accent-text p-2 rounded border border-evm-accent/20 dark:border-evm-accent/30">
                   <span className="font-bold">Tip:</span> {agentResponse.suggestion}
                 </div>
               )}
@@ -204,19 +204,19 @@ const Playground: React.FC = () => {
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-7">
               <div className="flex items-start gap-2">
-                <span className="text-evm-accent mt-0.5">→</span>
+                <span className="text-evm-accent-text mt-0.5">→</span>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400"><strong>PC (Program Counter):</strong> Shows which instruction runs next</p>
               </div>
               <div className="flex items-start gap-2">
-                <span className="text-evm-accent mt-0.5">→</span>
+                <span className="text-evm-accent-text mt-0.5">→</span>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400"><strong>Stack:</strong> Values pushed/popped like a stack of plates</p>
               </div>
               <div className="flex items-start gap-2">
-                <span className="text-evm-accent mt-0.5">→</span>
+                <span className="text-evm-accent-text mt-0.5">→</span>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400"><strong>Memory:</strong> Data stored temporarily at byte offsets</p>
               </div>
               <div className="flex items-start gap-2">
-                <span className="text-evm-accent mt-0.5">→</span>
+                <span className="text-evm-accent-text mt-0.5">→</span>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400"><strong>Gas:</strong> Computational cost (storage = expensive!)</p>
               </div>
             </div>
@@ -230,15 +230,15 @@ const Playground: React.FC = () => {
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 ml-7">
               <div className="p-3 rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
-                <span className="text-xs font-bold text-evm-accent">6002600301</span>
+                <span className="text-xs font-bold text-evm-accent-text">6002600301</span>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Simple math: Push 5, push 4, multiply = 20, push 3, add = 23</p>
               </div>
               <div className="p-3 rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
-                <span className="text-xs font-bold text-evm-accent">604260005260206000f3</span>
+                <span className="text-xs font-bold text-evm-accent-text">604260005260206000f3</span>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Store value 42 at memory position 0, then return 32 bytes from position 0</p>
               </div>
               <div className="p-3 rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
-                <span className="text-xs font-bold text-evm-accent">60ff600055</span>
+                <span className="text-xs font-bold text-evm-accent-text">60ff600055</span>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Write 255 to storage slot 0. This persists on blockchain (costs ~20k gas!)</p>
               </div>
             </div>

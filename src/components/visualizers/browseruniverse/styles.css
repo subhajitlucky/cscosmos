@@ -24,6 +24,23 @@
   --bu-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
   --bu-shadow-glow: 0 0 35px rgba(124, 58, 237, 0.25);
 
+  /* These utilities previously referenced colours that do not exist in
+     tailwind.config.js (`base`, `accentSoft`, `accentBlue`, `accentGreen`,
+     `shadow-inset`), so they emitted no CSS at all — panels rendered
+     transparent and the accent labels silently fell back to the inherited body
+     colour. Named custom properties are the supported way to express them.
+     `--bu-base*` mirrors `--bu-bg` (the engine's real page background), which
+     is what the light-mode overrides further down already mapped `.bg-base*`
+     onto; `--bu-accent-soft` / `--bu-accent-blue` / `--bu-accent-green` are
+     declared above and were simply never wired to a utility. */
+  --bu-base: #0b1220; /* = --bu-bg */
+  --bu-base-60: rgba(11, 18, 32, 0.6);
+  --bu-base-70: rgba(11, 18, 32, 0.7);
+  --bu-base-80: rgba(11, 18, 32, 0.8);
+  --bu-base-90: rgba(11, 18, 32, 0.9);
+  /* Hairline top highlight for sunken panels (replaces `shadow-inset`). */
+  --bu-shadow-inset-color: rgba(255, 255, 255, 0.08);
+
   --bu-display: 'Syne', sans-serif;
   --bu-sans: 'Inter', sans-serif;
   --bu-mono: 'DM Mono', monospace;
@@ -55,12 +72,23 @@ html[data-theme='light'] .browseruniverse-root,
   --bu-accent: #6d28d9;
   --bu-accent-hover: #7c3aed;
   --bu-accent-soft: #6d28d9;
-  --bu-accent-blue: #0284c7;
-  --bu-accent-green: #16a34a;
+  /* Was #0284c7 / #16a34a. Those values were never rendered before — the
+     text-accentBlue/text-accentGreen utilities emitted no CSS and the badges fell
+     back to the body colour (17:1). Now that the utilities work, the light-mode
+     badges measured 3.99:1 and 3.21:1 at 12px, below AA; these darker shades give
+     5.80:1 and 4.90:1. Dark mode is unchanged. */
+  --bu-accent-blue: #0369a1;
+  --bu-accent-green: #15803d;
   --bu-glass-bg: rgba(255, 255, 255, 0.95);
   --bu-glass-border: rgba(15, 23, 42, 0.1);
   --bu-shadow: 0 8px 30px -6px rgba(15, 23, 42, 0.08);
   --bu-shadow-glow: 0 0 30px rgba(109, 40, 217, 0.12);
+  --bu-base: #f8fafc; /* = --bu-bg */
+  --bu-base-60: rgba(248, 250, 252, 0.6);
+  --bu-base-70: rgba(248, 250, 252, 0.7);
+  --bu-base-80: rgba(248, 250, 252, 0.8);
+  --bu-base-90: rgba(248, 250, 252, 0.9);
+  --bu-shadow-inset-color: rgba(15, 23, 42, 0.06);
 
   background-color: var(--bu-bg);
   color: var(--bu-text);

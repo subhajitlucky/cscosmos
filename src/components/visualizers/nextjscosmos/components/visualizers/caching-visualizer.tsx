@@ -59,8 +59,8 @@ export function CachingVisualizer() {
           <div className="flex flex-col items-center gap-4 relative">
             <motion.div 
               animate={{ 
-                borderColor: status === 'cached' ? 'var(--emerald-500)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: status === 'cached' ? 'oklch(var(--emerald-500) / 0.05)' : 'transparent',
+                borderColor: status === 'cached' ? '#10b981' : 'rgba(148, 163, 184, 0.4)',
+                backgroundColor: status === 'cached' ? 'rgba(16, 185, 129, 0.05)' : 'transparent',
                 scale: status === 'fetching' ? [1, 1.05, 1] : 1
               }}
               transition={{ repeat: status === 'fetching' ? Infinity : 0 }}

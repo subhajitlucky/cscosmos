@@ -35,7 +35,7 @@ export function ProductionCaseStudyCard({ caseStudy }: ProductionCaseStudyCardPr
           <span className="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
             <Flame className="w-3.5 h-3.5" /> Production Challenge
           </span>
-          <p className="text-xs sm:text-sm text-[var(--foreground)]/90 leading-relaxed">
+          <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
             {caseStudy.challenge}
           </p>
         </div>
@@ -44,7 +44,7 @@ export function ProductionCaseStudyCard({ caseStudy }: ProductionCaseStudyCardPr
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
             <CheckCircle2 className="w-3.5 h-3.5" /> Architectural Solution
           </span>
-          <p className="text-xs sm:text-sm text-[var(--foreground)]/90 leading-relaxed">
+          <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
             {caseStudy.solution}
           </p>
         </div>

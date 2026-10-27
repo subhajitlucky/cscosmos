@@ -23,7 +23,8 @@ const ENDPOINTS = [
       "domain": "fullstack",
       "slug": "program-cosmos",
       "status": "active",
-      "url": "https://cscosmos.vercel.app/fullstack/program-cosmos"
+      "url": "https://cscosmos.vercel.app/fullstack/program-cosmos",
+      "crossListedDomains": []
     }
   ]
 }`,
@@ -37,8 +38,8 @@ const ENDPOINTS = [
     {
       "key": "dsa",
       "name": "Data Structures & Algorithms",
-      "totalTopics": 41,
-      "activeTopics": 12
+      "totalTopics": 40,
+      "activeTopics": 2
     }
   ]
 }`,
@@ -47,7 +48,7 @@ const ENDPOINTS = [
     path: "/api/interview",
     description: "Interview categories with difficulty, frequency, companies, and tags.",
     sample: `{
-  "count": 24,
+  "count": 25,
   "categories": [
     {
       "key": "dsa",

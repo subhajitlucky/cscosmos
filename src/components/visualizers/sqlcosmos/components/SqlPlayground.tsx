@@ -1,76 +1,51 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Database, Play, RotateCcw, Sparkles, Table, Terminal } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Play, Table, Terminal } from 'lucide-react';
+import { evaluateSql, SUPPORTED_SQL_SCOPE } from '../lib/sqlSubsetEvaluator';
+import type { SqlRow } from '../lib/sqlSubsetEvaluator';
 
-interface Row {
-  [key: string]: any;
+const DEFAULT_QUERY = `SELECT u.name, u.role, o.product, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id
+WHERE o.total > 100;`;
+
+const PRESETS: { label: string; sql: string }[] = [
+  { label: 'Filter Developers', sql: `SELECT * FROM users WHERE role = 'developer';` },
+  { label: 'Inner Join Orders', sql: `SELECT u.name, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id;` },
+  { label: 'All Orders', sql: `SELECT * FROM orders;` },
+];
+
+interface RunResult {
+  columns: string[];
+  rows: SqlRow[];
+  execTime: number;
+  note?: string;
 }
 
-const SAMPLE_USERS: Row[] = [
-  { id: 1, name: 'Alice', email: 'alice@test.com', role: 'admin', country: 'US' },
-  { id: 2, name: 'Bob', email: 'bob@test.com', role: 'developer', country: 'CA' },
-  { id: 3, name: 'Charlie', email: 'charlie@test.com', role: 'developer', country: 'US' },
-  { id: 4, name: 'Diana', email: 'diana@test.com', role: 'designer', country: 'UK' },
-];
-
-const SAMPLE_ORDERS: Row[] = [
-  { id: 101, user_id: 1, product: 'MacBook Pro', total: 2499.00 },
-  { id: 102, user_id: 1, product: 'Magic Mouse', total: 99.00 },
-  { id: 103, user_id: 2, product: 'Mechanical Keyboard', total: 150.00 },
-  { id: 104, user_id: 3, product: '4K Monitor', total: 450.00 },
-];
+/** Parses and evaluates `sql` against the in-memory tables, timing the real evaluation. */
+function runQuery(sql: string): RunResult {
+  const startedAt = performance.now();
+  const evaluated = evaluateSql(sql);
+  return {
+    columns: evaluated.columns,
+    rows: evaluated.rows,
+    execTime: performance.now() - startedAt,
+    note: evaluated.note,
+  };
+}
 
 export function SqlPlayground() {
-  const [query, setQuery] = useState<string>(
-    `SELECT u.name, u.role, o.product, o.total\nFROM users u\nJOIN orders o ON u.id = o.user_id\nWHERE o.total > 100;`
-  );
-  const [results, setResults] = useState<{
-    columns: string[];
-    rows: Row[];
-    execTime: number;
-  }>({
-    columns: ['name', 'role', 'product', 'total'],
-    rows: [
-      { name: 'Alice', role: 'admin', product: 'MacBook Pro', total: 2499.00 },
-      { name: 'Bob', role: 'developer', product: 'Mechanical Keyboard', total: 150.00 },
-      { name: 'Charlie', role: 'developer', product: '4K Monitor', total: 450.00 },
-    ],
-    execTime: 0.042
-  });
+  const [mounted, setMounted] = useState(false);
+  const [query, setQuery] = useState<string>(DEFAULT_QUERY);
+  const [result, setResult] = useState<RunResult>(() => runQuery(DEFAULT_QUERY));
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleRunQuery = () => {
-    const q = query.toLowerCase();
-
-    // Client-side heuristic interpreter
-    if (q.includes('users') && q.includes('orders')) {
-      const joined = SAMPLE_ORDERS.filter(o => o.total > 100).map(o => {
-        const u = SAMPLE_USERS.find(user => user.id === o.user_id);
-        return {
-          name: u?.name || 'Unknown',
-          role: u?.role || 'Unknown',
-          product: o.product,
-          total: o.total
-        };
-      });
-      setResults({
-        columns: ['name', 'role', 'product', 'total'],
-        rows: joined,
-        execTime: 0.038
-      });
-    } else if (q.includes('orders')) {
-      setResults({
-        columns: ['id', 'user_id', 'product', 'total'],
-        rows: SAMPLE_ORDERS,
-        execTime: 0.021
-      });
-    } else {
-      setResults({
-        columns: ['id', 'name', 'email', 'role', 'country'],
-        rows: SAMPLE_USERS,
-        execTime: 0.019
-      });
-    }
+    setResult(runQuery(query));
   };
 
   return (
@@ -82,16 +57,16 @@ export function SqlPlayground() {
           </div>
           <div>
             <div className="text-xs uppercase font-extrabold tracking-wider text-indigo-600 dark:text-indigo-400">
-              In-Browser Relational Engine
+              In-Browser SQL Subset Evaluator
             </div>
             <h3 className="text-xl font-bold text-foreground">
-              Interactive SQL Query Scratchpad &amp; Planner
+              Interactive SQL Query Scratchpad
             </h3>
           </div>
         </div>
 
         <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold">
-          Tables: users, orders • Real-Time Engine
+          Tables: users, orders • Evaluated locally in your browser
         </span>
       </div>
 
@@ -99,7 +74,7 @@ export function SqlPlayground() {
       <div className="space-y-3">
         <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
           <span>SQL Query Input:</span>
-          <span>Press &ldquo;Execute Query&rdquo; to run</span>
+          <span>Press &ldquo;Run Query&rdquo; to evaluate</span>
         </div>
 
         <textarea
@@ -112,30 +87,17 @@ export function SqlPlayground() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-2 text-xs">
             <span className="text-muted-foreground self-center">Presets:</span>
-            <button
-              onClick={() => {
-                setQuery(`SELECT * FROM users WHERE role = 'developer';`);
-              }}
-              className="px-2.5 py-1 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-[11px]"
-            >
-              Filter Developers
-            </button>
-            <button
-              onClick={() => {
-                setQuery(`SELECT u.name, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id;`);
-              }}
-              className="px-2.5 py-1 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-[11px]"
-            >
-              Inner Join Orders
-            </button>
-            <button
-              onClick={() => {
-                setQuery(`SELECT * FROM orders;`);
-              }}
-              className="px-2.5 py-1 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-[11px]"
-            >
-              All Orders
-            </button>
+            {PRESETS.map((preset) => (
+              <button
+                key={preset.label}
+                onClick={() => {
+                  setQuery(preset.sql);
+                }}
+                className="px-2.5 py-1 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-[11px]"
+              >
+                {preset.label}
+              </button>
+            ))}
           </div>
 
           <button
@@ -143,9 +105,14 @@ export function SqlPlayground() {
             className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs transition shadow-md flex items-center gap-1.5"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span>Execute Query</span>
+            <span>Run Query</span>
           </button>
         </div>
+
+        <p className="text-[11px] text-muted-foreground font-mono leading-relaxed">
+          Scope: {SUPPORTED_SQL_SCOPE} An in-memory evaluator, not a database — anything outside that
+          subset is refused instead of guessed.
+        </p>
       </div>
 
       {/* Relational Table Output Box */}
@@ -154,33 +121,45 @@ export function SqlPlayground() {
           <div className="flex items-center gap-2">
             <Table className="w-4 h-4 text-indigo-500" />
             <span className="font-bold text-foreground">Query Result Set:</span>
-            <span className="text-muted-foreground font-mono">({results.rows.length} rows returned)</span>
+            {result.note ? (
+              <span className="text-amber-600 dark:text-amber-400 font-mono">not evaluated</span>
+            ) : (
+              <span className="text-muted-foreground font-mono">({result.rows.length} rows returned)</span>
+            )}
           </div>
-          <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">
-            Execution Time: {results.execTime} ms
-          </span>
+          {!result.note && mounted && (
+            <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+              Evaluated in {result.execTime.toFixed(3)} ms
+            </span>
+          )}
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left font-mono text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-border text-muted-foreground">
-                {results.columns.map((col) => (
-                  <th key={col} className="p-2.5 capitalize">{col}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {results.rows.map((row, idx) => (
-                <tr key={idx} className="border-b border-border/50 hover:bg-muted/40 transition-colors">
-                  {results.columns.map((col) => (
-                    <td key={col} className="p-2.5 text-foreground">{String(row[col])}</td>
+        {result.note ? (
+          <p className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 font-mono text-xs leading-relaxed">
+            {result.note}
+          </p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left font-mono text-xs border-collapse">
+              <thead>
+                <tr className="border-b border-border text-muted-foreground">
+                  {result.columns.map((col) => (
+                    <th key={col} className="p-2.5 capitalize">{col}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {result.rows.map((row, idx) => (
+                  <tr key={idx} className="border-b border-border/50 hover:bg-muted/40 transition-colors">
+                    {result.columns.map((col) => (
+                      <td key={col} className="p-2.5 text-foreground">{String(row[col])}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

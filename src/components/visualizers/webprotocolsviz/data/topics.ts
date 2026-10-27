@@ -21,7 +21,7 @@ export interface Topic {
       explanation?: string;
       highlights?: string[];
     };
-    visualizationType: 'flow' | 'cycle' | 'methods' | 'headers' | 'status' | 'caching' | 'validation' | 'cdn' | 'performance';
+    visualizationType: 'flow' | 'cycle' | 'methods' | 'headers' | 'status' | 'caching' | 'validation' | 'cdn' | 'performance' | 'tls';
   };
 }
 
@@ -344,7 +344,7 @@ export const topics: Topic[] = [
           content: 'How do you know google.com is actually Google? They provide a Digital Certificate issued by a trusted third party (Certificate Authority).'
         }
       ],
-      visualizationType: 'validation'
+      visualizationType: 'tls'
     }
   },
   {

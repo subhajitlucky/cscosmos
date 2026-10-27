@@ -185,7 +185,7 @@ const Playground = () => {
                  <button 
                   onClick={runSimulation}
                   disabled={isRunning}
-                  className="bg-primary text-white px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-primary/90 transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
+                  className="bg-primary text-primary-foreground px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-primary/90 transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
                 >
                   {isRunning ? <RefreshCw className="animate-spin" size={14} /> : <Play size={14} />}
                   Send

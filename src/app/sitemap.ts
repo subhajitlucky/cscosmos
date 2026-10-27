@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { domains } from "@/data/domains";
+import { domains, domainPath } from "@/data/domains";
 import { topics } from "@/data/topics";
 import { categories as interviewCategories, getQuestionsByCategory } from "@/data/interview";
 
@@ -40,16 +40,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
         entry("/leaderboard", "daily", 0.4),
         entry("/mock-interview", "weekly", 0.5),
         entry("/tutor", "monthly", 0.4),
-        ...domains.map((d) => entry(d.path, "weekly", 0.8)),
+        ...domains.map((d) => entry(domainPath(d.domainKey), "weekly", 0.8)),
     ];
 
     // One entry per unique active topic url (shared engines dedupe naturally).
     const seen = new Set<string>();
     for (const t of topics) {
-        if (t.status !== "active" || !t.url) continue;
-        if (seen.has(t.url)) continue;
-        seen.add(t.url);
-        entries.push(entry(t.url, "weekly", 0.7));
+        if (t.status !== "active" || !t.canonicalPath) continue;
+        if (seen.has(t.canonicalPath)) continue;
+        seen.add(t.canonicalPath);
+        entries.push(entry(t.canonicalPath, "weekly", 0.7));
     }
 
     // Interview prep: category pages and every question page. The `/interview` hub itself is

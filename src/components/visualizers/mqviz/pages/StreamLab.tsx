@@ -2,36 +2,24 @@
 
 import React, { useState } from 'react';
 import { Activity, Server, Radio, Play, RotateCcw, Zap, RefreshCw, Layers, ShieldAlert, Cpu } from 'lucide-react';
-
-interface EventRecord {
-  id: string;
-  key: string;
-  partition: number;
-  offset: number;
-  payload: string;
-  timestamp: string;
-}
+import { partitionForKey } from '../lib/murmur2';
+import {
+  PARTITION_COUNT,
+  SEED_CONSUMER_OFFSETS,
+  SEED_KEY_INPUT,
+  SEED_PARTITIONS,
+} from '../lib/seedEvents';
+import type { EventRecord } from '../lib/types';
 
 export function StreamLab() {
-  const [keyInput, setKeyInput] = useState('user_881');
+  const [keyInput, setKeyInput] = useState(SEED_KEY_INPUT);
   const [payloadInput, setPayloadInput] = useState('{"event": "CHECKOUT_COMPLETED", "amount": 149}');
-  const [partitions, setPartitions] = useState<{ [key: number]: EventRecord[] }>({
-    0: [
-      { id: 'evt_1', key: 'user_102', partition: 0, offset: 0, payload: '{"event":"LOGIN"}', timestamp: '12:00:01' },
-      { id: 'evt_2', key: 'user_102', partition: 0, offset: 1, payload: '{"event":"PAGE_VIEW"}', timestamp: '12:00:02' }
-    ],
-    1: [
-      { id: 'evt_3', key: 'user_305', partition: 1, offset: 0, payload: '{"event":"ADD_TO_CART"}', timestamp: '12:00:01' }
-    ],
-    2: [
-      { id: 'evt_4', key: 'user_881', partition: 2, offset: 0, payload: '{"event":"SIGNUP"}', timestamp: '12:00:00' }
-    ]
-  });
+  const [partitions, setPartitions] = useState<{ [key: number]: EventRecord[] }>(() =>
+    Object.fromEntries(Object.entries(SEED_PARTITIONS).map(([p, records]) => [p, [...records]]))
+  );
 
   const [consumerOffsets, setConsumerOffsets] = useState<{ [key: number]: number }>({
-    0: 1,
-    1: 0,
-    2: 0
+    ...SEED_CONSUMER_OFFSETS
   });
 
   const [activeWorkers, setActiveWorkers] = useState<string[]>(['Worker-1 (C1)', 'Worker-2 (C2)']);
@@ -40,14 +28,11 @@ export function StreamLab() {
     '[GROUP] Consumer group "order-analytics" assigned partitions: C1 -> [P0, P1], C2 -> [P2].'
   ]);
 
-  const hashKey = (key: string) => {
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-      hash = (hash << 5) - hash + key.charCodeAt(i);
-      hash |= 0;
-    }
-    return Math.abs(hash) % 3;
-  };
+  // Kafka's default partitioner: `toPositive(murmur2(keyBytes)) % numPartitions`, with
+  // MurmurHash2 seeded 0x9747b28c. This used to be a plain 31-multiplier string hash while
+  // the UI called it "Murmur2", which taught the wrong algorithm; it now runs the real one,
+  // checked against Kafka's own `Utils.murmur2` test vectors (see lib/murmur2.test.ts).
+  const hashKey = (key: string) => partitionForKey(key, PARTITION_COUNT);
 
   const produceEvent = () => {
     const pId = hashKey(keyInput);
@@ -111,14 +96,14 @@ export function StreamLab() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       {/* Header */}
       <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--mq-primary)]/30 bg-[var(--mq-primary)]/10 text-[var(--mq-primary)] text-xs font-mono">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--mq-primary-30)] bg-[var(--mq-primary-10)] text-[var(--mq-primary)] text-xs font-mono">
           <Activity className="w-3.5 h-3.5" /> Interactive Broker Simulator
         </div>
         <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--mq-text)]">
           Live Event <span className="text-[var(--mq-primary)] mq-glow">Stream Lab</span>
         </h1>
         <p className="text-sm md:text-base text-[var(--mq-muted)] max-w-2xl leading-relaxed">
-          Produce messages with custom routing keys, observe partition Murmur2 hash distributions, trigger consumer rebalancing, and track real-time lag.
+          Produce messages with custom routing keys, observe how the Murmur2 key hash maps them to partitions, trigger consumer rebalancing, and track real-time lag.
         </p>
       </div>
 
@@ -152,7 +137,7 @@ export function StreamLab() {
             <span className="font-mono text-xs text-[var(--mq-primary)] uppercase tracking-wider font-bold">
               Producer Gateway
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--mq-primary)]/10 text-[var(--mq-primary)] border border-[var(--mq-primary)]/20">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--mq-primary-10)] text-[var(--mq-primary)] border border-[var(--mq-primary-20)]">
               ACKS=ALL
             </span>
           </div>
@@ -247,7 +232,7 @@ export function StreamLab() {
                         <button
                           onClick={() => consumePartition(pId)}
                           disabled={pLag === 0}
-                          className="px-2.5 py-1 rounded bg-[var(--mq-cyan)]/10 text-[var(--mq-cyan)] border border-[var(--mq-cyan)]/30 text-[10px] hover:bg-[var(--mq-cyan)]/20 disabled:opacity-30 disabled:cursor-not-allowed"
+                          className="px-2.5 py-1 rounded bg-[var(--mq-cyan-10)] text-[var(--mq-cyan)] border border-[var(--mq-cyan-30)] text-[10px] hover:bg-[var(--mq-cyan-20)] disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                           Commit Next
                         </button>
@@ -263,8 +248,8 @@ export function StreamLab() {
                             key={rIdx}
                             className={`px-2 py-1 rounded text-[10px] font-mono whitespace-nowrap border transition-all ${
                               isConsumed
-                                ? 'border-[var(--mq-emerald)]/30 bg-[var(--mq-emerald)]/10 text-[var(--mq-emerald)]'
-                                : 'border-[var(--mq-primary)]/40 bg-[var(--mq-primary)]/10 text-[var(--mq-primary)] animate-pulse'
+                                ? 'border-[var(--mq-emerald-30)] bg-[var(--mq-emerald-10)] text-[var(--mq-emerald)]'
+                                : 'border-[var(--mq-primary-40)] bg-[var(--mq-primary-10)] text-[var(--mq-primary)] animate-pulse'
                             }`}
                             title={`Key: ${rec.key} | Offset: ${rec.offset}`}
                           >

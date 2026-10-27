@@ -61,7 +61,7 @@ export function NotFoundVisualizer() {
                       <div className={`flex items-center gap-2 text-sm p-1 rounded transition-colors ${status === 'failed' ? 'bg-primary/10 text-primary' : ''}`}>
                          <FileQuestion className="h-3 w-3" />
                          <span>not-found.tsx</span>
-                         {status === 'failed' && <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="ml-auto text-[8px] font-black bg-primary text-white px-1 rounded">MATCH</motion.span>}
+                         {status === 'failed' && <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="ml-auto text-[8px] font-black bg-primary text-primary-foreground px-1 rounded">MATCH</motion.span>}
                       </div>
                       <div className="flex items-center gap-2 text-sm opacity-40">
                          <CornerDownRight className="h-3 w-3" />

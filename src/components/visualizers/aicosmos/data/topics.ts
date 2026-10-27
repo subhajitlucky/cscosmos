@@ -277,35 +277,35 @@ export const aiTopicGroups: AiTopicGroup[] = [
     id: 'vector-db',
     name: 'Vector Databases & Embeddings',
     description: 'High-dimensional embeddings, HNSW graph search, Cosine similarity, and vector quantization.',
-    badgeColor: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10',
+    badgeColor: 'border-cyan-500/30 text-cyan-700 dark:text-cyan-400 bg-cyan-500/10',
     topics: aiTopics.filter(t => t.group === 'Vector Databases')
   },
   {
     id: 'rag',
     name: 'RAG Architectures & Retrieval',
     description: 'Hybrid BM25 + Vector search, Reciprocal Rank Fusion, Cross-Encoder Re-Ranking, and citation grounding.',
-    badgeColor: 'border-indigo-500/30 text-indigo-400 bg-indigo-500/10',
+    badgeColor: 'border-indigo-500/30 text-indigo-700 dark:text-indigo-400 bg-indigo-500/10',
     topics: aiTopics.filter(t => t.group === 'RAG Architectures')
   },
   {
     id: 'agents',
     name: 'Autonomous AI Agents',
     description: 'ReAct loops (Thought -> Action -> Observation), JSON tool calling, and multi-agent coordination.',
-    badgeColor: 'border-amber-500/30 text-amber-400 bg-amber-500/10',
+    badgeColor: 'border-amber-500/30 text-amber-700 dark:text-amber-400 bg-amber-500/10',
     topics: aiTopics.filter(t => t.group === 'AI Agents')
   },
   {
     id: 'prompting',
     name: 'Prompt Engineering & Schemas',
     description: 'Chain-of-Thought reasoning, Few-Shot prompting, and grammar-constrained JSON schemas.',
-    badgeColor: 'border-purple-500/30 text-purple-400 bg-purple-500/10',
+    badgeColor: 'border-purple-500/30 text-purple-700 dark:text-purple-400 bg-purple-500/10',
     topics: aiTopics.filter(t => t.group === 'Prompt Engineering')
   },
   {
     id: 'eval-guardrails',
     name: 'Evaluation & Guardrails',
     description: 'The RAG Triad (Context, Groundedness, Answer relevance), PII redaction, and prompt injection defense.',
-    badgeColor: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10',
+    badgeColor: 'border-emerald-500/30 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10',
     topics: aiTopics.filter(t => t.group === 'Evaluation & Guardrails')
   }
 ];

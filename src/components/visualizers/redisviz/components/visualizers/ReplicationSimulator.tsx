@@ -58,7 +58,10 @@ const ReplicationSimulator = () => {
                     >
                         <Database className="w-10 h-10 mb-2" />
                         <span className="font-bold text-sm">MASTER</span>
-                        <Badge variant="outline" className="text-[8px] bg-white/20 text-white border-none mt-1">Writable</Badge>
+                        {/* "Writable" is the only text that says the master accepts writes, and
+                            white on bg-white/20-over-redis is 3.75:1 — below AA and identical in
+                            both themes. The palette's own darker red keeps white at 7.54:1 (FS-55). */}
+                        <Badge variant="outline" className="text-[8px] bg-redis-dark text-white border-none mt-1">Writable</Badge>
                     </motion.div>
                     <div className="bg-muted p-2 rounded-lg border border-border w-full max-h-[100px] overflow-auto">
                         <div className="text-[10px] font-mono space-y-1">

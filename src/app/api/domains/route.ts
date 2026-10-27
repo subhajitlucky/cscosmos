@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { domains } from "@/data/domains";
+import { domains, domainPath } from "@/data/domains";
 import { topics } from "@/data/topics";
 import { siteConfig } from "@/config/site";
 
@@ -12,13 +12,13 @@ export function GET() {
     domains: domains.map((domain) => {
       const domainTopics = topics.filter(
         (topic) =>
-          topic.domain === domain.domainKey || topic.aliases?.includes(domain.domainKey)
+          topic.domain === domain.domainKey || topic.crossListedDomains?.includes(domain.domainKey)
       );
       return {
         key: domain.domainKey,
         name: domain.name,
         description: domain.description,
-        path: `${siteConfig.url}${domain.path}`,
+        path: `${siteConfig.url}${domainPath(domain.domainKey)}`,
         totalTopics: domainTopics.length,
         activeTopics: domainTopics.filter((topic) => topic.status === "active").length,
       };

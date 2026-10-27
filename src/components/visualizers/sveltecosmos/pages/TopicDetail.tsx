@@ -25,7 +25,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--svelte-primary)]/10 text-[var(--svelte-primary)] border border-[var(--svelte-primary)]/30">
+            <span className="text-xs font-mono px-2.5 py-1 rounded bg-[var(--svelte-primary-10)] text-[var(--svelte-primary)] border border-[var(--svelte-primary-30)]">
               {topic.kicker}
             </span>
             <span className="text-xs font-mono text-[var(--svelte-muted)]">
@@ -37,7 +37,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
             {topic.title}
           </h1>
 
-          <p className="text-base md:text-lg text-[var(--svelte-muted)] leading-relaxed border-l-4 border-[var(--svelte-primary)]/30 pl-6 italic">
+          <p className="text-base md:text-lg text-[var(--svelte-muted)] leading-relaxed border-l-4 border-[var(--svelte-primary-30)] pl-6 italic">
             &ldquo;{topic.definition}&rdquo;
           </p>
         </div>
@@ -164,7 +164,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-[var(--svelte-mint)]/10 border border-[var(--svelte-mint)]/30 text-[11px] font-mono text-[var(--svelte-mint)] flex items-center gap-2">
+            <div className="p-3 rounded-lg bg-[var(--svelte-mint-10)] border border-[var(--svelte-mint-30)] text-[11px] font-mono text-[var(--svelte-mint)] flex items-center gap-2">
               <Zap className="w-3.5 h-3.5" />
               Surgical TextNode patch executed.
             </div>
@@ -182,7 +182,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
           <div className="space-y-4">
             {topic.steps.map((step, idx) => (
               <div key={idx} className="flex items-start gap-4 text-xs leading-relaxed">
-                <span className="font-mono text-[10px] text-[var(--svelte-primary)] font-bold bg-[var(--svelte-primary)]/10 px-2 py-0.5 rounded border border-[var(--svelte-primary)]/20">
+                <span className="font-mono text-[10px] text-[var(--svelte-primary)] font-bold bg-[var(--svelte-primary-10)] px-2 py-0.5 rounded border border-[var(--svelte-primary-20)]">
                   0{idx + 1}
                 </span>
                 <span className="text-[var(--svelte-text)]">{step}</span>

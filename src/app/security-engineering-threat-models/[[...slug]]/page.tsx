@@ -1,5 +1,5 @@
 import React from 'react';
-import RouteClientShell from './RouteClientShell';
+import EngineMount from './EngineMount';
 import { LESSONS } from '@/components/visualizers/threatmodelviz/data';
 
 export function generateStaticParams() {
@@ -21,5 +21,5 @@ export default async function ThreatModelsPage({
   params: Promise<{ slug?: string[] }>;
 }) {
   const resolved = await params;
-  return <RouteClientShell slug={resolved?.slug || []} />;
+  return <EngineMount slug={resolved?.slug || []} />;
 }

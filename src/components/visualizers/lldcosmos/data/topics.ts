@@ -278,39 +278,44 @@ export class NearestFirstStrategy implements IParkingStrategy {
 ];
 
 export const lldTopicGroups: LldTopicGroup[] = [
+  // badgeColor is applied to a `bg-<hue>-500/10` pill in Learn.tsx. The
+  // `-400` shades below are dark-optimised and measured 1.42–2.15:1 as text on
+  // that tint over the light surfaces, so each carries an explicit light-mode
+  // shade (choosing the darkest pass that still clears AA on the tint) plus the
+  // original `-400` value behind a `dark:` variant.
   {
     id: 'solid',
     name: 'SOLID Principles & Clean Architecture',
     description: 'Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.',
-    badgeColor: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10',
+    badgeColor: 'border-emerald-500/30 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10',
     topics: lldTopics.filter(t => t.group === 'SOLID Principles')
   },
   {
     id: 'creational',
     name: 'Creational Patterns',
     description: 'Factory Method, Abstract Factory, Builder with fluent chaining, Singleton, and Prototype.',
-    badgeColor: 'border-amber-500/30 text-amber-400 bg-amber-500/10',
+    badgeColor: 'border-amber-500/30 text-amber-800 dark:text-amber-400 bg-amber-500/10',
     topics: lldTopics.filter(t => t.group === 'Creational Patterns')
   },
   {
     id: 'structural',
     name: 'Structural Patterns',
     description: 'Adapter for interface translation, Decorator for dynamic behavior wrapping, and Facade gateways.',
-    badgeColor: 'border-purple-500/30 text-purple-400 bg-purple-500/10',
+    badgeColor: 'border-purple-500/30 text-purple-700 dark:text-purple-400 bg-purple-500/10',
     topics: lldTopics.filter(t => t.group === 'Structural Patterns')
   },
   {
     id: 'behavioral',
     name: 'Behavioral Patterns',
     description: 'Strategy for dynamic algorithms, State machines, Observer pub/sub, and Command history.',
-    badgeColor: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10',
+    badgeColor: 'border-cyan-500/30 text-cyan-800 dark:text-cyan-400 bg-cyan-500/10',
     topics: lldTopics.filter(t => t.group === 'Behavioral Patterns')
   },
   {
     id: 'case-studies',
     name: 'LLD Machine Coding Case Studies',
     description: 'Smart Multi-Floor Parking Lot, Elevator System, Rate Limiter, and Notification Dispatcher.',
-    badgeColor: 'border-blue-500/30 text-blue-400 bg-blue-500/10',
+    badgeColor: 'border-blue-500/30 text-blue-700 dark:text-blue-400 bg-blue-500/10',
     topics: lldTopics.filter(t => t.group === 'LLD Case Studies')
   }
 ];

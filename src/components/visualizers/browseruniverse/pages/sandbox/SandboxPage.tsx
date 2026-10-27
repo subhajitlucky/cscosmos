@@ -57,7 +57,7 @@ export default function SandboxPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2">
-        <p className="text-xs uppercase tracking-[0.3rem] text-accentSoft">Sandbox</p>
+        <p className="text-xs uppercase tracking-[0.3rem] text-[var(--bu-accent-soft)]">Sandbox</p>
         <h1 className="section-title">Live DOM, CSS, and JS sandbox</h1>
         <p className="text-sm text-slate-300">
           Monaco-powered split editors with a sandboxed iframe (CSP: default-src &apos;none&apos;). Mutation
@@ -104,7 +104,7 @@ export default function SandboxPage() {
               Refresh sandbox
             </button>
           </div>
-          <div className="rounded-2xl border border-border bg-base/70 p-3 text-xs text-slate-300">
+          <div className="rounded-2xl border border-border bg-[var(--bu-base-70)] p-3 text-xs text-slate-300">
             CSP applied inside iframe: <code>default-src &apos;none&apos;; script-src &apos;unsafe-inline&apos;; style-src &apos;unsafe-inline&apos;; img-src data:;</code>
           </div>
           <div className="relative overflow-hidden rounded-2xl border border-border bg-card/60 shadow-lg">
@@ -146,7 +146,7 @@ function LogPanel({ title, entries }: { title: string; entries: LogEntry[] }) {
               entry.type === 'error'
                 ? 'border-red-500/40 bg-red-500/10 text-red-100'
                 : entry.type === 'log'
-                  ? 'border-border bg-base/70'
+                  ? 'border-border bg-[var(--bu-base-70)]'
                   : 'border-accent/40 bg-accent/10 text-white',
             )}
           >
@@ -171,7 +171,7 @@ function ListPanel({ title, items }: { title: string; items: string[] }) {
       <ul className="mt-2 space-y-1 text-xs text-slate-200">
         {items.length === 0 ? <li className="text-slate-500">No data yet.</li> : null}
         {items.map((item, idx) => (
-          <li key={idx} className="rounded-lg border border-border bg-base/70 px-2 py-1">
+          <li key={idx} className="rounded-lg border border-border bg-[var(--bu-base-70)] px-2 py-1">
             {item}
           </li>
         ))}

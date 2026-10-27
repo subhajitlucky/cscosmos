@@ -82,7 +82,7 @@ export const TopicWrapper = ({
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-cyan-400" />
             <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
-              Interactive Engine Simulation
+              Interactive Engine Walkthrough
             </h3>
           </div>
           <button 
@@ -95,7 +95,7 @@ export const TopicWrapper = ({
             )}
           >
             <Play className={cn("w-3.5 h-3.5 fill-current", isExecuting && "animate-pulse")} /> 
-            {isExecuting ? 'Simulating Update...' : 'Execute Code'}
+            {isExecuting ? 'Animating Update...' : 'Animate Update'}
           </button>
         </div>
 
@@ -129,10 +129,10 @@ export const TopicWrapper = ({
                         <Play className={cn("w-6 h-6 text-cyan-400 fill-current", isExecuting && "animate-pulse")} />
                       </div>
                       <div className="text-foreground font-bold mb-2 uppercase tracking-[0.2em] text-xs">
-                        {isExecuting ? 'Engine Executing Update' : 'Simulation Engine Idle'}
+                        {isExecuting ? 'Animating Update' : 'Walkthrough Idle'}
                       </div>
                       <div className="text-muted-foreground text-sm italic max-w-sm leading-relaxed">
-                        {isExecuting ? `Reconciling ${topic.title} state and committing DOM changes...` : 'Click "Execute Code" to run state reconciliation simulation.'}
+                        {isExecuting ? `Animating how ${topic.title} state is reconciled and committed...` : 'Click "Animate Update" to play the state reconciliation walkthrough.'}
                       </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ export const TopicWrapper = ({
       <div className="space-y-3">
         <div className="flex justify-between items-center">
           <h3 className="text-xs font-bold uppercase tracking-widest text-foreground flex items-center gap-2">
-            <span>Executable Code Snippet</span>
+            <span>Reference Code Snippet</span>
           </h3>
         </div>
         <ReactCodeEditor code={code} onChange={setCode} />
@@ -157,12 +157,12 @@ export const TopicWrapper = ({
         <div className="flex items-center gap-2 text-foreground font-bold uppercase text-xs tracking-widest">
           <AlertCircle className="w-4 h-4 text-amber-500" /> Technical Takeaways & Best Practices
         </div>
+        {/* FS-22: these three strings used to be hardcoded here, so all 35 topic pages showed
+            the same Virtual-DOM/reconciliation/batching takeaways regardless of subject. Every
+            topic in data/topics.ts already authors its own `takeaways`, which were never read —
+            this renders that authored content. */}
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          {[
-            "Component re-renders are triggered by state or prop changes.",
-            "Reconciliation algorithm diffs the Virtual DOM to minimize actual DOM updates.",
-            "Automatic batching optimizes multiple state updates into a single render cycle."
-          ].map((item, i) => (
+          {topic.takeaways.map((item, i) => (
             <li key={i} className="p-4 rounded-xl bg-muted/40 border border-border text-xs text-muted-foreground leading-relaxed flex gap-3">
               <span className="text-cyan-400 font-bold font-mono select-none">0{i+1}.</span>
               <span>{item}</span>

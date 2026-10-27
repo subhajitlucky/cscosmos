@@ -9,8 +9,8 @@ export function Footer() {
     <footer className="border-t border-[var(--fastapi-border-subtle)] bg-[var(--fastapi-surface)] mt-24 py-12">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[var(--fastapi-teal)]/10 border border-[var(--fastapi-teal)]/30 flex items-center justify-center text-[var(--fastapi-teal)]">
-            <Server className="w-4 h-4 text-[var(--fastapi-teal)]" />
+          <div className="w-8 h-8 rounded-lg bg-[var(--fastapi-teal-10)] border border-[var(--fastapi-teal-30)] flex items-center justify-center text-[var(--fastapi-teal-text)]">
+            <Server className="w-4 h-4 text-[var(--fastapi-teal-text)]" />
           </div>
           <div>
             <span className="font-display font-bold text-sm text-[var(--fastapi-text)]">
@@ -23,23 +23,23 @@ export function Footer() {
         </div>
 
         <div className="flex items-center gap-6 text-xs text-[var(--fastapi-muted)] font-mono">
-          <Link href="/fastapicosmos/learn" className="hover:text-[var(--fastapi-teal)] transition-colors">
+          <Link href="/fastapicosmos/learn" className="hover:text-[var(--fastapi-teal-text)] transition-colors">
             Concept Map
           </Link>
-          <Link href="/fastapicosmos/di-graph" className="hover:text-[var(--fastapi-teal)] transition-colors">
+          <Link href="/fastapicosmos/di-graph" className="hover:text-[var(--fastapi-teal-text)] transition-colors">
             DI Graph Lab
           </Link>
-          <Link href="/fastapicosmos/async-lab" className="hover:text-[var(--fastapi-teal)] transition-colors">
+          <Link href="/fastapicosmos/async-lab" className="hover:text-[var(--fastapi-teal-text)] transition-colors">
             AsyncIO Lab
           </Link>
-          <Link href="/fastapicosmos/about" className="hover:text-[var(--fastapi-teal)] transition-colors">
+          <Link href="/fastapicosmos/about" className="hover:text-[var(--fastapi-teal-text)] transition-colors">
             Architecture
           </Link>
         </div>
 
         <div className="flex items-center gap-2 text-xs font-mono text-[var(--fastapi-muted)]">
           <span>Part of CSCosmos</span>
-          <Sparkles className="w-3.5 h-3.5 text-[var(--fastapi-teal)]" />
+          <Sparkles className="w-3.5 h-3.5 text-[var(--fastapi-teal-text)]" />
         </div>
       </div>
     </footer>

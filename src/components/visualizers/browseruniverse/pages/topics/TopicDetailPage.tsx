@@ -17,7 +17,7 @@ export default function TopicDetailPage({ slug: propSlug }: { slug?: string }) {
     return (
       <div className="space-y-3">
         <h1 className="section-title">Topic not found</h1>
-        <Link href="/browseruniverse/topics" className="text-accentSoft underline">
+        <Link href="/browseruniverse/topics" className="text-[var(--bu-accent-soft)] underline">
           Back to topics
         </Link>
       </div>
@@ -29,14 +29,14 @@ export default function TopicDetailPage({ slug: propSlug }: { slug?: string }) {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2">
-        <p className="text-xs uppercase tracking-[0.3rem] text-accentSoft">Topic</p>
+        <p className="text-xs uppercase tracking-[0.3rem] text-[var(--bu-accent-soft)]">Topic</p>
         <h1 className="section-title">{topic.title}</h1>
         <p className="text-sm text-slate-300">{topic.description}</p>
         <div className="flex flex-wrap gap-2">
           {topic.tags?.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-border bg-base/70 px-3 py-1 text-xs text-slate-300"
+              className="rounded-full border border-border bg-[var(--bu-base-70)] px-3 py-1 text-xs text-slate-300"
             >
               {tag}
             </span>
@@ -51,7 +51,7 @@ export default function TopicDetailPage({ slug: propSlug }: { slug?: string }) {
       </div>
 
       <div>
-        <p className="text-xs uppercase tracking-[0.3rem] text-accentSoft">Visualizer</p>
+        <p className="text-xs uppercase tracking-[0.3rem] text-[var(--bu-accent-soft)]">Visualizer</p>
         <h2 className="section-title">{meta?.title ?? topic.title}</h2>
         <p className="text-sm text-slate-300">{meta?.description}</p>
       </div>
@@ -78,7 +78,7 @@ function CodeCard({ title, code }: { title: string; code: string }) {
           sample
         </span>
       </div>
-      <pre className="max-h-48 overflow-auto rounded-xl border border-border bg-base/80 p-3 text-xs text-slate-200">
+      <pre className="max-h-48 overflow-auto rounded-xl border border-border bg-[var(--bu-base-80)] p-3 text-xs text-slate-200">
         {code}
       </pre>
     </div>

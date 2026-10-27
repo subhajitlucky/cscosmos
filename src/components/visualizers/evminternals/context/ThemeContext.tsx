@@ -1,31 +1,40 @@
-import React, { useEffect, useState, useMemo } from 'react';
+'use client';
+
+import React, { useMemo } from 'react';
 import { ThemeContext } from './ThemeContextCore';
+import { useTheme as useCosmosTheme } from '@/context/useTheme';
 
-type Theme = 'light' | 'dark';
-
+/**
+ * Backed directly by the app-wide theme provider (`@/context/useTheme`).
+ *
+ * This module used to own a `'theme'` storage key and read `localStorage` plus
+ * `matchMedia` inside a `useState` initialiser. That makes the whole tree below it
+ * un-renderable on the server and can never agree with the site toggle in
+ * `src/app/layout.tsx`. (It was only ever mounted by `App.tsx`, which nothing
+ * imports, so while the route sat behind `dynamic(..., { ssr: false })` this was
+ * a latent blocker rather than the immediate cause of the empty shells. It is
+ * still what has to go before the engine can be pre-rendered.)
+ *
+ * The local context shape (`theme`, `toggleTheme`, `isNightMode`) is kept so
+ * `hooks/useTheme.ts` and `components/layout/Navbar.tsx` need no changes; the
+ * values now come from the shared provider's `resolvedTheme`, which is the
+ * concrete "light" | "dark" painted on <html> and is safe to read while
+ * rendering on the server.
+ *
+ * Note for future wiring: this provider is mounted by `App.tsx`, which nothing
+ * imports — the Next route shell renders `pages/*` directly, so no component on
+ * that path calls `hooks/useTheme()`. If `components/layout/Navbar.tsx` is ever
+ * rendered from the shell, it must stay inside this provider (that hook throws
+ * when the context is missing), or be switched to `@/context/useTheme` directly.
+ */
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'light' || saved === 'dark') return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.toggle('dark', theme === 'dark');
-    root.style.setProperty('color-scheme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
-  };
+  const { resolvedTheme, setTheme } = useCosmosTheme();
 
   const value = useMemo(() => ({
-    theme,
-    toggleTheme,
-    isNightMode: theme === 'dark'
-  }), [theme]);
+    theme: resolvedTheme,
+    toggleTheme: () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark'),
+    isNightMode: resolvedTheme === 'dark',
+  }), [resolvedTheme, setTheme]);
 
   return (
     <ThemeContext.Provider value={value}>

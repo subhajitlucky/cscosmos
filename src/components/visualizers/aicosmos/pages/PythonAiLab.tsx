@@ -137,8 +137,8 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
         </Link>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 font-mono text-xs font-semibold text-blue-400">
-              <Zap className="h-3.5 w-3.5 text-amber-400" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 font-mono text-xs font-semibold text-blue-700 dark:text-blue-400">
+              <Zap className="h-3.5 w-3.5 text-amber-800 dark:text-amber-400" />
               Interactive Workbench // Subject 02
             </div>
             <h1 className="text-3xl font-black text-[var(--ai-text)] tracking-tight mt-2">
@@ -188,7 +188,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5 space-y-4">
               <h2 className="text-sm font-bold font-mono text-[var(--ai-text)] flex items-center gap-2">
-                <Server className="h-4 w-4 text-blue-400" />
+                <Server className="h-4 w-4 text-blue-700 dark:text-blue-400" />
                 Concurrency Controls
               </h2>
 
@@ -212,7 +212,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-mono text-[var(--ai-muted)]">
                   <span>Semaphore Limit (asyncio.Semaphore):</span>
-                  <span className="text-amber-400 font-bold">{semaphoreCap}</span>
+                  <span className="text-amber-700 dark:text-amber-400 font-bold">{semaphoreCap}</span>
                 </div>
                 <input
                   type="range"
@@ -249,7 +249,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
                 <button
                   onClick={runAsyncSimulation}
                   disabled={isRunning}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:bg-blue-500 disabled:opacity-50"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:bg-blue-700 disabled:opacity-50"
                 >
                   <Play className="h-3.5 w-3.5" />
                   {isRunning ? 'Executing Event Loop...' : 'Dispatch Batch'}
@@ -268,13 +268,13 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
             <div className="md:col-span-2 rounded-xl border border-[var(--ai-border)] bg-[var(--ai-card)] p-5 space-y-4">
               <div className="flex items-center justify-between border-b border-[var(--ai-border)] pb-3">
                 <div className="flex items-center gap-2 font-mono text-xs font-bold text-[var(--ai-text)]">
-                  <Activity className="h-4 w-4 text-emerald-400" />
+                  <Activity className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
                   Event Loop Micro-Task Grid
                 </div>
                 <div className="flex items-center gap-4 text-xs font-mono">
-                  <span className="text-zinc-500">Queued</span>
-                  <span className="text-amber-400">Active (Max {semaphoreCap})</span>
-                  <span className="text-emerald-400">Done</span>
+                  <span className="text-zinc-500 dark:text-zinc-400">Queued</span>
+                  <span className="text-amber-700 dark:text-amber-400">Active (Max {semaphoreCap})</span>
+                  <span className="text-emerald-700 dark:text-emerald-400">Done</span>
                 </div>
               </div>
 
@@ -298,7 +298,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
                       <div className="flex items-center justify-between text-[11px]">
                         <span className="font-bold">Req #{task.id}</span>
                         <span className={`uppercase font-bold ${
-                          task.status === 'active' ? 'text-amber-400' : task.status === 'done' ? 'text-emerald-400' : 'text-zinc-500'
+                          task.status === 'active' ? 'text-amber-700 dark:text-amber-400' : task.status === 'done' ? 'text-emerald-700 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'
                         }`}>
                           {task.status}
                         </span>
@@ -317,8 +317,8 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
               )}
 
               {/* Event Loop Code Insight */}
-              <div className="rounded-lg border border-[var(--ai-border)] bg-black/30 p-3 font-mono text-xs text-[var(--ai-muted)] space-y-1">
-                <div className="text-blue-400 font-semibold">// Python Production Pattern:</div>
+              <div className="rounded-lg border border-[var(--ai-border)] bg-black/30 p-3 font-mono text-xs text-zinc-700 dark:text-[var(--ai-muted)] space-y-1">
+                <div className="text-blue-900 dark:text-blue-400 font-semibold">// Python Production Pattern:</div>
                 <div>sem = asyncio.Semaphore({semaphoreCap})</div>
                 <div>async with sem: # Throttles fan-out without 429 penalties</div>
                 <div>&nbsp;&nbsp;response = await client.post(&quot;https://api.openai.com/...&quot;)</div>
@@ -355,7 +355,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-5 space-y-2">
-                <div className="text-xs font-mono font-bold text-rose-400">Python list[float]</div>
+                <div className="text-xs font-mono font-bold text-rose-700 dark:text-rose-400">Python list[float]</div>
                 <div className="text-3xl font-black font-mono text-[var(--ai-text)]">
                   {formatSize(pythonListBytes)}
                 </div>
@@ -365,7 +365,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
               </div>
 
               <div className="rounded-xl border border-blue-500/30 bg-blue-500/5 p-5 space-y-2">
-                <div className="text-xs font-mono font-bold text-blue-400">NumPy float32 Tensor</div>
+                <div className="text-xs font-mono font-bold text-blue-700 dark:text-blue-400">NumPy float32 Tensor</div>
                 <div className="text-3xl font-black font-mono text-[var(--ai-text)]">
                   {formatSize(numpyFloat32Bytes)}
                 </div>
@@ -375,7 +375,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
               </div>
 
               <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-5 space-y-2">
-                <div className="text-xs font-mono font-bold text-emerald-400">Quantized int8 Tensor</div>
+                <div className="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">Quantized int8 Tensor</div>
                 <div className="text-3xl font-black font-mono text-[var(--ai-text)]">
                   {formatSize(numpyInt8Bytes)}
                 </div>
@@ -412,7 +412,7 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
                 <button
                   onClick={() => setRepairStep((prev) => Math.min(stepExplanations.length - 1, prev + 1))}
                   disabled={repairStep === stepExplanations.length - 1}
-                  className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-mono font-semibold text-white hover:bg-blue-500 disabled:opacity-30"
+                  className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-mono font-semibold text-white hover:bg-blue-700 disabled:opacity-30"
                 >
                   Next Step
                 </button>
@@ -427,8 +427,8 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
                   onClick={() => setRepairStep(idx)}
                   className={`rounded-lg border p-3 text-left font-mono transition-all ${
                     repairStep === idx
-                      ? 'border-blue-500 bg-blue-500/10 text-blue-400 font-bold'
-                      : 'border-[var(--ai-border)] text-[var(--ai-muted)] hover:border-blue-500/30'
+                      ? 'border-blue-500 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold'
+                      : 'border-[var(--ai-border)] text-zinc-600 dark:text-zinc-400 hover:border-blue-500/30'
                   }`}
                 >
                   <div className="text-[10px]">STEP 0{idx + 1}</div>
@@ -445,16 +445,16 @@ export function PythonAiLab({ basePath = '/ai/python-for-ai-engineering' }: Pyth
                 </h3>
                 <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
                   stepExplanations[repairStep].status === 'SUCCESS'
-                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                    ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30'
                     : stepExplanations[repairStep].status === 'VALIDATION_ERROR'
-                    ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
-                    : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                    ? 'bg-rose-500/20 text-rose-800 dark:text-rose-400 border border-rose-500/30'
+                    : 'bg-amber-500/20 text-amber-800 dark:text-amber-400 border border-amber-500/30'
                 }`}>
                   {stepExplanations[repairStep].status}
                 </span>
               </div>
 
-              <p className="text-xs text-[var(--ai-muted)]">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
                 {stepExplanations[repairStep].desc}
               </p>
 

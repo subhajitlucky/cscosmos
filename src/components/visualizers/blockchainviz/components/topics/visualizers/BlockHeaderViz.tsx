@@ -6,6 +6,12 @@ import { Hash, Cpu, Timer, ShieldCheck, AlertCircle, RefreshCw } from 'lucide-re
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 
+// The demo header's timestamp is rendered and feeds the hash shown next to it,
+// so it has to be the same on the server and on the client's first render.
+// `Date.now()` in the initialiser below made the pre-rendered markup disagree
+// with the hydrated one (and made the puzzle unreproducible between reloads).
+const DEMO_HEADER_TIMESTAMP = 1704067200; // 2024-01-01T00:00:00Z
+
 export const BlockHeaderViz = () => {
     const [nonce, setNonce] = useState(0);
     const [difficulty] = useState(2); // Number of leading zeros required
@@ -16,7 +22,7 @@ export const BlockHeaderViz = () => {
         version: '00000002',
         prevHash: '0000000000000000000b5a...f21',
         merkleRoot: 'd8c1...912a',
-        timestamp: Math.floor(Date.now() / 1000)
+        timestamp: DEMO_HEADER_TIMESTAMP
     });
 
     const hash = useMemo(() => {

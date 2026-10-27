@@ -27,7 +27,7 @@ const EVMOverviewAnimation: React.FC = () => (
       <motion.div
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="p-4 rounded-2xl bg-evm-accent/10 text-evm-accent mb-2"
+        className="p-4 rounded-2xl bg-evm-accent/10 text-evm-accent-text mb-2"
       >
         <Cpu size={40} />
       </motion.div>
@@ -136,7 +136,7 @@ const StorageAnimation: React.FC = () => (
           className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"
         >
           <div className="text-[8px] text-neutral-400">slot {i}</div>
-          <div className="text-xs font-mono text-evm-accent truncate">
+          <div className="text-xs font-mono text-evm-accent-text truncate">
             {i === 0 ? '0x0000...0001' : '0x0'}
           </div>
         </motion.div>
@@ -159,7 +159,7 @@ const ControlFlowAnimation: React.FC = () => (
       <motion.div
         animate={{ x: [0, 10, 0] }}
         transition={{ duration: 1.5, repeat: Infinity }}
-        className="text-evm-accent"
+        className="text-evm-accent-text"
       >
         →
       </motion.div>
@@ -168,7 +168,7 @@ const ControlFlowAnimation: React.FC = () => (
         animate={{ opacity: 1, scale: 1 }}
         className="px-3 py-2 rounded-lg bg-evm-accent/10 border border-evm-accent"
       >
-        <span className="text-xs font-mono text-evm-accent">JUMP to 5</span>
+        <span className="text-xs font-mono text-evm-accent-text">JUMP to 5</span>
       </motion.div>
       <motion.div
         animate={{ x: [0, 30, 0] }}
@@ -299,7 +299,7 @@ const TopicPage: React.FC = () => {
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-white">Topic not found</h2>
-        <Link to="/learn" className="text-evm-accent hover:underline">Back to Learning Path</Link>
+        <Link to="/learn" className="text-evm-accent-text hover:underline">Back to Learning Path</Link>
       </div>
     );
   }
@@ -330,7 +330,7 @@ const TopicPage: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-evm-accent/10 text-evm-accent text-[10px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-evm-accent/10 text-evm-accent-text text-[10px] font-bold uppercase tracking-wider">
               <Book size={12} /> {topic.id.replace('-', ' ')}
             </div>
             <h1 className="text-4xl font-black tracking-tight text-neutral-900 dark:text-white leading-tight">{topic.title}</h1>
@@ -354,7 +354,7 @@ const TopicPage: React.FC = () => {
                 <div className="text-[10px] uppercase text-neutral-400 dark:text-neutral-600 font-bold flex items-center gap-1">
                    <ChevronLeft size={10} /> Previous
                 </div>
-                <div className="text-sm font-bold truncate text-neutral-900 dark:text-white group-hover:text-evm-accent transition-colors">{prevTopic.title}</div>
+                <div className="text-sm font-bold truncate text-neutral-900 dark:text-white group-hover:text-evm-accent-text transition-colors">{prevTopic.title}</div>
               </Link>
             ) : <div />}
             
@@ -366,7 +366,7 @@ const TopicPage: React.FC = () => {
                 <div className="text-[10px] uppercase text-neutral-400 dark:text-neutral-600 font-bold flex items-center gap-1 justify-end">
                    Next Up <ChevronRight size={10} />
                 </div>
-                <div className="text-sm font-bold truncate text-neutral-900 dark:text-white group-hover:text-evm-accent transition-colors">{nextTopic.title}</div>
+                <div className="text-sm font-bold truncate text-neutral-900 dark:text-white group-hover:text-evm-accent-text transition-colors">{nextTopic.title}</div>
               </Link>
             ) : (
                <Link 

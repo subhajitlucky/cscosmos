@@ -159,10 +159,10 @@ const TopicDetail = () => {
 
             {topic.id === 'why-p2p' && (
               <div className="flex items-center bg-bg-app/50 p-0.5 sm:p-1 rounded-lg border border-white/5 shadow-inner">
-                <button onClick={() => setArchitecture('centralized')} className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 rounded-md font-mono text-[7px] sm:text-[9px] font-black uppercase tracking-widest transition-all ${isCentralized ? 'bg-primary/20 text-primary border border-primary/30' : 'text-text-muted hover:text-white'}`}>
+                <button onClick={() => setArchitecture('centralized')} className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 rounded-md font-mono text-[7px] sm:text-[9px] font-black uppercase tracking-widest transition-all ${isCentralized ? 'bg-primary/20 text-primary border border-primary/30' : 'text-text-muted hover:text-primary-foreground'}`}>
                   <Server className="w-2.5 h-2.5 sm:w-3 h-3" /> <span className="hidden xs:inline">Centralized</span><span className="xs:hidden">Central</span>
                 </button>
-                <button onClick={() => setArchitecture('decentralized')} className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 rounded-md font-mono text-[7px] sm:text-[9px] font-black uppercase tracking-widest transition-all ${!isCentralized ? 'bg-primary/20 text-primary border border-primary/30' : 'text-text-muted hover:text-white'}`}>
+                <button onClick={() => setArchitecture('decentralized')} className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 rounded-md font-mono text-[7px] sm:text-[9px] font-black uppercase tracking-widest transition-all ${!isCentralized ? 'bg-primary/20 text-primary border border-primary/30' : 'text-text-muted hover:text-primary-foreground'}`}>
                   <Share2 className="w-2.5 h-2.5 sm:w-3 h-3" /> <span className="hidden xs:inline">P2P_Mesh</span><span className="xs:hidden">P2P</span>
                 </button>
               </div>
