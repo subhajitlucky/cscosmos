@@ -7,7 +7,7 @@ import { topics } from '@/data/topics';
 import { engineRoutes } from '@/data/engine-routes';
 import type { DomainKey } from '@/data/domains';
 import { TopicInDevelopment } from '@/components/TopicInDevelopment';
-import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
+import { TopicActionBar } from '@/components/learning/TopicActionBar';
 import { TopicNotes } from '@/components/learning/TopicNotes';
 import { RelatedTopics } from '@/components/learning/RelatedTopics';
 import { TopicComments } from '@/components/learning/TopicComments';
@@ -159,7 +159,7 @@ export default async function UniversalTopicPage({
     return (
       <div className="aicosmos-root min-h-screen">
         <div className="page-container space-y-2 pt-6">
-          <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
+          <TopicActionBar slug={learningSlug} name={learningName} domain={learningDomain} />
           <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
           <RelatedTopics slug={learningSlug} domain={learningDomain} />
           <TopicComments slug={learningSlug} />
@@ -190,7 +190,7 @@ export default async function UniversalTopicPage({
     return (
       <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl space-y-2">
-          <TopicLearningBar slug={learningSlug} name={learningName} domain={learningDomain} />
+          <TopicActionBar slug={learningSlug} name={learningName} domain={learningDomain} />
           <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
           <RelatedTopics slug={learningSlug} domain={learningDomain} />
           <TopicComments slug={learningSlug} />

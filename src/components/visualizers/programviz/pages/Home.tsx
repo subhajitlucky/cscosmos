@@ -93,22 +93,26 @@ export const Home: React.FC = () => {
               </p>
             </div>
           </div>
-          <Link
-            href={resumePath}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold transition-colors shadow-lg shadow-blue-500/20 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-          >
-            {isComplete ? <RotateCcw className="w-5 h-5" /> : <PlayCircle className="w-5 h-5" />}
-            {isComplete ? 'Review Course' : 'Resume'}
-          </Link>
-          <button
-            type="button"
-            onClick={() => {
-              if (window.confirm('Reset all step progress for this topic?')) resetProgress();
-            }}
-            className="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-          >
-            Reset progress
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <Link
+              href={resumePath}
+              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 font-bold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            >
+              <PlayCircle className="h-5 w-5" />
+              {isComplete ? 'Review Course' : 'Resume'}
+            </Link>
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm('Reset all step progress for this topic?')) resetProgress();
+              }}
+              aria-label="Reset progress"
+              title="Reset progress"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              <RotateCcw className="h-4 w-4" />
+            </button>
+          </div>
         </motion.section>
       )}
 

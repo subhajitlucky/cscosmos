@@ -6,10 +6,10 @@ import { usePathname } from 'next/navigation';
 import { MotionConfig } from 'framer-motion';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
-import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
-import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_DOMAIN_NAME, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
+import { TopicActionBar } from '@/components/learning/TopicActionBar';
+import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
 import { useTheme } from '../hooks/useTheme';
-import { CheckCircle2, ChevronRight, Circle, Menu, ArrowLeft, Sun, Moon, X } from 'lucide-react';
+import { CheckCircle2, Circle, Menu, ArrowLeft, Sun, Moon, X } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -202,24 +202,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-4xl mx-auto p-6 lg:p-12">
-            <nav
-              aria-label="Breadcrumb"
-              className="mb-3 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground"
-            >
-              <Link href="/" className="hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
-                CSCosmos
-              </Link>
-              <ChevronRight className="h-3 w-3" aria-hidden="true" />
-              <Link
-                href={`/${TOPIC_DOMAIN}`}
-                className="hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-              >
-                {TOPIC_DOMAIN_NAME}
-              </Link>
-              <ChevronRight className="h-3 w-3" aria-hidden="true" />
-              <span aria-current="page" className="font-medium text-foreground">{TOPIC_NAME}</span>
-            </nav>
-            <TopicLearningBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
+            <TopicActionBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
             {children}
           </div>
         </div>

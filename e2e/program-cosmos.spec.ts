@@ -27,8 +27,8 @@ test.describe('program-cosmos smoke', () => {
       'content',
       `${CANONICAL_URL}/og`,
     );
-    await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toContainText('CSCosmos');
-    await expect(page.getByRole('button', { name: /Mark complete|Completed/ })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: /Breadcrumb/ })).toContainText('CSCosmos');
+    await expect(page.getByRole('button', { name: /Mark topic complete|Topic completed/ })).toBeVisible();
   });
 
   test('shows the completion card and resets progress', async ({ page }) => {
