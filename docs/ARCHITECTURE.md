@@ -107,6 +107,8 @@ Passwordless magic links, isolated from ContestRadar with `cscosmos_` table pref
 
 - Vitest covers catalog invariants, topic metadata, exercises, review scheduling, tutor
   settings, interview data, and existing utility tests.
+- Playwright smoke tests cover the canonical URL, metadata, completion/reset flow, step
+  navigation, keyboard controls, theming, and mobile navigation for `program-cosmos`.
 - Lint, tests, and the full static build run in CI.
 
 ## Tradeoffs

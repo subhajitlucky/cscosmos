@@ -208,7 +208,11 @@ http://localhost:3000
 npm run dev
 npm run build
 npm run lint
+npm test
+npm run test:e2e
 ```
+
+`npm run test:e2e` builds the app, starts the production server on port 3100, and runs the Playwright smoke suite.
 
 ## Tradeoffs
 

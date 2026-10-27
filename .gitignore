@@ -30,3 +30,8 @@ dist-ssr
 
 # Local scratch scripts
 scratch/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/

@@ -91,6 +91,9 @@ npm run lint
 
 # 2. Verify static build and SSG pre-rendering
 npm run build
+
+# 3. Run the focused Playwright smoke suite
+npm run test:e2e
 ```
 
 ---
