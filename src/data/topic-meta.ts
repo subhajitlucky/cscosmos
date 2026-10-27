@@ -24,7 +24,7 @@ export const DOMAIN_DEFAULT_META: Record<DomainKey, Omit<TopicMeta, 'tags'>> = {
 const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
   'program-cosmos': {
     difficulty: 'beginner',
-    estimatedMinutes: 35,
+    estimatedMinutes: 40,
     tags: ['cpu', 'memory', 'execution'],
     related: ['computer-architecture-cpu-caches', 'operating-systems-internals-processes-memory', 'compilers-and-runtime-internals-ast-bytecode'],
   },

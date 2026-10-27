@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Play, Pause, RotateCcw, Cpu, Database, Keyboard, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { useTheme } from '../hooks/useTheme';
+import { TOPIC_BASE_PATH } from '../data/topic';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -202,7 +203,7 @@ export const ExecutionSummary: React.FC = () => {
           </p>
           <div className="flex justify-center gap-4">
             <Link 
-              href="/program-cosmos"
+              href={TOPIC_BASE_PATH}
               className={cn(
                 "px-8 py-3 rounded-full font-bold transition-colors",
                 theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"

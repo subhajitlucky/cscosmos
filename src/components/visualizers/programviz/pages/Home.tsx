@@ -36,26 +36,30 @@ function ProgressRing({ percent }: { percent: number }) {
 }
 
 export const Home: React.FC = () => {
-  const { progress } = useProgress();
+  const { progress, resetProgress } = useProgress();
   const completedCount = progress.completedSteps.length;
   const percent = Math.round((completedCount / steps.length) * 100);
 
   const nextStep = steps.find((s) => !progress.completedSteps.includes(s.step));
   const isStarted = completedCount > 0;
   const isComplete = completedCount === steps.length;
+  const resumePath = isComplete ? steps[0].path : nextStep?.path ?? steps[0].path;
+  const nextStepLabel = nextStep
+    ? `Step ${nextStep.step} — ${nextStep.title}`
+    : '';
 
   return (
     <div className="space-y-12">
       <header className="space-y-4">
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl lg:text-6xl font-extrabold tracking-tight text-foreground"
         >
           How Programs <span className="text-blue-500">Execute</span>
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="text-xl max-w-2xl text-muted-foreground"
@@ -64,9 +68,9 @@ export const Home: React.FC = () => {
         </motion.p>
       </header>
 
-      {(isStarted || isComplete) && nextStep !== undefined && (
+      {isStarted && (isComplete || nextStep !== undefined) && (
         <motion.section
-          initial={{ opacity: 0, y: 16 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           aria-label="Learning progress"
@@ -85,17 +89,26 @@ export const Home: React.FC = () => {
               <p className="text-sm text-muted-foreground mt-1">
                 {isComplete
                   ? `All ${steps.length} steps finished — review any step below or restart.`
-                  : `${completedCount} of ${steps.length} steps completed · Next up: Step ${nextStep.step} — ${nextStep.title}`}
+                  : `${completedCount} of ${steps.length} steps completed · Next up: ${nextStepLabel}`}
               </p>
             </div>
           </div>
           <Link
-            href={isComplete ? '/program-cosmos/what-is-a-program' : nextStep.path}
+            href={resumePath}
             className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold transition-colors shadow-lg shadow-blue-500/20 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
           >
             {isComplete ? <RotateCcw className="w-5 h-5" /> : <PlayCircle className="w-5 h-5" />}
             {isComplete ? 'Review Course' : 'Resume'}
           </Link>
+          <button
+            type="button"
+            onClick={() => {
+              if (window.confirm('Reset all step progress for this topic?')) resetProgress();
+            }}
+            className="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            Reset progress
+          </button>
         </motion.section>
       )}
 
@@ -107,7 +120,7 @@ export const Home: React.FC = () => {
         ].map((item, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={false}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 + i * 0.1 }}
             className="p-6 border border-border/80 rounded-xl bg-card shadow-sm"
@@ -127,7 +140,7 @@ export const Home: React.FC = () => {
             return (
               <motion.div
                 key={step.step}
-                initial={{ opacity: 0, x: -20 }}
+                initial={false}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + i * 0.05 }}
               >
@@ -159,7 +172,7 @@ export const Home: React.FC = () => {
       {!isStarted && (
         <div className="pt-8">
           <Link
-            href="/program-cosmos/what-is-a-program"
+            href={steps[0].path}
             className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-lg transition-colors shadow-lg shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
           >
             <PlayCircle className="w-6 h-6" />

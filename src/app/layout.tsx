@@ -3,9 +3,11 @@ import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { LayoutWrapper } from '@/components/LayoutWrapper';
 import { EmbedFlag } from '@/components/EmbedFlag';
+import { siteConfig } from '@/config/site';
 import '@/index.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: 'CSCosmos - Computer Science Learning Hub',
   description: 'Curated hub of interactive computer science visualizers and learning modules across Full Stack, DSA, Web3, Cybersecurity, AI, DevOps, and Core CS.',
 };

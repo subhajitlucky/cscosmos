@@ -92,7 +92,7 @@ export const InstructionCycle: React.FC = () => {
               "flex-1 rounded-xl p-8 border min-h-[200px] flex flex-col justify-center transition-colors",
               theme === 'dark' ? "bg-slate-800/50 border-slate-700" : "bg-slate-50 border-slate-100"
             )}>
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={activeStage}
                   initial={{ opacity: 0, x: 20 }}

@@ -11,6 +11,9 @@ import { MemoryBasics } from '@/components/visualizers/programviz/pages/MemoryBa
 import { MemoryLayout } from '@/components/visualizers/programviz/pages/MemoryLayout';
 import { IOBasics } from '@/components/visualizers/programviz/pages/IOBasics';
 import { ExecutionSummary } from '@/components/visualizers/programviz/pages/ExecutionSummary';
+import { steps } from '@/components/visualizers/programviz/data/learningPath';
+import { TOPIC_BASE_PATH } from '@/components/visualizers/programviz/data/topic';
+import { siteConfig } from '@/config/site';
 
 const SUB_ROUTE_META: Record<string, { title: string; description: string }> = {
     'what-is-a-program': {
@@ -46,13 +49,9 @@ const SUB_ROUTE_META: Record<string, { title: string; description: string }> = {
 export function generateStaticParams() {
     return [
         { slug: [] },
-        { slug: ['what-is-a-program'] },
-        { slug: ['cpu-basics'] },
-        { slug: ['instruction-cycle'] },
-        { slug: ['memory-basics'] },
-        { slug: ['memory-layout'] },
-        { slug: ['io-basics'] },
-        { slug: ['execution-summary'] },
+        ...steps.map((step) => ({
+            slug: [step.path.replace(`${TOPIC_BASE_PATH}/`, '')],
+        })),
     ];
 }
 
@@ -60,19 +59,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
     const { slug } = await params;
     const subRoute = slug && slug.length > 0 ? slug[0] : '';
     const meta = SUB_ROUTE_META[subRoute];
-    const basePath = '/program-cosmos';
-    const url = subRoute ? `${basePath}/${subRoute}` : basePath;
-    const ogImage = { url: `${basePath}/og${subRoute ? `?step=${subRoute}` : ''}`, width: 1200, height: 630 };
+    const canonicalPath = subRoute ? `${TOPIC_BASE_PATH}/${subRoute}` : TOPIC_BASE_PATH;
+    const ogImage = { url: `${TOPIC_BASE_PATH}/og${subRoute ? `?step=${subRoute}` : ''}`, width: 1200, height: 630 };
 
     if (!meta) {
         return {
-            title: 'ProgramViz — How Programs Execute (CPU, Memory, I/O)',
+            title: 'ProgramViz — How Programs Execute (CPU, Memory, I/O) | CSCosmos',
             description: 'Interactive visualizer for program execution: CPU basics, instruction cycle, memory layout, and I/O.',
-            alternates: { canonical: url },
+            alternates: { canonical: canonicalPath },
             openGraph: {
                 title: 'ProgramViz — How Programs Execute (CPU, Memory, I/O)',
                 description: 'Interactive visualizer for program execution: CPU basics, instruction cycle, memory layout, and I/O.',
-                url,
+                url: canonicalPath,
                 siteName: 'CSCosmos',
                 type: 'website',
                 images: [ogImage],
@@ -82,13 +80,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
     }
 
     return {
-        title: `${meta.title} — ProgramViz`,
+        title: `${meta.title} — ProgramViz | CSCosmos`,
         description: meta.description,
-        alternates: { canonical: url },
+        alternates: { canonical: canonicalPath },
         openGraph: {
             title: `${meta.title} — ProgramViz`,
             description: meta.description,
-            url,
+            url: canonicalPath,
             siteName: 'CSCosmos',
             type: 'article',
             images: [ogImage],
@@ -101,6 +99,7 @@ function buildJsonLd(subRoute: string) {
     const meta = SUB_ROUTE_META[subRoute];
     const isStep = Boolean(meta);
     const stepNumber = isStep ? Object.keys(SUB_ROUTE_META).indexOf(subRoute) + 1 : undefined;
+    const canonicalPath = subRoute ? `${TOPIC_BASE_PATH}/${subRoute}` : TOPIC_BASE_PATH;
 
     return {
         '@context': 'https://schema.org',
@@ -111,8 +110,12 @@ function buildJsonLd(subRoute: string) {
         description: meta
             ? meta.description
             : 'Interactive visualizer for program execution: CPU basics, instruction cycle, memory layout, and I/O.',
+        url: `${siteConfig.url}${canonicalPath}`,
+        image: `${siteConfig.url}${TOPIC_BASE_PATH}/og`,
         learningResourceType: 'Interactive Visualization',
         educationalLevel: 'Beginner',
+        inLanguage: 'en',
+        isAccessibleForFree: true,
         teaches: meta?.title ?? 'How Programs Execute',
         ...(isStep && { position: stepNumber }),
         isPartOf: {

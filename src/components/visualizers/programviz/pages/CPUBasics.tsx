@@ -92,7 +92,7 @@ export const CPUBasics: React.FC = () => {
                 "p-6 rounded-xl border-2 shadow-lg",
                 theme === 'dark' ? "bg-slate-800 border-blue-500 shadow-blue-500/10" : "bg-slate-50 border-blue-400 shadow-blue-400/5"
               ))}
-              initial={{ x: -20, opacity: 0 }}
+              initial={false}
               animate={{ x: 0, opacity: 1 }}
             >
               <h4 className="font-bold text-blue-500 mb-2 uppercase text-xs">Control Unit (CU)</h4>
@@ -108,7 +108,7 @@ export const CPUBasics: React.FC = () => {
                 "p-6 rounded-xl border-2 shadow-lg",
                 theme === 'dark' ? "bg-slate-800 border-red-500 shadow-red-500/10" : "bg-slate-50 border-red-400 shadow-red-400/5"
               ))}
-              initial={{ x: 20, opacity: 0 }}
+              initial={false}
               animate={{ x: 0, opacity: 1 }}
             >
               <h4 className="font-bold text-red-500 mb-2 uppercase text-xs">Arithmetic Logic Unit (ALU)</h4>
@@ -121,7 +121,7 @@ export const CPUBasics: React.FC = () => {
                 "md:col-span-2 p-6 rounded-xl border-2 shadow-lg",
                 theme === 'dark' ? "bg-slate-800 border-green-500 shadow-green-500/10" : "bg-slate-50 border-green-400 shadow-green-400/5"
               ))}
-              initial={{ y: 20, opacity: 0 }}
+              initial={false}
               animate={{ y: 0, opacity: 1 }}
             >
               <h4 className="font-bold text-green-500 mb-2 uppercase text-xs text-center">Registers</h4>
@@ -176,7 +176,7 @@ export const CPUBasics: React.FC = () => {
               ) : (
                 <motion.p
                   key="hint"
-                  initial={{ opacity: 0 }}
+                  initial={false}
                   animate={{ opacity: 1 }}
                   className={cn("text-sm text-center pt-6", theme === 'dark' ? "text-slate-500" : "text-slate-400")}
                 >

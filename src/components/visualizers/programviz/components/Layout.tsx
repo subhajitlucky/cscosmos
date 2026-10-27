@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { MotionConfig } from 'framer-motion';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
+import { TopicLearningBar } from '@/components/learning/TopicLearningBar';
+import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
 import { useTheme } from '../hooks/useTheme';
 import { CheckCircle2, Circle, Menu, ArrowLeft, Sun, Moon, X } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
@@ -18,7 +20,7 @@ function cn(...inputs: ClassValue[]) {
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const pathname = usePathname();
-  const { isStepCompleted } = useProgress();
+  const { isStepCompleted, resetProgress } = useProgress();
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       )}>
         <div className="h-full flex flex-col p-6">
           <div className="flex items-center justify-between mb-8">
-            <Link href="/program-cosmos" className="text-xl font-bold flex items-center gap-2">
+            <Link href={TOPIC_BASE_PATH} className="text-xl font-bold flex items-center gap-2">
               <span className="bg-blue-600 p-1 rounded text-white text-xs font-mono">PV</span>
               ProgramViz
             </Link>
@@ -96,6 +98,18 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               );
             })}
           </nav>
+          <button
+            type="button"
+            onClick={() => {
+              if (window.confirm('Reset all step progress for this topic?')) resetProgress();
+            }}
+            className={cn(
+              "mt-4 rounded-lg px-3 py-2 text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+              theme === 'dark' ? "text-slate-500 hover:bg-slate-800 hover:text-slate-300" : "text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+            )}
+          >
+            Reset step progress
+          </button>
         </div>
       </aside>
 
@@ -116,6 +130,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-4xl mx-auto p-6 lg:p-12">
+            <TopicLearningBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
             {children}
           </div>
         </div>

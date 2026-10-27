@@ -68,6 +68,22 @@ export function toggleCompleted(slug: string): LearningState {
   return next;
 }
 
+/** Idempotently set a topic's completed state (used by engine progress sync). */
+export function setTopicCompleted(slug: string, completed: boolean): LearningState {
+  const state = readLearningState();
+  const isCompleted = state.completed.includes(slug);
+  if (isCompleted === completed) return state;
+
+  const next = {
+    ...state,
+    completed: completed
+      ? [...state.completed, slug]
+      : state.completed.filter((id) => id !== slug),
+  };
+  writeLearningState(next);
+  return next;
+}
+
 export function markVisited(slug: string): LearningState {
   const state = readLearningState();
   const next = {
