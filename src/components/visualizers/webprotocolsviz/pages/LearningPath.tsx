@@ -6,10 +6,12 @@ import { ArrowRight, BookOpen, CheckCircle2 } from 'lucide-react';
 import { topics } from '../data/topics';
 import { TOPIC_BASE_PATH } from '../data/topic';
 import { useModuleProgress } from '../hooks/useModuleProgress';
+import { MODULE_META } from '../data/moduleMeta';
 
 const LearningPath = () => {
   const { isComplete, completedCount, mounted } = useModuleProgress();
   const progressPercent = Math.round((completedCount / topics.length) * 100);
+  const totalMinutes = Object.values(MODULE_META).reduce((total, meta) => total + meta.minutes, 0);
 
   return (
     <div className="max-w-3xl mx-auto py-8">
@@ -24,7 +26,7 @@ const LearningPath = () => {
         </div>
         <h1 className="text-4xl font-bold text-foreground">Your Learning Roadmap</h1>
         <p className="text-lg text-muted-foreground">
-          {topics.length} modules · self-paced · from one request to cache behavior
+          {topics.length} modules · ~{totalMinutes} min · self-paced
         </p>
         <div className="mt-2 flex items-center gap-3">
           <div className="h-1 w-40 overflow-hidden rounded-full bg-muted">
@@ -76,6 +78,11 @@ const LearningPath = () => {
                   <p className="text-muted-foreground text-sm line-clamp-1">
                     {topic.content.definition}
                   </p>
+                  {MODULE_META[topic.id] && (
+                    <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                      {MODULE_META[topic.id].difficulty} · {MODULE_META[topic.id].minutes} min
+                    </p>
+                  )}
                 </div>
                 <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors">
                   <ArrowRight size={20} />

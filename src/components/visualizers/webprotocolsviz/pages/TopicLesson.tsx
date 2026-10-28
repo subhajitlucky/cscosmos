@@ -5,8 +5,12 @@ import Link from 'next/link';
 import { CheckCircle2, ChevronLeft, ChevronRight, Circle, Lightbulb, Play, Terminal } from 'lucide-react';
 import { topics } from '../data/topics';
 import FlowVisualizer from '../components/visualizations/FlowVisualizer';
-import { TOPIC_BASE_PATH, TOPIC_SLUG } from '../data/topic';
+import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
+import { TopicActionBar } from '@/components/learning/TopicActionBar';
+import { TopicNotes } from '@/components/learning/TopicNotes';
+import { RelatedTopics } from '@/components/learning/RelatedTopics';
 import { useModuleProgress } from '../hooks/useModuleProgress';
+import { MODULE_META } from '../data/moduleMeta';
 import { setTopicCompleted } from '@/lib/local-learning';
 
 export default function TopicLesson({ topicId }: { topicId: string }) {
@@ -29,6 +33,7 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
   const nextTopic = currentIndex < topics.length - 1 ? topics[currentIndex + 1] : null;
   const { analogy, syntax, example, detailedSections } = topic.content;
   const isDone = isComplete(topic.id);
+  const moduleMeta = MODULE_META[topic.id];
 
   return (
     <div className="max-w-[1700px] mx-auto w-full flex flex-col gap-8">
@@ -37,7 +42,12 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
         <Link href={`${TOPIC_BASE_PATH}/path`} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 text-sm font-medium">
           <ChevronLeft size={16} /> Back to Path
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          {moduleMeta && (
+            <span className="hidden font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:inline">
+              {moduleMeta.difficulty} · {moduleMeta.minutes} min
+            </span>
+          )}
           <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Module {currentIndex + 1} of {topics.length}</span>
           <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
              <div 
@@ -47,6 +57,14 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
           </div>
         </div>
       </div>
+
+      <TopicActionBar
+        slug={TOPIC_SLUG}
+        name={TOPIC_NAME}
+        domain={TOPIC_DOMAIN}
+        showBreadcrumb={false}
+        className="mb-0 border-b-0 pb-0"
+      />
 
       {/* Main Lesson Content */}
       <div className="flex flex-col gap-4">
@@ -178,6 +196,11 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
           )}
           {isDone ? 'Completed' : 'Mark module complete'}
         </button>
+      </div>
+
+      <div className="space-y-3">
+        <TopicNotes slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
+        <RelatedTopics slug={TOPIC_SLUG} domain={TOPIC_DOMAIN} />
       </div>
 
       {/* Bottom Prev / Next Navigation */}

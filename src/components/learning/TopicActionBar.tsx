@@ -11,6 +11,7 @@ import {
   LineChart,
 } from "lucide-react";
 import { domains } from "@/data/domains";
+import { cn } from "@/lib/utils";
 import {
   LEARNING_EVENT,
   markVisited,
@@ -23,12 +24,20 @@ interface TopicActionBarProps {
   slug: string;
   name: string;
   domain: string;
+  showBreadcrumb?: boolean;
+  className?: string;
 }
 
 const actionClass =
   "inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
-export function TopicActionBar({ slug, name, domain }: TopicActionBarProps) {
+export function TopicActionBar({
+  slug,
+  name,
+  domain,
+  showBreadcrumb = true,
+  className,
+}: TopicActionBarProps) {
   const [mounted, setMounted] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -53,7 +62,13 @@ export function TopicActionBar({ slug, name, domain }: TopicActionBarProps) {
   const domainName = domains.find((item) => item.domainKey === domain)?.name ?? domain;
 
   return (
-    <div className="mb-5 flex flex-col gap-2 border-b border-border/70 pb-3 lg:mb-6 lg:flex-row lg:flex-nowrap lg:items-center lg:justify-between">
+    <div
+      className={cn(
+        "mb-5 flex flex-col gap-2 border-b border-border/70 pb-3 lg:mb-6 lg:flex-row lg:flex-nowrap lg:items-center lg:justify-between",
+        className,
+      )}
+    >
+      {showBreadcrumb && (
       <nav
         aria-label={`Breadcrumb for ${name}`}
         className="flex min-w-0 flex-1 flex-nowrap items-center gap-x-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground"
@@ -72,8 +87,14 @@ export function TopicActionBar({ slug, name, domain }: TopicActionBarProps) {
           {domainName}
         </Link>
       </nav>
+      )}
 
-      <div className="flex flex-wrap items-center gap-0.5 lg:flex-nowrap lg:shrink-0">
+      <div
+        className={cn(
+          "flex flex-wrap items-center gap-0.5 lg:flex-nowrap lg:shrink-0",
+          !showBreadcrumb && "w-full justify-end",
+        )}
+      >
         <button
           type="button"
           onClick={() => {

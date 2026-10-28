@@ -41,7 +41,7 @@ const TLS_STEPS = [
 ];
 
 const STEP_COUNT: Record<FlowVisualizerProps['type'], number> = {
-  flow: 2,
+  flow: 6,
   cycle: 2,
   methods: 4,
   headers: 4,
@@ -77,6 +77,50 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
     setStepIndex((index) => (index + delta + stepCount) % stepCount);
   };
 
+  const renderFlow = () => {
+    const flowSteps = [
+      { id: 'DNS', label: 'Resolve the host', caption: 'Translate example.com into an IP address before any connection starts.', icon: Globe },
+      { id: 'TCP', label: 'Open a connection', caption: 'Complete the TCP handshake so both sides can exchange bytes reliably.', icon: Server },
+      { id: 'TLS', label: 'Secure the channel', caption: 'Negotiate TLS and verify the certificate before sending HTTP.', icon: Lock },
+      { id: 'GET', label: 'Send the request', caption: 'Write the request line and headers. This is the HTTP layer.', icon: Laptop },
+      { id: 'CACHE', label: 'Check the cache', caption: 'A valid local copy can satisfy the request before it reaches the origin.', icon: HardDrive },
+      { id: '200', label: 'Return the response', caption: 'The response carries a status, headers, and the resource bytes.', icon: CheckCircle2 },
+    ];
+    const current = flowSteps[step];
+
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-8 p-6">
+        <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-2">
+          {flowSteps.map((item, index) => {
+            const Icon = item.icon;
+            const active = index === step;
+            const done = index < step;
+            return (
+              <div key={item.id} className="flex items-center gap-2">
+                <div
+                  className={`flex items-center gap-2 rounded-lg border px-3 py-2 transition-colors ${
+                    active
+                      ? 'border-primary bg-primary/10 text-primary'
+                      : done
+                        ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                        : 'border-border bg-card text-muted-foreground'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider">{item.id}</span>
+                </div>
+                {index < flowSteps.length - 1 && <ChevronRight className="h-3 w-3 text-border" />}
+              </div>
+            );
+          })}
+        </div>
+        <div className="max-w-lg rounded-xl border border-border bg-card px-5 py-4 text-center">
+          <p className="text-sm font-bold text-foreground">{current.label}</p>
+          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{current.caption}</p>
+        </div>
+      </div>
+    );
+  };
 
     const renderCycle = () => (
       <div className="w-full h-full flex flex-col items-center justify-center p-8">
@@ -494,6 +538,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
         case 'performance': return renderPerformance();
         case 'tls': return renderTLS();
         case 'flow':
+          return renderFlow();
         case 'cycle':
         default:
           return renderCycle();
