@@ -84,10 +84,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className={cn(
-      "min-h-[calc(100vh-4rem)] flex transition-colors duration-300",
-      theme === 'dark' ? "bg-slate-950 text-slate-50" : "bg-slate-50 text-slate-900"
-    )}>
+    <div className="min-h-[calc(100vh-4rem)] flex transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
       {/* Sidebar for Desktop */}
       <aside
         ref={sidebarRef}
@@ -95,8 +92,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         aria-modal={isSidebarOpen || undefined}
         aria-label="ProgramViz navigation"
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:bottom-auto lg:h-screen lg:translate-x-0",
-          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200",
+          "fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:bottom-auto lg:h-screen lg:translate-x-0 bg-white border-slate-200 dark:bg-slate-900 dark:border-slate-800",
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -182,10 +178,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0">
-        <header className={cn(
-          "h-14 border-b flex items-center justify-between px-6 lg:hidden",
-          theme === 'dark' ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-white"
-        )}>
+        <header className="h-14 border-b flex items-center justify-between px-6 lg:hidden border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
           <button
             onClick={() => setIsSidebarOpen(true)}
             aria-label="Open navigation menu"

@@ -84,6 +84,47 @@ test.describe('program-cosmos smoke', () => {
     await page.locator('button[aria-label="Toggle Theme"]:visible').first().click();
     await expect(page.locator('html')).toHaveClass(/light/);
   });
+
+  for (const { stored, forbidden } of [
+    { stored: 'light', forbidden: 'dark' },
+    { stored: 'dark', forbidden: 'light' },
+  ]) {
+    test(`does not flash ${forbidden} when the stored theme is ${stored}`, async ({ browser }) => {
+      const context = await browser.newContext({
+        colorScheme: stored === 'dark' ? 'dark' : 'light',
+      });
+
+      await context.addInitScript((theme) => {
+        localStorage.setItem('cscosmos-ui-theme', theme);
+        const state = window as unknown as { __themeClasses?: string[] };
+        state.__themeClasses = [];
+
+        const record = () => {
+          const html = document.documentElement;
+          if (html) state.__themeClasses?.push(html.className);
+        };
+
+        record();
+        new MutationObserver(record).observe(document, {
+          attributes: true,
+          subtree: true,
+          attributeFilter: ['class', 'data-theme', 'data-mode'],
+        });
+      }, stored);
+
+      const page = await context.newPage();
+      await page.goto(`${CANONICAL_PATH}/what-is-a-program`);
+      await expect(page.getByRole('heading', { level: 1, name: /What Is a Program/i })).toBeVisible();
+      await expect(page.locator('html')).toHaveClass(new RegExp(stored));
+
+      const classes = await page.evaluate(
+        () => (window as unknown as { __themeClasses?: string[] }).__themeClasses ?? [],
+      );
+      expect(classes.some((className) => className.includes(forbidden))).toBe(false);
+
+      await context.close();
+    });
+  }
 });
 
 test.describe('program-cosmos mobile navigation', () => {
