@@ -9,6 +9,7 @@ import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_NAME, TOPIC_SLUG } from '../data/t
 import { TopicActionBar } from '@/components/learning/TopicActionBar';
 import { TopicNotes } from '@/components/learning/TopicNotes';
 import { RelatedTopics } from '@/components/learning/RelatedTopics';
+import { TopicComments } from '@/components/learning/TopicComments';
 import { useModuleProgress } from '../hooks/useModuleProgress';
 import { MODULE_META } from '../data/moduleMeta';
 import { setTopicCompleted } from '@/lib/local-learning';
@@ -201,6 +202,7 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
       <div className="space-y-3">
         <TopicNotes slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
         <RelatedTopics slug={TOPIC_SLUG} domain={TOPIC_DOMAIN} />
+        <TopicComments slug={TOPIC_SLUG} />
       </div>
 
       {/* Bottom Prev / Next Navigation */}

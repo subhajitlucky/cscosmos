@@ -9,6 +9,7 @@ import Navbar from '@/components/visualizers/webprotocolsviz/components/Navbar';
 import Footer from '@/components/visualizers/webprotocolsviz/components/Footer';
 import { topics } from '@/components/visualizers/webprotocolsviz/data/topics';
 import { TOPIC_BASE_PATH } from '@/components/visualizers/webprotocolsviz/data/topic';
+import { siteConfig } from '@/config/site';
 
 export function generateStaticParams() {
     return [
@@ -83,10 +84,71 @@ export async function generateMetadata({
     );
 }
 
+
+function buildJsonLd(first: string, second: string) {
+    const provider = { '@type': 'Organization', name: 'CSCosmos', url: siteConfig.url };
+
+    if (first === 'topics') {
+        const topic = topics.find((item) => item.id === second);
+        if (!topic) return null;
+        return {
+            '@context': 'https://schema.org',
+            '@type': 'LearningResource',
+            name: topic.name,
+            description: topic.content.definition,
+            url: `${siteConfig.url}${TOPIC_BASE_PATH}/topics/${topic.id}`,
+            learningResourceType: 'Interactive Visualization',
+            educationalLevel: 'Beginner',
+            inLanguage: 'en',
+            isAccessibleForFree: true,
+            provider,
+        };
+    }
+
+    if (first === 'path') {
+        return {
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: 'HTTP & Web Protocols learning path',
+            numberOfItems: topics.length,
+            itemListElement: topics.map((topic, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: topic.name,
+                url: `${siteConfig.url}${TOPIC_BASE_PATH}${topic.path}`,
+            })),
+            provider,
+        };
+    }
+
+    if (first === 'playground') {
+        return {
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            name: 'HTTP Protocol Playground',
+            url: `${siteConfig.url}${TOPIC_BASE_PATH}/playground`,
+            applicationCategory: 'EducationalApplication',
+            isAccessibleForFree: true,
+            provider,
+        };
+    }
+
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'Course',
+        name: 'HTTP & Web Protocols',
+        description: 'A visual, interactive guide to HTTP, DNS, TCP/IP, caching, cookies, and HTTP/3.',
+        url: `${siteConfig.url}${TOPIC_BASE_PATH}`,
+        isAccessibleForFree: true,
+        provider,
+    };
+}
+
 export default async function WebProtocolsPage({ params }: { params: Promise<{ slug?: string[] }> }) {
     const { slug } = await params;
     const firstSegment = slug && slug.length > 0 ? slug[0] : '';
     const secondSegment = slug && slug.length > 1 ? slug[1] : '';
+    const jsonLd = buildJsonLd(firstSegment, secondSegment);
 
     let content = <Home />;
 
@@ -109,6 +171,12 @@ export default async function WebProtocolsPage({ params }: { params: Promise<{ s
         <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
             <Navbar />
             <div className="flex-1 px-4 sm:px-6 max-w-6xl mx-auto w-full pt-6">
+                {jsonLd && (
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                    />
+                )}
                 {content}
             </div>
             <Footer />
