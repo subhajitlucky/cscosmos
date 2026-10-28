@@ -28,7 +28,17 @@ function getServerSnapshot(): string {
   return "";
 }
 
-export function TopicNotes({ slug, name, domain }: { slug: string; name: string; domain: string }) {
+export function TopicNotes({
+  slug,
+  name,
+  domain,
+  bare = false,
+}: {
+  slug: string;
+  name: string;
+  domain: string;
+  bare?: boolean;
+}) {
   const raw = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const notes = useMemo(() => {
     try {
@@ -55,8 +65,8 @@ export function TopicNotes({ slug, name, domain }: { slug: string; name: string;
   )}`;
 
   return (
-    <details className="group rounded-xl border border-border bg-card/60">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+    <details className={bare ? "group" : "group rounded-xl border border-border bg-card/60"}>
+      <summary className={bare ? "flex cursor-pointer list-none items-center justify-between gap-3 py-1" : "flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3"}>
         <span className="flex items-center gap-2 text-xs font-semibold text-foreground">
           <NotebookPen className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
           Notes
@@ -67,7 +77,7 @@ export function TopicNotes({ slug, name, domain }: { slug: string; name: string;
         <span className="text-muted-foreground transition-transform group-open:rotate-45">+</span>
       </summary>
 
-      <div className="border-t border-border p-4 pt-3">
+      <div className={bare ? "pt-3" : "border-t border-border p-4 pt-3"}>
         <label htmlFor={`topic-notes-${slug}`} className="sr-only">
           Notes for {name}
         </label>

@@ -11,7 +11,7 @@ interface Comment {
   createdAt: string;
 }
 
-export function TopicComments({ slug }: { slug: string }) {
+export function TopicComments({ slug, bare = false }: { slug: string; bare?: boolean }) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [user, setUser] = useState<{ email: string } | null>(null);
   const [loading, setLoading] = useState(true);
@@ -78,7 +78,7 @@ export function TopicComments({ slug }: { slug: string }) {
   };
 
   return (
-    <section className="rounded-xl border border-border bg-card/60 p-4">
+    <section className={bare ? "" : "rounded-xl border border-border bg-card/60 p-4"}>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <MessageSquare className="h-4 w-4 text-muted-foreground" aria-hidden="true" />

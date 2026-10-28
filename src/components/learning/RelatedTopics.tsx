@@ -8,7 +8,15 @@ const DIFFICULTY_LABEL = {
   advanced: "Advanced",
 } as const;
 
-export function RelatedTopics({ slug, domain }: { slug: string; domain: string }) {
+export function RelatedTopics({
+  slug,
+  domain,
+  bare = false,
+}: {
+  slug: string;
+  domain: string;
+  bare?: boolean;
+}) {
   const current = topics.find((topic) => topic.slug === slug);
   if (!current) return null;
 
@@ -30,7 +38,7 @@ export function RelatedTopics({ slug, domain }: { slug: string; domain: string }
   if (prerequisites.length === 0 && related.length === 0) return null;
 
   return (
-    <section className="rounded-xl border border-border bg-card/60 p-4">
+    <section className={bare ? "" : "rounded-xl border border-border bg-card/60 p-4"}>
       <div className="flex items-center gap-2">
         <GitBranch className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
         <h2 className="text-xs font-semibold text-foreground">Learning graph</h2>
