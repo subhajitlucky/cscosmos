@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* global process, console */
+
 import { execFileSync } from 'node:child_process';
 
 const project = process.env.VERCEL_PROJECT ?? 'cscosmos';

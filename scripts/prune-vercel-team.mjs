@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* global process, console */
+
 import { execFileSync } from 'node:child_process';
 
 const DEFAULT_KEEP = Number(process.env.VERCEL_KEEP ?? 5);

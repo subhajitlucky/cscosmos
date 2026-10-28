@@ -212,11 +212,14 @@ npm test
 npm run test:e2e
 npm run deploy:prune
 npm run deploy:prune:team
+npm run storage:check
 ```
 
 `npm run test:e2e` builds the app, starts the production server on port 3100, and runs the Playwright smoke suite.
 
 `npm run deploy:prune` keeps the 2 newest CSCosmos deployments and removes older ones that do not hold an active alias. `npm run deploy:prune:team` keeps 5 newest deployments per team project (2 for CSCosmos), which is useful when the shared team Deployment Storage limit is close.
+
+`npm run storage:check` compares current Deployment Storage and Functions Storage with the peak recorded during the current usage window. The Vercel Usage page shows the peak for the selected range, so the 30-day view can keep showing the pre-cleanup total after deployments are deleted. The current value is what applies to the limit; the peak rolls off as the window advances.
 
 ## Tradeoffs
 
