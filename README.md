@@ -211,11 +211,12 @@ npm run lint
 npm test
 npm run test:e2e
 npm run deploy:prune
+npm run deploy:prune:team
 ```
 
 `npm run test:e2e` builds the app, starts the production server on port 3100, and runs the Playwright smoke suite.
 
-`npm run deploy:prune` keeps the 10 newest Vercel deployments and removes older ones that do not hold an active alias. Use it when Vercel Deployment Storage approaches the free-tier limit.
+`npm run deploy:prune` keeps the 10 newest CSCosmos deployments and removes older ones that do not hold an active alias. `npm run deploy:prune:team` keeps 5 newest deployments per team project (10 for CSCosmos), which is useful when the shared team Deployment Storage limit is close.
 
 ## Tradeoffs
 

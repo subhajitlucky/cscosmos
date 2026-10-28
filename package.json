@@ -13,7 +13,8 @@
     "test:e2e": "npm run build && playwright test",
     "test:e2e:ci": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "deploy:prune": "node scripts/prune-vercel-deployments.mjs 10"
+    "deploy:prune": "node scripts/prune-vercel-deployments.mjs 10",
+    "deploy:prune:team": "node scripts/prune-vercel-team.mjs"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
