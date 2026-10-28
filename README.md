@@ -210,9 +210,12 @@ npm run build
 npm run lint
 npm test
 npm run test:e2e
+npm run deploy:prune
 ```
 
 `npm run test:e2e` builds the app, starts the production server on port 3100, and runs the Playwright smoke suite.
+
+`npm run deploy:prune` keeps the 10 newest Vercel deployments and removes older ones that do not hold an active alias. Use it when Vercel Deployment Storage approaches the free-tier limit.
 
 ## Tradeoffs
 

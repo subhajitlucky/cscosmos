@@ -1,0 +1,11 @@
+# Local-only and non-runtime assets. Keep the deployment upload small.
+scratch/
+output/
+docs/
+e2e/
+test-results/
+playwright-report/
+blob-report/
+.playwright-cli/
+*.patch
+*.tgz

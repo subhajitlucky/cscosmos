@@ -97,6 +97,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   compress: true,
   productionBrowserSourceMaps: false,
+  enablePrerenderSourceMaps: false,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
@@ -111,6 +112,7 @@ const nextConfig: NextConfig = {
     };
   },
   experimental: {
+    serverSourceMaps: false,
     cpus: 12,
     staticGenerationMaxConcurrency: 12,
     staticGenerationMinPagesPerWorker: 10,
