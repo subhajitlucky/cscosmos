@@ -216,7 +216,7 @@ npm run deploy:prune:team
 
 `npm run test:e2e` builds the app, starts the production server on port 3100, and runs the Playwright smoke suite.
 
-`npm run deploy:prune` keeps the 10 newest CSCosmos deployments and removes older ones that do not hold an active alias. `npm run deploy:prune:team` keeps 5 newest deployments per team project (10 for CSCosmos), which is useful when the shared team Deployment Storage limit is close.
+`npm run deploy:prune` keeps the 2 newest CSCosmos deployments and removes older ones that do not hold an active alias. `npm run deploy:prune:team` keeps 5 newest deployments per team project (2 for CSCosmos), which is useful when the shared team Deployment Storage limit is close.
 
 ## Tradeoffs
 

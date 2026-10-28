@@ -3,7 +3,7 @@
 import { execFileSync } from 'node:child_process';
 
 const DEFAULT_KEEP = Number(process.env.VERCEL_KEEP ?? 5);
-const CSCOSMOS_KEEP = Number(process.env.VERCEL_CSCOSMOS_KEEP ?? 10);
+const CSCOSMOS_KEEP = Number(process.env.VERCEL_CSCOSMOS_KEEP ?? 2);
 
 function run(args, options = {}) {
   return execFileSync('vercel', args, {
