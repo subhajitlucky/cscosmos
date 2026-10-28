@@ -3,19 +3,20 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, Shield } from 'lucide-react';
 import Link from 'next/link';
+import { TOPIC_BASE_PATH } from '../data/topic';
 
 const Home = () => {
   return (
     <div className="flex flex-col gap-16">
       <section className="text-center flex flex-col items-center gap-6 py-12">
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
+          initial={{ scale: 0.98, opacity: 1 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="flex items-center gap-3"
+          className="flex flex-wrap items-center justify-center gap-3"
         >
           <Link
             href="/topics"
-            className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold text-muted-foreground hover:text-foreground bg-card border border-border rounded-full transition-all hover:border-primary/50 shadow-sm"
+            className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm transition-all hover:border-primary/50 hover:text-foreground sm:inline-flex"
           >
             ← CSCosmos
           </Link>
@@ -25,7 +26,7 @@ const Home = () => {
         </motion.div>
         <motion.h1 
           className="text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl text-foreground"
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 12, opacity: 1 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
@@ -34,7 +35,7 @@ const Home = () => {
         </motion.h1>
         <motion.p 
           className="text-xl text-muted-foreground max-w-2xl"
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 12, opacity: 1 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
@@ -42,19 +43,19 @@ const Home = () => {
         </motion.p>
         
         <motion.div 
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 12, opacity: 1 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4"
         >
           <Link 
-            href="/webprotocols/path" 
+            href={`${TOPIC_BASE_PATH}/path`} 
             className="bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-bold text-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
           >
             Start Learning <ArrowRight size={20} />
           </Link>
           <Link 
-            href="/webprotocols/playground" 
+            href={`${TOPIC_BASE_PATH}/playground`} 
             className="bg-card text-foreground border-2 border-border px-8 py-4 rounded-2xl font-bold text-lg hover:bg-muted transition-all flex items-center justify-center gap-2"
           >
             Explore Playground
@@ -116,8 +117,6 @@ const Home = () => {
           </div>
         </div>
         
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -ml-32 -mb-32" />
       </section>
     </div>
   );

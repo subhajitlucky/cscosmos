@@ -2,9 +2,12 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Lightbulb, Play, Terminal } from 'lucide-react';
+import { CheckCircle2, ChevronLeft, ChevronRight, Circle, Lightbulb, Play, Terminal } from 'lucide-react';
 import { topics } from '../data/topics';
 import FlowVisualizer from '../components/visualizations/FlowVisualizer';
+import { TOPIC_BASE_PATH, TOPIC_SLUG } from '../data/topic';
+import { useModuleProgress } from '../hooks/useModuleProgress';
+import { setTopicCompleted } from '@/lib/local-learning';
 
 export default function TopicLesson({ topicId }: { topicId: string }) {
   // Resolve during render, NOT in an effect. `topics` is a static import, so this
@@ -13,6 +16,7 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
   // page shipped with an empty body and was filled in only after hydration
   // (AGENTS.md §1/§3). The route validates the id and 404s for unknown topics.
   const topic = topics.find((t) => t.id === topicId);
+  const { isComplete, toggle, completedCount } = useModuleProgress();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,12 +28,13 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
   const prevTopic = currentIndex > 0 ? topics[currentIndex - 1] : null;
   const nextTopic = currentIndex < topics.length - 1 ? topics[currentIndex + 1] : null;
   const { analogy, syntax, example, detailedSections } = topic.content;
+  const isDone = isComplete(topic.id);
 
   return (
     <div className="max-w-[1700px] mx-auto w-full flex flex-col gap-8">
       {/* Lesson Navigation Header */}
       <div className="flex items-center justify-between border-b border-border/80 pb-6">
-        <Link href="/webprotocols/path" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 text-sm font-medium">
+        <Link href={`${TOPIC_BASE_PATH}/path`} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 text-sm font-medium">
           <ChevronLeft size={16} /> Back to Path
         </Link>
         <div className="flex items-center gap-2">
@@ -147,11 +152,39 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
         </div>
       )}
 
+      <div className="flex flex-col gap-3 rounded-2xl border border-border/80 bg-card p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Module status</p>
+          <p className="text-sm text-foreground">
+            {isDone ? 'Completed' : `Not completed · ${completedCount} of ${topics.length} modules done`}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            const nextDone = toggle(topic.id);
+            if (nextDone && completedCount + 1 === topics.length) {
+              setTopicCompleted(TOPIC_SLUG, true);
+            } else if (!nextDone) {
+              setTopicCompleted(TOPIC_SLUG, false);
+            }
+          }}
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-xs font-bold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          {isDone ? (
+            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+          ) : (
+            <Circle className="h-4 w-4 text-muted-foreground" />
+          )}
+          {isDone ? 'Completed' : 'Mark module complete'}
+        </button>
+      </div>
+
       {/* Bottom Prev / Next Navigation */}
       <div className="flex items-center justify-between border-t border-border/80 pt-8 mt-8">
         {prevTopic ? (
           <Link 
-            href={`/webprotocols${prevTopic.path}`}
+            href={`${TOPIC_BASE_PATH}${prevTopic.path}`}
             className="flex items-center gap-2 bg-card border border-border/80 px-5 py-3 rounded-2xl font-bold text-sm hover:border-primary transition-all text-foreground"
           >
             <ChevronLeft size={18} /> Previous: {prevTopic.name}
@@ -160,7 +193,7 @@ export default function TopicLesson({ topicId }: { topicId: string }) {
 
         {nextTopic ? (
           <Link 
-            href={`/webprotocols${nextTopic.path}`}
+            href={`${TOPIC_BASE_PATH}${nextTopic.path}`}
             className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-2xl font-bold text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
           >
             Next: {nextTopic.name} <ChevronRight size={18} />

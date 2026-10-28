@@ -1,63 +1,133 @@
 'use client';
 
 import Link from 'next/link';
-import { BookOpen, Terminal, Github, Twitter, Linkedin } from 'lucide-react';
+import { BookOpen, Terminal, Github, Twitter } from 'lucide-react';
+import { siteConfig } from '@/config/site';
+import { TOPIC_BASE_PATH } from '../data/topic';
 
 const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border/80 py-12 px-6 mt-20 transition-colors">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="col-span-1 md:col-span-1 space-y-4">
-          <Link href="/webprotocols" className="flex items-center gap-2 font-bold text-xl text-primary">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground">
+    <footer className="mt-20 border-t border-border/80 bg-card px-6 py-12 transition-colors">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-4">
+        <div className="col-span-1 space-y-4">
+          <Link
+            href={TOPIC_BASE_PATH}
+            className="flex items-center gap-2 text-xl font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <BookOpen size={20} />
-            </div>
+            </span>
             <span className="text-foreground">Web Protocols</span>
           </Link>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            The premium visual guide to mastering HTTP, headers, and web caching for modern developers.
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            A visual guide to HTTP, headers, caching, and the network path between browser and server.
           </p>
-          <div className="flex gap-4">
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitter size={18} /></a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Github size={18} /></a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Linkedin size={18} /></a>
+          <div className="flex gap-2">
+            <a
+              href={siteConfig.links.twitter}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="CSCosmos on Twitter"
+              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <Twitter size={18} />
+            </a>
+            <a
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="CSCosmos on GitHub"
+              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <Github size={18} />
+            </a>
           </div>
         </div>
 
         <div>
-          <h4 className="font-bold mb-4 text-sm uppercase tracking-widest text-foreground">Learning</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground font-medium">
-            <li><Link href="/webprotocols/path" className="hover:text-primary transition-colors">Learning Path</Link></li>
-            <li><Link href="/webprotocols/playground" className="hover:text-primary transition-colors">Playground</Link></li>
-            <li><Link href="/webprotocols/topics/http-intro" className="hover:text-primary transition-colors">Introduction</Link></li>
-            <li><Link href="/webprotocols/topics/caching-basics" className="hover:text-primary transition-colors">Caching Guide</Link></li>
+          <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-foreground">Learning</h4>
+          <ul className="space-y-2 text-sm font-medium text-muted-foreground">
+            <li>
+              <Link href={`${TOPIC_BASE_PATH}/path`} className="transition-colors hover:text-primary">
+                Learning Path
+              </Link>
+            </li>
+            <li>
+              <Link href={`${TOPIC_BASE_PATH}/playground`} className="transition-colors hover:text-primary">
+                Playground
+              </Link>
+            </li>
+            <li>
+              <Link href={`${TOPIC_BASE_PATH}/topics/http-intro`} className="transition-colors hover:text-primary">
+                Introduction
+              </Link>
+            </li>
+            <li>
+              <Link href={`${TOPIC_BASE_PATH}/topics/caching-basics`} className="transition-colors hover:text-primary">
+                Caching Guide
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-bold mb-4 text-sm uppercase tracking-widest text-foreground">Resources</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground font-medium">
-            <li><a href="https://developer.mozilla.org" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">MDN Web Docs</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">HTTP/3 Specs</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Cheat Sheets</a></li>
+          <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-foreground">Resources</h4>
+          <ul className="space-y-2 text-sm font-medium text-muted-foreground">
+            <li>
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTTP"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-primary"
+              >
+                MDN Web Docs
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.rfc-editor.org/rfc/rfc9114"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-primary"
+              >
+                HTTP/3 Spec
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-primary"
+              >
+                Header Reference
+              </a>
+            </li>
           </ul>
         </div>
 
-        <div className="bg-muted/50 p-6 rounded-2xl border border-border/80">
-           <div className="flex items-center gap-2 mb-3 text-primary">
-              <Terminal size={18} />
-              <span className="font-bold text-sm uppercase tracking-tighter">Ready to play?</span>
-           </div>
-           <p className="text-xs text-muted-foreground mb-4">Jump into the interactive playground and experiment with real HTTP flows.</p>
-           <Link href="/webprotocols/playground" className="block text-center bg-primary text-primary-foreground py-2 rounded-xl text-xs font-bold hover:bg-primary/90 transition-all">
-             Open Playground
-           </Link>
+        <div className="rounded-2xl border border-border/80 bg-muted/50 p-6">
+          <div className="mb-3 flex items-center gap-2 text-primary">
+            <Terminal size={18} />
+            <span className="text-sm font-bold uppercase tracking-tight">Try a request</span>
+          </div>
+          <p className="mb-4 text-xs text-muted-foreground">
+            Build a request, change the cache behavior, and inspect the response headers.
+          </p>
+          <Link
+            href={`${TOPIC_BASE_PATH}/playground`}
+            className="block rounded-xl bg-primary py-2 text-center text-xs font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            Open Playground
+          </Link>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto border-t border-border/80 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-muted-foreground text-xs font-medium">
+      <div className="mx-auto mt-12 flex max-w-6xl flex-col items-center justify-between gap-4 border-t border-border/80 pt-8 text-xs font-medium text-muted-foreground md:flex-row">
         <p>© CSCosmos Web Protocols Visualizer.</p>
         <div className="flex gap-6">
-           <Link href="/topics" className="hover:text-foreground transition-colors">CSCosmos Topics</Link>
+          <Link href="/topics" className="transition-colors hover:text-foreground">
+            CSCosmos Topics
+          </Link>
         </div>
       </div>
     </footer>

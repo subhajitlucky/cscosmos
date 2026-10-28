@@ -13,6 +13,14 @@ interface Header {
   value: string;
 }
 
+type ResponseTab = 'visual' | 'raw' | 'headers';
+
+const RESPONSE_TABS: { id: ResponseTab; label: string; icon: typeof Eye }[] = [
+  { id: 'visual', label: 'Visualization', icon: Eye },
+  { id: 'raw', label: 'Raw Body', icon: Code },
+  { id: 'headers', label: 'Response Headers', icon: List },
+];
+
 const Playground = () => {
   const [method, setMethod] = useState<'GET' | 'POST' | 'PUT' | 'DELETE'>('GET');
   const [cacheEnabled, setCacheEnabled] = useState(true);
@@ -20,13 +28,17 @@ const Playground = () => {
   const [latency, setLatency] = useState(1000);
   const [isRunning, setIsRunning] = useState(false);
   const [logs, setLogs] = useState<{ id: number, text: string, type: 'info' | 'success' | 'error' }[]>([]);
-  const [activeResponseTab, setActiveResponseTab] = useState<'visual' | 'raw' | 'headers'>('visual');
+  const [activeResponseTab, setActiveResponseTab] = useState<ResponseTab>('visual');
   const [requestHeaders, setRequestHeaders] = useState<Header[]>([
     { id: '1', key: 'Accept', value: 'application/json' },
     { id: '2', key: 'User-Agent', value: 'WebProtocols/1.0' }
   ]);
   const [cookies, setCookies] = useState<Record<string, string>>({ 'pref_theme': 'dark' });
   const [response, setResponse] = useState<{ status: string, headers: Record<string, string>, body: string } | null>(null);
+
+  const displayedStatus = response?.status ?? status;
+  const statusText = displayedStatus === '200' ? 'OK' : displayedStatus === '304' ? 'Not Modified' : displayedStatus === '404' ? 'Not Found' : displayedStatus === '500' ? 'Server Error' : 'Unknown';
+  const statusTone = displayedStatus === '200' ? 'text-green-500' : displayedStatus === '304' ? 'text-blue-500' : 'text-red-500';
 
   const copyAsCurl = () => {
     let curl = `curl -X ${method} 'https://api.webprotocols.dev/api/v1/resource'`;
@@ -177,8 +189,10 @@ const Playground = () => {
                <div className="flex gap-2">
                  <button 
                   onClick={() => setLogs([])}
-                  className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                  className="p-2 text-slate-400 hover:text-red-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   title="Clear Logs"
+                  aria-label="Clear traffic log"
+                  type="button"
                  >
                    <RefreshCw size={14} />
                  </button>
@@ -196,10 +210,11 @@ const Playground = () => {
             {/* Presets */}
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <label className="text-[10px] font-bold uppercase text-slate-400">Presets</label>
+                <label className="text-[11px] font-bold uppercase text-slate-400">Presets</label>
                 <button 
                   onClick={copyAsCurl}
-                  className="flex items-center gap-1 text-[8px] font-bold text-primary hover:text-primary/80 transition-colors uppercase"
+                  type="button"
+                  className="flex items-center gap-1 text-[11px] font-bold uppercase text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   <Copy size={10} /> Copy cURL
                 </button>
@@ -208,8 +223,9 @@ const Playground = () => {
                 {Object.keys(presets).map(name => (
                   <button
                     key={name}
+                    type="button"
                     onClick={() => applyPreset(name as any)}
-                    className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-md text-[9px] font-bold text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-all"
+                    className="rounded-md bg-slate-100 px-2 py-1 text-[10px] font-bold text-slate-600 transition-all hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-slate-800 dark:text-slate-400"
                   >
                     {name.replace('_', ' ')}
                   </button>
@@ -220,7 +236,7 @@ const Playground = () => {
             {/* Basic Config */}
             <div className="grid grid-cols-2 gap-4">
                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-slate-400">Method</label>
+                  <label className="text-[11px] font-bold uppercase text-slate-400">Method</label>
                   <select 
                     value={method}
                     onChange={(e) => setMethod(e.target.value as any)}
@@ -233,7 +249,7 @@ const Playground = () => {
                   </select>
                </div>
                <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase text-slate-400">Status</label>
+                  <label className="text-[11px] font-bold uppercase text-slate-400">Status</label>
                   <select 
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
@@ -250,7 +266,7 @@ const Playground = () => {
             {/* Latency Slider */}
             <div className="space-y-3">
               <div className="flex justify-between">
-                <label className="text-[10px] font-bold uppercase text-slate-400">Latency (RTT)</label>
+                <label className="text-[11px] font-bold uppercase text-slate-400">Latency (RTT)</label>
                 <span className="text-[10px] font-bold text-primary">{latency}ms</span>
               </div>
               <input 
@@ -264,8 +280,13 @@ const Playground = () => {
             {/* Headers Editor */}
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <label className="text-[10px] font-bold uppercase text-slate-400">Request Headers</label>
-                <button onClick={addHeader} className="text-primary hover:text-primary/80 transition-colors">
+                <label className="text-[11px] font-bold uppercase text-slate-400">Request Headers</label>
+                <button
+                  type="button"
+                  onClick={addHeader}
+                  aria-label="Add request header"
+                  className="text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
                   <Plus size={14} />
                 </button>
               </div>
@@ -276,17 +297,19 @@ const Playground = () => {
                       placeholder="Key"
                       value={h.key}
                       onChange={(e) => updateHeader(h.id, 'key', e.target.value)}
-                      className="w-[38%] bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg px-2 py-1.5 text-[10px] font-mono focus:outline-none dark:text-slate-300 min-w-0 flex-shrink-0 transition-colors"
+                      className="w-[38%] bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg px-2 py-1.5 text-[11px] font-mono focus:outline-none dark:text-slate-300 min-w-0 flex-shrink-0 transition-colors"
                     />
                     <input 
                       placeholder="Value"
                       value={h.value}
                       onChange={(e) => updateHeader(h.id, 'value', e.target.value)}
-                      className="flex-1 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg px-2 py-1.5 text-[10px] font-mono focus:outline-none dark:text-slate-300 min-w-0 transition-colors"
+                      className="flex-1 bg-slate-50 dark:bg-slate-800 border dark:border-slate-700 rounded-lg px-2 py-1.5 text-[11px] font-mono focus:outline-none dark:text-slate-300 min-w-0 transition-colors"
                     />
-                    <button 
-                      onClick={() => removeHeader(h.id)} 
-                      className="text-slate-300 hover:text-red-500 transition-colors p-0.5 flex-shrink-0"
+                    <button
+                      type="button"
+                      onClick={() => removeHeader(h.id)}
+                      aria-label={`Remove header ${h.key || 'header'}`}
+                      className="flex-shrink-0 p-0.5 text-slate-300 transition-colors hover:text-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
                     >
                       <X size={12} />
                     </button>
@@ -297,22 +320,29 @@ const Playground = () => {
 
             {/* Cookies Editor */}
             <div className="space-y-3">
-               <label className="text-[10px] font-bold uppercase text-slate-400">Active Cookies</label>
+               <label className="text-[11px] font-bold uppercase text-slate-400">Active Cookies</label>
                <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border dark:border-slate-800 space-y-2">
                   {Object.entries(cookies).map(([k, v]) => (
-                    <div key={k} className="flex justify-between items-center text-[10px] font-mono">
+                    <div key={k} className="group flex items-center justify-between gap-2 text-[11px] font-mono">
                        <span className="text-primary">{k}</span>
-                       <span className="text-slate-500 dark:text-slate-400 truncate max-w-[100px]">{v}</span>
-                       <button onClick={() => {
-                         const next = { ...cookies };
-                         delete next[k];
-                         setCookies(next);
-                       }} className="text-red-400 opacity-0 group-hover:opacity-100"><X size={10}/></button>
+                       <span className="max-w-[100px] truncate text-slate-500 dark:text-slate-400">{v}</span>
+                       <button
+                         type="button"
+                         aria-label={`Remove cookie ${k}`}
+                         onClick={() => {
+                           const next = { ...cookies };
+                           delete next[k];
+                           setCookies(next);
+                         }}
+                         className="text-red-400 opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:opacity-0 sm:group-hover:opacity-100"
+                       >
+                         <X size={10}/>
+                       </button>
                     </div>
                   ))}
                   <button 
                     onClick={() => setCookies({ ...cookies, [`session_${Math.floor(Math.random()*100)}`]: 'active_user' })}
-                    className="w-full py-1 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-lg text-[8px] font-bold text-slate-400 hover:text-primary transition-colors"
+                    className="w-full rounded-lg border-2 border-dashed border-slate-200 py-1 text-[10px] font-bold text-slate-400 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-800"
                   >
                     + INJECT AUTH COOKIE
                   </button>
@@ -320,7 +350,7 @@ const Playground = () => {
             </div>
 
             <div className="pt-4 border-t dark:border-slate-800 space-y-4">
-               <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border dark:border-slate-800 font-mono text-[9px] text-slate-500 dark:text-slate-400">
+               <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border dark:border-slate-800 font-mono text-[10px] text-slate-500 dark:text-slate-400">
                   <div className="flex justify-between mb-2 border-b dark:border-slate-800 pb-1">
                      <span className="uppercase font-bold">Raw Request Preview</span>
                      <span className="text-primary animate-pulse">LIVE</span>
@@ -341,8 +371,12 @@ const Playground = () => {
                     <span className="text-xs font-bold dark:text-slate-300 transition-colors">Persistent Cache</span>
                   </div>
                   <button 
+                    type="button"
+                    role="switch"
+                    aria-checked={cacheEnabled}
+                    aria-label="Persistent cache"
                     onClick={() => setCacheEnabled(!cacheEnabled)}
-                    className={`w-10 h-5 rounded-full relative transition-colors ${cacheEnabled ? 'bg-primary' : 'bg-slate-200 dark:bg-slate-700'}`}
+                    className={`relative h-5 w-10 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${cacheEnabled ? 'bg-primary' : 'bg-slate-200 dark:bg-slate-700'}`}
                   >
                     <motion.div 
                       animate={{ x: cacheEnabled ? 22 : 2 }}
@@ -358,7 +392,7 @@ const Playground = () => {
              <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">
                 <Terminal size={12} /> Live Traffic
              </div>
-             <div className="space-y-2 h-40 overflow-y-auto font-mono text-[10px] custom-scrollbar">
+             <div className="custom-scrollbar h-40 space-y-2 overflow-y-auto font-mono text-[11px]">
                 <AnimatePresence mode="popLayout">
                   {logs.length === 0 && <div className="text-slate-600 italic">No activity detected...</div>}
                   {logs.map((log) => (
@@ -381,16 +415,28 @@ const Playground = () => {
         <div className="lg:col-span-8 space-y-6">
            <div className="bg-white dark:bg-slate-900 border dark:border-slate-800 rounded-3xl shadow-sm min-h-[600px] flex flex-col relative overflow-hidden transition-colors">
               {/* Tabs */}
-              <div className="flex border-b dark:border-slate-800 px-6">
-                 {[
-                   { id: 'visual', label: 'Visualization', icon: Eye },
-                   { id: 'raw', label: 'Raw Body', icon: Code },
-                   { id: 'headers', label: 'Response Headers', icon: List }
-                 ].map((tab) => (
+              <div className="flex overflow-x-auto border-b px-2 dark:border-slate-800 sm:px-6" role="tablist" aria-label="Response views">
+                 {RESPONSE_TABS.map((tab) => (
                    <button
                     key={tab.id}
-                    onClick={() => setActiveResponseTab(tab.id as any)}
-                    className={`flex items-center gap-2 px-6 py-4 text-xs font-bold transition-all relative ${activeResponseTab === tab.id ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
+                    id={`response-tab-${tab.id}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeResponseTab === tab.id}
+                    aria-controls={`response-panel-${tab.id}`}
+                    onClick={() => setActiveResponseTab(tab.id)}
+                    onKeyDown={(event) => {
+                      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+                      event.preventDefault();
+                      const currentIndex = RESPONSE_TABS.findIndex((item) => item.id === activeResponseTab);
+                      const delta = event.key === 'ArrowRight' ? 1 : -1;
+                      const nextTab = RESPONSE_TABS[(currentIndex + delta + RESPONSE_TABS.length) % RESPONSE_TABS.length];
+                      setActiveResponseTab(nextTab.id);
+                      requestAnimationFrame(() => {
+                        document.getElementById(`response-tab-${nextTab.id}`)?.focus();
+                      });
+                    }}
+                    className={`relative flex shrink-0 items-center gap-2 whitespace-nowrap px-3 py-4 text-xs font-bold transition-all sm:px-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${activeResponseTab === tab.id ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
                    >
                      <tab.icon size={14} />
                      {tab.label}
@@ -406,15 +452,17 @@ const Playground = () => {
                     {activeResponseTab === 'visual' && (
                       <motion.div 
                         key="visual"
+                        id="response-panel-visual"
+                        role="tabpanel"
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         className="flex-1 flex flex-col items-center justify-center relative"
                       >
                          <div className="absolute top-0 left-0 flex items-center gap-4">
-                            <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-tighter transition-colors">
+                            <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-[11px] font-bold uppercase tracking-tighter transition-colors">
                                 <Laptop size={12} /> Browser
                             </div>
                             <div className="w-4 h-px bg-slate-200 dark:bg-slate-800" />
-                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-tighter transition-colors ${cacheEnabled ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
+                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-tighter transition-colors ${cacheEnabled ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
                                 <ShieldCheck size={12} /> {cacheEnabled ? 'Cache Layer' : 'No Cache'}
                             </div>
                          </div>
@@ -428,6 +476,8 @@ const Playground = () => {
                     {activeResponseTab === 'raw' && (
                       <motion.div 
                         key="raw"
+                        id="response-panel-raw"
+                        role="tabpanel"
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         className="flex-1 bg-slate-50 dark:bg-slate-950 rounded-2xl p-6 font-mono text-sm dark:text-slate-300 overflow-auto transition-colors"
                       >
@@ -442,6 +492,8 @@ const Playground = () => {
                     {activeResponseTab === 'headers' && (
                       <motion.div 
                         key="headers"
+                        id="response-panel-headers"
+                        role="tabpanel"
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         className="flex-1 space-y-3"
                       >
@@ -466,11 +518,11 @@ const Playground = () => {
               <div className="bg-slate-50 dark:bg-slate-800/50 border-t dark:border-slate-800 p-4 flex justify-between items-center transition-colors">
                  <div className="flex gap-6">
                     <div className="flex flex-col">
-                       <span className="text-[8px] font-bold uppercase text-slate-400">Status</span>
-                       <span className={`text-xs font-bold ${status === '200' ? 'text-green-500' : 'text-red-500'}`}>{response ? `${status} ${status === '200' ? 'OK' : 'Error'}` : '---'}</span>
+                       <span className="text-[10px] font-bold uppercase text-slate-400">Status</span>
+                       <span className={`text-xs font-bold ${statusTone}`}>{response ? `${response.status} ${statusText}` : '---'}</span>
                     </div>
                     <div className="flex flex-col">
-                       <span className="text-[8px] font-bold uppercase text-slate-400">Time</span>
+                       <span className="text-[10px] font-bold uppercase text-slate-400">Time</span>
                        <span className="text-xs font-bold dark:text-slate-300">{isRunning ? '...' : response ? `${latency}ms` : '---'}</span>
                     </div>
                  </div>
@@ -487,8 +539,8 @@ const Playground = () => {
               </div>
               <div className="space-y-1">
                  <h4 className="font-bold text-amber-900 dark:text-amber-400 text-sm">Pro Tip: Cache Control</h4>
-                 <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                   Try setting the Status to **304 Cache** and observe the "X-Cache" header in the Response Headers tab. This simulates a conditional request where the server tells the browser to use its local copy.
+                 <p className="text-xs leading-relaxed text-amber-700 dark:text-amber-300">
+                   Try setting the status to <strong>304 Not Modified</strong> and observe the <code className="font-mono">X-Cache</code> header in the Response Headers tab. This simulates a conditional request where the server tells the browser to reuse its local copy.
                  </p>
               </div>
            </div>

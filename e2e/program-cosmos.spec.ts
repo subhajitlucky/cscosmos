@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const APP_URL = 'http://127.0.0.1:3100';
+const APP_URL = `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? '3100'}`;
 const CANONICAL_PATH = '/fullstack/program-cosmos';
 const CANONICAL_URL = `https://cscosmos.vercel.app${CANONICAL_PATH}`;
 

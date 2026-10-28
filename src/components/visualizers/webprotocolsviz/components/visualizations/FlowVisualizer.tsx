@@ -1,7 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Laptop, Server, RefreshCw, HardDrive, Globe, AlertCircle, CheckCircle2, Search, Zap, Lock, ShieldCheck } from 'lucide-react';
+import { Laptop, Server, RefreshCw, HardDrive, Globe, AlertCircle, CheckCircle2, Search, Zap, Lock, ShieldCheck, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 interface FlowVisualizerProps {
   type: 'flow' | 'cycle' | 'methods' | 'headers' | 'status' | 'caching' | 'validation' | 'cdn' | 'performance' | 'tls';
@@ -39,15 +40,43 @@ const TLS_STEPS = [
   },
 ];
 
+const STEP_COUNT: Record<FlowVisualizerProps['type'], number> = {
+  flow: 2,
+  cycle: 2,
+  methods: 4,
+  headers: 4,
+  status: 4,
+  caching: 2,
+  validation: 2,
+  cdn: 2,
+  performance: 2,
+  tls: 4,
+};
+
 const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
-  const [step, setStep] = useState(0);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const stepCount = STEP_COUNT[type] ?? 4;
+  const step = stepIndex % stepCount;
 
   useEffect(() => {
-     const interval = setInterval(() => {
-       setStep(s => (s + 1) % 4);
-     }, 3000);
-     return () => clearInterval(interval);
-  }, []);
+    if (prefersReducedMotion) setPlaying(false);
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    if (!playing || prefersReducedMotion) return;
+    const interval = setInterval(() => {
+      setStepIndex((index) => index + 1);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [playing, prefersReducedMotion]);
+
+  const goToStep = (delta: number) => {
+    setPlaying(false);
+    setStepIndex((index) => (index + delta + stepCount) % stepCount);
+  };
+
 
     const renderCycle = () => (
       <div className="w-full h-full flex flex-col items-center justify-center p-8">
@@ -270,7 +299,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
                       opacity: step % 4 === i ? 1 : 0.5,
                       borderColor: step % 4 === i ? '#3b82f6' : 'transparent'
                     }}
-                    className={`p-4 rounded-2xl border-2 flex flex-col gap-2 transition-all cursor-pointer ${
+                    className={`p-4 rounded-2xl border-2 flex flex-col gap-2 transition-all ${
                       m.name === 'GET' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-300' : 
                       m.name === 'POST' ? 'bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-300' :
                       m.name === 'PUT' ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-300' :
@@ -454,19 +483,63 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
       );
     };
 
-    switch (type) {
-    case 'cycle': return renderCycle();
-    case 'status': return renderStatus();
-    case 'headers': return renderHeaders();
-    case 'cdn': return renderCDN();
-    case 'validation': return renderValidation();
-    case 'methods': return renderMethods();
-    case 'caching': return renderCaching();
-    case 'performance': return renderPerformance();
-    case 'tls': return renderTLS();
-    case 'flow': return renderCycle();
-    default: return renderCycle();
-  }
+    const renderVisualization = () => {
+      switch (type) {
+        case 'status': return renderStatus();
+        case 'headers': return renderHeaders();
+        case 'cdn': return renderCDN();
+        case 'validation': return renderValidation();
+        case 'methods': return renderMethods();
+        case 'caching': return renderCaching();
+        case 'performance': return renderPerformance();
+        case 'tls': return renderTLS();
+        case 'flow':
+        case 'cycle':
+        default:
+          return renderCycle();
+      }
+    };
+
+    return (
+      <div className="flex min-h-[320px] w-full flex-col">
+        <div className="flex items-center justify-between gap-3 border-b border-border/60 px-1 pb-3">
+          <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+            Step {step + 1} / {stepCount}
+          </span>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => goToStep(-1)}
+              aria-label="Previous step"
+              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setPlaying((value) => !value)}
+              disabled={prefersReducedMotion}
+              aria-label={prefersReducedMotion ? 'Auto-play disabled by reduced-motion preference' : playing ? 'Pause animation' : 'Play animation'}
+              aria-pressed={playing}
+              title={prefersReducedMotion ? 'Auto-play is disabled by your reduced-motion preference' : undefined}
+              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-40"
+            >
+              {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => goToStep(1)}
+              aria-label="Next step"
+              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+        <p className="sr-only" aria-live="polite">Step {step + 1} of {stepCount}</p>
+        <div className="min-h-0 flex-1">{renderVisualization()}</div>
+      </div>
+    );
 };
 
 export default FlowVisualizer;

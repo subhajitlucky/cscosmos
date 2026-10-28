@@ -8,6 +8,7 @@ import TopicLesson from '@/components/visualizers/webprotocolsviz/pages/TopicLes
 import Navbar from '@/components/visualizers/webprotocolsviz/components/Navbar';
 import Footer from '@/components/visualizers/webprotocolsviz/components/Footer';
 import { topics } from '@/components/visualizers/webprotocolsviz/data/topics';
+import { TOPIC_BASE_PATH } from '@/components/visualizers/webprotocolsviz/data/topic';
 
 export function generateStaticParams() {
     return [
@@ -23,6 +24,22 @@ export function generateStaticParams() {
     ];
 }
 
+function pageMetadata(title: string, description: string, canonicalPath: string): Metadata {
+    return {
+        title,
+        description,
+        alternates: { canonical: canonicalPath },
+        openGraph: {
+            title,
+            description,
+            url: canonicalPath,
+            siteName: 'CSCosmos',
+            type: 'website',
+        },
+        twitter: { card: 'summary' },
+    };
+}
+
 export async function generateMetadata({
     params,
 }: {
@@ -35,33 +52,35 @@ export async function generateMetadata({
     if (first === 'topics') {
         const topic = topics.find((t) => t.id === second);
         return topic
-            ? {
-                  title: `${topic.name} | HTTP & Web Protocols - CSCosmos`,
-                  description: topic.content.definition,
-              }
+            ? pageMetadata(
+                  `${topic.name} | HTTP & Web Protocols - CSCosmos`,
+                  topic.content.definition,
+                  `${TOPIC_BASE_PATH}/topics/${topic.id}`,
+              )
             : { title: 'Topic Not Found - CSCosmos' };
     }
 
     if (first === 'playground') {
-        return {
-            title: 'HTTP Protocol Playground - CSCosmos',
-            description:
-                'Compose a real HTTP request — method, status, headers, cookies, latency and caching — and inspect the response, headers and traffic log.',
-        };
+        return pageMetadata(
+            'HTTP Protocol Playground - CSCosmos',
+            'Compose a real HTTP request — method, status, headers, cookies, latency and caching — and inspect the response, headers and traffic log.',
+            `${TOPIC_BASE_PATH}/playground`,
+        );
     }
 
     if (first === 'path') {
-        return {
-            title: 'HTTP Curriculum Path - CSCosmos',
-            description: `All ${topics.length} modules of the HTTP and web protocols curriculum.`,
-        };
+        return pageMetadata(
+            'HTTP Curriculum Path - CSCosmos',
+            `All ${topics.length} modules of the HTTP and web protocols curriculum.`,
+            `${TOPIC_BASE_PATH}/path`,
+        );
     }
 
-    return {
-        title: 'HTTP & Web Protocols - CSCosmos',
-        description:
-            'Interactive visualizers for HTTP, DNS, TCP/IP, caching, cookies and HTTP/3.',
-    };
+    return pageMetadata(
+        'HTTP & Web Protocols - CSCosmos',
+        'Interactive visualizers for HTTP, DNS, TCP/IP, caching, cookies and HTTP/3.',
+        TOPIC_BASE_PATH,
+    );
 }
 
 export default async function WebProtocolsPage({ params }: { params: Promise<{ slug?: string[] }> }) {
