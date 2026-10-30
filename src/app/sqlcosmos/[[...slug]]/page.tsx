@@ -14,9 +14,6 @@ import Problems from '@/components/visualizers/sqlcosmos/pages/Problems';
 import Flashcards from '@/components/visualizers/sqlcosmos/pages/Flashcards';
 import CheatSheet from '@/components/visualizers/sqlcosmos/pages/CheatSheet';
 import { SQL_TOPICS } from '@/components/visualizers/sqlcosmos/data/topics';
-import { TopicNotes } from '@/components/learning/TopicNotes';
-import { RelatedTopics } from '@/components/learning/RelatedTopics';
-import { TopicComments } from '@/components/learning/TopicComments';
 
 const CANONICAL_BASE = 'https://cscosmos.vercel.app/fullstack/sqlcosmos';
 
@@ -167,14 +164,6 @@ export default async function SqlCosmosPage({
     <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
       <Navbar />
       <main className="flex-1 w-full">{content}</main>
-      
-      {/* Platform Learning Integration: Notes, Related Topics & Comments */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full pb-16 space-y-4 pt-12 border-t border-border/80">
-        <TopicNotes slug="sqlcosmos" name="SQL Visualizer (Queries, Indexes)" domain="fullstack" />
-        <RelatedTopics slug="sqlcosmos" domain="fullstack" />
-        <TopicComments slug="sqlcosmos" />
-      </div>
-
       <Footer />
     </div>
   );

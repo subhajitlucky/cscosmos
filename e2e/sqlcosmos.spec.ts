@@ -18,17 +18,12 @@ test.describe('sqlcosmos smoke', () => {
     ).toBeVisible();
   });
 
-  test('serves canonical metadata and platform chrome', async ({ page }) => {
+  test('serves canonical metadata', async ({ page }) => {
     await page.goto(CANONICAL_PATH);
 
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', CANONICAL_URL);
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', CANONICAL_URL);
     await expect(page).toHaveTitle(/SQL Visualizer/);
-
-    // Platform Chrome checks: Notes, Related Topics & Comments
-    await expect(page.locator('summary').filter({ hasText: 'Notes' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Learning graph' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Discussion' })).toBeVisible();
   });
 
   test('renders all 50 concepts and filters by architecture', async ({ page }) => {
