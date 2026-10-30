@@ -115,14 +115,14 @@ export default function Concepts() {
           </button>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredTopics.map((topic) => (
             <Link
               key={topic.id}
               href={`/sqlcosmos/concepts/${topic.id}`}
-              className="p-6 rounded-xl bg-card border border-border hover:border-foreground/40 shadow-xs transition-colors space-y-4 flex flex-col justify-between group"
+              className="p-5 rounded-xl bg-card border border-border hover:border-foreground/40 shadow-xs transition-colors flex flex-col justify-between gap-4 group"
             >
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold border border-border bg-muted/40 text-foreground">
                     #{String(topic.topicNumber).padStart(2, '0')}
@@ -135,13 +135,9 @@ export default function Concepts() {
                   </div>
                 </div>
 
-                <h2 className="text-base sm:text-lg font-bold text-foreground group-hover:underline transition-colors leading-snug">
+                <h2 className="text-base font-bold text-foreground group-hover:underline transition-colors leading-snug">
                   {topic.title}
                 </h2>
-
-                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                  {topic.summary}
-                </p>
               </div>
 
               <div className="pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-foreground">
