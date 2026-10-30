@@ -2,8 +2,17 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Filter, Sparkles } from 'lucide-react';
-import { SQL_TOPICS, type SqlTopic } from '../data/topics';
+import { ArrowRight, BookOpen, Layers } from 'lucide-react';
+import { SQL_TOPICS } from '../data/topics';
+
+const CATEGORIES = [
+  { id: 'all', label: 'All Modules' },
+  { id: 'foundations', label: 'Foundations' },
+  { id: 'query-execution', label: 'Query Execution' },
+  { id: 'indexing', label: 'Indexing & Storage' },
+  { id: 'transactions', label: 'Transactions & ACID' },
+  { id: 'architecture', label: 'Architecture' },
+] as const;
 
 export default function Concepts() {
   const [filter, setFilter] = useState<string>('all');
@@ -11,61 +20,69 @@ export default function Concepts() {
   const filtered = filter === 'all' ? SQL_TOPICS : SQL_TOPICS.filter((t) => t.category === filter);
 
   return (
-    <div className="space-y-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
-      <div className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest">
-          Curriculum
+    <div className="space-y-8 pb-24 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+      <div className="space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/40 text-foreground font-mono text-xs font-medium">
+          <BookOpen className="w-3.5 h-3.5 text-muted-foreground" />
+          <span>Complete Curriculum • 23 Interactive Modules</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-foreground tracking-tight">
           SQL &amp; Relational Engine Concepts
         </h1>
-        <p className="text-muted-foreground text-sm sm:text-base">
-          23 comprehensive lessons from SQL DDL, constraints, and aggregations to B+ Tree page traversals, MVCC, and table partitioning.
+        <p className="text-muted-foreground text-sm sm:text-base max-w-3xl leading-relaxed">
+          Comprehensive curriculum from SQL DDL, constraints, and aggregations to B+ Tree page traversals, Two-Phase Locking, MVCC, and table partitioning.
         </p>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap gap-2">
-        {['all', 'foundations', 'indexing', 'query-execution', 'transactions', 'architecture'].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setFilter(cat)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold capitalize transition-all ${
-              filter === cat
-                ? 'bg-indigo-600 text-white shadow-md'
-                : 'bg-card border border-border text-foreground hover:border-indigo-500'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+      <div className="flex flex-wrap gap-2 pt-2">
+        {CATEGORIES.map((cat) => {
+          const isSelected = filter === cat.id;
+          const count = cat.id === 'all' ? SQL_TOPICS.length : SQL_TOPICS.filter((t) => t.category === cat.id).length;
+          return (
+            <button
+              key={cat.id}
+              onClick={() => setFilter(cat.id)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all border flex items-center gap-1.5 ${
+                isSelected
+                  ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
+                  : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
+              }`}
+            >
+              <span>{cat.label}</span>
+              <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-background/20 text-background' : 'bg-muted text-muted-foreground'}`}>
+                {count}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {filtered.map((topic) => (
           <Link
             key={topic.id}
             href={`/sqlcosmos/concepts/${topic.id}`}
-            className="p-6 rounded-3xl bg-card border border-border/80 hover:border-indigo-500/50 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between group"
+            className="p-6 rounded-2xl bg-card border border-border hover:border-foreground/40 hover:shadow-sm transition-all space-y-4 flex flex-col justify-between group"
           >
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-wider">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium border border-border bg-muted/30 text-muted-foreground uppercase">
                   {topic.category}
                 </span>
-                <span className="text-xs text-muted-foreground font-mono">{topic.difficulty}</span>
+                <span className="text-[11px] font-mono text-muted-foreground">{topic.difficulty}</span>
               </div>
-              <h3 className="text-lg font-bold text-foreground group-hover:text-indigo-500 transition-colors">
+              <h3 className="text-base sm:text-lg font-bold text-foreground group-hover:underline transition-colors leading-snug">
                 {topic.title}
               </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
                 {topic.summary}
               </p>
             </div>
 
-            <div className="pt-2 border-t border-border flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-              <span>Start Interactive Lesson</span>
+            <div className="pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-foreground">
+              <span className="text-muted-foreground group-hover:text-foreground transition-colors">Start Interactive Lesson</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>

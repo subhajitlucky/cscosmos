@@ -49,24 +49,24 @@ export function SqlPlayground() {
   };
 
   return (
-    <div className="rounded-3xl border border-indigo-500/30 bg-indigo-500/5 dark:bg-indigo-500/10 p-6 sm:p-8 space-y-6 shadow-xl my-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/20 pb-4">
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6 shadow-sm transition-colors">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-            <Terminal className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/60 text-foreground flex items-center justify-center font-bold shadow-xs">
+            <Terminal className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs uppercase font-extrabold tracking-wider text-indigo-600 dark:text-indigo-400">
+            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
               In-Browser SQL Subset Evaluator
             </div>
-            <h3 className="text-xl font-bold text-foreground">
+            <h3 className="text-xl font-bold tracking-tight text-foreground">
               Interactive SQL Query Scratchpad
             </h3>
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold">
-          Tables: users, orders • Evaluated locally in your browser
+        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+          Tables: users, orders • Client-Side In-Memory Engine
         </span>
       </div>
 
@@ -81,7 +81,7 @@ export function SqlPlayground() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           rows={5}
-          className="w-full p-4 rounded-2xl bg-slate-950 text-indigo-300 font-mono text-xs border border-border focus:border-indigo-500 outline-none shadow-inner leading-relaxed"
+          className="w-full p-4 rounded-xl bg-zinc-950 text-emerald-400 dark:bg-black font-mono text-xs border border-border/80 focus:border-foreground/50 outline-none shadow-inner leading-relaxed"
         />
 
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -93,7 +93,7 @@ export function SqlPlayground() {
                 onClick={() => {
                   setQuery(preset.sql);
                 }}
-                className="px-2.5 py-1 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-[11px]"
+                className="px-2.5 py-1 rounded-md bg-muted/30 hover:bg-muted/70 border border-border text-foreground font-mono text-[11px] transition"
               >
                 {preset.label}
               </button>
@@ -102,7 +102,7 @@ export function SqlPlayground() {
 
           <button
             onClick={handleRunQuery}
-            className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs transition shadow-md flex items-center gap-1.5"
+            className="px-5 py-2 rounded-lg bg-foreground hover:bg-foreground/90 text-background font-semibold text-xs transition shadow-xs flex items-center gap-1.5"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Run Query</span>
@@ -110,17 +110,16 @@ export function SqlPlayground() {
         </div>
 
         <p className="text-[11px] text-muted-foreground font-mono leading-relaxed">
-          Scope: {SUPPORTED_SQL_SCOPE} An in-memory evaluator, not a database — anything outside that
-          subset is refused instead of guessed.
+          Scope: {SUPPORTED_SQL_SCOPE} In-memory AST evaluation engine.
         </p>
       </div>
 
       {/* Relational Table Output Box */}
-      <div className="p-6 rounded-3xl bg-card border border-border space-y-4 shadow-sm">
+      <div className="p-6 rounded-2xl bg-card border border-border space-y-4 shadow-xs">
         <div className="flex items-center justify-between text-xs border-b border-border pb-3">
           <div className="flex items-center gap-2">
-            <Table className="w-4 h-4 text-indigo-500" />
-            <span className="font-bold text-foreground">Query Result Set:</span>
+            <Table className="w-4 h-4 text-muted-foreground" />
+            <span className="font-semibold text-foreground">Query Result Set:</span>
             {result.note ? (
               <span className="text-amber-600 dark:text-amber-400 font-mono">not evaluated</span>
             ) : (
@@ -128,14 +127,14 @@ export function SqlPlayground() {
             )}
           </div>
           {!result.note && mounted && (
-            <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+            <span className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
               Evaluated in {result.execTime.toFixed(3)} ms
             </span>
           )}
         </div>
 
         {result.note ? (
-          <p className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 font-mono text-xs leading-relaxed">
+          <p className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 font-mono text-xs leading-relaxed">
             {result.note}
           </p>
         ) : (

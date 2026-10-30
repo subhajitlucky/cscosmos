@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AlertCircle, AlertTriangle, ArrowRight, CheckCircle2, ChevronRight, RotateCcw, ShieldAlert, ShieldCheck, Sparkles, Terminal } from 'lucide-react';
+import { ChevronRight, RotateCcw, ShieldAlert } from 'lucide-react';
 
 type Anomaly = 'dirty-read' | 'non-repeatable-read' | 'phantom-read' | 'write-skew';
 
@@ -77,23 +77,23 @@ export function TransactionAnomalyStepper() {
   const currentStep = currentTimeline.steps[stepIdx] || currentTimeline.steps[0];
 
   return (
-    <div className="rounded-3xl border border-indigo-500/30 bg-indigo-500/5 dark:bg-indigo-500/10 p-6 sm:p-8 space-y-6 shadow-xl my-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/20 pb-4">
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6 shadow-sm transition-colors">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-            <ShieldAlert className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/60 text-foreground flex items-center justify-center font-bold shadow-xs">
+            <ShieldAlert className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs uppercase font-extrabold tracking-wider text-indigo-600 dark:text-indigo-400">
+            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
               ACID Transaction Isolation
             </div>
-            <h3 className="text-xl font-bold text-foreground">
+            <h3 className="text-xl font-bold tracking-tight text-foreground">
               Concurrency Anomaly &amp; Isolation Level Stepper
             </h3>
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-mono text-xs font-bold">
+        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-foreground font-mono text-xs">
           🛡️ Required: {currentTimeline.isolationRequired}
         </span>
       </div>
@@ -105,62 +105,67 @@ export function TransactionAnomalyStepper() {
           { id: 'non-repeatable-read' as const, name: '2. Non-Repeatable Read', sub: 'Row value mutates mid-transaction' },
           { id: 'phantom-read' as const, name: '3. Phantom Read', sub: 'Range query count changes' },
           { id: 'write-skew' as const, name: '4. Write Skew', sub: 'Disjoint writes violate constraint' },
-        ].map((item) => (
-          <button
-            key={item.id}
-            onClick={() => {
-              setAnomaly(item.id);
-              setStepIdx(0);
-            }}
-            className={`p-3.5 rounded-2xl border text-left font-mono text-xs transition-all ${
-              anomaly === item.id
-                ? 'bg-indigo-600 text-white shadow-md border-indigo-500 font-bold'
-                : 'bg-card border-border text-foreground hover:border-indigo-500'
-            }`}
-          >
-            <div className="font-bold">{item.name}</div>
-            <div className={`text-[10px] ${anomaly === item.id ? 'text-indigo-100' : 'text-muted-foreground'}`}>
-              {item.sub}
-            </div>
-          </button>
-        ))}
+        ].map((item) => {
+          const isSelected = anomaly === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => {
+                setAnomaly(item.id);
+                setStepIdx(0);
+              }}
+              className={`p-3.5 rounded-xl border text-left font-mono text-xs transition-all ${
+                isSelected
+                  ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
+                  : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
+              }`}
+            >
+              <div className="font-bold">{item.name}</div>
+              <div className={`text-[10px] mt-0.5 ${isSelected ? 'text-background/80' : 'text-muted-foreground'}`}>
+                {item.sub}
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       {/* Concurrent Timeline Grid */}
-      <div className="p-6 rounded-3xl bg-slate-950 text-slate-100 border border-slate-800 space-y-6 font-mono text-xs shadow-inner">
-        <div className="text-slate-400 text-[11px] border-b border-slate-800 pb-2 flex items-center justify-between">
+      <div className="p-6 rounded-2xl bg-zinc-950 text-zinc-100 dark:bg-black border border-border/80 space-y-5 font-mono text-xs shadow-inner">
+        <div className="text-zinc-400 text-[11px] border-b border-zinc-800 pb-2 flex items-center justify-between">
           <span>Concurrency Timeline: {currentTimeline.title}</span>
-          <span className="text-indigo-400 font-bold">Time: {currentStep.time}</span>
+          <span className="text-zinc-200 font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800">
+            Time: {currentStep.time}
+          </span>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
           {/* Session A */}
-          <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
-            <div className="flex items-center justify-between text-indigo-400 font-bold border-b border-slate-800 pb-1">
+          <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-2">
+            <div className="flex items-center justify-between text-zinc-200 font-bold border-b border-zinc-800 pb-1">
               <span>Session A (Transaction #1)</span>
-              <span className="text-[10px] text-slate-500">Client 1</span>
+              <span className="text-[10px] text-zinc-500">Client 1</span>
             </div>
-            <pre className="text-emerald-300 min-h-[60px] whitespace-pre-wrap leading-relaxed py-1">
+            <pre className="text-emerald-400 min-h-[60px] whitespace-pre-wrap leading-relaxed py-1 font-mono">
               {currentStep.sessionA || '(Idle / Waiting for next step)'}
             </pre>
           </div>
 
           {/* Session B */}
-          <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
-            <div className="flex items-center justify-between text-purple-400 font-bold border-b border-slate-800 pb-1">
+          <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-2">
+            <div className="flex items-center justify-between text-zinc-200 font-bold border-b border-zinc-800 pb-1">
               <span>Session B (Transaction #2)</span>
-              <span className="text-[10px] text-slate-500">Client 2</span>
+              <span className="text-[10px] text-zinc-500">Client 2</span>
             </div>
-            <pre className="text-amber-300 min-h-[60px] whitespace-pre-wrap leading-relaxed py-1">
+            <pre className="text-amber-400 min-h-[60px] whitespace-pre-wrap leading-relaxed py-1 font-mono">
               {currentStep.sessionB || '(Idle / Waiting for next step)'}
             </pre>
           </div>
         </div>
 
         {/* Step Explanation */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
-          <span className="text-indigo-400 font-bold">Step Narration:</span>
-          <p className="text-slate-200 text-xs leading-relaxed">{currentStep.explanation}</p>
+        <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-1.5">
+          <span className="text-zinc-200 font-bold block">Step Narration:</span>
+          <p className="text-zinc-300 text-xs leading-relaxed">{currentStep.explanation}</p>
         </div>
       </div>
 
@@ -173,7 +178,7 @@ export function TransactionAnomalyStepper() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setStepIdx(0)}
-            className="p-2.5 rounded-xl border border-border hover:bg-card text-foreground transition"
+            className="p-2 rounded-lg border border-border bg-card hover:bg-muted/40 text-foreground transition"
             title="Reset"
           >
             <RotateCcw className="w-4 h-4" />
@@ -182,7 +187,7 @@ export function TransactionAnomalyStepper() {
           <button
             onClick={() => setStepIdx((prev) => (prev < currentTimeline.steps.length - 1 ? prev + 1 : prev))}
             disabled={stepIdx >= currentTimeline.steps.length - 1}
-            className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold text-xs transition shadow-md flex items-center gap-1.5"
+            className="px-4 py-2 rounded-lg bg-foreground hover:bg-foreground/90 disabled:opacity-50 text-background font-semibold text-xs transition shadow-xs flex items-center gap-1.5"
           >
             <span>Next Step</span>
             <ChevronRight className="w-4 h-4" />

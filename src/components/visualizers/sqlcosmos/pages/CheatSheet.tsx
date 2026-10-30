@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Bookmark, Check, Copy, Database, Search, Terminal } from 'lucide-react';
+import { Bookmark, Check, Copy, Database, Search } from 'lucide-react';
 import { SQL_CHEATSHEET } from '../data/cheatsheet';
 
 export default function CheatSheet() {
@@ -25,15 +25,16 @@ export default function CheatSheet() {
   })).filter((sec) => sec.snippets.length > 0);
 
   return (
-    <div className="space-y-8 pb-20 max-w-6xl mx-auto px-4 sm:px-6 pt-10">
-      <div className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest">
-          <Bookmark className="w-3.5 h-3.5" /> Performance &amp; Analytics Vault
+    <div className="space-y-8 pb-24 max-w-6xl mx-auto px-4 sm:px-6 pt-10">
+      <div className="space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/40 text-foreground font-mono text-xs font-medium">
+          <Bookmark className="w-3.5 h-3.5 text-muted-foreground" />
+          <span>Performance &amp; Analytics Vault</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-foreground tracking-tight">
           SQL Production Performance Cheat Sheet
         </h1>
-        <p className="text-muted-foreground text-sm sm:text-base">
+        <p className="text-muted-foreground text-sm sm:text-base max-w-3xl leading-relaxed">
           Covering index patterns, window functions, recursive CTEs, and query optimization recipes.
         </p>
       </div>
@@ -46,7 +47,7 @@ export default function CheatSheet() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search recipes (e.g. covering index, LAG, recursive CTE, partial index)..."
-          className="w-full pl-11 pr-4 py-3 rounded-2xl bg-card border border-border text-sm text-foreground focus:border-indigo-500 outline-none shadow-sm"
+          className="w-full pl-11 pr-4 py-3 rounded-xl bg-card border border-border text-sm text-foreground focus:border-foreground/50 outline-none shadow-xs font-mono"
         />
       </div>
 
@@ -54,8 +55,8 @@ export default function CheatSheet() {
       <div className="space-y-8">
         {filteredSections.map((sec) => (
           <div key={sec.id} className="space-y-4">
-            <h2 className="text-lg font-bold text-foreground border-b border-border pb-2 flex items-center gap-2">
-              <Database className="w-4 h-4 text-indigo-500" />
+            <h2 className="text-lg font-bold text-foreground border-b border-border/70 pb-2 flex items-center gap-2">
+              <Database className="w-4 h-4 text-muted-foreground" />
               <span>{sec.title}</span>
             </h2>
 
@@ -63,7 +64,7 @@ export default function CheatSheet() {
               {sec.snippets.map((snip, idx) => {
                 const uniqueId = `${sec.id}-${idx}`;
                 return (
-                  <div key={idx} className="p-5 rounded-3xl bg-card border border-border space-y-3 flex flex-col justify-between shadow-sm">
+                  <div key={idx} className="p-5 rounded-2xl bg-card border border-border space-y-3 flex flex-col justify-between shadow-xs hover:border-foreground/30 transition">
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-bold text-foreground">{snip.title}</h3>
@@ -87,11 +88,11 @@ export default function CheatSheet() {
                       <p className="text-xs text-muted-foreground">{snip.description}</p>
                     </div>
 
-                    <pre className="p-3.5 rounded-2xl bg-slate-950 text-indigo-300 font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner">
+                    <pre className="p-3.5 rounded-xl bg-zinc-950 text-emerald-400 dark:bg-black font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner border border-border/80">
                       {snip.sql}
                     </pre>
 
-                    <div className="p-2.5 rounded-xl bg-muted/40 border border-border text-[11px] text-muted-foreground">
+                    <div className="p-2.5 rounded-lg bg-muted/30 border border-border text-[11px] text-muted-foreground">
                       <strong>Pro Tip:</strong> {snip.tip}
                     </div>
                   </div>

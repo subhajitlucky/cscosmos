@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AlertCircle, AlertTriangle, CheckCircle2, Filter, Layers, Search, Sparkles, XCircle } from 'lucide-react';
+import { Filter } from 'lucide-react';
 
 interface QueryPreset {
   id: string;
@@ -51,72 +51,85 @@ export function CompositeIndexEvaluator() {
   const [selectedPreset, setSelectedPreset] = useState<QueryPreset>(PRESETS[0]);
 
   return (
-    <div className="rounded-3xl border border-indigo-500/30 bg-indigo-500/5 dark:bg-indigo-500/10 p-6 sm:p-8 space-y-6 shadow-xl my-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/20 pb-4">
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6 shadow-sm transition-colors">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-            <Filter className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/60 text-foreground flex items-center justify-center font-bold shadow-xs">
+            <Filter className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs uppercase font-extrabold tracking-wider text-indigo-600 dark:text-indigo-400">
+            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
               Query Optimization Rules
             </div>
-            <h3 className="text-xl font-bold text-foreground">
+            <h3 className="text-xl font-bold tracking-tight text-foreground">
               Composite Index &amp; Leftmost Prefix Rule Evaluator
             </h3>
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold">
+        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
           Index: ON users(country, status, created_at)
         </span>
       </div>
 
       {/* Query Presets */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {PRESETS.map((p) => (
-          <button
-            key={p.id}
-            onClick={() => setSelectedPreset(p)}
-            className={`p-4 rounded-2xl border text-left font-mono text-xs transition-all flex flex-col justify-between ${
-              selectedPreset.id === p.id
-                ? 'bg-indigo-600 text-white shadow-md border-indigo-500 font-bold'
-                : 'bg-card border-border text-foreground hover:border-indigo-500'
-            }`}
-          >
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">{p.plan}</span>
-              <div className="text-[11px] truncate">{p.sql}</div>
-            </div>
-            <div className={`text-[10px] pt-2 font-bold ${
-              selectedPreset.id === p.id ? 'text-indigo-100' : p.efficiency.includes('100%') ? 'text-emerald-500' : p.efficiency.includes('33%') ? 'text-amber-500' : 'text-rose-500'
-            }`}>
-              Efficiency: {p.efficiency}
-            </div>
-          </button>
-        ))}
+        {PRESETS.map((p) => {
+          const isSelected = selectedPreset.id === p.id;
+          return (
+            <button
+              key={p.id}
+              onClick={() => setSelectedPreset(p)}
+              className={`p-4 rounded-xl border text-left font-mono text-xs transition-all flex flex-col justify-between ${
+                isSelected
+                  ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
+                  : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
+              }`}
+            >
+              <div className="space-y-1">
+                <span className={`text-[10px] uppercase font-bold tracking-wider ${isSelected ? 'text-background/80' : 'text-muted-foreground'}`}>
+                  {p.plan}
+                </span>
+                <div className="text-[11px] truncate font-mono">{p.sql}</div>
+              </div>
+              <div className={`text-[11px] pt-2 font-bold ${
+                isSelected
+                  ? 'text-background/90'
+                  : p.efficiency.includes('100%')
+                  ? 'text-emerald-600 dark:text-emerald-400'
+                  : p.efficiency.includes('33%')
+                  ? 'text-amber-600 dark:text-amber-400'
+                  : 'text-rose-600 dark:text-rose-400'
+              }`}>
+                Efficiency: {p.efficiency}
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       {/* Index Utilization Visualizer */}
-      <div className="p-6 rounded-3xl bg-slate-950 text-slate-100 border border-slate-800 space-y-6 font-mono text-xs">
-        <div className="text-slate-400 text-[11px] border-b border-slate-800 pb-2 flex items-center justify-between">
+      <div className="p-6 rounded-2xl bg-zinc-950 text-zinc-100 dark:bg-black border border-border/80 space-y-5 font-mono text-xs shadow-inner">
+        <div className="text-zinc-400 text-[11px] border-b border-zinc-800 pb-2 flex items-center justify-between">
           <span>Active SQL Query:</span>
-          <span className="text-indigo-400 font-bold">{selectedPreset.plan}</span>
+          <span className="text-zinc-200 font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800">
+            {selectedPreset.plan}
+          </span>
         </div>
 
-        <div className="text-indigo-300 text-xs py-1">
+        <div className="text-emerald-400 text-xs py-1 font-mono">
           {selectedPreset.sql}
         </div>
 
         {/* 3-Column Indicator Meter */}
         <div className="space-y-2">
-          <span className="text-[11px] text-slate-400">Composite Index Column Utilization:</span>
+          <span className="text-[11px] text-zinc-400">Composite Index Column Utilization:</span>
           <div className="grid grid-cols-3 gap-3 text-center">
             {/* Col 1: Country */}
             <div className={`p-3.5 rounded-xl border transition-all ${
               selectedPreset.matchedColumns.includes('country')
-                ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400 font-bold'
-                : 'border-slate-800 bg-slate-900 text-slate-500'
+                ? 'border-emerald-500/50 bg-emerald-500/15 text-emerald-400 font-bold'
+                : 'border-zinc-800 bg-zinc-900/60 text-zinc-500'
             }`}>
               <div className="text-xs">Col 1: country</div>
               <div className="text-[10px] pt-1">
@@ -127,8 +140,8 @@ export function CompositeIndexEvaluator() {
             {/* Col 2: Status */}
             <div className={`p-3.5 rounded-xl border transition-all ${
               selectedPreset.matchedColumns.includes('status')
-                ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400 font-bold'
-                : 'border-slate-800 bg-slate-900 text-slate-500'
+                ? 'border-emerald-500/50 bg-emerald-500/15 text-emerald-400 font-bold'
+                : 'border-zinc-800 bg-zinc-900/60 text-zinc-500'
             }`}>
               <div className="text-xs">Col 2: status</div>
               <div className="text-[10px] pt-1">
@@ -139,8 +152,8 @@ export function CompositeIndexEvaluator() {
             {/* Col 3: Created_at */}
             <div className={`p-3.5 rounded-xl border transition-all ${
               selectedPreset.matchedColumns.includes('created_at')
-                ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400 font-bold'
-                : 'border-slate-800 bg-slate-900 text-slate-500'
+                ? 'border-emerald-500/50 bg-emerald-500/15 text-emerald-400 font-bold'
+                : 'border-zinc-800 bg-zinc-900/60 text-zinc-500'
             }`}>
               <div className="text-xs">Col 3: created_at</div>
               <div className="text-[10px] pt-1">
@@ -151,9 +164,9 @@ export function CompositeIndexEvaluator() {
         </div>
 
         {/* Explanation Card */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
-          <span className="text-indigo-400 font-bold">Execution Verdict:</span>
-          <p className="text-slate-300 text-xs leading-relaxed">{selectedPreset.description}</p>
+        <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-1.5">
+          <span className="text-zinc-200 font-bold block">Execution Verdict:</span>
+          <p className="text-zinc-300 text-xs leading-relaxed">{selectedPreset.description}</p>
         </div>
       </div>
     </div>

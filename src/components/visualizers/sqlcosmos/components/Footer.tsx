@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="w-full border-t border-border/80 bg-card/40 py-10 px-4 sm:px-6 transition-colors mt-auto">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-indigo-600 text-white font-mono font-bold text-[10px] flex items-center justify-center">
+          <div className="w-6 h-6 rounded-md bg-foreground text-background font-mono font-bold text-[10px] flex items-center justify-center">
             <Database className="w-3.5 h-3.5" />
           </div>
           <span className="font-semibold text-foreground">SQLCosmos by CSCosmos</span>

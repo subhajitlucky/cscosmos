@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CheckCircle2, Clock, Cpu, HardDrive, Search, Sparkles, Terminal, Zap } from 'lucide-react';
+import { Search, Terminal } from 'lucide-react';
 
 type ScanType = 'seq-scan' | 'index-scan' | 'index-only-scan' | 'bitmap-scan';
 
@@ -9,27 +9,26 @@ export function ExplainPlanVisualizer() {
   const [scanType, setScanType] = useState<ScanType>('index-scan');
 
   return (
-    <div className="rounded-3xl border border-indigo-500/30 bg-indigo-500/5 dark:bg-indigo-500/10 p-6 sm:p-8 space-y-6 shadow-xl my-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/20 pb-4">
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6 shadow-sm transition-colors">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-            <Search className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/60 text-foreground flex items-center justify-center font-bold shadow-xs">
+            <Search className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs uppercase font-extrabold tracking-wider text-indigo-600 dark:text-indigo-400">
+            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
               PostgreSQL Cost-Based Optimizer (CBO)
             </div>
-            <h3 className="text-xl font-bold text-foreground">
+            <h3 className="text-xl font-bold tracking-tight text-foreground">
               EXPLAIN (ANALYZE, BUFFERS) Plan Walkthrough
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Example plans for a sample <code>orders</code> table (100,000 rows) — not output from a
-              query you ran.
+              Example plans for a sample <code>orders</code> table (100,000 rows) — simulated execution metrics.
             </p>
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold">
+        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
           Illustrative Example Plan
         </span>
       </div>
@@ -41,36 +40,41 @@ export function ExplainPlanVisualizer() {
           { id: 'index-scan' as const, name: '2. Index Scan (B-Tree + Heap)', sub: 'Index point lookup + table heap fetch', speed: 'Fast (0.08ms)' },
           { id: 'index-only-scan' as const, name: '3. Index Only Scan', sub: 'Satisfied entirely inside index leaves', speed: 'Ultra-Fast (0.03ms)' },
           { id: 'bitmap-scan' as const, name: '4. Bitmap Index Scan', sub: 'Combines multiple index filters via bitmap', speed: 'Batch IO (0.4ms)' },
-        ].map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setScanType(item.id)}
-            className={`p-3.5 rounded-2xl border text-left font-mono text-xs transition-all ${
-              scanType === item.id
-                ? 'bg-indigo-600 text-white shadow-md border-indigo-500 font-bold'
-                : 'bg-card border-border text-foreground hover:border-indigo-500'
-            }`}
-          >
-            <div className="font-bold">{item.name}</div>
-            <div className={`text-[10px] ${scanType === item.id ? 'text-indigo-100' : 'text-muted-foreground'}`}>
-              {item.sub}
-            </div>
-            <div className={`text-[10px] pt-1 font-bold ${scanType === item.id ? 'text-emerald-200' : 'text-emerald-600 dark:text-emerald-400'}`}>
-              ⚡ {item.speed}
-            </div>
-          </button>
-        ))}
+        ].map((item) => {
+          const isSelected = scanType === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setScanType(item.id)}
+              className={`p-3.5 rounded-xl border text-left font-mono text-xs transition-all ${
+                isSelected
+                  ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
+                  : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
+              }`}
+            >
+              <div className="font-bold">{item.name}</div>
+              <div className={`text-[10px] mt-0.5 ${isSelected ? 'text-background/80' : 'text-muted-foreground'}`}>
+                {item.sub}
+              </div>
+              <div className={`text-[10px] pt-1.5 font-bold ${isSelected ? 'text-background' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                ⚡ {item.speed}
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       {/* Execution Plan Output Box */}
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="rounded-2xl border border-border bg-slate-950 text-slate-100 p-5 font-mono text-xs shadow-inner space-y-2">
-          <div className="flex items-center justify-between text-slate-400 text-[11px] border-b border-slate-800 pb-2">
-            <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5 text-indigo-400" /> psql explain output (example)</span>
+        <div className="rounded-2xl border border-border/80 bg-zinc-950 text-zinc-100 dark:bg-black p-5 font-mono text-xs shadow-inner space-y-2">
+          <div className="flex items-center justify-between text-zinc-400 text-[11px] border-b border-zinc-800 pb-2">
+            <span className="flex items-center gap-1.5">
+              <Terminal className="w-3.5 h-3.5 text-zinc-400" /> psql explain output (example)
+            </span>
             <span className="text-emerald-400 font-bold">Sample table: 100,000 rows</span>
           </div>
 
-          <pre className="text-indigo-300 overflow-x-auto whitespace-pre-wrap leading-relaxed py-2">
+          <pre className="text-zinc-200 overflow-x-auto whitespace-pre-wrap leading-relaxed py-2">
 {scanType === 'seq-scan' && `Seq Scan on orders (cost=0.00..1845.00 rows=2 width=32)
   Filter: (user_id = 942)
   Rows Removed by Filter: 99998
@@ -100,16 +104,15 @@ Planning Time: 0.145 ms
 Execution Time: 0.412 ms`}
           </pre>
 
-          <p className="text-[10px] text-slate-400 border-t border-slate-800 pt-2 leading-relaxed">
-            Timings are illustrative — they show where the cost sits in each plan, not measurements
-            from a live database.
+          <p className="text-[10px] text-zinc-500 border-t border-zinc-800 pt-2 leading-relaxed">
+            Timings are illustrative — showing where cost sits in each plan pattern.
           </p>
         </div>
 
         {/* Diagnostics & Cost Breakdown */}
-        <div className="p-6 rounded-3xl bg-card border border-border space-y-4 flex flex-col justify-between shadow-sm">
+        <div className="p-6 rounded-2xl bg-card border border-border space-y-4 flex flex-col justify-between shadow-xs">
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground">
               Optimizer Decision Analysis:
             </span>
             <h4 className="text-lg font-bold text-foreground">
@@ -126,9 +129,9 @@ Execution Time: 0.412 ms`}
             </p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-muted/40 border border-border font-mono text-xs space-y-1">
-            <div className="text-foreground font-bold">CBO Cost Formula:</div>
-            <div className="text-slate-500">Cost = (pages * seq_page_cost) + (tuples * cpu_tuple_cost)</div>
+          <div className="p-3.5 rounded-xl bg-zinc-950 text-zinc-300 dark:bg-black border border-border/80 font-mono text-xs space-y-1">
+            <div className="text-zinc-100 font-bold">CBO Cost Formula:</div>
+            <div className="text-zinc-400">Cost = (pages * seq_page_cost) + (tuples * cpu_tuple_cost)</div>
           </div>
         </div>
       </div>

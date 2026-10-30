@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ArrowLeft, Bookmark, BookOpen, ChevronDown, Database, GitMerge, HardDrive, HelpCircle, Layers, Play, Search, ShieldCheck, Sparkles, Terminal } from 'lucide-react';
+import { ArrowLeft, Bookmark, BookOpen, ChevronDown, Database, GitMerge, HelpCircle, Layers, Search, Terminal } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 export function Navbar() {
@@ -12,10 +12,10 @@ export function Navbar() {
 
   const primaryLinks = [
     { label: 'Concepts', href: '/sqlcosmos/concepts', icon: BookOpen },
-    { label: 'B+ Tree Index Lab', href: '/sqlcosmos/index-lab', icon: Layers },
+    { label: 'B+ Tree Lab', href: '/sqlcosmos/index-lab', icon: Layers },
     { label: 'EXPLAIN Lab', href: '/sqlcosmos/explain-lab', icon: Search },
     { label: 'Joins Engine', href: '/sqlcosmos/joins-lab', icon: GitMerge },
-    { label: 'SQL Playground', href: '/sqlcosmos/playground', icon: Terminal },
+    { label: 'Playground', href: '/sqlcosmos/playground', icon: Terminal },
   ];
 
   const toolsLinks = [
@@ -41,14 +41,14 @@ export function Navbar() {
           </Link>
 
           <Link href="/sqlcosmos" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-extrabold flex items-center justify-center text-sm shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-lg bg-foreground text-background font-mono font-bold flex items-center justify-center text-sm shadow-xs group-hover:scale-105 transition-transform">
               <Database className="w-4 h-4" />
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-sm tracking-tight text-foreground flex items-center gap-1">
-                SQLCosmos <Sparkles className="w-3 h-3 text-indigo-500" />
+              <span className="font-bold text-sm tracking-tight text-foreground flex items-center gap-1">
+                SQLCosmos
               </span>
-              <span className="text-[10px] font-mono text-muted-foreground -mt-0.5">Query &amp; Index Engine</span>
+              <span className="text-[10px] font-mono text-muted-foreground -mt-0.5">Query &amp; Storage Engine</span>
             </div>
           </Link>
         </div>
@@ -62,9 +62,9 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-indigo-600 text-white shadow-sm'
+                    ? 'bg-foreground text-background font-semibold shadow-xs'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                 }`}
               >
@@ -77,11 +77,12 @@ export function Navbar() {
           {/* Tools Dropdown */}
           <div className="relative">
             <button
+              type="button"
               onClick={() => setToolsOpen((prev) => !prev)}
               onBlur={() => setTimeout(() => setToolsOpen(false), 200)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
                 isToolsActive
-                  ? 'bg-indigo-600/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30'
+                  ? 'bg-muted text-foreground border border-border font-semibold'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
               }`}
             >
@@ -90,7 +91,7 @@ export function Navbar() {
             </button>
 
             {toolsOpen && (
-              <div className="absolute right-0 mt-2 w-56 p-2 rounded-2xl bg-card border border-border shadow-xl space-y-1 z-50 animate-in fade-in slide-in-from-top-1">
+              <div className="absolute right-0 mt-2 w-56 p-1.5 rounded-xl bg-card border border-border shadow-xl space-y-1 z-50 animate-in fade-in slide-in-from-top-1">
                 {toolsLinks.map((tool) => {
                   const Icon = tool.icon;
                   const isActive = pathname === tool.href;
@@ -98,9 +99,9 @@ export function Navbar() {
                     <Link
                       key={tool.href}
                       href={tool.href}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition ${
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${
                         isActive
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-foreground text-background font-semibold'
                           : 'text-foreground hover:bg-muted/60'
                       }`}
                     >

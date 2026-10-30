@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ArrowDown, ArrowRight, CheckCircle2, ChevronRight, Layers, RotateCcw, Search, Sparkles, Terminal } from 'lucide-react';
+import { ArrowDown, ArrowRight, Layers, RotateCcw } from 'lucide-react';
 
 interface TraversalStep {
   level: 'Root' | 'Branch' | 'Leaf' | 'Heap';
@@ -163,30 +163,30 @@ export function BTreeIndexVisualizer() {
   const currentStep = steps[stepIdx] || steps[0];
 
   return (
-    <div className="rounded-3xl border border-indigo-500/30 bg-indigo-500/5 dark:bg-indigo-500/10 p-6 sm:p-8 space-y-6 shadow-xl my-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/20 pb-4">
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6 shadow-sm transition-colors">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/70 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-            <Layers className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/60 text-foreground flex items-center justify-center font-bold shadow-xs">
+            <Layers className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs uppercase font-extrabold tracking-wider text-indigo-600 dark:text-indigo-400">
-              Database Physical Storage Engine
+            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
+              Physical Storage Engine
             </div>
-            <h3 className="text-xl font-bold text-foreground">
+            <h3 className="text-xl font-bold tracking-tight text-foreground">
               B+ Tree Index Traversal &amp; Leaf Page Stepper
             </h3>
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold">
+        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
           Step {stepIdx + 1} of {steps.length} • O(log N) Point Lookup
         </span>
       </div>
 
       {/* Target Selector */}
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-xs font-bold text-muted-foreground">Select Search Target ID:</span>
+        <span className="text-xs font-semibold text-muted-foreground">Select Search Target ID:</span>
         <div className="flex flex-wrap gap-2">
           {([18, 45, 82] as const).map((id) => {
             const isSelected = targetId === id;
@@ -199,10 +199,10 @@ export function BTreeIndexVisualizer() {
                   setTargetId(id);
                   setStepIdx(0);
                 }}
-                className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold transition border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                className={`px-3 py-1.5 rounded-lg font-mono text-xs font-medium transition border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 ${
                   isSelected
-                    ? 'bg-indigo-600 text-white border-indigo-500 shadow-md'
-                    : 'bg-card border-border hover:border-slate-400 text-muted-foreground hover:text-foreground'
+                    ? 'bg-foreground text-background border-foreground font-bold shadow-xs'
+                    : 'bg-muted/40 border-border hover:bg-muted text-muted-foreground hover:text-foreground'
                 }`}
               >
                 id = {id} ({cfg.name})
@@ -213,81 +213,83 @@ export function BTreeIndexVisualizer() {
       </div>
 
       {/* B+ Tree Visual Nodes Hierarchy */}
-      <div className="p-6 rounded-3xl bg-slate-950 text-slate-100 border border-slate-800 space-y-4 font-mono text-xs shadow-inner">
+      <div className="p-6 rounded-2xl bg-zinc-950 text-zinc-100 dark:bg-black border border-border/80 space-y-4 font-mono text-xs shadow-inner">
         {/* Tier 1: Root Node */}
-        <div className={`p-3.5 rounded-2xl border transition-all ${
-          currentStep.level === 'Root' ? 'border-indigo-500 bg-indigo-500/20 shadow-md scale-[1.02]' : 'border-slate-800 bg-slate-900/60 opacity-60'
+        <div className={`p-3.5 rounded-xl border transition-all ${
+          currentStep.level === 'Root' ? 'border-foreground/50 bg-zinc-900/90 shadow-xs' : 'border-zinc-800 bg-zinc-900/40 opacity-70'
         }`}>
-          <div className="flex items-center justify-between text-[11px] pb-1 border-b border-slate-800">
-            <span className="text-indigo-400 font-bold">Root Page #1 (Disk Block: 0x01)</span>
-            <span className="text-slate-400">8 KB Page</span>
+          <div className="flex items-center justify-between text-[11px] pb-1 border-b border-zinc-800">
+            <span className="text-zinc-200 font-bold">Root Page #1 (Disk Block: 0x01)</span>
+            <span className="text-zinc-400">8 KB Page</span>
           </div>
-          <div className="flex items-center justify-center gap-4 pt-2">
+          <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
             <span className={`p-1.5 px-3 rounded-lg border transition-all ${
-              currentStep.level === 'Root' && targetId === 18 ? 'bg-indigo-600 text-white font-bold animate-pulse' : 'bg-slate-800 text-slate-300'
+              currentStep.level === 'Root' && targetId === 18 ? 'bg-foreground text-background font-bold shadow-xs' : 'bg-zinc-800 border-zinc-700 text-zinc-300'
             }`}>
               ptr_0 (&lt; 30)
             </span>
-            <span className="text-indigo-300 font-bold">[ Key: 30 ]</span>
+            <span className="text-zinc-400 font-bold">[ Key: 30 ]</span>
             <span className={`p-1.5 px-3 rounded-lg border transition-all ${
-              currentStep.level === 'Root' && targetId === 45 ? 'bg-indigo-600 text-white font-bold animate-pulse' : 'bg-slate-800 text-slate-300'
+              currentStep.level === 'Root' && targetId === 45 ? 'bg-foreground text-background font-bold shadow-xs' : 'bg-zinc-800 border-zinc-700 text-zinc-300'
             }`}>
               ptr_1 (30 - 70)
             </span>
-            <span className="text-indigo-300 font-bold">[ Key: 70 ]</span>
+            <span className="text-zinc-400 font-bold">[ Key: 70 ]</span>
             <span className={`p-1.5 px-3 rounded-lg border transition-all ${
-              currentStep.level === 'Root' && targetId === 82 ? 'bg-indigo-600 text-white font-bold animate-pulse' : 'bg-slate-800 text-slate-300'
+              currentStep.level === 'Root' && targetId === 82 ? 'bg-foreground text-background font-bold shadow-xs' : 'bg-zinc-800 border-zinc-700 text-zinc-300'
             }`}>
               ptr_2 (&gt; 70)
             </span>
           </div>
         </div>
 
-        <div className="flex justify-center text-slate-600">
+        <div className="flex justify-center text-zinc-600">
           <ArrowDown className="w-4 h-4" />
         </div>
 
         {/* Tier 2: Branch Node */}
-        <div className={`p-3.5 rounded-2xl border transition-all ${
-          currentStep.level === 'Branch' ? 'border-purple-500 bg-purple-500/20 shadow-md scale-[1.02]' : 'border-slate-800 bg-slate-900/60 opacity-60'
+        <div className={`p-3.5 rounded-xl border transition-all ${
+          currentStep.level === 'Branch' ? 'border-foreground/50 bg-zinc-900/90 shadow-xs' : 'border-zinc-800 bg-zinc-900/40 opacity-70'
         }`}>
-          <div className="flex items-center justify-between text-[11px] pb-1 border-b border-slate-800">
-            <span className="text-purple-400 font-bold">{currentConfig.branchPage}</span>
-            <span className="text-slate-400">Internal Routing Page</span>
+          <div className="flex items-center justify-between text-[11px] pb-1 border-b border-zinc-800">
+            <span className="text-zinc-200 font-bold">{currentConfig.branchPage}</span>
+            <span className="text-zinc-400">Internal Routing Page</span>
           </div>
-          <div className="flex items-center justify-center gap-4 pt-2">
-            <span className="p-1.5 px-3 rounded-lg bg-slate-800 border border-slate-700">ptr_0 (&lt; {currentConfig.branchKeys[0]})</span>
-            <span className="text-purple-300 font-bold">[ Key: {currentConfig.branchKeys[0]} ]</span>
-            <span className={`p-1.5 px-3 rounded-lg border ${currentStep.level === 'Branch' ? 'bg-purple-600 text-white font-bold animate-pulse' : 'bg-slate-800 text-slate-300'}`}>
+          <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
+            <span className="p-1.5 px-3 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400">ptr_0 (&lt; {currentConfig.branchKeys[0]})</span>
+            <span className="text-zinc-300 font-bold">[ Key: {currentConfig.branchKeys[0]} ]</span>
+            <span className={`p-1.5 px-3 rounded-lg border transition-all ${
+              currentStep.level === 'Branch' ? 'bg-foreground text-background font-bold shadow-xs' : 'bg-zinc-800 border-zinc-700 text-zinc-300'
+            }`}>
               ptr_1 ({currentConfig.branchKeys[0]} - {currentConfig.branchKeys[1]})
             </span>
-            <span className="text-purple-300 font-bold">[ Key: {currentConfig.branchKeys[1]} ]</span>
-            <span className="p-1.5 px-3 rounded-lg bg-slate-800 border border-slate-700">ptr_2 (&gt; {currentConfig.branchKeys[1]})</span>
+            <span className="text-zinc-300 font-bold">[ Key: {currentConfig.branchKeys[1]} ]</span>
+            <span className="p-1.5 px-3 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400">ptr_2 (&gt; {currentConfig.branchKeys[1]})</span>
           </div>
         </div>
 
-        <div className="flex justify-center text-slate-600">
+        <div className="flex justify-center text-zinc-600">
           <ArrowDown className="w-4 h-4" />
         </div>
 
         {/* Tier 3: Leaf Pages (Linked List) */}
-        <div className={`p-3.5 rounded-2xl border transition-all ${
-          currentStep.level === 'Leaf' ? 'border-emerald-500 bg-emerald-500/20 shadow-md scale-[1.02]' : 'border-slate-800 bg-slate-900/60 opacity-60'
+        <div className={`p-3.5 rounded-xl border transition-all ${
+          currentStep.level === 'Leaf' ? 'border-emerald-500/50 bg-zinc-900/90 shadow-xs' : 'border-zinc-800 bg-zinc-900/40 opacity-70'
         }`}>
-          <div className="flex items-center justify-between text-[11px] pb-1 border-b border-slate-800">
-            <span className="text-emerald-400 font-bold">{currentConfig.leafPage}</span>
-            <span className="text-slate-400">Record Pointers</span>
+          <div className="flex items-center justify-between text-[11px] pb-1 border-b border-zinc-800">
+            <span className="text-zinc-200 font-bold">{currentConfig.leafPage}</span>
+            <span className="text-zinc-400">Record Pointers</span>
           </div>
-          <div className="flex items-center justify-center gap-3 pt-2">
+          <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
             {currentConfig.leafEntries.map((ent, idx) => {
               const isMatch = ent.id === targetId;
               return (
                 <React.Fragment key={ent.id}>
-                  {idx > 0 && <span>⇄</span>}
+                  {idx > 0 && <span className="text-zinc-500">⇄</span>}
                   <span className={`p-1.5 px-3 rounded-lg border transition-all ${
                     isMatch && currentStep.level === 'Leaf'
-                      ? 'bg-emerald-600 text-white font-bold animate-pulse shadow-md'
-                      : 'bg-slate-800 text-slate-400'
+                      ? 'border-emerald-500/60 bg-emerald-950/40 text-emerald-300 font-bold shadow-xs'
+                      : 'bg-zinc-800 border-zinc-700 text-zinc-400'
                   }`}>
                     [ id: {ent.id} ➔ {ent.block} ]
                   </span>
@@ -299,9 +301,9 @@ export function BTreeIndexVisualizer() {
       </div>
 
       {/* Step Description & Stepper Controls */}
-      <div className="p-4 rounded-2xl bg-card border border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-4 rounded-xl bg-muted/30 border border-border flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-xs text-foreground font-mono space-y-1">
-          <span className="text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider block">
+          <span className="text-foreground font-bold uppercase tracking-wider block">
             {currentStep.action}
           </span>
           <p className="text-muted-foreground">{currentStep.description}</p>
@@ -311,7 +313,7 @@ export function BTreeIndexVisualizer() {
           <button
             type="button"
             onClick={() => setStepIdx(0)}
-            className="p-2 rounded-xl border border-border hover:bg-muted text-muted-foreground hover:text-foreground text-xs"
+            className="p-2 rounded-lg border border-border hover:bg-muted text-muted-foreground hover:text-foreground text-xs transition"
             title="Reset Stepper"
           >
             <RotateCcw className="w-4 h-4" />
@@ -319,7 +321,7 @@ export function BTreeIndexVisualizer() {
           <button
             type="button"
             onClick={() => setStepIdx((prev) => (prev < steps.length - 1 ? prev + 1 : 0))}
-            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-md"
+            className="px-4 py-2 rounded-lg bg-foreground text-background hover:opacity-90 font-bold text-xs flex items-center gap-1.5 shadow-xs transition"
           >
             <span>{stepIdx < steps.length - 1 ? 'Next Step' : 'Restart Stepper'}</span>
             <ArrowRight className="w-3.5 h-3.5" />
