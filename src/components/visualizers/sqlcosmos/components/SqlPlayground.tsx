@@ -164,7 +164,7 @@ export function SqlPlayground({ defaultTab = 'scratchpad' }: SqlPlaygroundProps 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveTab('scratchpad')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition border flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors border flex items-center gap-1.5 ${
               activeTab === 'scratchpad'
                 ? 'bg-foreground text-background border-foreground shadow-xs'
                 : 'bg-card border-border text-foreground hover:bg-muted/40'
@@ -176,7 +176,7 @@ export function SqlPlayground({ defaultTab = 'scratchpad' }: SqlPlaygroundProps 
 
           <button
             onClick={() => setActiveTab('challenges')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition border flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors border flex items-center gap-1.5 ${
               activeTab === 'challenges'
                 ? 'bg-foreground text-background border-foreground shadow-xs'
                 : 'bg-card border-border text-foreground hover:bg-muted/40'
@@ -185,7 +185,7 @@ export function SqlPlayground({ defaultTab = 'scratchpad' }: SqlPlaygroundProps 
             <Trophy className="w-3.5 h-3.5" />
             <span>Guided Challenges</span>
             {completedChallenges.size > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono">
+              <span className="px-1.5 py-0.2 rounded-md text-[10px] bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono tabular-nums">
                 {completedChallenges.size}/{CHALLENGES.length}
               </span>
             )}
@@ -193,7 +193,7 @@ export function SqlPlayground({ defaultTab = 'scratchpad' }: SqlPlaygroundProps 
 
           <button
             onClick={() => setActiveTab('schema')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition border flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors border flex items-center gap-1.5 ${
               activeTab === 'schema'
                 ? 'bg-foreground text-background border-foreground shadow-xs'
                 : 'bg-card border-border text-foreground hover:bg-muted/40'
@@ -239,7 +239,7 @@ export function SqlPlayground({ defaultTab = 'scratchpad' }: SqlPlaygroundProps 
               <div className="p-4 rounded-xl border border-border bg-muted/20 space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono border border-border bg-muted/40 text-muted-foreground uppercase">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono border border-border bg-muted/40 text-muted-foreground">
                       {activeChallenge.difficulty}
                     </span>
                     <span className="font-bold text-sm text-foreground">{activeChallenge.title}</span>
@@ -259,7 +259,7 @@ export function SqlPlayground({ defaultTab = 'scratchpad' }: SqlPlaygroundProps 
                     onClick={() => setShowHint((prev) => !prev)}
                     className="text-muted-foreground hover:text-foreground underline font-mono text-[11px]"
                   >
-                    {showHint ? 'Hide Hint' : '💡 Show Hint'}
+                    {showHint ? 'Hide hint' : 'Show hint'}
                   </button>
                   {showHint && (
                     <span className="text-zinc-400 font-mono text-[11px]">

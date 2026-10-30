@@ -170,8 +170,8 @@ export function BTreeIndexVisualizer() {
             <Layers className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
-              Physical Storage Engine
+            <div className="text-xs font-mono text-muted-foreground">
+              Physical storage engine
             </div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">
               B+ Tree Index Traversal &amp; Leaf Page Stepper
@@ -179,14 +179,14 @@ export function BTreeIndexVisualizer() {
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
-          Step {stepIdx + 1} of {steps.length} • O(log N) Point Lookup
+        <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs tabular-nums">
+          Step {stepIdx + 1} of {steps.length} • O(log N) point lookup
         </span>
       </div>
 
       {/* Target Selector */}
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-xs font-semibold text-muted-foreground">Select Search Target ID:</span>
+        <span className="text-xs font-medium text-muted-foreground">Select search target ID:</span>
         <div className="flex flex-wrap gap-2">
           {([18, 45, 82] as const).map((id) => {
             const isSelected = targetId === id;
@@ -199,9 +199,9 @@ export function BTreeIndexVisualizer() {
                   setTargetId(id);
                   setStepIdx(0);
                 }}
-                className={`px-3 py-1.5 rounded-lg font-mono text-xs font-medium transition border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 ${
+                className={`px-3 py-1.5 rounded-lg font-mono text-xs font-medium transition-colors border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 ${
                   isSelected
-                    ? 'bg-foreground text-background border-foreground font-bold shadow-xs'
+                    ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
                     : 'bg-muted/40 border-border hover:bg-muted text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -303,7 +303,7 @@ export function BTreeIndexVisualizer() {
       {/* Step Description & Stepper Controls */}
       <div className="p-4 rounded-xl bg-muted/30 border border-border flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-xs text-foreground font-mono space-y-1">
-          <span className="text-foreground font-bold uppercase tracking-wider block">
+          <span className="text-xs font-mono font-bold text-foreground block">
             {currentStep.action}
           </span>
           <p className="text-muted-foreground">{currentStep.description}</p>

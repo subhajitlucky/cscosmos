@@ -31,7 +31,7 @@ export function Navbar() {
           </Link>
 
           <Link href="/sqlcosmos" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-foreground text-background font-mono font-bold flex items-center justify-center text-sm shadow-xs group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-lg bg-foreground text-background font-mono font-bold flex items-center justify-center text-sm shadow-xs transition-colors">
               <Database className="w-4 h-4" />
             </div>
             <div className="flex flex-col">
@@ -52,7 +52,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   isActive
                     ? 'bg-foreground text-background font-semibold shadow-xs'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
@@ -91,7 +91,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                   isActive
                     ? 'bg-foreground text-background font-semibold'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'

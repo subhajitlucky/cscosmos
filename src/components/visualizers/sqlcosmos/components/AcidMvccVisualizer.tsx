@@ -57,8 +57,8 @@ export function AcidMvccVisualizer() {
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
-              PostgreSQL / InnoDB Storage Internals
+            <div className="text-xs font-mono text-muted-foreground">
+              Storage engine internals
             </div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">
               MVCC Tuple Versioning &amp; AutoVacuum Simulator
@@ -66,15 +66,15 @@ export function AcidMvccVisualizer() {
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
-          Readers Never Block Writers • Writers Never Block Readers
+        <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+          Readers never block writers • Writers never block readers
         </span>
       </div>
 
       {/* Tuples on Disk Table */}
       <div className="space-y-3 font-mono text-xs">
-        <span className="text-muted-foreground font-semibold uppercase tracking-wider block text-[11px]">
-          Physical Disk Block Page Tuples:
+        <span className="text-xs font-mono text-muted-foreground block">
+          Physical disk block page tuples:
         </span>
         <div className="space-y-2">
           {tuples.map((t, idx) => (

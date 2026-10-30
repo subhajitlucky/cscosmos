@@ -58,8 +58,8 @@ export function CompositeIndexEvaluator() {
             <Filter className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
-              Query Optimization Rules
+            <div className="text-xs font-mono text-muted-foreground">
+              Query optimization rules
             </div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">
               Composite Index &amp; Leftmost Prefix Rule Evaluator
@@ -67,7 +67,7 @@ export function CompositeIndexEvaluator() {
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+        <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
           Index: ON users(country, status, created_at)
         </span>
       </div>
@@ -80,14 +80,14 @@ export function CompositeIndexEvaluator() {
             <button
               key={p.id}
               onClick={() => setSelectedPreset(p)}
-              className={`p-4 rounded-xl border text-left font-mono text-xs transition-all flex flex-col justify-between ${
+              className={`p-4 rounded-lg border text-left font-mono text-xs transition-colors flex flex-col justify-between ${
                 isSelected
                   ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
                   : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
               }`}
             >
               <div className="space-y-1">
-                <span className={`text-[10px] uppercase font-bold tracking-wider ${isSelected ? 'text-background/80' : 'text-muted-foreground'}`}>
+                <span className={`text-[10px] font-mono ${isSelected ? 'text-background/80' : 'text-muted-foreground'}`}>
                   {p.plan}
                 </span>
                 <div className="text-[11px] truncate font-mono">{p.sql}</div>

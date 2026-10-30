@@ -69,8 +69,8 @@ export function SchemaErVisualizer() {
             <Database className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
-              Schema Architecture
+            <div className="text-xs font-mono text-muted-foreground">
+              Relational data modeling
             </div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">
               Relational Schema &amp; Foreign Key Entity Diagram
@@ -78,8 +78,8 @@ export function SchemaErVisualizer() {
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
-          Interactive Schema Explorer
+        <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+          Interactive schema explorer
         </span>
       </div>
 

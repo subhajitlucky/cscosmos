@@ -32,8 +32,8 @@ export function WindowFunctionVisualizer() {
             <Table className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
-              Advanced Analytical SQL
+            <div className="text-xs font-mono text-muted-foreground">
+              Analytical query processing
             </div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">
               Window Functions &amp; Frame Partitions Visualizer
@@ -41,7 +41,7 @@ export function WindowFunctionVisualizer() {
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+        <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
           OVER (PARTITION BY dept ORDER BY salary DESC)
         </span>
       </div>
@@ -58,7 +58,7 @@ export function WindowFunctionVisualizer() {
             <button
               key={item.id}
               onClick={() => setMode(item.id)}
-              className={`p-3.5 rounded-xl border text-left font-mono text-xs transition-all ${
+              className={`p-3.5 rounded-lg border text-left font-mono text-xs transition-colors ${
                 isSelected
                   ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
                   : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'

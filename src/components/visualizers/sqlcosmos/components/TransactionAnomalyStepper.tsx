@@ -84,8 +84,8 @@ export function TransactionAnomalyStepper() {
             <ShieldAlert className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
-              ACID Transaction Isolation
+            <div className="text-xs font-mono text-muted-foreground">
+              Transaction isolation models
             </div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">
               Concurrency Anomaly &amp; Isolation Level Stepper
@@ -93,8 +93,8 @@ export function TransactionAnomalyStepper() {
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-foreground font-mono text-xs">
-          🛡️ Required: {currentTimeline.isolationRequired}
+        <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+          Required: {currentTimeline.isolationRequired}
         </span>
       </div>
 
@@ -114,7 +114,7 @@ export function TransactionAnomalyStepper() {
                 setAnomaly(item.id);
                 setStepIdx(0);
               }}
-              className={`p-3.5 rounded-xl border text-left font-mono text-xs transition-all ${
+              className={`p-3.5 rounded-lg border text-left font-mono text-xs transition-colors ${
                 isSelected
                   ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
                   : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'

@@ -27,11 +27,11 @@ export default function CheatSheet() {
   return (
     <div className="space-y-8 pb-24 max-w-6xl mx-auto px-4 sm:px-6 pt-10">
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/40 text-foreground font-mono text-xs font-medium">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
           <Bookmark className="w-3.5 h-3.5 text-muted-foreground" />
-          <span>Performance &amp; Analytics Vault</span>
+          <span>Performance &amp; analytics vault</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
           SQL Production Performance Cheat Sheet
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base max-w-3xl leading-relaxed">
@@ -46,8 +46,8 @@ export default function CheatSheet() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search recipes (e.g. covering index, LAG, recursive CTE, partial index)..."
-          className="w-full pl-11 pr-4 py-3 rounded-xl bg-card border border-border text-sm text-foreground focus:border-foreground/50 outline-none shadow-xs font-mono"
+          placeholder="Search performance recipes (e.g. covering index, window frames, CTE)..."
+          className="w-full pl-11 pr-4 py-2.5 rounded-lg bg-card border border-border text-xs text-foreground focus:border-foreground/50 outline-none shadow-xs font-mono"
         />
       </div>
 

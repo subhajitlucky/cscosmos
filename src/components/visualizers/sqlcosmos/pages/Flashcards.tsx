@@ -28,11 +28,11 @@ export default function Flashcards() {
   return (
     <div className="space-y-8 pb-24 max-w-4xl mx-auto px-4 sm:px-6 pt-10">
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/40 text-foreground font-mono text-xs font-medium">
-          <Database className="w-3.5 h-3.5 text-muted-foreground" />
-          <span>Spaced Recall Trainer • 18 Staff/Senior Cards</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+          <Database className="w-3.5 h-3.5" />
+          <span>Spaced recall trainer • 18 staff/senior questions</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-foreground tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
           SQL &amp; Database Senior Interview Flashcards
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
@@ -52,7 +52,7 @@ export default function Flashcards() {
                 setCurrentIndex(0);
                 setIsFlipped(false);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all border ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
                 isSelected
                   ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
                   : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
@@ -82,16 +82,16 @@ export default function Flashcards() {
             handlePrev();
           }
         }}
-        className="min-h-[360px] p-8 rounded-2xl border border-border bg-card hover:border-foreground/40 shadow-sm cursor-pointer transition-all flex flex-col justify-between select-none relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20"
+        className="min-h-[360px] p-8 rounded-xl border border-border bg-card hover:border-foreground/40 shadow-xs cursor-pointer transition-colors flex flex-col justify-between select-none relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20"
       >
         <div className="flex items-center justify-between border-b border-border/70 pb-3">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full border border-border bg-muted/30 text-foreground text-xs font-mono font-medium">
+            <span className="px-2.5 py-0.5 rounded-md border border-border bg-muted/30 text-foreground text-xs font-mono font-medium">
               {currentCard.category}
             </span>
             <span className="text-xs font-mono text-muted-foreground">{currentCard.difficulty}</span>
           </div>
-          <span className="text-xs font-mono text-muted-foreground">
+          <span className="text-xs font-mono text-muted-foreground tabular-nums">
             Card {currentIndex + 1} of {filteredCards.length}
           </span>
         </div>
@@ -100,29 +100,29 @@ export default function Flashcards() {
         <div className="py-6 space-y-4">
           {!isFlipped ? (
             <div className="space-y-3">
-              <div className="text-[11px] font-bold uppercase font-mono tracking-wider text-muted-foreground flex items-center gap-1.5">
+              <div className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
                 <HelpCircle className="w-4 h-4 text-muted-foreground" /> Question:
               </div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-foreground leading-relaxed">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-relaxed">
                 {currentCard.question}
               </h2>
             </div>
           ) : (
             <div className="space-y-4 animate-in fade-in">
-              <div className="text-[11px] font-bold uppercase font-mono tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <div className="text-xs font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Answer:
               </div>
               <p className="text-sm sm:text-base text-foreground leading-relaxed font-medium">
                 {currentCard.answer}
               </p>
               {currentCard.code && (
-                <pre className="p-3.5 rounded-xl bg-zinc-950 text-zinc-100 dark:bg-black font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed border border-border/80">
+                <pre className="p-3.5 rounded-lg bg-zinc-950 text-zinc-100 dark:bg-black font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed border border-border/80">
                   {currentCard.code}
                 </pre>
               )}
               <div className="p-3 rounded-lg bg-muted/30 border border-border text-xs text-muted-foreground flex items-start gap-2">
                 <Lightbulb className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <span><strong>Pro Tip:</strong> {currentCard.tip}</span>
+                <span><strong>Key takeaway:</strong> {currentCard.tip}</span>
               </div>
             </div>
           )}
@@ -130,7 +130,7 @@ export default function Flashcards() {
 
         <div className="pt-3 border-t border-border/70 flex items-center justify-between text-xs text-muted-foreground">
           <span>Click anywhere on card to {isFlipped ? 'flip back' : 'reveal answer'}</span>
-          <span className="text-foreground font-semibold group-hover:underline">Flip Card 🔄</span>
+          <span className="text-foreground font-semibold group-hover:underline">Flip card</span>
         </div>
       </div>
 

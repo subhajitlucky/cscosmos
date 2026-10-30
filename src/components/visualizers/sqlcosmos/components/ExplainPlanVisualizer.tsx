@@ -16,8 +16,8 @@ export function ExplainPlanVisualizer() {
             <Search className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[11px] uppercase font-mono font-bold tracking-wider text-muted-foreground">
-              PostgreSQL Cost-Based Optimizer (CBO)
+            <div className="text-xs font-mono text-muted-foreground">
+              Cost-based query optimizer (CBO)
             </div>
             <h3 className="text-xl font-bold tracking-tight text-foreground">
               EXPLAIN (ANALYZE, BUFFERS) Plan Walkthrough
@@ -28,8 +28,8 @@ export function ExplainPlanVisualizer() {
           </div>
         </div>
 
-        <span className="px-3 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
-          Illustrative Example Plan
+        <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
+          Illustrative example plan
         </span>
       </div>
 
@@ -46,7 +46,7 @@ export function ExplainPlanVisualizer() {
             <button
               key={item.id}
               onClick={() => setScanType(item.id)}
-              className={`p-3.5 rounded-xl border text-left font-mono text-xs transition-all ${
+              className={`p-3.5 rounded-lg border text-left font-mono text-xs transition-colors ${
                 isSelected
                   ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
                   : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
@@ -56,8 +56,8 @@ export function ExplainPlanVisualizer() {
               <div className={`text-[10px] mt-0.5 ${isSelected ? 'text-background/80' : 'text-muted-foreground'}`}>
                 {item.sub}
               </div>
-              <div className={`text-[10px] pt-1.5 font-bold ${isSelected ? 'text-background' : 'text-emerald-600 dark:text-emerald-400'}`}>
-                ⚡ {item.speed}
+              <div className={`text-[10px] pt-1.5 font-bold tabular-nums ${isSelected ? 'text-background' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                {item.speed}
               </div>
             </button>
           );
@@ -110,10 +110,10 @@ Execution Time: 0.412 ms`}
         </div>
 
         {/* Diagnostics & Cost Breakdown */}
-        <div className="p-6 rounded-2xl bg-card border border-border space-y-4 flex flex-col justify-between shadow-xs">
+        <div className="p-6 rounded-xl bg-card border border-border space-y-4 flex flex-col justify-between shadow-xs">
           <div className="space-y-2">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground">
-              Optimizer Decision Analysis:
+            <span className="text-xs font-mono text-muted-foreground">
+              Optimizer decision analysis:
             </span>
             <h4 className="text-lg font-bold text-foreground">
               {scanType === 'seq-scan' && 'Full Sequential Disk Scan'}
