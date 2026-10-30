@@ -6,12 +6,12 @@ import { ArrowRight, BookOpen, Layers } from 'lucide-react';
 import { SQL_TOPICS } from '../data/topics';
 
 const CATEGORIES = [
-  { id: 'all', label: 'All Modules' },
-  { id: 'foundations', label: 'Foundations' },
-  { id: 'query-execution', label: 'Query Execution' },
-  { id: 'indexing', label: 'Indexing & Storage' },
-  { id: 'transactions', label: 'Transactions & ACID' },
-  { id: 'architecture', label: 'Architecture' },
+  'all',
+  'foundations',
+  'indexing',
+  'query-execution',
+  'transactions',
+  'architecture',
 ] as const;
 
 export default function Concepts() {
@@ -37,22 +37,18 @@ export default function Concepts() {
       {/* Filter Tabs */}
       <div className="flex flex-wrap gap-2 pt-2">
         {CATEGORIES.map((cat) => {
-          const isSelected = filter === cat.id;
-          const count = cat.id === 'all' ? SQL_TOPICS.length : SQL_TOPICS.filter((t) => t.category === cat.id).length;
+          const isSelected = filter === cat;
           return (
             <button
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all border flex items-center gap-1.5 ${
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all border ${
                 isSelected
-                  ? 'bg-foreground text-background border-foreground font-semibold shadow-xs'
+                  ? 'bg-foreground text-background border-foreground shadow-xs'
                   : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
               }`}
             >
-              <span>{cat.label}</span>
-              <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-background/20 text-background' : 'bg-muted text-muted-foreground'}`}>
-                {count}
-              </span>
+              {cat}
             </button>
           );
         })}
