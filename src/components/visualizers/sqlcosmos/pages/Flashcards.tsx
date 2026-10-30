@@ -62,8 +62,23 @@ export default function Flashcards() {
 
       {/* Interactive Card */}
       <div
+        role="button"
+        tabIndex={0}
+        aria-label={`Flashcard: ${currentCard.question}. Press Space or Enter to reveal answer. Use arrow keys to navigate.`}
         onClick={() => setIsFlipped((prev) => !prev)}
-        className="min-h-[360px] p-8 rounded-3xl border border-border bg-card hover:border-indigo-500/50 shadow-xl cursor-pointer transition-all flex flex-col justify-between select-none relative group"
+        onKeyDown={(e) => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            setIsFlipped((prev) => !prev);
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            handleNext();
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            handlePrev();
+          }
+        }}
+        className="min-h-[360px] p-8 rounded-3xl border border-border bg-card hover:border-indigo-500/50 shadow-xl cursor-pointer transition-all flex flex-col justify-between select-none relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
       >
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">

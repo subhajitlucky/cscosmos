@@ -20,7 +20,7 @@ export default function Concepts() {
           SQL &amp; Relational Engine Concepts
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base">
-          20 in-depth architectural topics from B+ Tree leaf traversals to MVCC tuple headers and Cost-Based Optimizers.
+          23 comprehensive lessons from SQL DDL, constraints, and aggregations to B+ Tree page traversals, MVCC, and table partitioning.
         </p>
       </div>
 
