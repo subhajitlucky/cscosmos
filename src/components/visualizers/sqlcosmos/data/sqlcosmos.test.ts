@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { SQL_TOPICS } from './topics';
 import { SQL_FLASHCARDS } from './flashcards';
 import { SQL_CHEATSHEET } from './cheatsheet';
+import { SQL_PROBLEMS } from './problems';
+import { evaluateSql } from '../lib/sqlSubsetEvaluator';
 
 describe('sqlcosmos data integrity', () => {
   it('defines 50 comprehensive SQL topics across all 5 categories', () => {
@@ -65,6 +67,28 @@ describe('sqlcosmos data integrity', () => {
         expect(snippet.sql).toBeTruthy();
         expect(snippet.tip).toBeTruthy();
       }
+    }
+  });
+
+  it('defines 25 practice problems across all 4 difficulty levels that evaluate correctly', () => {
+    expect(SQL_PROBLEMS).toHaveLength(25);
+
+    const diffs = new Set(SQL_PROBLEMS.map((p) => p.difficulty));
+    expect(diffs).toEqual(new Set(['Easy', 'Intermediate', 'Advanced', 'Expert']));
+
+    for (const problem of SQL_PROBLEMS) {
+      expect(problem.id).toBeTruthy();
+      expect(problem.title).toBeTruthy();
+      expect(problem.description.length).toBeGreaterThan(15);
+      expect(problem.initialSql.length).toBeGreaterThan(10);
+      expect(problem.solutionSql.length).toBeGreaterThan(10);
+
+      // Verify that the reference solution evaluates and passes validation
+      const evalResult = evaluateSql(problem.solutionSql);
+      expect(evalResult.status).toBe('ok');
+      expect(evalResult.note).toBeUndefined();
+      const isValid = problem.validate(evalResult.rows, evalResult.columns);
+      expect(isValid).toBe(true);
     }
   });
 });
