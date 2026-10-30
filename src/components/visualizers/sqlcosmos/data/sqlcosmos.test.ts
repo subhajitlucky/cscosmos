@@ -4,8 +4,8 @@ import { SQL_FLASHCARDS } from './flashcards';
 import { SQL_CHEATSHEET } from './cheatsheet';
 
 describe('sqlcosmos data integrity', () => {
-  it('defines 23 comprehensive SQL topics across all 5 categories', () => {
-    expect(SQL_TOPICS).toHaveLength(23);
+  it('defines 50 comprehensive SQL topics across all 5 categories', () => {
+    expect(SQL_TOPICS).toHaveLength(50);
 
     const categories = new Set(SQL_TOPICS.map((t) => t.category));
     expect(categories).toEqual(

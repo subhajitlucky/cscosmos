@@ -31,16 +31,16 @@ test.describe('sqlcosmos smoke', () => {
     await expect(page.getByRole('heading', { level: 2, name: 'Discussion' })).toBeVisible();
   });
 
-  test('renders all 23 concepts and filters by architecture', async ({ page }) => {
+  test('renders all 50 concepts and filters by architecture', async ({ page }) => {
     await page.goto(`${CANONICAL_PATH}/concepts`);
 
     await expect(
       page.getByRole('heading', { level: 1, name: /SQL & Relational Engine Concepts/i }),
     ).toBeVisible();
 
-    // Verify all 23 concept links are rendered
+    // Verify all 50 concept links are rendered
     const conceptCards = page.locator('a[href^="/sqlcosmos/concepts/"]');
-    await expect(conceptCards).toHaveCount(23);
+    await expect(conceptCards).toHaveCount(50);
 
     // Test the architecture category filter
     await page.getByRole('button', { name: 'architecture', exact: true }).click();

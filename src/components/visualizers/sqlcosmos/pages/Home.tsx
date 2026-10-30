@@ -29,6 +29,7 @@ import { TransactionAnomalyStepper } from '../components/TransactionAnomalyStepp
 import { AcidMvccVisualizer } from '../components/AcidMvccVisualizer';
 import { WindowFunctionVisualizer } from '../components/WindowFunctionVisualizer';
 import { SqlPlayground } from '../components/SqlPlayground';
+import { SchemaErVisualizer } from '../components/SchemaErVisualizer';
 import { SQL_TOPICS } from '../data/topics';
 
 type StudioTool =
@@ -39,6 +40,7 @@ type StudioTool =
   | 'anomalies'
   | 'mvcc'
   | 'window'
+  | 'schema'
   | 'playground';
 
 const STUDIO_TOOLS: {
@@ -96,6 +98,13 @@ const STUDIO_TOOLS: {
     shortLabel: 'Window Frames',
     tag: 'Analytical SQL',
     icon: Table,
+  },
+  {
+    id: 'schema',
+    title: 'Schema & ER Diagram',
+    shortLabel: 'ER Diagram',
+    tag: 'Relational Model',
+    icon: Database,
   },
   {
     id: 'playground',
@@ -170,7 +179,7 @@ export default function Home() {
             className="px-5 py-2.5 rounded-xl bg-foreground hover:bg-foreground/90 text-background font-semibold text-xs transition shadow-xs flex items-center gap-2"
           >
             <BookOpen className="w-4 h-4" />
-            <span>Curriculum (23 Lessons)</span>
+            <span>Curriculum (50 Lessons)</span>
           </Link>
 
           <Link
@@ -201,11 +210,11 @@ export default function Home() {
         {/* Engine Metrics Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-border/60">
           <div className="p-3.5 rounded-xl border border-border bg-card text-left">
-            <div className="text-xl sm:text-2xl font-bold font-mono text-foreground">23</div>
+            <div className="text-xl sm:text-2xl font-bold font-mono text-foreground">50</div>
             <div className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Engine Lessons</div>
           </div>
           <div className="p-3.5 rounded-xl border border-border bg-card text-left">
-            <div className="text-xl sm:text-2xl font-bold font-mono text-foreground">7</div>
+            <div className="text-xl sm:text-2xl font-bold font-mono text-foreground">8</div>
             <div className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Live Simulators</div>
           </div>
           <div className="p-3.5 rounded-xl border border-border bg-card text-left">
@@ -258,7 +267,7 @@ export default function Home() {
 
         {/* Workbench Tool Selector Bar */}
         {viewMode === 'workbench' && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-2">
             {STUDIO_TOOLS.map((tool) => {
               const Icon = tool.icon;
               const isSelected = activeTool === tool.id;
@@ -297,6 +306,7 @@ export default function Home() {
             {activeTool === 'anomalies' && <TransactionAnomalyStepper />}
             {activeTool === 'mvcc' && <AcidMvccVisualizer />}
             {activeTool === 'window' && <WindowFunctionVisualizer />}
+            {activeTool === 'schema' && <SchemaErVisualizer />}
             {activeTool === 'playground' && <SqlPlayground />}
           </div>
         ) : (
@@ -309,6 +319,7 @@ export default function Home() {
             <TransactionAnomalyStepper />
             <AcidMvccVisualizer />
             <WindowFunctionVisualizer />
+            <SchemaErVisualizer />
             <SqlPlayground />
           </div>
         )}
@@ -329,7 +340,7 @@ export default function Home() {
             href="/sqlcosmos/concepts"
             className="text-xs font-semibold text-foreground hover:underline inline-flex items-center gap-1 self-start sm:self-auto"
           >
-            <span>View All 23 Modules</span>
+            <span>View All 50 Modules</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -401,7 +412,7 @@ export default function Home() {
             <BookOpen className="w-4 h-4" />
           </div>
           <h3 className="text-base font-bold text-foreground group-hover:underline">
-            23 In-Depth Lessons
+            50 In-Depth Lessons
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
             Relational algebra, B+ Tree leaf pages, Leftmost Prefix Rule, Window functions, and WAL crash recovery.
