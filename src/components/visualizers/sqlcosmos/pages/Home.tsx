@@ -1,19 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   BookOpen,
   CheckCircle2,
   Database,
-  Filter,
-  GitMerge,
   HelpCircle,
-  Layers,
-  Search,
-  ShieldAlert,
-  ShieldCheck,
-  Table,
   Terminal,
 } from 'lucide-react';
 import { BTreeIndexVisualizer } from '../components/BTreeIndexVisualizer';
@@ -27,95 +20,9 @@ import { SqlPlayground } from '../components/SqlPlayground';
 import { SchemaErVisualizer } from '../components/SchemaErVisualizer';
 import { SQL_TOPICS } from '../data/topics';
 
-type StudioTool =
-  | 'btree'
-  | 'prefix'
-  | 'explain'
-  | 'joins'
-  | 'anomalies'
-  | 'mvcc'
-  | 'window'
-  | 'schema'
-  | 'playground';
-
-const STUDIO_TOOLS: {
-  id: StudioTool;
-  title: string;
-  shortLabel: string;
-  tag: string;
-  icon: React.ComponentType<{ className?: string }>;
-}[] = [
-  {
-    id: 'btree',
-    title: 'B+ Tree Index Traversal',
-    shortLabel: 'B+ Tree',
-    tag: 'Storage',
-    icon: Layers,
-  },
-  {
-    id: 'prefix',
-    title: 'Composite Prefix Rule',
-    shortLabel: 'Prefix Rule',
-    tag: 'Indexes',
-    icon: Filter,
-  },
-  {
-    id: 'explain',
-    title: 'EXPLAIN Plan Cost Model',
-    shortLabel: 'EXPLAIN Cost',
-    tag: 'Optimizer',
-    icon: Search,
-  },
-  {
-    id: 'joins',
-    title: 'Physical Joins Engine',
-    shortLabel: 'Joins Engine',
-    tag: 'Execution',
-    icon: GitMerge,
-  },
-  {
-    id: 'anomalies',
-    title: 'ACID Concurrency Anomalies',
-    shortLabel: 'ACID Anomalies',
-    tag: 'Transactions',
-    icon: ShieldAlert,
-  },
-  {
-    id: 'mvcc',
-    title: 'MVCC & Dead Tuples',
-    shortLabel: 'MVCC / Vacuum',
-    tag: 'Storage',
-    icon: ShieldCheck,
-  },
-  {
-    id: 'window',
-    title: 'Window Function Frames',
-    shortLabel: 'Window Frames',
-    tag: 'Analytics',
-    icon: Table,
-  },
-  {
-    id: 'schema',
-    title: 'Schema & ER Diagram',
-    shortLabel: 'ER Diagram',
-    tag: 'Schema',
-    icon: Database,
-  },
-  {
-    id: 'playground',
-    title: 'In-Browser SQL Sandbox',
-    shortLabel: 'SQL Terminal',
-    tag: 'AST Runner',
-    icon: Terminal,
-  },
-];
-
 export default function Home() {
-  const [activeTool, setActiveTool] = useState<StudioTool>('btree');
-  const [viewMode, setViewMode] = useState<'workbench' | 'expanded'>('workbench');
-
   return (
-    <div className="space-y-14 pb-24 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+    <div className="space-y-16 pb-24 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
       {/* Hero Section */}
       <div className="space-y-6 max-w-4xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-border/80 bg-muted/30 text-muted-foreground font-mono text-xs">
@@ -158,7 +65,7 @@ export default function Home() {
           </div>
           <div className="p-3.5 rounded-xl border border-border bg-card text-left">
             <div className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-foreground">8</div>
-            <div className="text-xs text-muted-foreground font-medium">Live simulators</div>
+            <div className="text-xs text-muted-foreground font-medium">Live visualizers</div>
           </div>
           <div className="p-3.5 rounded-xl border border-border bg-card text-left">
             <div className="text-xl sm:text-2xl font-bold font-mono text-foreground">O(log N)</div>
@@ -171,106 +78,32 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Interactive Studio Workbench */}
-      <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/70 pb-4">
-          <div>
-            <div className="text-xs font-mono text-muted-foreground">
-              Interactive engine studio
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Database Laboratory Workbench
-            </h2>
-          </div>
+      {/* Feature 1: B+ Tree Index Traversal */}
+      <BTreeIndexVisualizer />
 
-          {/* View mode toggle */}
-          <div className="inline-flex p-1 rounded-lg border border-border bg-muted/30 self-start sm:self-auto">
-            <button
-              onClick={() => setViewMode('workbench')}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                viewMode === 'workbench'
-                  ? 'bg-card text-foreground shadow-xs font-semibold'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              Workbench View
-            </button>
-            <button
-              onClick={() => setViewMode('expanded')}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                viewMode === 'expanded'
-                  ? 'bg-card text-foreground shadow-xs font-semibold'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              Expanded Feed
-            </button>
-          </div>
-        </div>
+      {/* Feature 2: Composite Prefix Rule */}
+      <CompositeIndexEvaluator />
 
-        {/* Workbench Tool Selector Bar */}
-        {viewMode === 'workbench' && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-2">
-            {STUDIO_TOOLS.map((tool) => {
-              const Icon = tool.icon;
-              const isSelected = activeTool === tool.id;
-              return (
-                <button
-                  key={tool.id}
-                  onClick={() => setActiveTool(tool.id)}
-                  className={`p-3 rounded-lg border text-left transition-colors flex flex-col justify-between gap-2.5 ${
-                    isSelected
-                      ? 'bg-foreground text-background border-foreground shadow-xs font-semibold'
-                      : 'bg-card border-border text-foreground hover:bg-muted/40 hover:border-foreground/30'
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <Icon className="w-4 h-4 shrink-0" />
-                    <span
-                      className={`text-[10px] font-mono ${
-                        isSelected ? 'text-background/80' : 'text-muted-foreground'
-                      }`}
-                    >
-                      {tool.tag}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold truncate">{tool.shortLabel}</div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        )}
+      {/* Feature 3: EXPLAIN Plan Cost Model */}
+      <ExplainPlanVisualizer />
 
-        {/* Active Tool Render in Workbench Mode */}
-        {viewMode === 'workbench' ? (
-          <div className="transition-opacity duration-150">
-            {activeTool === 'btree' && <BTreeIndexVisualizer />}
-            {activeTool === 'prefix' && <CompositeIndexEvaluator />}
-            {activeTool === 'explain' && <ExplainPlanVisualizer />}
-            {activeTool === 'joins' && <SqlJoinsVisualizer />}
-            {activeTool === 'anomalies' && <TransactionAnomalyStepper />}
-            {activeTool === 'mvcc' && <AcidMvccVisualizer />}
-            {activeTool === 'window' && <WindowFunctionVisualizer />}
-            {activeTool === 'schema' && <SchemaErVisualizer />}
-            {activeTool === 'playground' && <SqlPlayground />}
-          </div>
-        ) : (
-          /* Expanded Mode: All visualizers sequentially */
-          <div className="space-y-12">
-            <BTreeIndexVisualizer />
-            <CompositeIndexEvaluator />
-            <ExplainPlanVisualizer />
-            <SqlJoinsVisualizer />
-            <TransactionAnomalyStepper />
-            <AcidMvccVisualizer />
-            <WindowFunctionVisualizer />
-            <SchemaErVisualizer />
-            <SqlPlayground />
-          </div>
-        )}
-      </section>
+      {/* Feature 4: Physical Joins Engine */}
+      <SqlJoinsVisualizer />
+
+      {/* Feature 5: ACID Concurrency Anomalies */}
+      <TransactionAnomalyStepper />
+
+      {/* Feature 6: MVCC Tuple Versioning & AutoVacuum */}
+      <AcidMvccVisualizer />
+
+      {/* Feature 7: Window Function Frames */}
+      <WindowFunctionVisualizer />
+
+      {/* Feature 8: Schema & ER Diagram */}
+      <SchemaErVisualizer />
+
+      {/* Feature 9: In-Browser SQL Playground */}
+      <SqlPlayground />
 
       {/* Navigation Cards */}
       <section className="grid sm:grid-cols-3 gap-6 pt-4">
