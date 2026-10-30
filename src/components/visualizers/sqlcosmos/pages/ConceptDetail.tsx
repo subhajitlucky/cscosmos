@@ -13,11 +13,6 @@ import {
   RotateCcw,
   Sparkles,
   XCircle,
-  Key,
-  Link2,
-  Play,
-  Terminal,
-  Database,
 } from 'lucide-react';
 import { SQL_TOPICS } from '../data/topics';
 import { TopicVisualizer } from '../components/TopicVisualizer';
@@ -36,7 +31,6 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
   const [selectedOption, setSelectedOption] = useState<'A' | 'B' | 'C' | 'D' | null>(null);
   const [copiedCodeIndex, setCopiedCodeIndex] = useState<number | null>(null);
   const [copiedPitch, setCopiedPitch] = useState(false);
-  const [showLivePreview, setShowLivePreview] = useState(false);
 
   const handleCopyCode = (code: string, index: number) => {
     navigator.clipboard.writeText(code);
@@ -156,34 +150,18 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
             <div className="space-y-5">
               {topic.realWorldExample.tables.map((tbl, idx) => (
                 <div key={idx} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    {tbl.title && (
-                      <div className="text-xs font-mono font-bold text-foreground uppercase tracking-wide flex items-center gap-1.5">
-                        <Database className="w-3.5 h-3.5 text-muted-foreground" />
-                        <span>{tbl.title}</span>
-                      </div>
-                    )}
-                    <span className="text-[11px] font-mono text-muted-foreground">
-                      {tbl.rows.length} {tbl.rows.length === 1 ? 'record' : 'records'}
-                    </span>
-                  </div>
-                  <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-2xs">
+                  {tbl.title && (
+                    <div className="text-xs font-mono font-bold text-foreground uppercase tracking-wide">
+                      {tbl.title}
+                    </div>
+                  )}
+                  <div className="overflow-x-auto rounded-xl border border-border bg-card">
                     <table className="w-full text-sm text-left">
                       <thead className="bg-muted/50 border-b border-border text-foreground font-bold">
                         <tr>
-                          {tbl.headers.map((h, hIdx) => {
-                            const isPk = h.includes('(PK)');
-                            const isFk = h.includes('(FK)');
-                            return (
-                              <th key={hIdx} className="px-4 py-2.5">
-                                <span className="inline-flex items-center gap-1">
-                                  {isPk && <Key className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
-                                  {isFk && <Link2 className="w-3.5 h-3.5 text-cyan-500 shrink-0" />}
-                                  <span>{h}</span>
-                                </span>
-                              </th>
-                            );
-                          })}
+                          {tbl.headers.map((h, hIdx) => (
+                            <th key={hIdx} className="px-4 py-2.5">{h}</th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border">
@@ -201,75 +179,6 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
               ))}
             </div>
           )}
-
-          {/* Interactive Live Query Execution on Example */}
-          <div className="pt-2 border-t border-border/70 space-y-3">
-            <button
-              onClick={() => setShowLivePreview(!showLivePreview)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-card hover:bg-muted/40 text-xs sm:text-sm font-bold text-foreground transition-all shadow-2xs"
-            >
-              <Terminal className="w-4 h-4 text-cyan-500" />
-              <span>{showLivePreview ? 'Hide Query Execution Output' : '▶ Run Query on Example Data'}</span>
-            </button>
-
-            {showLivePreview && (
-              <div className="p-5 rounded-xl border border-border/80 bg-zinc-950 text-white space-y-4 shadow-xl">
-                <div className="flex items-center justify-between border-b border-zinc-800 pb-2.5">
-                  <div className="flex items-center gap-2 font-mono text-xs text-cyan-300 font-bold">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                    <span>In-Memory Relational Result</span>
-                  </div>
-                  <span className="text-[11px] font-mono text-zinc-400">Execution: 0.08 ms • Plan: Hash Match</span>
-                </div>
-
-                <div className="space-y-1.5">
-                  <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Executed SQL:</span>
-                  <pre className="p-3 rounded-lg bg-black text-emerald-300 font-mono text-xs overflow-x-auto border border-zinc-800">
-                    {topic.codeSnippet || topic.sqlSyntaxSteps[0]?.code}
-                  </pre>
-                </div>
-
-                <div className="space-y-1.5">
-                  <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Result Relation (Output Stream):</span>
-                  <div className="overflow-x-auto rounded-lg border border-zinc-800 bg-black">
-                    <table className="w-full text-xs text-left">
-                      <thead className="bg-zinc-900 border-b border-zinc-800 text-cyan-300 font-mono font-bold">
-                        <tr>
-                          {topic.realWorldExample.tables && topic.realWorldExample.tables[0] ? (
-                            topic.realWorldExample.tables[0].headers.map((h, i) => (
-                              <th key={i} className="px-3 py-2">{h}</th>
-                            ))
-                          ) : (
-                            <th className="px-3 py-2">status</th>
-                          )}
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-zinc-900">
-                        {topic.realWorldExample.tables && topic.realWorldExample.tables[0] ? (
-                          topic.realWorldExample.tables[0].rows.slice(0, 2).map((r, ri) => (
-                            <tr key={ri} className="bg-emerald-950/20 hover:bg-emerald-950/30 transition-colors">
-                              {r.map((c, ci) => (
-                                <td key={ci} className="px-3 py-2 font-mono text-emerald-300 font-medium">{String(c)}</td>
-                              ))}
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td className="px-3 py-2 font-mono text-emerald-300">SUCCESS</td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div className="text-xs text-zinc-400 font-mono flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Output tuples verified against relational schema constraints and primary key invariants.</span>
-                </div>
-              </div>
-            )}
-          </div>
 
           <div className="p-4 rounded-xl bg-muted/30 border border-border text-sm text-foreground leading-relaxed">
             <span className="font-bold">Relational walkthrough: </span>
