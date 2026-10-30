@@ -73,6 +73,29 @@ const CHALLENGES: Challenge[] = [
       cols.includes('product') &&
       rows.every((r) => Number(r.total) > 100),
   },
+  {
+    id: 'ch-5',
+    title: '5. Budget Purchases',
+    difficulty: 'Beginner',
+    prompt: 'Query all orders with total price less than or equal to $150.',
+    hint: 'SELECT product, total FROM orders WHERE total <= 150;',
+    initialSql: 'SELECT product, total FROM orders WHERE total <= 150;',
+    validate: (rows) =>
+      rows.length === 2 && rows.every((r) => Number(r.total) <= 150),
+  },
+  {
+    id: 'ch-6',
+    title: '6. Designer Lookup',
+    difficulty: 'Intermediate',
+    prompt: 'Select the name and email for users with role = "designer".',
+    hint: "SELECT name, email FROM users WHERE role = 'designer';",
+    initialSql: "SELECT name, email FROM users WHERE role = 'designer';",
+    validate: (rows, cols) =>
+      rows.length === 1 &&
+      rows[0].name === 'Diana' &&
+      cols.includes('name') &&
+      cols.includes('email'),
+  },
 ];
 
 interface RunResult {
@@ -94,11 +117,16 @@ function runQuery(sql: string): RunResult {
   };
 }
 
-export function SqlPlayground() {
+export interface SqlPlaygroundProps {
+  defaultTab?: 'scratchpad' | 'challenges' | 'schema';
+}
+
+export function SqlPlayground({ defaultTab = 'scratchpad' }: SqlPlaygroundProps = {}) {
   const [mounted, setMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<'scratchpad' | 'challenges' | 'schema'>('scratchpad');
-  const [query, setQuery] = useState<string>(DEFAULT_QUERY);
-  const [result, setResult] = useState<RunResult>(() => runQuery(DEFAULT_QUERY));
+  const [activeTab, setActiveTab] = useState<'scratchpad' | 'challenges' | 'schema'>(defaultTab);
+  const initialSql = defaultTab === 'challenges' ? CHALLENGES[0].initialSql : DEFAULT_QUERY;
+  const [query, setQuery] = useState<string>(initialSql);
+  const [result, setResult] = useState<RunResult>(() => runQuery(initialSql));
   const [selectedChallengeId, setSelectedChallengeId] = useState<string>(CHALLENGES[0].id);
   const [completedChallenges, setCompletedChallenges] = useState<Set<string>>(new Set());
   const [showHint, setShowHint] = useState<boolean>(false);
@@ -218,7 +246,7 @@ export function SqlPlayground() {
                   </div>
                   {completedChallenges.has(activeChallenge.id) && (
                     <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-semibold flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Completed
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Challenge Solved
                     </span>
                   )}
                 </div>

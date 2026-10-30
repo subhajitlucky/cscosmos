@@ -10,6 +10,7 @@ import IndexLab from '@/components/visualizers/sqlcosmos/pages/IndexLab';
 import ExplainLab from '@/components/visualizers/sqlcosmos/pages/ExplainLab';
 import JoinsLab from '@/components/visualizers/sqlcosmos/pages/JoinsLab';
 import Playground from '@/components/visualizers/sqlcosmos/pages/Playground';
+import Problems from '@/components/visualizers/sqlcosmos/pages/Problems';
 import Flashcards from '@/components/visualizers/sqlcosmos/pages/Flashcards';
 import CheatSheet from '@/components/visualizers/sqlcosmos/pages/CheatSheet';
 import { SQL_TOPICS } from '@/components/visualizers/sqlcosmos/data/topics';
@@ -27,6 +28,7 @@ export function generateStaticParams() {
     { slug: ['explain-lab'] },
     { slug: ['joins-lab'] },
     { slug: ['playground'] },
+    { slug: ['problems'] },
     { slug: ['flashcards'] },
     { slug: ['cheatsheet'] },
   ];
@@ -65,7 +67,7 @@ export async function generateMetadata({
     }
     return {
       title: 'SQL & Database Architecture Concepts | SQLCosmos - CSCosmos',
-      description: '23 comprehensive lessons from SQL DDL, constraints, and aggregations to B+ Tree page traversals, MVCC, and table partitioning.',
+      description: '50 comprehensive lessons from SQL DDL, constraints, and aggregations to B+ Tree page traversals, MVCC, and table partitioning.',
       alternates: { canonical: `${CANONICAL_BASE}/concepts` },
     };
   }
@@ -86,6 +88,10 @@ export async function generateMetadata({
     'playground': {
       title: 'Interactive SQL Playground | SQLCosmos - CSCosmos',
       desc: 'In-browser relational engine evaluating SQL queries against in-memory tables.',
+    },
+    'problems': {
+      title: 'SQL Practice Problems & Challenges | SQLCosmos - CSCosmos',
+      desc: 'Solve interactive SQL query challenges against in-memory schemas with automated unit verification.',
     },
     'flashcards': {
       title: 'Senior Database Engineering Flashcards | SQLCosmos - CSCosmos',
@@ -112,11 +118,11 @@ export async function generateMetadata({
 
   return {
     title: 'SQL Visualizer: Queries, Indexes & Storage Engine | CSCosmos',
-    description: 'Master relational database architecture: B+ Tree page traversals, Leftmost Prefix rule, EXPLAIN plans, MVCC tuple headers, and 23 in-depth lessons.',
+    description: 'Master relational database architecture: B+ Tree page traversals, Leftmost Prefix rule, EXPLAIN plans, MVCC tuple headers, and 50 in-depth lessons.',
     alternates: { canonical: CANONICAL_BASE },
     openGraph: {
       title: 'SQL Visualizer: Queries, Indexes & Storage Engine | CSCosmos',
-      description: 'Master relational database architecture: B+ Tree page traversals, Leftmost Prefix rule, EXPLAIN plans, MVCC tuple headers, and 23 in-depth lessons.',
+      description: 'Master relational database architecture: B+ Tree page traversals, Leftmost Prefix rule, EXPLAIN plans, MVCC tuple headers, and 50 in-depth lessons.',
       url: CANONICAL_BASE,
     },
   };
@@ -147,6 +153,8 @@ export default async function SqlCosmosPage({
     content = <JoinsLab />;
   } else if (first === 'playground') {
     content = <Playground />;
+  } else if (first === 'problems') {
+    content = <Problems />;
   } else if (first === 'flashcards') {
     content = <Flashcards />;
   } else if (first === 'cheatsheet') {

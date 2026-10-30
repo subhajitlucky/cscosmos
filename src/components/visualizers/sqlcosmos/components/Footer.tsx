@@ -13,24 +13,21 @@ export function Footer() {
             <Database className="w-3.5 h-3.5" />
           </div>
           <span className="font-semibold text-foreground">SQLCosmos by CSCosmos</span>
-          <span>• Relational SQL, Query Plans, B+ Tree Indexing &amp; Engine Visualizers</span>
+          <span>• Relational SQL, Query Plans, B+ Tree Indexing &amp; Storage Engine</span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <Link href="/sqlcosmos/concepts" className="hover:text-foreground transition-colors">
             Concepts
           </Link>
-          <Link href="/sqlcosmos/index-lab" className="hover:text-foreground transition-colors">
-            B+ Tree Lab
-          </Link>
-          <Link href="/sqlcosmos/explain-lab" className="hover:text-foreground transition-colors">
-            EXPLAIN Lab
-          </Link>
-          <Link href="/sqlcosmos/joins-lab" className="hover:text-foreground transition-colors">
-            Joins Engine
-          </Link>
           <Link href="/sqlcosmos/playground" className="hover:text-foreground transition-colors">
-            SQL Playground
+            Playground
+          </Link>
+          <Link href="/sqlcosmos/problems" className="hover:text-foreground transition-colors">
+            Problems
+          </Link>
+          <Link href="/sqlcosmos/flashcards" className="hover:text-foreground transition-colors">
+            Interview Questions
           </Link>
           <Link href="/topics" className="hover:text-foreground font-semibold flex items-center gap-1">
             <ArrowLeft className="w-3 h-3" /> Back to CSCosmos

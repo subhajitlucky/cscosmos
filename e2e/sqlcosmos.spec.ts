@@ -78,4 +78,31 @@ test.describe('sqlcosmos smoke', () => {
     await card.press('Space');
     await expect(page.getByText('Answer:', { exact: false })).toBeVisible();
   });
+
+  test('navbar provides clean links to concepts, playground, problems, and flashcards', async ({ page }) => {
+    await page.goto(CANONICAL_PATH);
+
+    const nav = page.locator('nav');
+    await expect(nav.getByRole('link', { name: 'Concepts' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Playground' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Problems' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Interview Questions' })).toBeVisible();
+  });
+
+  test('runs and validates interactive practice problems', async ({ page }) => {
+    await page.goto(`${CANONICAL_PATH}/problems`);
+
+    await expect(
+      page.getByRole('heading', { level: 1, name: /SQL Practice Problems/i }),
+    ).toBeVisible();
+
+    // Verify challenge button is visible
+    await expect(page.getByRole('button', { name: /Filter Developers/i })).toBeVisible();
+
+    // Click "Evaluate Challenge"
+    await page.getByRole('button', { name: /Evaluate Challenge/i }).click();
+
+    // Challenge 1 evaluates to true and shows "Challenge Solved" badge
+    await expect(page.getByText('Challenge Solved')).toBeVisible();
+  });
 });
