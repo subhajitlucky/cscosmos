@@ -2,6 +2,7 @@
 import React from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { PredictCheck } from '../components/PredictCheck';
+import { CodeToBinaryPipeline } from '../components/CodeToBinaryPipeline';
 import { motion } from 'framer-motion';
 import { FileCode, Cpu, Database } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -132,6 +133,9 @@ export const WhatIsProgram: React.FC = () => {
             </p>
           </div>
         </section>
+
+        {/* Interactive Deep Dive: Pipeline from Source to Executing Binary */}
+        <CodeToBinaryPipeline />
 
         <PredictCheck
           question="Before you press “Run”, where does the program actually live?"

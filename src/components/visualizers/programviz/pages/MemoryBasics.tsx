@@ -2,6 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { PredictCheck } from '../components/PredictCheck';
+import { VirtualMemoryCallout } from '../components/VirtualMemoryCallout';
 import { motion } from 'framer-motion';
 import { useTheme } from '../hooks/useTheme';
 import { clsx, type ClassValue } from 'clsx';
@@ -204,6 +205,9 @@ export const MemoryBasics: React.FC = () => {
             </span>
           </div>
         </section>
+
+        {/* Deep Dive Callout: The Virtual Memory Secret & MMU */}
+        <VirtualMemoryCallout />
 
         <PredictCheck
           question="How many bits live in one byte?"

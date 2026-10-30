@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { PredictCheck } from '../components/PredictCheck';
+import { MemoryHierarchy } from '../components/MemoryHierarchy';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../hooks/useTheme';
 import { clsx, type ClassValue } from 'clsx';
@@ -186,6 +187,9 @@ export const CPUBasics: React.FC = () => {
             </AnimatePresence>
           </div>
         </div>
+
+        {/* Memory Hierarchy & CPU Caches: The Memory Wall */}
+        <MemoryHierarchy />
 
         <PredictCheck
           question="An instruction says “ADD R0, R1”. Which part of the CPU performs the actual addition?"

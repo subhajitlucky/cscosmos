@@ -1,16 +1,21 @@
 'use client';
 
 import React, { useReducer } from 'react';
-import { Cpu, RotateCcw, SkipForward } from 'lucide-react';
+import { Cpu, RotateCcw, SkipForward, Play, ListOrdered } from 'lucide-react';
 import {
   INITIAL_MACHINE_STATE,
-  PROGRAM,
+  PRESETS,
+  type PresetKey,
   assemblyReducer,
 } from '../lib/assemblyMachine';
 
 export function AssemblySimulator() {
   const [machine, dispatch] = useReducer(assemblyReducer, INITIAL_MACHINE_STATE);
-  const { pc, r0, r1, acc, ram0x10, ramStored, stage, halted, log } = machine;
+  const { pc, r0, r1, acc, ram0x10, ramStored, stage, halted, log, preset } = machine;
+
+  const currentPresetKey: PresetKey = preset ?? 'addition';
+  const activePreset = PRESETS[currentPresetKey];
+  const program = activePreset.program;
 
   const handleKeys = (event: React.KeyboardEvent) => {
     if (event.key === 'ArrowRight') {
@@ -30,6 +35,7 @@ export function AssemblySimulator() {
       aria-label="8-bit assembly step-through simulator. Press the right arrow to step and R to reset."
       onKeyDown={handleKeys}
     >
+      {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-blue-500/20 pb-4">
         <div className="flex items-center gap-2.5">
           <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md">
@@ -49,15 +55,60 @@ export function AssemblySimulator() {
         </span>
       </div>
 
+      {/* Program Preset Selector */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+            <ListOrdered className="w-3.5 h-3.5" />
+            <span>Select Assembly Program:</span>
+          </span>
+          <span className="text-[11px] font-mono text-blue-500 font-bold">
+            {activePreset.badge}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {(Object.keys(PRESETS) as PresetKey[]).map((key) => {
+            const p = PRESETS[key];
+            const isSelected = currentPresetKey === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => dispatch({ type: 'setPreset', preset: key })}
+                className={`px-3 py-2 rounded-xl text-xs font-bold text-left transition border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                  isSelected
+                    ? 'bg-blue-600 text-white border-blue-500 shadow-md'
+                    : 'bg-card border-border hover:border-slate-400 dark:hover:border-slate-700 text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <div>{p.title}</div>
+                <div
+                  className={`text-[10px] font-normal truncate ${
+                    isSelected ? 'text-blue-100' : 'text-muted-foreground'
+                  }`}
+                >
+                  {p.badge}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <p className="text-[11px] text-muted-foreground leading-relaxed pt-1">
+          {activePreset.description}
+        </p>
+      </div>
+
       <div className="grid md:grid-cols-2 gap-6">
         {/* Left: Assembly Instructions in ROM */}
         <div className="space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block">
-            ROM Instruction Memory:
+            ROM Instruction Memory ({program.length} instructions):
           </span>
           <div className="rounded-2xl border border-border bg-slate-950 text-slate-100 overflow-hidden shadow-inner p-2 font-mono text-xs space-y-1">
-            {PROGRAM.map((instruction, index) => {
-              const isCurrent = halted ? index === PROGRAM.length - 1 : pc === index;
+            {program.map((instruction, index) => {
+              const isCurrent = halted ? index === program.length - 1 : pc === index;
               return (
                 <div
                   key={instruction.addr}
@@ -94,7 +145,7 @@ export function AssemblySimulator() {
             <div className="p-3.5 rounded-2xl bg-card border border-border space-y-1">
               <span className="text-[11px] font-mono text-muted-foreground">PC (Program Counter)</span>
               <div className="text-lg font-mono font-extrabold text-blue-500">
-                {halted ? '—' : PROGRAM[pc]?.addr}
+                {halted ? '—' : program[pc]?.addr ?? '—'}
               </div>
             </div>
 
