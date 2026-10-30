@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Play,
   Pause,
@@ -15,6 +16,13 @@ import {
   Cpu,
   Sparkles,
   Sliders,
+  Zap,
+  HardDrive,
+  Activity,
+  Clock,
+  Compass,
+  Check,
+  X,
 } from 'lucide-react';
 import { SqlTopic } from '../data/topics';
 import { BTreeIndexVisualizer } from './BTreeIndexVisualizer';
@@ -26,23 +34,34 @@ import { CompositeIndexEvaluator } from './CompositeIndexEvaluator';
 import { ExplainPlanVisualizer } from './ExplainPlanVisualizer';
 import { SchemaErVisualizer } from './SchemaErVisualizer';
 
+interface VisualNode {
+  id: string;
+  label: string;
+  sub?: string;
+  category?: 'tuple' | 'gate' | 'index' | 'buffer' | 'storage' | 'output';
+  highlight?: boolean;
+  status?: 'active' | 'success' | 'warning' | 'error' | 'muted';
+  badge?: string;
+  attributes?: Record<string, string | number>;
+}
+
 interface VisualStep {
   title: string;
   engineAction: string;
   explanation: string;
   activeQuery?: string;
+  telemetry: {
+    bufferHitRate: string;
+    estimatedCost: string;
+    ioType: string;
+    latencyUs: string;
+    tuplesProcessed: number;
+  };
   visualState: {
     status: 'idle' | 'processing' | 'matched' | 'filtered' | 'error' | 'success';
-    nodes: Array<{
-      id: string;
-      label: string;
-      sub?: string;
-      highlight?: boolean;
-      status?: 'active' | 'success' | 'warning' | 'error' | 'muted';
-      badge?: string;
-    }>;
-    metrics?: Array<{ label: string; value: string }>;
-    codeHighlight?: string;
+    stageName: string;
+    nodes: VisualNode[];
+    mathFormula?: string;
     note?: string;
   };
 }
@@ -53,428 +72,291 @@ interface TopicSimData {
   scenarios: Array<{
     name: string;
     query: string;
+    description: string;
     steps: VisualStep[];
   }>;
 }
 
-// Generates high-fidelity visual animation data for all 50 topics
+// 3Blue1Brown level simulation generator for all 50 topics
 function getTopicSimData(topic: SqlTopic): TopicSimData {
   const num = topic.topicNumber;
+  const title = topic.title;
 
-  switch (num) {
-    case 1: // Intro to SQL
-      return {
-        simTitle: 'Declarative Engine Pipeline',
-        simConcept: 'SQL specifies WHAT data you want; the engine optimizer figures out HOW to access disk.',
-        scenarios: [
-          {
-            name: 'Declarative Query Execution',
-            query: "SELECT id, email FROM users WHERE country = 'India';",
-            steps: [
-              {
-                title: 'Step 1: SQL Lexer & Parser',
-                engineAction: 'Text Tokenization & AST Construction',
-                explanation: 'The client sends the raw SQL string. The parser validates syntax and builds an Abstract Syntax Tree (AST).',
-                visualState: {
-                  status: 'processing',
-                  nodes: [
-                    { id: 'client', label: 'Client App', sub: 'Sends Query', status: 'muted' },
-                    { id: 'parser', label: 'SQL Parser', sub: 'AST Validation', status: 'active', highlight: true, badge: 'Tokens OK' },
-                    { id: 'catalog', label: 'System Catalog', sub: 'Metadata Cache', status: 'muted' },
-                  ],
-                  metrics: [{ label: 'Parser Time', value: '0.04 ms' }, { label: 'Syntax Errors', value: '0' }],
-                  note: 'Verifies table "users" and columns "id", "email", "country" exist.',
-                },
+  if (num === 1) { // Intro to SQL
+    return {
+      simTitle: 'Declarative Query Execution Pipeline',
+      simConcept: 'SQL specifies WHAT data to retrieve. The Cost-Based Optimizer determines the optimal physical path to disk.',
+      scenarios: [
+        {
+          name: 'Declarative Stream (Point Lookup)',
+          query: "SELECT id, email, country FROM users WHERE country = 'India';",
+          description: 'Traces the transformation from raw SQL text to AST, execution plan, buffer hit, and output tuple.',
+          steps: [
+            {
+              title: 'Phase 1: Lexical Analysis & Abstract Syntax Tree (AST)',
+              engineAction: 'Tokenize query string & validate against system catalog',
+              explanation: 'The parser reads the SQL string and generates an Abstract Syntax Tree (AST). It verifies that table "users" and columns "id, email, country" exist in the pg_catalog metadata cache.',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '0.04 cost units', ioType: 'Catalog Lookup', latencyUs: '35 µs', tuplesProcessed: 0 },
+              visualState: {
+                status: 'processing',
+                stageName: 'SQL Parser & Semantic Analyzer',
+                mathFormula: 'Q_{raw} \\xrightarrow{\\text{Lexer}} \\text{Tokens} \\xrightarrow{\\text{Grammar}} \\text{AST}(Select, From(users), Where(country = \'India\'))',
+                nodes: [
+                  { id: 'client', label: 'Client Socket', sub: 'Inbound SQL Text', category: 'tuple', status: 'muted', badge: 'Source' },
+                  { id: 'parser', label: 'AST Compiler', sub: 'Grammar Tree Constructed', category: 'gate', status: 'active', highlight: true, badge: 'Tokens OK' },
+                  { id: 'catalog', label: 'Catalog Cache', sub: 'O(1) Schema Verified', category: 'storage', status: 'success', badge: 'Types Valid' },
+                ],
+                note: 'Syntax and permission checks pass with zero disk I/O.',
               },
-              {
-                title: 'Step 2: Cost-Based Optimizer (CBO)',
-                engineAction: 'Plan Enumeration & Statistics Analysis',
-                explanation: 'The optimizer consults table stats. It chooses between a Sequential Scan vs Index Scan.',
-                visualState: {
-                  status: 'processing',
-                  nodes: [
-                    { id: 'cbo', label: 'Cost-Based Optimizer', sub: 'Dynamic Programming', status: 'active', highlight: true, badge: 'Plan Selected' },
-                    { id: 'plan', label: 'Index Scan on idx_country', sub: 'Estimated Cost: 4.2', status: 'success' },
-                  ],
-                  metrics: [{ label: 'Seq Scan Cost', value: '45.00' }, { label: 'Index Scan Cost', value: '4.20' }],
-                  note: 'Optimizer selects the lowest cost execution plan (Index Scan).',
-                },
+            },
+            {
+              title: 'Phase 2: Cost-Based Optimizer (CBO) Plan Enumeration',
+              engineAction: 'Dynamic Programming search across Index Scan vs Seq Scan',
+              explanation: 'The optimizer checks table statistics (MCV frequency, histograms). It calculates that an Index Scan on idx_country costs 4.2 units versus a full Sequential Scan costing 45.0 units.',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '4.20 cost units', ioType: 'Plan Selection', latencyUs: '82 µs', tuplesProcessed: 0 },
+              visualState: {
+                status: 'processing',
+                stageName: 'Query Planner (Cost Engine)',
+                mathFormula: '\\text{Cost} = (N_{\\text{pages}} \\times c_{\\text{page}}) + (N_{\\text{tuples}} \\times c_{\\text{cpu}}) \\implies 4.2 < 45.0',
+                nodes: [
+                  { id: 'seq_scan', label: 'Sequential Scan', sub: 'Cost: 45.0 (Rejection)', category: 'storage', status: 'error', badge: 'Discarded' },
+                  { id: 'idx_scan', label: 'Index Scan (idx_country)', sub: 'Cost: 4.2 (Optimal Plan)', category: 'index', status: 'success', highlight: true, badge: 'Selected' },
+                ],
+                note: 'CBO selects index point seek based on statistical selectivity.',
               },
-              {
-                title: 'Step 3: Storage Engine & Buffer Cache',
-                engineAction: 'Page Fetch & Predicate Evaluation',
-                explanation: 'The storage engine checks shared buffers (RAM). If missing, it reads the 8KB disk block into memory.',
-                visualState: {
-                  status: 'matched',
-                  nodes: [
-                    { id: 'buffer', label: 'Shared Buffers (RAM)', sub: 'Cache Hit: 8KB Page #4', status: 'success', highlight: true },
-                    { id: 'filter', label: 'Filter Evaluator', sub: "country = 'India'", status: 'active' },
-                  ],
-                  metrics: [{ label: 'Shared Hits', value: '2 blocks' }, { label: 'Disk Reads', value: '0' }],
-                  note: 'Fast in-memory point lookup. Zero random physical disk I/O.',
-                },
+            },
+            {
+              title: 'Phase 3: Storage Engine & Shared Buffer Hit',
+              engineAction: 'Traverse B-Tree leaf & fetch 8 KB page from RAM buffer pool',
+              explanation: 'The execution engine follows the B-Tree root to the leaf page. It checks the Shared Buffers pool in RAM: 8 KB Block #04 is already cached in memory, avoiding physical disk I/O.',
+              telemetry: { bufferHitRate: '100% (Shared RAM)', estimatedCost: '4.20 cost units', ioType: 'Shared Buffer Hit', latencyUs: '112 µs', tuplesProcessed: 2 },
+              visualState: {
+                status: 'matched',
+                stageName: 'Buffer Pool Execution',
+                mathFormula: '\\text{SharedBuffer}(\\text{Block } 0x04) \\xrightarrow{\\text{Cache Hit}} \\text{RAM Page Bus (0 Disk Reads)}',
+                nodes: [
+                  { id: 'btree', label: 'idx_country Leaves', sub: 'Key: \'India\' -> CTID (4, 1)', category: 'index', status: 'success' },
+                  { id: 'ram', label: 'Shared Buffers (8 KB)', sub: 'Block 0x04 Cached in RAM', category: 'buffer', status: 'success', highlight: true, badge: 'Cache Hit' },
+                  { id: 'disk', label: 'NVMe Storage', sub: 'Zero Physical Reads Required', category: 'storage', status: 'muted' },
+                ],
+                note: 'Ultra-fast memory bus access: zero mechanical or NVMe wait states.',
               },
-              {
-                title: 'Step 4: Result Projection & Client Return',
-                engineAction: 'Tuple Serialization & Network Flush',
-                explanation: 'Only the requested projection columns (id, email) are serialized and returned to the client socket.',
-                visualState: {
-                  status: 'success',
-                  nodes: [
-                    { id: 'row1', label: 'Tuple #1: Lucky', sub: 'id: 1, email: lucky@...', status: 'success', badge: 'Matched' },
-                    { id: 'row2', label: 'Tuple #2: Amit', sub: 'id: 103, email: amit@...', status: 'success', badge: 'Matched' },
-                  ],
-                  metrics: [{ label: 'Rows Returned', value: '2' }, { label: 'Total Exec Time', value: '0.08 ms' }],
-                  note: 'Client receives clean relational tuples without managing low-level pointers.',
-                },
+            },
+            {
+              title: 'Phase 4: Projection Pushdown & Stream Emission',
+              engineAction: 'Filter row headers, strip unrequested columns, serialize output',
+              explanation: 'The executor unpacks the matching tuples, applies projection pushdown (emitting only id, email, country), and streams serialized relational records to the client socket.',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '4.20 cost units', ioType: 'Network Output', latencyUs: '138 µs', tuplesProcessed: 2 },
+              visualState: {
+                status: 'success',
+                stageName: 'Result Hopper Output',
+                mathFormula: '\\pi_{\\text{id, email, country}}(\\sigma_{\\text{country}=\'India\'}(\\text{Users})) \\implies \\{ \\text{Row}_1, \\text{Row}_2 \\}',
+                nodes: [
+                  { id: 'out1', label: 'Lucky (#1)', sub: 'email: lucky@... | India', category: 'output', status: 'success', highlight: true, badge: 'Emitted' },
+                  { id: 'out2', label: 'Amit (#103)', sub: 'email: amit@... | India', category: 'output', status: 'success', highlight: true, badge: 'Emitted' },
+                ],
+                note: 'Execution completed in 0.138 ms. Mathematical relation delivered.',
               },
-            ],
-          },
-        ],
-      };
-
-    case 2: // Database & Tables
-      return {
-        simTitle: 'Slotted Page Disk Architecture',
-        simConcept: 'Tables store data inside 8 KB disk pages containing a Page Header, Item Pointer array, and Heap Tuples.',
-        scenarios: [
-          {
-            name: '8 KB Page Layout Walkthrough',
-            query: 'SELECT * FROM users WHERE id = 42; -- Examining 8KB Block 0x05',
-            steps: [
-              {
-                title: 'Step 1: 8KB Page Header & Item Pointers',
-                engineAction: 'Inspect Page Header (24 bytes)',
-                explanation: 'Every disk page begins with a 24-byte header containing LSN (Log Sequence Number) and line pointer count.',
-                visualState: {
-                  status: 'processing',
-                  nodes: [
-                    { id: 'header', label: 'Page Header (24B)', sub: 'LSN: 0/1A45B, Flags: 0x0', status: 'active', highlight: true },
-                    { id: 'ptr1', label: 'Line Pointer #1', sub: 'Offset: 8140, Len: 48B', status: 'muted' },
-                    { id: 'ptr2', label: 'Line Pointer #2', sub: 'Offset: 8080, Len: 60B', status: 'muted' },
-                  ],
-                  metrics: [{ label: 'Page Size', value: '8192 bytes' }, { label: 'Free Space', value: '4120 bytes' }],
-                  note: 'Item pointers grow from bottom-up; raw row tuples grow top-down from end of page.',
-                },
-              },
-              {
-                title: 'Step 2: Free Space Hole & Tuple Offset',
-                engineAction: 'Resolve Tuple Offset',
-                explanation: 'The line pointer points to byte offset 8080 inside the page where tuple #42 physically resides.',
-                visualState: {
-                  status: 'matched',
-                  nodes: [
-                    { id: 'freespace', label: 'Free Space Gap', sub: 'Available for new INSERTs', status: 'muted' },
-                    { id: 'tuple', label: 'Heap Tuple #42', sub: 'Header (23B) + [42, Alice, 1500]', status: 'success', highlight: true, badge: 'Target' },
-                  ],
-                  metrics: [{ label: 'Tuple Offset', value: '8080' }, { label: 'Tuple Length', value: '60 bytes' }],
-                  note: 'Slotted page architecture allows moving tuples during VACUUM without invalidating index pointers.',
-                },
-              },
-              {
-                title: 'Step 3: Tuple Header & Column Extraction',
-                engineAction: 'Unpack Tuple Attributes',
-                explanation: 'The tuple header contains MVCC metadata (xmin, xmax, infomasks). Columns are extracted using data type offsets.',
-                visualState: {
-                  status: 'success',
-                  nodes: [
-                    { id: 'xmin', label: 'xmin: 1042', sub: 'Created by TX 1042', status: 'success' },
-                    { id: 'xmax', label: 'xmax: 0', sub: 'Active (Not Deleted)', status: 'success' },
-                    { id: 'payload', label: 'Columns: [id: 42, name: Alice]', sub: 'Data Decoded', status: 'success', highlight: true },
-                  ],
-                  metrics: [{ label: 'Visibility', value: 'VISIBLE' }, { label: 'Attributes', value: '3 columns' }],
-                  note: 'Tuple decoded into relational memory buffer.',
-                },
-              },
-            ],
-          },
-        ],
-      };
-
-    case 27: // Foreign Key
-      return {
-        simTitle: 'Referential Integrity & CASCADE Engine',
-        simConcept: 'Foreign Keys enforce parent-child invariants and automatically synchronize deletions.',
-        scenarios: [
-          {
-            name: 'ON DELETE CASCADE Simulation',
-            query: 'DELETE FROM departments WHERE id = 1; -- Trigger CASCADE to employees',
-            steps: [
-              {
-                title: 'Step 1: Check Parent Record',
-                engineAction: 'Evaluate departments WHERE id = 1',
-                explanation: 'The database acquires a row-level Exclusive Lock on department 1 (IT).',
-                visualState: {
-                  status: 'processing',
-                  nodes: [
-                    { id: 'dept1', label: 'Dept #1 (IT)', sub: 'Status: Pending Delete', status: 'warning', highlight: true, badge: 'X-Lock' },
-                    { id: 'dept2', label: 'Dept #2 (HR)', sub: 'Status: Active', status: 'muted' },
-                  ],
-                  metrics: [{ label: 'Parent Table', value: 'departments' }, { label: 'Target ID', value: '1' }],
-                  note: 'Referential integrity check triggers internal FK trigger handler.',
-                },
-              },
-              {
-                title: 'Step 2: Scan Child FK Index (employees.department_id)',
-                engineAction: 'Lookup child records referencing parent id 1',
-                explanation: 'The engine queries the foreign key index on employees. It locates two matching employee records.',
-                visualState: {
-                  status: 'matched',
-                  nodes: [
-                    { id: 'emp1', label: 'Emp #101 (Lucky)', sub: 'dept_id: 1 ➔ Cascade Target', status: 'warning', highlight: true, badge: 'Match' },
-                    { id: 'emp2', label: 'Emp #102 (Rahul)', sub: 'dept_id: 2 ➔ Unaffected', status: 'muted' },
-                    { id: 'emp3', label: 'Emp #103 (Amit)', sub: 'dept_id: 1 ➔ Cascade Target', status: 'warning', highlight: true, badge: 'Match' },
-                  ],
-                  metrics: [{ label: 'FK Index Scan', value: 'Hit (2 rows)' }, { label: 'Action', value: 'CASCADE' }],
-                  note: 'If an index on department_id is missing, the engine is forced to do a slow full table scan!',
-                },
-              },
-              {
-                title: 'Step 3: Atomic Cascade Deletion & Commit',
-                engineAction: 'Delete child records then delete parent department',
-                explanation: 'Both child rows (Lucky & Amit) and the parent department are marked dead under the same transaction ID.',
-                visualState: {
-                  status: 'success',
-                  nodes: [
-                    { id: 'del_dept', label: 'Dept #1 (IT)', sub: 'DELETED (xmax = tx_id)', status: 'error', badge: 'Removed' },
-                    { id: 'del_emp1', label: 'Emp #101', sub: 'DELETED by CASCADE', status: 'error', badge: 'Removed' },
-                    { id: 'del_emp3', label: 'Emp #103', sub: 'DELETED by CASCADE', status: 'error', badge: 'Removed' },
-                  ],
-                  metrics: [{ label: 'Total Rows Deleted', value: '3' }, { label: 'Integrity Preserved', value: '100%' }],
-                  note: 'Referential integrity is guaranteed: zero orphaned records remain.',
-                },
-              },
-            ],
-          },
-        ],
-      };
-
-    default: // Dynamic high-fidelity visualizer for any of the 50 topics
-      return generateDynamicSimData(topic);
+            },
+          ],
+        },
+      ],
+    };
   }
+
+  if (num === 7) { // WHERE Clause
+    return {
+      simTitle: 'SARGable Predicate Filter Pipeline',
+      simConcept: 'Streaming row tuples through laser evaluation gates; filtering matching tuples and deflecting non-matching records.',
+      scenarios: [
+        {
+          name: 'Compound SARGable Filter',
+          query: "SELECT id, name, salary FROM employees WHERE salary > 60000 AND status = 'active';",
+          description: 'Visualizes short-circuit boolean evaluation, index selectivity, and row filtering.',
+          steps: [
+            {
+              title: 'Phase 1: Ingest Candidate Tuples from Relation Heap',
+              engineAction: 'Stream 8 KB page row tuples into evaluation gate',
+              explanation: 'Three employee records from the table heap enter the execution pipeline. Each row carries physical byte offsets and MVCC visibility transaction headers.',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '2.15 cost units', ioType: 'Heap Fetch', latencyUs: '22 µs', tuplesProcessed: 3 },
+              visualState: {
+                status: 'processing',
+                stageName: 'Tuple Stream Ingestion',
+                nodes: [
+                  { id: 't1', label: 'Alice ($75k, active)', sub: 'Tuple 1', category: 'tuple', status: 'active', highlight: true, badge: 'Evaluating' },
+                  { id: 't2', label: 'Bob ($50k, active)', sub: 'Tuple 2', category: 'tuple', status: 'muted', badge: 'Queued' },
+                  { id: 't3', label: 'Charlie ($90k, inactive)', sub: 'Tuple 3', category: 'tuple', status: 'muted', badge: 'Queued' },
+                ],
+                note: 'Tuples enter CPU instruction pipeline in row-oriented slotted order.',
+              },
+            },
+            {
+              title: 'Phase 2: Evaluate SARGable Boolean Predicates',
+              engineAction: 'Atomic comparisons with short-circuit evaluation',
+              explanation: 'Alice satisfies salary > 60000 AND status = active (both TRUE). Bob fails salary > 60000 (short-circuits to FALSE). Charlie passes salary > 60000 but fails status = active (evaluates to FALSE).',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '2.15 cost units', ioType: 'CPU Predicate Gate', latencyUs: '48 µs', tuplesProcessed: 3 },
+              visualState: {
+                status: 'matched',
+                stageName: 'Laser Evaluation Gate',
+                mathFormula: 'P(t) = (t.\\text{salary} > 60000) \\land (t.\\text{status} = \'\\text{active}\') \\implies \\{ \\text{Alice: T}, \\text{Bob: F}, \\text{Charlie: F} \\}',
+                nodes: [
+                  { id: 't1', label: 'Alice', sub: '75k > 60k (T) & active (T) -> PASS', category: 'output', status: 'success', highlight: true, badge: 'TRUE' },
+                  { id: 't2', label: 'Bob', sub: '50k > 60k (F) -> Short-circuit DROP', category: 'tuple', status: 'error', badge: 'FALSE' },
+                  { id: 't3', label: 'Charlie', sub: '90k > 60k (T) & inactive (F) -> DROP', category: 'tuple', status: 'error', badge: 'FALSE' },
+                ],
+                note: 'Non-matching rows hit the rejection deflector barrier and are freed from cache.',
+              },
+            },
+            {
+              title: 'Phase 3: Materialize Qualifying Output Projection',
+              engineAction: 'Filter complete: emit matching record to output stream',
+              explanation: 'Only Alice meets all boolean criteria. The projection engine emits the qualifying tuple to the output stream with selectivity = 33.3%.',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '2.15 cost units', ioType: 'Output Stream', latencyUs: '64 µs', tuplesProcessed: 1 },
+              visualState: {
+                status: 'success',
+                stageName: 'Output Delivery',
+                nodes: [
+                  { id: 'out1', label: 'Alice (ID: 101, Salary: $75,000)', sub: 'Selectivity: 33.3% | Emitted to Client', category: 'output', status: 'success', highlight: true, badge: 'Emitted' },
+                ],
+                note: 'Clean mathematical filtering complete with zero intermediate disk spills.',
+              },
+            },
+          ],
+        },
+      ],
+    };
+  }
+
+  if (num === 27) { // Foreign Key
+    return {
+      simTitle: 'Referential Integrity & CASCADE Engine',
+      simConcept: 'Foreign keys enforce relational parent-child graph consistency. Deletions cascade atomically through child tables.',
+      scenarios: [
+        {
+          name: 'ON DELETE CASCADE Execution',
+          query: 'DELETE FROM departments WHERE id = 1; -- Trigger CASCADE to employees',
+          description: 'Visualizes parent X-Lock, child index lookup, and atomic multi-table deletion.',
+          steps: [
+            {
+              title: 'Phase 1: Acquire Row-Level Exclusive Lock on Parent',
+              engineAction: 'Evaluate departments WHERE id = 1 and lock parent row',
+              explanation: 'The transaction acquires an Exclusive Row Lock (X-Lock) on Department 1 (IT). No other transaction can update or reference this department while the delete is pending.',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '1.05 cost units', ioType: 'X-Lock Acquired', latencyUs: '18 µs', tuplesProcessed: 1 },
+              visualState: {
+                status: 'processing',
+                stageName: 'Parent Row Locking',
+                mathFormula: '\\text{Lock}(\\text{Dept}_{\\text{id}=1}, \\text{Exclusive}) \\implies \\text{Block Foreign Updates}',
+                nodes: [
+                  { id: 'dept1', label: 'Dept #1 (IT)', sub: 'Status: Pending Deletion', category: 'storage', status: 'warning', highlight: true, badge: 'X-Lock' },
+                  { id: 'dept2', label: 'Dept #2 (HR)', sub: 'Status: Active (Unaffected)', category: 'storage', status: 'muted' },
+                ],
+                note: 'Referential integrity triggers internal foreign key cascading handler.',
+              },
+            },
+            {
+              title: 'Phase 2: Probe Child FK Index (employees.department_id)',
+              engineAction: 'Index Scan on child relation to identify referencing tuples',
+              explanation: 'The engine queries the foreign key index on employees.department_id = 1. It finds two referencing employee tuples (Lucky & Amit).',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '3.40 cost units', ioType: 'FK Index Scan', latencyUs: '42 µs', tuplesProcessed: 2 },
+              visualState: {
+                status: 'matched',
+                stageName: 'Child Index Probe',
+                mathFormula: '\\sigma_{\\text{dept\\_id}=1}(\\text{Employees}) \\xrightarrow{\\text{FK Index Seek}} \\{ \\text{Emp}_{101}, \\text{Emp}_{103} \\}',
+                nodes: [
+                  { id: 'emp1', label: 'Emp #101 (Lucky)', sub: 'dept_id: 1 -> CASCADE Target', category: 'tuple', status: 'warning', highlight: true, badge: 'Target' },
+                  { id: 'emp2', label: 'Emp #102 (Rahul)', sub: 'dept_id: 2 -> Safe (HR)', category: 'tuple', status: 'muted' },
+                  { id: 'emp3', label: 'Emp #103 (Amit)', sub: 'dept_id: 1 -> CASCADE Target', category: 'tuple', status: 'warning', highlight: true, badge: 'Target' },
+                ],
+                note: 'If an index on department_id is missing, the engine would have to scan the entire employees table!',
+              },
+            },
+            {
+              title: 'Phase 3: Atomic Multi-Table Deletion & Commit',
+              engineAction: 'Set xmax on child tuples and parent tuple under single Transaction ID',
+              explanation: 'Both child rows (Lucky and Amit) and the parent department are marked dead under the same transaction ID in the Write-Ahead Log. Referential integrity is 100% preserved with zero orphaned records.',
+              telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '4.80 cost units', ioType: 'WAL Commit Sync', latencyUs: '78 µs', tuplesProcessed: 3 },
+              visualState: {
+                status: 'success',
+                stageName: 'Atomic Cascade Commit',
+                mathFormula: '\\text{WAL}(tx_{1042}) \\implies \\{ \\text{Dept}_1^{\\dagger}, \\text{Emp}_{101}^{\\dagger}, \\text{Emp}_{103}^{\\dagger} \\} \\xrightarrow{\\text{fsync}} \\text{Disk}',
+                nodes: [
+                  { id: 'del_dept', label: 'Dept #1 (IT)', sub: 'DELETED (xmax = tx_id)', category: 'storage', status: 'error', badge: 'Removed' },
+                  { id: 'del_emp1', label: 'Emp #101 (Lucky)', sub: 'DELETED by CASCADE', category: 'storage', status: 'error', badge: 'Removed' },
+                  { id: 'del_emp3', label: 'Emp #103 (Amit)', sub: 'DELETED by CASCADE', category: 'storage', status: 'error', badge: 'Removed' },
+                ],
+                note: 'Zero orphaned records remain. Referential invariant strictly maintained.',
+              },
+            },
+          ],
+        },
+      ],
+    };
+  }
+
+  // Universal dynamic 3Blue1Brown simulation generator for all other topics
+  return generateUniversal3B1BSim(topic);
 }
 
-// Universal dynamic generator creating custom interactive simulations for each topic
-function generateDynamicSimData(topic: SqlTopic): TopicSimData {
+function generateUniversal3B1BSim(topic: SqlTopic): TopicSimData {
   const t = topic.title;
   const num = topic.topicNumber;
+  const cat = topic.category;
 
-  if (num === 7) { // WHERE clause
-    return {
-      simTitle: 'Predicate Filter Evaluation Pipeline',
-      simConcept: 'Streaming rows through boolean predicates; evaluating sargability and row selectivity.',
-      scenarios: [
-        {
-          name: 'Filter Evaluation',
-          query: "SELECT * FROM employees WHERE salary > 60000 AND status = 'active';",
-          steps: [
-            {
-              title: 'Step 1: Stream Tuples from Table',
-              engineAction: 'Fetch raw rows from heap or index',
-              explanation: 'Candidate rows enter the filter engine one by one.',
-              visualState: {
-                status: 'processing',
-                nodes: [
-                  { id: 'r1', label: 'Alice ($75k, active)', sub: 'Row 1', status: 'active', highlight: true },
-                  { id: 'r2', label: 'Bob ($50k, active)', sub: 'Row 2', status: 'muted' },
-                  { id: 'r3', label: 'Charlie ($90k, inactive)', sub: 'Row 3', status: 'muted' },
-                ],
-                metrics: [{ label: 'Rows Scanned', value: '3' }, { label: 'Filtered In', value: '0' }],
-              },
-            },
-            {
-              title: 'Step 2: Evaluate Boolean Predicates',
-              engineAction: 'Short-circuit evaluation of AND clauses',
-              explanation: 'Alice passes both predicates. Bob fails salary > 60000. Charlie fails status = active.',
-              visualState: {
-                status: 'matched',
-                nodes: [
-                  { id: 'r1', label: 'Alice', sub: '75k > 60k (T) & active (T) ➔ TRUE', status: 'success', highlight: true, badge: 'PASS' },
-                  { id: 'r2', label: 'Bob', sub: '50k > 60k (F) ➔ Short-circuits FALSE', status: 'error', badge: 'REJECT' },
-                  { id: 'r3', label: 'Charlie', sub: '90k > 60k (T) & inactive (F) ➔ FALSE', status: 'error', badge: 'REJECT' },
-                ],
-                metrics: [{ label: 'Pass Rate', value: '33.3%' }, { label: 'Selectivity', value: '0.33' }],
-              },
-            },
-            {
-              title: 'Step 3: Output Result Projection',
-              engineAction: 'Emit surviving tuple to client stream',
-              explanation: 'Only Alice meets all criteria and is emitted to the output buffer.',
-              visualState: {
-                status: 'success',
-                nodes: [
-                  { id: 'out1', label: 'Alice (ID: 101, Salary: $75,000)', sub: 'Output Tuple', status: 'success', highlight: true, badge: 'Emitted' },
-                ],
-                metrics: [{ label: 'Final Rows', value: '1' }, { label: 'CPU Instructions', value: 'Minimal' }],
-              },
-            },
-          ],
-        },
-      ],
-    };
-  }
-
-  if (num === 20 || num === 21) { // GROUP BY & HAVING
-    return {
-      simTitle: 'Hash Aggregation & Bucket Pipeline',
-      simConcept: 'Splitting rows into distinct hash buckets, calculating aggregates, and filtering grouped metrics.',
-      scenarios: [
-        {
-          name: 'Group By & Aggregate Flow',
-          query: 'SELECT department, AVG(salary) FROM employees GROUP BY department HAVING AVG(salary) > 65000;',
-          steps: [
-            {
-              title: 'Step 1: Hash Key Calculation',
-              engineAction: 'Hash department column for incoming rows',
-              explanation: 'The engine hashes the group key ("IT", "HR", "Sales") into in-memory hash buckets.',
-              visualState: {
-                status: 'processing',
-                nodes: [
-                  { id: 'b1', label: 'Bucket #1: IT', sub: 'Alice ($80k), David ($70k)', status: 'active', highlight: true },
-                  { id: 'b2', label: 'Bucket #2: HR', sub: 'Bob ($50k), Eve ($55k)', status: 'active' },
-                  { id: 'b3', label: 'Bucket #3: Sales', sub: 'Charlie ($90k)', status: 'active' },
-                ],
-                metrics: [{ label: 'Hash Table', value: 'In-Memory (work_mem)' }, { label: 'Groups', value: '3' }],
-              },
-            },
-            {
-              title: 'Step 2: Aggregate Calculation per Group',
-              engineAction: 'Compute AVG(salary) across bucket tuples',
-              explanation: 'IT average = $75,000. HR average = $52,500. Sales average = $90,000.',
-              visualState: {
-                status: 'matched',
-                nodes: [
-                  { id: 'b1', label: 'IT Group', sub: 'Count: 2 | AVG: $75,000', status: 'success', highlight: true },
-                  { id: 'b2', label: 'HR Group', sub: 'Count: 2 | AVG: $52,500', status: 'muted' },
-                  { id: 'b3', label: 'Sales Group', sub: 'Count: 1 | AVG: $90,000', status: 'success', highlight: true },
-                ],
-                metrics: [{ label: 'Aggregates Done', value: '3 buckets' }],
-              },
-            },
-            {
-              title: 'Step 3: HAVING Filter Stage',
-              engineAction: 'Filter groups where AVG(salary) > 65000',
-              explanation: 'HAVING filters aggregated groups. IT and Sales qualify; HR ($52,500) is discarded.',
-              visualState: {
-                status: 'success',
-                nodes: [
-                  { id: 'out1', label: 'IT', sub: 'AVG: $75,000 ➔ Kept', status: 'success', highlight: true, badge: 'PASS' },
-                  { id: 'out2', label: 'HR', sub: 'AVG: $52,500 ➔ Dropped by HAVING', status: 'error', badge: 'REJECT' },
-                  { id: 'out3', label: 'Sales', sub: 'AVG: $90,000 ➔ Kept', status: 'success', highlight: true, badge: 'PASS' },
-                ],
-                metrics: [{ label: 'Output Groups', value: '2' }],
-              },
-            },
-          ],
-        },
-      ],
-    };
-  }
-
-  if (num === 29 || num === 30 || num === 31 || num === 32) { // Joins
-    return {
-      simTitle: 'Physical Join Engine (Build & Probe Phase)',
-      simConcept: 'Comparing rows between tables using Hash Join and Nested Loop mechanisms.',
-      scenarios: [
-        {
-          name: 'Hash Join Execution',
-          query: 'SELECT u.name, o.total FROM users u JOIN orders o ON u.id = o.user_id;',
-          steps: [
-            {
-              title: 'Step 1: Build Phase (Smaller Table)',
-              engineAction: 'Construct in-memory Hash Table on users.id',
-              explanation: 'The optimizer selects the smaller table (users) and hashes primary keys into memory buckets.',
-              visualState: {
-                status: 'processing',
-                nodes: [
-                  { id: 'h1', label: 'Hash Bucket 1', sub: 'Key: id=1 ➔ Alice', status: 'active', highlight: true },
-                  { id: 'h2', label: 'Hash Bucket 2', sub: 'Key: id=2 ➔ Bob', status: 'active' },
-                ],
-                metrics: [{ label: 'Build Table', value: 'users (2 rows)' }, { label: 'Memory Used', value: '16 KB' }],
-              },
-            },
-            {
-              title: 'Step 2: Probe Phase (Larger Table Stream)',
-              engineAction: 'Stream orders and probe hash table with user_id',
-              explanation: 'Streaming incoming orders table and looking up user_id in the hash table in O(1) time.',
-              visualState: {
-                status: 'matched',
-                nodes: [
-                  { id: 'o1', label: 'Order #101', sub: 'user_id: 1 ➔ Matches Alice', status: 'success', highlight: true, badge: 'Join Hit' },
-                  { id: 'o2', label: 'Order #102', sub: 'user_id: 2 ➔ Matches Bob', status: 'success', highlight: true, badge: 'Join Hit' },
-                  { id: 'o3', label: 'Order #103', sub: 'user_id: 99 ➔ No Match in Hash', status: 'error', badge: 'No Match' },
-                ],
-                metrics: [{ label: 'Probe Time', value: '0.02 ms' }, { label: 'Join Matches', value: '2' }],
-              },
-            },
-            {
-              title: 'Step 3: Joined Tuples Emitted',
-              engineAction: 'Combine attributes and output joined rows',
-              explanation: 'Attributes from both relations are stitched together into the final output projection.',
-              visualState: {
-                status: 'success',
-                nodes: [
-                  { id: 'j1', label: '[Alice, Order 101: $140]', sub: 'Joined Result Row 1', status: 'success', highlight: true },
-                  { id: 'j2', label: '[Bob, Order 102: $85]', sub: 'Joined Result Row 2', status: 'success', highlight: true },
-                ],
-                metrics: [{ label: 'Join Complexity', value: 'O(N + M)' }],
-              },
-            },
-          ],
-        },
-      ],
-    };
-  }
-
-  // Universal fallback simulation for other topics
   return {
-    simTitle: `${t} Visual Simulator`,
-    simConcept: `Interactive engine animation demonstrating relational behavior, disk structures, and execution flow for ${t}.`,
+    simTitle: `${t} Engine Visual Simulator`,
+    simConcept: `Interactive 3Blue1Brown-style architectural animation demonstrating ${t} execution mechanics, memory buffers, and relational invariants.`,
     scenarios: [
       {
-        name: 'Standard Engine Flow',
-        query: topic.codeSnippet || `EXPLAIN ANALYZE -- ${t} Execution Flow;`,
+        name: 'Standard Execution Trace',
+        query: topic.codeSnippet || `EXPLAIN (ANALYZE, BUFFERS) -- Execution Trace for ${t};`,
+        description: `Visualizes the step-by-step physical transformation of data inside the database engine for ${t}.`,
         steps: [
           {
-            title: 'Step 1: Input & Parsing Stage',
-            engineAction: `Validate SQL syntax and resolve schema metadata for ${t}`,
-            explanation: `The database engine inspects active tables, verifies permissions, and prepares the physical operation.`,
+            title: `Phase 1: Input Ingestion & Catalog Validation`,
+            engineAction: `Parse SQL expression and verify metadata for ${t}`,
+            explanation: `The query engine receives the statement, verifies table contracts in the system catalog, and allocates memory buffers in work_mem.`,
+            telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '1.20 cost units', ioType: 'Memory Allocation', latencyUs: '25 µs', tuplesProcessed: 0 },
             visualState: {
               status: 'processing',
+              stageName: 'Ingestion & Schema Check',
+              mathFormula: `\\mathcal{R}_{\\text{in}} \\xrightarrow{\\text{Validate}} \\text{Schema}(\\text{${cat.toUpperCase()}}) \\implies \\text{Invariant Verified}`,
               nodes: [
-                { id: 'n1', label: 'SQL Input', sub: `Initiating ${t}`, status: 'active', highlight: true },
-                { id: 'n2', label: 'Schema Catalog', sub: 'Checking Table Invariants', status: 'muted' },
+                { id: 'n1', label: 'SQL Ingestion', sub: `Initiating ${t}`, category: 'tuple', status: 'active', highlight: true, badge: 'Inbound' },
+                { id: 'n2', label: 'Catalog Engine', sub: 'Checking Table Invariants', category: 'storage', status: 'success', badge: 'Verified' },
               ],
-              metrics: [{ label: 'Target Topic', value: `#${num}` }, { label: 'Status', value: 'Validating' }],
-              note: topic.mentalModel,
+              note: topic.mentalModel || 'Initial declarative validation passed.',
             },
           },
           {
-            title: 'Step 2: Engine Processing & State Evaluation',
-            engineAction: `Execute physical algorithm: ${topic.category.toUpperCase()} layer`,
+            title: `Phase 2: Relational Engine Transformation`,
+            engineAction: `Execute physical algorithm: ${topic.category.toUpperCase()} operator`,
             explanation: topic.definition,
+            telemetry: { bufferHitRate: '98% (RAM Hit)', estimatedCost: '3.85 cost units', ioType: 'Buffer Execution', latencyUs: '64 µs', tuplesProcessed: 2 },
             visualState: {
               status: 'matched',
+              stageName: 'Relational Transformation Core',
+              mathFormula: `\\mathcal{T}_{\\text{heap}} \\xrightarrow{\\text{Operator}} \\mathcal{R}_{\\text{out}} \\quad [\\text{ACID Guaranteed}]`,
               nodes: [
-                { id: 'n3', label: 'Execution Engine', sub: 'Evaluating Invariants', status: 'success', highlight: true, badge: 'In Progress' },
-                { id: 'n4', label: 'Buffer Pool / Disk', sub: 'Handling 8KB Blocks', status: 'active' },
+                { id: 'n3', label: 'Execution Operator', sub: 'Evaluating Invariants', category: 'gate', status: 'success', highlight: true, badge: 'Processing' },
+                { id: 'n4', label: 'Shared Buffer RAM', sub: 'Handling 8 KB Slotted Pages', category: 'buffer', status: 'active', badge: 'Cache Hit' },
               ],
-              metrics: [{ label: 'Category', value: topic.category }, { label: 'Difficulty', value: topic.difficulty }],
-              note: 'Engine ensures ACID compliance and referential consistency.',
+              note: 'Engine maintains strict ACID consistency and relational invariants.',
             },
           },
           {
-            title: 'Step 3: Verification & Execution Complete',
-            engineAction: 'Commit state changes and return verified output',
+            title: `Phase 3: State Verification & Output Delivery`,
+            engineAction: `Commit state changes, serialize tuples, stream output to client`,
             explanation: topic.interviewReadyAnswer,
+            telemetry: { bufferHitRate: '100% (RAM)', estimatedCost: '3.85 cost units', ioType: 'Client Stream', latencyUs: '89 µs', tuplesProcessed: 2 },
             visualState: {
               status: 'success',
+              stageName: 'Stream Completion',
+              mathFormula: `\\text{Success}(\\mathcal{R}_{\\text{out}}) \\implies 100\\% \\text{ Referential & Transactional Consistency}`,
               nodes: [
-                { id: 'n5', label: 'Operation Success', sub: 'Invariants Preserved', status: 'success', highlight: true, badge: 'Done' },
-                { id: 'n6', label: 'Output Stream', sub: 'Result Returned to Client', status: 'success' },
+                { id: 'n5', label: 'Operation Success', sub: 'Invariants Preserved', category: 'output', status: 'success', highlight: true, badge: 'Committed' },
+                { id: 'n6', label: 'Result Projection', sub: 'Emitted to Application Socket', category: 'output', status: 'success', badge: 'Emitted' },
               ],
-              metrics: [{ label: 'Execution', value: 'SUCCESS' }, { label: 'Data Integrity', value: '100%' }],
-              note: topic.takeaways[0] || 'Declarative execution completed.',
+              note: topic.takeaways[0] || 'Declarative execution completed successfully.',
             },
           },
         ],
@@ -515,15 +397,17 @@ export function TopicVisualizer({ topic }: { topic: SqlTopic }) {
   const [activeScenarioIdx, setActiveScenarioIdx] = useState(0);
   const [currentStepIdx, setCurrentStepIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState<0.5 | 1 | 2>(1);
 
   const activeScenario = simData.scenarios[activeScenarioIdx] || simData.scenarios[0];
   const steps = activeScenario.steps;
   const currentStep = steps[currentStepIdx] || steps[0];
 
-  // Auto-play timer
+  // Auto-play timer with dynamic speed
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isPlaying && activeTab === 'animation') {
+      const intervalMs = 2800 / playbackSpeed;
       timer = setInterval(() => {
         setCurrentStepIdx((prev) => {
           if (prev >= steps.length - 1) {
@@ -532,10 +416,10 @@ export function TopicVisualizer({ topic }: { topic: SqlTopic }) {
           }
           return prev + 1;
         });
-      }, 2500);
+      }, intervalMs);
     }
     return () => clearInterval(timer);
-  }, [isPlaying, steps.length, activeTab]);
+  }, [isPlaying, steps.length, activeTab, playbackSpeed]);
 
   const handleReset = () => {
     setIsPlaying(false);
@@ -554,24 +438,26 @@ export function TopicVisualizer({ topic }: { topic: SqlTopic }) {
     }
   };
 
+  const progressPercent = ((currentStepIdx) / Math.max(1, steps.length - 1)) * 100;
+
   return (
     <div className="space-y-4">
       {specializedLab && (
-        <div className="flex items-center gap-2 p-1.5 rounded-xl border border-border bg-card max-w-fit">
+        <div className="flex items-center gap-2 p-1.5 rounded-xl border border-border bg-card max-w-fit shadow-2xs">
           <button
             onClick={() => setActiveTab('animation')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'animation'
                 ? 'bg-foreground text-background shadow-xs'
                 : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Interactive Animation Stepper</span>
+            <span>3Blue1Brown Visual Simulation</span>
           </button>
           <button
             onClick={() => setActiveTab('lab')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'lab'
                 ? 'bg-foreground text-background shadow-xs'
                 : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
@@ -586,166 +472,262 @@ export function TopicVisualizer({ topic }: { topic: SqlTopic }) {
       {activeTab === 'lab' && specializedLab ? (
         specializedLab.component
       ) : (
-        <div className="rounded-2xl border border-border bg-card p-5 sm:p-7 space-y-6 shadow-sm transition-colors">
+        <div className="rounded-2xl border border-border/80 bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-white p-5 sm:p-7 space-y-6 shadow-xl transition-all overflow-hidden relative">
+          {/* Subtle 3Blue1Brown Grid Background */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-20"
+            style={{
+              backgroundImage: 'radial-gradient(#38bdf8 1px, transparent 1px)',
+              backgroundSize: '24px 24px',
+            }}
+          />
+
           {/* Visualizer Top Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl border border-border bg-muted/60 text-foreground flex items-center justify-center font-bold shadow-xs">
-                <Cpu className="w-5 h-5 text-foreground" />
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-4 relative z-10">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl border border-cyan-500/30 bg-cyan-950/40 text-cyan-400 flex items-center justify-center font-bold shadow-[0_0_15px_rgba(56,189,248,0.2)]">
+                <Cpu className="w-5 h-5 text-cyan-400 animate-pulse" />
               </div>
               <div>
-                <div className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-foreground" />
-                  <span>Interactive Engine Simulation</span>
+                <div className="text-[11px] font-mono text-cyan-400 flex items-center gap-1.5 uppercase tracking-wider font-bold">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Interactive Engine Geometry</span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground">
+                <h3 className="text-lg sm:text-xl font-extrabold tracking-tight text-zinc-100">
                   {simData.simTitle}
                 </h3>
               </div>
             </div>
 
+            {/* Speed & Step Pills */}
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
-                Step {currentStepIdx + 1} of {steps.length}
+              <div className="flex items-center rounded-lg border border-zinc-800 bg-zinc-900/80 p-0.5 text-[11px] font-mono">
+                {([0.5, 1, 2] as const).map((spd) => (
+                  <button
+                    key={spd}
+                    onClick={() => setPlaybackSpeed(spd)}
+                    className={`px-2 py-0.5 rounded font-bold transition-colors ${
+                      playbackSpeed === spd
+                        ? 'bg-cyan-500 text-black shadow-xs'
+                        : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    {spd}x
+                  </button>
+                ))}
+              </div>
+
+              <span className="px-2.5 py-1 rounded-lg border border-cyan-500/20 bg-cyan-950/30 text-cyan-300 font-mono text-xs font-bold">
+                Phase {currentStepIdx + 1} of {steps.length}
               </span>
             </div>
           </div>
 
-          {/* Scenario Selector & SQL Query Banner */}
-          <div className="space-y-3">
-            {simData.scenarios.length > 1 && (
-              <div className="flex flex-wrap gap-2">
-                {simData.scenarios.map((sc, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setActiveScenarioIdx(idx);
-                      setCurrentStepIdx(0);
-                      setIsPlaying(false);
-                    }}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors border ${
-                      activeScenarioIdx === idx
-                        ? 'bg-foreground text-background border-foreground shadow-xs'
-                        : 'bg-card border-border text-foreground hover:bg-muted/40'
-                    }`}
-                  >
-                    {sc.name}
-                  </button>
-                ))}
+          {/* Active SQL Statement Console with Laser Border */}
+          <div className="space-y-3 relative z-10">
+            <div className="p-4 rounded-xl bg-black/90 border border-cyan-500/30 font-mono text-xs sm:text-sm text-zinc-200 flex items-center justify-between gap-3 overflow-x-auto shadow-[0_0_20px_rgba(56,189,248,0.1)]">
+              <div className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-emerald-400 font-bold shrink-0">SQL&gt;</span>
               </div>
-            )}
-
-            <div className="p-3.5 rounded-xl bg-zinc-950 text-zinc-100 dark:bg-black font-mono text-xs sm:text-sm border border-border/80 flex items-center justify-between gap-3 overflow-x-auto">
-              <span className="text-emerald-400 font-bold shrink-0">SQL&gt;</span>
-              <code className="text-zinc-200 flex-1 truncate">{activeScenario.query}</code>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 shrink-0">Active Input</span>
+              <code className="text-cyan-300 font-medium flex-1 truncate">{activeScenario.query}</code>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 shrink-0 font-bold">
+                {activeScenario.name}
+              </span>
             </div>
           </div>
 
-          {/* Animation Stage Canvas */}
-          <div className="p-5 sm:p-6 rounded-xl border border-border bg-muted/15 space-y-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="text-sm sm:text-base font-bold text-foreground flex items-center gap-2">
-                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+          {/* 3Blue1Brown Telemetry HUD (Heads-Up Display) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 relative z-10">
+            <div className="p-3 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm space-y-1">
+              <div className="text-[10px] font-mono text-zinc-400 flex items-center gap-1.5 uppercase font-bold">
+                <HardDrive className="w-3 h-3 text-cyan-400" />
+                <span>Buffer Pool</span>
+              </div>
+              <div className="text-xs sm:text-sm font-mono font-extrabold text-cyan-300">
+                {currentStep.telemetry.bufferHitRate}
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm space-y-1">
+              <div className="text-[10px] font-mono text-zinc-400 flex items-center gap-1.5 uppercase font-bold">
+                <Zap className="w-3 h-3 text-amber-400" />
+                <span>Planner Cost</span>
+              </div>
+              <div className="text-xs sm:text-sm font-mono font-extrabold text-amber-300">
+                {currentStep.telemetry.estimatedCost}
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm space-y-1">
+              <div className="text-[10px] font-mono text-zinc-400 flex items-center gap-1.5 uppercase font-bold">
+                <Activity className="w-3 h-3 text-emerald-400" />
+                <span>Physical I/O</span>
+              </div>
+              <div className="text-xs sm:text-sm font-mono font-extrabold text-emerald-300">
+                {currentStep.telemetry.ioType}
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm space-y-1">
+              <div className="text-[10px] font-mono text-zinc-400 flex items-center gap-1.5 uppercase font-bold">
+                <Clock className="w-3 h-3 text-violet-400" />
+                <span>Engine Latency</span>
+              </div>
+              <div className="text-xs sm:text-sm font-mono font-extrabold text-violet-300">
+                {currentStep.telemetry.latencyUs}
+              </div>
+            </div>
+          </div>
+
+          {/* Cinematic Animation Stage Canvas */}
+          <div className="p-6 rounded-2xl border border-cyan-500/20 bg-black/60 backdrop-blur-md space-y-6 relative overflow-hidden shadow-inner">
+            {/* Stage Header */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800/80 pb-3">
+              <div className="space-y-0.5">
+                <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold">
+                  {currentStep.visualState.stageName}
+                </div>
+                <h4 className="text-base sm:text-lg font-extrabold text-white flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#38bdf8]" />
                   {currentStep.title}
                 </h4>
-                <div className="text-xs font-mono text-muted-foreground mt-0.5">
-                  Engine Action: {currentStep.engineAction}
-                </div>
               </div>
 
-              {currentStep.visualState.metrics && (
-                <div className="hidden sm:flex items-center gap-3">
-                  {currentStep.visualState.metrics.map((m, mIdx) => (
-                    <div key={mIdx} className="text-right">
-                      <div className="text-[10px] font-mono text-muted-foreground uppercase">{m.label}</div>
-                      <div className="text-xs font-mono font-bold text-foreground">{m.value}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="text-xs font-mono text-zinc-400">
+                Action: <span className="text-zinc-200 font-semibold">{currentStep.engineAction}</span>
+              </div>
             </div>
 
-            {/* Visual Node Graph */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {currentStep.visualState.nodes.map((node) => {
-                let borderStyle = 'border-border bg-card';
-                let badgeStyle = 'bg-muted/40 text-muted-foreground';
+            {/* Mathematical Formula / Invariant Banner */}
+            {currentStep.visualState.mathFormula && (
+              <div className="p-3.5 rounded-xl border border-cyan-500/20 bg-cyan-950/20 text-center font-mono text-xs sm:text-sm text-cyan-300 shadow-inner">
+                <span className="text-zinc-400 text-xs font-sans mr-2">Formal Invariant:</span>
+                <code className="font-bold tracking-wide">{currentStep.visualState.mathFormula}</code>
+              </div>
+            )}
 
-                if (node.status === 'active') {
-                  borderStyle = 'border-foreground/50 bg-foreground/5 shadow-xs';
-                  badgeStyle = 'bg-foreground text-background';
-                } else if (node.status === 'success') {
-                  borderStyle = 'border-emerald-500/50 bg-emerald-500/10';
-                  badgeStyle = 'bg-emerald-500 text-white';
-                } else if (node.status === 'warning') {
-                  borderStyle = 'border-amber-500/50 bg-amber-500/10';
-                  badgeStyle = 'bg-amber-500 text-white';
-                } else if (node.status === 'error') {
-                  borderStyle = 'border-rose-500/50 bg-rose-500/10';
-                  badgeStyle = 'bg-rose-500 text-white';
-                } else if (node.status === 'muted') {
-                  borderStyle = 'border-border/60 bg-card/60 opacity-60';
-                }
+            {/* Visual Node Graph with Animated Particle Transitions */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 min-h-[140px] items-stretch">
+              <AnimatePresence mode="wait">
+                {currentStep.visualState.nodes.map((node, nIdx) => {
+                  let borderStyle = 'border-zinc-800 bg-zinc-900/60 text-zinc-200';
+                  let glowBadge = 'bg-zinc-800 text-zinc-300';
 
-                return (
-                  <div
-                    key={node.id}
-                    className={`p-4 rounded-xl border transition-all space-y-1.5 ${borderStyle} ${
-                      node.highlight ? 'ring-2 ring-foreground/20' : ''
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs sm:text-sm font-bold text-foreground truncate">{node.label}</span>
-                      {node.badge && (
-                        <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${badgeStyle}`}>
-                          {node.badge}
-                        </span>
+                  if (node.status === 'active') {
+                    borderStyle = 'border-cyan-400/60 bg-cyan-950/30 text-white shadow-[0_0_20px_rgba(56,189,248,0.25)]';
+                    glowBadge = 'bg-cyan-500 text-black font-extrabold';
+                  } else if (node.status === 'success') {
+                    borderStyle = 'border-emerald-500/60 bg-emerald-950/30 text-white shadow-[0_0_20px_rgba(52,211,153,0.25)]';
+                    glowBadge = 'bg-emerald-400 text-black font-extrabold';
+                  } else if (node.status === 'warning') {
+                    borderStyle = 'border-amber-500/60 bg-amber-950/30 text-white shadow-[0_0_20px_rgba(251,191,36,0.25)]';
+                    glowBadge = 'bg-amber-400 text-black font-extrabold';
+                  } else if (node.status === 'error') {
+                    borderStyle = 'border-rose-500/60 bg-rose-950/30 text-white shadow-[0_0_20px_rgba(244,63,94,0.25)]';
+                    glowBadge = 'bg-rose-500 text-white font-extrabold';
+                  } else if (node.status === 'muted') {
+                    borderStyle = 'border-zinc-800/40 bg-zinc-900/20 text-zinc-500 opacity-50';
+                  }
+
+                  return (
+                    <motion.div
+                      key={`${currentStepIdx}-${node.id}`}
+                      initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -15, scale: 0.95 }}
+                      transition={{ duration: 0.35, delay: nIdx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                      className={`p-4 rounded-xl border backdrop-blur-sm transition-all flex flex-col justify-between gap-3 ${borderStyle} ${
+                        node.highlight ? 'ring-2 ring-cyan-400/40' : ''
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="text-sm font-bold truncate leading-snug">{node.label}</span>
+                        {node.badge && (
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded shadow-xs shrink-0 ${glowBadge}`}>
+                            {node.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      {node.sub && (
+                        <p className="text-xs font-mono text-zinc-400 leading-relaxed">
+                          {node.sub}
+                        </p>
                       )}
-                    </div>
-                    {node.sub && (
-                      <p className="text-xs font-mono text-muted-foreground leading-relaxed">
-                        {node.sub}
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
             </div>
 
-            {/* Step Explanation Callout */}
-            <div className="p-4 rounded-xl bg-card border border-border space-y-2">
-              <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>How the Database Executes This:</span>
+            {/* Grant Sanderson-style Intuition Callout */}
+            <motion.div
+              key={`callout-${currentStepIdx}`}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              className="p-4 rounded-xl bg-zinc-900/80 border-l-4 border-cyan-400 space-y-2 border border-zinc-800 shadow-sm"
+            >
+              <div className="text-xs font-bold text-cyan-300 flex items-center gap-1.5 uppercase tracking-wide">
+                <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+                <span>Engine Transformation Insight</span>
               </div>
-              <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
+              <p className="text-sm text-zinc-200 leading-relaxed font-normal">
                 {currentStep.explanation}
               </p>
               {currentStep.visualState.note && (
-                <div className="text-xs text-muted-foreground font-mono pt-1 border-t border-border/60">
-                  💡 {currentStep.visualState.note}
+                <div className="text-xs text-zinc-400 font-mono pt-1.5 border-t border-zinc-800 flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                  <span>{currentStep.visualState.note}</span>
                 </div>
               )}
+            </motion.div>
+          </div>
+
+          {/* 3Blue1Brown Interactive Timeline Scrubber */}
+          <div className="space-y-2 relative z-10 pt-1">
+            <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400">
+              <span>0% Start</span>
+              <span className="text-cyan-300 font-bold">Progress: {Math.round(progressPercent)}%</span>
+              <span>100% Commit</span>
+            </div>
+
+            {/* Scrubber Track */}
+            <div
+              onClick={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+                const targetIdx = Math.round(ratio * (steps.length - 1));
+                setCurrentStepIdx(targetIdx);
+              }}
+              className="h-3 w-full rounded-full bg-zinc-800/80 border border-zinc-700/80 cursor-pointer relative overflow-hidden p-0.5 group"
+            >
+              <motion.div
+                className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-emerald-400 to-cyan-300 shadow-[0_0_12px_rgba(56,189,248,0.5)]"
+                style={{ width: `${progressPercent}%` }}
+                layout
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              />
             </div>
           </div>
 
           {/* Playback Controls */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 relative z-10">
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-foreground text-background text-xs font-semibold hover:bg-foreground/90 transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black text-xs font-extrabold transition-all shadow-[0_0_15px_rgba(56,189,248,0.4)]"
               >
                 {isPlaying ? (
                   <>
-                    <Pause className="w-3.5 h-3.5" />
+                    <Pause className="w-4 h-4 fill-black" />
                     <span>Pause</span>
                   </>
                 ) : (
                   <>
-                    <Play className="w-3.5 h-3.5" />
+                    <Play className="w-4 h-4 fill-black" />
                     <span>Auto Play</span>
                   </>
                 )}
@@ -753,7 +735,7 @@ export function TopicVisualizer({ topic }: { topic: SqlTopic }) {
 
               <button
                 onClick={handleReset}
-                className="p-1.5 rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
+                className="p-2 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
                 title="Reset to Step 1"
                 aria-label="Reset animation"
               >
@@ -765,19 +747,19 @@ export function TopicVisualizer({ topic }: { topic: SqlTopic }) {
               <button
                 onClick={handlePrev}
                 disabled={currentStepIdx === 0}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border bg-card text-xs font-semibold text-foreground hover:bg-muted/40 disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-zinc-800 bg-zinc-900 text-xs font-bold text-zinc-200 hover:text-white hover:bg-zinc-800 disabled:opacity-30 disabled:pointer-events-none transition-colors"
               >
-                <ChevronLeft className="w-3.5 h-3.5" />
-                <span>Prev Step</span>
+                <ChevronLeft className="w-4 h-4" />
+                <span>Prev Phase</span>
               </button>
 
               <button
                 onClick={handleNext}
                 disabled={currentStepIdx === steps.length - 1}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border bg-card text-xs font-semibold text-foreground hover:bg-muted/40 disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-cyan-500/40 bg-cyan-950/40 text-xs font-bold text-cyan-200 hover:text-white hover:bg-cyan-900/60 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-xs"
               >
-                <span>Next Step</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <span>Next Phase</span>
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>
