@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Cpu, Database, Keyboard, PlayCircle, ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
+import { Cpu, Database, Keyboard, PlayCircle, ArrowRight, CheckCircle2, RotateCcw, Sparkles } from 'lucide-react';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
 
@@ -172,6 +172,66 @@ export const Home: React.FC = () => {
           })}
         </div>
       </section>
+
+      {isComplete && (
+        <section className="space-y-4 pt-6 border-t border-border/80">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-amber-500" aria-hidden="true" />
+            <h2 className="text-xl font-bold text-foreground">Recommended Next Steps</h2>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            You've built the foundation of how hardware executes software. Deepen your systems knowledge with these next modules:
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Link
+              href="/corecs/computer-architecture-cpu-caches"
+              className="group p-4 rounded-xl border border-border/80 bg-card/60 hover:bg-card transition-all shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono uppercase text-blue-500 font-bold">Deep Dive</span>
+                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:translate-x-0.5" />
+              </div>
+              <h3 className="mt-2 text-base font-bold text-foreground group-hover:text-blue-500 transition-colors">
+                Computer Architecture &amp; CPU Caches
+              </h3>
+              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                Explore L1/L2 caches, cache lines, associativity, and the memory wall.
+              </p>
+            </Link>
+
+            <Link
+              href="/corecs/operating-systems-internals-processes-memory"
+              className="group p-4 rounded-xl border border-border/80 bg-card/60 hover:bg-card transition-all shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono uppercase text-amber-500 font-bold">Systems</span>
+                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:translate-x-0.5" />
+              </div>
+              <h3 className="mt-2 text-base font-bold text-foreground group-hover:text-amber-500 transition-colors">
+                OS Internals: Processes &amp; Memory
+              </h3>
+              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                Step through CPU scheduling algorithms, page-table walks, and virtual memory.
+              </p>
+            </Link>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 pt-2 text-xs">
+            <Link
+              href="/exercises"
+              className="font-semibold text-primary hover:underline"
+            >
+              Practice multiple-choice challenges →
+            </Link>
+            <span className="text-muted-foreground" aria-hidden="true">·</span>
+            <Link
+              href="/progress"
+              className="font-semibold text-primary hover:underline"
+            >
+              View certification progress →
+            </Link>
+          </div>
+        </section>
+      )}
 
       {!isStarted && (
         <div className="pt-8">

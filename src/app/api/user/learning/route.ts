@@ -4,7 +4,7 @@ import { getSessionUser } from "@/lib/auth-server";
 
 export const dynamic = "force-dynamic";
 
-function validStringArray(value: unknown, max: number): value is string[] {
+export function validStringArray(value: unknown, max: number): value is string[] {
   return (
     Array.isArray(value) &&
     value.length <= max &&
@@ -12,25 +12,32 @@ function validStringArray(value: unknown, max: number): value is string[] {
   );
 }
 
-function validNotes(value: unknown): value is Record<string, string> {
-  return (
-    Boolean(value) &&
-    typeof value === "object" &&
-    !Array.isArray(value) &&
-    Object.values(value as Record<string, unknown>).every(
-      (item) => typeof item === "string" && item.length <= 20000
-    )
+export function validNotes(value: unknown, max = 500): value is Record<string, string> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const entries = Object.entries(value as Record<string, unknown>);
+  if (entries.length > max) return false;
+  return entries.every(
+    ([key, item]) =>
+      typeof key === "string" &&
+      key.length > 0 &&
+      key.length <= 120 &&
+      typeof item === "string" &&
+      item.length <= 20000
   );
 }
 
-function validVisited(value: unknown): value is Record<string, number> {
-  return (
-    Boolean(value) &&
-    typeof value === "object" &&
-    !Array.isArray(value) &&
-    Object.values(value as Record<string, unknown>).every(
-      (item) => typeof item === "number" && Number.isFinite(item)
-    )
+export function validVisited(value: unknown, max = 500): value is Record<string, number> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const entries = Object.entries(value as Record<string, unknown>);
+  if (entries.length > max) return false;
+  return entries.every(
+    ([key, item]) =>
+      typeof key === "string" &&
+      key.length > 0 &&
+      key.length <= 120 &&
+      typeof item === "number" &&
+      Number.isFinite(item) &&
+      item >= 0
   );
 }
 

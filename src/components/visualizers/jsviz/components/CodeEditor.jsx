@@ -64,7 +64,6 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
         const FLUSH_DELAY = 1500; // capture async logs briefly
 
         try {
-            // eslint-disable-next-line no-new-func
             const run = new Function(code);
             const result = run();
 

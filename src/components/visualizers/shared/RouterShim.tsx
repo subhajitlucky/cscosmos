@@ -45,23 +45,38 @@ export function normalizeHref(to: string | number | undefined, basePath: string)
   return `${basePath}/${to}`;
 }
 
+export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  to?: string;
+  href?: string;
+  children?: React.ReactNode;
+  ref?: React.Ref<HTMLAnchorElement>;
+}
+
 export function Link({
   to,
   href,
   children,
   className,
   onClick,
+  ref,
   ...props
-}: any) {
+}: LinkProps) {
   const { basePath } = useContext(RouteContext);
   const target = href || to || '';
   const finalHref = normalizeHref(target, basePath);
 
   return (
-    <NextLink href={finalHref} className={className} onClick={onClick} {...props}>
+    <NextLink ref={ref} href={finalHref} className={className} onClick={onClick} {...props}>
       {children}
     </NextLink>
   );
+}
+
+export interface NavLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'className' | 'children'> {
+  to?: string;
+  href?: string;
+  className?: string | ((props: { isActive: boolean; isPending: boolean }) => string | undefined);
+  children?: React.ReactNode | ((props: { isActive: boolean }) => React.ReactNode);
 }
 
 export function NavLink({
@@ -70,12 +85,12 @@ export function NavLink({
   children,
   className,
   ...props
-}: any) {
+}: NavLinkProps) {
   const { basePath } = useContext(RouteContext);
   const pathname = usePathname();
   const target = href || to || '';
   const finalHref = normalizeHref(target, basePath);
-  const isActive = pathname === finalHref || (finalHref !== basePath && pathname?.startsWith(finalHref));
+  const isActive = pathname === finalHref || (finalHref !== basePath && (pathname?.startsWith(finalHref) ?? false));
 
   const resolvedClass =
     typeof className === 'function'
@@ -89,11 +104,16 @@ export function NavLink({
   );
 }
 
+export interface NavigateOptions {
+  replace?: boolean;
+  state?: unknown;
+}
+
 export function useNavigate() {
   const router = useNextRouter();
   const { basePath } = useContext(RouteContext);
 
-  return (to: string | number, options?: any) => {
+  return (to: string | number, options?: NavigateOptions) => {
     if (typeof to === 'number') {
       if (to === -1) router.back();
       return;
@@ -151,8 +171,8 @@ export function useSearchParams() {
   const pathname = usePathname();
   const searchParams = useClientSearch();
 
-  const setSearchParams = (params: any) => {
-    const sp = new URLSearchParams(params);
+  const setSearchParams = (params: Record<string, string> | string | URLSearchParams) => {
+    const sp = new URLSearchParams(params as Record<string, string>);
     router.replace(`${pathname}?${sp.toString()}`);
   };
 
@@ -178,7 +198,7 @@ export const Router = BrowserRouter;
 export const HashRouter = BrowserRouter;
 export const MemoryRouter = BrowserRouter;
 
-export function Routes({ children, ...props }: { children?: React.ReactNode; [key: string]: any }) {
+export function Routes({ children }: { children?: React.ReactNode; [key: string]: unknown }) {
   return <>{children}</>;
 }
 

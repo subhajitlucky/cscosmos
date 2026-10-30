@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 function maskedEmail(email: string): string {
   const [name, domain] = email.split("@");
   return `${name.slice(0, 2)}***@${domain}`;
@@ -24,23 +26,37 @@ export default async function CertificatePage({
 }) {
   const { certificateId } = await params;
 
-  if (!isDatabaseConfigured()) notFound();
+  if (!UUID_REGEX.test(certificateId) || !isDatabaseConfigured()) {
+    notFound();
+  }
 
-  const result = await getPool().query<{
+  let certificate: {
     id: string;
     title: string;
     completed_count: number;
     issued_at: string;
     email: string;
-  }>(
-    `SELECT c.id, c.title, c.completed_count, c.issued_at, u.email
-     FROM cscosmos_certificates c
-     JOIN cscosmos_users u ON u.id = c.user_id
-     WHERE c.id = $1`,
-    [certificateId]
-  );
+  } | undefined;
 
-  const certificate = result.rows[0];
+  try {
+    const result = await getPool().query<{
+      id: string;
+      title: string;
+      completed_count: number;
+      issued_at: string;
+      email: string;
+    }>(
+      `SELECT c.id, c.title, c.completed_count, c.issued_at, u.email
+       FROM cscosmos_certificates c
+       JOIN cscosmos_users u ON u.id = c.user_id
+       WHERE c.id = $1`,
+      [certificateId]
+    );
+    certificate = result.rows[0];
+  } catch {
+    notFound();
+  }
+
   if (!certificate) notFound();
 
   const issued = new Date(certificate.issued_at).toLocaleDateString("en-IN", {

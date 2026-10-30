@@ -7,6 +7,9 @@ import { MotionConfig } from 'framer-motion';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
 import { TopicActionBar } from '@/components/learning/TopicActionBar';
+import { TopicNotes } from '@/components/learning/TopicNotes';
+import { RelatedTopics } from '@/components/learning/RelatedTopics';
+import { TopicComments } from '@/components/learning/TopicComments';
 import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
 import { useTheme } from '../hooks/useTheme';
 import { CheckCircle2, Circle, Menu, ArrowLeft, Sun, Moon, X } from 'lucide-react';
@@ -84,7 +87,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-[calc(100vh-4rem)] flex transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
+    <div className="min-h-screen flex transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
       {/* Sidebar for Desktop */}
       <aside
         ref={sidebarRef}
@@ -113,7 +116,12 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
-              <Link href="/topics" aria-label="Back to all topics" className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+              <Link
+                href="/topics"
+                aria-label="Back to all topics"
+                title="Back to all topics"
+                className="rounded-lg p-1.5 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
                 <ArrowLeft className="w-3.5 h-3.5" />
               </Link>
               <button
@@ -179,14 +187,24 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0">
         <header className="h-14 border-b flex items-center justify-between px-6 lg:hidden border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            aria-label="Open navigation menu"
-            aria-expanded={isSidebarOpen}
-            className="rounded-lg p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={isSidebarOpen}
+              className="rounded-lg p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            <Link
+              href="/fullstack"
+              aria-label="Back to Full Stack domain"
+              className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Full Stack</span>
+            </Link>
+          </div>
           <span className="font-bold">ProgramViz</span>
           <button onClick={toggleTheme} className="rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Toggle Theme">
             {theme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-blue-600" />}
@@ -194,9 +212,14 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         </header>
         
         <div className="flex-1 overflow-y-auto">
-          <div className="max-w-4xl mx-auto p-6 lg:p-12">
+          <div className="max-w-4xl mx-auto p-6 lg:p-12 space-y-8">
             <TopicActionBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
             {children}
+            <div className="mt-12 space-y-4 pt-8 border-t border-border/80">
+              <TopicNotes slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
+              <RelatedTopics slug={TOPIC_SLUG} domain={TOPIC_DOMAIN} />
+              <TopicComments slug={TOPIC_SLUG} />
+            </div>
           </div>
         </div>
       </main>

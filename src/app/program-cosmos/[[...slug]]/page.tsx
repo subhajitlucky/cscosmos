@@ -156,7 +156,7 @@ export default async function ProgramCosmosPage({ params }: { params: Promise<{ 
             <Layout>
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(subRoute)) }}
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(subRoute)).replace(/</g, '\\u003c') }}
                 />
                 {content}
             </Layout>

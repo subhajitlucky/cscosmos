@@ -17,7 +17,13 @@ function hashToken(token: string): string {
 }
 
 function siteUrl(requestUrl: string): string {
-  return (process.env.NEXT_PUBLIC_SITE_URL || new URL(requestUrl).origin).replace(/\/$/, "");
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  }
+  if (siteConfig.url) {
+    return siteConfig.url.replace(/\/$/, "");
+  }
+  return new URL(requestUrl).origin.replace(/\/$/, "");
 }
 
 function cookieOptions(maxAge: number) {

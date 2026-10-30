@@ -43,7 +43,6 @@ const Problem = ({ problemId: propProblemId }) => {
           return eval(funcName)(...${JSON.stringify(testCase.input)});
         `;
 
-                // eslint-disable-next-line no-new-func
                 const run = new Function(wrappedCode);
                 const result = run();
 
