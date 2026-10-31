@@ -34,6 +34,41 @@ test.describe('program-cosmos smoke', () => {
     await expect(page.getByRole('heading', { level: 2, name: 'Learning graph' })).toBeHidden();
     await expect(page.getByRole('heading', { level: 2, name: 'Discussion' })).toBeHidden();
     await expect(page.getByText('saved locally')).toBeHidden();
+
+    // Verify top navbar links and absence of desktop sidebar on homepage
+    await expect(page.getByRole('navigation', { name: 'Main Navigation' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Concepts' }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Simulation Lab' }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: /Problems/ }).first()).toBeVisible();
+    await expect(page.locator('aside[aria-label="ProgramViz lessons navigation"]')).toBeHidden();
+  });
+
+  test('navigates to practice arena and solves a question from the 100 questions', async ({ page }) => {
+    await page.goto(`${CANONICAL_PATH}/problems`);
+
+    await expect(page.getByRole('heading', { level: 1, name: /Systems Practice Arena/i })).toBeVisible();
+    await expect(page.getByText(/0 \/ 100/i)).toBeVisible();
+
+    // Verify question 1 is present
+    await expect(page.getByText('Question #1')).toBeVisible();
+
+    // Answer Question 1 correctly ("A sequence of precise instructions...")
+    await page.getByRole('button', { name: /A sequence of precise instructions/i }).click();
+
+    // Verify explanation is revealed
+    await expect(page.getByText(/Correct! Technical Explanation/i)).toBeVisible();
+    await expect(page.getByText(/1 \/ 100/i)).toBeVisible();
+  });
+
+  test('navigates to simulation lab and switches tools', async ({ page }) => {
+    await page.goto(`${CANONICAL_PATH}/lab`);
+
+    await expect(page.getByRole('heading', { level: 1, name: /Systems Simulation Lab/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: /CPU Instruction Execution Simulator/i })).toBeVisible();
+
+    // Switch to RAM memory grid
+    await page.getByRole('button', { name: /RAM Memory Grid/i }).click();
+    await expect(page.getByRole('heading', { level: 2, name: /Interactive RAM Memory Grid/i })).toBeVisible();
   });
 
   test('shows the completion card and resets progress', async ({ page }) => {

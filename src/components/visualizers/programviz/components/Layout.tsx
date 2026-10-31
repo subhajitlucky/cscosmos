@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MotionConfig } from 'framer-motion';
@@ -11,8 +11,8 @@ import { TopicNotes } from '@/components/learning/TopicNotes';
 import { RelatedTopics } from '@/components/learning/RelatedTopics';
 import { TopicComments } from '@/components/learning/TopicComments';
 import { TOPIC_BASE_PATH, TOPIC_DOMAIN, TOPIC_NAME, TOPIC_SLUG } from '../data/topic';
-import { useTheme } from '../hooks/useTheme';
-import { CheckCircle2, Circle, Menu, ArrowLeft, Sun, Moon, X } from 'lucide-react';
+import { CheckCircle2, Circle } from 'lucide-react';
+import { Navbar } from './Navbar';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -26,11 +26,9 @@ export interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, isHome: isHomeProp }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-  const sidebarRef = React.useRef<HTMLElement>(null);
+  const sidebarRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const { isStepCompleted, resetProgress } = useProgress();
-  const { theme, toggleTheme } = useTheme();
 
   const isHome =
     isHomeProp ??
@@ -40,214 +38,105 @@ export const Layout: React.FC<LayoutProps> = ({ children, isHome: isHomeProp }) 
       pathname === '/program-cosmos' ||
       pathname === '/program-cosmos/');
 
-  useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 1024px)');
-    const closeOnDesktop = () => {
-      if (desktop.matches) setIsSidebarOpen(false);
-    };
-    desktop.addEventListener('change', closeOnDesktop);
-    return () => desktop.removeEventListener('change', closeOnDesktop);
-  }, []);
-
-  useEffect(() => {
-    if (!isSidebarOpen) return;
-
-    const sidebar = sidebarRef.current;
-    if (!sidebar) return;
-
-    const previousFocus = document.activeElement as HTMLElement | null;
-    const getFocusable = () =>
-      Array.from(
-        sidebar.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )
-      ).filter((element) => element.offsetParent !== null);
-
-    const focusable = getFocusable();
-    focusable[0]?.focus();
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsSidebarOpen(false);
-        return;
-      }
-      if (event.key !== 'Tab') return;
-
-      const items = getFocusable();
-      if (items.length === 0) return;
-      const first = items[0];
-      const last = items[items.length - 1];
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = previousOverflow;
-      previousFocus?.focus?.();
-    };
-  }, [isSidebarOpen]);
+  // Determine if on an individual step/lesson page
+  const isStepPage = Boolean(
+    pathname &&
+    steps.some(
+      (s) =>
+        pathname === s.path ||
+        pathname === `${s.path}/` ||
+        pathname === s.path.replace(`${TOPIC_BASE_PATH}/`, '/program-cosmos/')
+    )
+  );
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen flex transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
-      {/* Sidebar for Desktop */}
-      <aside
-        ref={sidebarRef}
-        role={isSidebarOpen ? 'dialog' : undefined}
-        aria-modal={isSidebarOpen || undefined}
-        aria-label="ProgramViz navigation"
-        className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 border-r transform transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:bottom-auto lg:h-screen lg:translate-x-0 bg-white border-slate-200 dark:bg-slate-900 dark:border-slate-800",
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        )}
-      >
-        <div className="h-full flex flex-col p-6">
-          <div className="flex items-center justify-between mb-8">
-            <Link href={TOPIC_BASE_PATH} className="text-xl font-bold flex items-center gap-2">
-              <span className="bg-blue-600 p-1 rounded text-white text-xs font-mono">PV</span>
-              ProgramViz
-            </Link>
-            <div className="flex items-center gap-2">
-              <button 
-                onClick={toggleTheme}
-                className={cn(
-                  "p-1.5 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                  theme === 'dark' ? "hover:bg-slate-800 text-yellow-400" : "hover:bg-slate-100 text-blue-600"
-                )}
-                aria-label="Toggle Theme"
-              >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-              <Link
-                href="/topics"
-                aria-label="Back to all topics"
-                title="Back to all topics"
-                className="rounded-lg p-1.5 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-              </Link>
+      <div className="min-h-screen flex flex-col transition-colors duration-300 bg-background text-foreground">
+        {/* Top Sticky Navbar across all pages */}
+        <Navbar />
+
+        {/* Content Area */}
+        <div className="flex-1 flex w-full">
+          {/* Step Sidebar for Desktop (ONLY displayed on individual lesson pages, NEVER on homepage, concepts, lab, problems) */}
+          {isStepPage && (
+            <aside
+              ref={sidebarRef}
+              aria-label="ProgramViz lessons navigation"
+              className="hidden lg:block w-64 shrink-0 border-r border-border bg-card/60 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto p-4 space-y-4"
+            >
+              <div className="flex items-center justify-between pb-2 border-b border-border/80">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground">
+                  10 Core Lessons
+                </span>
+                <Link
+                  href={`${TOPIC_BASE_PATH}/concepts`}
+                  className="text-[11px] font-semibold text-blue-500 hover:underline"
+                >
+                  Syllabus
+                </Link>
+              </div>
+
+              <nav className="space-y-1">
+                {steps.map((step) => {
+                  const isActive = pathname === step.path;
+                  const isCompleted = isStepCompleted(step.step);
+
+                  return (
+                    <Link
+                      key={step.step}
+                      href={step.path}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={cn(
+                        'flex items-center gap-2.5 p-2 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                        isActive
+                          ? 'bg-blue-600 text-white font-semibold shadow-xs'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      )}
+                    >
+                      {isCompleted ? (
+                        <CheckCircle2 className={cn('w-4 h-4 shrink-0', isActive ? 'text-white' : 'text-emerald-500')} />
+                      ) : (
+                        <Circle className="w-4 h-4 shrink-0 opacity-50" />
+                      )}
+                      <span className="truncate">
+                        {step.step}. {step.title}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </nav>
+
               <button
                 type="button"
-                onClick={() => setIsSidebarOpen(false)}
-                aria-label="Close navigation menu"
-                className={cn(
-                  "rounded-lg p-1.5 lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                  theme === 'dark' ? "hover:bg-slate-800 text-slate-300" : "hover:bg-slate-100 text-slate-600"
-                )}
+                onClick={() => {
+                  if (window.confirm('Reset all step progress for this topic?')) resetProgress();
+                }}
+                className="w-full text-left px-2 py-1.5 text-[11px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
-                <X className="w-4 h-4" />
+                Reset step progress
               </button>
+            </aside>
+          )}
+
+          {/* Main Content Body */}
+          <main className="flex-1 min-w-0">
+            <div className={cn(
+              'mx-auto p-4 sm:p-6 lg:p-10 space-y-8',
+              isStepPage ? 'max-w-4xl' : 'max-w-6xl'
+            )}>
+              <TopicActionBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
+              {children}
+              {!isHome && isStepPage && (
+                <div className="mt-12 space-y-4 pt-8 border-t border-border/80">
+                  <TopicNotes slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
+                  <RelatedTopics slug={TOPIC_SLUG} domain={TOPIC_DOMAIN} />
+                  <TopicComments slug={TOPIC_SLUG} />
+                </div>
+              )}
             </div>
-          </div>
-          
-          <nav className="flex-1 space-y-2 overflow-y-auto">
-            {steps.map((step) => {
-              const isActive = pathname === step.path;
-              const isCompleted = isStepCompleted(step.step);
-              
-              return (
-                <Link
-                  key={step.step}
-                  href={step.path}
-                  onClick={() => setIsSidebarOpen(false)}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={cn(
-                    "flex items-center gap-3 p-3 rounded-lg transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                    isActive
-                      ? "bg-blue-600 text-white"
-                      : (theme === 'dark' ? "hover:bg-slate-800 text-slate-400" : "hover:bg-slate-100 text-slate-600")
-                  )}
-                >
-                  {isCompleted ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                  ) : (
-                    <Circle className="w-5 h-5" />
-                  )}
-                  <div className="flex flex-col">
-                    <span className="text-xs opacity-70">Step {step.step}</span>
-                    <span className="font-medium text-sm">{step.title}</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </nav>
-          <button
-            type="button"
-            onClick={() => {
-              if (window.confirm('Reset all step progress for this topic?')) resetProgress();
-            }}
-            className={cn(
-              "mt-4 rounded-lg px-3 py-2 text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-              theme === 'dark' ? "text-slate-500 hover:bg-slate-800 hover:text-slate-300" : "text-slate-400 hover:bg-slate-100 hover:text-slate-600"
-            )}
-          >
-            Reset step progress
-          </button>
+          </main>
         </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 border-b flex items-center justify-between px-6 lg:hidden border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              aria-label="Open navigation menu"
-              aria-expanded={isSidebarOpen}
-              className="rounded-lg p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            <Link
-              href="/fullstack"
-              aria-label="Back to Full Stack domain"
-              className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Full Stack</span>
-            </Link>
-          </div>
-          <span className="font-bold">ProgramViz</span>
-          <button onClick={toggleTheme} className="rounded-lg p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Toggle Theme">
-            {theme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-blue-600" />}
-          </button>
-        </header>
-        
-        <div className="flex-1 overflow-y-auto">
-          <div className="max-w-4xl mx-auto p-6 lg:p-12 space-y-8">
-            <TopicActionBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
-            {children}
-            {!isHome && (
-              <div className="mt-12 space-y-4 pt-8 border-t border-border/80">
-                <TopicNotes slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
-                <RelatedTopics slug={TOPIC_SLUG} domain={TOPIC_DOMAIN} />
-                <TopicComments slug={TOPIC_SLUG} />
-              </div>
-            )}
-          </div>
-        </div>
-      </main>
-
-      {/* Overlay for mobile sidebar */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-    </div>
+      </div>
     </MotionConfig>
   );
 };

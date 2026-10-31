@@ -3,9 +3,22 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Cpu, Database, Keyboard, PlayCircle, ArrowRight, CheckCircle2, RotateCcw, Sparkles } from 'lucide-react';
+import {
+  Cpu,
+  Database,
+  Keyboard,
+  PlayCircle,
+  ArrowRight,
+  CheckCircle2,
+  RotateCcw,
+  Sparkles,
+  BookOpen,
+  FlaskConical,
+  CheckSquare,
+} from 'lucide-react';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
+import { TOPIC_BASE_PATH } from '../data/topic';
 
 function ProgressRing({ percent }: { percent: number }) {
   const radius = 34;
@@ -50,24 +63,103 @@ export const Home: React.FC = () => {
 
   return (
     <div className="space-y-12">
-      <header className="space-y-4">
+      {/* Hero Header */}
+      <header className="space-y-6 text-center max-w-3xl mx-auto pt-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-500 text-xs font-mono font-semibold">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Interactive Computer Architecture &amp; Execution</span>
+        </div>
+
         <motion.h1
           initial={false}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl lg:text-6xl font-extrabold tracking-tight text-foreground"
+          className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground"
         >
           How Programs <span className="text-blue-500">Execute</span>
         </motion.h1>
+
         <motion.p
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-xl max-w-2xl text-muted-foreground"
+          className="text-lg sm:text-xl text-muted-foreground leading-relaxed"
         >
-          A visual, step-by-step guide to understanding the journey of a program from source code to CPU instructions, memory management, and I/O.
+          A visual, step-by-step deep dive into what happens when code runs — from high-level source text to binary opcodes, CPU cycles, RAM memory layout, and operating system I/O.
         </motion.p>
+
+        {/* 3 Main Navbar Feature Navigation Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-left">
+          <Link
+            href={`${TOPIC_BASE_PATH}/concepts`}
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-blue-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-2">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500 w-fit">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-sm text-foreground group-hover:text-blue-500 transition-colors">
+                Core Concepts
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                10 structured lessons covering binary, CPU, RAM, stack/heap, and system calls.
+              </p>
+            </div>
+            <div className="pt-3 mt-2 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-blue-500">
+              <span>View Syllabus</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          <Link
+            href={`${TOPIC_BASE_PATH}/lab`}
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-blue-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-2">
+              <div className="p-2 rounded-lg bg-purple-500/10 text-purple-500 w-fit">
+                <FlaskConical className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-sm text-foreground group-hover:text-purple-500 transition-colors">
+                Simulation Lab
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                Interactive CPU assembly simulator, RAM address matrix, and data explorer.
+              </p>
+            </div>
+            <div className="pt-3 mt-2 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-purple-500">
+              <span>Launch Studio</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          <Link
+            href={`${TOPIC_BASE_PATH}/problems`}
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-emerald-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-2">
+              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500 w-fit">
+                <CheckSquare className="w-5 h-5" />
+              </div>
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold text-sm text-foreground group-hover:text-emerald-500 transition-colors">
+                  Practice Problems
+                </h3>
+                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500">
+                  100 Qs
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Test and reinforce your systems understanding with instant explanations.
+              </p>
+            </div>
+            <div className="pt-3 mt-2 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-emerald-500">
+              <span>Start Practice</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+        </div>
       </header>
 
+      {/* Continue Progress Section (if started) */}
       {isStarted && (isComplete || nextStep !== undefined) && (
         <motion.section
           initial={false}
@@ -116,11 +208,12 @@ export const Home: React.FC = () => {
         </motion.section>
       )}
 
+      {/* 3 Pillars Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { icon: Cpu, title: "CPU Execution", desc: "How the processor fetches and runs instructions." },
-          { icon: Database, title: "Memory Usage", desc: "How data is stored and organized in RAM." },
-          { icon: Keyboard, title: "Input / Output", desc: "How programs interact with the outside world." }
+          { icon: Cpu, title: "CPU Execution", desc: "How the processor fetches instructions, decodes opcodes, and runs ALU cycles." },
+          { icon: Database, title: "Memory Systems", desc: "How RAM is addressed and partitioned into Code, Data, Heap, and Stack." },
+          { icon: Keyboard, title: "Input / Output", desc: "How programs transition to Ring 0 kernel mode to communicate with real hardware." }
         ].map((item, i) => (
           <motion.div
             key={i}
@@ -136,8 +229,19 @@ export const Home: React.FC = () => {
         ))}
       </div>
 
+      {/* Step by Step Learning Path */}
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-foreground">Learning Path</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-foreground">Step-by-Step Learning Path</h2>
+          <Link
+            href={`${TOPIC_BASE_PATH}/concepts`}
+            className="text-xs font-semibold text-blue-500 hover:underline flex items-center gap-1"
+          >
+            <span>View Full Syllabus</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
         <div className="space-y-4">
           {steps.map((step, i) => {
             const isStepDone = progress.completedSteps.includes(step.step);
@@ -173,6 +277,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Completion Recommendations */}
       {isComplete && (
         <section className="space-y-4 pt-6 border-t border-border/80">
           <div className="flex items-center gap-2">
@@ -215,26 +320,12 @@ export const Home: React.FC = () => {
               </p>
             </Link>
           </div>
-          <div className="flex flex-wrap items-center gap-3 pt-2 text-xs">
-            <Link
-              href="/exercises"
-              className="font-semibold text-primary hover:underline"
-            >
-              Practice multiple-choice challenges →
-            </Link>
-            <span className="text-muted-foreground" aria-hidden="true">·</span>
-            <Link
-              href="/progress"
-              className="font-semibold text-primary hover:underline"
-            >
-              View certification progress →
-            </Link>
-          </div>
         </section>
       )}
 
+      {/* Start Learning Button if not started */}
       {!isStarted && (
-        <div className="pt-8">
+        <div className="pt-4 text-center">
           <Link
             href={steps[0].path}
             className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-lg transition-colors shadow-lg shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"

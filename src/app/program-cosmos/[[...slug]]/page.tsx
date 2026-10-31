@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation';
 import { ProgressProvider } from '@/components/visualizers/programviz/context/ProgressContext';
 import { Layout } from '@/components/visualizers/programviz/components/Layout';
 import { Home } from '@/components/visualizers/programviz/pages/Home';
+import { Concepts } from '@/components/visualizers/programviz/pages/Concepts';
+import { Lab } from '@/components/visualizers/programviz/pages/Lab';
+import { Problems } from '@/components/visualizers/programviz/pages/Problems';
 import { WhatIsProgram } from '@/components/visualizers/programviz/pages/WhatIsProgram';
 import { DataRepresentation } from '@/components/visualizers/programviz/pages/DataRepresentation';
 import { CPUBasics } from '@/components/visualizers/programviz/pages/CPUBasics';
@@ -19,6 +22,26 @@ import { TOPIC_BASE_PATH } from '@/components/visualizers/programviz/data/topic'
 import { siteConfig } from '@/config/site';
 
 const SUB_ROUTE_META: Record<string, { title: string; description: string }> = {
+    'concepts': {
+        title: 'Core Concepts & Curriculum',
+        description: 'Explore the 10 fundamental concepts of program execution: CPU architecture, memory layout, and system calls.',
+    },
+    'lab': {
+        title: 'Interactive Simulation Lab',
+        description: 'Experiment with an 8-bit CPU simulator, RAM address matrix, binary encoder, and hardware syscall tracer.',
+    },
+    'playground': {
+        title: 'Interactive Simulation Lab',
+        description: 'Experiment with an 8-bit CPU simulator, RAM address matrix, binary encoder, and hardware syscall tracer.',
+    },
+    'simulation': {
+        title: 'Interactive Simulation Lab',
+        description: 'Experiment with an 8-bit CPU simulator, RAM address matrix, binary encoder, and hardware syscall tracer.',
+    },
+    'problems': {
+        title: 'Practice Problems (100 Questions)',
+        description: 'Master computer execution with 100 interactive questions across CPU architecture, memory, processes, and runtimes.',
+    },
     'what-is-a-program': {
         title: 'What Is a Program?',
         description: 'Understand instructions, source code vs machine code, and what happens when we click Run.',
@@ -64,6 +87,10 @@ const SUB_ROUTE_META: Record<string, { title: string; description: string }> = {
 export function generateStaticParams() {
     return [
         { slug: [] },
+        { slug: ['concepts'] },
+        { slug: ['lab'] },
+        { slug: ['playground'] },
+        { slug: ['problems'] },
         ...steps.map((step) => ({
             slug: [step.path.replace(`${TOPIC_BASE_PATH}/`, '')],
         })),
@@ -79,11 +106,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
 
     if (!meta) {
         return {
-            title: 'ProgramViz — How Programs Execute (CPU, Memory, I/O) | CSCosmos',
+            title: 'Program Cosmos — How Programs Execute (CPU, Memory, I/O) | CSCosmos',
             description: 'Interactive beginner-friendly visualizer for computer architecture, CPU execution, memory layout, and system calls.',
             alternates: { canonical: canonicalPath },
             openGraph: {
-                title: 'ProgramViz — How Programs Execute (CPU, Memory, I/O)',
+                title: 'Program Cosmos — How Programs Execute (CPU, Memory, I/O)',
                 description: 'Interactive beginner-friendly visualizer for computer architecture, CPU execution, memory layout, and system calls.',
                 url: canonicalPath,
                 siteName: 'CSCosmos',
@@ -95,11 +122,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
     }
 
     return {
-        title: `${meta.title} — ProgramViz | CSCosmos`,
+        title: `${meta.title} — Program Cosmos | CSCosmos`,
         description: meta.description,
         alternates: { canonical: canonicalPath },
         openGraph: {
-            title: `${meta.title} — ProgramViz`,
+            title: `${meta.title} — Program Cosmos`,
             description: meta.description,
             url: canonicalPath,
             siteName: 'CSCosmos',
@@ -112,16 +139,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
 
 function buildJsonLd(subRoute: string) {
     const meta = SUB_ROUTE_META[subRoute];
-    const isStep = Boolean(meta);
-    const stepNumber = isStep ? Object.keys(SUB_ROUTE_META).indexOf(subRoute) + 1 : undefined;
+    const isStep = Boolean(meta) && !['concepts', 'lab', 'playground', 'simulation', 'problems'].includes(subRoute);
+    const stepNumber = isStep ? Object.keys(SUB_ROUTE_META).indexOf(subRoute) - 4 : undefined;
     const canonicalPath = subRoute ? `${TOPIC_BASE_PATH}/${subRoute}` : TOPIC_BASE_PATH;
 
     return {
         '@context': 'https://schema.org',
         '@type': 'LearningResource',
         name: meta
-            ? `${meta.title} — ProgramViz`
-            : 'ProgramViz — How Programs Execute (CPU, Memory, I/O)',
+            ? `${meta.title} — Program Cosmos`
+            : 'Program Cosmos — How Programs Execute (CPU, Memory, I/O)',
         description: meta
             ? meta.description
             : 'Interactive visualizer for program execution: CPU basics, instruction cycle, memory layout, and I/O.',
@@ -148,7 +175,13 @@ export default async function ProgramCosmosPage({ params }: { params: Promise<{ 
 
     let content = <Home />;
 
-    if (subRoute === 'what-is-a-program') {
+    if (subRoute === 'concepts') {
+        content = <Concepts />;
+    } else if (subRoute === 'lab' || subRoute === 'playground' || subRoute === 'simulation') {
+        content = <Lab />;
+    } else if (subRoute === 'problems') {
+        content = <Problems />;
+    } else if (subRoute === 'what-is-a-program') {
         content = <WhatIsProgram />;
     } else if (subRoute === 'how-computers-understand-data') {
         content = <DataRepresentation />;
