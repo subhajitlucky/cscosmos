@@ -42,9 +42,9 @@ export function Navbar() {
           <Link
             href="/topics"
             className="brand"
-            style={{ opacity: 0.7, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em' }}
+            style={{ opacity: 0.9, fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}
           >
-            <ArrowLeft size={13} /> CSCosmos
+            <ArrowLeft size={14} /> CSCosmos
           </Link>
           <Link href="/vuecosmos" className="brand" aria-label="Vue Visualizer home">
             <span className="brand-mark">
