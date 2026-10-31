@@ -231,36 +231,40 @@ export function ScenePasswordHashing({ step }: SceneProps) {
           </div>
         </div>
 
-        {/* GPU Crack Speed Simulator */}
+        {/* Algorithm Resistance Comparison */}
         <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-3">
           <div className="flex items-center justify-between text-xs border-b border-zinc-800 pb-2">
-            <span className="text-emerald-400 font-bold font-mono">8x NVIDIA RTX 4090 GPU Cluster Attack</span>
+            <span className="text-emerald-400 font-bold font-mono">Algorithm Resistance Comparison</span>
             <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
               algo === 'sha256' ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'
             }`}>
-              {algo === 'sha256' ? 'VULNERABLE' : 'HARDENED'}
+              {algo === 'sha256' ? 'UNSUITABLE' : 'PASSWORD-HARDENED'}
             </span>
           </div>
 
           <div className="space-y-2 text-xs font-mono">
             <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 space-y-1 text-[11px]">
               <div>
-                <span className="text-zinc-500">Hash Rate: </span>
+                <span className="text-zinc-500">Execution Speed: </span>
                 <span className={algo === 'sha256' ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold'}>
-                  {algo === 'sha256' ? '150 Billion / sec' : algo === 'bcrypt' ? '12,000 / sec' : '150 / sec (Memory-Stalled)'}
+                  {algo === 'sha256' ? 'Nanoseconds (Too Fast for Passwords)' : algo === 'bcrypt' ? 'Millisecond Range (Configurable)' : 'Millisecond Range + Memory-Hard'}
                 </span>
               </div>
               <div>
-                <span className="text-zinc-500">Estimated Crack Time: </span>
+                <span className="text-zinc-500">Design Purpose: </span>
                 <span className={algo === 'sha256' ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold'}>
-                  {algo === 'sha256' ? '3.4 Seconds' : algo === 'bcrypt' ? '8.4 Years' : '450+ Years (Impracticable)'}
+                  {algo === 'sha256' ? 'Data Integrity / Checksums' : algo === 'bcrypt' ? 'CPU-Bound Password Hashing' : 'Memory-Hard Password Hashing'}
                 </span>
               </div>
             </div>
 
             <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-[10px] text-zinc-400">
-              <span className="text-zinc-300 font-bold">Why Argon2id Wins: </span>
-              GPUs have thousands of cores but tiny cache. Argon2id forces 64MB of RAM per hash, completely starving GPU memory buses.
+              <span className="text-zinc-300 font-bold">Design Difference: </span>
+              {algo === 'sha256'
+                ? 'Fast algorithms allow attackers to test millions of password guesses quickly.'
+                : algo === 'bcrypt'
+                ? 'Bcrypt adds a configurable CPU work factor to slow down brute force attempts.'
+                : 'Argon2id requires physical RAM per hash, making massive parallel attacks inefficient.'}
             </div>
           </div>
 
