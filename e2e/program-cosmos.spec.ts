@@ -29,6 +29,11 @@ test.describe('program-cosmos smoke', () => {
     );
     await expect(page.getByRole('navigation', { name: /Breadcrumb/ })).toContainText('CSCosmos');
     await expect(page.getByRole('button', { name: /Mark topic complete|Topic completed/ })).toBeVisible();
+
+    // Notes, learning graph, and discussion must be excluded from the homepage
+    await expect(page.getByRole('heading', { level: 2, name: 'Learning graph' })).toBeHidden();
+    await expect(page.getByRole('heading', { level: 2, name: 'Discussion' })).toBeHidden();
+    await expect(page.getByText('saved locally')).toBeHidden();
   });
 
   test('shows the completion card and resets progress', async ({ page }) => {
@@ -54,6 +59,11 @@ test.describe('program-cosmos smoke', () => {
 
     await page.getByRole('link', { name: /CPU Basics/i }).first().click();
     await expect(page).toHaveURL(new RegExp(`${CANONICAL_PATH}/cpu-basics$`));
+
+    // Lesson pages retain notes, learning graph, and discussion
+    await expect(page.getByRole('heading', { level: 2, name: 'Learning graph' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Discussion' })).toBeVisible();
+    await expect(page.getByText('saved locally')).toBeVisible();
 
     await page.getByRole('button', { name: 'Mark Step Complete' }).click();
     await expect(page).toHaveURL(new RegExp(`${CANONICAL_PATH}/instruction-cycle$`));

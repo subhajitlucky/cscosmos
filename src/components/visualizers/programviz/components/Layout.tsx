@@ -20,12 +20,25 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export interface LayoutProps {
+  children: React.ReactNode;
+  isHome?: boolean;
+}
+
+export const Layout: React.FC<LayoutProps> = ({ children, isHome: isHomeProp }) => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const sidebarRef = React.useRef<HTMLElement>(null);
   const pathname = usePathname();
   const { isStepCompleted, resetProgress } = useProgress();
   const { theme, toggleTheme } = useTheme();
+
+  const isHome =
+    isHomeProp ??
+    (!pathname ||
+      pathname === TOPIC_BASE_PATH ||
+      pathname === `${TOPIC_BASE_PATH}/` ||
+      pathname === '/program-cosmos' ||
+      pathname === '/program-cosmos/');
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1024px)');
@@ -215,11 +228,13 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           <div className="max-w-4xl mx-auto p-6 lg:p-12 space-y-8">
             <TopicActionBar slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
             {children}
-            <div className="mt-12 space-y-4 pt-8 border-t border-border/80">
-              <TopicNotes slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
-              <RelatedTopics slug={TOPIC_SLUG} domain={TOPIC_DOMAIN} />
-              <TopicComments slug={TOPIC_SLUG} />
-            </div>
+            {!isHome && (
+              <div className="mt-12 space-y-4 pt-8 border-t border-border/80">
+                <TopicNotes slug={TOPIC_SLUG} name={TOPIC_NAME} domain={TOPIC_DOMAIN} />
+                <RelatedTopics slug={TOPIC_SLUG} domain={TOPIC_DOMAIN} />
+                <TopicComments slug={TOPIC_SLUG} />
+              </div>
+            )}
           </div>
         </div>
       </main>
