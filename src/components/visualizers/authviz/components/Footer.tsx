@@ -13,27 +13,24 @@ export function Footer() {
             <ShieldCheck className="w-3.5 h-3.5" />
           </div>
           <span className="font-semibold text-foreground">AuthCosmos by CSCosmos</span>
-          <span>• OAuth 2.0 PKCE, JWT RS256, OIDC, RBAC &amp; Password Cryptography</span>
+          <span className="hidden md:inline">• OAuth 2.0 PKCE, JWT RS256, OIDC, RBAC &amp; Password Cryptography</span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <Link href="/authviz/concepts" className="hover:text-foreground transition-colors">
             Concepts
           </Link>
-          <Link href="/authviz/pkce-lab" className="hover:text-foreground transition-colors">
-            OAuth PKCE
+          <Link href="/authviz/lab" className="hover:text-foreground transition-colors">
+            Simulation Lab
           </Link>
-          <Link href="/authviz/jwt-lab" className="hover:text-foreground transition-colors">
-            JWT Inspector
+          <Link href="/authviz/problems" className="hover:text-foreground transition-colors">
+            Practice Problems
           </Link>
-          <Link href="/authviz/session-lab" className="hover:text-foreground transition-colors">
-            Cookies vs Tokens
+          <Link href="/authviz/flashcards" className="hover:text-foreground transition-colors">
+            Flashcards
           </Link>
-          <Link href="/authviz/rbac-lab" className="hover:text-foreground transition-colors">
-            RBAC vs ABAC
-          </Link>
-          <Link href="/authviz/hashing-lab" className="hover:text-foreground transition-colors">
-            Password Hashing
+          <Link href="/authviz/cheatsheet" className="hover:text-foreground transition-colors">
+            Cheat Sheet
           </Link>
           <Link href="/topics" className="hover:text-foreground font-semibold flex items-center gap-1">
             <ArrowLeft className="w-3 h-3" /> Back to CSCosmos

@@ -2,8 +2,18 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Filter, ShieldCheck, Sparkles } from 'lucide-react';
-import { AUTH_TOPICS, type AuthTopic } from '../data/topics';
+import { ArrowRight, BookOpen } from 'lucide-react';
+import { AUTH_TOPICS } from '../data/topics';
+
+const CATEGORY_TABS = [
+  { id: 'all', label: 'All Topics' },
+  { id: 'oauth-oidc', label: 'OAuth & OIDC' },
+  { id: 'jwt-tokens', label: 'JWT & Signatures' },
+  { id: 'sessions-cookies', label: 'Sessions & Cookies' },
+  { id: 'authz-rbac', label: 'Authorization & RBAC' },
+  { id: 'cryptography-passwords', label: 'Cryptography & Passwords' },
+  { id: 'resilience-security', label: 'Resilience & Defense' },
+];
 
 export default function Concepts() {
   const [filter, setFilter] = useState<string>('all');
@@ -13,7 +23,8 @@ export default function Concepts() {
     : AUTH_TOPICS.filter((t) => t.category === filter);
 
   return (
-    <div className="space-y-8 pb-20 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+    <div className="space-y-8 pb-24 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+      {/* Header */}
       <div className="space-y-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-widest">
           Curriculum
@@ -28,50 +39,69 @@ export default function Concepts() {
 
       {/* Filter Tabs */}
       <div className="flex flex-wrap gap-2">
-        {['all', 'oauth-oidc', 'jwt-tokens', 'sessions-cookies', 'authz-rbac', 'cryptography-passwords', 'resilience-security'].map((cat) => (
+        {CATEGORY_TABS.map((cat) => (
           <button
-            key={cat}
-            onClick={() => setFilter(cat)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold capitalize transition-all ${
-              filter === cat
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'bg-card border border-border text-foreground hover:border-emerald-500'
+            key={cat.id}
+            onClick={() => setFilter(cat.id)}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              filter === cat.id
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'bg-card border border-border text-foreground hover:border-emerald-500/50 hover:bg-muted/40'
             }`}
           >
-            {cat}
+            {cat.label}
           </button>
         ))}
       </div>
 
-      {/* Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((topic) => (
-          <Link
-            key={topic.id}
-            href={`/authviz/concepts/${topic.id}`}
-            className="p-6 rounded-3xl bg-card border border-border/80 hover:border-emerald-500/50 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between group"
-          >
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
-                  {topic.category}
-                </span>
-                <span className="text-xs text-muted-foreground font-mono">{topic.difficulty}</span>
-              </div>
-              <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-500 transition-colors">
-                {topic.title}
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                {topic.summary}
-              </p>
-            </div>
+      {/* Cards Grid: Topic names only, no extra description */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {filtered.map((topic) => {
+          const originalIndex = AUTH_TOPICS.findIndex((t) => t.id === topic.id) + 1;
+          const formattedNum = originalIndex < 10 ? `0${originalIndex}` : `${originalIndex}`;
+          const catLabel = CATEGORY_TABS.find((c) => c.id === topic.category)?.label ?? topic.category;
 
-            <div className="pt-2 border-t border-border flex items-center justify-between text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-              <span>Start Interactive Lesson</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Link>
-        ))}
+          return (
+            <Link
+              key={topic.id}
+              href={`/authviz/concepts/${topic.id}`}
+              className="p-5 rounded-2xl bg-card border border-border/80 hover:border-emerald-500/50 hover:bg-muted/30 transition-all flex flex-col justify-between group space-y-4 shadow-xs"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-muted-foreground group-hover:text-emerald-500 transition-colors">
+                    #{formattedNum}
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-2 py-0.5 rounded-md bg-muted text-muted-foreground text-[10px] font-mono font-medium">
+                      {catLabel}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold ${
+                      topic.difficulty === 'Beginner'
+                        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                        : topic.difficulty === 'Intermediate'
+                        ? 'bg-slate-500/10 text-slate-700 dark:text-slate-300'
+                        : topic.difficulty === 'Advanced'
+                        ? 'bg-muted text-foreground'
+                        : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'
+                    }`}>
+                      {topic.difficulty}
+                    </span>
+                  </div>
+                </div>
+
+                <h3 className="text-base font-bold text-foreground group-hover:text-emerald-500 transition-colors leading-snug">
+                  {topic.title}
+                </h3>
+              </div>
+
+              <div className="pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                <span>Start Lesson</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
