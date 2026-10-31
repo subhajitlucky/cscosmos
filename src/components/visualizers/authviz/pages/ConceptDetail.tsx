@@ -79,13 +79,13 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         </p>
       </div>
 
-      {/* 3Blue1Brown-style Interactive Protocol Animation */}
+      {/* Interactive Step-by-Step Visual Concept Explainer */}
       <div className="space-y-3">
         <div className="flex items-center justify-between text-xs text-muted-foreground font-semibold">
           <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-            <Sparkles className="w-4 h-4" /> Interactive Visual Protocol Animation
+            <Sparkles className="w-4 h-4" /> Interactive Visual Concept Explainer
           </span>
-          <span className="font-mono text-[11px] text-muted-foreground">3Blue1Brown Visual Simulation</span>
+          <span className="font-mono text-[11px] text-muted-foreground">Step-by-Step Educational Simulation</span>
         </div>
         <TopicAnimationTheater
           topicId={topic.id}
