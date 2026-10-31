@@ -24,6 +24,7 @@ import { AUTH_TOPICS } from '../data/topics';
 import TopicAnimationTheater from '../components/TopicAnimationTheater';
 import Topic1Foundations from '../components/Topic1Foundations';
 import Topic2PasswordHashing from '../components/Topic2PasswordHashing';
+import Topic9MfaTotp from '../components/Topic9MfaTotp';
 
 export default function ConceptDetail({ topicId }: { topicId: string }) {
   const currentIndex = AUTH_TOPICS.findIndex((t) => t.id === topicId);
@@ -85,6 +86,8 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         <Topic1Foundations />
       ) : topic.id === 'passwords-salting-argon2id' ? (
         <Topic2PasswordHashing />
+      ) : topic.id === 'mfa-totp-hotp-rfc6238' ? (
+        <Topic9MfaTotp />
       ) : (
         <>
           {/* Interactive Step-by-Step Visual Concept Explainer */}

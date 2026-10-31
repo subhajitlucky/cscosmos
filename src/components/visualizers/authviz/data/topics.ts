@@ -330,22 +330,23 @@ export const AUTH_TOPICS: AuthTopic[] = [
     "title": "Multi-Factor Authentication: TOTP (RFC 6238), HOTP (RFC 4226) & Emergency Backup Codes",
     "category": "cryptography-passwords",
     "difficulty": "Intermediate",
-    "summary": "Time-Based One-Time Passwords (TOTP, RFC 6238) compute short-lived 6-digit codes by hashing the current Unix epoch time block with a shared Base32 secret using HMAC-SHA1. Defenses require replay prevention, clock drift tolerance (+/- 1 step), and hashed emergency backup recovery codes.",
-    "whyExists": "Passwords are frequently stolen via phishing, breaches, and malware. Multi-Factor Authentication (MFA) requires proving possession of a physical authenticator device. Even if an attacker learns the password, they cannot generate the rotating 30-second cryptographic passcode.",
-    "mentalModel": "The Synchronized Clock Safe: Both you and the bank possess identical copies of an encrypted codebook and perfectly synchronized wristwatches. Every 30 seconds, you turn to the page matching the current minute to read a temporary 6-digit access code.",
+    "summary": "Multi-Factor Authentication (MFA) adds a vital second layer of defense beyond passwords. Time-Based One-Time Passwords (TOTP) generate rotating 6-digit codes on mobile authenticator apps using a shared secret and current time—working completely offline—backed by single-use recovery codes.",
+    "whyExists": "Passwords can be leaked, phished, or reused across services. MFA ensures that even if an attacker learns your password, they cannot access your account without your physical second factor (like your phone generating a 30-second TOTP code).",
+    "mentalModel": "The Dual-Key Safety Deposit Box: Opening the safe requires two different keys held by two different entities. One key is your memorized password (something you know); the other key is the temporary code displayed on your personal phone (something you have).",
     "architectureDiagram": "[ User Phone (Google Authenticator) ]         [ CosmosApp Server ]\n                  \u2502                                           \u2502\n   Shared Secret: \u2502 JBSWY3DPEHPK3PXP          Shared Secret:  \u2502 JBSWY3DPEHPK3PXP\n   Current Time:  \u2502 T = Math.floor(now / 30)  Current Time:   \u2502 T = Math.floor(now / 30)\n   HMAC-SHA1:     \u2502 hash(Secret, T)           HMAC-SHA1:      \u2502 hash(Secret, T)\n   Dynamic Trunc: \u2502 6-digit Code: 482910      Expected Code:  \u2502 482910\n                  \u2502                                           \u2502\n                  \u251c\u2500\u2500 (1) Submits code: 482910 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25ba\u2502\n                  \u2502                                           \u251c\u2500\u2500 Verify Code == Expected\n                  \u2502                                           \u251c\u2500\u2500 Check Replay Cache in Redis\n                  \u2502                                           \u2502   (Prevent reuse in same 30s window)\n                  \u2502\u25c4\u2500\u2500 (2) 200 OK (MFA Verified) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524",
-    "cosmosAppStory": "CosmosApp introduces MFA for sensitive workspace settings. When Bob enables 2FA, CosmosApp generates a 160-bit crypto secret and displays a QR code formatted as otpauth://totp/CosmosApp:bob@cosmos.io?secret=JBSWY3DPEHPK3PXP. Bob scans it with his authenticator app. CosmosApp provides 10 single-use emergency backup codes hashed with Argon2id for account recovery.",
+    "cosmosAppStory": "CosmosApp introduces MFA for sensitive workspace settings. When Bob enables 2FA, CosmosApp generates a 160-bit crypto secret and displays a QR code formatted as otpauth://totp/CosmosApp:bob@cosmos.io?secret=JBSWY3DPEHPK3PXP. Bob scans it with his authenticator app. CosmosApp provides single-use emergency backup codes for account recovery.",
     "stepByStep": [
-      "Step 1: Server generates a 20-byte cryptographically secure random secret, encoded in Base32.",
-      "Step 2: Server renders an otpauth:// URI in a QR code for the authenticator app to scan.",
-      "Step 3: User inputs the currently displayed 6-digit code to prove synchronization before MFA activation.",
-      "Step 4: Server computes HMAC-SHA1(secret, floor(now / 30)) and dynamically truncates to 6 digits.",
-      "Step 5: If code matches within +/- 1 time step (allowing 30s clock drift), MFA is enabled.",
-      "Step 6: The used code is stored in Redis with a 60-second TTL to prevent replay attacks during the same time window."
+      "Step 1: Website generates a shared secret key and renders an otpauth QR code.",
+      "Step 2: User scans the QR code into Google Authenticator or another authenticator app.",
+      "Step 3: Both the user's phone and the web server now share the exact same secret key.",
+      "Step 4: The authenticator app calculates a fresh 6-digit code every 30 seconds using its internal clock.",
+      "Step 5: User submits the 6-digit code during login; the server independently verifies it against its clock.",
+      "Step 6: The server marks the code as used for that time window and provides single-use backup codes for emergency recovery."
     ],
     "misconceptions": [
-      "TOTP requires an internet connection on the authenticator app (TOTP is completely offline; it depends only on the shared secret and Unix timestamp).",
-      "SMS OTP is just as secure as TOTP (SMS is vulnerable to SIM-swapping, SS7 interception, and telecom social engineering; TOTP is stored in local device memory)."
+      "TOTP requires an internet connection on your phone (TOTP works 100% offline; the app only needs the shared secret and its internal clock).",
+      "SMS OTP is just as secure as an authenticator app (SMS messages can be intercepted via SIM-swapping or telecom vulnerabilities; authenticator apps store the secret locally on the device).",
+      "Entering two different passwords counts as Multi-Factor Authentication (MFA requires two different categories of factors, such as something you know plus something you have)."
     ],
     "codeSnippet": "import crypto from 'node:crypto';\n\n// CosmosApp TOTP Verification Algorithm (RFC 6238):\nexport function generateTotp(secretBase32: string, timeStepWindow = 0): string {\n  const secret = Buffer.from(base32Decode(secretBase32));\n  const timeStep = Math.floor(Date.now() / 1000 / 30) + timeStepWindow;\n  \n  const timeBuffer = Buffer.alloc(8);\n  timeBuffer.writeBigInt64BE(BigInt(timeStep));\n\n  // 1. Compute HMAC-SHA1\n  const hmac = crypto.createHmac('sha1', secret).update(timeBuffer).digest();\n\n  // 2. Dynamic Truncation (Extract 4 bytes starting at offset)\n  const offset = hmac[hmac.length - 1] & 0x0f;\n  const binary =\n    ((hmac[offset] & 0x7f) << 24) |\n    ((hmac[offset + 1] & 0xff) << 16) |\n    ((hmac[offset + 2] & 0xff) << 8) |\n    (hmac[offset + 3] & 0xff);\n\n  // 3. Modulo 1,000,000 for 6-digit code\n  const otp = (binary % 1_000_000).toString().padStart(6, '0');\n  return otp;\n}",
     "takeaways": [

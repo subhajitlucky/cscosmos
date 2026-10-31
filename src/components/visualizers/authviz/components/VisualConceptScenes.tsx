@@ -587,17 +587,17 @@ export function SceneTotpMfa({ step }: SceneProps) {
         </button>
       </div>
 
-      {/* RFC 6238 Pipeline */}
+      {/* RFC 6238 Conceptual Steps */}
       <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-2">
         <div className="text-emerald-400 font-bold text-[11px] border-b border-zinc-800 pb-1">
-          RFC 6238 Algorithmic Derivation
+          TOTP Generation Steps (RFC 6238)
         </div>
-        <div className="space-y-1 text-[11px] text-zinc-300">
-          <div><span className="text-zinc-500">1. Shared Secret:</span> JBSWY3DPEHPK3PXP (Base32)</div>
-          <div><span className="text-zinc-500">2. Time Counter T:</span> floor(UnixEpoch / 30)</div>
-          <div><span className="text-zinc-500">3. HMAC-SHA1(K, T):</span> 20-byte hash</div>
-          <div><span className="text-zinc-500">4. Dynamic Truncation:</span> Offset = hash[19] &amp; 0x0F</div>
-          <div><span className="text-zinc-500">5. Modulo 10^6:</span> <span className="text-emerald-400 font-bold">{code}</span></div>
+        <div className="space-y-1.5 text-[11px] text-zinc-300">
+          <div><span className="text-zinc-500">1. Shared Secret:</span> JBSWY3DPEHPK3PXP</div>
+          <div><span className="text-zinc-500">2. Current Clock Window:</span> floor(CurrentTime / 30s)</div>
+          <div><span className="text-zinc-500">3. Cryptographic Hash:</span> Hashed locally on device</div>
+          <div><span className="text-zinc-500">4. 6-Digit Display:</span> <span className="text-emerald-400 font-bold">{code}</span></div>
+          <div><span className="text-zinc-500">5. Verification:</span> Server checks match within +/- 30s window</div>
         </div>
       </div>
     </div>
