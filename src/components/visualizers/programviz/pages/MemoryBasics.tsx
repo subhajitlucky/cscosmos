@@ -1,9 +1,10 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+
+import React from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { PredictCheck } from '../components/PredictCheck';
-import { VirtualMemoryCallout } from '../components/VirtualMemoryCallout';
-import { motion } from 'framer-motion';
+import { InteractiveMemoryGrid } from '../components/InteractiveMemoryGrid';
+import { Database, HardDrive, Zap, Lightbulb, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -13,208 +14,172 @@ function cn(...inputs: ClassValue[]) {
 }
 
 export const MemoryBasics: React.FC = () => {
-  const [selectedCell, setSelectedCell] = useState<number | null>(null);
   const { theme } = useTheme();
 
-  // Simulated memory cells — deterministic values so SSG and hydration agree.
-  const cells = useMemo(() => Array.from({ length: 64 }, (_, i) => {
-    const valueInt = (i * 53 + 7) % 256;
-    return {
-      address: `0x${i.toString(16).padStart(2, '0').toUpperCase()}`,
-      value: valueInt.toString(16).padStart(2, '0').toUpperCase(),
-      valueInt,
-    };
-  }), []);
-
-  const selectedBits =
-    selectedCell !== null
-      ? cells[selectedCell].valueInt.toString(2).padStart(8, '0').split('')
-      : null;
-
-  const focusCell = (index: number) => {
-    const next = Math.max(0, Math.min(cells.length - 1, index));
-    setSelectedCell(next);
-    requestAnimationFrame(() => {
-      document.querySelector<HTMLElement>(`[data-memory-cell="${next}"]`)?.focus();
-    });
-  };
-
-  const handleCellKeyDown = (event: React.KeyboardEvent, index: number) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      setSelectedCell(index);
-      return;
-    }
-
-    const columns = window.matchMedia('(min-width: 640px)').matches ? 8 : 4;
-    let next: number;
-    switch (event.key) {
-      case 'ArrowRight':
-        next = index + 1;
-        break;
-      case 'ArrowLeft':
-        next = index - 1;
-        break;
-      case 'ArrowDown':
-        next = index + columns;
-        break;
-      case 'ArrowUp':
-        next = index - columns;
-        break;
-      case 'Home':
-        next = 0;
-        break;
-      case 'End':
-        next = cells.length - 1;
-        break;
-      default:
-        return;
-    }
-
-    event.preventDefault();
-    focusCell(next);
-  };
-
   return (
-    <TopicLayout stepNumber={4} title="Memory Basics">
+    <TopicLayout stepNumber={5} title="Understanding Computer Memory">
       <div className="space-y-12">
-        <section className={cn(
-          "space-y-4",
-          theme === 'dark' ? "text-slate-300" : "text-slate-700"
-        )}>
-          <p>
-            <strong>Random Access Memory (RAM)</strong> is where the computer stores the data and instructions it is currently using. 
-            Think of it as a massive wall of post-it notes, where each note has a unique <strong>address</strong>.
+        {/* Section A: Simple Introduction */}
+        <section className="space-y-4">
+          <p className="text-lg leading-relaxed text-foreground">
+            A CPU is blindingly fast, but it has very little internal storage—its registers can only hold a few dozen numbers at once. 
+            To run actual applications, the computer needs a vast, high-speed workspace to store millions of instructions and variables. 
+            This workspace is <strong>Random Access Memory (RAM)</strong>.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            RAM is organized like a massive grid of numbered cubbies. Every single byte has its own unique <strong>memory address</strong>.
           </p>
         </section>
 
-        {/* Memory Grid Visualization */}
-        <div className={cn(
-          "rounded-2xl p-6 border transition-colors duration-300",
-          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200 shadow-sm"
-        )}>
-          <div className="mb-6 flex items-center justify-between">
-            <h3 className={cn(
-              "uppercase tracking-widest text-sm font-semibold",
-              theme === 'dark' ? "text-slate-400" : "text-slate-500"
-            )}>Memory Map (RAM)</h3>
-            <div className="flex items-center gap-4 text-xs">
-              <div className="flex items-center gap-1"><div className="w-3 h-3 bg-blue-500 rounded" /> Address</div>
-              <div className="flex items-center gap-1"><div className={cn("w-3 h-3 rounded", theme === 'dark' ? "bg-slate-700" : "bg-slate-200")} /> Value</div>
-            </div>
+        {/* Section B & C: Why RAM & The Post-It Note Wall Analogy */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <Zap className="w-5 h-5 text-amber-500" />
+              Volatile RAM vs Persistent Storage (SSD)
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              <strong>RAM is volatile:</strong> it uses tiny electrical capacitors that require power to maintain data. Turn off the computer, and RAM instantly wipes clean to 0. 
+              <strong>Storage (SSD / NVMe / HDD) is non-volatile:</strong> it uses magnetic or flash-charge traps that retain photos and files forever without power, but it is hundreds of times slower than RAM.
+            </p>
           </div>
 
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
-            {cells.map((cell, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                onClick={() => setSelectedCell(i)}
-                onKeyDown={(event) => handleCellKeyDown(event, i)}
-                role="button"
-                tabIndex={selectedCell === i || (selectedCell === null && i === 0) ? 0 : -1}
-                aria-pressed={selectedCell === i}
-                aria-label={`Memory cell at address ${cell.address}, value 0x${cell.value}. Press Enter to inspect.`}
-                data-memory-cell={i}
-                className={cn(
-                  "p-2 rounded border cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                  selectedCell === i 
-                    ? "bg-blue-600 border-blue-400 text-white" 
-                    : (theme === 'dark' 
-                        ? "bg-slate-800 border-slate-700 hover:border-slate-500" 
-                        : "bg-slate-50 border-slate-200 hover:border-blue-300")
-                )}
-              >
-                <div className={cn(
-                  "text-[10px] font-mono mb-1",
-                  selectedCell === i ? "text-blue-100" : "text-slate-500"
-                )}>{cell.address}</div>
-                <div className="text-sm font-mono font-bold text-center">{cell.value}</div>
-              </motion.div>
-            ))}
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <Database className="w-5 h-5 text-blue-500" />
+              The Post-Office Box Analogy
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Imagine a giant wall of post-office boxes:
+              Every box has a distinct number stamped on it (<code className="font-mono">0x00, 0x01, 0x02...</code>)—this is the <strong>Address</strong>. 
+              Inside each box sits a piece of paper holding an 8-bit number—this is the <strong>Value</strong>. 
+              The mail carrier can walk directly to box #16 and read or swap the paper in nanoseconds. That is why it’s called <em>"Random Access"</em> (you can access any address randomly with equal speed).
+            </p>
           </div>
-          <p className="mt-3 text-[10px] text-muted-foreground">
-            Tip: use the arrow keys, Home, and End to move through memory; press Enter to inspect a cell.
-          </p>
-
-          {selectedCell !== null && (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={cn(
-                "mt-8 p-4 rounded-xl border transition-colors",
-                theme === 'dark' ? "bg-slate-800 border-blue-500/30" : "bg-blue-50 border-blue-200"
-              )}
-            >
-              <h4 className="font-bold mb-2">Cell Details</h4>
-              <p className={cn(
-                "text-sm",
-                theme === 'dark' ? "text-slate-300" : "text-slate-700"
-              )}>
-                The CPU requested address <span className="font-mono text-blue-500 font-bold">{cells[selectedCell].address}</span> and found the hexadecimal value <span className="font-mono text-green-600 font-bold">0x{cells[selectedCell].value}</span>{' '}
-                — which is <span className="font-mono font-bold">{cells[selectedCell].valueInt}</span> in decimal and{' '}
-                <span className="font-mono text-purple-500 font-bold">0b{cells[selectedCell].valueInt.toString(2).padStart(8, '0')}</span> in binary.
-                This value could be a part of a program instruction, a piece of text, or a number.
-              </p>
-            </motion.div>
-          )}
         </div>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-3">
-            <h3 className="font-bold text-lg">Key Concepts</h3>
-            <ul className={cn(
-              "space-y-4 text-sm",
-              theme === 'dark' ? "text-slate-400" : "text-slate-600"
-            )}>
-              <li>
-                <strong className={cn("block mb-1", theme === 'dark' ? "text-slate-200" : "text-slate-900")}>Addressing</strong>
-                Every byte in a process&apos;s address space has a number. The OS and memory-management unit translate that virtual address to a physical location in RAM.
-              </li>
-              <li>
-                <strong className={cn("block mb-1", theme === 'dark' ? "text-slate-200" : "text-slate-900")}>Volatile</strong>
-                RAM needs power to keep data. If you turn off the computer, everything in RAM is gone.
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <h3 className="font-bold text-lg">Bytes & Words</h3>
-            <p className={cn(
-              "text-sm leading-relaxed",
-              theme === 'dark' ? "text-slate-400" : "text-slate-600"
-            )}>
-              Computers usually group 8 bits into a <strong>Byte</strong>.
-              Most 64-bit CPUs work with 64 bits (8 bytes) at a time; the architecture defines its native <strong>word</strong> size.
-            </p>
-            <div className="flex gap-1 mt-4">
-              {(selectedBits ?? '01001010'.split('')).map((bit, i) => (
-                <div key={i} className={cn(
-                  "flex-1 h-8 border rounded flex items-center justify-center text-[10px] font-mono transition-colors",
-                  selectedCell !== null
-                    ? "bg-blue-600/20 border-blue-500 text-blue-600 dark:text-blue-300 font-bold"
-                    : (theme === 'dark' ? "bg-slate-800 border-slate-700" : "bg-white border-slate-200 shadow-inner")
-                )}>
-                  {bit}
-                </div>
-              ))}
+        {/* Section D: Interactive Memory Address Grid */}
+        <InteractiveMemoryGrid />
+
+        {/* Section E: How It Works Internally — RAM vs ROM */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-bold text-foreground">
+            The Three Types of Computer Storage
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
+              <span className="text-xs font-mono font-bold text-emerald-500 uppercase">
+                1. RAM (Main Memory)
+              </span>
+              <h4 className="font-bold text-foreground text-base">Read &amp; Write / Volatile</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Ultra-fast working memory for active programs and variables. Data vanishes when powered off. Size: typically 8 GB to 64 GB. Speed: ~50 nanoseconds.
+              </p>
             </div>
-            <span className="text-[10px] text-slate-500 text-center block uppercase tracking-wider">
-              {selectedCell !== null
-                ? `The 8 bits of ${cells[selectedCell].address} = 0x${cells[selectedCell].value}`
-                : 'Example byte: 0x4A — click any cell above to see its real bits'}
-            </span>
+
+            <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
+              <span className="text-xs font-mono font-bold text-blue-500 uppercase">
+                2. ROM (Read-Only Memory)
+              </span>
+              <h4 className="font-bold text-foreground text-base">Read-Only / Permanent</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Contains factory-programmed boot instructions (UEFI/BIOS). It cannot be easily modified and persists forever. It tells the hardware how to turn on and find the SSD.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
+              <span className="text-xs font-mono font-bold text-amber-500 uppercase">
+                3. SSD / Storage
+              </span>
+              <h4 className="font-bold text-foreground text-base">Persistent / Files</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Stores the operating system, games, and documents permanently. When you launch an app, the OS copies it from SSD into RAM so the CPU can execute it.
+              </p>
+            </div>
+          </div>
+
+          {/* Byte-Addressable Memory & Multi-byte Variables Callout */}
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h4 className="font-bold text-foreground text-base flex items-center gap-2">
+              <Database className="w-5 h-5 text-emerald-500" />
+              Byte-Addressable Memory: How Multi-Byte Data Lives in RAM
+            </h4>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Every single address in RAM points to exactly <strong>ONE byte (8 bits)</strong> of space. 
+              So what happens when a program stores larger data types?
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
+              <div className="p-3.5 rounded-xl border border-border bg-muted/30 space-y-1">
+                <span className="font-mono font-bold text-blue-500">char (1 Byte)</span>
+                <p className="text-foreground font-bold">Takes 1 Address</p>
+                <p className="text-muted-foreground text-[11px]">Example: <code className="font-mono">char c = &apos;A&apos;</code> occupies address <code className="font-mono">0x10</code>.</p>
+              </div>
+              <div className="p-3.5 rounded-xl border border-border bg-muted/30 space-y-1">
+                <span className="font-mono font-bold text-emerald-500">int (4 Bytes / 32-bit)</span>
+                <p className="text-foreground font-bold">Takes 4 Consecutive Addresses</p>
+                <p className="text-muted-foreground text-[11px]">Example: <code className="font-mono">int a = 15</code> spans <code className="font-mono">0x10, 0x11, 0x12, 0x13</code>. The pointer points to <code className="font-mono">0x10</code>.</p>
+              </div>
+              <div className="p-3.5 rounded-xl border border-border bg-muted/30 space-y-1">
+                <span className="font-mono font-bold text-purple-500">Pointer / double (8 Bytes)</span>
+                <p className="text-foreground font-bold">Takes 8 Consecutive Addresses</p>
+                <p className="text-muted-foreground text-[11px]">Spans 8 consecutive bytes in 64-bit systems.</p>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Deep Dive Callout: The Virtual Memory Secret & MMU */}
-        <VirtualMemoryCallout />
+        {/* Section G: Common Misconceptions */}
+        <section className="p-6 rounded-2xl border border-border bg-card space-y-3">
+          <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-rose-500" />
+            Common Beginner Misconceptions
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"More RAM makes the CPU faster."</strong> <br />
+              <span className="text-foreground">Reality:</span> RAM does not speed up the CPU’s clock. However, if you run out of RAM, the computer is forced to swap memory pages to your SSD (called swapping/paging), which slows down your system by 1,000×! Having enough RAM prevents this bottleneck.
+            </li>
+            <li>
+              <strong>"The memory address and the value inside it are the same number."</strong> <br />
+              <span className="text-foreground">Reality:</span> Never confuse a house address with the person living inside! Memory address <code className="font-mono">0x10</code> is just the location. The value stored inside <code className="font-mono">0x10</code> could be 42, 0, 255, or the letter 'A'.
+            </li>
+          </ul>
+        </section>
 
+        {/* Section H: Quick Knowledge Check */}
         <PredictCheck
-          question="How many bits live in one byte?"
-          options={['4 bits', '8 bits', '16 bits', '64 bits']}
+          question="What happens to the data stored inside your computer's RAM if the power cable is suddenly unplugged?"
+          options={[
+            'The data stays safely saved in RAM until the next boot',
+            'All data in RAM is instantly lost because RAM is volatile memory',
+            'RAM transfers all data to the SSD in 1 microsecond',
+            'Only variables are lost, but code remains in RAM',
+          ]}
           correctIndex={1}
-          explanation="One byte = 8 bits. Some computers used to use other sizes, but 8 has been the standard for decades — and most 64-bit CPUs process 64-bit words (8 bytes) per operation."
+          explanation="RAM is volatile memory—it requires continuous electrical power to maintain the microscopic charges in its capacitors. Once power drops, all electrical charges dissipate and RAM contents are wiped!"
         />
+
+        {/* Section I: Summary */}
+        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+            Lesson 05 Key Takeaways
+          </h4>
+          <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>RAM provides the high-speed workspace the CPU needs to run active software.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>Every byte in RAM has a unique numerical address (e.g. 0x00, 0x10).</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>RAM is volatile (wipes on shutdown); SSD storage is persistent (retains files).</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </TopicLayout>
   );

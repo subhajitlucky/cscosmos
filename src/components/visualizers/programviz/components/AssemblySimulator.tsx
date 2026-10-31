@@ -150,6 +150,13 @@ export function AssemblySimulator() {
             </div>
 
             <div className="p-3.5 rounded-2xl bg-card border border-border space-y-1">
+              <span className="text-[11px] font-mono text-muted-foreground">IR (Instruction Register)</span>
+              <div className="text-sm font-mono font-extrabold text-indigo-500 truncate" title={halted ? 'HALT' : program[pc]?.asm ?? '—'}>
+                {halted ? 'HALT' : program[pc]?.asm ?? '—'}
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-card border border-border space-y-1">
               <span className="text-[11px] font-mono text-muted-foreground">ACC (Accumulator)</span>
               <div className="text-lg font-mono font-extrabold text-purple-500">{acc}</div>
             </div>
@@ -163,13 +170,23 @@ export function AssemblySimulator() {
               <span className="text-[11px] font-mono text-muted-foreground">R1 Register</span>
               <div className="text-lg font-mono font-extrabold text-emerald-500">{r1}</div>
             </div>
+
+            <div className="p-3.5 rounded-2xl bg-card border border-border space-y-1">
+              <span className="text-[11px] font-mono text-muted-foreground">RAM [0x10]</span>
+              <div className="text-lg font-mono font-extrabold text-amber-500">
+                {ramStored ? `${ram0x10}` : '0x00'}
+              </div>
+            </div>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-card border border-border flex items-center justify-between font-mono text-xs">
-            <span className="text-muted-foreground">RAM Address [0x10]:</span>
-            <span className="font-bold text-amber-500 text-sm">
-              {ramStored ? `${ram0x10} (Stored!)` : '0x00'}
-            </span>
+          {/* Educational Syntax Callout */}
+          <div className="p-3 rounded-xl bg-muted/40 border border-border text-[11px] text-muted-foreground space-y-1 leading-relaxed">
+            <div>
+              <strong className="text-foreground">MOV = COPY:</strong> <code className="font-mono">MOV R0, 15</code> copies 15 into R0. It does not erase 15.
+            </div>
+            <div>
+              <strong className="text-foreground">[0x10] = Address:</strong> Square brackets mean &quot;look inside RAM address 0x10&quot;.
+            </div>
           </div>
         </div>
       </div>

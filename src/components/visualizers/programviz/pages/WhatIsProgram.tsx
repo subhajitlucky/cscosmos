@@ -1,10 +1,10 @@
 'use client';
+
 import React from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { PredictCheck } from '../components/PredictCheck';
-import { CodeToBinaryPipeline } from '../components/CodeToBinaryPipeline';
 import { motion } from 'framer-motion';
-import { FileCode, Cpu, Database } from 'lucide-react';
+import { FileCode, Database, Cpu, Terminal, Play, AlertCircle, Lightbulb, CheckCircle2 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -19,135 +19,199 @@ export const WhatIsProgram: React.FC = () => {
   return (
     <TopicLayout stepNumber={1} title="What Is a Program?">
       <div className="space-y-12">
-        <section className={cn(
-          "space-y-4",
-          theme === 'dark' ? "text-slate-300" : "text-slate-700"
-        )}>
-          <p>
-            At its simplest, a <strong>program</strong> is a sequence of instructions that tells a computer what to do. 
-            Before a program runs, it exists as a file on your storage (like a hard drive or SSD).
+        {/* Section A: Simple Introduction */}
+        <section className="space-y-4">
+          <p className="text-lg leading-relaxed text-foreground">
+            A <strong>computer program</strong> is simply a sequence of step-by-step instructions that tells a computer what to do. 
+            Just as a cooking recipe guides a chef to prepare a meal, a program guides the computer hardware to solve a math problem, display a web page, or play a game.
           </p>
-          <p>
-            When you "run" a program, the computer performs a series of steps to turn those stored instructions into active work.
+          <p className="text-muted-foreground leading-relaxed">
+            Before you run a program, it is not active. It sits quietly as a passive file on your storage disk (SSD or hard drive). Only when you launch it does the computer bring those instructions to life.
           </p>
         </section>
 
-        {/* Visualization: Program Lifecycle */}
+        {/* Section B & C: Why Does It Exist & Real-World Analogy */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-amber-500" />
+              Why Do Programs Exist?
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Early computers in the 1940s had to be physically rewired by hand with cables and vacuum tubes for every single calculation! 
+              Computer pioneers like <strong>John von Neumann</strong> realized: <em>"What if instructions could be stored as data in memory, so the machine could change tasks instantly?"</em> That invention gave birth to modern software.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <FileCode className="w-5 h-5 text-blue-500" />
+              The Music Box &amp; Sheet Music Analogy
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Think of a computer program like sheet music. Sheet music is just ink on paper—it makes no sound on its own. 
+              The <strong>musician (the CPU)</strong> reads the notes (instructions) and plays the instruments (hardware). 
+              A different sheet of music immediately turns the same musician into a symphony orchestra or a rock concert.
+            </p>
+          </div>
+        </div>
+
+        {/* Section D: Interactive Visual Explanation — Program Lifecycle */}
         <section className={cn(
-          "rounded-2xl p-8 border transition-colors duration-300",
-          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200 shadow-sm"
+          "rounded-2xl p-6 sm:p-8 border shadow-xl transition-colors space-y-6",
+          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
         )}>
-          <h3 className={cn(
-            "text-center mb-12 uppercase tracking-widest text-sm font-semibold",
-            theme === 'dark' ? "text-slate-400" : "text-slate-500"
-          )}>Program Lifecycle</h3>
-          
-          <div className="relative flex flex-col md:flex-row items-center justify-between gap-8">
-            {/* Step 1: Storage */}
-            <motion.div 
-              className="flex flex-col items-center gap-4 text-center w-32"
-              whileHover={{ y: -5 }}
-            >
-              <div className={cn(
-                "w-16 h-16 rounded-xl flex items-center justify-center border shadow-xl transition-colors",
-                theme === 'dark' ? "bg-slate-800 border-slate-700" : "bg-slate-50 border-slate-200"
-              )}>
-                <FileCode className="w-8 h-8 text-blue-400" />
-              </div>
-              <span className="text-sm font-bold">1. Program File<br/><span className={cn("text-xs font-normal", theme === 'dark' ? "text-slate-500" : "text-slate-400")}>(On Disk)</span></span>
-            </motion.div>
+          <div className="text-center space-y-1">
+            <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+              The Fundamental Journey
+            </span>
+            <h3 className="text-xl font-bold text-foreground">
+              What Happens When You Click "Run"?
+            </h3>
+          </div>
 
-            {/* Arrow */}
-            <div className={cn("hidden md:block flex-1 h-0.5 relative", theme === 'dark' ? "bg-slate-800" : "bg-slate-200")}>
-              <motion.div 
-                className="absolute top-1/2 left-0 h-1 bg-blue-500"
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative pt-4">
+            {/* Step 1: Human Source Code */}
+            <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold">
+                1
+              </div>
+              <h4 className="font-bold text-foreground text-sm">Source Code</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                You write readable text using a programming language like C, Python, or JavaScript.
+              </p>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-muted text-foreground">
+                a = 15 + 27
+              </span>
             </div>
 
-            {/* Step 2: Memory */}
-            <motion.div 
-              className="flex flex-col items-center gap-4 text-center w-32"
-              whileHover={{ y: -5 }}
-            >
-              <div className={cn(
-                "w-16 h-16 rounded-xl flex items-center justify-center border shadow-xl transition-colors",
-                theme === 'dark' ? "bg-slate-800 border-slate-700" : "bg-slate-50 border-slate-200"
-              )}>
-                <Database className="w-8 h-8 text-green-400" />
+            {/* Step 2: Stored File on Disk */}
+            <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
+                2
               </div>
-              <span className="text-sm font-bold">2. Loaded<br/><span className={cn("text-xs font-normal", theme === 'dark' ? "text-slate-500" : "text-slate-400")}>(Into RAM)</span></span>
-            </motion.div>
-
-            {/* Arrow */}
-            <div className={cn("hidden md:block flex-1 h-0.5 relative", theme === 'dark' ? "bg-slate-800" : "bg-slate-200")}>
-              <motion.div 
-                className="absolute top-1/2 left-0 h-1 bg-green-500"
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-              />
+              <h4 className="font-bold text-foreground text-sm">File on Storage</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Saved as bytes on your SSD/disk. At this stage, it uses zero CPU time and zero RAM.
+              </p>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-muted text-foreground">
+                program.exe
+              </span>
             </div>
 
-            {/* Step 3: CPU */}
-            <motion.div 
-              className="flex flex-col items-center gap-4 text-center w-32"
-              whileHover={{ y: -5 }}
-            >
-              <div className={cn(
-                "w-16 h-16 rounded-xl flex items-center justify-center border shadow-xl transition-colors",
-                theme === 'dark' ? "bg-slate-800 border-slate-700" : "bg-slate-50 border-slate-200"
-              )}>
-                <Cpu className="w-8 h-8 text-red-400" />
+            {/* Step 3: Loaded into RAM */}
+            <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold">
+                3
               </div>
-              <span className="text-sm font-bold">3. Executing<br/><span className={cn("text-xs font-normal", theme === 'dark' ? "text-slate-500" : "text-slate-400")}>(By CPU)</span></span>
-            </motion.div>
+              <h4 className="font-bold text-foreground text-sm">Loaded into RAM</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                When you click "Run", the Operating System copies the instructions into high-speed memory.
+              </p>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-muted text-foreground">
+                Process Created
+              </span>
+            </div>
+
+            {/* Step 4: CPU Execution & Output */}
+            <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold">
+                4
+              </div>
+              <h4 className="font-bold text-foreground text-sm">CPU Execution</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                The CPU fetches instructions one by one, executes arithmetic, and outputs the result.
+              </p>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-muted text-foreground">
+                Screen Prints "42"
+              </span>
+            </div>
           </div>
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className={cn(
-            "p-6 rounded-xl border transition-colors",
-            theme === 'dark' ? "bg-slate-900/50 border-slate-800" : "bg-white border-slate-200 shadow-sm"
-          )}>
-            <h4 className="font-bold mb-3 flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full" />
-              Code vs Data
-            </h4>
-            <p className={cn("text-sm leading-relaxed", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>
-              Programs consist of two main parts: <strong>Code</strong> (the instructions) and <strong>Data</strong> (the numbers, text, and values the code works with).
-            </p>
-          </div>
-          <div className={cn(
-            "p-6 rounded-xl border transition-colors",
-            theme === 'dark' ? "bg-slate-900/50 border-slate-800" : "bg-white border-slate-200 shadow-sm"
-          )}>
-            <h4 className="font-bold mb-3 flex items-center gap-2">
-              <div className="w-2 h-2 bg-purple-500 rounded-full" />
-              Compiled vs Interpreted
-            </h4>
-            <p className={cn("text-sm leading-relaxed", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>
-              Some programs are translated to machine code ahead of time (compiled), while others are translated on the fly (interpreted). Many modern runtimes use both, compiling hot code at runtime with a JIT.
-            </p>
+        {/* Section E: How It Works Internally — Code vs Data */}
+        <section className="space-y-4">
+          <h3 className="text-xl font-bold text-foreground">
+            The Two Halves of Every Program: Code and Data
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Every computer program in existence breaks down into two core elements:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 rounded-2xl border-2 border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10 space-y-2">
+              <div className="flex items-center gap-2">
+                <Cpu className="w-5 h-5 text-blue-500" />
+                <h4 className="font-bold text-foreground text-base">1. Code (The Verbs)</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                These are the <strong>action commands</strong>: <code className="font-mono">ADD</code>, <code className="font-mono">MOVE</code>, <code className="font-mono">COMPARE</code>, <code className="font-mono">JUMP</code>. They tell the CPU what calculations or steps to perform.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl border-2 border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10 space-y-2">
+              <div className="flex items-center gap-2">
+                <Database className="w-5 h-5 text-emerald-500" />
+                <h4 className="font-bold text-foreground text-base">2. Data (The Nouns)</h4>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                These are the <strong>values operated on</strong>: numbers (e.g. <code className="font-mono">15</code>, <code className="font-mono">27</code>), user text, images, or audio samples that the code modifies and computes.
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* Interactive Deep Dive: Pipeline from Source to Executing Binary */}
-        <CodeToBinaryPipeline />
+        {/* Section G: Common Misconceptions */}
+        <section className="p-6 rounded-2xl border border-border bg-card space-y-3">
+          <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-rose-500" />
+            Common Beginner Misconceptions
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"The CPU executes Python or C code directly."</strong> <br />
+              <span className="text-foreground">Reality:</span> The CPU has zero understanding of English words like <code className="font-mono">if</code>, <code className="font-mono">while</code>, or <code className="font-mono">function</code>. It only understands raw binary numbers called <strong>machine instructions</strong>. Your source code must always be translated first.
+            </li>
+            <li>
+              <strong>"A program runs directly from your hard drive or SSD."</strong> <br />
+              <span className="text-foreground">Reality:</span> Hard drives and SSDs are far too slow for the CPU (thousands of times slower than RAM). The operating system always copies instructions into fast RAM before the CPU begins executing them.
+            </li>
+          </ul>
+        </section>
 
+        {/* Section H: Quick Knowledge Check */}
         <PredictCheck
-          question="Before you press “Run”, where does the program actually live?"
+          question="Before you click or type “Run”, where does the program actually exist?"
           options={[
-            'Inside the CPU, waiting',
-            'On disk (storage) as a file',
-            'In RAM already',
-            'On the network',
+            'Inside the CPU arithmetic units, waiting for a signal',
+            'As an inert, passive file stored on your SSD or disk',
+            'Already loaded into RAM, executing in the background',
+            'Inside the monitor graphics buffer',
           ]}
           correctIndex={1}
-          explanation="Before running, a program is just bytes in a file on disk. The whole journey of this topic is what happens next: the OS loads it into RAM, and the CPU starts executing its instructions."
+          explanation="Before execution, a program is simply an inactive collection of bytes in a file on your disk (SSD). It only becomes an active 'process' when the OS loads it into RAM and points the CPU to it!"
         />
+
+        {/* Section I: Summary */}
+        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+            Lesson 01 Key Takeaways
+          </h4>
+          <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>A program is a sequence of instructions telling hardware what to compute.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>Source code is human-friendly; machine code is CPU-friendly binary numbers.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>Programs live on storage disks until launched, then load into RAM for CPU execution.</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </TopicLayout>
   );

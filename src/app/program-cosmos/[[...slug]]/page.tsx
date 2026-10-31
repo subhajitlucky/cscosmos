@@ -5,11 +5,14 @@ import { ProgressProvider } from '@/components/visualizers/programviz/context/Pr
 import { Layout } from '@/components/visualizers/programviz/components/Layout';
 import { Home } from '@/components/visualizers/programviz/pages/Home';
 import { WhatIsProgram } from '@/components/visualizers/programviz/pages/WhatIsProgram';
+import { DataRepresentation } from '@/components/visualizers/programviz/pages/DataRepresentation';
 import { CPUBasics } from '@/components/visualizers/programviz/pages/CPUBasics';
 import { InstructionCycle } from '@/components/visualizers/programviz/pages/InstructionCycle';
 import { MemoryBasics } from '@/components/visualizers/programviz/pages/MemoryBasics';
 import { MemoryLayout } from '@/components/visualizers/programviz/pages/MemoryLayout';
+import { MultitaskingProcesses } from '@/components/visualizers/programviz/pages/MultitaskingProcesses';
 import { IOBasics } from '@/components/visualizers/programviz/pages/IOBasics';
+import { ExecutablePipeline } from '@/components/visualizers/programviz/pages/ExecutablePipeline';
 import { ExecutionSummary } from '@/components/visualizers/programviz/pages/ExecutionSummary';
 import { steps } from '@/components/visualizers/programviz/data/learningPath';
 import { TOPIC_BASE_PATH } from '@/components/visualizers/programviz/data/topic';
@@ -18,31 +21,43 @@ import { siteConfig } from '@/config/site';
 const SUB_ROUTE_META: Record<string, { title: string; description: string }> = {
     'what-is-a-program': {
         title: 'What Is a Program?',
-        description: 'Understand what a program is, code vs data, and how compiled and interpreted code reaches the CPU.',
+        description: 'Understand instructions, source code vs machine code, and what happens when we click Run.',
+    },
+    'how-computers-understand-data': {
+        title: 'How Does a Computer Understand Data?',
+        description: 'Explore bits, bytes, binary, hexadecimal, ASCII text, and RGB pixel representations.',
     },
     'cpu-basics': {
-        title: 'CPU Basics',
-        description: 'Visualize the CPU role, registers, ALU, and control unit with interactive diagrams.',
+        title: 'Understanding the CPU',
+        description: 'Discover CPU cores, the ALU, Control Unit, hardware registers, and the CPU clock.',
     },
     'instruction-cycle': {
-        title: 'Instruction Execution Cycle',
-        description: 'Step through fetch, decode, execute, and write-back phases of the CPU instruction cycle.',
+        title: 'How Does a CPU Execute Instructions?',
+        description: 'Step through fetch, decode, execute, and write-back with an interactive 8-bit assembly simulator.',
     },
     'memory-basics': {
-        title: 'Memory Basics',
-        description: 'Learn how RAM stores code and data with memory addressing, bytes, and words.',
+        title: 'Understanding Computer Memory',
+        description: 'Learn about RAM, ROM, storage, memory addresses, and read/write operations with an interactive grid.',
     },
     'memory-layout': {
-        title: 'Program Memory Layout',
-        description: 'Explore code segment, stack, heap, and global data with an animated function call stack.',
+        title: 'How Does a Program Live in Memory?',
+        description: 'Explore process address space: Code, Data, Heap, and Stack with an animated call stack.',
+    },
+    'multitasking-and-processes': {
+        title: 'How Does a Computer Run Multiple Programs?',
+        description: 'Understand processes, threads, time-sharing, timer interrupts, and context switching.',
     },
     'io-basics': {
-        title: 'Input / Output (I/O)',
-        description: 'See how programs interact with devices through system calls and blocking vs non-blocking I/O.',
+        title: 'How Does a Program Interact With Hardware?',
+        description: 'Learn how programs communicate with devices via system calls, drivers, and blocking vs non-blocking I/O.',
+    },
+    'how-code-becomes-an-executable': {
+        title: 'How Does Code Become an Executable?',
+        description: 'Compare native compilers, linkers, bytecode virtual machines, and JIT engines across C, Java, JS, and Python.',
     },
     'execution-summary': {
-        title: 'Complete Program Execution',
-        description: 'Watch a full program execution timeline across OS, CPU, memory, and I/O.',
+        title: 'Putting Everything Together',
+        description: 'Watch the complete 13-milestone journey of a C program from source code to screen output.',
     },
 };
 
@@ -65,11 +80,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
     if (!meta) {
         return {
             title: 'ProgramViz — How Programs Execute (CPU, Memory, I/O) | CSCosmos',
-            description: 'Interactive visualizer for program execution: CPU basics, instruction cycle, memory layout, and I/O.',
+            description: 'Interactive beginner-friendly visualizer for computer architecture, CPU execution, memory layout, and system calls.',
             alternates: { canonical: canonicalPath },
             openGraph: {
                 title: 'ProgramViz — How Programs Execute (CPU, Memory, I/O)',
-                description: 'Interactive visualizer for program execution: CPU basics, instruction cycle, memory layout, and I/O.',
+                description: 'Interactive beginner-friendly visualizer for computer architecture, CPU execution, memory layout, and system calls.',
                 url: canonicalPath,
                 siteName: 'CSCosmos',
                 type: 'website',
@@ -135,6 +150,8 @@ export default async function ProgramCosmosPage({ params }: { params: Promise<{ 
 
     if (subRoute === 'what-is-a-program') {
         content = <WhatIsProgram />;
+    } else if (subRoute === 'how-computers-understand-data') {
+        content = <DataRepresentation />;
     } else if (subRoute === 'cpu-basics') {
         content = <CPUBasics />;
     } else if (subRoute === 'instruction-cycle') {
@@ -143,8 +160,12 @@ export default async function ProgramCosmosPage({ params }: { params: Promise<{ 
         content = <MemoryBasics />;
     } else if (subRoute === 'memory-layout') {
         content = <MemoryLayout />;
+    } else if (subRoute === 'multitasking-and-processes') {
+        content = <MultitaskingProcesses />;
     } else if (subRoute === 'io-basics') {
         content = <IOBasics />;
+    } else if (subRoute === 'how-code-becomes-an-executable') {
+        content = <ExecutablePipeline />;
     } else if (subRoute === 'execution-summary') {
         content = <ExecutionSummary />;
     } else if (subRoute !== '') {

@@ -1,10 +1,11 @@
 'use client';
+
 import React, { useState } from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { AssemblySimulator } from '../components/AssemblySimulator';
 import { PredictCheck } from '../components/PredictCheck';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RefreshCw, Search, Cpu, Database, Save } from 'lucide-react';
+import { RefreshCw, Search, Cpu, Save, Lightbulb, AlertCircle, CheckCircle2, RotateCw } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -13,35 +14,47 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const stages = [
-  { 
-    id: 'fetch', 
-    title: 'Fetch', 
-    icon: Search, 
-    color: 'text-blue-500', 
-    desc: 'The CPU gets the next instruction from memory using the address in the Program Counter.' 
+const STAGES = [
+  {
+    id: 'fetch',
+    stepNumber: '1',
+    title: 'Fetch',
+    icon: Search,
+    color: 'text-blue-500',
+    borderColor: 'border-blue-500',
+    summary: 'The CPU reads the next instruction from memory.',
+    action: 'The Control Unit looks at the address in the Program Counter (PC), reaches out over the memory bus into RAM, and copies the instruction bytes into the Instruction Register (IR). Then, the PC automatically increments.',
   },
-  { 
-    id: 'decode', 
-    title: 'Decode', 
-    icon: RefreshCw, 
-    color: 'text-purple-500', 
-    desc: 'The Control Unit translates the instruction into signals the rest of the CPU understands.' 
+  {
+    id: 'decode',
+    stepNumber: '2',
+    title: 'Decode',
+    icon: RefreshCw,
+    color: 'text-purple-500',
+    borderColor: 'border-purple-500',
+    summary: 'The Control Unit translates the binary opcode.',
+    action: 'The Control Unit interprets the pattern of bits. It determines: "Is this an ADD, a MOV, or a JUMP? Which registers need to be read? Which ALU circuit needs to be activated?"',
   },
-  { 
-    id: 'execute', 
-    title: 'Execute', 
-    icon: Cpu, 
-    color: 'text-red-500', 
-    desc: 'The ALU performs the actual operation (like adding two numbers).' 
+  {
+    id: 'execute',
+    stepNumber: '3',
+    title: 'Execute',
+    icon: Cpu,
+    color: 'text-red-500',
+    borderColor: 'border-red-500',
+    summary: 'The ALU or execution units carry out the operation.',
+    action: 'Electrical signals pulse through the arithmetic circuits. If the instruction is "ADD R0, R1", the ALU takes 15 from R0 and 27 from R1, adding them electronically to produce 42.',
   },
-  { 
-    id: 'writeback', 
-    title: 'Write-back', 
-    icon: Save, 
-    color: 'text-green-500', 
-    desc: 'The result is saved back into a register or memory.' 
-  }
+  {
+    id: 'writeback',
+    stepNumber: '4',
+    title: 'Write-Back',
+    icon: Save,
+    color: 'text-emerald-500',
+    borderColor: 'border-emerald-500',
+    summary: 'The calculation result is saved to its destination.',
+    action: 'The output of the computation (42) is written back into a register (like R0 or the Accumulator) or stored into a RAM address so future instructions can use it.',
+  },
 ];
 
 export const InstructionCycle: React.FC = () => {
@@ -49,127 +62,173 @@ export const InstructionCycle: React.FC = () => {
   const { theme } = useTheme();
 
   return (
-    <TopicLayout stepNumber={3} title="Instruction Execution Cycle">
+    <TopicLayout stepNumber={4} title="How Does a CPU Execute Instructions?">
       <div className="space-y-12">
-        <section className={cn(
-          "space-y-4",
-          theme === 'dark' ? "text-slate-300" : "text-slate-700"
-        )}>
-          <p>
-            The CPU runs in a continuous loop called the <strong>Instruction Cycle</strong>. This four-stage model is the conceptual path every instruction follows. Real processors <strong>pipeline</strong> the stages and may overlap or reorder work, but the model is the right mental starting point.
+        {/* Section A: Simple Introduction */}
+        <section className="space-y-4">
+          <p className="text-lg leading-relaxed text-foreground">
+            A CPU cannot think ahead or get bored. From the moment you turn on your computer until you power it down, 
+            the CPU repeats a relentless, four-step routine billions of times per second: 
+            <strong> Fetch → Decode → Execute → Write-Back</strong>.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            This continuous loop is known as the <strong>Instruction Execution Cycle</strong> (or the Fetch-Execute cycle).
           </p>
         </section>
 
-        {/* Interactive Cycle Visualization */}
-        <div className={cn(
-          "rounded-2xl p-8 border transition-colors duration-300",
-          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200 shadow-sm"
-        )}>
-          <div className="flex flex-col md:flex-row gap-8 items-center">
-            {/* Stage Selector */}
-            <div className="flex flex-col gap-3 w-full md:w-48" role="group" aria-label="Instruction cycle stages">
-              {stages.map((stage, i) => (
-                <button
-                  key={stage.id}
-                  type="button"
-                  aria-pressed={activeStage === i}
-                  onClick={() => setActiveStage(i)}
-                  className={cn(
-                    "flex items-center gap-3 p-3 rounded-lg transition-all text-left border-l-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                    activeStage === i 
-                      ? (theme === 'dark' ? "bg-slate-800 border-blue-500" : "bg-slate-50 border-blue-600 shadow-sm")
-                      : "border-transparent text-slate-500 hover:bg-slate-800/20"
-                  )}
-                >
-                  <stage.icon className={cn("w-5 h-5", activeStage === i ? stage.color : "opacity-40")} />
-                  <span className={cn("font-bold text-sm", activeStage === i ? (theme === 'dark' ? "text-white" : "text-slate-900") : "")}>
-                    {i + 1}. {stage.title}
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            {/* Stage Detail */}
-            <div
-              aria-live="polite"
-              className={cn(
-                "flex-1 rounded-xl p-8 border min-h-[200px] flex flex-col justify-center transition-colors",
-                theme === 'dark' ? "bg-slate-800/50 border-slate-700" : "bg-slate-50 border-slate-100"
-              )}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={activeStage}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-4"
-                >
-                  <div className={cn(
-                    "inline-flex p-3 rounded-full transition-colors",
-                    theme === 'dark' ? "bg-slate-900" : "bg-white shadow-sm"
-                  )}>
-                    {React.createElement(stages[activeStage].icon, { className: cn("w-8 h-8", stages[activeStage].color) })}
-                  </div>
-                  <h3 className="text-2xl font-bold">{stages[activeStage].title}</h3>
-                  <p className={cn("leading-relaxed", theme === 'dark' ? "text-slate-300" : "text-slate-600")}>{stages[activeStage].desc}</p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+        {/* Section B & C: Why It Exists & The Assembly Line Analogy */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-amber-500" />
+              Why A Standard Cycle?
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Without a strict sequence, electrical signals would collide and corrupt data. 
+              By breaking instruction handling into synchronized stages driven by the clock metronome, 
+              hardware guarantees that values are safely transferred before the next step begins.
+            </p>
           </div>
 
-          {/* Controls */}
-          <div className="mt-8 flex justify-center gap-4">
-            <button 
-              onClick={() => setActiveStage(prev => (prev > 0 ? prev - 1 : stages.length - 1))}
-              className={cn(
-                "px-4 py-2 rounded transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                theme === 'dark' ? "bg-slate-800 hover:bg-slate-700" : "bg-slate-100 hover:bg-slate-200"
-              )}
-            >
-              Previous
-            </button>
-            <button 
-              onClick={() => setActiveStage(prev => (prev < stages.length - 1 ? prev + 1 : 0))}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-bold shadow-md shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-            >
-              Next Phase
-            </button>
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <RotateCw className="w-5 h-5 text-blue-500" />
+              The Factory Assembly Line Analogy
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Think of a manufacturing robot:
+              <strong> 1. Fetch:</strong> picks up a raw part from the supply shelf.
+              <strong> 2. Decode:</strong> identifies the blueprint.
+              <strong> 3. Execute:</strong> welds the piece into place.
+              <strong> 4. Write-Back:</strong> places the assembled product into the output bin. Then repeats immediately!
+            </p>
           </div>
         </div>
 
-        {/* Interactive 8-Bit Machine Code & Hardware Stepper */}
-        <AssemblySimulator />
+        {/* Section D: Interactive 4-Phase Cycle Selector */}
+        <div className={cn(
+          "rounded-2xl p-6 sm:p-8 border shadow-xl transition-colors space-y-6",
+          theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
+        )}>
+          <div className="text-center space-y-1">
+            <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+              The 4-Stage Model
+            </span>
+            <h3 className="text-xl font-bold text-foreground">
+              The Fetch-Decode-Execute-WriteBack Cycle
+            </h3>
+          </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+            {STAGES.map((stage, idx) => (
+              <button
+                key={stage.id}
+                type="button"
+                onClick={() => setActiveStage(idx)}
+                className={cn(
+                  "p-4 rounded-xl border-2 text-left transition-all flex flex-col justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  activeStage === idx
+                    ? "border-blue-500 bg-blue-500/10 shadow-lg scale-[1.02]"
+                    : "border-border bg-card hover:border-muted-foreground/30"
+                )}
+              >
+                <div className="flex items-center justify-between">
+                  <span className={cn("text-xs font-mono font-bold px-2 py-0.5 rounded", activeStage === idx ? "bg-blue-600 text-white" : "bg-muted text-muted-foreground")}>
+                    Phase {stage.stepNumber}
+                  </span>
+                  <stage.icon className={cn("w-5 h-5", stage.color)} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-foreground text-sm">{stage.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-tight mt-1">{stage.summary}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Active Stage Narrative */}
+          <div className="p-6 rounded-xl border border-border bg-card space-y-2">
+            <span className="text-xs font-mono font-bold text-blue-500 uppercase block">
+              What Happens Behind the Silicon:
+            </span>
+            <h4 className="text-lg font-bold text-foreground">
+              {STAGES[activeStage].title} Phase
+            </h4>
+            <p className="text-sm text-foreground leading-relaxed">
+              {STAGES[activeStage].action}
+            </p>
+          </div>
+        </div>
+
+        {/* Section E: Live Interactive 8-Bit CPU Simulator */}
+        <section className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 className="text-xl font-bold text-foreground">
+                Interactive CPU Hardware Stepper
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Step through real instructions one clock tick at a time. Watch the Program Counter advance, registers update, and the ALU add 15 + 27.
+              </p>
+            </div>
+            <span className="text-xs font-mono px-3 py-1 rounded-full bg-blue-500/10 text-blue-500 font-bold self-start">
+              Simplified Educational CPU Model
+            </span>
+          </div>
+
+          <AssemblySimulator />
+        </section>
+
+        {/* Section G: Common Misconceptions */}
+        <section className="p-6 rounded-2xl border border-border bg-card space-y-3">
+          <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-rose-500" />
+            Common Beginner Misconceptions
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"A CPU finishes an entire instruction before starting the next one."</strong> <br />
+              <span className="text-foreground">Reality:</span> While our educational simulator shows instructions one at a time, real modern CPUs use <strong>Instruction Pipelining</strong>. While instruction #3 is executing, instruction #2 is already being decoded, and instruction #1 is already being fetched!
+            </li>
+            <li>
+              <strong>"The Program Counter is just a counter that adds 1."</strong> <br />
+              <span className="text-foreground">Reality:</span> Normally it increments sequentially. But when your code hits an <code className="font-mono">if</code> statement, loop, or function call (like <code className="font-mono">JUMP</code>), the PC is forcefully overwritten with a completely different address, jumping execution to another part of memory!
+            </li>
+          </ul>
+        </section>
+
+        {/* Section H: Quick Knowledge Check */}
         <PredictCheck
-          question="In the simulator, R0 holds 15 and R1 holds 27. Right after “ADD R0, R1” executes, what does the accumulator hold?"
-          options={['15', '27', '42 — the sum', '0']}
+          question="In the simulator, R0 holds 15 and R1 holds 27. Right after the instruction “ADD R0, R1” executes, what does the accumulator (and R0) hold?"
+          options={[
+            '15',
+            '27',
+            '42 — the sum of 15 and 27',
+            '0 — registers are cleared',
+          ]}
           correctIndex={2}
-          explanation="The ALU adds R0 + R1 = 15 + 27 = 42 and drops the result into the accumulator (and back into R0). You saw exactly this if you stepped the simulator above — the ACC card changed to 42."
+          explanation="The ALU adds R0 + R1 = 15 + 27 = 42. In the write-back stage, this 42 is stored into both the Accumulator (ACC) and register R0!"
         />
 
-        <div className={cn(
-          "grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t transition-colors",
-          theme === 'dark' ? "border-slate-800" : "border-slate-200"
-        )}>
-          <div className="space-y-4">
-            <h4 className="font-bold flex items-center gap-2 text-blue-500">
-              <RefreshCw className="w-4 h-4" />
-              The Loop Never Stops
-            </h4>
-            <p className={cn("text-sm leading-relaxed", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>
-              A modern CPU repeats this cycle <strong>billions</strong> of times every second. This speed is what we call "Clock Speed" (measured in GHz).
-            </p>
-          </div>
-          <div className="space-y-4">
-            <h4 className="font-bold flex items-center gap-2 text-green-500">
-              <Database className="w-4 h-4" />
-              Fetch vs Execute
-            </h4>
-            <p className={cn("text-sm leading-relaxed", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>
-              Fetch reads the next instruction through the memory hierarchy — usually L1/L2 cache, falling back to RAM. Execute happens inside the CPU's execution units.
-            </p>
-          </div>
+        {/* Section I: Summary */}
+        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+            Lesson 04 Key Takeaways
+          </h4>
+          <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>The CPU repeats the Fetch → Decode → Execute → Write-Back cycle continuously.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>Fetch reads from RAM at PC; Decode translates opcodes; Execute runs ALU math.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <span>Write-back saves the result to registers or memory for subsequent instructions.</span>
+            </li>
+          </ul>
         </div>
       </div>
     </TopicLayout>

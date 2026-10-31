@@ -1,13 +1,11 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+
+import React from 'react';
 import { TopicLayout } from '../components/TopicLayout';
 import { PredictCheck } from '../components/PredictCheck';
-import { motion } from 'framer-motion';
-import { Play, Pause, RotateCcw, Cpu, Database, Keyboard, CheckCircle2 } from 'lucide-react';
-import Link from 'next/link';
+import { EndToEndExecutionStepper } from '../components/EndToEndExecutionStepper';
+import { Sparkles, Award, Lightbulb, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import { TOPIC_BASE_PATH } from '../data/topic';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -15,213 +13,225 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const executionSteps = [
-  { id: 1, component: 'OS', action: 'Load Program', detail: 'The OS loader maps the executable — the same ROM listing from Step 3 (MOV 15, MOV 27, ADD, STORE, HALT) — into the process address space. Pages are faulted in as the program touches them.', icon: Database, color: 'text-blue-500' },
-  { id: 2, component: 'CPU', action: 'Initialize PC', detail: 'The Program Counter is set to 0x00, the address of the very first instruction.', icon: Cpu, color: 'text-purple-500' },
-  { id: 3, component: 'CPU/RAM', action: 'Fetch Loop', detail: 'The CPU repeats Fetch → Decode → Execute: R0 = 15, R1 = 27, the ALU computes 42, and RAM[0x10] = 42.', icon: RotateCcw, color: 'text-red-500' },
-  { id: 4, component: 'CPU/IO', action: 'System Call', detail: 'A print instruction calls the OS, which hands 42 to the monitor driver — the same system-call path from the I/O lesson.', icon: Keyboard, color: 'text-orange-500' },
-  { id: 5, component: 'OS', action: 'Terminate', detail: 'HALT ends the fetch cycle. The OS reclaims the memory block the program was using.', icon: CheckCircle2, color: 'text-green-500' },
-];
-
 export const ExecutionSummary: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const { theme } = useTheme();
-  const prefersReducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => {
-    if (prefersReducedMotion) setIsPlaying(false);
-  }, [prefersReducedMotion]);
-
-  useEffect(() => {
-    let interval: number | undefined;
-    if (isPlaying && !prefersReducedMotion) {
-      interval = window.setInterval(() => {
-        setCurrentStep(s => {
-          if (s >= executionSteps.length - 1) {
-            setIsPlaying(false);
-            return s;
-          }
-          return s + 1;
-        });
-      }, 3000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, prefersReducedMotion]);
-
-  const handleReset = () => {
-    setCurrentStep(0);
-    setIsPlaying(false);
-  };
-
-  const handleStepKeyboard = (e: React.KeyboardEvent) => {
-    if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      if (!prefersReducedMotion) setIsPlaying(p => !p);
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      setIsPlaying(false);
-      setCurrentStep(s => Math.min(s + 1, executionSteps.length - 1));
-    } else if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      setIsPlaying(false);
-      setCurrentStep(s => Math.max(s - 1, 0));
-    }
-  };
 
   return (
-    <TopicLayout stepNumber={7} title="Putting It All Together">
+    <TopicLayout stepNumber={10} title="Putting Everything Together">
       <div className="space-y-12">
-        <section className={cn(
-          "space-y-4",
-          theme === 'dark' ? "text-slate-300" : "text-slate-700"
-        )}>
-          <p>
-            You've seen the individual parts. Now, let's watch how they work in harmony during the life of a single program execution.
+        {/* Section A: Simple Introduction */}
+        <section className="space-y-4">
+          <p className="text-lg leading-relaxed text-foreground">
+            You have explored the individual pieces: bits and bytes, the CPU ALU and Control Unit, the fetch-execute cycle, 
+            RAM addresses, the stack and heap, multitasking, and system calls.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Now comes the grand unification. We will trace the complete, unbroken journey of a real C program—from the instant the developer writes it on a keyboard 
+            to compilation, process creation, CPU execution, screen display, and termination.
           </p>
         </section>
 
-        {/* The program from Step 3, now viewed at system level */}
-        <div className="rounded-xl border border-border bg-slate-950 text-slate-100 font-mono text-xs p-5 space-y-2 shadow-inner">
-          <span className="text-blue-400 font-bold block">
-            // The exact program you stepped through in Step 3 — now at system level:
-          </span>
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-slate-300">
-            <span><span className="text-slate-500">0x00</span> MOV R0, 15</span>
-            <span><span className="text-slate-500">0x01</span> MOV R1, 27</span>
-            <span><span className="text-slate-500">0x02</span> ADD R0, R1</span>
-            <span><span className="text-slate-500">0x03</span> STORE [0x10], R0</span>
-            <span><span className="text-slate-500">0x04</span> HALT</span>
+        {/* Section B & C: The Symphony Analogy */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-500" />
+              The Symphony of Modern Computing
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              When you write <code className="font-mono text-blue-500">int a = 15; int b = 27;</code>, millions of transistors, operating system kernel routines, 
+              memory buses, and graphics pipelines coordinate with nanosecond precision. 
+              No single component does everything—software and hardware work in complete harmony.
+            </p>
           </div>
-          <p className="text-slate-400">
-            Everything below is the story of this tiny program: loaded by the OS, fetched and executed by the CPU, printed through a system call, and cleaned up.
-          </p>
+
+          <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
+            <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-blue-500" />
+              The Rocket Flight Plan Analogy
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Think of a rocket mission:
+              Writing the source code is drawing up the flight plan. 
+              Compilation builds the physical rocket. 
+              The OS launching the process is fueling the engines on the launchpad. 
+              The CPU clock is the countdown clock. 
+              And the print statement is the telemetry beacon beaming data back to mission control!
+            </p>
+          </div>
         </div>
 
-        {/* Timeline Visualization */}
-        <div
-          className={cn(
-            "rounded-2xl p-8 border transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-            theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200 shadow-sm"
-          )}
-          tabIndex={0}
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Execution timeline stepper. Use Space to play or pause, arrow keys to step."
-          onKeyDown={handleStepKeyboard}
-        >
-          <div className="flex items-center justify-between mb-12">
-             <h3 className={cn(
-               "uppercase tracking-widest text-sm font-semibold",
-               theme === 'dark' ? "text-slate-400" : "text-slate-500"
-             )}>Execution Timeline</h3>
-             <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  aria-label={prefersReducedMotion ? 'Auto-play disabled by reduced-motion preference' : isPlaying ? 'Pause timeline' : 'Play timeline'}
-                  aria-pressed={isPlaying}
-                  disabled={prefersReducedMotion}
-                  title={prefersReducedMotion ? 'Auto-play is disabled by your reduced-motion preference' : undefined}
-                  className={cn(
-                    "p-2 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                    theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 shadow-sm"
-                  )}
-                >
-                  {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                </button>
-                <button
-                  onClick={handleReset}
-                  aria-label="Reset timeline to first step"
-                  className={cn(
-                    "p-2 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                    theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 shadow-sm"
-                  )}
-                >
-                  <RotateCcw className="w-5 h-5" />
-                </button>
-             </div>
-          </div>
+        {/* Section D: The 13-Step End-to-End Visual Stepper */}
+        <EndToEndExecutionStepper />
 
-          <p aria-live="polite" className="sr-only">
-            {`Step ${currentStep + 1} of ${executionSteps.length}: ${executionSteps[currentStep].action}. ${executionSteps[currentStep].detail}`}
-          </p>
+        {/* Section E: The Complete 13-Milestone Breakdown */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-bold text-foreground">
+            The 13 Milestones of Program Execution
+          </h3>
 
-          <div className="relative">
-            {/* The Line */}
-            <div className={cn("absolute left-6 top-0 bottom-0 w-0.5", theme === 'dark' ? "bg-slate-800" : "bg-slate-100")} />
+          <div className="space-y-3 text-xs leading-relaxed text-muted-foreground">
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">1</span>
+              <div>
+                <strong className="text-foreground">Source Code:</strong> Written by the developer in high-level C expressions (<code className="font-mono">int a = 15; int b = 27;</code>).
+              </div>
+            </div>
 
-            <div className="space-y-8 relative">
-              {executionSteps.map((step, i) => (
-                <motion.div 
-                  key={step.id}
-                  className={`flex gap-6 items-start transition-opacity duration-500 ${i <= currentStep ? 'opacity-100' : 'opacity-20'}`}
-                >
-                  <div className={cn(
-                    "relative z-10 w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all",
-                    i <= currentStep 
-                      ? "border-blue-500 shadow-lg shadow-blue-500/20 bg-white dark:bg-slate-900" 
-                      : (theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200")
-                  )}>
-                    <step.icon className={`w-5 h-5 ${i <= currentStep ? step.color : 'text-slate-300'}`} />
-                  </div>
-                  
-                  <div className={cn(
-                    "flex-1 p-4 rounded-xl border transition-colors",
-                    i <= currentStep 
-                      ? (theme === 'dark' ? "bg-slate-800/50 border-slate-700" : "bg-slate-50 border-blue-100 shadow-sm")
-                      : (theme === 'dark' ? "border-slate-800" : "border-slate-100")
-                  )}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className={cn("text-[10px] font-bold uppercase", theme === 'dark' ? "text-slate-500" : "text-slate-400")}>{step.component}</span>
-                      {i === currentStep && isPlaying && (
-                        <motion.div 
-                          className="w-2 h-2 bg-blue-500 rounded-full"
-                          animate={{ scale: [1, 1.5, 1] }}
-                          transition={{ duration: 1, repeat: Infinity }}
-                        />
-                      )}
-                    </div>
-                    <h4 className="font-bold mb-2">{step.action}</h4>
-                    <p className={cn("text-sm leading-relaxed", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>{step.detail}</p>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">2</span>
+              <div>
+                <strong className="text-foreground">Storage (SSD):</strong> Saved to persistent disk as UTF-8 text bytes in <code className="font-mono">main.c</code>.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">3</span>
+              <div>
+                <strong className="text-foreground">Compiler:</strong> GCC translates C into native x86 machine instructions inside object file <code className="font-mono">main.o</code>.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">4</span>
+              <div>
+                <strong className="text-foreground">Linker:</strong> Stitches <code className="font-mono">main.o</code> with <code className="font-mono">libc</code> (for <code className="font-mono">printf</code>) to produce executable binary <code className="font-mono">program.exe</code>.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">5</span>
+              <div>
+                <strong className="text-foreground">User Launch:</strong> User runs <code className="font-mono">./program</code>. The shell requests process launch from the OS.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">6</span>
+              <div>
+                <strong className="text-foreground">Process Creation:</strong> OS Kernel creates Process ID (PID) and allocates an isolated virtual address space.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">7</span>
+              <div>
+                <strong className="text-foreground">Memory Mapping:</strong> OS Loader copies machine code into RAM and initializes the Stack Pointer (SP).
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">8</span>
+              <div>
+                <strong className="text-foreground">CPU Fetch &amp; Execute (a = 15):</strong> PC = 0x00. CPU fetches <code className="font-mono">MOV R0, 15</code> and executes; R0 = 15.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">9</span>
+              <div>
+                <strong className="text-foreground">CPU Fetch &amp; Execute (b = 27):</strong> PC = 0x01. CPU fetches <code className="font-mono">MOV R1, 27</code> and executes; R1 = 27.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">10</span>
+              <div>
+                <strong className="text-foreground">ALU Addition:</strong> PC = 0x02. ALU adds R0 + R1 ($15 + 27 = 42$). Result 42 written to Accumulator and RAM stack address 0x10.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">11</span>
+              <div>
+                <strong className="text-foreground">System Call &amp; ASCII Formatting:</strong> <code className="font-mono">printf</code> converts the integer 42 into two ASCII character bytes: <code className="font-mono">&apos;4&apos; (0x34)</code> and <code className="font-mono">&apos;2&apos; (0x32)</code>. It then invokes the <code className="font-mono">sys_write</code> system call, safely switching the CPU from User Mode to Kernel Mode.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">12</span>
+              <div>
+                <strong className="text-foreground">Device Output:</strong> The terminal driver writes the ASCII character codes into the GPU framebuffer. The display hardware illuminates RGB subpixels on your physical monitor to render the glyphs &quot;42&quot;.
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">13</span>
+              <div>
+                <strong className="text-foreground">Termination:</strong> Program returns 0. OS Kernel reclaims address space and terminates the process.
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
+        {/* Section G: Common Misconceptions */}
+        <section className="p-6 rounded-2xl border border-border bg-card space-y-3">
+          <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-rose-500" />
+            Common Beginner Misconceptions
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"A program runs inside the source code file."</strong> <br />
+              <span className="text-foreground">Reality:</span> The file on disk is never modified while running. The OS creates a separate dynamic instance in RAM (a Process). You can delete the source code file while the program is running, and the program will keep running without interruption!
+            </li>
+            <li>
+              <strong>"A computer needs human intervention to move from step to step."</strong> <br />
+              <span className="text-foreground">Reality:</span> The clock oscillator pulses continuously. Every tick pushes electrical charges through logic gates automatically, driving the entire cycle from start to finish.
+            </li>
+          </ul>
+        </section>
+
+        {/* Section H: Quick Knowledge Check */}
         <PredictCheck
-          question="When you double-click a program, WHO actually loads it into RAM?"
-          options={['The CPU', 'The operating system', 'The monitor', 'The program itself']}
+          question="Why does the program require an operating system 'System Call' to print the number 42 to the screen instead of writing directly to the monitor?"
+          options={[
+            'Because the CPU does not have the physical electrical circuits to calculate 42',
+            'Because user-mode applications are restricted from touching physical display hardware directly for security and crash prevention',
+            'Because print statements can only run after the computer restarts',
+            'Because the terminal emulator does not have an address in RAM',
+          ]}
           correctIndex={1}
-          explanation="The OS is the loader: it reads the file from disk, allocates memory, points the CPU at the entry instruction — and reclaims everything when the program exits."
+          explanation="Correct! To prevent applications from corrupting hardware or spying on each other, the CPU runs user code in unprivileged User Mode. Whenever an app needs to touch the screen, SSD, or network, it must request the OS Kernel to perform the I/O via a System Call."
         />
 
-        <section className={cn(
-          "text-center space-y-6 pt-12 border-t transition-colors",
-          theme === 'dark' ? "border-slate-800" : "border-slate-200"
-        )}>
-          <h2 className="text-3xl font-bold">Congratulations!</h2>
-          <p className={cn(
-            "max-w-xl mx-auto",
-            theme === 'dark' ? "text-slate-400" : "text-slate-600"
-          )}>
-            You now have a foundational mental model of how a computer actually runs your code. 
-            You're ready to dive deeper into operating systems, compilers, and advanced software design.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link 
-              href={TOPIC_BASE_PATH}
-              className={cn(
-                "px-8 py-3 rounded-full font-bold transition-colors",
-                theme === 'dark' ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
-              )}
-            >
-              Back to Home
-            </Link>
+        {/* Section I: Graduation & Summary */}
+        <div className="p-8 rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/5 dark:bg-emerald-500/10 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-lg">
+              <Award className="w-6 h-6" />
+            </div>
+            <div>
+              <h4 className="text-xl font-bold text-foreground">
+                Congratulations! You Understand How Programs Execute
+              </h4>
+              <p className="text-xs text-muted-foreground">
+                You have completed the entire Program Cosmos curriculum.
+              </p>
+            </div>
           </div>
-        </section>
+
+          <p className="text-sm text-foreground leading-relaxed">
+            You now possess the foundational mental model that separates great software engineers from casual code typers. 
+            Whenever you write code in any language—whether C, Python, JavaScript, Rust, or Java—you know what happens beneath the surface: 
+            how memory is laid out, how the CPU executes instructions on clock ticks, how the OS multitasks, and how system calls bridge software to physical silicon.
+          </p>
+
+          <div className="pt-2 flex flex-wrap gap-3">
+            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">
+              ✓ Hardware Architecture
+            </span>
+            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-700 dark:text-blue-300">
+              ✓ Memory Layout &amp; Stack
+            </span>
+            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300">
+              ✓ Multitasking &amp; Context Switching
+            </span>
+            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300">
+              ✓ Compilation &amp; System Calls
+            </span>
+          </div>
+        </div>
       </div>
     </TopicLayout>
   );

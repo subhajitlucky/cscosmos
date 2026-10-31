@@ -35,7 +35,7 @@ test.describe('program-cosmos smoke', () => {
     await page.addInitScript(() => {
       localStorage.setItem(
         'programviz-progress',
-        JSON.stringify({ completedSteps: [1, 2, 3, 4, 5, 6, 7] }),
+        JSON.stringify({ completedSteps: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }),
       );
       localStorage.removeItem('cscosmos:learning:v1');
     });
