@@ -172,7 +172,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
          <div className="grid grid-cols-2 gap-4 w-full max-w-md">
             {[
               { code: '200', text: 'OK', color: 'bg-green-500', icon: <CheckCircle2 size={20}/> },
-              { code: '304', text: 'Not Modified', color: 'bg-blue-500', icon: <RefreshCw size={20}/> },
+              { code: '304', text: 'Not Modified', color: 'bg-emerald-600', icon: <RefreshCw size={20}/> },
               { code: '404', text: 'Not Found', color: 'bg-amber-500', icon: <Search size={20}/> },
               { code: '500', text: 'Server Error', color: 'bg-red-500', icon: <AlertCircle size={20}/> }
             ].map((s, i) => (
@@ -341,10 +341,10 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
                     animate={{ 
                       scale: step % 4 === i ? 1.05 : 1,
                       opacity: step % 4 === i ? 1 : 0.5,
-                      borderColor: step % 4 === i ? '#3b82f6' : 'transparent'
+                      borderColor: step % 4 === i ? '#f59e0b' : 'transparent'
                     }}
                     className={`p-4 rounded-2xl border-2 flex flex-col gap-2 transition-all ${
-                      m.name === 'GET' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-300' : 
+                      m.name === 'GET' ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-900 dark:text-amber-300 border-amber-200 dark:border-amber-800' : 
                       m.name === 'POST' ? 'bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-300' :
                       m.name === 'PUT' ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-300' :
                       'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-900 dark:text-red-300'
@@ -398,7 +398,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
   
             <div className="relative">
                <motion.div 
-                 animate={{ scale: step % 2 === 0 ? 1.1 : 1, borderColor: step % 2 === 0 ? '#3b82f6' : '#e2e8f0' }}
+                 animate={{ scale: step % 2 === 0 ? 1.1 : 1, borderColor: step % 2 === 0 ? '#f59e0b' : '#e2e8f0' }}
                  className="w-24 h-24 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center border-4 shadow-xl dark:border-slate-800 transition-colors"
                >
                   <HardDrive size={32} className={step % 2 === 0 ? "text-primary" : "text-slate-300 dark:text-slate-700"} />

@@ -20,5 +20,9 @@ export const MODULE_META: Record<string, ModuleMeta> = {
   'browser-vs-cdn': { difficulty: 'Intermediate', minutes: 3 },
   https: { difficulty: 'Intermediate', minutes: 4 },
   cookies: { difficulty: 'Intermediate', minutes: 3 },
+  'cors-security': { difficulty: 'Intermediate', minutes: 3 },
+  'http2-http3': { difficulty: 'Intermediate', minutes: 4 },
+  'websockets-sse': { difficulty: 'Intermediate', minutes: 3 },
+  'dns-connection-lifecycle': { difficulty: 'Intermediate', minutes: 4 },
   performance: { difficulty: 'Intermediate', minutes: 4 },
 };

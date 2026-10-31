@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme as useCSCosmosTheme } from '@/context/useTheme';
-import { Globe, Map, Terminal, Moon, Sun, ArrowLeft, Menu, X } from 'lucide-react';
+import { Globe, Map, Terminal, Moon, Sun, ArrowLeft, Menu, X, CheckSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ENGINE_BASE_PATH, TOPIC_BASE_PATH } from '../data/topic';
 
@@ -26,6 +26,12 @@ const NAV_ITEMS = [
     match: `${ENGINE_BASE_PATH}/playground`,
     label: 'HTTP Playground',
     icon: Terminal,
+  },
+  {
+    href: `${TOPIC_BASE_PATH}/problems`,
+    match: `${ENGINE_BASE_PATH}/problems`,
+    label: 'Practice (100 Qs)',
+    icon: CheckSquare,
   },
 ];
 
@@ -68,10 +74,10 @@ export default function Navbar() {
             href={TOPIC_BASE_PATH}
             className="flex items-center gap-2 text-lg font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <span className="rounded-lg border border-blue-500/20 bg-blue-500/10 p-1.5 text-blue-500">
+            <span className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-1.5 text-amber-500">
               <Globe className="w-5 h-5" />
             </span>
-            <span className="text-blue-500">WebProtocols</span>
+            <span className="text-amber-500">WebProtocols</span>
           </Link>
         </div>
 
@@ -87,7 +93,7 @@ export default function Navbar() {
                 className={cn(
                   'flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                   active
-                    ? 'border border-blue-500/20 bg-blue-500/10 font-bold text-blue-500'
+                    ? 'border border-amber-500/20 bg-amber-500/10 font-bold text-amber-500'
                     : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground',
                 )}
               >
@@ -145,7 +151,7 @@ export default function Navbar() {
                   className={cn(
                     'flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                     active
-                      ? 'bg-blue-500/10 text-blue-500'
+                      ? 'bg-amber-500/10 text-amber-500'
                       : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground',
                   )}
                 >

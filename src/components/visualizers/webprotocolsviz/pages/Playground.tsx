@@ -38,7 +38,7 @@ const Playground = () => {
 
   const displayedStatus = response?.status ?? status;
   const statusText = displayedStatus === '200' ? 'OK' : displayedStatus === '304' ? 'Not Modified' : displayedStatus === '404' ? 'Not Found' : displayedStatus === '500' ? 'Server Error' : 'Unknown';
-  const statusTone = displayedStatus === '200' ? 'text-green-500' : displayedStatus === '304' ? 'text-blue-500' : 'text-red-500';
+  const statusTone = displayedStatus === '200' ? 'text-green-500' : displayedStatus === '304' ? 'text-amber-500' : 'text-red-500';
 
   const copyAsCurl = () => {
     let curl = `curl -X ${method} 'https://api.webprotocols.dev/api/v1/resource'`;

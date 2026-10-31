@@ -13,18 +13,18 @@ test.describe('webprotocols smoke', () => {
     const navHrefs = await page.locator('header nav a').evaluateAll((links) =>
       links.map((link) => link.getAttribute('href')),
     );
-    expect(navHrefs).toEqual([BASE, `${BASE}/path`, `${BASE}/playground`]);
+    expect(navHrefs).toEqual([BASE, `${BASE}/path`, `${BASE}/playground`, `${BASE}/problems`]);
   });
 
-  test('shows all 14 modules in the learning path', async ({ page }) => {
+  test('shows all 18 modules in the learning path', async ({ page }) => {
     await page.goto(`${BASE}/path`);
 
     await expect(page.getByRole('heading', { name: 'Your Learning Roadmap' })).toBeVisible();
-    await expect(page.getByText(/14 modules/).first()).toBeVisible();
+    await expect(page.getByText(/18 modules/).first()).toBeVisible();
 
     const cards = page.locator('h3');
-    await expect(cards).toHaveCount(15); // 14 modules + the completion heading
-    for (let index = 0; index < 15; index += 1) {
+    await expect(cards).toHaveCount(19); // 18 modules + the completion heading
+    for (let index = 0; index < 19; index += 1) {
       await expect(cards.nth(index)).toBeVisible();
     }
   });
@@ -51,6 +51,28 @@ test.describe('webprotocols smoke', () => {
     await expect(page.getByText(/STEP 2 \/ 6/i)).toBeVisible();
     await expect(page.getByText('Open a connection')).toBeVisible();
   });
+
+  test('interacts with 100 practice problems arena', async ({ page }) => {
+    await page.goto(`${BASE}/problems`);
+
+    await expect(page.getByRole('heading', { name: /Practice Arena/i })).toBeVisible();
+    await expect(page.getByText('100 Line-by-Line System & Protocol Questions')).toBeVisible();
+
+    // Verify navigator pills exist
+    const pillButtons = page.locator('button[aria-label^="Jump to Question"]');
+    await expect(pillButtons).toHaveCount(100);
+
+    // Verify question 1 content
+    await expect(page.getByText('What does the acronym HTTP stand for in computer networking?')).toBeVisible();
+
+    // Click option A
+    const firstOption = page.getByRole('button', { name: /Hypertext Transfer Protocol/i });
+    await expect(firstOption).toBeVisible();
+    await firstOption.click();
+
+    // Verify explanation appears
+    await expect(page.getByText(/Correct! Technical Explanation/i)).toBeVisible();
+  });
 });
 
 test.describe('webprotocols mobile navigation', () => {
@@ -67,5 +89,6 @@ test.describe('webprotocols mobile navigation', () => {
     await expect(mobileNav.getByRole('link', { name: 'Overview' })).toBeVisible();
     await expect(mobileNav.getByRole('link', { name: 'Learning Path' })).toBeVisible();
     await expect(mobileNav.getByRole('link', { name: 'HTTP Playground' })).toBeVisible();
+    await expect(mobileNav.getByRole('link', { name: 'Practice (100 Qs)' })).toBeVisible();
   });
 });

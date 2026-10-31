@@ -378,6 +378,135 @@ export const topics: Topic[] = [
     }
   },
   {
+    id: 'cors-security',
+    name: 'CORS & Web Security Headers',
+    path: '/topics/cors-security',
+    lessonStructure: ['same-origin policy', 'preflight OPTIONS', 'CORS headers', 'security headers'],
+    content: {
+      definition: 'CORS (Cross-Origin Resource Sharing) is a browser security mechanism that governs whether client-side JavaScript from one origin is permitted to access resources from a different origin.',
+      analogy: 'Like passport control at an international border: when your JavaScript tries to access another domain’s private data, the browser asks the destination server: "Do you explicitly authorize visitors from this origin?"',
+      syntax: 'Origin: https://app.example.com\nAccess-Control-Allow-Origin: https://app.example.com',
+      detailedSections: [
+        {
+          title: 'Same-Origin Policy (SOP) vs CORS',
+          content: 'The browser Same-Origin Policy forbids scripts from reading responses from a differing scheme, host, or port. CORS provides the HTTP headers that allow servers to declare safe exceptions.'
+        },
+        {
+          title: 'Preflight OPTIONS Requests',
+          subItems: [
+            { label: 'Trigger', description: 'Non-simple requests (methods like PUT/DELETE or custom headers like Authorization) trigger an automated preflight.' },
+            { label: 'OPTIONS check', description: 'The browser sends OPTIONS with Access-Control-Request-Method and Access-Control-Request-Headers.' },
+            { label: 'Server Response', description: 'The server returns Access-Control-Allow-Origin, Allow-Methods, Allow-Headers, and Max-Age cache duration.' }
+          ]
+        },
+        {
+          title: 'Essential Web Security Headers',
+          subItems: [
+            { label: 'CSP (Content-Security-Policy)', description: 'Prevents XSS and data injection attacks by restricting allowed sources for scripts, images, and styles.' },
+            { label: 'HSTS (Strict-Transport-Security)', description: 'Directs browsers to automatically upgrade all future requests to HTTPS for a declared time.' },
+            { label: 'X-Content-Type-Options: nosniff', description: 'Stops browsers from MIME-sniffing responses away from the declared Content-Type.' }
+          ]
+        }
+      ],
+      example: {
+        request: 'OPTIONS /api/data HTTP/1.1\nOrigin: https://app.client.com\nAccess-Control-Request-Method: DELETE',
+        response: 'HTTP/1.1 204 No Content\nAccess-Control-Allow-Origin: https://app.client.com\nAccess-Control-Allow-Methods: GET, POST, DELETE\nAccess-Control-Max-Age: 86400',
+        explanation: 'The browser pre-clears authorization before executing the destructive DELETE method. The server grants permission and caches the verdict for 24 hours.'
+      },
+      visualizationType: 'headers'
+    }
+  },
+  {
+    id: 'http2-http3',
+    name: 'HTTP/2, HTTP/3 & QUIC',
+    path: '/topics/http2-http3',
+    lessonStructure: ['binary framing', 'multiplexing', 'head-of-line blocking', 'QUIC over UDP'],
+    content: {
+      definition: 'HTTP/2 introduced binary framing and multiplexed streams over a single TCP connection. HTTP/3 transitions transport to UDP-based QUIC, eliminating TCP Head-of-Line blocking and enabling 0-RTT handshakes.',
+      analogy: 'HTTP/1.1 is single-lane road traffic with red lights. HTTP/2 is a high-speed multi-car train on a single railway track (if one train car derails, all cars halt). HTTP/3 is a fleet of independent drones over UDP—if one drone encounters turbulence, every other drone flies uninterrupted.',
+      detailedSections: [
+        {
+          title: 'HTTP/2 Core Capabilities',
+          subItems: [
+            { label: 'Binary Framing', description: 'Plaintext lines are replaced by structured binary frames (HEADERS, DATA, SETTINGS, RST_STREAM).' },
+            { label: 'Multiplexing', description: 'Multiple bidirectional request and response streams interleave simultaneously over a single TCP connection.' },
+            { label: 'HPACK Compression', description: 'Static and dynamic tables compress repetitive headers, dramatically reducing metadata byte overhead.' }
+          ]
+        },
+        {
+          title: 'HTTP/3 & QUIC Innovations',
+          subItems: [
+            { label: 'UDP-Based QUIC', description: 'Eliminates TCP transport-layer Head-of-Line blocking; packet loss on stream A never stalls stream B.' },
+            { label: '0-RTT Handshakes', description: 'Returning clients transmit encrypted request payloads within the very first packet flight.' },
+            { label: 'Connection Migration', description: 'Connections are tracked with 64-bit Connection IDs, allowing seamless roaming between Wi-Fi and 5G cellular without reconnecting.' }
+          ]
+        }
+      ],
+      visualizationType: 'performance'
+    }
+  },
+  {
+    id: 'websockets-sse',
+    name: 'WebSockets & Server-Sent Events',
+    path: '/topics/websockets-sse',
+    lessonStructure: ['http upgrade', 'full-duplex framing', 'server-sent events', 'protocol comparison'],
+    content: {
+      definition: 'WebSockets provide full-duplex, bidirectional communication over a single persistent TCP socket. Server-Sent Events (SSE) offer lightweight, unidirectional push streaming over standard HTTP.',
+      analogy: 'HTTP is mailing letters back and forth. Server-Sent Events is tuning into an ongoing FM radio transmission. WebSockets is an open telephone call where both parties can talk and listen simultaneously with zero delay.',
+      syntax: 'GET /chat HTTP/1.1\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==',
+      detailedSections: [
+        {
+          title: 'The WebSocket Protocol Upgrade',
+          content: 'Clients initiate an HTTP handshake with "Connection: Upgrade" and "Upgrade: websocket". Upon receiving "101 Switching Protocols", both sides switch to low-overhead binary/text framing.'
+        },
+        {
+          title: 'WebSockets vs Server-Sent Events (SSE)',
+          subItems: [
+            { label: 'Directionality', description: 'WebSockets is full-duplex (two-way); SSE is unidirectional (server-to-client only).' },
+            { label: 'Reconnection & Proxying', description: 'SSE uses standard HTTP text/event-stream with native auto-reconnection and standard proxy support; WebSockets requires custom reconnection logic.' },
+            { label: 'Ideal Workloads', description: 'Use SSE for LLM AI token streaming and news tickers; use WebSockets for real-time multiplayer gaming and collaborative editors.' }
+          ]
+        }
+      ],
+      example: {
+        request: 'GET /feed HTTP/1.1\nAccept: text/event-stream',
+        response: 'HTTP/1.1 200 OK\nContent-Type: text/event-stream\nCache-Control: no-cache\n\nevent: update\ndata: {"price": 105.4}',
+        explanation: 'Server-Sent Events streaming real-time JSON payload updates to the browser over a persistent HTTP response stream.'
+      },
+      visualizationType: 'flow'
+    }
+  },
+  {
+    id: 'dns-connection-lifecycle',
+    name: 'DNS, TCP & TLS Lifecycle',
+    path: '/topics/dns-connection-lifecycle',
+    lessonStructure: ['dns lookup', 'tcp 3-way handshake', 'tls 1.3 negotiation', 'connection pooling'],
+    content: {
+      definition: 'Before HTTP bytes can flow, client and server execute three sequential network phases: DNS IP resolution, TCP connection establishment, and TLS cryptographic key exchange.',
+      analogy: 'Like making an overseas delivery: look up the recipient warehouse coordinates in a registry (DNS), establish an open shipping corridor (TCP 3-way handshake), verify customs credentials and seal containers with cryptographic locks (TLS), then exchange cargo (HTTP).',
+      detailedSections: [
+        {
+          title: 'DNS Resolution Chain',
+          content: 'Browser cache &rarr; OS resolver &rarr; Recursive DNS server (ISP/1.1.1.1) &rarr; Root (.) &rarr; TLD (.com) &rarr; Authoritative nameserver &rarr; IP Address returned with a Time-To-Live (TTL).'
+        },
+        {
+          title: 'TCP 3-Way Handshake & Keep-Alive',
+          subItems: [
+            { label: 'SYN', description: 'Client sends SYN packet with Initial Sequence Number (ISN).' },
+            { label: 'SYN-ACK', description: 'Server responds with SYN-ACK, acknowledging client ISN and sending its own.' },
+            { label: 'ACK', description: 'Client acknowledges server ISN. The reliable bidirectional socket is established.' },
+            { label: 'Keep-Alive Pooling', description: 'Persistent sockets reuse open connections across requests, eliminating repeated 3-way handshake overhead.' }
+          ]
+        },
+        {
+          title: 'TLS 1.3 1-RTT Handshake',
+          content: 'Client transmits ClientHello with supported ciphers and an ephemeral KeyShare in the very first flight. The server returns its KeyShare, certificate chain, and Finished message in 1 roundtrip (1-RTT), initiating forward-secret symmetric encryption.'
+        }
+      ],
+      visualizationType: 'tls'
+    }
+  },
+  {
     id: 'performance',
     name: 'Performance & Best Practices',
     path: '/topics/performance',

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Home from '@/components/visualizers/webprotocolsviz/pages/Home';
 import LearningPath from '@/components/visualizers/webprotocolsviz/pages/LearningPath';
 import Playground from '@/components/visualizers/webprotocolsviz/pages/Playground';
+import Problems from '@/components/visualizers/webprotocolsviz/pages/Problems';
 import TopicLesson from '@/components/visualizers/webprotocolsviz/pages/TopicLesson';
 import Navbar from '@/components/visualizers/webprotocolsviz/components/Navbar';
 import Footer from '@/components/visualizers/webprotocolsviz/components/Footer';
@@ -16,6 +17,7 @@ export function generateStaticParams() {
         { slug: [] },
         { slug: ['path'] },
         { slug: ['playground'] },
+        { slug: ['problems'] },
         // Derived from the authored curriculum. The previous hand-written list
         // named 7 topic ids that do not exist (http-methods, headers-deep-dive,
         // validation-etags, cdns-edge, cookies-sessions, cors-security,
@@ -66,6 +68,14 @@ export async function generateMetadata({
             'HTTP Protocol Playground - CSCosmos',
             'Compose a real HTTP request — method, status, headers, cookies, latency and caching — and inspect the response, headers and traffic log.',
             `${TOPIC_BASE_PATH}/playground`,
+        );
+    }
+
+    if (first === 'problems') {
+        return pageMetadata(
+            'HTTP & Web Protocols Practice Arena (100 Problems) - CSCosmos',
+            'Master HTTP methods, status codes, headers, caching, CORS, TLS 1.3, HTTP/2/3, and WebSockets with 100 interactive questions and detailed explanations.',
+            `${TOPIC_BASE_PATH}/problems`,
         );
     }
 
@@ -133,6 +143,18 @@ function buildJsonLd(first: string, second: string) {
         };
     }
 
+    if (first === 'problems') {
+        return {
+            '@context': 'https://schema.org',
+            '@type': 'Quiz',
+            name: 'HTTP & Web Protocols 100 Practice Problems',
+            description: '100 comprehensive questions covering HTTP methods, headers, status codes, caching, HTTPS, CORS, HTTP/2/3, and WebSockets.',
+            url: `${siteConfig.url}${TOPIC_BASE_PATH}/problems`,
+            isAccessibleForFree: true,
+            provider,
+        };
+    }
+
     return {
         '@context': 'https://schema.org',
         '@type': 'Course',
@@ -156,6 +178,8 @@ export default async function WebProtocolsPage({ params }: { params: Promise<{ s
         content = <LearningPath />;
     } else if (firstSegment === 'playground') {
         content = <Playground />;
+    } else if (firstSegment === 'problems') {
+        content = <Problems />;
     } else if (firstSegment === 'topics') {
         // Validate here so an unknown lesson 404s instead of rendering a shell
         // that only redirects once client JavaScript has loaded.
