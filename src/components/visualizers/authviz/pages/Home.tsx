@@ -186,66 +186,6 @@ export default function Home() {
         ))}
       </section>
 
-      {/* Step by Step Learning Path */}
-      <section className="space-y-6">
-        <div className="flex items-center justify-between pb-2 border-b border-border/80">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground">
-              Step-by-Step Learning Path
-            </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-              19 sequential lessons from protocol basics to enterprise zero-trust infrastructure.
-            </p>
-          </div>
-          <Link
-            href="/authviz/concepts"
-            className="text-xs font-semibold text-foreground hover:text-emerald-500 hover:underline flex items-center gap-1 transition-colors"
-          >
-            <span>Full Syllabus</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        <div className="space-y-2.5">
-          {AUTH_TOPICS.map((topic, i) => {
-            const stepNum = i + 1 < 10 ? `0${i + 1}` : `${i + 1}`;
-            return (
-              <motion.div
-                key={topic.id}
-                initial={false}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 + i * 0.02 }}
-              >
-                <Link
-                  href={`/authviz/concepts/${topic.id}`}
-                  className="group flex items-center justify-between p-3.5 sm:p-4 border border-border/80 rounded-xl bg-card hover:bg-muted/40 hover:border-emerald-500/40 transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                >
-                  <div className="flex items-center gap-3.5 min-w-0">
-                    <span className="w-8 h-8 flex items-center justify-center rounded-lg bg-muted text-foreground font-mono text-xs font-bold shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                      {stepNum}
-                    </span>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-bold text-sm text-foreground group-hover:text-emerald-500 transition-colors truncate">
-                          {topic.title}
-                        </h4>
-                        <span className="hidden sm:inline-block text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-muted text-muted-foreground shrink-0">
-                          {topic.difficulty}
-                        </span>
-                      </div>
-                      <p className="text-xs text-muted-foreground truncate hidden md:block">
-                        {topic.summary}
-                      </p>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-emerald-500 group-hover:translate-x-1 transition-all shrink-0 ml-3" />
-                </Link>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* Bottom Call to Action */}
       <section className="text-center py-8 space-y-4 max-w-xl mx-auto border-t border-border/80">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
