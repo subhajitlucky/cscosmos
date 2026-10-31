@@ -104,7 +104,7 @@ const HANDSHAKE_TRACE: HandshakeStep[] = [
     protocol: 'RFC 7515 / JWKS RFC 7517',
     actor: 'IdP / Auth Server',
     command: 'jwt.sign(payload, idp_rsa_private_key, { algorithm: "RS256", kid: "key_2026_01" })',
-    codeSnippet: '{\n  "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImtleV8yMDI2XzAxIn0.eyJzdWIiOiJ1c3JfOTQyIiwiYXVkIjoiaHR0cHM6Ly9hcGkuY29ycC5pbyJ9.C_7u...\",\n  "token_type": "Bearer",\n  "expires_in": 900\n}',
+    codeSnippet: '{\n  "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImtleV8yMDI2XzAxIn0.eyJzdWIiOiJ1c3JfOTQyIiwiYXVkIjoiaHR0cHM6Ly9hcGkuY29ycC5pbyJ9.C_7u...",\n  "token_type": "Bearer",\n  "expires_in": 900\n}',
     defense: 'Asymmetric cryptography: IdP signs with private key; resource microservices verify using public JWKS without sharing private keys.',
     detail: 'The IdP generates a signed RS256 JWT containing sub, aud, iss, exp, and role claims for downstream verification.',
   },
