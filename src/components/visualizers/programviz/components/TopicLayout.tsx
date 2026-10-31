@@ -7,7 +7,7 @@ import { steps } from '../data/learningPath';
 import { TOPIC_BASE_PATH } from '../data/topic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Network } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -53,8 +53,8 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
             href={TOPIC_BASE_PATH}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
           >
-            <Network className="w-3.5 h-3.5 text-blue-500" />
-            <span>Concept Map</span>
+            <BookOpen className="w-3.5 h-3.5 text-blue-500" />
+            <span>Course Home</span>
           </Link>
         </div>
       </header>
