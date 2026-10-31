@@ -185,10 +185,14 @@ export const InstructionCycle: React.FC = () => {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"MOV cuts or deletes the source value."</strong> <br />
+              <span className="text-foreground">Reality:</span> The name &quot;MOV&quot; (Move) is a historical misnomer in assembly language. It does not cut-and-paste. It duplicates the electrical bits into the destination register, leaving the original source completely intact and unchanged.
+            </li>
             <li>
               <strong>"A CPU finishes an entire instruction before starting the next one."</strong> <br />
-              <span className="text-foreground">Reality:</span> While our educational simulator shows instructions one at a time, real modern CPUs use <strong>Instruction Pipelining</strong>. While instruction #3 is executing, instruction #2 is already being decoded, and instruction #1 is already being fetched!
+              <span className="text-foreground">Reality:</span> While our educational simulator steps instructions one at a time, real modern CPUs use <strong>Instruction Pipelining</strong>. While instruction #3 is executing, instruction #2 is already being decoded, and instruction #1 is already being fetched!
             </li>
             <li>
               <strong>"The Program Counter is just a counter that adds 1."</strong> <br />
@@ -197,17 +201,24 @@ export const InstructionCycle: React.FC = () => {
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="In the simulator, R0 holds 15 and R1 holds 27. Right after the instruction “ADD R0, R1” executes, what does the accumulator (and R0) hold?"
+          kind="predict-register"
+          question="In the CPU simulator, register R0 holds 15 and register R1 holds 27. When “ADD R0, R1” completes its Write-Back phase, what value will R0 and the Accumulator hold?"
           options={[
-            '15',
-            '27',
-            '42 — the sum of 15 and 27',
-            '0 — registers are cleared',
+            '15 — registers cannot be modified after initialization',
+            '27 — R0 takes the value of R1',
+            '42 — the ALU output (15 + 27 = 42) is written back into R0 and the Accumulator',
+            '0 — arithmetic clears all working registers to prevent leaks',
           ]}
           correctIndex={2}
-          explanation="The ALU adds R0 + R1 = 15 + 27 = 42. In the write-back stage, this 42 is stored into both the Accumulator (ACC) and register R0!"
+          explanation="Correct! In the Execute stage, the ALU adder computes 15 + 27 = 42. In the Write-Back stage, this result 42 is latched into both the Accumulator (ACC) and the destination register R0."
+          optionExplanations={[
+            'Incorrect! General-purpose registers are designed specifically to be rewritten as calculations progress.',
+            'Incorrect! This would happen in a MOV R0, R1 instruction, but this is an arithmetic ADD.',
+            'Correct! The ALU adds 15 + 27 = 42, which is saved into R0 and ACC during Write-Back.',
+            'Incorrect! Registers are not cleared; they preserve their new result for the next instruction to use.',
+          ]}
         />
 
         {/* Section I: Summary */}

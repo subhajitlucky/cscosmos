@@ -167,7 +167,11 @@ export const WhatIsProgram: React.FC = () => {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"A program is the same thing as a process."</strong> <br />
+              <span className="text-foreground">Reality:</span> A <strong>program</strong> is like a recipe in a cookbook—an inert, passive file of text/bytes sitting on your SSD. A <strong>process</strong> is the chef actually in the kitchen cooking—it has an assigned Process ID (PID), memory allocated in RAM, and active execution on the CPU.
+            </li>
             <li>
               <strong>"The CPU executes Python or C code directly."</strong> <br />
               <span className="text-foreground">Reality:</span> The CPU has zero understanding of English words like <code className="font-mono">if</code>, <code className="font-mono">while</code>, or <code className="font-mono">function</code>. It only understands raw binary numbers called <strong>machine instructions</strong>. Your source code must always be translated first.
@@ -179,17 +183,24 @@ export const WhatIsProgram: React.FC = () => {
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="Before you click or type “Run”, where does the program actually exist?"
+          kind="identify-incorrect"
+          question="Which of the following statements about computer programs is FALSE (a common beginner misconception)?"
           options={[
-            'Inside the CPU arithmetic units, waiting for a signal',
-            'As an inert, passive file stored on your SSD or disk',
-            'Already loaded into RAM, executing in the background',
-            'Inside the monitor graphics buffer',
+            'Before execution, a program exists as an inactive file of bytes on storage (SSD)',
+            'The CPU chip directly executes Python and JavaScript text without any translation',
+            'When launched, the Operating System copies program instructions into high-speed RAM',
+            'Every software program is fundamentally composed of code (instructions) and data (values)',
           ]}
           correctIndex={1}
-          explanation="Before execution, a program is simply an inactive collection of bytes in a file on your disk (SSD). It only becomes an active 'process' when the OS loads it into RAM and points the CPU to it!"
+          explanation="Statement B is FALSE! The CPU is silicon hardware—it cannot understand high-level human words like 'print', 'if', or 'def'. Code must be compiled or interpreted into binary machine instructions before the CPU can run it."
+          optionExplanations={[
+            'This statement is TRUE! On disk, a program is an inert file taking zero CPU time.',
+            'Correct! This statement is FALSE. The CPU cannot read source code directly; it only runs binary machine code.',
+            'This statement is TRUE! Storage disks are far too slow for the CPU, so the OS always loads code into RAM first.',
+            'This statement is TRUE! Every program consists of instructions (code verbs) operating on values (data nouns).',
+          ]}
         />
 
         {/* Section I: Summary */}

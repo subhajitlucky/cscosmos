@@ -103,17 +103,17 @@ export const DataRepresentation: React.FC = () => {
             </div>
           </div>
 
-          {/* Multi-byte Integers Section */}
-          <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
+          {/* Multi-byte Integers & Endianness Section */}
+          <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-4">
             <h4 className="font-bold text-foreground text-base flex items-center gap-2">
               <Binary className="w-5 h-5 text-blue-500" />
-              What About Numbers Greater Than 255?
+              What About Numbers Greater Than 255? Multi-Byte Integers &amp; Endianness
             </h4>
             <p className="text-sm text-muted-foreground leading-relaxed">
               If a single 8-bit byte can only count up to 255, how does a computer calculate $1,000,000$ or track bank balances? 
-              The computer simply lines up <strong>multiple consecutive bytes</strong> together:
+              The computer simply lines up <strong>multiple consecutive bytes</strong> together in memory:
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-3.5 rounded-xl border border-border bg-card space-y-1">
                 <span className="font-mono font-bold text-blue-500 block">16-Bit Integer (2 Bytes)</span>
                 <p className="text-foreground font-bold">Up to 65,535</p>
@@ -130,6 +130,24 @@ export const DataRepresentation: React.FC = () => {
                 <p className="text-muted-foreground text-[11px]">Virtually infinite. Used for 64-bit RAM addresses and timestamps.</p>
               </div>
             </div>
+
+            {/* Endianness Callout */}
+            <div className="p-4 rounded-xl border border-border bg-card text-xs space-y-1.5">
+              <span className="font-mono font-bold text-amber-500 uppercase block">
+                How Multiple Bytes Are Ordered in RAM: Little-Endian vs. Big-Endian
+              </span>
+              <p className="text-muted-foreground leading-relaxed">
+                When a 4-byte integer like <code className="font-mono">42</code> (<code className="font-mono">0x0000002A</code> in hex) is stored across 4 byte addresses:
+              </p>
+              <ul className="space-y-1 text-muted-foreground list-disc list-inside">
+                <li>
+                  <strong className="text-foreground">Little-Endian (x86 &amp; modern ARM laptops):</strong> The <strong>Least Significant Byte</strong> comes first at the lowest address (<code className="font-mono">0x10: 2A</code>, <code className="font-mono">0x11: 00</code>, <code className="font-mono">0x12: 00</code>, <code className="font-mono">0x13: 00</code>).
+                </li>
+                <li>
+                  <strong className="text-foreground">Big-Endian (Internet protocols &amp; older mainframes):</strong> The <strong>Most Significant Byte</strong> comes first (<code className="font-mono">0x10: 00</code> ... <code className="font-mono">0x13: 2A</code>).
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
 
@@ -139,30 +157,40 @@ export const DataRepresentation: React.FC = () => {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-2.5 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
             <li>
               <strong>"A bit and a byte are the same thing."</strong> <br />
-              <span className="text-foreground">Reality:</span> A <strong>bit</strong> is a single 0 or 1. A <strong>byte</strong> is a group of 8 bits. 
-              Internet download speeds are usually advertised in megabits (Mb/s), whereas file sizes on your disk are measured in megabytes (MB). 1 MB = 8 Mb!
+              <span className="text-foreground">Reality:</span> A <strong>bit</strong> is a single 0 or 1 switch. A <strong>byte</strong> is 8 bits (256 values). File downloads are in Megabits (Mb), while files on disk are Megabytes (MB). 1 Byte = 8 Bits.
             </li>
             <li>
-              <strong>"Computers store pictures, audio, and text in different physical ways."</strong> <br />
-              <span className="text-foreground">Reality:</span> In physical memory, every single thing—whether an MP3 song, a selfie, a C program, or a font—is just rows of bytes. Only the program reading the bytes knows how to interpret them.
+              <strong>"Every programming language represents text with a null-terminator ('\0')."</strong> <br />
+              <span className="text-foreground">Reality:</span> In C, strings end with a null character <code className="font-mono">&apos;\0&apos;</code>. But modern languages (Python, JavaScript, Java, Go, Rust) store text with an <strong>explicit length field</strong> (e.g. length: 5) plus a byte buffer, making text operations safer and immune to buffer overflows!
+            </li>
+            <li>
+              <strong>"ASCII and Unicode are competing formats."</strong> <br />
+              <span className="text-foreground">Reality:</span> ASCII is an old 7-bit standard for English. Unicode is a universal catalog of every human symbol. <strong>UTF-8</strong> is the encoding format that bridges them: it uses 1 byte for English ASCII characters, and 2 to 4 bytes for other alphabets and emojis!
             </li>
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="How many distinct values or numbers can a single 8-bit byte store (from 00000000 to 11111111)?"
+          kind="trace-memory"
+          question="A C program stores the 32-bit integer 42 (hex 0x0000002A) at RAM address 0x10 on an x86 (Little-Endian) computer. What byte value sits at the very first address, 0x10?"
           options={[
-            '8 values (0 to 7)',
-            '64 values (0 to 63)',
-            '256 values (0 to 255)',
-            '1024 values (0 to 1023)',
+            '0x00 — because numbers are read left-to-right',
+            '0x2A (decimal 42) — because Little-Endian puts the least significant byte first',
+            '0x42 — the decimal digits are stored directly',
+            '0xFF — default memory fill byte',
           ]}
-          correctIndex={2}
-          explanation="Because each of the 8 bits has 2 possible states (0 or 1), the total number of combinations is 2 × 2 × 2 × 2 × 2 × 2 × 2 × 2 = 2⁸ = 256. This represents values from 0 up to 255!"
+          correctIndex={1}
+          explanation="Correct! In Little-Endian systems (used by Intel, AMD, and modern Apple silicon), the least significant byte (0x2A = 42) is placed at the lowest numerical address (0x10). The upper bytes (0x00) sit at addresses 0x11, 0x12, and 0x13!"
+          optionExplanations={[
+            'Incorrect! Storing 0x00 first is Big-Endian. Modern x86 and ARM processors use Little-Endian.',
+            'Correct! In Little-Endian, the lowest address gets the least significant byte (0x2A).',
+            'Incorrect! 42 is decimal, but computers store binary bytes. In hex, decimal 42 is 0x2A, not 0x42.',
+            'Incorrect! 0xFF is 255. The number stored is 42.',
+          ]}
         />
 
         {/* Section I: Summary */}

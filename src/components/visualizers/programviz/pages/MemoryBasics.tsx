@@ -135,29 +135,40 @@ export const MemoryBasics: React.FC = () => {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
             <li>
-              <strong>"More RAM makes the CPU faster."</strong> <br />
-              <span className="text-foreground">Reality:</span> RAM does not speed up the CPU’s clock. However, if you run out of RAM, the computer is forced to swap memory pages to your SSD (called swapping/paging), which slows down your system by 1,000×! Having enough RAM prevents this bottleneck.
+              <strong>"The memory address and the value inside it are the same thing."</strong> <br />
+              <span className="text-foreground">Reality:</span> Never confuse a house number with the person living inside! Memory address <code className="font-mono">0x10</code> is just the physical/virtual location coordinate. The value stored inside <code className="font-mono">0x10</code> could be 42, 0, 255, or the letter &apos;A&apos;.
             </li>
             <li>
-              <strong>"The memory address and the value inside it are the same number."</strong> <br />
-              <span className="text-foreground">Reality:</span> Never confuse a house address with the person living inside! Memory address <code className="font-mono">0x10</code> is just the location. The value stored inside <code className="font-mono">0x10</code> could be 42, 0, 255, or the letter 'A'.
+              <strong>"RAM addresses correspond directly to physical wires on the silicon chip."</strong> <br />
+              <span className="text-foreground">Reality:</span> To protect programs from hacking or crashing each other, the operating system gives every application an isolated <strong>Virtual Address Space</strong>. The CPU’s hardware <strong>MMU (Memory Management Unit)</strong> translates virtual addresses to actual physical DRAM pins via page tables on the fly.
+            </li>
+            <li>
+              <strong>"More RAM makes the CPU clock tick faster."</strong> <br />
+              <span className="text-foreground">Reality:</span> RAM capacity has zero effect on the CPU’s clock speed. However, if you run out of RAM, the OS is forced to use the SSD as slow emergency memory (called <em>paging or swapping</em>), which slows down execution by 1,000×!
             </li>
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="What happens to the data stored inside your computer's RAM if the power cable is suddenly unplugged?"
+          kind="why-operation"
+          question="A program requests to write the number 42 into memory address 0x10. Why is address 0x10 considered a 'Virtual Address' rather than a physical wire on the RAM chip?"
           options={[
-            'The data stays safely saved in RAM until the next boot',
-            'All data in RAM is instantly lost because RAM is volatile memory',
-            'RAM transfers all data to the SSD in 1 microsecond',
-            'Only variables are lost, but code remains in RAM',
+            'Because modern RAM chips do not have physical wires',
+            'To protect programs: the OS and MMU map virtual address 0x10 to physical RAM so apps cannot spy on or overwrite each other’s data',
+            'Because virtual memory is stored only on the monitor screen',
+            'Because 0x10 is a floating-point number',
           ]}
           correctIndex={1}
-          explanation="RAM is volatile memory—it requires continuous electrical power to maintain the microscopic charges in its capacitors. Once power drops, all electrical charges dissipate and RAM contents are wiped!"
+          explanation="Correct! Without virtual memory, any program could guess the address of your web browser and read your passwords directly from RAM! Virtual memory isolation ensures each process only sees its own sandbox."
+          optionExplanations={[
+            'Incorrect! Physical RAM is built from billions of microscopic silicon capacitors and wires.',
+            'Correct! Virtual addressing allows the OS and MMU to enforce security and memory isolation between processes.',
+            'Incorrect! Virtual memory refers to system RAM and OS translation, not monitor graphics.',
+            'Incorrect! 0x10 is a hexadecimal integer address representing 16.',
+          ]}
         />
 
         {/* Section I: Summary */}

@@ -234,29 +234,40 @@ export const IOBasics: React.FC = () => {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
             <li>
               <strong>"A print statement is fast because it's only one line of code."</strong> <br />
-              <span className="text-foreground">Reality:</span> Printing to the screen or console is actually one of the slowest things your code can do! It requires a user-to-kernel mode switch, font rasterization, and GPU pixel rendering. Doing 10,000 <code className="font-mono">printf()</code> calls in a loop takes seconds, while 10,000 math additions in CPU registers takes nanoseconds.
+              <span className="text-foreground">Reality:</span> Printing to the terminal is millions of times slower than register arithmetic! Calling <code className="font-mono">printf()</code> formats text in <code className="font-mono">libc</code>, triggers a <code className="font-mono">sys_write</code> system call, forces a CPU user-to-kernel mode switch, signals the terminal emulator, invokes a font glyph rasterizer, and composites pixels to the GPU framebuffer.
             </li>
             <li>
               <strong>"A device driver is a hardware chip."</strong> <br />
-              <span className="text-foreground">Reality:</span> A driver is software! It is a specialized piece of code written by the hardware manufacturer (like NVIDIA or Logitech) that teaches the generic OS kernel how to speak the specific electrical protocol of that device.
+              <span className="text-foreground">Reality:</span> A driver is software! It is a specialized privileged kernel module written by hardware vendors that teaches the operating system how to talk the specific electrical protocol of a USB controller, SSD, or GPU.
+            </li>
+            <li>
+              <strong>"The CPU constantly checks every device in a loop."</strong> <br />
+              <span className="text-foreground">Reality:</span> That would be wasteful polling! Modern hardware uses <strong>Hardware Interrupts (IRQs)</strong>. Devices signal the CPU only when an event occurs, leaving the CPU free for useful computations.
             </li>
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="Why are regular user programs (like web browsers or games) forbidden from sending electronic signals directly to physical hardware wires?"
+          kind="why-operation"
+          question="Why are user-mode applications strictly forbidden from sending electrical voltages directly to physical hardware controller pins?"
           options={[
-            'Because modern CPUs lack the physical circuits to send electrical signals',
-            'For security and stability: to prevent crashes, hardware corruption, and unauthorized data theft',
-            'Because monitor screens can only read binary from the hard drive',
-            'Because device drivers are only allowed to run when the computer is turned off',
+            'Because CPUs lack the physical circuits required to transmit electrical signals',
+            'For security, stability, and crash isolation: without OS kernel mediation via system calls, any buggy or malicious program could overwrite the disk or read keystrokes',
+            'Because monitor screens can only read binary directly from the SSD',
+            'Because device drivers can only be executed while the computer is booting',
           ]}
           correctIndex={1}
-          explanation="If any program could touch hardware wires directly, a single buggy program could overwrite your operating system files or spy on every keystroke you make! The OS kernel acts as the secure gatekeeper via System Calls."
+          explanation="Correct! If any application could directly manipulate physical hardware wires, a single malicious website or buggy student script could format the hard drive, read passwords from the keyboard, or crash the machine! The OS Kernel acts as the secure gatekeeper."
+          optionExplanations={[
+            'Incorrect! CPU pins connect directly to the motherboard bus, but the CPU hardware restricts privileged instructions to Kernel Mode.',
+            'Correct! Kernel Mode gatekeeping and System Calls prevent unauthorized hardware access, memory snooping, and system crashes.',
+            'Incorrect! Monitors receive rendered pixels from the GPU framebuffer, not from the SSD.',
+            'Incorrect! Device drivers run continuously in the kernel whenever devices are used.',
+          ]}
         />
 
         {/* Section I: Summary */}

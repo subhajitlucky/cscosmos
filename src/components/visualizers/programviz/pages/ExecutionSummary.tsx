@@ -182,17 +182,24 @@ export const ExecutionSummary: React.FC = () => {
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="Why does the program require an operating system 'System Call' to print the number 42 to the screen instead of writing directly to the monitor?"
+          kind="why-operation"
+          question="Why does the program require an operating system 'System Call' (sys_write) to display the characters '42' on your monitor instead of writing directly to the display wires?"
           options={[
-            'Because the CPU does not have the physical electrical circuits to calculate 42',
-            'Because user-mode applications are restricted from touching physical display hardware directly for security and crash prevention',
-            'Because print statements can only run after the computer restarts',
-            'Because the terminal emulator does not have an address in RAM',
+            'Because the CPU does not have the physical electrical circuits to calculate the number 42',
+            'Because user-mode applications are restricted by CPU hardware from touching display controllers directly, ensuring security and crash isolation',
+            'Because printf can only run after the computer restarts',
+            'Because terminal character rendering requires no memory or GPU',
           ]}
           correctIndex={1}
-          explanation="Correct! To prevent applications from corrupting hardware or spying on each other, the CPU runs user code in unprivileged User Mode. Whenever an app needs to touch the screen, SSD, or network, it must request the OS Kernel to perform the I/O via a System Call."
+          explanation="Correct! To prevent applications from corrupting hardware or spying on each other, the CPU executes user code in unprivileged User Mode. Whenever an application needs to interact with the screen, SSD, or network, it must request the OS Kernel to perform the I/O via a System Call."
+          optionExplanations={[
+            'Incorrect! The CPU ALU computed 15 + 27 = 42 in nanoseconds inside its own hardware register.',
+            'Correct! User Mode privilege rings prevent user software from accessing hardware directly without OS Kernel validation.',
+            'Incorrect! Print statements execute dynamically at runtime in milliseconds.',
+            'Incorrect! Display rendering requires font glyph rasterization, virtual terminal buffers, and GPU compositing.',
+          ]}
         />
 
         {/* Section I: Graduation & Summary */}

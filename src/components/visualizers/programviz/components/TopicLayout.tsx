@@ -7,7 +7,7 @@ import { steps } from '../data/learningPath';
 import { TOPIC_BASE_PATH } from '../data/topic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Network } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -38,13 +38,25 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
 
   return (
     <div className="space-y-8">
-      <header className="space-y-2">
-        <div className="flex items-center gap-2 text-blue-500 font-medium">
-          <span>Step {stepNumber}</span>
-          <span className="w-1 h-1 rounded-full bg-slate-500" />
-          <span>{steps[currentStepIndex]?.estimatedTime}</span>
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/80 pb-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-blue-500 font-medium text-xs font-mono">
+            <span>Step {stepNumber} of {steps.length}</span>
+            <span className="w-1 h-1 rounded-full bg-slate-500" />
+            <span>{steps[currentStepIndex]?.estimatedTime}</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{title}</h1>
         </div>
-        <h1 className="text-3xl font-bold">{title}</h1>
+
+        <div className="flex items-center gap-2">
+          <Link
+            href={TOPIC_BASE_PATH}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Network className="w-3.5 h-3.5 text-blue-500" />
+            <span>Concept Map</span>
+          </Link>
+        </div>
       </header>
 
       {/* initial={false} matters for SSG: framer-motion serialises `initial` into

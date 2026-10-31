@@ -401,29 +401,40 @@ int main() {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
             <li>
               <strong>"A Stack Overflow is just an internet forum."</strong> <br />
-              <span className="text-foreground">Reality:</span> The forum was named after a fatal computer error! The Stack has a fixed maximum size (often 1MB to 8MB). If a function calls itself infinitely without stopping (infinite recursion), new frames keep getting pushed until the stack collides with other memory, triggering an instant <strong>Stack Overflow crash</strong>.
+              <span className="text-foreground">Reality:</span> The forum was named after a fatal computer hardware trap! The Stack has a fixed maximum size (typically 1MB to 8MB). If a recursive function calls itself without terminating, it keeps pushing frames until it hits an unmapped <strong>OS Guard Page</strong>. The CPU immediately halts the process with a fatal Segmentation Fault (<code className="font-mono">SIGSEGV</code>).
             </li>
             <li>
-              <strong>"Variables created inside a function exist forever."</strong> <br />
-              <span className="text-foreground">Reality:</span> Local variables only exist while that specific function’s stack frame is alive. The microsecond the function returns, its frame is popped and those variables are immediately vaporized.
+              <strong>"Variables created inside a function persist after it returns."</strong> <br />
+              <span className="text-foreground">Reality:</span> Local variables only exist while that specific function’s stack frame is active. The microsecond the function hits <code className="font-mono">return</code>, the CPU adjusts the Stack Pointer (pops the frame), immediately invalidating those variables.
+            </li>
+            <li>
+              <strong>"malloc() allocates memory on the Stack."</strong> <br />
+              <span className="text-foreground">Reality:</span> <code className="font-mono">malloc()</code> always allocates bytes on the <strong>Heap</strong>. Only the pointer variable holding the heap’s memory address resides on the Stack!
             </li>
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="In the program above, function square(n) creates a local variable 'int sq'. What happens to 'sq' when square() returns its result?"
+          kind="trace-memory"
+          question="In the C program above, function square(n) creates a local variable 'int sq = n * n'. What happens to the memory occupied by 'sq' the moment square() finishes executing and returns?"
           options={[
-            'It is permanently moved into the Data Segment',
-            'Its stack frame is popped, and its memory is instantly freed',
-            'It is saved to the SSD for future calls',
-            'It remains on the Stack until the computer restarts',
+            'It is permanently copied into the Data Segment for future reuse',
+            'The CPU pops square’s stack frame off the Call Stack, immediately invalidating the memory used by sq',
+            'It is saved to persistent SSD storage as a temporary cache',
+            'It remains permanently on the Stack until the computer is rebooted',
           ]}
           correctIndex={1}
-          explanation="Local variables live strictly inside their function's stack frame. When a function finishes, the CPU pops that frame off the stack (LIFO), immediately discarding all of its local variables!"
+          explanation="Correct! Local variables exist strictly within their function's stack frame. When square() returns, its frame is popped off the top of the stack (LIFO), immediately freeing that memory for future function calls!"
+          optionExplanations={[
+            'Incorrect! The Data Segment only holds global and static variables declared outside functions.',
+            'Correct! The Stack Pointer moves, popping square’s frame and invalidating all its local variables.',
+            'Incorrect! Function local variables never touch the SSD storage disk.',
+            'Incorrect! If stack frames remained forever, the computer would run out of memory within seconds.',
+          ]}
         />
 
         {/* Section I: Summary */}

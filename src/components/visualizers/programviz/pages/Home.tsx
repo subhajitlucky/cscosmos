@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { Cpu, Database, Keyboard, PlayCircle, ArrowRight, CheckCircle2, RotateCcw, Sparkles } from 'lucide-react';
 import { steps } from '../data/learningPath';
 import { useProgress } from '../context/ProgressContext';
+import { ConceptDependencyMap } from '../components/ConceptDependencyMap';
+import { QuickRevisionDeck } from '../components/QuickRevisionDeck';
 
 function ProgressRing({ percent }: { percent: number }) {
   const radius = 34;
@@ -136,6 +138,9 @@ export const Home: React.FC = () => {
         ))}
       </div>
 
+      {/* Visual Concept Dependency Map */}
+      <ConceptDependencyMap />
+
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-foreground">Learning Path</h2>
         <div className="space-y-4">
@@ -172,6 +177,9 @@ export const Home: React.FC = () => {
           })}
         </div>
       </section>
+
+      {/* Active Recall / Lightweight Revision Deck */}
+      <QuickRevisionDeck />
 
       {isComplete && (
         <section className="space-y-4 pt-6 border-t border-border/80">

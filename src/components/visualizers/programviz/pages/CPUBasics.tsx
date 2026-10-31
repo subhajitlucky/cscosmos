@@ -220,35 +220,46 @@ export const CPUBasics: React.FC = () => {
           </div>
         </div>
 
-        {/* Section G: Common Misconceptions */}
-        <section className="p-6 rounded-2xl border border-border bg-card space-y-3">
+        {/* Section G: Common Misconceptions & Architecture Reality */}
+        <section className="p-6 rounded-2xl border border-border bg-card space-y-4">
           <h3 className="font-bold text-foreground text-base flex items-center gap-2">
             <AlertCircle className="w-5 h-5 text-rose-500" />
-            Common Beginner Misconceptions
+            Common Beginner Misconceptions vs. Real Hardware
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
             <li>
-              <strong>"A 4.0 GHz CPU is always twice as fast as a 2.0 GHz CPU."</strong> <br />
-              <span className="text-foreground">Reality:</span> Clock frequency is only one factor! Different CPU architectures can complete different amounts of work per clock cycle (IPC: Instructions Per Cycle). A modern CPU at 2.5 GHz easily outperforms a 20-year-old Pentium 4 at 3.8 GHz.
+              <strong>"A 4.0 GHz CPU executes exactly 4 billion instructions every second."</strong> <br />
+              <span className="text-foreground">Reality:</span> Clock speed is only the rate of electronic metronome pulses. How many instructions finish per clock tick is called <strong>IPC (Instructions Per Cycle)</strong>. A modern superscalar CPU can execute 4 to 6 instructions per cycle in parallel, while an instruction stalled waiting for RAM might take 200 cycles! A modern 2.5 GHz chip crushes a 20-year-old 3.8 GHz Pentium 4.
             </li>
             <li>
-              <strong>"The Control Unit does the math."</strong> <br />
-              <span className="text-foreground">Reality:</span> The Control Unit never calculates 2 + 2. It simply acts as a traffic director, opening the electronic gates so the ALU can perform the calculation.
+              <strong>"The Control Unit calculates the numbers."</strong> <br />
+              <span className="text-foreground">Reality:</span> The Control Unit never performs math. It is strictly the conductor: it decodes instructions and sends control wire signals so the ALU can calculate.
+            </li>
+            <li>
+              <strong>"Educational CPU Model vs. Modern Reality:"</strong> <br />
+              <span className="text-foreground">Reality:</span> In this course, we teach sequential execution so you can learn without overwhelm. Real modern CPUs use <strong>Branch Prediction</strong> (guessing which path an <code className="font-mono">if</code> statement will take), <strong>Pipelining</strong>, and <strong>Out-of-Order Execution</strong> to run instructions ahead of time whenever possible.
             </li>
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="An instruction says “ADD R0, R1”. Which specific part inside the CPU performs the actual mathematical addition?"
+          kind="why-operation"
+          question="An instruction says “ADD R0, R1”. Why does the Control Unit NOT perform the addition itself?"
           options={[
-            'The Control Unit (CU)',
-            'The Arithmetic Logic Unit (ALU)',
-            'The Program Counter (PC)',
-            'The Instruction Register (IR)',
+            'Because the Control Unit is only powered when the computer is shutting down',
+            'Because the Control Unit is an orchestration manager with no arithmetic logic gates; arithmetic is physically wired inside the ALU',
+            'Because registers are physically located inside the power supply',
+            'Because addition can only be computed by the graphics card (GPU)',
           ]}
           correctIndex={1}
-          explanation="The ALU is the hardware calculator that performs the math. The Control Unit directs when the addition happens, the Program Counter tracks what line comes next, and registers hold the values."
+          explanation="Correct! Silicon hardware specializes: the Control Unit contains decoding logic to direct data traffic, while the ALU (Arithmetic Logic Unit) contains the physical transistor adders that perform math."
+          optionExplanations={[
+            'Incorrect! The Control Unit operates continuously on every single clock cycle.',
+            'Correct! The Control Unit coordinates signals, while the ALU contains the physical arithmetic adder circuits.',
+            'Incorrect! Registers are ultra-fast silicon cells built directly inside the CPU core.',
+            'Incorrect! General CPU integer math is always handled by the CPU ALU, not the GPU.',
+          ]}
         />
 
         {/* Optional Collapsible Advanced Deep-Dive: CPU Caches & SRAM */}

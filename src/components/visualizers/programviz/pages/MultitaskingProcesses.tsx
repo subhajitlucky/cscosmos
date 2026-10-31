@@ -151,29 +151,40 @@ export const MultitaskingProcesses: React.FC = () => {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"Threads share everything inside a process, including local variables."</strong> <br />
+              <span className="text-foreground">Reality:</span> If threads shared local variables, function calls would corrupt each other! While threads share the Heap and Data segments, <strong>every thread has its own private Call Stack, its own Program Counter (PC), and its own CPU registers</strong>.
+            </li>
             <li>
               <strong>"A quad-core CPU can only run 4 programs."</strong> <br />
-              <span className="text-foreground">Reality:</span> A quad-core CPU can execute 4 instructions at the exact same physical microsecond, but through time-slicing it easily juggles 200 processes and 2,000 threads smoothly!
+              <span className="text-foreground">Reality:</span> A quad-core CPU can execute 4 instructions at the exact same physical microsecond, but through preemptive time-slicing it easily juggles 200 processes and 2,000 threads smoothly!
             </li>
             <li>
               <strong>"Multitasking has zero performance cost."</strong> <br />
-              <span className="text-foreground">Reality:</span> Every context switch takes time (saving registers to RAM, invalidating CPU caches, switching page tables). If you run too many heavy programs at once, the CPU spends more time switching between apps than doing useful work—a condition called <em>thrashing</em>.
+              <span className="text-foreground">Reality:</span> Every context switch takes time (saving registers to RAM, invalidating CPU caches, switching MMU page tables). If you run too many heavy programs at once, the CPU spends more time switching between apps than doing useful work—a condition called <em>thrashing</em>.
             </li>
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="When the operating system switches the CPU from running Spotify to running VS Code, what happens to Spotify's current calculation?"
+          kind="identify-incorrect"
+          question="Which of the following statements about multi-threading and processes is FALSE (a misconception)?"
           options={[
-            'Spotify is deleted from RAM and restarted later',
-            'Its current Program Counter and registers are saved into its PCB in memory, to be restored on its next turn',
-            'Spotify continues running on the monitor graphics chip',
-            'The CPU freezes until Spotify completes its track',
+            'A process has its own isolated memory address space that other processes cannot touch',
+            'All threads in a process share the same call stack and local variables',
+            'When the OS switches processes, it saves the current PC and registers into a Process Control Block (PCB)',
+            'Threads in the same process share the Heap and global variables',
           ]}
           correctIndex={1}
-          explanation="This is the definition of a Context Switch! The operating system saves Spotify's current register values and Program Counter into its Process Control Block (PCB) in memory. When Spotify gets CPU time again, its registers are restored exactly where it left off!"
+          explanation="Statement B is FALSE! If threads shared the same call stack, one thread calling a function would overwrite the local variables and return addresses of another thread! Each thread MUST have its own dedicated stack and Program Counter."
+          optionExplanations={[
+            'This statement is TRUE! Process memory isolation prevents one crash from taking down the OS.',
+            'Correct! This statement is FALSE. Each thread has its own private stack and Program Counter.',
+            'This statement is TRUE! The PCB preserves hardware register state during context switches.',
+            'This statement is TRUE! Shared heap memory is what makes thread communication fast.',
+          ]}
         />
 
         {/* Section I: Summary */}

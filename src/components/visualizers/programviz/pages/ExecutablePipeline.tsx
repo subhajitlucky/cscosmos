@@ -118,29 +118,40 @@ export const ExecutablePipeline: React.FC = () => {
             <AlertCircle className="w-5 h-5 text-rose-500" />
             Common Beginner Misconceptions
           </h3>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
+            <li>
+              <strong>"A compiled C/C++ executable runs on any computer."</strong> <br />
+              <span className="text-foreground">Reality:</span> C compilers translate code into the specific machine instructions of that exact CPU architecture (e.g. x86_64 vs ARM64) and operating system (Linux ELF vs Windows PE). A C binary compiled on an Intel Windows PC will crash on an Apple Silicon Mac! Bytecode languages (Java, Python) achieve &quot;Write Once, Run Anywhere&quot; because they target a virtual software CPU instead of bare silicon.
+            </li>
             <li>
               <strong>"Java is slow because it's interpreted."</strong> <br />
               <span className="text-foreground">Reality:</span> Java hasn't been purely interpreted since the 1990s! The modern JVM uses the HotSpot JIT compiler to compile heavily executed loops into native machine code that often approaches the speed of compiled C++.
             </li>
             <li>
-              <strong>"An executable file only contains machine code."</strong> <br />
+              <strong>"An executable file only contains raw CPU instructions."</strong> <br />
               <span className="text-foreground">Reality:</span> An executable binary (like an ELF file on Linux or .exe on Windows) also contains headers, section tables telling the OS where the code and data segments belong in memory, debug symbols, and external library dependency lists.
             </li>
           </ul>
         </section>
 
-        {/* Section H: Quick Knowledge Check */}
+        {/* Section H: Active Learning Check */}
         <PredictCheck
-          question="What is the primary role of the Linker during the C / C++ build process?"
+          kind="identify-incorrect"
+          question="Which of the following statements about how code becomes an executable is FALSE (a misconception)?"
           options={[
-            'To format your source code indentation according to style guidelines',
-            'To stitch compiled object files (.o) together with system libraries and resolve function addresses into a final executable file',
-            'To translate binary machine code back into English text',
-            'To load the program into CPU registers during execution',
+            'The compiler translates source syntax into an object file (.o) containing machine instructions',
+            'The Linker stitches object files with standard system libraries (like libc) to produce an executable file',
+            'A C program compiled on an Intel x86 computer can run directly on an ARM iPhone with zero changes because all machine code is identical',
+            'Modern runtimes like Chrome V8 and Java HotSpot compile hot bytecode into native CPU code dynamically at runtime',
           ]}
-          correctIndex={1}
-          explanation="The compiler only compiles individual source files into object files (.o). The Linker is the crucial tool that stitches your object files together with system libraries (like libc for printf) into a single standalone executable!"
+          correctIndex={2}
+          explanation="Statement C is FALSE! Different CPU families speak completely different instruction set architectures (x86 vs ARM vs RISC-V). Machine code compiled for x86 cannot be understood by an ARM processor."
+          optionExplanations={[
+            'This statement is TRUE! The compiler produces object files from individual source files.',
+            'This statement is TRUE! The Linker resolves external function symbols (like printf) and combines object files.',
+            'Correct! This statement is FALSE. Machine code is tied directly to the CPU architecture and OS format.',
+            'This statement is TRUE! JIT (Just-In-Time) compilation bridges interpreted startup speed with native execution performance.',
+          ]}
         />
 
         {/* Section I: Summary */}
