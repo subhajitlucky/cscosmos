@@ -19,7 +19,7 @@ import {
 // Interactive Visualizer: "Who Can Access What?"
 // ============================================================================
 type Role = 'guest' | 'employee' | 'admin';
-type Action = 'profile' | 'documents' | 'deleteUser';
+type Action = 'public' | 'documents' | 'deleteUser';
 
 function WhoCanAccessWhatVisualizer() {
   const [selectedRole, setSelectedRole] = useState<Role>('employee');
@@ -30,7 +30,7 @@ function WhoCanAccessWhatVisualizer() {
     {
       id: 'guest' as Role,
       label: 'Guest',
-      sublabel: 'Not logged in',
+      sublabel: 'Not logged in (Anonymous)',
       icon: User,
       isAuthenticated: false,
     },
@@ -43,7 +43,7 @@ function WhoCanAccessWhatVisualizer() {
     },
     {
       id: 'admin' as Role,
-      label: 'Admin',
+      label: 'Administrator',
       sublabel: 'Logged in as Sarah',
       icon: ShieldCheck,
       isAuthenticated: true,
@@ -53,59 +53,120 @@ function WhoCanAccessWhatVisualizer() {
   // Action metadata
   const actions = [
     {
-      id: 'profile' as Action,
-      label: 'View Profile',
-      desc: 'Read basic public information',
+      id: 'public' as Action,
+      label: 'View Public Info',
+      desc: 'Read public announcement page',
       icon: Eye,
+      requiresAuth: false,
     },
     {
       id: 'documents' as Action,
       label: 'Edit Documents',
-      desc: 'Modify team files and notes',
+      desc: 'Modify team files and workspace',
       icon: Edit3,
+      requiresAuth: true,
     },
     {
       id: 'deleteUser' as Action,
       label: 'Delete Users',
       desc: 'Remove user accounts from the system',
       icon: Trash2,
+      requiresAuth: true,
     },
+  ];
+
+  // Quick Preset Scenarios for easy testing
+  const quickScenarios: { label: string; role: Role; action: Action }[] = [
+    { label: 'Guest → Public Info', role: 'guest', action: 'public' },
+    { label: 'Employee → Edit Documents', role: 'employee', action: 'documents' },
+    { label: 'Employee → Delete Users', role: 'employee', action: 'deleteUser' },
+    { label: 'Admin → Delete Users', role: 'admin', action: 'deleteUser' },
   ];
 
   const currentRoleObj = roles.find((r) => r.id === selectedRole)!;
   const currentActionObj = actions.find((a) => a.id === selectedAction)!;
 
-  // Evaluation logic
+  const requiresAuth = currentActionObj.requiresAuth;
   const isAuthenticated = currentRoleObj.isAuthenticated;
 
-  // Authorization policy matrix
+  // Step 1: Authentication Check (Who are you?)
+  let authNPassed = false;
+  let authNStatus = '';
+  let authNDesc = '';
+
+  if (!requiresAuth) {
+    authNPassed = true;
+    authNStatus = 'Not Required (Public)';
+    authNDesc = isAuthenticated
+      ? `User is logged in as ${currentRoleObj.label}, but public pages do not require authentication.`
+      : 'No login required. Public pages are openly accessible to all visitors.';
+  } else if (isAuthenticated) {
+    authNPassed = true;
+    authNStatus = 'Passed ✅';
+    authNDesc = `Identity verified: Logged in as ${currentRoleObj.label}.`;
+  } else {
+    authNPassed = false;
+    authNStatus = 'Failed ❌';
+    authNDesc = 'Visitor is anonymous (not logged in). A valid session or login is required.';
+  }
+
+  // Step 2: Authorization Check (What can you do?)
   let isAuthorized = false;
-  if (isAuthenticated) {
+  let authZStatus = '';
+  let authZDesc = '';
+
+  if (!authNPassed) {
+    // If AuthN failed on a protected resource, AuthZ is skipped / blocked
+    isAuthorized = false;
+    authZStatus = 'Skipped (Login Required)';
+    authZDesc = 'Cannot check permissions because identity is unknown. Please log in first.';
+  } else if (!requiresAuth) {
+    // Public resource
+    isAuthorized = true;
+    authZStatus = 'Permitted ✅';
+    authZDesc = 'Public information is accessible to everyone.';
+  } else {
+    // Protected resource with authenticated user
     if (selectedRole === 'admin') {
-      isAuthorized = true; // Admin can do everything
+      isAuthorized = true;
+      authZStatus = 'Permitted ✅';
+      authZDesc = 'Administrator role has full permissions across the system.';
     } else if (selectedRole === 'employee') {
-      isAuthorized = selectedAction === 'profile' || selectedAction === 'documents';
+      if (selectedAction === 'documents') {
+        isAuthorized = true;
+        authZStatus = 'Permitted ✅';
+        authZDesc = 'Employee role has permission to edit team documents.';
+      } else {
+        isAuthorized = false;
+        authZStatus = 'Denied ❌';
+        authZDesc = 'Employee role does not have permission to delete user accounts (Admin only).';
+      }
     }
   }
 
-  // Determine final HTTP status & explanation
+  // Final HTTP Status & Explanation
   let httpStatus = 200;
-  let statusText = 'OK (Access Granted)';
+  let statusBadge = '200 OK';
   let explanation = '';
 
-  if (!isAuthenticated) {
+  if (requiresAuth && !isAuthenticated) {
     httpStatus = 401;
-    statusText = '401 Unauthorized';
+    statusBadge = '401 Unauthorized';
     explanation =
-      'The user is not logged in. The application does not know who this visitor is, so access is denied immediately before checking permissions.';
+      'HTTP 401 Unauthorized: The request was rejected because the user is not authenticated. The application must know who you are before checking your permissions.';
   } else if (!isAuthorized) {
     httpStatus = 403;
-    statusText = '403 Forbidden';
-    explanation = `${currentRoleObj.label} is logged in successfully, but does not have permission to ${currentActionObj.label.toLowerCase()}. Only Admins can perform this action.`;
+    statusBadge = '403 Forbidden';
+    explanation = `HTTP 403 Forbidden: Identity is confirmed as ${currentRoleObj.label}, but this account does not have permission to ${currentActionObj.label.toLowerCase()}. Only Administrators can delete users.`;
   } else {
     httpStatus = 200;
-    statusText = '200 OK (Access Granted)';
-    explanation = `${currentRoleObj.label} is authenticated and has the required permission to ${currentActionObj.label.toLowerCase()}. The action succeeds!`;
+    statusBadge = '200 OK (Access Granted)';
+    if (!requiresAuth) {
+      explanation =
+        'HTTP 200 OK (Access Granted): Public information is accessible to all visitors without requiring credentials.';
+    } else {
+      explanation = `HTTP 200 OK (Access Granted): ${currentRoleObj.label} is successfully authenticated and has the required authorization to ${currentActionObj.label.toLowerCase()}.`;
+    }
   }
 
   return (
@@ -120,12 +181,40 @@ function WhoCanAccessWhatVisualizer() {
           </h3>
         </div>
         <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
-          Select a role and an action to see the result
+          Select a role and an action to observe the security checks
         </span>
       </div>
 
+      {/* Quick Scenario Shortcuts */}
+      <div className="space-y-2">
+        <label className="text-[11px] font-bold uppercase font-mono tracking-wider text-zinc-500 dark:text-zinc-400">
+          Try a Common Scenario:
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {quickScenarios.map((qs) => {
+            const isActive = selectedRole === qs.role && selectedAction === qs.action;
+            return (
+              <button
+                key={qs.label}
+                onClick={() => {
+                  setSelectedRole(qs.role);
+                  setSelectedAction(qs.action);
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                  isActive
+                    ? 'bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950 font-bold shadow-xs'
+                    : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800'
+                }`}
+              >
+                {qs.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Selectors Grid */}
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-4 pt-1">
         {/* 1. Pick a Role */}
         <div className="space-y-2">
           <label className="text-xs font-bold uppercase font-mono tracking-wider text-zinc-600 dark:text-zinc-400">
@@ -203,74 +292,52 @@ function WhoCanAccessWhatVisualizer() {
         </div>
       </div>
 
-      {/* Evaluation Results Banner */}
+      {/* Step-by-Step Security Evaluation Cards */}
       <div className="grid sm:grid-cols-2 gap-3 pt-2">
-        {/* Step 1: Authentication Result */}
-        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+        {/* Step 1: Authentication Check */}
+        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-2">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase">
-              Step 1: Authentication Check
+            <span className="font-bold text-zinc-600 dark:text-zinc-400 font-mono text-[11px] uppercase tracking-wide">
+              Step 1: Authentication Check (Who are you?)
             </span>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                isAuthenticated
-                  ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400'
-                  : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-400'
+                !requiresAuth
+                  ? 'bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-400'
+                  : isAuthenticated
+                    ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400'
+                    : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-400'
               }`}
             >
-              {isAuthenticated ? 'Authenticated ✅' : 'Unauthenticated ❌'}
+              {authNStatus}
             </span>
           </div>
-          <div className="text-xs text-zinc-700 dark:text-zinc-300">
-            {isAuthenticated ? (
-              <span>
-                Identity is confirmed: <strong className="text-zinc-900 dark:text-zinc-100">{currentRoleObj.label}</strong> is logged in.
-              </span>
-            ) : (
-              <span>
-                Anonymous visitor: No credentials or session token provided.
-              </span>
-            )}
-          </div>
+          <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            {authNDesc}
+          </p>
         </div>
 
-        {/* Step 2: Authorization Result */}
-        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+        {/* Step 2: Authorization Check */}
+        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-2">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase">
-              Step 2: Authorization Check
+            <span className="font-bold text-zinc-600 dark:text-zinc-400 font-mono text-[11px] uppercase tracking-wide">
+              Step 2: Authorization Check (What can you do?)
             </span>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                !isAuthenticated
+                !authNPassed
                   ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                   : isAuthorized
                     ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400'
                     : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-400'
               }`}
             >
-              {!isAuthenticated
-                ? 'Skipped'
-                : isAuthorized
-                  ? 'Permitted ✅'
-                  : 'Denied ❌'}
+              {authZStatus}
             </span>
           </div>
-          <div className="text-xs text-zinc-700 dark:text-zinc-300">
-            {!isAuthenticated ? (
-              <span>
-                Cannot evaluate permissions because the visitor is not logged in.
-              </span>
-            ) : isAuthorized ? (
-              <span>
-                Role <strong className="text-zinc-900 dark:text-zinc-100">{currentRoleObj.label}</strong> has permission to <strong className="text-zinc-900 dark:text-zinc-100">{currentActionObj.label}</strong>.
-              </span>
-            ) : (
-              <span>
-                Role <strong className="text-zinc-900 dark:text-zinc-100">{currentRoleObj.label}</strong> lacks permission to <strong className="text-zinc-900 dark:text-zinc-100">{currentActionObj.label}</strong>.
-              </span>
-            )}
-          </div>
+          <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            {authZDesc}
+          </p>
         </div>
       </div>
 
@@ -304,7 +371,7 @@ function WhoCanAccessWhatVisualizer() {
                   : 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-400'
             }`}
           >
-            HTTP {statusText}
+            HTTP {statusBadge}
           </span>
         </div>
         <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
@@ -422,7 +489,8 @@ function KnowledgeCheckQuiz() {
                     btnStyle =
                       'bg-rose-50 dark:bg-rose-500/10 border-rose-500 text-rose-800 dark:text-rose-300 font-bold';
                   } else {
-                    btnStyle = 'bg-zinc-50/50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900 text-zinc-400 dark:text-zinc-600 opacity-60';
+                    btnStyle =
+                      'bg-zinc-50/50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900 text-zinc-400 dark:text-zinc-600 opacity-60';
                   }
                 }
 
@@ -474,34 +542,8 @@ export default function Topic1Foundations() {
           A. Introduction
         </h2>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          Every multi-user application needs to protect its data. Whether you are using Instagram,
-          online banking, or your college student portal, the system must answer two essential questions:
+          Every modern web application—from university portals and social media networks to banking systems—must protect its resources and user data. To do this reliably, security systems split access control into two separate, sequential checkpoints: first confirming who is making the request, and then determining whether that person has permission to perform the requested action.
         </p>
-        <div className="grid sm:grid-cols-2 gap-3 pt-1">
-          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              1. Authentication
-            </span>
-            <div className="text-base font-bold text-zinc-900 dark:text-zinc-100">
-              &quot;Who are you?&quot;
-            </div>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-              Verifying that you are really the person you claim to be.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              2. Authorization
-            </span>
-            <div className="text-base font-bold text-zinc-900 dark:text-zinc-100">
-              &quot;What are you allowed to do?&quot;
-            </div>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-              Checking what actions and records you have permission to access.
-            </p>
-          </div>
-        </div>
       </section>
 
       {/* B. Authentication */}
@@ -510,17 +552,14 @@ export default function Topic1Foundations() {
           B. Authentication (AuthN)
         </h2>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          <strong>Authentication</strong> is the process of verifying a user&apos;s identity. When you
-          type your email and password to log in, you are proving to the system who you are.
+          <strong>Authentication</strong> is the process of verifying a user&apos;s identity. When you log in with your email and password, the server securely verifies the submitted password against the stored password hash to prove who you are.
         </p>
         <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 space-y-2">
           <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 font-mono">
-            <Lightbulb className="w-4 h-4" /> Real-World Example
+            <Lightbulb className="w-4 h-4" /> Real-World Analogy
           </div>
           <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
-            Think of showing your <strong>passport</strong> at airport security. The officer compares
-            your face to the photo and checks the official seal. This confirms your identity. It proves
-            who you are.
+            Think of showing your <strong>passport</strong> at an airport. The officer checks your photo and passport details to confirm who you are before letting you proceed.
           </p>
         </div>
 
@@ -531,15 +570,15 @@ export default function Topic1Foundations() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
             <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
               <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Passwords</span>
-              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Secret memorized text</span>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Verified against stored hash</span>
             </div>
             <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
               <span className="font-bold text-zinc-900 dark:text-zinc-100 block">OTPs (One-Time)</span>
-              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">6-digit SMS / app codes</span>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">SMS or authenticator app</span>
             </div>
             <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
               <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Passkeys</span>
-              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Hardware credentials</span>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Device biometric or security key</span>
             </div>
             <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
               <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Biometrics</span>
@@ -629,11 +668,6 @@ export default function Topic1Foundations() {
                 <td className="p-3.5">Showing your passport at border control</td>
                 <td className="p-3.5">Showing your boarding pass at the plane gate</td>
               </tr>
-              <tr>
-                <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">HTTP Status Code</td>
-                <td className="p-3.5 font-mono text-emerald-700 dark:text-emerald-400 font-bold">401 Unauthorized</td>
-                <td className="p-3.5 font-mono text-rose-700 dark:text-rose-400 font-bold">403 Forbidden</td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -664,7 +698,7 @@ export default function Topic1Foundations() {
             {
               num: '2',
               title: 'Identity is verified (Authentication)',
-              desc: 'The server verifies the password against stored records and confirms: "Yes, this is Alice."',
+              desc: 'The server securely verifies the submitted password against the stored password hash and confirms: "Yes, this is Alice."',
             },
             {
               num: '3',
@@ -749,10 +783,10 @@ export default function Topic1Foundations() {
         </div>
 
         <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          <span className="font-bold text-zinc-900 dark:text-zinc-200">Security Note on 404: </span>
-          Sometimes, an application will return <code className="text-zinc-900 dark:text-zinc-100 font-bold">404 Not Found</code> instead
-          of <code className="text-zinc-900 dark:text-zinc-100 font-bold">403 Forbidden</code>. This is done intentionally to prevent
-          attackers from guessing whether a secret file exists or not.
+          <span className="font-bold text-zinc-800 dark:text-zinc-200">Optional Note (HTTP 404): </span>
+          In some security-sensitive systems, the server may return <code className="px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-mono font-semibold">404 Not Found</code> instead
+          of <code className="px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-mono font-semibold">403 Forbidden</code>. This is done to prevent
+          attackers from discovering whether a sensitive document or endpoint exists.
         </div>
       </section>
 
@@ -765,15 +799,11 @@ export default function Topic1Foundations() {
           {[
             {
               myth: 'Logging in gives a user access to everything in the application.',
-              fact: 'Logging in only confirms who you are. Your specific assigned role (e.g., student vs teacher) determines what you can actually see and do.',
+              fact: 'Logging in only confirms who you are. Your specific assigned role (such as student or employee) determines what you can actually see and do.',
             },
             {
               myth: 'Authentication and authorization are just different words for the same thing.',
-              fact: 'They are two completely distinct security checkpoints. Authentication happens first; authorization happens second.',
-            },
-            {
-              myth: 'Having a valid login token (like a JWT) automatically grants permission to all resources.',
-              fact: 'A token is like a digital ID card. It proves identity, but the server must still check whether that ID is allowed to perform each specific action.',
+              fact: 'They are two completely distinct security checkpoints. Authentication answers "Who are you?" while Authorization answers "What are you allowed to do?"',
             },
           ].map((item, idx) => (
             <div

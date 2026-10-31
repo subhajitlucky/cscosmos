@@ -33,7 +33,7 @@ export const AUTH_TOPICS: AuthTopic[] = [
     "cosmosAppStory": "In CosmosApp, Alice logs in with her username and password. CosmosApp performs Authentication (AuthN). Once Alice is verified as an authentic employee, she attempts to open a financial billing spreadsheet. CosmosApp performs Authorization (AuthZ) to check her role permissions. Because Alice works in Marketing rather than Finance, CosmosApp safely responds with 403 Forbidden.",
     "stepByStep": [
       "Step 1: Alice submits her login credentials (email and password) to the application.",
-      "Step 2: The server verifies her credentials and confirms her identity (Authentication: Alice is logged in).",
+      "Step 2: The server securely verifies her submitted password against the stored password hash and confirms her identity (Authentication: Alice is logged in).",
       "Step 3: Alice clicks on a restricted billing report URL (/company/billing.pdf).",
       "Step 4: The server checks whether Alice's role has permission to view financial files (Authorization check).",
       "Step 5: Access is denied with HTTP 403 Forbidden because Marketing employees cannot view billing reports.",
@@ -41,8 +41,7 @@ export const AUTH_TOPICS: AuthTopic[] = [
     ],
     "misconceptions": [
       "Logging in gives a user permission to access everything in the application.",
-      "Authentication and authorization are just different words for the same thing.",
-      "Having a valid login session or token automatically grants access to every database record."
+      "Authentication and authorization are just different words for the same thing."
     ],
     "codeSnippet": "// Simple, beginner-friendly route handler separating AuthN and AuthZ\nexport async function handleDocumentRequest(req: Request) {\n  // 1. AUTHENTICATION: Who are you?\n  const user = await getAuthenticatedUser(req);\n  if (!user) {\n    return new Response(\"Please log in first.\", { status: 401 });\n  }\n\n  // 2. AUTHORIZATION: What are you allowed to do?\n  if (!user.permissions.includes(\"documents:edit\")) {\n    return new Response(\"You do not have permission to edit documents.\", { status: 403 });\n  }\n\n  return new Response(\"Document updated successfully!\", { status: 200 });\n}",
     "takeaways": [
