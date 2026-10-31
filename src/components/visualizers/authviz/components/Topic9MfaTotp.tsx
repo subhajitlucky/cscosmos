@@ -25,6 +25,18 @@ import {
   WifiOff,
   Radio,
   Send,
+  Play,
+  Pause,
+  RotateCcw,
+  ArrowRight,
+  ArrowLeft,
+  Camera,
+  Laptop,
+  Scan,
+  Database,
+  ShieldAlert,
+  Globe,
+  Wifi,
 } from 'lucide-react';
 
 // ============================================================================
@@ -846,6 +858,1035 @@ function Topic9KnowledgeQuiz() {
 }
 
 // ============================================================================
+// Interactive TOTP Step-by-Step Educational Theater
+// ============================================================================
+
+const QR_GRID: number[][] = [
+  [1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1],
+  [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+  [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
+  [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0],
+  [1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1],
+  [0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0],
+  [1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1],
+  [1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+  [1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+];
+
+function SvgQrCode({ className = 'w-28 h-28' }: { className?: string }) {
+  return (
+    <div
+      className={`p-2 bg-white rounded-xl shadow-xs border border-zinc-200 flex items-center justify-center shrink-0 ${className}`}
+      aria-label="Simulated QR Code"
+    >
+      <svg viewBox="0 0 21 21" className="w-full h-full text-zinc-950 fill-current">
+        {QR_GRID.map((row, r) =>
+          row.map((val, c) => (val === 1 ? <rect key={`${r}-${c}`} x={c} y={r} width="1" height="1" /> : null))
+        )}
+      </svg>
+    </div>
+  );
+}
+
+interface TotpTheaterStep {
+  stepIndex: number;
+  chipLabel: string;
+  title: string;
+  badge: string;
+  explanation: string;
+  keyTakeaway: string;
+}
+
+const TOTP_THEATER_STEPS: TotpTheaterStep[] = [
+  {
+    stepIndex: 0,
+    chipLabel: '1. Secret Setup',
+    title: 'Server Generates Secret & QR Code',
+    badge: 'Step 1 of 7: Setup Initiation',
+    explanation:
+      'When you click "Enable 2FA" in your account security settings, the website server generates a random 160-bit shared secret key (e.g., JBSWY3DPEHPK3PXP). The server encodes this key into an otpauth:// URL and displays it on your screen as a high-contrast QR code.',
+    keyTakeaway:
+      'The QR code is just a graphical shortcut. It exists solely so users don’t have to manually type a 16-character random string on a mobile keyboard.',
+  },
+  {
+    stepIndex: 1,
+    chipLabel: '2. Scan QR',
+    title: 'Camera Scans the QR Code',
+    badge: 'Step 2 of 7: Optical Key Transfer',
+    explanation:
+      'You open Google Authenticator on your phone and point the camera at your computer screen. The camera sensor reads the optical QR pattern and extracts the shared secret directly into the authenticator app’s local keychain.',
+    keyTakeaway:
+      'Zero internet is required here! The secret is transferred through optical light photons entering your phone camera lens. No Wi-Fi or mobile data is used.',
+  },
+  {
+    stepIndex: 2,
+    chipLabel: '3. Shared Key',
+    title: 'Both Sides Store the Exact Same Secret',
+    badge: 'Step 3 of 7: Symmetric Secret In Place',
+    explanation:
+      'Now, both sides hold the identical secret key: the phone stores it in its offline hardware keychain, and the web server stores it in its encrypted database record. From this moment on, your phone NEVER needs an internet connection to produce valid login codes!',
+    keyTakeaway:
+      'You can switch your phone to Airplane Mode, turn off Wi-Fi, and remove the SIM card. Your authenticator app will still generate valid codes indefinitely.',
+  },
+  {
+    stepIndex: 3,
+    chipLabel: '4. Time Windows',
+    title: 'Time Synchronization (30-Second Windows)',
+    badge: 'Step 4 of 7: Clock Slicing',
+    explanation:
+      'Standard Unix epoch time (seconds elapsed since Jan 1, 1970) is divided into 30-second blocks using the formula: Window = Floor(Current Time / 30). Because time moves at the exact same rate everywhere, both the phone and server calculate the exact same window number (#59079001).',
+    keyTakeaway:
+      'Neither device needs to ask the other what time it is. Both simply read their own internal system clocks.',
+  },
+  {
+    stepIndex: 4,
+    chipLabel: '5. Parallel Math',
+    title: 'Parallel Independent Code Generation',
+    badge: 'Step 5 of 7: Deterministic Cryptography',
+    explanation:
+      'At this exact instant, both devices run the TOTP algorithm (HMAC-SHA1) using identical inputs: Shared Secret (JBSWY3DPEHPK3PXP) + Current Window (#59079001). Both devices calculate the exact same 6-digit result: 482 910!',
+    keyTakeaway:
+      'Pure deterministic mathematics! Identical inputs + identical cryptographic algorithm = identical 6-digit number, with zero network packets transmitted between phone and server.',
+  },
+  {
+    stepIndex: 5,
+    chipLabel: '6. Server Verify',
+    title: 'User Submits Code & Server Verifies',
+    badge: 'Step 6 of 7: Authentication Check',
+    explanation:
+      'You read 482 910 on your phone and type it into the website login prompt. Your browser sends this code across the network to the server. The server compares: does what the user typed equal the expected code it calculated locally? If yes, login succeeds!',
+    keyTakeaway:
+      'The server never contacts Google Authenticator to check if the code is correct. The server already computed the expected code itself and just does a fast equality check.',
+  },
+  {
+    stepIndex: 6,
+    chipLabel: '7. Expire & Rotate',
+    title: 'Window Expiration & Replay Defense',
+    badge: 'Step 7 of 7: Automatic Rotation',
+    explanation:
+      'When the 30-second countdown reaches zero, the time window increments to #59079002. Code 482 910 is permanently expired, and both devices simultaneously compute a fresh code (731 054). If an attacker intercepted the old code, it is now useless.',
+    keyTakeaway:
+      'Rotating every 30 seconds protects you from replay attacks. Even if a spy glances at your screen or sniffs an old OTP, they cannot reuse it after 30 seconds have passed.',
+  },
+];
+
+export function TotpInteractiveTheater() {
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState<1 | 2>(1);
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(24);
+  const [currentWindow, setCurrentWindow] = useState<number>(59079001);
+  const [testVerificationMode, setTestVerificationMode] = useState<'idle' | 'valid' | 'invalid'>('idle');
+  const [replayAttempted, setReplayAttempted] = useState<boolean>(false);
+  const [copiedSecret, setCopiedSecret] = useState<boolean>(false);
+
+  // 30-second countdown ticker
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsRemaining((prev) => {
+        if (prev <= 1) {
+          setCurrentWindow((w) => w + 1);
+          return 30;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Autoplay step sequencer
+  useEffect(() => {
+    if (!isPlaying) return;
+    const intervalMs = playbackSpeed === 2 ? 3500 : 7000;
+    const timeout = setTimeout(() => {
+      setCurrentStep((prev) => {
+        if (prev < 6) return prev + 1;
+        setIsPlaying(false);
+        return 0;
+      });
+    }, intervalMs);
+    return () => clearTimeout(timeout);
+  }, [isPlaying, currentStep, playbackSpeed]);
+
+  const handlePrev = () => {
+    setCurrentStep((prev) => Math.max(0, prev - 1));
+    setTestVerificationMode('idle');
+    setReplayAttempted(false);
+  };
+
+  const handleNext = () => {
+    setCurrentStep((prev) => Math.min(6, prev + 1));
+    setTestVerificationMode('idle');
+    setReplayAttempted(false);
+  };
+
+  const handleRestart = () => {
+    setCurrentStep(0);
+    setIsPlaying(false);
+    setTestVerificationMode('idle');
+    setReplayAttempted(false);
+  };
+
+  const handleStepSelect = (idx: number) => {
+    setCurrentStep(idx);
+    setTestVerificationMode('idle');
+    setReplayAttempted(false);
+  };
+
+  const handleCopySecret = () => {
+    navigator.clipboard.writeText('JBSWY3DPEHPK3PXP');
+    setCopiedSecret(true);
+    setTimeout(() => setCopiedSecret(false), 2000);
+  };
+
+  const activeStepInfo = TOTP_THEATER_STEPS[currentStep];
+  const progressPercent = ((currentStep + 1) / 7) * 100;
+  const timerRadius = 16;
+  const timerCircumference = 2 * Math.PI * timerRadius;
+  const timerStrokeDashoffset = timerCircumference - (secondsRemaining / 30) * timerCircumference;
+
+  return (
+    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 sm:p-6 shadow-sm space-y-6">
+      {/* 1. Header & Step Scrubber */}
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 font-mono text-[11px] font-bold">
+                {activeStepInfo.badge}
+              </span>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
+                Offline Cryptographic Verification
+              </span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
+              {activeStepInfo.title}
+            </h3>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <span className="text-xs text-zinc-500 dark:text-zinc-400 font-mono font-medium">
+              Step {currentStep + 1} of 7
+            </span>
+          </div>
+        </div>
+
+        {/* Clickable Step Navigation Tabs */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          {TOTP_THEATER_STEPS.map((step, idx) => {
+            const isActive = currentStep === idx;
+            const isCompleted = currentStep > idx;
+            return (
+              <button
+                key={step.stepIndex}
+                onClick={() => handleStepSelect(idx)}
+                className={`px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-1.5 border ${
+                  isActive
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs shadow-emerald-600/30 font-bold'
+                    : isCompleted
+                      ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-900 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30'
+                      : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800'
+                }`}
+                aria-label={`Jump to ${step.title}`}
+              >
+                <span
+                  className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-mono ${
+                    isActive
+                      ? 'bg-black/20 text-white'
+                      : isCompleted
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                  }`}
+                >
+                  {isCompleted ? '✓' : idx + 1}
+                </span>
+                <span>{step.chipLabel}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 2. Visual Theater Stage: LEFT (Phone) | CENTER (Sync & Net) | RIGHT (Server) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80">
+        {/* ================================================================= */}
+        {/* LEFT: Google Authenticator (Phone) (4 cols on lg)                */}
+        {/* ================================================================= */}
+        <div className="lg:col-span-4 flex flex-col">
+          <div className="flex items-center justify-between mb-2 px-1">
+            <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+              <Smartphone className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Mobile Phone</span>
+            </span>
+            <span
+              className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                currentStep >= 2
+                  ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
+                  : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
+              }`}
+            >
+              <WifiOff className="w-3 h-3" />
+              <span>Offline Ready</span>
+            </span>
+          </div>
+
+          {/* Smartphone Hardware Frame */}
+          <div className="flex-1 w-full max-w-[290px] mx-auto rounded-[32px] border-4 border-zinc-300 dark:border-zinc-700 bg-zinc-950 text-zinc-100 p-3.5 shadow-xl flex flex-col justify-between min-h-[460px]">
+            {/* Top Phone Speaker / Dynamic Island */}
+            <div>
+              <div className="w-24 h-4 bg-zinc-900 rounded-full mx-auto mb-2.5 flex items-center justify-center gap-2 border border-zinc-800">
+                <div className="w-2 h-2 rounded-full bg-zinc-800 border border-zinc-700" />
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse" />
+              </div>
+
+              {/* Status Bar */}
+              <div className="flex items-center justify-between px-2 text-[10px] text-zinc-400 font-mono mb-3">
+                <span>12:00</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[9px] bg-zinc-800 px-1 rounded text-zinc-300">✈️ AIRPLANE</span>
+                  <div className="w-4 h-2 border border-zinc-500 rounded-xs flex items-center p-0.5">
+                    <div className="h-full w-2.5 bg-emerald-400 rounded-xs" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Authenticator App Bar */}
+              <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800/80 flex items-center gap-2 mb-3">
+                <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
+                  G
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] font-bold text-zinc-100 truncate">Google Authenticator</div>
+                  <div className="text-[9px] text-zinc-400 truncate">Time-Based OTP Vault</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Dynamic Phone Screen Content per Step */}
+            <div className="flex-1 flex flex-col justify-center py-2">
+              {currentStep === 0 && (
+                /* Step 1: Standby / Ready to pair */
+                <div className="text-center space-y-3 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+                  <div className="w-12 h-12 rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto text-zinc-400">
+                    <Scan className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-zinc-200">No Accounts Configured</div>
+                    <div className="text-[10px] text-zinc-400 mt-1 leading-relaxed">
+                      Tap &quot;+&quot; to scan the QR code displayed on your website security page.
+                    </div>
+                  </div>
+                  <div className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">
+                    <span>Camera Standby</span>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 1 && (
+                /* Step 2: Camera Viewfinder Active */
+                <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/80 bg-black p-4 text-center space-y-3">
+                  {/* Viewfinder Target Reticle */}
+                  <div className="absolute inset-2 border-2 border-dashed border-emerald-400/40 rounded-xl pointer-events-none" />
+                  {/* Animated Scanning Laser Line */}
+                  <div className="absolute left-2 right-2 h-0.5 bg-emerald-400 shadow-sm shadow-emerald-400 animate-pulse top-1/2 transform -translate-y-1/2" />
+
+                  <Camera className="w-8 h-8 text-emerald-400 mx-auto animate-bounce" />
+                  <div className="relative z-10 space-y-1">
+                    <div className="text-xs font-bold text-emerald-300">Scanning Screen...</div>
+                    <div className="text-[10px] text-zinc-300 leading-tight">
+                      Aligning QR code within camera viewfinder.
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-xl bg-zinc-900/90 border border-emerald-500/40 text-[10px] text-zinc-200 font-mono">
+                    <div className="text-emerald-400 font-bold">QR Detected!</div>
+                    <div className="truncate text-zinc-400 text-[9px]">otpauth://totp/CSCosmos...</div>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 2 && (
+                /* Step 3: Shared Secret Saved */
+                <div className="space-y-2.5 p-3.5 rounded-2xl bg-zinc-900 border border-emerald-500/30">
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="font-bold text-emerald-400 uppercase tracking-wider font-mono">Account Saved</span>
+                    <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-mono">
+                      Offline Vault
+                    </span>
+                  </div>
+
+                  <div className="space-y-0.5">
+                    <div className="text-xs font-bold text-zinc-100">CSCosmos Portal</div>
+                    <div className="text-[10px] text-zinc-400 font-mono">student@college.edu</div>
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-black/60 border border-zinc-800 space-y-1">
+                    <div className="text-[9px] uppercase font-mono text-zinc-400">Stored Secret Key</div>
+                    <div className="text-xs font-mono font-bold text-emerald-300 tracking-wider">
+                      JBSWY3DPEHPK3PXP
+                    </div>
+                  </div>
+
+                  <div className="text-[10px] text-zinc-400 leading-relaxed">
+                    Key securely saved in local phone storage. Internet is now permanently optional.
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                /* Step 4: Clock Synchronization */
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border border-zinc-800 text-center">
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-zinc-100">Internal Hardware Clock</div>
+                    <div className="text-[10px] text-zinc-400">Reads phone&apos;s quartz crystal oscillator</div>
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-black/60 border border-zinc-800 space-y-1 font-mono text-left">
+                    <div className="text-[9px] text-zinc-400">Phone Clock Time: 12:00:42 PM</div>
+                    <div className="text-[10px] text-emerald-400 font-bold">
+                      Calculated Window: #{currentWindow}
+                    </div>
+                  </div>
+
+                  <div className="text-[10px] text-zinc-400 leading-tight">
+                    Formula: Floor(Current Unix Seconds / 30)
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                /* Step 5: Parallel OTP Generation */
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/10 text-center">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                    <span className="font-bold text-zinc-200">CSCosmos</span>
+                    <span className="text-emerald-400">Window #{currentWindow}</span>
+                  </div>
+
+                  <div className="space-y-1 py-1">
+                    <div className="text-[9px] uppercase font-mono text-zinc-400">Generated TOTP Code</div>
+                    <div className="text-3xl font-black font-mono tracking-widest text-emerald-400 drop-shadow-sm">
+                      482 910
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-2 text-xs font-mono text-zinc-300">
+                    <div className="w-4 h-4 rounded-full border border-emerald-400 flex items-center justify-center text-[9px] text-emerald-400 font-bold">
+                      {secondsRemaining}
+                    </div>
+                    <span>{secondsRemaining}s remaining in window</span>
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-black/60 border border-zinc-800 text-[10px] text-zinc-400 leading-tight">
+                    Computed via HMAC-SHA1(Secret, Window)
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 5 && (
+                /* Step 6: Server Verification */
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border border-emerald-500/40 text-center">
+                  <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">
+                    Displayed on Mobile Screen
+                  </div>
+                  <div className="text-2xl font-black font-mono tracking-widest text-emerald-400">
+                    482 910
+                  </div>
+                  <p className="text-[10px] text-zinc-300 leading-relaxed">
+                    User views this 6-digit code on their phone screen and types it into the website login form.
+                  </p>
+                  <div className="p-2 rounded-xl bg-zinc-800/80 border border-zinc-700 text-[10px] text-zinc-300 font-mono">
+                    Status: Awaiting typing into browser
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 6 && (
+                /* Step 7: Expiration & Regeneration */
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border border-zinc-800 text-center">
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-mono text-rose-400 line-through">
+                      Previous Code: 482 910 (EXPIRED)
+                    </div>
+                    <div className="text-[9px] text-zinc-400 font-mono">Window #{currentWindow - 1} Closed</div>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-1">
+                    <div className="text-[9px] uppercase font-mono text-emerald-400 font-bold">
+                      Fresh Active Code (Window #{currentWindow})
+                    </div>
+                    <div className="text-2xl font-black font-mono tracking-widest text-emerald-300">
+                      731 054
+                    </div>
+                  </div>
+
+                  <p className="text-[10px] text-zinc-400 leading-tight">
+                    Window rolled over. Old code is dead; new code active for the next 30 seconds.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Phone Home Indicator Bar */}
+            <div className="pt-2">
+              <div className="w-28 h-1 bg-zinc-700 rounded-full mx-auto" />
+            </div>
+          </div>
+        </div>
+
+        {/* ================================================================= */}
+        {/* CENTER: Interaction Zone, Synchronizer & Network (4 cols on lg)   */}
+        {/* ================================================================= */}
+        <div className="lg:col-span-4 flex flex-col justify-center items-center p-3 text-center space-y-4">
+          {currentStep === 0 && (
+            <div className="space-y-2 max-w-xs">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400 flex items-center justify-center mx-auto">
+                <ArrowRight className="w-6 h-6 animate-pulse" />
+              </div>
+              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Setup Step 1</div>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                The user navigates to website security settings and clicks &quot;Enable 2FA&quot;. The server creates a secret key.
+              </p>
+            </div>
+          )}
+
+          {currentStep === 1 && (
+            <div className="space-y-3 max-w-xs">
+              <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-200 space-y-1.5">
+                <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                  <Camera className="w-4 h-4" />
+                  <span>Optical Ray Transfer</span>
+                </div>
+                <div className="flex items-center justify-center gap-1 text-emerald-600 dark:text-emerald-400 py-1">
+                  <ArrowLeft className="w-4 h-4 animate-ping" />
+                  <span className="font-mono text-xs font-bold">◄ ◄ ◄ Light Beam ◄ ◄ ◄</span>
+                </div>
+                <p className="text-[11px] leading-relaxed text-zinc-700 dark:text-zinc-300">
+                  Photons of light travel from the laptop monitor into the phone camera lens.
+                  <strong> ZERO network packets</strong> are transmitted.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {currentStep === 2 && (
+            <div className="space-y-2.5 max-w-xs">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400 flex items-center justify-center mx-auto">
+                <Key className="w-6 h-6" />
+              </div>
+              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Symmetric Key Paired</div>
+              <div className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">
+                Phone Key == Server Key
+              </div>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Both devices now independently hold the exact same secret. No future network communication is required to generate codes.
+              </p>
+            </div>
+          )}
+
+          {currentStep === 3 && (
+            <div className="space-y-3 max-w-xs">
+              {/* Universal Master Clock Dial */}
+              <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r={timerRadius * 2}
+                    className="stroke-zinc-200 dark:stroke-zinc-800"
+                    strokeWidth="6"
+                    fill="transparent"
+                  />
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r={timerRadius * 2}
+                    className="stroke-emerald-500 transition-all duration-1000 ease-linear"
+                    strokeWidth="6"
+                    strokeDasharray={timerCircumference * 2}
+                    strokeDashoffset={timerStrokeDashoffset * 2}
+                    strokeLinecap="round"
+                    fill="transparent"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-lg font-black font-mono text-zinc-900 dark:text-zinc-100">
+                    {secondsRemaining}s
+                  </span>
+                  <span className="text-[9px] uppercase font-mono text-zinc-500 dark:text-zinc-400">Window</span>
+                </div>
+              </div>
+
+              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Universal Time Slicing</div>
+              <div className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-mono text-[11px] text-zinc-700 dark:text-zinc-300">
+                Floor(Time / 30) = #{currentWindow}
+              </div>
+              <p className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Earth&apos;s time ticks identically on both devices. Both clocks calculate the exact same 30-second window.
+              </p>
+            </div>
+          )}
+
+          {currentStep === 4 && (
+            <div className="space-y-3 max-w-xs">
+              <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-center space-y-1.5">
+                <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Air-Gapped Math</span>
+                </div>
+                <div className="text-lg font-black font-mono text-emerald-700 dark:text-emerald-400 tracking-wider">
+                  482 910 === 482 910
+                </div>
+                <div className="text-[10px] text-zinc-600 dark:text-zinc-400 leading-tight">
+                  Phone result equals Server result without speaking to each other.
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center gap-1 text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
+                <WifiOff className="w-3.5 h-3.5 text-rose-500" />
+                <span>0 network packets sent</span>
+              </div>
+            </div>
+          )}
+
+          {currentStep === 5 && (
+            <div className="space-y-3 max-w-xs">
+              <div className="p-3 rounded-2xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-center space-y-2">
+                <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-blue-900 dark:text-blue-300">
+                  <Send className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <span>HTTPS Transmission</span>
+                </div>
+                <div className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-mono text-[11px] text-zinc-800 dark:text-zinc-200 text-left space-y-0.5">
+                  <div className="text-blue-600 dark:text-blue-400 font-bold">POST /api/auth/verify</div>
+                  <div>
+                    Body: {'{'} &quot;code&quot;: &quot;
+                    {testVerificationMode === 'invalid' ? '999111' : '482910'}&quot; {'}'}
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold text-xs py-0.5">
+                  <ArrowRight className="w-4 h-4 animate-pulse" />
+                  <span>Sending Code to Server</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {currentStep === 6 && (
+            <div className="space-y-3 max-w-xs">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-500/10 border border-amber-300 dark:border-amber-500/30 text-amber-700 dark:text-amber-400 flex items-center justify-center mx-auto">
+                <RefreshCw className="w-6 h-6 animate-spin" style={{ animationDuration: '6s' }} />
+              </div>
+              <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Window Advanced</div>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                30 seconds expired. The counter advanced: #59079001 ➔ #59079002. Any previously submitted or captured
+                code is now permanently invalid.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ================================================================= */}
+        {/* RIGHT: Website / Server Screen (4 cols on lg)                    */}
+        {/* ================================================================= */}
+        <div className="lg:col-span-4 flex flex-col">
+          <div className="flex items-center justify-between mb-2 px-1">
+            <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+              <Laptop className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <span>Website / Server</span>
+            </span>
+            <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
+              <Database className="w-3 h-3 text-purple-500" />
+              <span>DB Secure</span>
+            </span>
+          </div>
+
+          {/* Browser / Server Frame */}
+          <div className="flex-1 w-full max-w-[340px] mx-auto rounded-2xl border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xl overflow-hidden flex flex-col justify-between min-h-[460px]">
+            {/* Browser Header Bar */}
+            <div className="px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700/80 flex items-center gap-2">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              </div>
+              <div className="flex-1 px-2 py-0.5 rounded-md bg-white dark:bg-zinc-950 text-[10px] text-zinc-500 dark:text-zinc-400 font-mono truncate flex items-center gap-1 border border-zinc-200 dark:border-zinc-800">
+                <Lock className="w-2.5 h-2.5 text-emerald-500 shrink-0" />
+                <span className="truncate">
+                  https://cscosmos.edu/{currentStep === 5 ? 'login/verify' : 'settings/security'}
+                </span>
+              </div>
+            </div>
+
+            {/* Dynamic Server Screen Content per Step */}
+            <div className="p-4 flex-1 flex flex-col justify-center space-y-3">
+              {currentStep === 0 && (
+                /* Step 1: Server Generates Secret & QR */
+                <div className="space-y-3 text-center">
+                  <div className="space-y-0.5">
+                    <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Set Up Two-Factor Auth</div>
+                    <div className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                      Scan this code with Google Authenticator
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center">
+                    <SvgQrCode className="w-28 h-28" />
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-left space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] uppercase font-mono text-zinc-500 dark:text-zinc-400 font-bold">
+                        Shared Secret Key
+                      </span>
+                      <button
+                        onClick={handleCopySecret}
+                        className="text-[10px] text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-0.5 font-medium"
+                      >
+                        {copiedSecret ? (
+                          <>
+                            <Check className="w-3 h-3" /> Copied
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3 h-3" /> Copy
+                          </>
+                        )}
+                      </button>
+                    </div>
+                    <div className="font-mono text-xs font-bold text-zinc-800 dark:text-zinc-200 tracking-wider">
+                      JBSWY3DPEHPK3PXP
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 1 && (
+                /* Step 2: Screen being scanned by camera */
+                <div className="space-y-3 text-center">
+                  <div className="space-y-0.5">
+                    <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Awaiting Scan...</div>
+                    <div className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                      Website is broadcasting QR photons
+                    </div>
+                  </div>
+
+                  <div className="relative inline-block mx-auto">
+                    <div className="absolute -inset-1.5 rounded-2xl bg-emerald-500/20 blur-xs animate-pulse" />
+                    <SvgQrCode className="w-28 h-28 relative z-10" />
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-[11px] text-emerald-900 dark:text-emerald-300 font-medium">
+                    Phone camera reading QR pattern...
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 2 && (
+                /* Step 3: Server Database Record */
+                <div className="space-y-2.5">
+                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+                    <Database className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                    <span>Server Database Storage</span>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 font-mono text-[11px] space-y-1.5 text-zinc-700 dark:text-zinc-300">
+                    <div className="text-[10px] text-zinc-400 uppercase font-bold">Table: users_mfa</div>
+                    <div>user: &quot;student@college.edu&quot;</div>
+                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">
+                      totp_secret: &quot;JBSWY3DPEHPK3PXP&quot;
+                    </div>
+                    <div>algorithm: &quot;HMAC-SHA1&quot;</div>
+                    <div>step_seconds: 30</div>
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-[10px] text-emerald-950 dark:text-emerald-300 leading-tight">
+                    Secret is encrypted and safely committed to database disk.
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                /* Step 4: Server Clock Sync */
+                <div className="space-y-3 text-center">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/10 border border-blue-300 dark:border-blue-500/30 flex items-center justify-center mx-auto text-blue-600 dark:text-blue-400">
+                    <Globe className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Server Clock (NTP Sync)</div>
+                    <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                      Synchronized to World Atomic Clocks
+                    </div>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-left font-mono text-[11px] space-y-1">
+                    <div className="text-zinc-500 dark:text-zinc-400 text-[10px]">Server Time: 12:00:42 PM</div>
+                    <div className="text-blue-600 dark:text-blue-400 font-bold">
+                      Calculated Window: #{currentWindow}
+                    </div>
+                  </div>
+
+                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight">
+                    Both server and phone reach window #{currentWindow} independently!
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                /* Step 5: Server Expected Code Calculation */
+                <div className="space-y-3 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
+                  <div className="text-[10px] uppercase font-mono text-zinc-500 dark:text-zinc-400 font-bold">
+                    Server Calculated Expected Code
+                  </div>
+
+                  <div className="text-3xl font-black font-mono tracking-widest text-emerald-600 dark:text-emerald-400">
+                    482 910
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-left font-mono text-[10px] space-y-0.5 text-zinc-700 dark:text-zinc-300">
+                    <div>HMAC-SHA1(&quot;JBSWY3...&quot;, #{currentWindow})</div>
+                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">Expected: 482910</div>
+                  </div>
+
+                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                    Awaiting HTTP submission from student login screen.
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 5 && (
+                /* Step 6: Interactive Verification Test */
+                <div className="space-y-3">
+                  <div className="text-center space-y-1">
+                    <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Login Verification</div>
+                    <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                      Enter the 6-digit code shown on your phone
+                    </div>
+                  </div>
+
+                  {/* 6 Digit Inputs */}
+                  <div className="flex justify-center gap-1.5 font-mono">
+                    {(testVerificationMode === 'invalid' ? '999111' : '482910').split('').map((char, i) => (
+                      <span
+                        key={i}
+                        className={`w-7 h-9 rounded-lg border flex items-center justify-center font-bold text-sm ${
+                          testVerificationMode === 'valid'
+                            ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-500 text-emerald-800 dark:text-emerald-300'
+                            : testVerificationMode === 'invalid'
+                              ? 'bg-rose-50 dark:bg-rose-500/10 border-rose-500 text-rose-800 dark:text-rose-300'
+                              : 'bg-zinc-50 dark:bg-zinc-950 border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100'
+                        }`}
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Result Message */}
+                  {testVerificationMode === 'valid' && (
+                    <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-200 text-xs text-center space-y-0.5">
+                      <div className="font-bold flex items-center justify-center gap-1">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                        <span>200 OK — Access Granted!</span>
+                      </div>
+                      <div className="text-[10px]">482910 matches expected server code.</div>
+                    </div>
+                  )}
+
+                  {testVerificationMode === 'invalid' && (
+                    <div className="p-2 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-950 dark:text-rose-200 text-xs text-center space-y-0.5">
+                      <div className="font-bold flex items-center justify-center gap-1">
+                        <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                        <span>401 Unauthorized — Access Denied!</span>
+                      </div>
+                      <div className="text-[10px]">Submitted 999111 does not match expected 482910.</div>
+                    </div>
+                  )}
+
+                  {/* Interactive Test Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <button
+                      onClick={() => setTestVerificationMode('valid')}
+                      className={`px-2 py-1.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 ${
+                        testVerificationMode === 'valid'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 hover:bg-emerald-100'
+                      }`}
+                    >
+                      <span>Test Valid Code</span>
+                    </button>
+                    <button
+                      onClick={() => setTestVerificationMode('invalid')}
+                      className={`px-2 py-1.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 ${
+                        testVerificationMode === 'invalid'
+                          ? 'bg-rose-600 text-white'
+                          : 'bg-rose-50 dark:bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/30 hover:bg-rose-100'
+                      }`}
+                    >
+                      <span>Test Wrong Code</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 6 && (
+                /* Step 7: Expiration & Replay Test */
+                <div className="space-y-3">
+                  <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 space-y-1">
+                    <div className="flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-zinc-500 dark:text-zinc-400">Server Window:</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">#{currentWindow}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-zinc-500 dark:text-zinc-400">Expected OTP:</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">731 054</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-zinc-500 dark:text-zinc-400">Old Code (482 910):</span>
+                      <span className="font-bold text-rose-500">EXPIRED</span>
+                    </div>
+                  </div>
+
+                  {replayAttempted && (
+                    <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-950 dark:text-rose-200 text-xs space-y-0.5">
+                      <div className="font-bold flex items-center gap-1">
+                        <ShieldAlert className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                        <span>Replay Attack Blocked!</span>
+                      </div>
+                      <p className="text-[10px] leading-relaxed">
+                        Attacker tried submitting expired code 482910 from previous window #{currentWindow - 1}.
+                        Server strictly rejected it.
+                      </p>
+                    </div>
+                  )}
+
+                  <button
+                    onClick={() => setReplayAttempted(true)}
+                    className="w-full px-3 py-2 rounded-xl bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 text-rose-900 dark:text-rose-200 border border-rose-300 dark:border-rose-500/30 text-xs font-bold transition flex items-center justify-center gap-1.5"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                    <span>Simulate Attacker Replaying 482 910</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Server Footer Bar */}
+            <div className="px-3 py-1.5 bg-zinc-50 dark:bg-zinc-800/60 border-t border-zinc-200 dark:border-zinc-700/60 text-[10px] text-zinc-500 dark:text-zinc-400 flex items-center justify-between">
+              <span>CSCosmos Identity Engine</span>
+              <span>RFC 6238 Compliant</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Deep-Dive Pedagogical Card for Active Step */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/20 space-y-2">
+        <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 dark:text-emerald-400 font-mono">
+          <Lightbulb className="w-4 h-4" />
+          <span>Step {currentStep + 1} Educational Breakdown</span>
+        </div>
+        <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+          {activeStepInfo.explanation}
+        </p>
+        <div className="pt-1 flex items-start gap-2 text-xs text-zinc-900 dark:text-zinc-100 font-medium">
+          <span className="text-emerald-700 dark:text-emerald-400 font-bold shrink-0">💡 Student Takeaway:</span>
+          <span className="text-zinc-700 dark:text-zinc-300">{activeStepInfo.keyTakeaway}</span>
+        </div>
+      </div>
+
+      {/* 4. Playback Controls Toolbar */}
+      <div className="space-y-2 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {/* Left: Playback controls */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleRestart}
+              className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 transition"
+              title="Restart from Step 1"
+              aria-label="Restart animation"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+                isPlaying
+                  ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                  : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+              }`}
+              aria-label={isPlaying ? 'Pause auto-play' : 'Start auto-play'}
+            >
+              {isPlaying ? (
+                <>
+                  <Pause className="w-3.5 h-3.5" /> Pause
+                </>
+              ) : (
+                <>
+                  <Play className="w-3.5 h-3.5" /> Auto-Play
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={() => setPlaybackSpeed(playbackSpeed === 1 ? 2 : 1)}
+              className="px-2.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-mono font-bold transition"
+              title="Toggle playback speed"
+            >
+              {playbackSpeed}x Speed
+            </button>
+          </div>
+
+          {/* Center: Active Step label */}
+          <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400 hidden sm:block">
+            Step {currentStep + 1} of 7: <span className="font-bold text-zinc-800 dark:text-zinc-200">{activeStepInfo.chipLabel}</span>
+          </div>
+
+          {/* Right: Step Prev / Next */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrev}
+              disabled={currentStep === 0}
+              className="px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-xs font-medium text-zinc-700 dark:text-zinc-300 transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" /> Previous
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={currentStep === 6}
+              className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
+            >
+              Next <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full h-1 bg-zinc-100 dark:bg-zinc-900 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-emerald-500 transition-all duration-300 ease-out"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
 // Main Topic 9 Content Component
 // ============================================================================
 export default function Topic9MfaTotp() {
@@ -1061,50 +2102,8 @@ export function generateBackupCodes(count = 8): string[] {
           The secret is a standard algorithm called <strong>TOTP (Time-Based One-Time Password)</strong>:
         </p>
 
-        <div className="space-y-2.5">
-          {[
-            {
-              step: '1',
-              title: 'Website Generates a Shared Secret Key',
-              desc: 'When you turn on 2FA in your account settings, the server generates a random secret key (e.g. JBSWY3DPEHPK3PXP).',
-            },
-            {
-              step: '2',
-              title: 'You Scan the QR Code',
-              desc: 'The QR code contains the secret key. Scanning it imports the secret directly into your phone’s authenticator app.',
-            },
-            {
-              step: '3',
-              title: 'Both Sides Now Share the Secret',
-              desc: 'Now, both your phone and the web server possess the exact same secret key saved in storage.',
-            },
-            {
-              step: '4',
-              title: 'Your Phone Calculates the Current Code',
-              desc: 'Every 30 seconds, the authenticator app combines the secret key with the current time (divided into 30-second blocks) to calculate a temporary 6-digit number.',
-            },
-            {
-              step: '5',
-              title: 'The Server Verifies the Code',
-              desc: 'When you type the 6 digits to log in, the server performs the exact same calculation using its own clock and confirms that the numbers match.',
-            },
-          ].map((item) => (
-            <div
-              key={item.step}
-              className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs flex items-start gap-3.5"
-            >
-              <span className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                {item.step}
-              </span>
-              <div>
-                <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.title}</h4>
-                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-0.5 leading-relaxed font-normal">
-                  {item.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Step-by-Step Interactive TOTP Animation */}
+        <TotpInteractiveTheater />
 
         <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-1">
           <span className="font-bold text-zinc-900 dark:text-zinc-100">Why Clock Drift Matters: </span>
