@@ -64,11 +64,11 @@ test.describe('program-cosmos smoke', () => {
     await page.goto(`${CANONICAL_PATH}/lab`);
 
     await expect(page.getByRole('heading', { level: 1, name: /Systems Simulation Lab/i })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: /CPU Instruction Execution Simulator/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: /CPU Instruction Execution/i })).toBeVisible();
 
     // Switch to RAM memory grid
-    await page.getByRole('button', { name: /RAM Memory Grid/i }).click();
-    await expect(page.getByRole('heading', { level: 2, name: /Interactive RAM Memory Grid/i })).toBeVisible();
+    await page.getByRole('button', { name: /RAM Grid|STN-02/i }).first().click();
+    await expect(page.getByRole('heading', { level: 2, name: /Silicon RAM Matrix/i })).toBeVisible();
   });
 
   test('shows the completion card and resets progress', async ({ page }) => {
