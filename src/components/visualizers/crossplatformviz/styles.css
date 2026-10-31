@@ -1,39 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+/* =========================================================================
+   CrossPlatformViz Design System (Zero Gradients, Anti-Slop, High Contrast)
+   Designed for Mobile Systems Engineering Education (BCA & B.Tech)
+   ========================================================================= */
 
 .crossplatformviz-root {
+  --cp-display: 'Syne', sans-serif;
+  --cp-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --cp-mono: 'DM Mono', monospace;
+
+  /* Theme Tokens - Dark Mode Default */
   --cp-primary: #6366f1;
   --cp-primary-hover: #4f46e5;
+  --cp-primary-10: rgba(99, 102, 241, 0.12);
+  --cp-primary-20: rgba(99, 102, 241, 0.22);
+  --cp-primary-30: rgba(99, 102, 241, 0.32);
+
   --cp-sky: #0ea5e9;
   --cp-amber: #f59e0b;
-  --cp-orange: #f97316;
   --cp-emerald: #10b981;
   --cp-rose: #f43f5e;
-  
+  --cp-purple: #8b5cf6;
+
   --cp-bg: #090b14;
-  --cp-surface: #101424;
+  --cp-surface: #0f1424;
   --cp-surface-2: #181d33;
-  --cp-border: rgba(99, 102, 241, 0.25);
-  --cp-border-subtle: rgba(255, 255, 255, 0.08);
+  --cp-surface-3: #232a48;
+  --cp-border: #1e2540;
+  --cp-border-subtle: #181d33;
+  --cp-border-accent: rgba(99, 102, 241, 0.35);
+
   --cp-text: #f8fafc;
-  --cp-muted: #8b93af;
-
-  /* Pre-mixed translucent tokens. Tailwind v3 cannot apply an opacity
-     modifier to an arbitrary var() colour: `bg-[var(--cp-primary)]/10` is not
-     a valid v3 utility and emits no CSS at all (verified against tailwindcss
-     3.4.19). These real custom properties are the supported way to get the
-     same tint. Values are the base token's RGB at the requested alpha. */
-  --cp-primary-5: rgba(99, 102, 241, 0.05);
-  --cp-primary-10: rgba(99, 102, 241, 0.1);
-  --cp-primary-20: rgba(99, 102, 241, 0.2);
-  --cp-primary-30: rgba(99, 102, 241, 0.3);
-  --cp-primary-40: rgba(99, 102, 241, 0.4);
-  --cp-sky-10: rgba(14, 165, 233, 0.1);
-  --cp-sky-30: rgba(14, 165, 233, 0.3);
-  --cp-bg-80: rgba(9, 11, 20, 0.8);
-
-  --cp-display: 'Syne', sans-serif;
-  --cp-sans: 'Inter', sans-serif;
-  --cp-mono: 'DM Mono', monospace;
+  --cp-muted: #94a3b8;
+  --cp-dim: #64748b;
+  
+  --cp-bg-80: rgba(9, 11, 20, 0.88);
 
   font-family: var(--cp-sans);
   background-color: var(--cp-bg);
@@ -41,62 +43,135 @@
   min-height: 100vh;
 }
 
+/* Light Mode Overrides - High WCAG AA/AAA Contrast (Zero Gradients) */
 html.light .crossplatformviz-root,
 html[data-theme='light'] .crossplatformviz-root,
+html[data-mode='light'] .crossplatformviz-root,
 html:not(.dark) .crossplatformviz-root,
 .crossplatformviz-root[data-theme='light'],
 .crossplatformviz-root.light-mode {
+  --cp-primary: #4338ca;         /* Deep accessible indigo, >5.5:1 on light */
+  --cp-primary-hover: #3730a3;
+  --cp-primary-10: rgba(67, 56, 202, 0.1);
+  --cp-primary-20: rgba(67, 56, 202, 0.18);
+  --cp-primary-30: rgba(67, 56, 202, 0.28);
+
+  --cp-sky: #0284c7;
+  --cp-amber: #b45309;
+  --cp-emerald: #047857;
+  --cp-rose: #be123c;
+  --cp-purple: #6d28d9;
+
   --cp-bg: #f8fafc;
   --cp-surface: #ffffff;
   --cp-surface-2: #f1f5f9;
-  --cp-border: rgba(99, 102, 241, 0.28);
-  --cp-border-subtle: rgba(0, 0, 0, 0.08);
+  --cp-surface-3: #e2e8f0;
+  --cp-border: #e2e8f0;
+  --cp-border-subtle: #f1f5f9;
+  --cp-border-accent: rgba(67, 56, 202, 0.35);
+
   --cp-text: #0f172a;
-  --cp-muted: #64748b;
-  /* --cp-bg flips to #f8fafc in light mode, so its translucent mix must flip too. */
-  --cp-bg-80: rgba(248, 250, 252, 0.8);
+  --cp-muted: #334155;
+  --cp-dim: #64748b;
+
+  --cp-bg-80: rgba(248, 250, 252, 0.92);
 }
 
+/* Explicit Dark Mode Overrides */
 html.dark .crossplatformviz-root,
 html[data-theme='dark'] .crossplatformviz-root,
+html[data-mode='dark'] .crossplatformviz-root,
 .crossplatformviz-root[data-theme='dark'],
 .crossplatformviz-root.dark-mode {
+  --cp-primary: #6366f1;
+  --cp-primary-hover: #4f46e5;
+  --cp-primary-10: rgba(99, 102, 241, 0.12);
+  --cp-primary-20: rgba(99, 102, 241, 0.22);
+  --cp-primary-30: rgba(99, 102, 241, 0.32);
+
+  --cp-sky: #0ea5e9;
+  --cp-amber: #f59e0b;
+  --cp-emerald: #10b981;
+  --cp-rose: #f43f5e;
+  --cp-purple: #8b5cf6;
+
   --cp-bg: #090b14;
-  --cp-surface: #101424;
+  --cp-surface: #0f1424;
   --cp-surface-2: #181d33;
-  --cp-border: rgba(99, 102, 241, 0.25);
-  --cp-border-subtle: rgba(255, 255, 255, 0.08);
+  --cp-surface-3: #232a48;
+  --cp-border: #1e2540;
+  --cp-border-subtle: #181d33;
+  --cp-border-accent: rgba(99, 102, 241, 0.35);
+
   --cp-text: #f8fafc;
-  --cp-muted: #8b93af;
+  --cp-muted: #94a3b8;
+  --cp-dim: #64748b;
+
+  --cp-bg-80: rgba(9, 11, 20, 0.88);
 }
 
-.crossplatformviz-root .font-display {
-  font-family: var(--cp-display);
-}
+/* Typography Classes */
+.crossplatformviz-root .font-display { font-family: var(--cp-display); }
+.crossplatformviz-root .font-mono { font-family: var(--cp-mono); }
+.crossplatformviz-root .font-sans { font-family: var(--cp-sans); }
 
-.crossplatformviz-root .font-mono {
-  font-family: var(--cp-mono);
-}
-
-.crossplatformviz-root .cp-glow {
-  text-shadow: 0 0 25px rgba(99, 102, 241, 0.55), 0 0 50px rgba(99, 102, 241, 0.2);
-}
-
+/* Card & Button Styles (Solid, Zero Gradients) */
 .crossplatformviz-root .cp-card {
-  background: var(--cp-surface);
-  border: 1px solid var(--cp-border-subtle);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .crossplatformviz-root .cp-card:hover {
-  border-color: var(--cp-border);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.2);
+  border-color: var(--cp-border-accent);
 }
 
-.crossplatformviz-root .cp-grid-bg {
-  background-image: 
-    linear-gradient(to right, rgba(99, 102, 241, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
-  background-size: 38px 38px;
+.crossplatformviz-root .cp-card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.12);
+}
+
+.crossplatformviz-root .cp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: var(--cp-primary);
+  color: #ffffff;
+  font-family: var(--cp-sans);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.18s ease, transform 0.15s ease;
+  box-shadow: 0 2px 8px -2px rgba(99, 102, 241, 0.3);
+}
+
+.crossplatformviz-root .cp-btn-primary:hover {
+  background-color: var(--cp-primary-hover);
+  transform: translateY(-1px);
+}
+
+.crossplatformviz-root .cp-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background-color: var(--cp-surface-2);
+  border: 1px solid var(--cp-border);
+  color: var(--cp-text);
+  font-family: var(--cp-sans);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.15s ease;
+}
+
+.crossplatformviz-root .cp-btn-secondary:hover {
+  border-color: var(--cp-border-accent);
+  background-color: var(--cp-surface-3);
+  transform: translateY(-1px);
 }
