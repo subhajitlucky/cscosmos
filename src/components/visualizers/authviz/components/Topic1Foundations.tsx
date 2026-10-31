@@ -1,20 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   User,
   ShieldCheck,
-  ShieldAlert,
   CheckCircle2,
   XCircle,
-  Lock,
-  Unlock,
-  ArrowRight,
   HelpCircle,
   Lightbulb,
   Sparkles,
-  FileText,
   Trash2,
   Eye,
   Edit3,
@@ -115,17 +109,17 @@ function WhoCanAccessWhatVisualizer() {
   }
 
   return (
-    <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-6 sm:p-8 space-y-6 shadow-xl">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800/80 pb-4">
+    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 sm:p-8 space-y-6 shadow-sm dark:shadow-xl">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800/80 pb-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" /> Interactive Simulation
           </span>
-          <h3 className="text-lg font-bold text-zinc-100 mt-1">
+          <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-1">
             Who Can Access What?
           </h3>
         </div>
-        <span className="text-xs font-mono text-zinc-400">
+        <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
           Select a role and an action to see the result
         </span>
       </div>
@@ -134,7 +128,7 @@ function WhoCanAccessWhatVisualizer() {
       <div className="grid sm:grid-cols-2 gap-4">
         {/* 1. Pick a Role */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase font-mono tracking-wider text-zinc-400">
+          <label className="text-xs font-bold uppercase font-mono tracking-wider text-zinc-600 dark:text-zinc-400">
             1. Select User Role
           </label>
           <div className="grid grid-cols-3 gap-2">
@@ -147,17 +141,21 @@ function WhoCanAccessWhatVisualizer() {
                   onClick={() => setSelectedRole(r.id)}
                   className={`p-3 rounded-2xl border text-left transition-all ${
                     isSelected
-                      ? 'bg-emerald-500/10 border-emerald-500 text-zinc-100 shadow-sm'
-                      : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                      ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-500 text-zinc-900 dark:text-zinc-100 font-bold shadow-xs'
+                      : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-900'
                   }`}
                 >
                   <Icon
                     className={`w-4 h-4 mb-1.5 ${
-                      isSelected ? 'text-emerald-400' : 'text-zinc-500'
+                      isSelected
+                        ? 'text-emerald-600 dark:text-emerald-400'
+                        : 'text-zinc-400 dark:text-zinc-500'
                     }`}
                   />
-                  <div className="text-xs font-bold">{r.label}</div>
-                  <div className="text-[10px] text-zinc-500 leading-tight mt-0.5 truncate">
+                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                    {r.label}
+                  </div>
+                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight mt-0.5 truncate">
                     {r.sublabel}
                   </div>
                 </button>
@@ -168,7 +166,7 @@ function WhoCanAccessWhatVisualizer() {
 
         {/* 2. Pick an Action */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase font-mono tracking-wider text-zinc-400">
+          <label className="text-xs font-bold uppercase font-mono tracking-wider text-zinc-600 dark:text-zinc-400">
             2. Select Desired Action
           </label>
           <div className="grid grid-cols-3 gap-2">
@@ -181,17 +179,21 @@ function WhoCanAccessWhatVisualizer() {
                   onClick={() => setSelectedAction(a.id)}
                   className={`p-3 rounded-2xl border text-left transition-all ${
                     isSelected
-                      ? 'bg-emerald-500/10 border-emerald-500 text-zinc-100 shadow-sm'
-                      : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                      ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-500 text-zinc-900 dark:text-zinc-100 font-bold shadow-xs'
+                      : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-900'
                   }`}
                 >
                   <Icon
                     className={`w-4 h-4 mb-1.5 ${
-                      isSelected ? 'text-emerald-400' : 'text-zinc-500'
+                      isSelected
+                        ? 'text-emerald-600 dark:text-emerald-400'
+                        : 'text-zinc-400 dark:text-zinc-500'
                     }`}
                   />
-                  <div className="text-xs font-bold">{a.label}</div>
-                  <div className="text-[10px] text-zinc-500 leading-tight mt-0.5 truncate">
+                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                    {a.label}
+                  </div>
+                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight mt-0.5 truncate">
                     {a.desc}
                   </div>
                 </button>
@@ -204,25 +206,25 @@ function WhoCanAccessWhatVisualizer() {
       {/* Evaluation Results Banner */}
       <div className="grid sm:grid-cols-2 gap-3 pt-2">
         {/* Step 1: Authentication Result */}
-        <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-1.5">
+        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-zinc-400 font-mono text-[11px] uppercase">
+            <span className="font-bold text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase">
               Step 1: Authentication Check
             </span>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-mono ${
                 isAuthenticated
-                  ? 'bg-emerald-500/20 text-emerald-400'
-                  : 'bg-rose-500/20 text-rose-400'
+                  ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400'
+                  : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-400'
               }`}
             >
               {isAuthenticated ? 'Authenticated ✅' : 'Unauthenticated ❌'}
             </span>
           </div>
-          <div className="text-xs text-zinc-300">
+          <div className="text-xs text-zinc-700 dark:text-zinc-300">
             {isAuthenticated ? (
               <span>
-                Identity is confirmed: <strong className="text-zinc-100">{currentRoleObj.label}</strong> is logged in.
+                Identity is confirmed: <strong className="text-zinc-900 dark:text-zinc-100">{currentRoleObj.label}</strong> is logged in.
               </span>
             ) : (
               <span>
@@ -233,18 +235,18 @@ function WhoCanAccessWhatVisualizer() {
         </div>
 
         {/* Step 2: Authorization Result */}
-        <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-1.5">
+        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-zinc-400 font-mono text-[11px] uppercase">
+            <span className="font-bold text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase">
               Step 2: Authorization Check
             </span>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-mono ${
                 !isAuthenticated
-                  ? 'bg-zinc-800 text-zinc-500'
+                  ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                   : isAuthorized
-                    ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-rose-500/20 text-rose-400'
+                    ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400'
+                    : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-400'
               }`}
             >
               {!isAuthenticated
@@ -254,18 +256,18 @@ function WhoCanAccessWhatVisualizer() {
                   : 'Denied ❌'}
             </span>
           </div>
-          <div className="text-xs text-zinc-300">
+          <div className="text-xs text-zinc-700 dark:text-zinc-300">
             {!isAuthenticated ? (
               <span>
                 Cannot evaluate permissions because the visitor is not logged in.
               </span>
             ) : isAuthorized ? (
               <span>
-                Role <strong className="text-zinc-100">{currentRoleObj.label}</strong> has permission to <strong className="text-zinc-100">{currentActionObj.label}</strong>.
+                Role <strong className="text-zinc-900 dark:text-zinc-100">{currentRoleObj.label}</strong> has permission to <strong className="text-zinc-900 dark:text-zinc-100">{currentActionObj.label}</strong>.
               </span>
             ) : (
               <span>
-                Role <strong className="text-zinc-100">{currentRoleObj.label}</strong> lacks permission to <strong className="text-zinc-100">{currentActionObj.label}</strong>.
+                Role <strong className="text-zinc-900 dark:text-zinc-100">{currentRoleObj.label}</strong> lacks permission to <strong className="text-zinc-900 dark:text-zinc-100">{currentActionObj.label}</strong>.
               </span>
             )}
           </div>
@@ -276,36 +278,36 @@ function WhoCanAccessWhatVisualizer() {
       <div
         className={`p-4 rounded-2xl border transition-all ${
           httpStatus === 200
-            ? 'bg-emerald-500/10 border-emerald-500/30'
+            ? 'bg-emerald-50/80 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-200'
             : httpStatus === 401
-              ? 'bg-rose-500/10 border-rose-500/30'
-              : 'bg-amber-500/10 border-amber-500/30'
+              ? 'bg-rose-50/80 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30 text-rose-950 dark:text-rose-200'
+              : 'bg-amber-50/80 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30 text-amber-950 dark:text-amber-200'
         }`}
       >
-        <div className="flex items-center justify-between border-b border-zinc-800/60 pb-2 mb-2">
+        <div className="flex items-center justify-between border-b border-zinc-200/60 dark:border-zinc-800/60 pb-2 mb-2">
           <div className="flex items-center gap-2">
             {httpStatus === 200 ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             ) : (
-              <XCircle className="w-4 h-4 text-rose-400" />
+              <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
             )}
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
               Final Result:
             </span>
           </div>
           <span
             className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full ${
               httpStatus === 200
-                ? 'bg-emerald-500/20 text-emerald-400'
+                ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400'
                 : httpStatus === 401
-                  ? 'bg-rose-500/20 text-rose-400'
-                  : 'bg-amber-500/20 text-amber-400'
+                  ? 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-400'
+                  : 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-400'
             }`}
           >
             HTTP {statusText}
           </span>
         </div>
-        <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+        <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
           {explanation}
         </p>
       </div>
@@ -395,13 +397,13 @@ function KnowledgeCheckQuiz() {
         return (
           <div
             key={q.id}
-            className="p-5 sm:p-6 rounded-3xl bg-zinc-950 border border-zinc-800 space-y-4"
+            className="p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-4"
           >
             <div className="flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              <span className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                 {q.id}
               </span>
-              <p className="text-sm sm:text-base font-semibold text-zinc-100 leading-snug">
+              <p className="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100 leading-snug">
                 {q.question}
               </p>
             </div>
@@ -410,17 +412,17 @@ function KnowledgeCheckQuiz() {
               {q.options.map((opt, optIdx) => {
                 const isSelected = userChoice === optIdx;
                 let btnStyle =
-                  'bg-zinc-900 border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:text-zinc-100';
+                  'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800';
 
                 if (isRevealed) {
                   if (optIdx === q.correctIndex) {
                     btnStyle =
-                      'bg-emerald-500/10 border-emerald-500 text-emerald-300 font-bold';
+                      'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold';
                   } else if (isSelected && !isCorrect) {
                     btnStyle =
-                      'bg-rose-500/10 border-rose-500 text-rose-300 font-bold';
+                      'bg-rose-50 dark:bg-rose-500/10 border-rose-500 text-rose-800 dark:text-rose-300 font-bold';
                   } else {
-                    btnStyle = 'bg-zinc-950 border-zinc-900 text-zinc-600 opacity-60';
+                    btnStyle = 'bg-zinc-50/50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900 text-zinc-400 dark:text-zinc-600 opacity-60';
                   }
                 }
 
@@ -432,7 +434,7 @@ function KnowledgeCheckQuiz() {
                   >
                     <span>{opt}</span>
                     {isRevealed && optIdx === q.correctIndex && (
-                      <Check className="w-4 h-4 text-emerald-400 shrink-0 ml-2" />
+                      <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 ml-2" />
                     )}
                   </button>
                 );
@@ -443,8 +445,8 @@ function KnowledgeCheckQuiz() {
               <div
                 className={`ml-9 p-3.5 rounded-2xl border text-xs sm:text-sm leading-relaxed ${
                   isCorrect
-                    ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-300'
+                    ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20 text-emerald-900 dark:text-emerald-300'
+                    : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200'
                 }`}
               >
                 <span className="font-bold">
@@ -468,34 +470,34 @@ export default function Topic1Foundations() {
     <div className="space-y-10">
       {/* A. Introduction */}
       <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           A. Introduction
         </h2>
-        <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
           Every multi-user application needs to protect its data. Whether you are using Instagram,
           online banking, or your college student portal, the system must answer two essential questions:
         </p>
         <div className="grid sm:grid-cols-2 gap-3 pt-1">
-          <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-1">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
+          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               1. Authentication
             </span>
-            <div className="text-base font-bold text-zinc-100">
+            <div className="text-base font-bold text-zinc-900 dark:text-zinc-100">
               &quot;Who are you?&quot;
             </div>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
               Verifying that you are really the person you claim to be.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-1">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
+          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               2. Authorization
             </span>
-            <div className="text-base font-bold text-zinc-100">
+            <div className="text-base font-bold text-zinc-900 dark:text-zinc-100">
               &quot;What are you allowed to do?&quot;
             </div>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
               Checking what actions and records you have permission to access.
             </p>
           </div>
@@ -504,18 +506,18 @@ export default function Topic1Foundations() {
 
       {/* B. Authentication */}
       <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           B. Authentication (AuthN)
         </h2>
-        <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
           <strong>Authentication</strong> is the process of verifying a user&apos;s identity. When you
           type your email and password to log in, you are proving to the system who you are.
         </p>
-        <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-2">
-          <div className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5 font-mono">
-            <Lightbulb className="w-3.5 h-3.5" /> Real-World Example
+        <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 space-y-2">
+          <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 font-mono">
+            <Lightbulb className="w-4 h-4" /> Real-World Example
           </div>
-          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
             Think of showing your <strong>passport</strong> at airport security. The officer compares
             your face to the photo and checks the official seal. This confirms your identity. It proves
             who you are.
@@ -523,25 +525,25 @@ export default function Topic1Foundations() {
         </div>
 
         <div className="space-y-2 pt-2">
-          <h3 className="text-sm font-bold text-zinc-200">
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
             Common Authentication Methods:
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
-            <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800">
-              <span className="font-bold text-zinc-200 block">Passwords</span>
-              <span className="text-[10px] text-zinc-500">Secret memorized text</span>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
+              <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Passwords</span>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Secret memorized text</span>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800">
-              <span className="font-bold text-zinc-200 block">OTPs (One-Time)</span>
-              <span className="text-[10px] text-zinc-500">6-digit SMS / app codes</span>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
+              <span className="font-bold text-zinc-900 dark:text-zinc-100 block">OTPs (One-Time)</span>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">6-digit SMS / app codes</span>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800">
-              <span className="font-bold text-zinc-200 block">Passkeys</span>
-              <span className="text-[10px] text-zinc-500">Hardware device credentials</span>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
+              <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Passkeys</span>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Hardware credentials</span>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800">
-              <span className="font-bold text-zinc-200 block">Biometrics</span>
-              <span className="text-[10px] text-zinc-500">Fingerprint or Face ID</span>
+            <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs">
+              <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Biometrics</span>
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Fingerprint or Face ID</span>
             </div>
           </div>
         </div>
@@ -549,39 +551,39 @@ export default function Topic1Foundations() {
 
       {/* C. Authorization */}
       <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           C. Authorization (AuthZ)
         </h2>
-        <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
           <strong>Authorization</strong> is the process of deciding what an authenticated user is permitted
           to access or modify.
         </p>
-        <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
           Why isn&apos;t authentication enough on its own? Because logging in only tells the application
           <em> who</em> you are, not what you should be allowed to touch. An intern and the company CEO
           can both log into the same corporate portal, but they should not have the same access permissions.
         </p>
 
-        <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
+        <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
             Example: A Company Application
           </span>
           <div className="grid sm:grid-cols-3 gap-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800">
-              <span className="font-bold text-zinc-200 block">Employee</span>
-              <span className="text-zinc-400 mt-1 block">
+            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+              <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Employee</span>
+              <span className="text-zinc-600 dark:text-zinc-400 mt-1 block">
                 Can view company policies and their own payslip.
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800">
-              <span className="font-bold text-zinc-200 block">Manager</span>
-              <span className="text-zinc-400 mt-1 block">
+            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+              <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Manager</span>
+              <span className="text-zinc-600 dark:text-zinc-400 mt-1 block">
                 Can view and approve time-off requests for their team.
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800">
-              <span className="font-bold text-zinc-200 block">Administrator</span>
-              <span className="text-zinc-400 mt-1 block">
+            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+              <span className="font-bold text-zinc-900 dark:text-zinc-100 block">Administrator</span>
+              <span className="text-zinc-600 dark:text-zinc-400 mt-1 block">
                 Can add or delete user accounts and manage system settings.
               </span>
             </div>
@@ -591,46 +593,46 @@ export default function Topic1Foundations() {
 
       {/* D. Comparison Table */}
       <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           D. Authentication vs Authorization
         </h2>
-        <p className="text-sm text-zinc-300">
+        <p className="text-sm text-zinc-700 dark:text-zinc-300 font-normal">
           Here is a quick side-by-side comparison to help you remember the difference:
         </p>
-        <div className="overflow-x-auto rounded-2xl border border-zinc-800">
+        <div className="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xs">
           <table className="w-full text-left text-xs sm:text-sm">
-            <thead className="bg-zinc-900 border-b border-zinc-800 text-zinc-400 font-mono text-[11px] uppercase tracking-wider">
+            <thead className="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 font-mono text-[11px] uppercase tracking-wider">
               <tr>
                 <th className="p-3.5">Feature</th>
-                <th className="p-3.5 text-emerald-400 font-bold">Authentication (AuthN)</th>
-                <th className="p-3.5 text-zinc-100 font-bold">Authorization (AuthZ)</th>
+                <th className="p-3.5 text-emerald-700 dark:text-emerald-400 font-bold">Authentication (AuthN)</th>
+                <th className="p-3.5 text-zinc-900 dark:text-zinc-100 font-bold">Authorization (AuthZ)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/80 bg-zinc-950 text-zinc-300">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium">
               <tr>
-                <td className="p-3.5 font-bold text-zinc-200">Core Question</td>
+                <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">Core Question</td>
                 <td className="p-3.5">&quot;Who are you?&quot;</td>
                 <td className="p-3.5">&quot;What are you allowed to do?&quot;</td>
               </tr>
               <tr>
-                <td className="p-3.5 font-bold text-zinc-200">Primary Purpose</td>
+                <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">Primary Purpose</td>
                 <td className="p-3.5">Verifies user identity</td>
                 <td className="p-3.5">Determines access permissions</td>
               </tr>
               <tr>
-                <td className="p-3.5 font-bold text-zinc-200">Order of Execution</td>
+                <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">Order of Execution</td>
                 <td className="p-3.5">Happens <strong>first</strong></td>
                 <td className="p-3.5">Happens <strong>second</strong> (after identity is known)</td>
               </tr>
               <tr>
-                <td className="p-3.5 font-bold text-zinc-200">Real-World Analogy</td>
+                <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">Real-World Analogy</td>
                 <td className="p-3.5">Showing your passport at border control</td>
                 <td className="p-3.5">Showing your boarding pass at the plane gate</td>
               </tr>
               <tr>
-                <td className="p-3.5 font-bold text-zinc-200">HTTP Status Code</td>
-                <td className="p-3.5 font-mono text-emerald-400">401 Unauthorized</td>
-                <td className="p-3.5 font-mono text-rose-400">403 Forbidden</td>
+                <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">HTTP Status Code</td>
+                <td className="p-3.5 font-mono text-emerald-700 dark:text-emerald-400 font-bold">401 Unauthorized</td>
+                <td className="p-3.5 font-mono text-rose-700 dark:text-rose-400 font-bold">403 Forbidden</td>
               </tr>
             </tbody>
           </table>
@@ -644,10 +646,10 @@ export default function Topic1Foundations() {
 
       {/* E. How They Work Together */}
       <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           E. How They Work Together (Alice&apos;s Scenario)
         </h2>
-        <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
           Let&apos;s trace what happens when an employee named <strong>Alice</strong> tries to access
           a sensitive billing spreadsheet:
         </p>
@@ -682,14 +684,14 @@ export default function Topic1Foundations() {
           ].map((item) => (
             <div
               key={item.num}
-              className="p-3.5 sm:p-4 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-start gap-3.5"
+              className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs flex items-start gap-3.5"
             >
-              <span className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              <span className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                 {item.num}
               </span>
               <div>
-                <h4 className="text-sm font-bold text-zinc-100">{item.title}</h4>
-                <p className="text-xs sm:text-sm text-zinc-400 mt-0.5 leading-relaxed">
+                <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{item.title}</h4>
+                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-0.5 leading-relaxed font-normal">
                   {item.desc}
                 </p>
               </div>
@@ -700,63 +702,63 @@ export default function Topic1Foundations() {
 
       {/* F. HTTP Status Codes */}
       <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           F. HTTP Status Codes: 401 vs 403
         </h2>
-        <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
           When an action fails, web servers use standard HTTP status codes to tell the client what went wrong.
           Understanding these two codes is essential for any developer:
         </p>
 
         <div className="grid sm:grid-cols-2 gap-3 pt-1">
-          <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-2">
+          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-base font-bold font-mono text-rose-400">
+              <span className="text-base font-bold font-mono text-rose-600 dark:text-rose-400">
                 HTTP 401 Unauthorized
               </span>
-              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">
+              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-500/10 text-rose-800 dark:text-rose-400 border border-rose-200 dark:border-rose-500/20 font-bold">
                 AuthN Failed
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
               <strong>Meaning:</strong> &quot;We don&apos;t know who you are.&quot;
             </p>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               The request did not provide valid login credentials, or your session has expired. You need
               to log in first.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-2">
+          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-base font-bold font-mono text-amber-400">
+              <span className="text-base font-bold font-mono text-amber-600 dark:text-amber-400">
                 HTTP 403 Forbidden
               </span>
-              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20 font-bold">
                 AuthZ Failed
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
               <strong>Meaning:</strong> &quot;We know who you are, but you cannot touch this.&quot;
             </p>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               You are successfully authenticated, but your account or role does not have permission
               to view or edit this resource.
             </p>
           </div>
         </div>
 
-        <div className="p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800 text-xs text-zinc-400 leading-relaxed">
-          <span className="font-bold text-zinc-200">Security Note on 404: </span>
-          Sometimes, an application will return <code className="text-zinc-200">404 Not Found</code> instead
-          of <code className="text-zinc-200">403 Forbidden</code>. This is done intentionally to prevent
+        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          <span className="font-bold text-zinc-900 dark:text-zinc-200">Security Note on 404: </span>
+          Sometimes, an application will return <code className="text-zinc-900 dark:text-zinc-100 font-bold">404 Not Found</code> instead
+          of <code className="text-zinc-900 dark:text-zinc-100 font-bold">403 Forbidden</code>. This is done intentionally to prevent
           attackers from guessing whether a secret file exists or not.
         </div>
       </section>
 
       {/* G. Common Misconceptions */}
       <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           G. Common Misconceptions
         </h2>
         <div className="grid gap-3">
@@ -776,14 +778,14 @@ export default function Topic1Foundations() {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-1.5"
+              className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1.5"
             >
-              <div className="flex items-center gap-2 text-rose-400 text-xs font-bold">
+              <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 text-xs font-bold">
                 <XCircle className="w-4 h-4 shrink-0" />
                 <span>Myth: &quot;{item.myth}&quot;</span>
               </div>
-              <div className="text-xs sm:text-sm text-zinc-300 pl-6 leading-relaxed">
-                <strong className="text-emerald-400">Fact: </strong>
+              <div className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 pl-6 leading-relaxed font-medium">
+                <strong className="text-emerald-700 dark:text-emerald-400 font-bold">Fact: </strong>
                 {item.fact}
               </div>
             </div>
@@ -793,13 +795,13 @@ export default function Topic1Foundations() {
 
       {/* H. Knowledge Check */}
       <section className="space-y-4 pt-2">
-        <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
-          <HelpCircle className="w-5 h-5 text-emerald-400" />
-          <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+        <div className="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3">
+          <HelpCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
             H. Knowledge Check
           </h2>
         </div>
-        <p className="text-sm text-zinc-400">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 font-normal">
           Test your understanding with these 4 quick conceptual questions. Click an answer to check yourself!
         </p>
         <KnowledgeCheckQuiz />
