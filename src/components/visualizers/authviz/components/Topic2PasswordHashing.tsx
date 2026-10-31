@@ -2,7 +2,6 @@
 
 import React, { useState, useId } from 'react';
 import {
-  Key,
   ShieldCheck,
   Lock,
   RefreshCw,
@@ -19,13 +18,12 @@ import {
   Database,
   Cpu,
   Layers,
-  Users,
-  Sliders,
-  AlertTriangle,
+  LogIn,
+  UserPlus,
 } from 'lucide-react';
 
 // ============================================================================
-// Interactive Visualizer: "Interactive Password Hashing Lab"
+// Deterministic Simulated Hash Helper (Runs locally in browser)
 // ============================================================================
 function generateRandomSalt(): string {
   const chars = '0123456789abcdef';
@@ -36,8 +34,7 @@ function generateRandomSalt(): string {
   return salt;
 }
 
-// Pseudo-hash generator for educational simulation (deterministic from input)
-function simulateArgon2Hash(password: string, salt: string, memoryMb: number, iterations: number): string {
+function simulateArgon2Hash(password: string, salt: string): string {
   let seed = 0;
   for (let i = 0; i < password.length; i++) {
     seed = (seed * 31 + password.charCodeAt(i)) >>> 0;
@@ -45,228 +42,145 @@ function simulateArgon2Hash(password: string, salt: string, memoryMb: number, it
   for (let i = 0; i < salt.length; i++) {
     seed = (seed * 17 + salt.charCodeAt(i)) >>> 0;
   }
-  seed = (seed ^ (memoryMb * 1024)) >>> 0;
-  seed = (seed ^ (iterations * 97)) >>> 0;
-
   const hexSeed = seed.toString(16).padStart(8, '0');
   const part1 = btoa(password + salt).replace(/[^a-zA-Z0-9]/g, '').slice(0, 16);
   const part2 = btoa(salt + hexSeed).replace(/[^a-zA-Z0-9]/g, '').slice(0, 16);
 
-  return `$argon2id$v=19$m=${memoryMb * 1024},t=${iterations},p=4$${btoa(salt).slice(0, 12)}$${part1}${part2}`;
+  return `$argon2id$v=19$m=65536,t=3,p=4$${btoa(salt).slice(0, 12)}$${part1}${part2}`;
 }
 
+// ============================================================================
+// Interactive Visualizer: 3 Core Password Experiments
+// ============================================================================
 export function PasswordHashingSimulator() {
-  const inputId = useId();
-  const [activeTab, setActiveTab] = useState<'single' | 'two-users'>('single');
+  const [activeExperiment, setActiveExperiment] = useState<'salts' | 'speed' | 'workflow'>('salts');
 
-  // Single user state
-  const [samplePassword, setSamplePassword] = useState<string>('Student#2026');
-  const [userSalt, setUserSalt] = useState<string>('e4b7c29a8f10d35a');
-  const [memoryCost, setMemoryCost] = useState<number>(64); // in MB
-  const [iterations, setIterations] = useState<number>(3);
-
-  // Two users comparison state
+  // Experiment 1 State (Salts)
   const sharedPassword = 'SecretPassword#123';
   const [aliceSalt, setAliceSalt] = useState<string>('a1b2c3d4e5f67890');
   const [bobSalt, setBobSalt] = useState<string>('9876543210fedcba');
 
-  const presetPasswords = ['Student#2026', 'BlueSky!42', 'CoffeeCup@99'];
+  const aliceHash = simulateArgon2Hash(sharedPassword, aliceSalt);
+  const bobHash = simulateArgon2Hash(sharedPassword, bobSalt);
 
-  const currentSingleHash = simulateArgon2Hash(samplePassword, userSalt, memoryCost, iterations);
-  const aliceHash = simulateArgon2Hash(sharedPassword, aliceSalt, 64, 3);
-  const bobHash = simulateArgon2Hash(sharedPassword, bobSalt, 64, 3);
+  // Experiment 3 State (Workflow: Registration & Login)
+  const [registeredPassword, setRegisteredPassword] = useState<string>('Student#2026');
+  const [registeredSalt, setRegisteredSalt] = useState<string>('c7e49b1a0f82d35a');
+  const [isRegistered, setIsRegistered] = useState<boolean>(true);
+
+  const [loginInput, setLoginInput] = useState<string>('Student#2026');
+  const [loginResult, setLoginResult] = useState<'idle' | 'success' | 'failure'>('idle');
+
+  const storedHash = simulateArgon2Hash(registeredPassword, registeredSalt);
+
+  const handleRegisterNew = (newPwd: string) => {
+    const newSalt = generateRandomSalt();
+    setRegisteredPassword(newPwd);
+    setRegisteredSalt(newSalt);
+    setIsRegistered(true);
+    setLoginInput(newPwd);
+    setLoginResult('idle');
+  };
+
+  const handleLoginAttempt = () => {
+    if (loginInput === registeredPassword) {
+      setLoginResult('success');
+    } else {
+      setLoginResult('failure');
+    }
+  };
+
+  const loginInputId = useId();
 
   return (
     <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 sm:p-8 space-y-6 shadow-sm dark:shadow-xl">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800/80 pb-4">
-        <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" /> Interactive Demonstration
+      {/* Header & Experiment Selector */}
+      <div className="space-y-4 border-b border-zinc-200 dark:border-zinc-800/80 pb-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" /> Interactive Demonstration
+            </span>
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-1">
+              Password Security Lab: 3 Key Experiments
+            </h3>
+          </div>
+          <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
+            Local browser simulation &bull; Demo data only
           </span>
-          <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-1">
-            Password Hashing &amp; Salting Explorer
-          </h3>
         </div>
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs">
+
+        {/* Experiment Navigation Tabs */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
           <button
-            onClick={() => setActiveTab('single')}
-            className={`px-3 py-1.5 rounded-lg font-medium transition ${
-              activeTab === 'single'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs font-bold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+            onClick={() => setActiveExperiment('salts')}
+            className={`p-3 rounded-2xl border text-left transition-all ${
+              activeExperiment === 'salts'
+                ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-500 text-zinc-900 dark:text-zinc-100 font-bold shadow-xs'
+                : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-900'
             }`}
           >
-            1. Try Hashing
+            <div className="font-bold flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              Experiment 1
+            </div>
+            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+              Unique Salts in Action
+            </div>
           </button>
+
           <button
-            onClick={() => setActiveTab('two-users')}
-            className={`px-3 py-1.5 rounded-lg font-medium transition ${
-              activeTab === 'two-users'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs font-bold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+            onClick={() => setActiveExperiment('speed')}
+            className={`p-3 rounded-2xl border text-left transition-all ${
+              activeExperiment === 'speed'
+                ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-500 text-zinc-900 dark:text-zinc-100 font-bold shadow-xs'
+                : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-900'
             }`}
           >
-            2. Two Users with Same Password
+            <div className="font-bold flex items-center gap-1.5">
+              <Cpu className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              Experiment 2
+            </div>
+            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+              Fast vs. Password Hashing
+            </div>
+          </button>
+
+          <button
+            onClick={() => setActiveExperiment('workflow')}
+            className={`p-3 rounded-2xl border text-left transition-all ${
+              activeExperiment === 'workflow'
+                ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-500 text-zinc-900 dark:text-zinc-100 font-bold shadow-xs'
+                : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-900'
+            }`}
+          >
+            <div className="font-bold flex items-center gap-1.5">
+              <LogIn className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              Experiment 3
+            </div>
+            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+              Register &amp; Verify Login
+            </div>
           </button>
         </div>
       </div>
 
-      {activeTab === 'single' ? (
-        <div className="space-y-5">
-          {/* Preset Buttons */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label htmlFor={inputId} className="text-xs font-bold uppercase font-mono tracking-wider text-zinc-600 dark:text-zinc-400">
-                Sample Password Input (Demo Only)
-              </label>
-              <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                Never enter real personal passwords
-              </span>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <input
-                id={inputId}
-                type="text"
-                value={samplePassword}
-                onChange={(e) => setSamplePassword(e.target.value)}
-                placeholder="Enter sample password..."
-                className="px-3.5 py-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm font-mono focus:outline-hidden focus:border-emerald-500 w-full sm:w-64"
-              />
-              <div className="flex flex-wrap gap-1.5">
-                {presetPasswords.map((pwd) => (
-                  <button
-                    key={pwd}
-                    onClick={() => setSamplePassword(pwd)}
-                    className={`px-2.5 py-1.5 rounded-lg text-xs font-mono transition ${
-                      samplePassword === pwd
-                        ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-bold border border-emerald-300 dark:border-emerald-500/30'
-                        : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-                    }`}
-                  >
-                    &quot;{pwd}&quot;
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Salt Row */}
-          <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 font-mono uppercase">
-                  User&apos;s Cryptographic Salt
-                </span>
-              </div>
-              <button
-                onClick={() => setUserSalt(generateRandomSalt())}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition"
-              >
-                <RefreshCw className="w-3 h-3" /> Generate New Salt
-              </button>
-            </div>
-            <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800/80 font-mono text-xs text-emerald-700 dark:text-emerald-400 break-all">
-              {userSalt}
-            </div>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal">
-              A random salt is created specifically for this user. It is stored publicly alongside the hash in the database.
-            </p>
-          </div>
-
-          {/* Argon2id Parameters */}
-          <div className="grid sm:grid-cols-2 gap-3">
-            <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="font-bold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
-                  <Database className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> Memory Cost (RAM)
-                </span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400">{memoryCost} MB</span>
-              </div>
-              <div className="flex gap-2 pt-1">
-                {[19, 48, 64].map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => setMemoryCost(m)}
-                    className={`flex-1 py-1 rounded-lg text-xs font-mono font-medium transition ${
-                      memoryCost === m
-                        ? 'bg-emerald-600 text-white font-bold'
-                        : 'bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400'
-                    }`}
-                  >
-                    {m} MB
-                  </button>
-                ))}
-              </div>
-              <p className="text-[11px] text-zinc-500 dark:text-zinc-400 pt-0.5">
-                Forces RAM allocation to resist GPU parallel guessing attacks.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="font-bold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
-                  <Cpu className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> Time Cost (Passes)
-                </span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400">{iterations} Iterations</span>
-              </div>
-              <div className="flex gap-2 pt-1">
-                {[2, 3, 4].map((t) => (
-                  <button
-                    key={t}
-                    onClick={() => setIterations(t)}
-                    className={`flex-1 py-1 rounded-lg text-xs font-mono font-medium transition ${
-                      iterations === t
-                        ? 'bg-emerald-600 text-white font-bold'
-                        : 'bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400'
-                    }`}
-                  >
-                    {t} Passes
-                  </button>
-                ))}
-              </div>
-              <p className="text-[11px] text-zinc-500 dark:text-zinc-400 pt-0.5">
-                Repeats computation rounds to deliberately increase processing time.
-              </p>
-            </div>
-          </div>
-
-          {/* Generated Hash Display */}
-          <div className="p-4 rounded-2xl bg-emerald-50/60 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono flex items-center gap-1.5">
-                <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Stored Argon2id Hash String:
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-200 dark:bg-emerald-500/20 text-emerald-900 dark:text-emerald-300 font-bold">
-                Safe to store in DB
-              </span>
-            </div>
-            <div className="p-3 rounded-xl bg-white dark:bg-zinc-950 border border-emerald-200 dark:border-emerald-500/20 font-mono text-xs text-zinc-900 dark:text-zinc-100 break-all leading-relaxed">
-              {currentSingleHash}
-            </div>
-            <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed font-medium">
-              Notice how the output safely encodes the algorithm name (<code className="font-mono text-emerald-700 dark:text-emerald-400">$argon2id</code>),
-              parameters (<code className="font-mono text-emerald-700 dark:text-emerald-400">m={memoryCost * 1024}, t={iterations}</code>), the salt, and the hash into one standard string.
-            </p>
-          </div>
-        </div>
-      ) : (
-        /* Two Users Tab */
+      {/* Experiment 1: Unique Salts */}
+      {activeExperiment === 'salts' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-2xl bg-blue-50/60 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 space-y-1">
-            <h4 className="text-xs font-bold uppercase font-mono text-blue-900 dark:text-blue-300">
-              Scenario: Alice and Bob choose the EXACT SAME password
-            </h4>
-            <p className="text-xs text-blue-800 dark:text-blue-200 leading-relaxed">
-              Both users registered with the common password <code className="font-mono font-bold">&quot;{sharedPassword}&quot;</code>.
-              Observe how unique cryptographic salts prevent identical hashes.
+          <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1 text-xs">
+            <span className="font-bold text-zinc-900 dark:text-zinc-100 uppercase font-mono">
+              Hypothesis:
+            </span>
+            <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              If two users choose the exact same password, will their stored hashes look identical?
+              Observe how adding a unique random salt ensures two completely distinct hash strings.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             {/* Alice */}
-            <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-3">
               <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold text-xs">
@@ -287,16 +201,16 @@ export function PasswordHashingSimulator() {
                   Password: <span className="font-bold text-zinc-900 dark:text-zinc-100">&quot;{sharedPassword}&quot;</span>
                 </div>
                 <div className="text-zinc-600 dark:text-zinc-400">
-                  Salt: <span className="font-bold text-emerald-600 dark:text-emerald-400">{aliceSalt}</span>
+                  Unique Salt: <span className="font-bold text-emerald-600 dark:text-emerald-400">{aliceSalt}</span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 break-all text-[11px] text-zinc-800 dark:text-zinc-200">
+                <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 break-all text-[11px] text-zinc-800 dark:text-zinc-200">
                   {aliceHash}
                 </div>
               </div>
             </div>
 
             {/* Bob */}
-            <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-3">
               <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-300 flex items-center justify-center font-bold text-xs">
@@ -317,25 +231,206 @@ export function PasswordHashingSimulator() {
                   Password: <span className="font-bold text-zinc-900 dark:text-zinc-100">&quot;{sharedPassword}&quot;</span>
                 </div>
                 <div className="text-zinc-600 dark:text-zinc-400">
-                  Salt: <span className="font-bold text-emerald-600 dark:text-emerald-400">{bobSalt}</span>
+                  Unique Salt: <span className="font-bold text-emerald-600 dark:text-emerald-400">{bobSalt}</span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 break-all text-[11px] text-zinc-800 dark:text-zinc-200">
+                <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 break-all text-[11px] text-zinc-800 dark:text-zinc-200">
                   {bobHash}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Key Insight Banner */}
           <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-xs text-zinc-800 dark:text-zinc-200 space-y-1">
             <span className="font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              Key Cryptographic Insight:
+              Key Learning:
             </span>
             <p className="leading-relaxed">
-              Even though Alice and Bob entered the exact same password, their stored hashes are completely different.
-              An attacker who steals the database cannot tell that they share the same password, and precomputed rainbow tables are completely useless!
+              Alice and Bob share the exact same password, but their stored hashes look completely unrelated.
+              An attacker who steals the database cannot tell that they share the same password, and precomputed lookup tables are completely neutralized.
             </p>
+          </div>
+        </div>
+      )}
+
+      {/* Experiment 2: Fast vs Password Hashing */}
+      {activeExperiment === 'speed' && (
+        <div className="space-y-4">
+          <div className="grid sm:grid-cols-2 gap-4">
+            {/* Fast Hashing */}
+            <div className="p-5 rounded-2xl bg-rose-50/50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold uppercase text-rose-800 dark:text-rose-400">
+                  Fast Hashing (e.g., SHA-256)
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 font-bold">
+                  Unsuitable for Passwords
+                </span>
+              </div>
+              <div className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300">
+                <p>
+                  <strong>Designed For:</strong> File checksums, data integrity, and digital signatures.
+                </p>
+                <p>
+                  <strong>Execution Time:</strong> Under 1 microsecond (nanoseconds).
+                </p>
+                <p>
+                  <strong>Why dangerous for passwords:</strong> Because it is fast, an attacker who obtains stolen hashes can test millions of guesses quickly using automated tools.
+                </p>
+              </div>
+            </div>
+
+            {/* Password Hashing */}
+            <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold uppercase text-emerald-800 dark:text-emerald-400">
+                  Password Hashing (e.g., Argon2id)
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-bold">
+                  Recommended Standard
+                </span>
+              </div>
+              <div className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300">
+                <p>
+                  <strong>Designed For:</strong> Secure user authentication and credential storage.
+                </p>
+                <p>
+                  <strong>Execution Time:</strong> Deliberately delayed (~100 to 300 ms) + physical RAM cost.
+                </p>
+                <p>
+                  <strong>Why effective:</strong> A fraction of a second is unnoticeable to a human logging in once, but makes mass automated brute-force attacks impractical.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <span className="font-bold text-zinc-900 dark:text-zinc-100">Takeaway: </span>
+            Speed is a feature for downloading files, but a critical vulnerability for storing passwords. Password algorithms must be deliberately slow and resource-intensive.
+          </div>
+        </div>
+      )}
+
+      {/* Experiment 3: Registration and Login Workflow */}
+      {activeExperiment === 'workflow' && (
+        <div className="space-y-5">
+          {/* Phase 1: Registration */}
+          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-3">
+            <div className="flex items-center gap-2">
+              <UserPlus className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <h4 className="text-xs font-bold uppercase font-mono text-zinc-900 dark:text-zinc-100">
+                Step 1: Registration (Creating the Hash)
+              </h4>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">Choose Demo Password:</span>
+              {['Student#2026', 'BlueSky!42', 'MyDogRex99'].map((pwd) => (
+                <button
+                  key={pwd}
+                  onClick={() => handleRegisterNew(pwd)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-mono transition ${
+                    registeredPassword === pwd
+                      ? 'bg-emerald-600 text-white font-bold'
+                      : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800'
+                  }`}
+                >
+                  &quot;{pwd}&quot;
+                </button>
+              ))}
+            </div>
+
+            {/* Stored Record Preview */}
+            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-mono space-y-1">
+              <div className="text-zinc-500">Database Record (users table):</div>
+              <div className="text-zinc-700 dark:text-zinc-300">
+                username: <span className="text-zinc-900 dark:text-zinc-100 font-bold">&quot;demo_student&quot;</span>
+              </div>
+              <div className="text-zinc-700 dark:text-zinc-300">
+                salt: <span className="text-emerald-600 dark:text-emerald-400 font-bold">&quot;{registeredSalt}&quot;</span>
+              </div>
+              <div className="text-zinc-700 dark:text-zinc-300 truncate">
+                storedHash: <span className="text-zinc-900 dark:text-zinc-100 font-bold">{storedHash}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Phase 2: Login Verification */}
+          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-3">
+            <div className="flex items-center gap-2">
+              <LogIn className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <h4 className="text-xs font-bold uppercase font-mono text-zinc-900 dark:text-zinc-100">
+                Step 2: Login Verification (Checking the Password)
+              </h4>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor={loginInputId} className="text-xs font-medium text-zinc-600 dark:text-zinc-400 block">
+                Submitted Password to Verify:
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <input
+                  id={loginInputId}
+                  type="text"
+                  value={loginInput}
+                  onChange={(e) => {
+                    setLoginInput(e.target.value);
+                    setLoginResult('idle');
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 text-xs font-mono focus:outline-hidden focus:border-emerald-500 w-full sm:w-60"
+                  placeholder="Type submitted password..."
+                />
+                <button
+                  onClick={handleLoginAttempt}
+                  className="px-4 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                >
+                  Verify Submitted Password
+                </button>
+                <button
+                  onClick={() => {
+                    setLoginInput('IncorrectPassword#99');
+                    setLoginResult('idle');
+                  }}
+                  className="px-3 py-1.5 rounded-xl text-xs font-medium bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition"
+                >
+                  Fill Wrong Password
+                </button>
+              </div>
+            </div>
+
+            {/* Login Outcome Result */}
+            {loginResult !== 'idle' && (
+              <div
+                className={`p-4 rounded-xl border text-xs space-y-1 transition-all ${
+                  loginResult === 'success'
+                    ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-200'
+                    : 'bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30 text-rose-950 dark:text-rose-200'
+                }`}
+              >
+                <div className="flex items-center justify-between font-bold">
+                  <div className="flex items-center gap-1.5">
+                    {loginResult === 'success' ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                    )}
+                    <span>
+                      {loginResult === 'success'
+                        ? 'HTTP 200 OK — Password Verified Successfully!'
+                        : 'HTTP 401 Unauthorized — Password Verification Failed!'}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] uppercase">
+                    {loginResult === 'success' ? 'Access Granted' : 'Access Denied'}
+                  </span>
+                </div>
+                <p className="leading-relaxed">
+                  {loginResult === 'success'
+                    ? 'The library re-computed the hash using the stored salt and parameters; the result matched the stored hash perfectly in constant time.'
+                    : 'The submitted password does not match the stored hash. The server denies access without revealing any internal details.'}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -379,7 +474,7 @@ const TOPIC2_QUIZ: QuizQuestion[] = [
     ],
     correctIndex: 1,
     explanation:
-      'A unique salt ensures that identical passwords produce completely different hash strings. This prevents attackers from recognizing common passwords or using precomputed rainbow tables.',
+      'A unique salt ensures that identical passwords produce completely different hash strings. This prevents attackers from recognizing common passwords or using precomputed lookup tables.',
   },
   {
     id: 3,
@@ -387,12 +482,12 @@ const TOPIC2_QUIZ: QuizQuestion[] = [
     options: [
       'SHA-256 is an obsolete algorithm that is no longer used anywhere on the internet.',
       'SHA-256 produces hashes that are too short to store in SQL databases.',
-      'Modern hardware and graphics cards can compute billions of SHA-256 hashes per second, making brute-force guessing very fast.',
+      'Fast algorithms execute in nanoseconds, allowing attackers to test millions of password guesses quickly.',
       'SHA-256 only works on numbers and cannot hash text strings.',
     ],
     correctIndex: 2,
     explanation:
-      'SHA-256 was designed for rapid data integrity checks. Because it runs in nanoseconds, attackers can test hundreds of millions of guesses per second on modern hardware. Password hashing needs to be deliberately slow.',
+      'SHA-256 was designed for rapid data integrity checks. Because it runs in nanoseconds, attackers can test millions of guesses quickly. Password hashing needs to be deliberately slow.',
   },
   {
     id: 4,
@@ -403,7 +498,7 @@ const TOPIC2_QUIZ: QuizQuestion[] = [
     ],
     correctIndex: 1,
     explanation:
-      'Salts are not secret! They are routinely stored in the database right next to the hash. Their purpose is uniqueness, not secrecy. (A secret key stored separately is called a pepper).',
+      'Salts are not secret! They are stored in the database right next to the hash. Their purpose is uniqueness, not secrecy. (A secret key stored separately is called a pepper).',
   },
 ];
 
@@ -501,7 +596,7 @@ export default function Topic2PasswordHashing() {
 
   const sampleNodeCode = `import { hash, verify } from '@node-rs/argon2';
 
-// Recommended OWASP Argon2id Parameters for modern web servers:
+// Recommended configuration based on server capacity and OWASP guidelines:
 const ARGON2_CONFIG = {
   memoryCost: 65536, // 64 MB of RAM required per calculation
   timeCost: 3,       // 3 computational passes
@@ -509,17 +604,15 @@ const ARGON2_CONFIG = {
   outputLen: 32,     // 32-byte final hash output
 };
 
-// 1. User Registration: Hash password with unique automatic salt
+// 1. Registration: Hash password with unique automatic salt
 export async function registerUserPassword(plaintext: string): Promise<string> {
-  // The library automatically generates a cryptographically random salt
-  // and encodes the parameters directly into the output string:
+  // Generates a cryptographically random salt and encodes parameters into the hash string:
   return await hash(plaintext, ARGON2_CONFIG);
 }
 
-// 2. User Login: Verify submitted password against stored hash
+// 2. Login: Verify submitted password against stored hash
 export async function verifyUserLogin(submittedPassword: string, storedHash: string): Promise<boolean> {
-  // Extracts the salt and parameters from the storedHash and computes
-  // a constant-time comparison to protect against timing attacks:
+  // Extracts salt and parameters from storedHash and verifies in constant time:
   return await verify(storedHash, submittedPassword);
 }`;
 
@@ -531,27 +624,27 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
 
   return (
     <div className="space-y-10">
-      {/* A. Why Password Hashing Matters */}
+      {/* A. Why Plaintext Password Storage Is Dangerous */}
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-          A. Why Password Hashing Matters
+          A. Why Storing Plaintext Passwords Is Dangerous
         </h2>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          When users register on a website, they trust the application with their credentials.
-          Unfortunately, database leaks, misconfigured cloud backups, and insider threats are an everyday reality in software engineering.
+          When users register on a website, they trust the application to safeguard their credentials.
+          Unfortunately, database leaks, misconfigured cloud storage, and security breaches happen regularly in the real world.
         </p>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
           If an application stores passwords in <strong>plaintext</strong> (plain, readable text like <code className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 font-mono text-zinc-900 dark:text-zinc-100">&quot;mypassword123&quot;</code>),
           anyone who gains unauthorized access to the database immediately sees every user&apos;s password.
-          Because most users reuse passwords across their email, personal social accounts, and banking services, a single plaintext database leak puts their entire digital life at risk.
+          Because many people reuse passwords across personal email, banking, and social media accounts, a single plaintext database breach can compromise a user&apos;s entire digital identity.
         </p>
         <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 space-y-2">
           <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 font-mono">
             <Lightbulb className="w-4 h-4" /> Everyday Analogy
           </div>
           <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
-            Storing passwords in plaintext is like writing the PIN code to your front door on a sticky note and pasting it to your front door.
-            Secure password hashing transforms that PIN into a permanent, scrambled lock that only matches when the original key is entered.
+            Storing passwords in plaintext is like writing the PIN code to your home on a sticky note and pasting it to the front door.
+            Secure password hashing transforms that secret into a permanent, scrambled digital lock that cannot be reversed.
           </p>
         </div>
       </section>
@@ -562,7 +655,7 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
           B. What Is Password Hashing?
         </h2>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          To protect passwords, we use a <strong>one-way cryptographic hash function</strong>. Here is how the key terms connect:
+          To protect passwords, applications use a <strong>one-way cryptographic hash function</strong>. Here is how the key terms connect:
         </p>
 
         <div className="grid sm:grid-cols-2 gap-3 pt-1">
@@ -586,7 +679,7 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
               One-Way Math Engine
             </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              A specialized mathematical algorithm that transforms any input into a scrambled, fixed-length output.
+              A specialized mathematical algorithm that takes input data and produces a scrambled, fixed-length output string.
             </p>
           </div>
 
@@ -598,53 +691,33 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
               $argon2id$v=19$m=65536...
             </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              The scrambled string stored in the database. It is safe to store because it cannot be reversed.
+              The scrambled string stored in the database. It is safe to store because it cannot be turned back into the password.
             </p>
           </div>
 
           <div className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              4. One-Way Transformation
+              4. Hashing vs. Encryption
             </span>
             <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
-              Strictly Irreversible
+              One-Way vs. Two-Way
             </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              Unlike <em>encryption</em> (which can be decrypted using a secret key), a cryptographic hash mathematically cannot be turned back into the original password.
+              <strong>Encryption</strong> is two-way: data is scrambled, but can be decrypted using a secret key.
+              <strong> Hashing</strong> is strictly one-way: there is no key that can unhash the string.
             </p>
           </div>
         </div>
-
-        {/* Example Box */}
-        <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs">
-          <span className="font-bold text-zinc-900 dark:text-zinc-100 font-mono uppercase">
-            Example (The Avalanche Effect):
-          </span>
-          <div className="grid sm:grid-cols-2 gap-2 font-mono">
-            <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 space-y-1">
-              <span className="text-zinc-500 block">Input: &quot;Cat123&quot;</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-bold block truncate">Hash: 7d2f9b84a1e...</span>
-            </div>
-            <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 space-y-1">
-              <span className="text-zinc-500 block">Input: &quot;Cat124&quot; (1 char difference)</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-bold block truncate">Hash: a1c4e788fb2...</span>
-            </div>
-          </div>
-          <p className="text-zinc-600 dark:text-zinc-400 text-[11px] leading-relaxed">
-            Changing even a single letter completely scrambles the output hash. An attacker cannot guess patterns.
-          </p>
-        </div>
       </section>
 
-      {/* C. Understanding Salt and Pepper */}
+      {/* C. Salt and Pepper */}
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
           C. Understanding Salt and Pepper
         </h2>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          If you only hash the raw password, a major security weakness emerges: <strong>identical passwords produce identical hashes</strong>.
-          If Alice and Bob both choose <code className="font-mono text-zinc-900 dark:text-zinc-100">&quot;password123&quot;</code>, their database records would look identical!
-          Attackers could also precalculate tables of billions of common hashes (known as <em>rainbow tables</em>) to crack passwords instantly.
+          If you only hash the raw password, an attacker can spot patterns: <strong>identical passwords produce identical hashes</strong>.
+          Two techniques protect against this:
         </p>
 
         <div className="grid sm:grid-cols-2 gap-4 pt-1">
@@ -652,15 +725,15 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
             <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
               <ShieldCheck className="w-4 h-4" />
               <h3 className="text-sm font-bold font-mono uppercase text-zinc-900 dark:text-zinc-100">
-                1. What is a Salt?
+                1. Cryptographic Salt
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              A <strong>salt</strong> is a unique, cryptographically random string (e.g. 16 random bytes) generated automatically for each user upon account creation.
+              A <strong>salt</strong> is a unique, cryptographically random string generated automatically for each user upon signup.
             </p>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              <strong>Key Fact:</strong> Salts are <em>not secret</em>. They are stored right next to the hash in the database.
-              Their value comes from <em>uniqueness</em>: because every user has a different salt, identical passwords result in completely different hashes.
+              <strong>Important:</strong> Salts are <em>not secret</em>. They are stored right next to the hash in the database.
+              Their purpose is <em>uniqueness</em>: ensuring that two users with the same password have completely different hashes.
             </p>
           </div>
 
@@ -668,15 +741,14 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
             <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
               <Lock className="w-4 h-4" />
               <h3 className="text-sm font-bold font-mono uppercase text-zinc-900 dark:text-zinc-100">
-                2. What is a Pepper?
+                2. Secret Pepper
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              A <strong>pepper</strong> is an application-wide secret value added to passwords before they are hashed.
+              A <strong>pepper</strong> is an application-wide secret value added to passwords before hashing.
             </p>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              <strong>Key Fact:</strong> Peppers <em>must be kept strictly secret</em>. They are stored outside the database (in secure environment variables or a key vault).
-              If the database is stolen, attackers still cannot crack the hashes without the pepper from the application server.
+              <strong>Important:</strong> Peppers <em>must be kept strictly secret</em>. They are stored separately from the database (e.g., in a secure secret manager or environment variable) to provide defense-in-depth if the database is leaked.
             </p>
           </div>
         </div>
@@ -709,9 +781,9 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
                   <td className="p-3.5">Strictly confidential and secret</td>
                 </tr>
                 <tr>
-                  <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">Primary Defense</td>
-                  <td className="p-3.5">Stops precomputed rainbow tables &amp; identical hashes</td>
-                  <td className="p-3.5">Protects hashes if database dump is stolen</td>
+                  <td className="p-3.5 font-bold text-zinc-900 dark:text-zinc-100">Primary Purpose</td>
+                  <td className="p-3.5">Stops precomputed lookup tables &amp; identical hashes</td>
+                  <td className="p-3.5">Protects hashes if the database file is stolen</td>
                 </tr>
               </tbody>
             </table>
@@ -719,60 +791,43 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
         </div>
       </section>
 
-      {/* Interactive Demonstration Section */}
+      {/* Interactive Demonstration: The 3 Experiments */}
       <section className="space-y-3 pt-2">
         <PasswordHashingSimulator />
       </section>
 
-      {/* D. Why Not Use SHA-256? */}
+      {/* D. Why Not Use SHA-256 for Passwords? */}
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-          D. Why Not Use SHA-256?
+          D. Why Not Use SHA-256 for Passwords?
         </h2>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          Students often ask: <em>&quot;SHA-256 is a famous cryptographic hash function used in Bitcoin and HTTPS certificates. Why can&apos;t we use it for passwords?&quot;</em>
+          General cryptographic hash functions like SHA-256 and MD5 were engineered for speed.
+          They are designed to verify large files, verify data integrity, and sign certificates in fractions of a microsecond.
         </p>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          The answer is <strong>speed</strong>. SHA-256 and MD5 were engineered to verify huge files and signatures in nanoseconds.
-          Because they are so fast, modern graphics cards (GPUs) can compute <strong>hundreds of millions of SHA-256 hashes per second</strong>.
-          If an attacker steals a database of salted SHA-256 hashes, they can test millions of password guesses every single second.
+          Because fast algorithms run in nanoseconds, attackers can test millions of password guesses very quickly using modern hardware.
+          For password storage, we need the exact opposite: <strong>deliberately slow and resource-intensive algorithms</strong>.
         </p>
 
-        <div className="p-5 rounded-2xl bg-amber-50/60 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 space-y-2">
-          <div className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 flex items-center gap-1.5 font-mono">
-            <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-            The Core Principle of Password Hashing
+        <div className="grid sm:grid-cols-3 gap-3 text-xs pt-1">
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-emerald-300 dark:border-emerald-500/30 shadow-xs space-y-1">
+            <span className="font-bold text-emerald-700 dark:text-emerald-400 font-mono text-sm block">Argon2id (Recommended)</span>
+            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              The modern standard for password hashing. It is memory-hard, requiring both CPU time and physical RAM.
+            </p>
           </div>
-          <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-medium">
-            Password hashing algorithms must be <strong>deliberately slow and resource-intensive</strong>!
-            When a user logs in once, waiting 200 milliseconds is completely unnoticeable.
-            However, that small delay makes it practically impossible for an attacker to test hundreds of millions of guesses offline.
-          </p>
-        </div>
-
-        <div className="space-y-2 pt-2">
-          <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
-            Dedicated Password-Hashing Algorithms:
-          </h3>
-          <div className="grid sm:grid-cols-3 gap-3 text-xs">
-            <div className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-emerald-300 dark:border-emerald-500/30 shadow-xs space-y-1">
-              <span className="font-bold text-emerald-700 dark:text-emerald-400 font-mono text-sm block">Argon2id (Recommended)</span>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                The modern gold standard. Winner of the international Password Hashing Competition. It requires both processing time and substantial computer memory (RAM).
-              </p>
-            </div>
-            <div className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
-              <span className="font-bold text-zinc-900 dark:text-zinc-100 font-mono text-sm block">bcrypt</span>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                A battle-tested classic created in 1999. It uses a configurable work factor (cost) to slow down calculations as computers get faster.
-              </p>
-            </div>
-            <div className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
-              <span className="font-bold text-zinc-900 dark:text-zinc-100 font-mono text-sm block">PBKDF2</span>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                A standardized legacy option based on repeating a hash function thousands of times. Widely supported, but lacks memory-hardness.
-              </p>
-            </div>
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
+            <span className="font-bold text-zinc-900 dark:text-zinc-100 font-mono text-sm block">bcrypt</span>
+            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              A reliable, battle-tested standard that uses a configurable work factor to increase computation time.
+            </p>
+          </div>
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1">
+            <span className="font-bold text-zinc-900 dark:text-zinc-100 font-mono text-sm block">PBKDF2</span>
+            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              A standardized legacy option based on repeated hashing iterations. Slower than SHA-256, but lacks memory-hardness.
+            </p>
           </div>
         </div>
       </section>
@@ -783,8 +838,8 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
           E. Understanding Argon2id
         </h2>
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          Argon2id is currently recommended by security organizations like OWASP because it is <strong>memory-hard</strong>.
-          It gives system architects three configurable tuning knobs:
+          Argon2id is currently recommended by security standards because it is <strong>memory-hard</strong>.
+          It gives engineers three simple tuning knobs:
         </p>
 
         <div className="grid sm:grid-cols-3 gap-3 pt-1">
@@ -793,11 +848,8 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
               <Database className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span className="text-xs font-mono font-bold uppercase text-zinc-900 dark:text-zinc-100">1. Memory Cost</span>
             </div>
-            <div className="text-xs font-bold text-emerald-700 dark:text-emerald-400 font-mono">
-              m = 65536 (64 MB RAM)
-            </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Forces the computer to allocate physical memory per hash. Graphics cards have thousands of cores but very little memory per core, preventing massive parallel cracking.
+              How much RAM is required to compute one hash (e.g., 64 MB). Requiring physical memory makes mass parallel guessing impractical.
             </p>
           </div>
 
@@ -806,11 +858,8 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
               <Cpu className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span className="text-xs font-mono font-bold uppercase text-zinc-900 dark:text-zinc-100">2. Time Cost</span>
             </div>
-            <div className="text-xs font-bold text-emerald-700 dark:text-emerald-400 font-mono">
-              t = 3 (3 Iterations)
-            </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              How many computational passes the algorithm makes over the allocated memory. Increasing iterations increases calculation time linearly.
+              How many computational passes the algorithm performs over the memory, scaling calculation time linearly.
             </p>
           </div>
 
@@ -819,17 +868,14 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
               <Layers className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span className="text-xs font-mono font-bold uppercase text-zinc-900 dark:text-zinc-100">3. Parallelism</span>
             </div>
-            <div className="text-xs font-bold text-emerald-700 dark:text-emerald-400 font-mono">
-              p = 4 (4 CPU Threads)
-            </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              How many independent CPU threads cooperate to compute the hash on modern multi-core processors.
+              How many independent CPU threads cooperate to compute the hash on multi-core processors.
             </p>
           </div>
         </div>
 
         <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed pt-1">
-          <em>Note for engineers:</em> Parameters should be chosen based on server capacity and current OWASP guidelines (e.g. 64 MB RAM with 3 iterations for general servers, or 19 MB with 2 iterations when memory is constrained).
+          <em>Guidance for engineers:</em> Parameters should be chosen based on server capacity and current security guidance (e.g. OWASP recommendations), rather than treated as a fixed universal guarantee.
         </p>
       </section>
 
@@ -853,23 +899,23 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
           <div className="grid sm:grid-cols-4 gap-2.5 text-xs">
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">Step 1</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">User Creates Password</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">User types their password on the signup form over HTTPS.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Create Password</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">User creates a password on the signup form.</p>
             </div>
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">Step 2</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Generate Random Salt</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Server generates a unique cryptographically random salt.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Generate Salt</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Server generates a unique random salt.</p>
             </div>
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">Step 3</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Argon2id Processing</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Server computes the hash using the password, salt, and parameters.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Generate Hash</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Password-hashing library generates the password hash.</p>
             </div>
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-emerald-600 dark:text-emerald-400 font-mono">Step 4</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Database Persistence</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Salt, parameters, and resulting hash are safely saved in the user record.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Store in Database</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Hash and required parameters are safely stored in the database.</p>
             </div>
           </div>
         </div>
@@ -888,29 +934,29 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
           <div className="grid sm:grid-cols-4 gap-2.5 text-xs">
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-blue-600 dark:text-blue-400 font-mono">Step 1</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">User Submits Password</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">User enters their email and password on the login screen.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Submit Password</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">User submits password on the login form.</p>
             </div>
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-blue-600 dark:text-blue-400 font-mono">Step 2</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Retrieve Stored Hash</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Server fetches the user&apos;s stored Argon2id record from the database.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Retrieve Hash</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Server retrieves the stored hash from the database.</p>
             </div>
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-blue-600 dark:text-blue-400 font-mono">Step 3</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Constant-Time Verify</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Library extracts salt and parameters, re-hashes, and compares.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Library Verifies</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Password-hashing library verifies the submitted password.</p>
             </div>
             <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-blue-600 dark:text-blue-400 font-mono">Step 4</span>
-              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Success or Failure</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">If verified &rarr; Login succeeds (200 OK). If mismatch &rarr; 401 Unauthorized.</p>
+              <p className="text-zinc-800 dark:text-zinc-200 font-medium">Result Rendered</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-[11px]">Login succeeds (200 OK) or fails (401 Unauthorized).</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* G. Practical Code Example (Expandable Developer Reference) */}
+      {/* G. Developer Corner (Optional Expandable Section) */}
       <section className="space-y-3">
         <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden shadow-xs">
           <button
@@ -923,10 +969,10 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
               </div>
               <div>
                 <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100">
-                  G. Practical Code Example (Node.js &amp; Argon2)
+                  Developer Corner: Node.js &amp; Argon2 Example (Optional)
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-                  Optional expandable developer reference using modern industry libraries
+                  Expandable developer reference using the standard Argon2 library
                 </p>
               </div>
             </div>
@@ -957,10 +1003,12 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
               </pre>
 
               <div className="p-3.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-1">
-                <span className="font-bold text-zinc-900 dark:text-zinc-100">How this works in practice:</span>
+                <span className="font-bold text-zinc-900 dark:text-zinc-100">Key implementation notes:</span>
                 <p>
-                  The <code className="font-mono text-emerald-600 dark:text-emerald-400">hash()</code> function handles salt generation automatically.
-                  The <code className="font-mono text-emerald-600 dark:text-emerald-400">verify()</code> function reads the parameters directly from the stored string and compares in constant time to prevent side-channel timing attacks.
+                  1. The <code className="font-mono text-emerald-600 dark:text-emerald-400">hash()</code> function handles random salt generation automatically.
+                </p>
+                <p>
+                  2. Always use the library&apos;s <code className="font-mono text-emerald-600 dark:text-emerald-400">verify()</code> function. It automatically extracts parameters and compares in constant time to prevent side-channel timing attacks.
                 </p>
               </div>
             </div>
@@ -968,60 +1016,12 @@ export async function verifyUserLogin(submittedPassword: string, storedHash: str
         </div>
       </section>
 
-      {/* H. Common Mistakes */}
-      <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-          H. Common Mistakes to Avoid
-        </h2>
-        <div className="grid sm:grid-cols-2 gap-3">
-          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1.5">
-            <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 text-xs font-bold font-mono uppercase">
-              <XCircle className="w-4 h-4 shrink-0" />
-              1. Storing Plaintext Passwords
-            </div>
-            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              Never store passwords unhashed. If the database is ever leaked, every user account is immediately compromised.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1.5">
-            <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 text-xs font-bold font-mono uppercase">
-              <XCircle className="w-4 h-4 shrink-0" />
-              2. Using Fast Hashes (SHA-256 / MD5)
-            </div>
-            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              Even with a salt, fast general-purpose hashes can be brute-forced at hundreds of millions of guesses per second on modern GPUs.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1.5">
-            <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 text-xs font-bold font-mono uppercase">
-              <XCircle className="w-4 h-4 shrink-0" />
-              3. Reusing Salts Across Users
-            </div>
-            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              Using one universal salt destroys the security value of salting. Identical passwords will once again produce identical hashes.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-1.5">
-            <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 text-xs font-bold font-mono uppercase">
-              <XCircle className="w-4 h-4 shrink-0" />
-              4. Manual String Comparison
-            </div>
-            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              Do not compare hashes with standard <code className="font-mono text-zinc-900 dark:text-zinc-100">===</code> (which stops on the first mismatch, enabling timing attacks). Always use the library&apos;s <code className="font-mono text-zinc-900 dark:text-zinc-100">verify()</code> function.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* I. Knowledge Check */}
+      {/* H. Knowledge Check */}
       <section className="space-y-4 pt-2">
         <div className="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3">
           <HelpCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-            I. Knowledge Check
+            H. Knowledge Check
           </h2>
         </div>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 font-normal">
