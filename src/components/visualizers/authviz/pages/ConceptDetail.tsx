@@ -21,6 +21,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import { AUTH_TOPICS } from '../data/topics';
+import TopicAnimationTheater from '../components/TopicAnimationTheater';
 
 export default function ConceptDetail({ topicId }: { topicId: string }) {
   const currentIndex = AUTH_TOPICS.findIndex((t) => t.id === topicId);
@@ -76,6 +77,21 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
           {topic.summary}
         </p>
+      </div>
+
+      {/* 3Blue1Brown-style Interactive Protocol Animation */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between text-xs text-muted-foreground font-semibold">
+          <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            <Sparkles className="w-4 h-4" /> Interactive Visual Protocol Animation
+          </span>
+          <span className="font-mono text-[11px] text-muted-foreground">3Blue1Brown Visual Simulation</span>
+        </div>
+        <TopicAnimationTheater
+          topicId={topic.id}
+          topicTitle={topic.title}
+          category={topic.category}
+        />
       </div>
 
       {/* 2. Why This Concept Exists */}
