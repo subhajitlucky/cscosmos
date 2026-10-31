@@ -38,7 +38,7 @@ const Playground = () => {
 
   const displayedStatus = response?.status ?? status;
   const statusText = displayedStatus === '200' ? 'OK' : displayedStatus === '304' ? 'Not Modified' : displayedStatus === '404' ? 'Not Found' : displayedStatus === '500' ? 'Server Error' : 'Unknown';
-  const statusTone = displayedStatus === '200' ? 'text-green-500' : displayedStatus === '304' ? 'text-amber-500' : 'text-red-500';
+  const statusTone = displayedStatus === '200' ? 'text-green-500' : displayedStatus === '304' ? 'text-emerald-500' : 'text-red-500';
 
   const copyAsCurl = () => {
     let curl = `curl -X ${method} 'https://api.webprotocols.dev/api/v1/resource'`;
@@ -361,7 +361,7 @@ const Playground = () => {
                     <div key={h.id}>{h.key}: {h.value}</div>
                   ))}
                   {(method === 'POST' || method === 'PUT') && (
-                    <div className="mt-2 text-amber-500">{'{ "data": "..." }'}</div>
+                    <div className="mt-2 text-foreground/80">{'{ "data": "..." }'}</div>
                   )}
                </div>
 
@@ -533,13 +533,13 @@ const Playground = () => {
               </div>
            </div>
 
-           <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 p-6 rounded-3xl flex gap-4 transition-colors">
-              <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center text-amber-500 shadow-sm border border-amber-100 dark:border-slate-800 shrink-0">
+           <div className="bg-muted/40 border border-border p-6 rounded-3xl flex gap-4 transition-colors">
+              <div className="w-12 h-12 bg-card rounded-2xl flex items-center justify-center text-foreground shadow-xs border border-border shrink-0">
                  <Globe size={24} />
               </div>
               <div className="space-y-1">
-                 <h4 className="font-bold text-amber-900 dark:text-amber-400 text-sm">Pro Tip: Cache Control</h4>
-                 <p className="text-xs leading-relaxed text-amber-700 dark:text-amber-300">
+                 <h4 className="font-bold text-foreground text-sm">Pro Tip: Cache Control</h4>
+                 <p className="text-xs leading-relaxed text-muted-foreground">
                    Try setting the status to <strong>304 Not Modified</strong> and observe the <code className="font-mono">X-Cache</code> header in the Response Headers tab. This simulates a conditional request where the server tells the browser to reuse its local copy.
                  </p>
               </div>

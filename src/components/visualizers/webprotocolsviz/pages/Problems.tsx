@@ -74,7 +74,7 @@ export default function Problems() {
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#f59e0b', '#10b981', '#ffffff', '#fbbf24'],
+          colors: ['#10b981', '#ffffff', '#e2e8f0', '#94a3b8', '#059669'],
         });
       }
     }
@@ -143,12 +143,12 @@ export default function Problems() {
     <div className="space-y-8 pb-16">
       {/* Header */}
       <header className="space-y-3 pt-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-500 text-xs font-mono font-semibold">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/60 text-foreground text-xs font-mono font-semibold">
           <CheckSquare className="w-3.5 h-3.5" />
           <span>100 Line-by-Line System &amp; Protocol Questions</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-          Web Protocols <span className="text-amber-500">Practice Arena</span>
+          Web Protocols Practice Arena
         </h1>
         <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           Master the complete HTTP protocol stack line-by-line: from sockets and DNS to TLS 1.3 handshakes,
@@ -160,7 +160,7 @@ export default function Problems() {
       <div className="p-6 rounded-2xl border border-border/80 bg-card shadow-xs space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20">
+            <div className="p-3 rounded-xl bg-muted text-foreground border border-border">
               <Trophy className="w-6 h-6" />
             </div>
             <div>
@@ -180,7 +180,7 @@ export default function Problems() {
             <button
               type="button"
               onClick={resetAllProgress}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset</span>
@@ -192,7 +192,7 @@ export default function Problems() {
         <div className="space-y-1.5">
           <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
             <div
-              className="bg-amber-500 h-3 rounded-full transition-all duration-500"
+              className="bg-emerald-500 h-3 rounded-full transition-all duration-500"
               style={{ width: `${percent}%` }}
             />
           </div>
@@ -213,7 +213,7 @@ export default function Problems() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search in 100 questions (e.g. ETag, CORS, HTTP/2, QUIC, max-age, 304)..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl border border-border/80 bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full pl-9 pr-4 py-2 rounded-xl border border-border/80 bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -222,7 +222,7 @@ export default function Problems() {
               value={selectedDifficulty}
               onChange={(e) => setSelectedDifficulty(e.target.value)}
               aria-label="Filter questions by difficulty"
-              className="py-2 px-3 rounded-xl border border-border/80 bg-card text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="py-2 px-3 rounded-xl border border-border/80 bg-card text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="all">All Difficulties (100)</option>
               <option value="Beginner">Beginner (1–33)</option>
@@ -238,9 +238,9 @@ export default function Problems() {
             type="button"
             onClick={() => setSelectedTopicId('all')}
             className={cn(
-              'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+              'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
               selectedTopicId === 'all'
-                ? 'bg-amber-500 text-zinc-950 font-bold shadow-xs'
+                ? 'bg-foreground text-background font-semibold shadow-xs'
                 : 'bg-card border border-border/80 text-muted-foreground hover:text-foreground'
             )}
           >
@@ -256,9 +256,9 @@ export default function Problems() {
                 type="button"
                 onClick={() => setSelectedTopicId(cat.id)}
                 className={cn(
-                  'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+                  'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                   isCatActive
-                    ? 'bg-amber-500 text-zinc-950 font-bold shadow-xs'
+                    ? 'bg-foreground text-background font-semibold shadow-xs'
                     : 'bg-card border border-border/80 text-muted-foreground hover:text-foreground'
                 )}
               >
@@ -266,7 +266,7 @@ export default function Problems() {
                 <span
                   className={cn(
                     'text-[10px] font-mono px-1 rounded',
-                    isCatActive ? 'bg-zinc-950/20 text-zinc-950' : 'bg-muted'
+                    isCatActive ? 'bg-background/20 text-background' : 'bg-muted text-muted-foreground'
                   )}
                 >
                   {count}
@@ -285,16 +285,16 @@ export default function Problems() {
             {/* Top metadata */}
             <div className="flex items-center justify-between gap-2 border-b border-border/80 pb-4">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 font-mono text-xs font-bold">
+                <span className="px-2.5 py-1 rounded-md bg-muted text-foreground border border-border font-mono text-xs font-bold">
                   Question #{activeProblem.id}
                 </span>
                 <Link
                   href={activeTopic ? `${TOPIC_BASE_PATH}${activeTopic.path}` : `${TOPIC_BASE_PATH}/path`}
-                  className="text-xs text-muted-foreground hover:text-amber-500 font-medium hidden sm:inline-flex items-center gap-1.5 transition-colors group"
+                  className="text-xs text-muted-foreground hover:text-foreground font-medium hidden sm:inline-flex items-center gap-1.5 transition-colors group"
                   title={`Open lesson for ${activeProblem.category}`}
                 >
                   <span>Chapter: {activeProblem.category}</span>
-                  <BookOpen className="w-3.5 h-3.5 text-muted-foreground/70 group-hover:text-amber-500 transition-colors" />
+                  <BookOpen className="w-3.5 h-3.5 text-muted-foreground/70 group-hover:text-foreground transition-colors" />
                 </Link>
               </div>
 
@@ -305,7 +305,7 @@ export default function Problems() {
                     activeProblem.difficulty === 'Beginner' &&
                       'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20',
                     activeProblem.difficulty === 'Intermediate' &&
-                      'bg-amber-500/10 text-amber-500 border border-amber-500/20',
+                      'bg-muted text-foreground border border-border',
                     activeProblem.difficulty === 'Advanced' &&
                       'bg-rose-500/10 text-rose-500 border border-rose-500/20'
                   )}
@@ -355,7 +355,7 @@ export default function Problems() {
                     disabled={answered}
                     onClick={() => recordAnswer(activeProblem.id, idx, isCorrectOption)}
                     className={cn(
-                      'w-full text-left p-4 rounded-xl border transition-all flex items-start gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+                      'w-full text-left p-4 rounded-xl border transition-all flex items-start gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                       buttonStyle
                     )}
                   >
@@ -377,14 +377,14 @@ export default function Problems() {
                     'p-5 rounded-xl border mt-4 space-y-2',
                     activeAnswer.isCorrect
                       ? 'border-emerald-500/30 bg-emerald-500/5'
-                      : 'border-amber-500/30 bg-amber-500/5'
+                      : 'border-border bg-muted/30'
                   )}
                 >
                   <div className="flex items-center gap-2">
                     <Sparkles
                       className={cn(
                         'w-4 h-4',
-                        activeAnswer.isCorrect ? 'text-emerald-500' : 'text-amber-500'
+                        activeAnswer.isCorrect ? 'text-emerald-500' : 'text-muted-foreground'
                       )}
                     />
                     <span className="text-xs font-bold text-foreground">
@@ -402,7 +402,7 @@ export default function Problems() {
                     </span>
                     <Link
                       href={activeTopic ? `${TOPIC_BASE_PATH}${activeTopic.path}` : `${TOPIC_BASE_PATH}/path`}
-                      className="inline-flex items-center gap-1 font-semibold text-amber-500 hover:text-amber-400 transition-colors"
+                      className="inline-flex items-center gap-1 font-semibold text-foreground hover:underline transition-colors"
                     >
                       <span>Study Chapter Lesson</span>
                       <ArrowRight className="w-3 h-3" />
@@ -421,7 +421,7 @@ export default function Problems() {
                   if (prevProblem) setSelectedId(prevProblem.id);
                 }}
                 className={cn(
-                  'flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+                  'flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                   prevProblem
                     ? 'border border-border text-foreground hover:bg-muted/50'
                     : 'opacity-30 cursor-not-allowed border border-border text-muted-foreground'
@@ -438,9 +438,9 @@ export default function Problems() {
                   if (nextProblem) setSelectedId(nextProblem.id);
                 }}
                 className={cn(
-                  'flex items-center gap-1.5 px-5 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+                  'flex items-center gap-1.5 px-5 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                   nextProblem
-                    ? 'bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold shadow-xs'
+                    ? 'bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-xs'
                     : 'opacity-30 cursor-not-allowed bg-muted text-muted-foreground'
                 )}
               >
@@ -471,7 +471,7 @@ export default function Problems() {
               <span>Missed</span>
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+              <span className="w-2.5 h-2.5 rounded-full bg-foreground" />
               <span>Selected</span>
             </span>
           </div>
@@ -485,7 +485,7 @@ export default function Problems() {
               let cellStyle = 'bg-muted/40 text-muted-foreground hover:bg-muted';
               if (isSelected) {
                 cellStyle =
-                  'bg-amber-500 text-zinc-950 font-bold ring-2 ring-amber-400 shadow-xs';
+                  'bg-foreground text-background font-bold ring-2 ring-foreground/20 shadow-xs';
               } else if (answer?.isCorrect) {
                 cellStyle = 'bg-emerald-500 text-white font-bold';
               } else if (answer && !answer.isCorrect) {
@@ -499,7 +499,7 @@ export default function Problems() {
                   onClick={() => setSelectedId(prob.id)}
                   aria-label={`Jump to Question ${prob.id}`}
                   className={cn(
-                    'h-8 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+                    'h-8 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                     cellStyle
                   )}
                 >

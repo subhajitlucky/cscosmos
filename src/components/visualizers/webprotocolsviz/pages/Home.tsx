@@ -10,8 +10,8 @@ const TRACE = [
   { label: 'DNS', value: 'example.com → 93.184.216.34', tone: 'text-slate-400' },
   { label: 'TCP', value: ':443 · connection established', tone: 'text-slate-400' },
   { label: 'TLS', value: '1.3 · encrypted', tone: 'text-emerald-400' },
-  { label: 'GET', value: '/index.html · HTTP/1.1', tone: 'text-primary' },
-  { label: 'CACHE', value: 'MISS → origin', tone: 'text-amber-400' },
+  { label: 'GET', value: '/index.html · HTTP/1.1', tone: 'text-foreground' },
+  { label: 'CACHE', value: 'MISS → origin', tone: 'text-slate-300' },
   { label: '200', value: 'OK · text/html · 14 KB', tone: 'text-emerald-400' },
 ];
 
@@ -63,7 +63,7 @@ const Home = () => {
           </Link>
           <Link
             href={`${TOPIC_BASE_PATH}/problems`}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-7 py-3.5 text-base font-bold text-amber-500 transition-colors hover:bg-amber-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-7 py-3.5 text-base font-bold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <CheckSquare size={18} /> Practice (100 Qs)
           </Link>
@@ -133,12 +133,12 @@ const Home = () => {
       <section className="rounded-2xl border border-border/80 bg-card p-8 md:p-12 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-500 text-xs font-mono font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/60 text-foreground text-xs font-mono font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Comprehensive System Evaluation</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
-              100 Practice Problems, <span className="text-amber-500">Curated Line-by-Line</span>
+              100 Practice Problems, Curated Line-by-Line
             </h2>
             <p className="text-base text-muted-foreground leading-relaxed">
               From beginner HTTP grammar and status codes to RFC 9111 caching subtleties, CORS preflight edge cases,
@@ -148,7 +148,7 @@ const Home = () => {
 
           <Link
             href={`${TOPIC_BASE_PATH}/problems`}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-600 px-7 py-3.5 text-sm font-bold text-zinc-950 transition-colors shadow-xs shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary/90 px-7 py-3.5 text-sm font-bold text-primary-foreground transition-colors shadow-xs shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             Launch Practice Arena <ArrowRight className="w-4 h-4" />
           </Link>
@@ -166,7 +166,7 @@ const Home = () => {
           </div>
 
           <div className="p-5 rounded-xl border border-border/70 bg-muted/20 space-y-2">
-            <div className="text-xs font-mono font-bold text-amber-500 uppercase tracking-wider">
+            <div className="text-xs font-mono font-bold text-foreground uppercase tracking-wider">
               Intermediate (Q34–Q85)
             </div>
             <div className="text-sm font-bold text-foreground">RFCs, Security &amp; Protocols</div>

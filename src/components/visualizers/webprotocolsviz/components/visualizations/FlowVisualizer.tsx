@@ -28,8 +28,8 @@ const TLS_STEPS = [
     from: 'client',
     label: '3 · Certificate verified, key exchanged',
     detail: 'The browser checks the certificate against a trusted CA, then both sides derive the same session key.',
-    tone: 'text-amber-500',
-    dot: 'bg-amber-500',
+    tone: 'text-foreground',
+    dot: 'bg-foreground',
   },
   {
     from: 'server',
@@ -173,7 +173,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
             {[
               { code: '200', text: 'OK', color: 'bg-green-500', icon: <CheckCircle2 size={20}/> },
               { code: '304', text: 'Not Modified', color: 'bg-emerald-600', icon: <RefreshCw size={20}/> },
-              { code: '404', text: 'Not Found', color: 'bg-amber-500', icon: <Search size={20}/> },
+              { code: '404', text: 'Not Found', color: 'bg-slate-600', icon: <Search size={20}/> },
               { code: '500', text: 'Server Error', color: 'bg-red-500', icon: <AlertCircle size={20}/> }
             ].map((s, i) => (
                <motion.div 
@@ -292,13 +292,13 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
                <div className="h-0.5 bg-slate-200 dark:bg-slate-800 w-full relative">
                   <motion.div 
                     animate={{ left: step % 2 === 0 ? '0%' : '100%' }}
-                    className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-amber-500 rounded-full"
+                    className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-foreground rounded-full"
                   />
                </div>
                <div className="bg-slate-900 dark:bg-slate-950 text-white p-2 rounded-lg font-mono text-[8px] leading-tight border dark:border-slate-800 transition-colors">
                   {step % 2 === 0 ? (
                     <>
-                      <div className="text-amber-400">GET /image.png</div>
+                      <div className="text-foreground">GET /image.png</div>
                       <div className="text-slate-400">If-None-Match: "v1"</div>
                     </>
                   ) : (
@@ -341,18 +341,18 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
                     animate={{ 
                       scale: step % 4 === i ? 1.05 : 1,
                       opacity: step % 4 === i ? 1 : 0.5,
-                      borderColor: step % 4 === i ? '#f59e0b' : 'transparent'
+                      borderColor: step % 4 === i ? 'currentColor' : 'transparent'
                     }}
                     className={`p-4 rounded-2xl border-2 flex flex-col gap-2 transition-all ${
-                      m.name === 'GET' ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-900 dark:text-amber-300 border-amber-200 dark:border-amber-800' : 
+                      m.name === 'GET' ? 'bg-muted/40 border-border text-foreground' : 
                       m.name === 'POST' ? 'bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-300' :
-                      m.name === 'PUT' ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-300' :
+                      m.name === 'PUT' ? 'bg-muted/40 border-border text-foreground' :
                       'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-900 dark:text-red-300'
                     }`}
                   >
                     <div className="flex items-center justify-between font-bold">
                       <span>{m.name}</span>
-                      {step % 4 === i && <Zap size={12} className="text-amber-500 animate-pulse" />}
+                      {step % 4 === i && <Zap size={12} className="text-foreground animate-pulse" />}
                     </div>
                     <p className="text-[10px] leading-tight opacity-80">{m.desc}</p>
                   </motion.div>
@@ -370,7 +370,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
                   <motion.div 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }} 
-                    className="mt-2 text-amber-400"
+                    className="mt-2 text-foreground/80 font-mono"
                   >
                     {'{ "status": "active" }'}
                   </motion.div>
@@ -398,7 +398,7 @@ const FlowVisualizer: React.FC<FlowVisualizerProps> = ({ type }) => {
   
             <div className="relative">
                <motion.div 
-                 animate={{ scale: step % 2 === 0 ? 1.1 : 1, borderColor: step % 2 === 0 ? '#f59e0b' : '#e2e8f0' }}
+                 animate={{ scale: step % 2 === 0 ? 1.1 : 1, borderColor: step % 2 === 0 ? 'currentColor' : '#e2e8f0' }}
                  className="w-24 h-24 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center border-4 shadow-xl dark:border-slate-800 transition-colors"
                >
                   <HardDrive size={32} className={step % 2 === 0 ? "text-primary" : "text-slate-300 dark:text-slate-700"} />
