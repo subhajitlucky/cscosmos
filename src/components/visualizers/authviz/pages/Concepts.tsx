@@ -22,7 +22,7 @@ export default function Concepts() {
           Authentication, OAuth 2.0 &amp; Security Concepts
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base">
-          20 in-depth architectural topics from OAuth 2.0 PKCE and RS256 JWTs to HttpOnly Cookie defenses, RBAC/ABAC engines, and Argon2id password hashing.
+          {AUTH_TOPICS.length} in-depth architectural topics from OAuth 2.0 PKCE and RS256 JWTs to HttpOnly Cookie defenses, RBAC/ABAC engines, and Argon2id password hashing.
         </p>
       </div>
 

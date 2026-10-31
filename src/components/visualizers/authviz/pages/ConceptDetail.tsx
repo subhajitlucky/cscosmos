@@ -23,7 +23,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         href="/authviz/concepts"
         className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground font-semibold transition"
       >
-        <ArrowLeft className="w-3.5 h-3.5" /> Back to 20 Concepts
+        <ArrowLeft className="w-3.5 h-3.5" /> Back to Curriculum
       </Link>
 
       <div className="space-y-3">
