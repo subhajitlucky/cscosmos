@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   CheckCircle2,
@@ -18,6 +19,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { PROGRAM_PROBLEMS, TOPIC_CATEGORIES, type ProgramProblem } from '../data/problems';
+import { steps } from '../data/learningPath';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -273,9 +275,14 @@ export function Problems() {
                 <span className="px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-500 font-mono text-xs font-bold">
                   Question #{activeProblem.id}
                 </span>
-                <span className="text-xs text-muted-foreground font-medium hidden sm:inline">
-                  {activeProblem.category}
-                </span>
+                <Link
+                  href={steps.find((s) => s.step === activeProblem.topicNumber)?.path || '#'}
+                  className="text-xs text-muted-foreground hover:text-blue-500 font-medium hidden sm:inline-flex items-center gap-1.5 transition-colors group"
+                  title={`Go to Lesson ${activeProblem.topicNumber}: ${activeProblem.category}`}
+                >
+                  <span>Topic {activeProblem.topicNumber}: {activeProblem.category}</span>
+                  <BookOpen className="w-3.5 h-3.5 text-muted-foreground/70 group-hover:text-blue-500 transition-colors" />
+                </Link>
               </div>
 
               <div className="flex items-center gap-2">
@@ -364,6 +371,18 @@ export function Problems() {
                   <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
                     {activeProblem.explanation}
                   </p>
+                  <div className="pt-2 border-t border-border/40 flex items-center justify-between text-[11px]">
+                    <span className="text-muted-foreground">
+                      Covered in Lesson {activeProblem.topicNumber}: {activeProblem.category}
+                    </span>
+                    <Link
+                      href={steps.find((s) => s.step === activeProblem.topicNumber)?.path || '#'}
+                      className="inline-flex items-center gap-1 font-semibold text-blue-500 hover:text-blue-600 transition-colors"
+                    >
+                      <span>Study Full Lesson</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
