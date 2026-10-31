@@ -1143,33 +1143,35 @@ export function TotpInteractiveTheater() {
           </div>
 
           {/* Smartphone Hardware Frame */}
-          <div className="flex-1 w-full max-w-[290px] mx-auto rounded-[32px] border-4 border-zinc-300 dark:border-zinc-700 bg-zinc-950 text-zinc-100 p-3.5 shadow-xl flex flex-col justify-between min-h-[460px]">
+          <div className="flex-1 w-full max-w-[290px] mx-auto rounded-[32px] border-4 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 p-3.5 shadow-xl flex flex-col justify-between min-h-[460px]">
             {/* Top Phone Speaker / Dynamic Island */}
             <div>
-              <div className="w-24 h-4 bg-zinc-900 rounded-full mx-auto mb-2.5 flex items-center justify-center gap-2 border border-zinc-800">
-                <div className="w-2 h-2 rounded-full bg-zinc-800 border border-zinc-700" />
+              <div className="w-24 h-4 bg-zinc-100 dark:bg-zinc-900 rounded-full mx-auto mb-2.5 flex items-center justify-center gap-2 border border-zinc-200 dark:border-zinc-800">
+                <div className="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-800 border border-zinc-400 dark:border-zinc-700" />
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse" />
               </div>
 
               {/* Status Bar */}
-              <div className="flex items-center justify-between px-2 text-[10px] text-zinc-400 font-mono mb-3">
+              <div className="flex items-center justify-between px-2 text-[10px] text-zinc-500 dark:text-zinc-400 font-mono mb-3">
                 <span>12:00</span>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[9px] bg-zinc-800 px-1 rounded text-zinc-300">✈️ AIRPLANE</span>
-                  <div className="w-4 h-2 border border-zinc-500 rounded-xs flex items-center p-0.5">
-                    <div className="h-full w-2.5 bg-emerald-400 rounded-xs" />
+                  <span className="text-[9px] bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700">
+                    ✈️ AIRPLANE
+                  </span>
+                  <div className="w-4 h-2 border border-zinc-400 dark:border-zinc-500 rounded-xs flex items-center p-0.5">
+                    <div className="h-full w-2.5 bg-emerald-500 rounded-xs" />
                   </div>
                 </div>
               </div>
 
               {/* Authenticator App Bar */}
-              <div className="p-2 rounded-xl bg-zinc-900 border border-zinc-800/80 flex items-center gap-2 mb-3">
-                <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
+              <div className="p-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 flex items-center gap-2 mb-3">
+                <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                   G
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[11px] font-bold text-zinc-100 truncate">Google Authenticator</div>
-                  <div className="text-[9px] text-zinc-400 truncate">Time-Based OTP Vault</div>
+                  <div className="text-[11px] font-bold text-zinc-900 dark:text-zinc-100 truncate">Google Authenticator</div>
+                  <div className="text-[9px] text-zinc-500 dark:text-zinc-400 truncate">Time-Based OTP Vault</div>
                 </div>
               </div>
             </div>
@@ -1178,17 +1180,17 @@ export function TotpInteractiveTheater() {
             <div className="flex-1 flex flex-col justify-center py-2">
               {currentStep === 0 && (
                 /* Step 1: Standby / Ready to pair */
-                <div className="text-center space-y-3 p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="w-12 h-12 rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto text-zinc-400">
+                <div className="text-center space-y-3 p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+                  <div className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center mx-auto text-zinc-600 dark:text-zinc-400">
                     <Scan className="w-6 h-6" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-zinc-200">No Accounts Configured</div>
-                    <div className="text-[10px] text-zinc-400 mt-1 leading-relaxed">
+                    <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">No Accounts Configured</div>
+                    <div className="text-[10px] text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">
                       Tap &quot;+&quot; to scan the QR code displayed on your website security page.
                     </div>
                   </div>
-                  <div className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">
+                  <div className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-200 dark:border-emerald-500/20">
                     <span>Camera Standby</span>
                   </div>
                 </div>
@@ -1196,9 +1198,9 @@ export function TotpInteractiveTheater() {
 
               {currentStep === 1 && (
                 /* Step 2: Camera Viewfinder Active */
-                <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/80 bg-black p-4 text-center space-y-3">
+                <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/80 bg-zinc-900 text-zinc-100 p-4 text-center space-y-3 shadow-inner">
                   {/* Viewfinder Target Reticle */}
-                  <div className="absolute inset-2 border-2 border-dashed border-emerald-400/40 rounded-xl pointer-events-none" />
+                  <div className="absolute inset-2 border-2 border-dashed border-emerald-400/50 rounded-xl pointer-events-none" />
                   {/* Animated Scanning Laser Line */}
                   <div className="absolute left-2 right-2 h-0.5 bg-emerald-400 shadow-sm shadow-emerald-400 animate-pulse top-1/2 transform -translate-y-1/2" />
 
@@ -1209,7 +1211,7 @@ export function TotpInteractiveTheater() {
                       Aligning QR code within camera viewfinder.
                     </div>
                   </div>
-                  <div className="p-2 rounded-xl bg-zinc-900/90 border border-emerald-500/40 text-[10px] text-zinc-200 font-mono">
+                  <div className="p-2 rounded-xl bg-zinc-950/80 border border-emerald-500/40 text-[10px] text-zinc-200 font-mono">
                     <div className="text-emerald-400 font-bold">QR Detected!</div>
                     <div className="truncate text-zinc-400 text-[9px]">otpauth://totp/CSCosmos...</div>
                   </div>
@@ -1218,27 +1220,27 @@ export function TotpInteractiveTheater() {
 
               {currentStep === 2 && (
                 /* Step 3: Shared Secret Saved */
-                <div className="space-y-2.5 p-3.5 rounded-2xl bg-zinc-900 border border-emerald-500/30">
+                <div className="space-y-2.5 p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-emerald-200 dark:border-emerald-500/30">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="font-bold text-emerald-400 uppercase tracking-wider font-mono">Account Saved</span>
-                    <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-mono">
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider font-mono">Account Saved</span>
+                    <span className="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 text-[9px] font-mono font-bold">
                       Offline Vault
                     </span>
                   </div>
 
                   <div className="space-y-0.5">
-                    <div className="text-xs font-bold text-zinc-100">CSCosmos Portal</div>
-                    <div className="text-[10px] text-zinc-400 font-mono">student@college.edu</div>
+                    <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">CSCosmos Portal</div>
+                    <div className="text-[10px] text-zinc-600 dark:text-zinc-400 font-mono">student@college.edu</div>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-black/60 border border-zinc-800 space-y-1">
-                    <div className="text-[9px] uppercase font-mono text-zinc-400">Stored Secret Key</div>
-                    <div className="text-xs font-mono font-bold text-emerald-300 tracking-wider">
+                  <div className="p-2 rounded-xl bg-white dark:bg-black/60 border border-zinc-200 dark:border-zinc-800 space-y-1">
+                    <div className="text-[9px] uppercase font-mono text-zinc-500 dark:text-zinc-400 font-bold">Stored Secret Key</div>
+                    <div className="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300 tracking-wider">
                       JBSWY3DPEHPK3PXP
                     </div>
                   </div>
 
-                  <div className="text-[10px] text-zinc-400 leading-relaxed">
+                  <div className="text-[10px] text-zinc-600 dark:text-zinc-400 leading-relaxed">
                     Key securely saved in local phone storage. Internet is now permanently optional.
                   </div>
                 </div>
@@ -1246,23 +1248,23 @@ export function TotpInteractiveTheater() {
 
               {currentStep === 3 && (
                 /* Step 4: Clock Synchronization */
-                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border border-zinc-800 text-center">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400">
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-700 dark:text-emerald-400">
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-zinc-100">Internal Hardware Clock</div>
-                    <div className="text-[10px] text-zinc-400">Reads phone&apos;s quartz crystal oscillator</div>
+                    <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Internal Hardware Clock</div>
+                    <div className="text-[10px] text-zinc-600 dark:text-zinc-400">Reads phone&apos;s quartz crystal oscillator</div>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-black/60 border border-zinc-800 space-y-1 font-mono text-left">
-                    <div className="text-[9px] text-zinc-400">Phone Clock Time: 12:00:42 PM</div>
-                    <div className="text-[10px] text-emerald-400 font-bold">
+                  <div className="p-2 rounded-xl bg-white dark:bg-black/60 border border-zinc-200 dark:border-zinc-800 space-y-1 font-mono text-left">
+                    <div className="text-[9px] text-zinc-500 dark:text-zinc-400">Phone Clock Time: 12:00:42 PM</div>
+                    <div className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">
                       Calculated Window: #{currentWindow}
                     </div>
                   </div>
 
-                  <div className="text-[10px] text-zinc-400 leading-tight">
+                  <div className="text-[10px] text-zinc-600 dark:text-zinc-400 leading-tight">
                     Formula: Floor(Current Unix Seconds / 30)
                   </div>
                 </div>
@@ -1270,27 +1272,27 @@ export function TotpInteractiveTheater() {
 
               {currentStep === 4 && (
                 /* Step 5: Parallel OTP Generation */
-                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/10 text-center">
-                  <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
-                    <span className="font-bold text-zinc-200">CSCosmos</span>
-                    <span className="text-emerald-400">Window #{currentWindow}</span>
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/10 text-center">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-zinc-600 dark:text-zinc-400">
+                    <span className="font-bold text-zinc-900 dark:text-zinc-200">CSCosmos</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 font-bold">Window #{currentWindow}</span>
                   </div>
 
                   <div className="space-y-1 py-1">
-                    <div className="text-[9px] uppercase font-mono text-zinc-400">Generated TOTP Code</div>
-                    <div className="text-3xl font-black font-mono tracking-widest text-emerald-400 drop-shadow-sm">
+                    <div className="text-[9px] uppercase font-mono text-zinc-500 dark:text-zinc-400 font-bold">Generated TOTP Code</div>
+                    <div className="text-3xl font-black font-mono tracking-widest text-emerald-600 dark:text-emerald-400 drop-shadow-sm">
                       482 910
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center gap-2 text-xs font-mono text-zinc-300">
-                    <div className="w-4 h-4 rounded-full border border-emerald-400 flex items-center justify-center text-[9px] text-emerald-400 font-bold">
+                  <div className="flex items-center justify-center gap-2 text-xs font-mono text-zinc-700 dark:text-zinc-300">
+                    <div className="w-5 h-5 rounded-full border border-emerald-500 flex items-center justify-center text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">
                       {secondsRemaining}
                     </div>
                     <span>{secondsRemaining}s remaining in window</span>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-black/60 border border-zinc-800 text-[10px] text-zinc-400 leading-tight">
+                  <div className="p-2 rounded-xl bg-white dark:bg-black/60 border border-zinc-200 dark:border-zinc-800 text-[10px] text-zinc-600 dark:text-zinc-400 leading-tight">
                     Computed via HMAC-SHA1(Secret, Window)
                   </div>
                 </div>
@@ -1298,17 +1300,17 @@ export function TotpInteractiveTheater() {
 
               {currentStep === 5 && (
                 /* Step 6: Server Verification */
-                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border border-emerald-500/40 text-center">
-                  <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-emerald-300 dark:border-emerald-500/40 text-center">
+                  <div className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-bold">
                     Displayed on Mobile Screen
                   </div>
-                  <div className="text-2xl font-black font-mono tracking-widest text-emerald-400">
+                  <div className="text-2xl font-black font-mono tracking-widest text-emerald-600 dark:text-emerald-400">
                     482 910
                   </div>
-                  <p className="text-[10px] text-zinc-300 leading-relaxed">
+                  <p className="text-[10px] text-zinc-700 dark:text-zinc-300 leading-relaxed">
                     User views this 6-digit code on their phone screen and types it into the website login form.
                   </p>
-                  <div className="p-2 rounded-xl bg-zinc-800/80 border border-zinc-700 text-[10px] text-zinc-300 font-mono">
+                  <div className="p-2 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 text-[10px] text-zinc-700 dark:text-zinc-300 font-mono">
                     Status: Awaiting typing into browser
                   </div>
                 </div>
@@ -1316,24 +1318,24 @@ export function TotpInteractiveTheater() {
 
               {currentStep === 6 && (
                 /* Step 7: Expiration & Regeneration */
-                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-900 border border-zinc-800 text-center">
+                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center">
                   <div className="space-y-1">
-                    <div className="text-[10px] font-mono text-rose-400 line-through">
+                    <div className="text-[10px] font-mono text-rose-600 dark:text-rose-400 line-through font-bold">
                       Previous Code: 482 910 (EXPIRED)
                     </div>
-                    <div className="text-[9px] text-zinc-400 font-mono">Window #{currentWindow - 1} Closed</div>
+                    <div className="text-[9px] text-zinc-500 dark:text-zinc-400 font-mono">Window #{currentWindow - 1} Closed</div>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-1">
-                    <div className="text-[9px] uppercase font-mono text-emerald-400 font-bold">
+                  <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 space-y-1">
+                    <div className="text-[9px] uppercase font-mono text-emerald-800 dark:text-emerald-400 font-bold">
                       Fresh Active Code (Window #{currentWindow})
                     </div>
-                    <div className="text-2xl font-black font-mono tracking-widest text-emerald-300">
+                    <div className="text-2xl font-black font-mono tracking-widest text-emerald-700 dark:text-emerald-300">
                       731 054
                     </div>
                   </div>
 
-                  <p className="text-[10px] text-zinc-400 leading-tight">
+                  <p className="text-[10px] text-zinc-600 dark:text-zinc-400 leading-tight">
                     Window rolled over. Old code is dead; new code active for the next 30 seconds.
                   </p>
                 </div>
@@ -1342,7 +1344,7 @@ export function TotpInteractiveTheater() {
 
             {/* Bottom Phone Home Indicator Bar */}
             <div className="pt-2">
-              <div className="w-28 h-1 bg-zinc-700 rounded-full mx-auto" />
+              <div className="w-28 h-1 bg-zinc-300 dark:bg-zinc-700 rounded-full mx-auto" />
             </div>
           </div>
         </div>
