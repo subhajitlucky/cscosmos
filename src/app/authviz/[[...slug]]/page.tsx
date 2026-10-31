@@ -5,6 +5,8 @@ import { Footer } from '@/components/visualizers/authviz/components/Footer';
 import Home from '@/components/visualizers/authviz/pages/Home';
 import Concepts from '@/components/visualizers/authviz/pages/Concepts';
 import ConceptDetail from '@/components/visualizers/authviz/pages/ConceptDetail';
+import Lab from '@/components/visualizers/authviz/pages/Lab';
+import Problems from '@/components/visualizers/authviz/pages/Problems';
 import PkceLab from '@/components/visualizers/authviz/pages/PkceLab';
 import JwtLab from '@/components/visualizers/authviz/pages/JwtLab';
 import SessionLab from '@/components/visualizers/authviz/pages/SessionLab';
@@ -18,6 +20,10 @@ export function generateStaticParams() {
   const params: { slug: string[] }[] = [
     { slug: [] },
     { slug: ['concepts'] },
+    { slug: ['lab'] },
+    { slug: ['playground'] },
+    { slug: ['simulation'] },
+    { slug: ['problems'] },
     { slug: ['pkce-lab'] },
     { slug: ['jwt-lab'] },
     { slug: ['session-lab'] },
@@ -51,6 +57,10 @@ export default async function AuthVizPage({
     } else {
       content = <Concepts />;
     }
+  } else if (first === 'lab' || first === 'playground' || first === 'simulation') {
+    content = <Lab />;
+  } else if (first === 'problems') {
+    content = <Problems />;
   } else if (first === 'pkce-lab') {
     content = <PkceLab />;
   } else if (first === 'jwt-lab') {

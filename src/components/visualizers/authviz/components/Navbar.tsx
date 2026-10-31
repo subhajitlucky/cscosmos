@@ -3,7 +3,17 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ArrowLeft, Bookmark, BookOpen, ChevronDown, Database, Fingerprint, HelpCircle, Key, KeyRound, Lock, Shield, ShieldCheck, Sparkles, Terminal, UserCheck, Zap } from 'lucide-react';
+import {
+  ArrowLeft,
+  Bookmark,
+  BookOpen,
+  CheckSquare,
+  ChevronDown,
+  FlaskConical,
+  HelpCircle,
+  ShieldCheck,
+  Sparkles,
+} from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 export function Navbar() {
@@ -12,16 +22,13 @@ export function Navbar() {
 
   const primaryLinks = [
     { label: 'Concepts', href: '/authviz/concepts', icon: BookOpen },
-    { label: 'OAuth 2.0 PKCE', href: '/authviz/pkce-lab', icon: KeyRound },
-    { label: 'JWT Signature Lab', href: '/authviz/jwt-lab', icon: Key },
-    { label: 'Cookies vs Tokens', href: '/authviz/session-lab', icon: ShieldCheck },
-    { label: 'RBAC vs ABAC', href: '/authviz/rbac-lab', icon: UserCheck },
-    { label: 'Password Hashing', href: '/authviz/hashing-lab', icon: Lock },
+    { label: 'Lab', href: '/authviz/lab', icon: FlaskConical },
+    { label: 'Problems', href: '/authviz/problems', icon: CheckSquare },
   ];
 
   const toolsLinks = [
-    { label: 'Auth Architect Flashcards', href: '/authviz/flashcards', icon: HelpCircle },
-    { label: 'Auth & Identity Cheat Sheet', href: '/authviz/cheatsheet', icon: Bookmark },
+    { label: 'Security Flashcards', href: '/authviz/flashcards', icon: HelpCircle },
+    { label: 'RFC Cheat Sheet', href: '/authviz/cheatsheet', icon: Bookmark },
   ];
 
   const isToolsActive = toolsLinks.some(
@@ -42,30 +49,39 @@ export function Navbar() {
           </Link>
 
           <Link href="/authviz" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white font-mono font-extrabold flex items-center justify-center text-sm shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white font-mono font-extrabold flex items-center justify-center text-sm shadow-xs group-hover:scale-105 transition-transform">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div className="flex flex-col">
               <span className="font-extrabold text-sm tracking-tight text-foreground flex items-center gap-1">
                 AuthCosmos <Sparkles className="w-3 h-3 text-emerald-500" />
               </span>
-              <span className="text-[10px] font-mono text-muted-foreground -mt-0.5">OAuth 2.0, JWT, OIDC &amp; RBAC Architecture</span>
+              <span className="text-[10px] font-mono text-muted-foreground -mt-0.5">
+                Identity &amp; Authentication Architecture
+              </span>
             </div>
           </Link>
         </div>
 
-        {/* Center: Nav links */}
-        <nav className="hidden md:flex items-center gap-1.5">
+        {/* Center: Nav links (Concepts, Lab, Problems) */}
+        <nav className="flex items-center gap-1 sm:gap-2">
           {primaryLinks.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
+            // Match exact href or sub-routes (e.g. /authviz/concepts/..., /authviz/lab, /authviz/*-lab)
+            const isActive =
+              pathname === item.href ||
+              (item.href === '/authviz/concepts' && pathname?.startsWith('/authviz/concepts')) ||
+              (item.href === '/authviz/lab' &&
+                (pathname?.startsWith('/authviz/lab') || pathname?.endsWith('-lab'))) ||
+              (item.href === '/authviz/problems' && pathname?.startsWith('/authviz/problems'));
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   isActive
-                    ? 'bg-emerald-600 text-white shadow-sm'
+                    ? 'bg-emerald-600 text-white shadow-xs'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                 }`}
               >
@@ -86,12 +102,12 @@ export function Navbar() {
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
               }`}
             >
-              <span>Practice &amp; Tools</span>
+              <span>Tools</span>
               <ChevronDown className="w-3.5 h-3.5" />
             </button>
 
             {toolsOpen && (
-              <div className="absolute right-0 mt-2 w-56 p-2 rounded-2xl bg-card border border-border shadow-xl space-y-1 z-50 animate-in fade-in slide-in-from-top-1">
+              <div className="absolute right-0 mt-2 w-52 p-2 rounded-2xl bg-card border border-border shadow-lg space-y-1 z-50 animate-in fade-in slide-in-from-top-1">
                 {toolsLinks.map((tool) => {
                   const Icon = tool.icon;
                   const isActive = pathname === tool.href;
