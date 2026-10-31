@@ -3,11 +3,11 @@ import { AUTH_PROBLEMS, AUTH_PROBLEM_CATEGORIES } from './problems';
 import { AUTH_TOPICS } from './topics';
 
 describe('AuthCosmos Practice Problems Dataset', () => {
-  it('contains exactly 50 curated problems', () => {
-    expect(AUTH_PROBLEMS.length).toBe(50);
+  it('contains exactly 60 curated problems (2 per topic)', () => {
+    expect(AUTH_PROBLEMS.length).toBe(60);
   });
 
-  it('has sequential IDs from 1 to 50', () => {
+  it('has sequential IDs from 1 to 60', () => {
     AUTH_PROBLEMS.forEach((p, index) => {
       expect(p.id).toBe(index + 1);
     });
@@ -31,10 +31,14 @@ describe('AuthCosmos Practice Problems Dataset', () => {
     });
   });
 
-  it('covers all 19 topics across the curriculum', () => {
-    const coveredTopicIds = new Set(AUTH_PROBLEMS.map((p) => p.topicId));
+  it('covers all 30 topics across the curriculum with exactly 2 questions each', () => {
+    const topicCountMap = new Map<string, number>();
+    AUTH_PROBLEMS.forEach((p) => {
+      topicCountMap.set(p.topicId, (topicCountMap.get(p.topicId) || 0) + 1);
+    });
+
     AUTH_TOPICS.forEach((t) => {
-      expect(coveredTopicIds.has(t.id)).toBe(true);
+      expect(topicCountMap.get(t.id)).toBe(2);
     });
   });
 

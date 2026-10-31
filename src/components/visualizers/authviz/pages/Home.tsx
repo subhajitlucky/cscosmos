@@ -75,7 +75,7 @@ export default function Home() {
             href="/authviz/problems"
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-7 py-3.5 text-base font-bold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
-            <CheckSquare className="w-4 h-4 text-emerald-500" /> Practice (50 Qs)
+            <CheckSquare className="w-4 h-4 text-emerald-500" /> Practice (60 Qs)
           </Link>
         </motion.div>
 
@@ -93,7 +93,7 @@ export default function Home() {
                 Core Concepts
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                19 structured lessons covering OAuth 2.0 PKCE, RS256 JWTs, cookies vs tokens, RBAC, and mTLS.
+                30 structured lessons covering authentication foundations, session lifecycles, OAuth 2.0 PKCE, RS256 JWTs, cookies vs tokens, RBAC, and Zero Trust.
               </p>
             </div>
             <div className="pt-4 mt-3 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-foreground">
@@ -114,7 +114,7 @@ export default function Home() {
                 Simulation Lab
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                8 interactive security visualizers: PKCE, JWT inspector, cookie security, RBAC engine, and password hashing.
+                11 interactive security visualizers: PKCE, JWT inspector, cookie security, session lifecycle, token rotation, RBAC, IDOR, and hashing.
               </p>
             </div>
             <div className="pt-4 mt-3 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-foreground">
@@ -136,7 +136,7 @@ export default function Home() {
                   Practice Problems
                 </h3>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                  50 Qs
+                  60 Qs
                 </span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">

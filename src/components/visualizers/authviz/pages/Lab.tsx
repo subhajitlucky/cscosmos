@@ -1,17 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
+  Clock,
   Cookie,
   Database,
+  FileCheck,
   Fingerprint,
   FlaskConical,
   Key,
   KeyRound,
   Lock,
   RefreshCw,
+  Repeat,
+  RotateCcw,
+  ShieldAlert,
   ShieldCheck,
   Sparkles,
   UserCheck,
@@ -20,7 +23,10 @@ import {
 import { OAuthPkceVisualizer } from '../components/OAuthPkceVisualizer';
 import { JwtSignatureVisualizer } from '../components/JwtSignatureVisualizer';
 import { SessionVsTokenVisualizer } from '../components/SessionVsTokenVisualizer';
+import { SessionLifecycleVisualizer } from '../components/SessionLifecycleVisualizer';
+import { RefreshTokenRotationVisualizer } from '../components/RefreshTokenRotationVisualizer';
 import { RbacAbacVisualizer } from '../components/RbacAbacVisualizer';
+import { IdorBolaVisualizer } from '../components/IdorBolaVisualizer';
 import { PasswordHashingVisualizer } from '../components/PasswordHashingVisualizer';
 import { WebAuthnPasskeyVisualizer } from '../components/WebAuthnPasskeyVisualizer';
 import { TotpMfaVisualizer } from '../components/TotpMfaVisualizer';
@@ -30,7 +36,10 @@ type StationId =
   | 'pkce'
   | 'jwt'
   | 'cookies'
+  | 'session-lifecycle'
+  | 'token-rotation'
   | 'rbac'
+  | 'idor-bola'
   | 'hashing'
   | 'passkeys'
   | 'totp'
@@ -67,11 +76,32 @@ const STATIONS: StationMeta[] = [
     description: 'Compare HttpOnly SameSite cookies against LocalStorage Bearer tokens.',
   },
   {
+    id: 'session-lifecycle',
+    name: 'Session Lifecycle',
+    badge: 'Idle & Expiry',
+    icon: Clock,
+    description: 'Simulate idle timeouts, absolute expiration windows, and session fixation defense.',
+  },
+  {
+    id: 'token-rotation',
+    name: 'Token Rotation',
+    badge: 'RFC 9700 BCP',
+    icon: Repeat,
+    description: 'Single-use refresh token exchange and automatic token family replay revocation.',
+  },
+  {
     id: 'rbac',
     name: 'RBAC vs ABAC Engine',
     badge: 'Policy Engine',
     icon: UserCheck,
     description: 'Role-based access versus dynamic departmental and contextual attributes.',
+  },
+  {
+    id: 'idor-bola',
+    name: 'IDOR & BOLA Lab',
+    badge: 'OWASP API #1',
+    icon: ShieldAlert,
+    description: 'Test resource ID tampering and enforce multi-tenant database authorization boundaries.',
   },
   {
     id: 'hashing',
@@ -115,13 +145,13 @@ export default function Lab() {
         <div className="space-y-2 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-muted/60 text-foreground text-xs font-mono font-semibold">
             <FlaskConical className="w-3.5 h-3.5 text-emerald-500" />
-            <span>Interactive Security Lab Suite</span>
+            <span>Interactive Security Lab Suite · 11 Stations</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
             Identity Simulation Lab
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            Test and inspect core cryptographic primitives across 8 dedicated stations — PKCE verifiers, JWT signatures, cookie defenses, and memory-hard password hashing.
+            Test and inspect core cryptographic primitives across 11 dedicated stations — PKCE verifiers, JWT signatures, session lifecycles, refresh token rotation, IDOR defenses, and memory-hard password hashing.
           </p>
         </div>
 
@@ -130,8 +160,8 @@ export default function Lab() {
         </div>
       </div>
 
-      {/* Station Tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+      {/* Station Tabs Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-2">
         {STATIONS.map((station) => {
           const Icon = station.icon;
           const isActive = activeStation === station.id;
@@ -176,7 +206,10 @@ export default function Lab() {
         {activeStation === 'pkce' && <OAuthPkceVisualizer />}
         {activeStation === 'jwt' && <JwtSignatureVisualizer />}
         {activeStation === 'cookies' && <SessionVsTokenVisualizer />}
+        {activeStation === 'session-lifecycle' && <SessionLifecycleVisualizer />}
+        {activeStation === 'token-rotation' && <RefreshTokenRotationVisualizer />}
         {activeStation === 'rbac' && <RbacAbacVisualizer />}
+        {activeStation === 'idor-bola' && <IdorBolaVisualizer />}
         {activeStation === 'hashing' && <PasswordHashingVisualizer />}
         {activeStation === 'passkeys' && <WebAuthnPasskeyVisualizer />}
         {activeStation === 'totp' && <TotpMfaVisualizer />}

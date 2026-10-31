@@ -35,3 +35,7 @@ scratch/
 test-results/
 playwright-report/
 blob-report/
+
+# Python
+__pycache__/
+*.pyc

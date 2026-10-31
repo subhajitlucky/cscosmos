@@ -69,7 +69,7 @@ export default function Problems() {
 
     if (isCorrect) {
       const currentSolved = Object.values(userAnswers).filter((a) => a.isCorrect).length;
-      if ([10, 25, 40, 50].includes(currentSolved + 1)) {
+      if ([10, 25, 40, 60].includes(currentSolved + 1)) {
         confetti({
           particleCount: 80,
           spread: 70,
@@ -80,7 +80,7 @@ export default function Problems() {
   };
 
   const resetAllProgress = () => {
-    if (window.confirm('Reset all your practice progress across the 50 questions?')) {
+    if (window.confirm(`Reset all your practice progress across the ${AUTH_PROBLEMS.length} questions?`)) {
       setUserAnswers({});
       try {
         localStorage.removeItem(STORAGE_KEY);
@@ -162,7 +162,7 @@ export default function Problems() {
             Identity &amp; Auth Practice Problems
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            50 architectural questions covering OAuth 2.0 PKCE, asymmetric RS256 JWTs, WebAuthn Passkeys, cookie security, RBAC engines, and Zero Trust identity.
+            {AUTH_PROBLEMS.length} architectural questions covering OAuth 2.0 PKCE, asymmetric RS256 JWTs, WebAuthn Passkeys, cookie security, RBAC engines, and Zero Trust identity.
           </p>
         </div>
 
