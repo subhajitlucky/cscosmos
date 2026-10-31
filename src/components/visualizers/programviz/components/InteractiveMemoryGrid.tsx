@@ -132,7 +132,7 @@ export function InteractiveMemoryGrid() {
           <span className="text-muted-foreground">Code Segment (Instructions)</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3.5 h-3.5 rounded bg-blue-500/20 border border-blue-500" />
+          <div className="w-3.5 h-3.5 rounded bg-amber-500/20 border border-amber-500" />
           <span className="text-muted-foreground">Data Segment (Variables)</span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -155,13 +155,13 @@ export function InteractiveMemoryGrid() {
                   setLastAction(`Read address ${cell.hexAddr}: holds value ${cell.value} (0x${cell.value.toString(16).toUpperCase().padStart(2, '0')}).`);
                 }}
                 className={cn(
-                  "p-2.5 rounded-xl border flex flex-col items-center justify-between min-h-[72px] transition-all text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  "p-2.5 rounded-xl border flex flex-col items-center justify-between min-h-[72px] transition-all text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                   isSelected
-                    ? "ring-2 ring-blue-500 border-blue-500 bg-blue-500/15 scale-[1.04] shadow-md z-10"
+                    ? "ring-2 ring-amber-500 border-amber-500 bg-amber-500/15 scale-[1.04] shadow-md z-10"
                     : cell.type === 'code'
                     ? "bg-green-500/10 border-green-500/30 hover:border-green-500"
                     : cell.type === 'data'
-                    ? "bg-blue-500/10 border-blue-500/30 hover:border-blue-500"
+                    ? "bg-amber-500/10 border-amber-500/30 hover:border-amber-500"
                     : "bg-card border-border hover:border-muted-foreground/40"
                 )}
                 aria-label={`Address ${cell.hexAddr}, value ${cell.value}`}
@@ -173,11 +173,11 @@ export function InteractiveMemoryGrid() {
                 <span className={cn(
                   "text-sm sm:text-base font-extrabold font-mono",
                   isSelected
-                    ? "text-blue-500"
+                    ? "text-amber-500"
                     : cell.type === 'code'
                     ? "text-green-600 dark:text-green-400"
                     : cell.type === 'data'
-                    ? "text-blue-600 dark:text-blue-400"
+                    ? "text-amber-600 dark:text-amber-400"
                     : "text-foreground"
                 )}>
                   {cell.value.toString(16).toUpperCase().padStart(2, '0')}
@@ -197,9 +197,9 @@ export function InteractiveMemoryGrid() {
         {/* Cell Telemetry */}
         <div className="space-y-3 border-b md:border-b-0 md:border-r pb-4 md:pb-0 md:pr-4 border-border">
           <div className="flex items-center gap-2">
-            <Database className="w-4 h-4 text-blue-500" />
+            <Database className="w-4 h-4 text-amber-500" />
             <h4 className="text-sm font-bold text-foreground">
-              Address Inspector: <span className="font-mono text-blue-500">{selectedCell.hexAddr}</span>
+              Address Inspector: <span className="font-mono text-amber-500">{selectedCell.hexAddr}</span>
             </h4>
           </div>
 
@@ -254,7 +254,7 @@ export function InteractiveMemoryGrid() {
                 max={255}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                className="w-full px-3 py-1.5 text-sm font-mono rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-1.5 text-sm font-mono rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
 
@@ -268,7 +268,7 @@ export function InteractiveMemoryGrid() {
                 maxLength={12}
                 value={customLabel}
                 onChange={(e) => setCustomLabel(e.target.value)}
-                className="w-full px-3 py-1.5 text-sm font-mono rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-1.5 text-sm font-mono rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
                 placeholder="e.g. score"
               />
             </div>
@@ -277,7 +277,7 @@ export function InteractiveMemoryGrid() {
           <button
             type="button"
             onClick={handleWrite}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
             <ArrowDownToLine className="w-3.5 h-3.5" />
             Write Byte into RAM Address {selectedCell.hexAddr}
@@ -293,7 +293,7 @@ export function InteractiveMemoryGrid() {
           className="w-full flex items-center justify-between p-4 rounded-xl border border-border/80 bg-muted/20 hover:bg-muted/40 transition-colors text-left"
         >
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-purple-500" />
+            <ShieldCheck className="w-4 h-4 text-emerald-500" />
             <span className="text-xs font-bold text-foreground">
               Optional Advanced Topic: Virtual Memory &amp; The Memory Management Unit (MMU)
             </span>
@@ -309,7 +309,7 @@ export function InteractiveMemoryGrid() {
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden"
             >
-              <div className="p-5 mt-2 rounded-xl border border-purple-500/20 bg-purple-500/5 space-y-3 text-xs leading-relaxed text-muted-foreground">
+              <div className="p-5 mt-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 space-y-3 text-xs leading-relaxed text-muted-foreground">
                 <h5 className="font-bold text-foreground text-sm">
                   Do programs touch real physical RAM addresses directly?
                 </h5>

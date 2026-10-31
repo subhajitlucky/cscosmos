@@ -76,7 +76,7 @@ const TIERS: MemoryTier[] = [
     description:
       'Larger than L1, absorbs cache misses with minimal performance penalty before needing to go to the shared bus.',
     speedRating: 4,
-    colorClass: 'text-blue-500 bg-blue-500/10 border-blue-500/30',
+    colorClass: 'text-amber-500 bg-amber-500/10 border-amber-500/30',
   },
   {
     id: 'l3',
@@ -92,7 +92,7 @@ const TIERS: MemoryTier[] = [
     description:
       'The Last-Level Cache (LLC). If Core 0 writes data that Core 1 needs to read, L3 coordinates the shared cache coherency without touching slow motherboard RAM.',
     speedRating: 3,
-    colorClass: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/30',
+    colorClass: 'text-zinc-300 bg-zinc-800 border-zinc-700',
   },
   {
     id: 'ram',
@@ -145,7 +145,7 @@ export const MemoryHierarchy: React.FC = () => {
       {/* Header and Toggle */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-slate-200 dark:border-slate-800">
         <div>
-          <div className="flex items-center gap-2 text-xs uppercase font-extrabold tracking-widest text-blue-600 dark:text-blue-400">
+          <div className="flex items-center gap-2 text-xs uppercase font-extrabold tracking-widest text-amber-600 dark:text-amber-400">
             <Layers className="w-4 h-4" />
             <span>Architecture Deep Dive</span>
           </div>
@@ -171,7 +171,7 @@ export const MemoryHierarchy: React.FC = () => {
             className={cn(
               'px-3.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5',
               viewMode === 'hardware'
-                ? 'bg-blue-600 text-white shadow'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow'
                 : 'text-slate-600 dark:text-slate-400 hover:text-foreground'
             )}
           >
@@ -186,7 +186,7 @@ export const MemoryHierarchy: React.FC = () => {
             className={cn(
               'px-3.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5',
               viewMode === 'human'
-                ? 'bg-blue-600 text-white shadow'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow'
                 : 'text-slate-600 dark:text-slate-400 hover:text-foreground'
             )}
           >
@@ -222,9 +222,9 @@ export const MemoryHierarchy: React.FC = () => {
                 type="button"
                 onClick={() => setSelectedTierId(tier.id)}
                 className={cn(
-                  'w-full text-left p-3.5 rounded-2xl border transition-all duration-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'w-full text-left p-3.5 rounded-2xl border transition-all duration-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   isSelected
-                    ? 'border-blue-500 bg-blue-50/70 dark:bg-blue-950/40 shadow-md ring-1 ring-blue-500'
+                    ? 'border-amber-500 bg-amber-50/70 dark:bg-zinc-900 dark:bg-zinc-900 shadow-md ring-1 ring-amber-500'
                     : 'border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 bg-card'
                 )}
               >
@@ -251,7 +251,7 @@ export const MemoryHierarchy: React.FC = () => {
                 </div>
 
                 <div className="text-right flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-1">
-                  <div className="font-mono font-extrabold text-sm text-blue-600 dark:text-blue-400">
+                  <div className="font-mono font-extrabold text-sm text-amber-600 dark:text-amber-400">
                     {viewMode === 'hardware' ? tier.latencyNs : tier.humanTime}
                   </div>
                   <div className="text-[11px] text-muted-foreground font-mono">
@@ -293,7 +293,7 @@ export const MemoryHierarchy: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div className="p-3.5 rounded-xl border bg-card border-border space-y-1">
-              <span className="font-bold uppercase tracking-wider text-[10px] text-blue-500 block">
+              <span className="font-bold uppercase tracking-wider text-[10px] text-amber-500 block">
                 Access Latency &amp; Penalty
               </span>
               <p className="text-foreground font-mono text-sm font-bold">
@@ -317,10 +317,10 @@ export const MemoryHierarchy: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-slate-800 dark:text-slate-300 leading-relaxed flex items-start gap-2.5">
-            <HelpCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-slate-800 dark:text-slate-300 leading-relaxed flex items-start gap-2.5">
+            <HelpCircle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
             <p>
-              <strong className="text-blue-600 dark:text-blue-400">Why Modern Programs Run Fast: </strong>
+              <strong className="text-amber-600 dark:text-amber-400">Why Modern Programs Run Fast: </strong>
               Because of <em>Spatial and Temporal Locality</em>, ~95% of CPU memory requests hit the L1/L2 caches! The CPU rarely needs to endure the agonizing 150-cycle penalty to reach external RAM.
             </p>
           </div>

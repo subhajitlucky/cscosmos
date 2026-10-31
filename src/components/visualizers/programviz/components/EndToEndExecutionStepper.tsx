@@ -54,7 +54,7 @@ const JOURNEY_STEPS: JourneyStep[] = [
     title: '1. Developer Writes Source Code',
     component: 'Editor (Human)',
     icon: FileCode,
-    color: 'text-blue-500',
+    color: 'text-amber-500',
     summary: 'The programmer writes high-level C code in a text editor.',
     technicalDetail: 'Human-readable expressions like "int a = 15;" and "printf" are saved in memory buffers inside your text editor. The CPU cannot execute this yet.',
     systemState: {
@@ -92,7 +92,7 @@ const JOURNEY_STEPS: JourneyStep[] = [
     title: '3. Compiler Translates C to Machine Code',
     component: 'Compiler (GCC / Clang)',
     icon: Layers,
-    color: 'text-indigo-500',
+    color: 'text-zinc-300',
     summary: 'The compiler parses syntax and generates native assembly & machine instructions.',
     technicalDetail: 'The compiler converts "a + b" into the CPU’s native arithmetic instructions: "MOV eax, 15", "MOV edx, 27", and "ADD eax, edx", outputting an object file (main.o).',
     systemState: {
@@ -111,7 +111,7 @@ const JOURNEY_STEPS: JourneyStep[] = [
     title: '4. Linker Prepares the Standalone Executable',
     component: 'Linker (ld)',
     icon: Boxes,
-    color: 'text-purple-500',
+    color: 'text-emerald-500',
     summary: 'The linker attaches the C standard library (printf) and builds "program.exe".',
     technicalDetail: 'Your code called printf(), but you did not write printf. The linker connects your code to the standard library libc and writes binary executable headers.',
     systemState: {
@@ -149,7 +149,7 @@ const JOURNEY_STEPS: JourneyStep[] = [
     title: '6. OS Creates the Process & Virtual Memory',
     component: 'OS & Memory Manager (MMU)',
     icon: Database,
-    color: 'text-blue-600',
+    color: 'text-amber-600',
     summary: 'The OS creates Process ID 2048 with its own isolated memory address space.',
     technicalDetail: 'The OS allocates a page table and memory segments: Code Segment (read-only machine code), Data Segment (globals), and Stack (for local variables a, b, result).',
     systemState: {
@@ -187,7 +187,7 @@ const JOURNEY_STEPS: JourneyStep[] = [
     title: '8. CPU Fetches & Executes "int a = 15"',
     component: 'CPU (Fetch -> Decode -> Execute)',
     icon: Cpu,
-    color: 'text-blue-500',
+    color: 'text-amber-500',
     summary: 'CPU loads constant 15 into register R0.',
     technicalDetail: 'Control Unit fetches MOV R0, 15 from RAM address 0x00. PC increments to 0x01. Control signals load the binary integer 15 into CPU register R0.',
     systemState: {
@@ -206,7 +206,7 @@ const JOURNEY_STEPS: JourneyStep[] = [
     title: '9. CPU Fetches & Executes "int b = 27"',
     component: 'CPU (Fetch -> Decode -> Execute)',
     icon: Cpu,
-    color: 'text-blue-500',
+    color: 'text-amber-500',
     summary: 'CPU loads constant 27 into register R1.',
     technicalDetail: 'Control Unit fetches MOV R1, 27 from RAM address 0x01. PC increments to 0x02. Register R1 now holds 27. Both inputs are ready in CPU scratchpad.',
     systemState: {
@@ -351,7 +351,7 @@ export function EndToEndExecutionStepper() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-border/80">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+          <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
             The Grand Unification
           </span>
           <h3 className="text-xl font-bold text-foreground">
@@ -364,7 +364,7 @@ export function EndToEndExecutionStepper() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs transition-colors"
           >
             {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
             {isPlaying ? 'Pause' : 'Auto-Play Story'}
@@ -383,7 +383,7 @@ export function EndToEndExecutionStepper() {
             type="button"
             onClick={handleNext}
             disabled={currentStepIdx === JOURNEY_STEPS.length - 1}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-40"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs transition-colors disabled:opacity-40"
           >
             <span>Next Step</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -403,7 +403,7 @@ export function EndToEndExecutionStepper() {
       {/* Target Program Code Preview */}
       <div className="rounded-xl border border-border bg-slate-950 text-slate-100 p-4 font-mono text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs text-blue-400 font-bold block mb-1">
+          <span className="text-xs text-amber-400 font-bold block mb-1">
             // Target C Program being traced step by step:
           </span>
           <code className="text-slate-300">
@@ -426,7 +426,7 @@ export function EndToEndExecutionStepper() {
         </div>
         <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-blue-600"
+            className="h-full bg-amber-600"
             initial={false}
             animate={{ width: `${((currentStepIdx + 1) / JOURNEY_STEPS.length) * 100}%` }}
             transition={{ duration: 0.3 }}
@@ -435,14 +435,14 @@ export function EndToEndExecutionStepper() {
       </div>
 
       {/* Current Step Spotlight Card */}
-      <div className="p-6 rounded-2xl border-2 border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10 space-y-4">
+      <div className="p-6 rounded-2xl border-2 border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-amber-500 text-zinc-950 font-bold flex items-center justify-center shadow-md">
             <StepIcon className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono uppercase font-bold text-blue-500">
+              <span className="text-xs font-mono uppercase font-bold text-amber-500">
                 {current.component}
               </span>
               <span className={cn(

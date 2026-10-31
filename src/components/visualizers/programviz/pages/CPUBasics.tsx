@@ -62,9 +62,9 @@ export const CPUBasics: React.FC = () => {
   const partCardClass = (key: PartKey, base: string) =>
     cn(
       base,
-      'text-left transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+      'text-left transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
       selectedPart === key
-        ? 'ring-2 ring-blue-500 shadow-xl scale-[1.02]'
+        ? 'ring-2 ring-amber-500 shadow-xl scale-[1.02]'
         : 'hover:scale-[1.01]'
     );
 
@@ -86,7 +86,7 @@ export const CPUBasics: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <Cpu className="w-5 h-5 text-blue-500" />
+              <Cpu className="w-5 h-5 text-amber-500" />
               What is a CPU "Core"?
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -113,7 +113,7 @@ export const CPUBasics: React.FC = () => {
           theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
         )}>
           <div className="text-center space-y-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+            <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
               Interactive Hardware Inspector
             </span>
             <h3 className="text-xl font-bold text-foreground">
@@ -129,12 +129,12 @@ export const CPUBasics: React.FC = () => {
               aria-pressed={selectedPart === 'cu'}
               className={partCardClass('cu', cn(
                 "p-5 rounded-xl border-2 transition-all",
-                theme === 'dark' ? "bg-slate-800/80 border-blue-500/50" : "bg-slate-50 border-blue-400"
+                theme === 'dark' ? "bg-slate-800/80 border-amber-500/50" : "bg-slate-50 border-amber-400"
               ))}
             >
               <div className="flex items-center justify-between mb-2">
-                <h4 className="font-bold text-blue-500 text-sm">Control Unit (CU)</h4>
-                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-500 font-bold">
+                <h4 className="font-bold text-amber-500 text-sm">Control Unit (CU)</h4>
+                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-500 font-bold">
                   The Manager
                 </span>
               </div>
@@ -195,8 +195,8 @@ export const CPUBasics: React.FC = () => {
                     className={cn(
                       "p-2.5 rounded-lg border text-xs font-mono font-bold transition-all text-center",
                       selectedPart === reg.key
-                        ? "bg-blue-600 text-white border-blue-500 shadow-md"
-                        : "bg-card border-border text-foreground hover:border-blue-400"
+                        ? "bg-amber-500 text-zinc-950 font-bold border-amber-500 shadow-md"
+                        : "bg-card border-border text-foreground hover:border-amber-400"
                     )}
                   >
                     {reg.label}
@@ -208,7 +208,7 @@ export const CPUBasics: React.FC = () => {
 
           {/* Detailed Inspector Panel */}
           <div className="p-5 rounded-xl border border-border bg-muted/40 space-y-2">
-            <span className="text-[10px] font-mono uppercase text-blue-500 font-bold block">
+            <span className="text-[10px] font-mono uppercase text-amber-500 font-bold block">
               Component Deep-Dive: {PART_DETAILS[selectedPart].analogy}
             </span>
             <h4 className="text-base font-bold text-foreground">
@@ -270,7 +270,7 @@ export const CPUBasics: React.FC = () => {
             className="w-full flex items-center justify-between p-4 rounded-xl border border-border/80 bg-muted/20 hover:bg-muted/40 transition-colors text-left"
           >
             <div className="flex items-center gap-2">
-              <Layers className="w-4 h-4 text-purple-500" />
+              <Layers className="w-4 h-4 text-emerald-500" />
               <span className="text-xs font-bold text-foreground">
                 Optional Advanced Topic: CPU Caches (L1, L2, L3) &amp; The Memory Wall
               </span>
@@ -293,8 +293,8 @@ export const CPUBasics: React.FC = () => {
         </div>
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 03 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

@@ -65,7 +65,7 @@ export const IOBasics: React.FC = () => {
           theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
         )}>
           <div className="text-center space-y-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+            <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
               The Journey of a Keypress &amp; printf
             </span>
             <h3 className="text-xl font-bold text-foreground">
@@ -76,7 +76,7 @@ export const IOBasics: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-center pt-2">
             {/* Step 1: Physical Hardware */}
             <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-2">
-              <Keyboard className="w-8 h-8 text-blue-500" />
+              <Keyboard className="w-8 h-8 text-amber-500" />
               <span className="text-xs font-bold text-foreground">1. Physical Device</span>
               <p className="text-[11px] text-muted-foreground">
                 You press the 'A' key on keyboard (closes electrical switch).
@@ -89,7 +89,7 @@ export const IOBasics: React.FC = () => {
 
             {/* Step 2: Device Controller & Driver */}
             <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-2">
-              <HardDrive className="w-8 h-8 text-purple-500" />
+              <HardDrive className="w-8 h-8 text-emerald-500" />
               <span className="text-xs font-bold text-foreground">2. Device Driver</span>
               <p className="text-[11px] text-muted-foreground">
                 Hardware chip sends scan code. Driver translates it into character 'A'.
@@ -111,8 +111,8 @@ export const IOBasics: React.FC = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-border/80">
-            <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30 text-xs font-mono text-foreground flex items-center gap-2">
-              <Cpu className="w-4 h-4 text-blue-500" />
+            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs font-mono text-foreground flex items-center gap-2">
+              <Cpu className="w-4 h-4 text-amber-500" />
               <span>User Program receives char &apos;A&apos; &rarr; Calls <code className="font-bold">printf(&quot;Result: %d&quot;, 42)</code></span>
             </div>
             <ArrowRight className="w-4 h-4 text-muted-foreground hidden sm:block" />
@@ -176,7 +176,7 @@ export const IOBasics: React.FC = () => {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-xs font-bold transition-all",
                   ioMode === 'blocking'
-                    ? "bg-blue-600 text-white shadow-sm"
+                    ? "bg-amber-500 text-zinc-950 font-bold shadow-sm"
                     : "border border-border text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -188,7 +188,7 @@ export const IOBasics: React.FC = () => {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-xs font-bold transition-all",
                   ioMode === 'non-blocking'
-                    ? "bg-blue-600 text-white shadow-sm"
+                    ? "bg-amber-500 text-zinc-950 font-bold shadow-sm"
                     : "border border-border text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -200,7 +200,7 @@ export const IOBasics: React.FC = () => {
           <div className="p-6 rounded-2xl border border-border bg-card">
             {ioMode === 'blocking' ? (
               <div className="space-y-3">
-                <span className="text-xs font-mono font-bold text-blue-500 uppercase">
+                <span className="text-xs font-mono font-bold text-amber-500 uppercase">
                   Traditional Synchronous / Blocking Mode (e.g. standard C scanf / read)
                 </span>
                 <p className="text-sm text-foreground leading-relaxed">
@@ -237,7 +237,7 @@ export const IOBasics: React.FC = () => {
           <ul className="space-y-3 text-sm text-muted-foreground list-disc list-inside leading-relaxed">
             <li>
               <strong>"A print statement is fast because it's only one line of code."</strong> <br />
-              <span className="text-foreground">Reality:</span> Printing to the terminal is millions of times slower than register arithmetic! Calling <code className="font-mono">printf()</code> formats text in <code className="font-mono">libc</code>, triggers a <code className="font-mono">sys_write</code> system call, forces a CPU user-to-kernel mode switch, signals the terminal emulator, invokes a font glyph rasterizer, and composites pixels to the GPU framebuffer.
+              <span className="text-foreground">Reality:</span> Printing to the terminal is millions of times slower than register arithmetic! Calling <code className="font-mono">printf()</code> formats text in <code className="font-mono">libc</code>, triggers a <code className="font-mono">sys_write</code> system call, forces a CPU user- mode switch, signals the terminal emulator, invokes a font glyph rasterizer, and composites pixels to the GPU framebuffer.
             </li>
             <li>
               <strong>"A device driver is a hardware chip."</strong> <br />
@@ -271,8 +271,8 @@ export const IOBasics: React.FC = () => {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 08 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

@@ -139,11 +139,8 @@ export function Lab() {
 
   return (
     <div className="space-y-8">
-      {/* Hardware Chassis Ambient Glow Background */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-gradient-to-b from-card via-card to-background p-6 sm:p-10 shadow-xl">
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-
+      {/* Hardware Chassis Ambient Surface */}
+      <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-6 sm:p-10 shadow-sm">
         {/* Top Hardware Telemetry Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-6 mb-8 text-xs font-mono">
           <div className="flex items-center gap-3">
@@ -155,7 +152,7 @@ export function Lab() {
               HARDWARE SIMULATION WORKBENCH
             </span>
             <span className="text-muted-foreground hidden sm:inline">·</span>
-            <span className="text-blue-500 font-bold hidden sm:inline">
+            <span className="text-amber-500 font-bold hidden sm:inline">
               SYSCLK: 3.20 GHz
             </span>
           </div>
@@ -172,13 +169,13 @@ export function Lab() {
 
         {/* Hero Title & Mission */}
         <div className="space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-500 text-xs font-mono font-bold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-xs font-mono font-bold">
             <Zap className="w-3.5 h-3.5" />
             <span>Interactive Computer Architecture Laboratory</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground leading-tight">
-            Systems <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-400 to-emerald-400">Simulation Lab</span>
+            Systems <span className="text-amber-500">Simulation Lab</span>
           </h1>
 
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
@@ -199,9 +196,9 @@ export function Lab() {
                 type="button"
                 onClick={() => setActiveStationId(station.id)}
                 className={cn(
-                  'group relative text-left p-4 rounded-2xl border transition-all duration-200 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'group relative text-left p-4 rounded-2xl border transition-all duration-200 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   isSelected
-                    ? 'border-blue-500 bg-blue-500/10 shadow-lg shadow-blue-500/5 ring-1 ring-blue-500/50'
+                    ? 'border-amber-500 bg-amber-500/10 ring-1 ring-amber-500/50 shadow-xs'
                     : 'border-border/80 bg-card/60 hover:border-slate-400 dark:hover:border-slate-700 hover:bg-card'
                 )}
               >
@@ -209,11 +206,11 @@ export function Lab() {
                   <div className="flex items-center justify-between">
                     <span className={cn(
                       'text-[10px] font-mono font-bold tracking-widest px-2 py-0.5 rounded',
-                      isSelected ? 'bg-blue-600 text-white' : 'bg-muted text-muted-foreground'
+                      isSelected ? 'bg-amber-500 text-zinc-950 font-black' : 'bg-muted text-muted-foreground'
                     )}>
                       {station.code}
                     </span>
-                    <Icon className={cn('w-4 h-4', isSelected ? 'text-blue-500' : 'text-muted-foreground')} />
+                    <Icon className={cn('w-4 h-4', isSelected ? 'text-amber-500' : 'text-muted-foreground')} />
                   </div>
 
                   <div>
@@ -230,10 +227,10 @@ export function Lab() {
                 </div>
 
                 <div className="pt-3 mt-3 border-t border-border/50 flex items-center justify-between text-[11px] font-mono">
-                  <span className={isSelected ? 'text-blue-500 font-bold' : 'text-muted-foreground'}>
+                  <span className={isSelected ? 'text-amber-500 font-bold' : 'text-muted-foreground'}>
                     {isSelected ? 'ACTIVE STATION' : 'SELECT STATION'}
                   </span>
-                  <ChevronRight className={cn('w-3.5 h-3.5 transition-transform', isSelected ? 'text-blue-500 translate-x-0.5' : 'text-muted-foreground')} />
+                  <ChevronRight className={cn('w-3.5 h-3.5 transition-transform', isSelected ? 'text-amber-500 translate-x-0.5' : 'text-muted-foreground')} />
                 </div>
               </button>
             );
@@ -247,7 +244,7 @@ export function Lab() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/80 pb-6">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold text-blue-500 uppercase tracking-wider">
+              <span className="text-xs font-mono font-bold text-amber-500 uppercase tracking-wider">
                 {activeStation.code} · {activeStation.badge}
               </span>
             </div>
@@ -317,7 +314,7 @@ export function Lab() {
               className="p-5 rounded-2xl border border-border/80 bg-card flex flex-col justify-between space-y-4 shadow-xs"
             >
               <div className="space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-blue-500">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-500">
                   Mission Target: {exp.station.toUpperCase()}
                 </span>
                 <h4 className="text-sm font-bold text-foreground leading-snug">{exp.title}</h4>
@@ -337,7 +334,7 @@ export function Lab() {
               <button
                 type="button"
                 onClick={() => setActiveStationId(exp.station)}
-                className="w-full py-2 px-3 rounded-lg border border-border bg-muted/40 hover:bg-blue-600 hover:text-white hover:border-blue-500 text-xs font-semibold text-foreground transition-all flex items-center justify-center gap-1.5"
+                className="w-full py-2 px-3 rounded-lg border border-border bg-muted/40 hover:bg-amber-500 hover:text-zinc-950 hover:border-amber-500 text-xs font-bold text-foreground transition-all flex items-center justify-center gap-1.5 shadow-xs"
               >
                 <span>Switch to {exp.station.toUpperCase()} Station</span>
                 <ArrowRightIcon className="w-3.5 h-3.5" />

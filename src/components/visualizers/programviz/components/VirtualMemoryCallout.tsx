@@ -84,7 +84,7 @@ export const VirtualMemoryCallout: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-slate-200 dark:border-slate-800">
         <div>
-          <div className="flex items-center gap-2 text-xs uppercase font-extrabold tracking-widest text-indigo-600 dark:text-indigo-400">
+          <div className="flex items-center gap-2 text-xs uppercase font-extrabold tracking-widest text-zinc-300 dark:text-zinc-300">
             <KeyRound className="w-4 h-4" />
             <span>Hardware Architecture Reality</span>
           </div>
@@ -92,7 +92,7 @@ export const VirtualMemoryCallout: React.FC = () => {
             The Virtual Memory Secret: Why Programs Never Touch Physical RAM Directly
           </h3>
         </div>
-        <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+        <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-zinc-800 text-zinc-300 dark:text-zinc-300 border border-zinc-700">
           MMU &amp; Paging
         </span>
       </div>
@@ -111,7 +111,7 @@ export const VirtualMemoryCallout: React.FC = () => {
 
         <div className="p-4 rounded-2xl border bg-card border-border space-y-2">
           <div className="flex items-center gap-2 font-bold text-sm text-foreground">
-            <Cpu className="w-4 h-4 text-blue-500" />
+            <Cpu className="w-4 h-4 text-amber-500" />
             <span>The Hardware MMU</span>
           </div>
           <p className="text-muted-foreground leading-relaxed">
@@ -148,9 +148,9 @@ export const VirtualMemoryCallout: React.FC = () => {
                 type="button"
                 onClick={() => setSelectedExampleId(ex.id)}
                 className={cn(
-                  'px-3.5 py-2.5 rounded-xl text-left border text-xs font-bold transition flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'px-3.5 py-2.5 rounded-xl text-left border text-xs font-bold transition flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   isSelected
-                    ? 'border-indigo-500 bg-indigo-50/70 dark:bg-indigo-950/40 text-foreground ring-1 ring-indigo-500'
+                    ? 'border-zinc-700 bg-zinc-800 dark:bg-zinc-800 text-foreground ring-1 ring-amber-500'
                     : 'border-slate-200 dark:border-slate-800 bg-card text-muted-foreground hover:text-foreground hover:border-slate-400'
                 )}
               >
@@ -178,10 +178,10 @@ export const VirtualMemoryCallout: React.FC = () => {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs">
               {/* Virtual Address */}
               <div className="w-full md:w-1/3 p-3.5 rounded-xl bg-card border border-border text-center space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500 block">
                   1. Program Virtual Address
                 </span>
-                <div className="text-base font-extrabold text-blue-600 dark:text-blue-400">
+                <div className="text-base font-extrabold text-amber-600 dark:text-amber-400">
                   {selectedExample.virtualAddress}
                 </div>
                 <div className="text-[11px] text-muted-foreground">{selectedExample.process}</div>
@@ -189,10 +189,10 @@ export const VirtualMemoryCallout: React.FC = () => {
 
               {/* Arrow / MMU */}
               <div className="flex flex-col items-center justify-center text-center px-2">
-                <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow">
+                <div className="w-8 h-8 rounded-full bg-zinc-800 text-zinc-100 font-bold flex items-center justify-center shadow">
                   <Cpu className="w-4 h-4" />
                 </div>
-                <span className="text-[10px] font-bold text-indigo-500 mt-1 uppercase">
+                <span className="text-[10px] font-bold text-zinc-300 mt-1 uppercase">
                   MMU Translation
                 </span>
               </div>
@@ -237,7 +237,7 @@ export const VirtualMemoryCallout: React.FC = () => {
               className={cn(
                 'p-3.5 rounded-xl border text-xs leading-relaxed',
                 selectedExample.status === 'valid'
-                  ? 'bg-indigo-500/10 border-indigo-500/20 text-slate-800 dark:text-slate-200'
+                  ? 'bg-zinc-800 border-zinc-700 text-slate-800 dark:text-slate-200'
                   : 'bg-rose-500/10 border-rose-500/20 text-rose-800 dark:text-rose-200'
               )}
             >
@@ -255,7 +255,7 @@ export const VirtualMemoryCallout: React.FC = () => {
         </div>
         <Link
           href="/corecs/operating-systems-internals-processes-memory"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition shadow-md whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-800 text-white text-xs font-bold transition shadow-md whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
         >
           <span>OS Internals &amp; Memory Topic</span>
           <ExternalLink className="w-3.5 h-3.5" />

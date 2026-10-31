@@ -263,7 +263,7 @@ export const QuickRevisionDeck: React.FC = () => {
       {/* Card Metadata Ribbon */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
         <div className="flex items-center gap-2">
-          <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">
+          <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold">
             Lesson 0{card.lesson}: {card.lessonTitle}
           </span>
           <span className="text-muted-foreground">
@@ -292,10 +292,10 @@ export const QuickRevisionDeck: React.FC = () => {
                 onClick={() => handleSelect(idx)}
                 disabled={isAnswered}
                 className={cn(
-                  "p-4 rounded-xl border-2 text-left text-xs sm:text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  "p-4 rounded-xl border-2 text-left text-xs sm:text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                   isTarget && "bg-emerald-500/15 border-emerald-500 text-emerald-800 dark:text-emerald-200 shadow-md font-bold",
                   isPicked && !isTarget && "bg-red-500/15 border-red-500 text-red-800 dark:text-red-200 font-bold",
-                  !isPicked && !isTarget && "bg-card border-border text-foreground hover:border-blue-400 disabled:opacity-60"
+                  !isPicked && !isTarget && "bg-card border-border text-foreground hover:border-amber-400 disabled:opacity-60"
                 )}
               >
                 <div className="flex items-start gap-2">
@@ -339,7 +339,7 @@ export const QuickRevisionDeck: React.FC = () => {
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-sm"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs font-bold text-xs transition-colors shadow-sm"
               >
                 <span>Next Revision Card</span>
                 <ArrowRight className="w-3.5 h-3.5" />

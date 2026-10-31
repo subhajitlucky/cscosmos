@@ -40,7 +40,7 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
     <div className="space-y-8">
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/80 pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-blue-500 font-medium text-xs font-mono">
+          <div className="flex items-center gap-2 text-amber-500 font-medium text-xs font-mono">
             <span>Step {stepNumber} of {steps.length}</span>
             <span className="w-1 h-1 rounded-full bg-slate-500" />
             <span>{steps[currentStepIndex]?.estimatedTime}</span>
@@ -53,7 +53,7 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
             href={TOPIC_BASE_PATH}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-card text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
           >
-            <BookOpen className="w-3.5 h-3.5 text-blue-500" />
+            <BookOpen className="w-3.5 h-3.5 text-amber-500" />
             <span>Course Home</span>
           </Link>
         </div>
@@ -75,7 +75,7 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
         {prevStep ? (
           <Link 
             href={prevStep.path}
-            className="flex items-center gap-2 transition-colors text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+            className="flex items-center gap-2 transition-colors text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{prevStep.title}</span>
@@ -84,7 +84,7 @@ export const TopicLayout: React.FC<TopicLayoutProps> = ({ stepNumber, title, chi
 
         <button
           onClick={handleComplete}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+          className="flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 rounded-lg font-bold text-zinc-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shadow-xs"
         >
           {isStepCompleted(stepNumber)
             ? (isLastStep ? "Back to Course Home" : "Next Step")

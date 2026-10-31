@@ -33,9 +33,9 @@ const MEMORY_SEGMENTS = [
   },
   {
     name: 'Data Segment (Globals)',
-    color: 'bg-blue-500',
-    borderColor: 'border-blue-500/40',
-    textColor: 'text-blue-500',
+    color: 'bg-amber-500',
+    borderColor: 'border-amber-500/40',
+    textColor: 'text-amber-500',
     desc: 'Stores global and static variables declared outside functions. Allocated once when the program launches and exists until termination.',
     details: 'Fixed Size / Read & Write',
   },
@@ -139,7 +139,7 @@ export const MemoryLayout: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <Layers className="w-5 h-5 text-blue-500" />
+              <Layers className="w-5 h-5 text-amber-500" />
               Stack vs Heap: What Is the Difference?
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -164,7 +164,7 @@ export const MemoryLayout: React.FC = () => {
         {/* C Program Reference & Architectural Insights */}
         <div className="space-y-4">
           <div className="rounded-xl border border-border bg-slate-950 text-slate-100 p-5 font-mono text-xs space-y-2">
-            <span className="text-blue-400 font-bold block">
+            <span className="text-amber-400 font-bold block">
               // C Program demonstrating the 4 Memory Segments:
             </span>
             <pre className="text-slate-300 overflow-x-auto leading-relaxed">
@@ -197,7 +197,7 @@ int main() {
 
             <div className="p-4 rounded-xl border border-border bg-card space-y-1.5">
               <h4 className="font-bold text-foreground flex items-center gap-2">
-                <Lightbulb className="w-4 h-4 text-blue-500" />
+                <Lightbulb className="w-4 h-4 text-amber-500" />
                 The Pointer Duality: Stack Variable vs Heap Block
               </h4>
               <p className="text-muted-foreground leading-relaxed">
@@ -216,7 +216,7 @@ int main() {
         )}>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-border/80">
             <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+              <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
                 Live Memory Animator
               </span>
               <h3 className="text-xl font-bold text-foreground">
@@ -229,7 +229,7 @@ int main() {
               <button
                 type="button"
                 onClick={() => setPlaying((p) => !p)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs transition-colors"
               >
                 {playing ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                 {playing ? 'Pause' : 'Auto-Step'}
@@ -248,7 +248,7 @@ int main() {
                 type="button"
                 onClick={() => setFrameIndex((f) => Math.min(CALL_TIMELINE.length - 1, f + 1))}
                 disabled={frameIndex === CALL_TIMELINE.length - 1}
-                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-40"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs disabled:opacity-40"
               >
                 Next Step
               </button>
@@ -318,8 +318,8 @@ int main() {
               </div>
 
               {/* Data Box */}
-              <div className="p-3 rounded-lg border-2 border-blue-500/40 bg-blue-500/10 space-y-1">
-                <span className="text-[10px] font-mono font-bold text-blue-500 uppercase block">
+              <div className="p-3 rounded-lg border-2 border-amber-500/40 bg-amber-500/10 space-y-1">
+                <span className="text-[10px] font-mono font-bold text-amber-500 uppercase block">
                   Data Segment: global_count = 10
                 </span>
               </div>
@@ -339,8 +339,8 @@ int main() {
 
             {/* Step Story Narrative */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="p-5 rounded-xl border-2 border-blue-500/20 bg-blue-500/5 space-y-2">
-                <span className="text-xs font-mono font-bold text-blue-500 uppercase block">
+              <div className="p-5 rounded-xl border-2 border-amber-500/20 bg-amber-500/5 space-y-2">
+                <span className="text-xs font-mono font-bold text-amber-500 uppercase block">
                   Execution State (Step {frameIndex + 1} of {CALL_TIMELINE.length}):
                 </span>
                 <p className="text-base font-bold text-foreground">
@@ -438,8 +438,8 @@ int main() {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 06 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

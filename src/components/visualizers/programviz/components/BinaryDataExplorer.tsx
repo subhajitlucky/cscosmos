@@ -67,7 +67,7 @@ export function BinaryDataExplorer() {
       {/* Header and Mode Selector */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-border/80">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+          <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
             Interactive Laboratory
           </span>
           <h3 className="text-xl font-bold text-foreground">
@@ -82,9 +82,9 @@ export function BinaryDataExplorer() {
             aria-selected={activeTab === 'binary'}
             onClick={() => setActiveTab('binary')}
             className={cn(
-              "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+              "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
               activeTab === 'binary'
-                ? "bg-blue-600 text-white shadow-sm"
+                ? "bg-amber-500 text-zinc-950 font-bold shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
@@ -98,9 +98,9 @@ export function BinaryDataExplorer() {
             aria-selected={activeTab === 'ascii'}
             onClick={() => setActiveTab('ascii')}
             className={cn(
-              "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+              "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
               activeTab === 'ascii'
-                ? "bg-blue-600 text-white shadow-sm"
+                ? "bg-amber-500 text-zinc-950 font-bold shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
@@ -114,9 +114,9 @@ export function BinaryDataExplorer() {
             aria-selected={activeTab === 'pixel'}
             onClick={() => setActiveTab('pixel')}
             className={cn(
-              "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+              "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
               activeTab === 'pixel'
-                ? "bg-blue-600 text-white shadow-sm"
+                ? "bg-amber-500 text-zinc-950 font-bold shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
@@ -145,8 +145,8 @@ export function BinaryDataExplorer() {
 
           {/* Live Values HUD */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10">
-              <span className="text-xs uppercase font-mono text-blue-500 font-bold block mb-1">
+            <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10">
+              <span className="text-xs uppercase font-mono text-amber-500 font-bold block mb-1">
                 Decimal (Base 10)
               </span>
               <div className="flex items-center gap-3">
@@ -156,7 +156,7 @@ export function BinaryDataExplorer() {
                   max={255}
                   value={decimalValue}
                   onChange={(e) => setFromDecimal(Number(e.target.value))}
-                  className="text-3xl font-extrabold font-mono text-foreground bg-transparent w-24 border-b border-blue-400 focus:outline-none"
+                  className="text-3xl font-extrabold font-mono text-foreground bg-transparent w-24 border-b border-amber-400 focus:outline-none"
                   aria-label="Decimal number value"
                 />
                 <span className="text-xs text-muted-foreground">Human readable</span>
@@ -173,11 +173,11 @@ export function BinaryDataExplorer() {
               <span className="text-xs text-muted-foreground block mt-1">8 bits (switches)</span>
             </div>
 
-            <div className="p-4 rounded-xl border border-purple-500/30 bg-purple-500/5 dark:bg-purple-500/10">
-              <span className="text-xs uppercase font-mono text-purple-500 font-bold block mb-1">
+            <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10">
+              <span className="text-xs uppercase font-mono text-emerald-500 font-bold block mb-1">
                 Hexadecimal (Base 16)
               </span>
-              <span className="text-3xl font-extrabold font-mono text-purple-600 dark:text-purple-400">
+              <span className="text-3xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400">
                 0x{hexValue}
               </span>
               <span className="text-xs text-muted-foreground block mt-1">2 hex digits per byte</span>
@@ -201,10 +201,10 @@ export function BinaryDataExplorer() {
                     type="button"
                     onClick={() => toggleBit(idx)}
                     className={cn(
-                      "p-3 rounded-xl border-2 flex flex-col items-center justify-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                      "p-3 rounded-xl border-2 flex flex-col items-center justify-center gap-1.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                       isOn
-                        ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20 scale-[1.02]"
-                        : "bg-card border-border text-foreground hover:border-blue-400/50"
+                        ? "bg-amber-600 border-amber-500 text-white shadow-lg shadow-xs scale-[1.02]"
+                        : "bg-card border-border text-foreground hover:border-amber-400/50"
                     )}
                     aria-label={`Bit weight ${weight}, current value ${bit}`}
                   >
@@ -235,7 +235,7 @@ export function BinaryDataExplorer() {
               {bits.map((bit, idx) => {
                 const weight = BIT_WEIGHTS[idx];
                 return (
-                  <span key={idx} className={bit ? "text-blue-500 font-bold" : "text-muted-foreground opacity-50"}>
+                  <span key={idx} className={bit ? "text-amber-500 font-bold" : "text-muted-foreground opacity-50"}>
                     ({bit} × {weight}) {idx < 7 ? '+ ' : ''}
                   </span>
                 );
@@ -283,14 +283,14 @@ export function BinaryDataExplorer() {
                   setTextInput(e.target.value);
                   setSelectedCharIdx(0);
                 }}
-                className="w-full sm:w-48 px-3.5 py-2 text-center text-lg font-extrabold font-mono rounded-xl border-2 border-blue-500 bg-background text-foreground focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                className="w-full sm:w-48 px-3.5 py-2 text-center text-lg font-extrabold font-mono rounded-xl border-2 border-amber-500 bg-background text-foreground focus:outline-none focus:ring-4 focus:ring-amber-500/20"
                 placeholder="e.g. CAT"
               />
             </div>
 
             {/* Sequential RAM Address Strip */}
             <div className="space-y-2">
-              <span className="text-xs font-mono font-bold text-blue-500 uppercase block">
+              <span className="text-xs font-mono font-bold text-amber-500 uppercase block">
                 Sequential Memory Layout in RAM (Click a byte to inspect):
               </span>
               <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -305,23 +305,23 @@ export function BinaryDataExplorer() {
                       type="button"
                       onClick={() => setSelectedCharIdx(idx)}
                       className={cn(
-                        "p-3 rounded-xl border-2 flex flex-col items-center min-w-[70px] sm:min-w-[85px] transition-all text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                        "p-3 rounded-xl border-2 flex flex-col items-center min-w-[70px] sm:min-w-[85px] transition-all text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                         isSelected
-                          ? "bg-blue-600 text-white border-blue-500 shadow-lg scale-[1.03]"
-                          : "bg-muted/40 border-border text-foreground hover:border-blue-400"
+                          ? "bg-amber-500 text-zinc-950 font-bold border-amber-500 shadow-lg scale-[1.03]"
+                          : "bg-muted/40 border-border text-foreground hover:border-amber-400"
                       )}
                       aria-label={`Character ${ch} at memory address 0x0${idx}`}
                     >
-                      <span className={cn("text-[10px] font-mono", isSelected ? "text-blue-100" : "text-muted-foreground")}>
+                      <span className={cn("text-[10px] font-mono", isSelected ? "text-amber-100" : "text-muted-foreground")}>
                         RAM [0x0{idx}]
                       </span>
                       <span className="text-2xl font-black font-mono my-1">
                         '{ch}'
                       </span>
-                      <span className={cn("text-xs font-mono font-bold", isSelected ? "text-white" : "text-blue-500")}>
+                      <span className={cn("text-xs font-mono font-bold", isSelected ? "text-white" : "text-amber-500")}>
                         {code}
                       </span>
-                      <span className={cn("text-[10px] font-mono", isSelected ? "text-blue-200" : "text-purple-500")}>
+                      <span className={cn("text-[10px] font-mono", isSelected ? "text-amber-200" : "text-emerald-500")}>
                         0x{hex}
                       </span>
                     </button>
@@ -361,11 +361,11 @@ export function BinaryDataExplorer() {
               </span>
             </div>
 
-            <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30">
-              <span className="text-xs font-mono text-blue-500 font-bold block mb-1">
+            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
+              <span className="text-xs font-mono text-amber-500 font-bold block mb-1">
                 ASCII Decimal Code
               </span>
-              <span className="text-3xl font-black font-mono text-blue-600 dark:text-blue-400">
+              <span className="text-3xl font-black font-mono text-amber-600 dark:text-amber-400">
                 {charCode}
               </span>
               <span className="text-xs text-muted-foreground block mt-1">
@@ -449,7 +449,7 @@ export function BinaryDataExplorer() {
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-bold font-mono">
-                  <span className="text-blue-500">Blue Byte: {blue}</span>
+                  <span className="text-foreground">Channel 3 (Blue): {blue}</span>
                   <span className="text-muted-foreground font-mono">{blue.toString(2).padStart(8, '0')}</span>
                 </div>
                 <input
@@ -458,7 +458,7 @@ export function BinaryDataExplorer() {
                   max={255}
                   value={blue}
                   onChange={(e) => setBlue(Number(e.target.value))}
-                  className="w-full accent-blue-500"
+                  className="w-full accent-amber-500"
                 />
               </div>
             </div>

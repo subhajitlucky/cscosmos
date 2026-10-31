@@ -177,7 +177,7 @@ export const CONCEPT_NODES: ConceptNode[] = [
     whyItMatters: 'Disproves the myth that all programming languages execute in the same physical manner.',
   },
   {
-    id: 'end-to-end',
+    id: 'end-',
     title: '3. Complete Program Execution Journey',
     track: 'system',
     lessonStep: 10,
@@ -206,9 +206,9 @@ export const ConceptDependencyMap: React.FC = () => {
       case 'data':
         return { label: 'Data & Memory Track', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' };
       case 'cpu':
-        return { label: 'CPU & Control Track', color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30' };
+        return { label: 'CPU & Control Track', color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30' };
       case 'system':
-        return { label: 'System Integration Track', color: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30' };
+        return { label: 'System Integration Track', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' };
     }
   };
 
@@ -224,8 +224,8 @@ export const ConceptDependencyMap: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-border/80">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Network className="w-5 h-5 text-blue-500" />
-            <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+            <Network className="w-5 h-5 text-amber-500" />
+            <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
               Pedagogical Roadmap
             </span>
           </div>
@@ -242,8 +242,8 @@ export const ConceptDependencyMap: React.FC = () => {
             type="button"
             onClick={() => setActiveTrack('all')}
             className={cn(
-              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-              activeTrack === 'all' ? "bg-blue-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
+              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+              activeTrack === 'all' ? "bg-amber-500 text-zinc-950 font-bold shadow-sm" : "text-muted-foreground hover:text-foreground"
             )}
           >
             All Tracks
@@ -252,7 +252,7 @@ export const ConceptDependencyMap: React.FC = () => {
             type="button"
             onClick={() => setActiveTrack('data')}
             className={cn(
-              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
               activeTrack === 'data' ? "bg-emerald-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
             )}
           >
@@ -262,8 +262,8 @@ export const ConceptDependencyMap: React.FC = () => {
             type="button"
             onClick={() => setActiveTrack('cpu')}
             className={cn(
-              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-              activeTrack === 'cpu' ? "bg-blue-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
+              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+              activeTrack === 'cpu' ? "bg-amber-500 text-zinc-950 font-bold shadow-sm" : "text-muted-foreground hover:text-foreground"
             )}
           >
             CPU &amp; Control
@@ -272,8 +272,8 @@ export const ConceptDependencyMap: React.FC = () => {
             type="button"
             onClick={() => setActiveTrack('system')}
             className={cn(
-              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-              activeTrack === 'system' ? "bg-purple-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
+              "px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+              activeTrack === 'system' ? "bg-emerald-500 text-zinc-950 font-bold shadow-sm" : "text-muted-foreground hover:text-foreground"
             )}
           >
             System Integration
@@ -292,10 +292,10 @@ export const ConceptDependencyMap: React.FC = () => {
               type="button"
               onClick={() => setSelectedId(node.id)}
               className={cn(
-                "p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between min-h-[110px] gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                "p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between min-h-[110px] gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                 isSelected
-                  ? "border-blue-500 bg-blue-500/10 shadow-lg scale-[1.02] ring-2 ring-blue-500/20"
-                  : "border-border bg-card hover:border-blue-400/50 hover:bg-muted/30"
+                  ? "border-amber-500 bg-amber-500/10 shadow-lg scale-[1.02] ring-2 ring-amber-500/20"
+                  : "border-border bg-card hover:border-amber-400/50 hover:bg-muted/30"
               )}
             >
               <div className="flex items-center justify-between w-full">
@@ -325,15 +325,15 @@ export const ConceptDependencyMap: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="p-6 rounded-2xl border-2 border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10 space-y-4"
+          className="p-6 rounded-2xl border-2 border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10 space-y-4"
         >
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-blue-500/20 pb-3">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-amber-500/20 pb-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className={cn("text-[10px] font-mono font-bold px-2 py-0.5 rounded border", getTrackBadge(selectedNode.track).color)}>
                   {getTrackBadge(selectedNode.track).label}
                 </span>
-                <span className="text-xs font-mono text-blue-500 font-bold">
+                <span className="text-xs font-mono text-amber-500 font-bold">
                   Lesson 0{selectedNode.lessonStep}
                 </span>
               </div>
@@ -344,7 +344,7 @@ export const ConceptDependencyMap: React.FC = () => {
 
             <Link
               href={selectedNode.lessonPath}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-sm shrink-0"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs font-bold text-xs transition-colors shadow-sm shrink-0"
             >
               <span>Go to Lesson 0{selectedNode.lessonStep}</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -379,7 +379,7 @@ export const ConceptDependencyMap: React.FC = () => {
             </div>
 
             <div className="p-3.5 rounded-xl border border-border bg-card space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-blue-500 block">
+              <span className="text-[10px] font-mono font-bold uppercase text-amber-500 block">
                 Why It Matters:
               </span>
               <p className="text-muted-foreground leading-relaxed">

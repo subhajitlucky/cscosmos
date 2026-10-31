@@ -36,7 +36,7 @@ export const ExecutablePipeline: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <Layers className="w-5 h-5 text-blue-500" />
+              <Layers className="w-5 h-5 text-amber-500" />
               Why Don't All Languages Work the Same Way?
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -71,7 +71,7 @@ export const ExecutablePipeline: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
-              <span className="text-xs font-mono font-bold text-blue-500 uppercase">
+              <span className="text-xs font-mono font-bold text-amber-500 uppercase">
                 1. Compiler &amp; Assembler
               </span>
               <h4 className="font-bold text-foreground text-base">From Syntax to Object Files (.o)</h4>
@@ -81,12 +81,12 @@ export const ExecutablePipeline: React.FC = () => {
             </div>
 
             <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
-              <span className="text-xs font-mono font-bold text-purple-500 uppercase">
+              <span className="text-xs font-mono font-bold text-emerald-500 uppercase">
                 2. The Linker
               </span>
               <h4 className="font-bold text-foreground text-base">Stitching Modules and Libraries</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Your code rarely exists alone. When you call <code className="font-mono">printf()</code> or <code className="font-mono">Math.sqrt()</code>, that implementation lives in the standard system library. The <strong>Linker</strong> connects your object files with library files, resolves memory addresses, and outputs a ready-to-run executable binary (<code className="font-mono">.exe</code>, ELF, Mach-O).
+                Your code rarely exists alone. When you call <code className="font-mono">printf()</code> or <code className="font-mono">Math.sqrt()</code>, that implementation lives in the standard system library. The <strong>Linker</strong> connects your object files with library files, resolves memory addresses, and outputs a ready- executable binary (<code className="font-mono">.exe</code>, ELF, Mach-O).
               </p>
             </div>
 
@@ -155,8 +155,8 @@ export const ExecutablePipeline: React.FC = () => {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 09 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

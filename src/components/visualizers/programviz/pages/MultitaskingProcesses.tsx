@@ -35,7 +35,7 @@ export const MultitaskingProcesses: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <RefreshCw className="w-5 h-5 text-purple-500" />
+              <RefreshCw className="w-5 h-5 text-emerald-500" />
               Why Multitasking Exists
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -69,9 +69,9 @@ export const MultitaskingProcesses: React.FC = () => {
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl border-2 border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
+            <div className="p-6 rounded-2xl border-2 border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
               <div className="flex items-center gap-2">
-                <Layers className="w-5 h-5 text-blue-500" />
+                <Layers className="w-5 h-5 text-amber-500" />
                 <h4 className="font-bold text-foreground text-base">A Process (Isolated House)</h4>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
@@ -100,8 +100,8 @@ export const MultitaskingProcesses: React.FC = () => {
               What Is Shared vs. Private in Multi-Threading?
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 space-y-1.5">
-                <span className="font-bold text-blue-600 dark:text-blue-400 block">Shared Across All Threads in a Process:</span>
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-1.5">
+                <span className="font-bold text-amber-600 dark:text-amber-400 block">Shared Across All Threads in a Process:</span>
                 <ul className="space-y-1 text-muted-foreground list-disc list-inside">
                   <li><strong>Code Segment:</strong> All threads run the same program binary.</li>
                   <li><strong>Heap &amp; Data:</strong> Dynamically allocated objects and global variables.</li>
@@ -122,7 +122,7 @@ export const MultitaskingProcesses: React.FC = () => {
 
           {/* Context Switching Mechanics */}
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
-            <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-purple-500">
+            <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-emerald-500">
               The Secret Weapon: The Context Switch
             </h4>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -188,8 +188,8 @@ export const MultitaskingProcesses: React.FC = () => {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 07 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

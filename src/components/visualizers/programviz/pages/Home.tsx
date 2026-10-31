@@ -38,7 +38,7 @@ function ProgressRing({ percent }: { percent: number }) {
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className="stroke-blue-500 transition-all duration-700"
+          className="stroke-amber-500 transition-all duration-700"
         />
       </svg>
       <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-foreground">
@@ -65,7 +65,7 @@ export const Home: React.FC = () => {
     <div className="space-y-12">
       {/* Hero Header */}
       <header className="space-y-6 text-center max-w-3xl mx-auto pt-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-500 text-xs font-mono font-semibold">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-500 text-xs font-mono font-semibold">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Interactive Computer Architecture &amp; Execution</span>
         </div>
@@ -75,7 +75,7 @@ export const Home: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground"
         >
-          How Programs <span className="text-blue-500">Execute</span>
+          How Programs <span className="text-amber-500">Execute</span>
         </motion.h1>
 
         <motion.p
@@ -91,20 +91,20 @@ export const Home: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-left">
           <Link
             href={`${TOPIC_BASE_PATH}/concepts`}
-            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-blue-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-amber-500/50 hover:shadow-sm transition-all flex flex-col justify-between"
           >
             <div className="space-y-2">
-              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500 w-fit">
+              <div className="p-2 rounded-lg bg-amber-500/10 text-amber-500 w-fit">
                 <BookOpen className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-sm text-foreground group-hover:text-blue-500 transition-colors">
+              <h3 className="font-bold text-sm text-foreground group-hover:text-amber-500 transition-colors">
                 Core Concepts
               </h3>
               <p className="text-xs text-muted-foreground">
                 10 structured lessons covering binary, CPU, RAM, stack/heap, and system calls.
               </p>
             </div>
-            <div className="pt-3 mt-2 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-blue-500">
+            <div className="pt-3 mt-2 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-amber-500">
               <span>View Syllabus</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -112,20 +112,20 @@ export const Home: React.FC = () => {
 
           <Link
             href={`${TOPIC_BASE_PATH}/lab`}
-            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-blue-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-amber-500/50 hover:shadow-sm transition-all flex flex-col justify-between"
           >
             <div className="space-y-2">
-              <div className="p-2 rounded-lg bg-purple-500/10 text-purple-500 w-fit">
+              <div className="p-2 rounded-lg bg-zinc-800 text-amber-400 w-fit">
                 <FlaskConical className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-sm text-foreground group-hover:text-purple-500 transition-colors">
+              <h3 className="font-bold text-sm text-foreground group-hover:text-amber-500 transition-colors">
                 Simulation Lab
               </h3>
               <p className="text-xs text-muted-foreground">
                 Interactive CPU assembly simulator, RAM address matrix, and data explorer.
               </p>
             </div>
-            <div className="pt-3 mt-2 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-purple-500">
+            <div className="pt-3 mt-2 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-amber-500">
               <span>Launch Studio</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
@@ -133,7 +133,7 @@ export const Home: React.FC = () => {
 
           <Link
             href={`${TOPIC_BASE_PATH}/problems`}
-            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-emerald-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-emerald-500/50 hover:shadow-sm transition-all flex flex-col justify-between"
           >
             <div className="space-y-2">
               <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500 w-fit">
@@ -166,7 +166,7 @@ export const Home: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           aria-label="Learning progress"
-          className="p-6 border border-border/80 rounded-xl bg-card shadow-md flex flex-col sm:flex-row items-center gap-6 justify-between"
+          className="p-6 border border-border/80 rounded-xl bg-card shadow-sm flex flex-col sm:flex-row items-center gap-6 justify-between"
         >
           <div className="flex items-center gap-6">
             <ProgressRing percent={percent} />
@@ -188,7 +188,7 @@ export const Home: React.FC = () => {
           <div className="flex shrink-0 items-center gap-2">
             <Link
               href={resumePath}
-              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 font-bold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-6 py-3 font-bold text-zinc-950 transition-colors hover:bg-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shadow-xs"
             >
               <PlayCircle className="h-5 w-5" />
               {isComplete ? 'Review Course' : 'Resume'}
@@ -200,7 +200,7 @@ export const Home: React.FC = () => {
               }}
               aria-label="Reset progress"
               title="Reset progress"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             >
               <RotateCcw className="h-4 w-4" />
             </button>
@@ -222,7 +222,7 @@ export const Home: React.FC = () => {
             transition={{ delay: 0.2 + i * 0.1 }}
             className="p-6 border border-border/80 rounded-xl bg-card shadow-sm"
           >
-            <item.icon className="w-10 h-10 text-blue-500 mb-4" />
+            <item.icon className="w-10 h-10 text-amber-500 mb-4" />
             <h3 className="text-lg font-bold mb-2 text-foreground">{item.title}</h3>
             <p className="text-sm text-muted-foreground">{item.desc}</p>
           </motion.div>
@@ -235,7 +235,7 @@ export const Home: React.FC = () => {
           <h2 className="text-2xl font-bold text-foreground">Step-by-Step Learning Path</h2>
           <Link
             href={`${TOPIC_BASE_PATH}/concepts`}
-            className="text-xs font-semibold text-blue-500 hover:underline flex items-center gap-1"
+            className="text-xs font-semibold text-amber-500 hover:underline flex items-center gap-1"
           >
             <span>View Full Syllabus</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -254,13 +254,13 @@ export const Home: React.FC = () => {
               >
                 <Link
                   href={step.path}
-                  className="group flex items-center justify-between p-4 border border-border/80 rounded-lg bg-card/60 hover:bg-card transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="group flex items-center justify-between p-4 border border-border/80 rounded-lg bg-card/60 hover:bg-card transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
                 >
                   <div className="flex items-center gap-4">
                     <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold transition-colors ${
                       isStepDone
                         ? 'bg-emerald-500 text-white'
-                        : 'bg-muted group-hover:bg-blue-600 group-hover:text-white'
+                        : 'bg-muted group-hover:bg-amber-500 group-hover:text-zinc-950'
                     }`}>
                       {isStepDone ? <CheckCircle2 className="w-4 h-4" /> : step.step}
                     </span>
@@ -293,10 +293,10 @@ export const Home: React.FC = () => {
               className="group p-4 rounded-xl border border-border/80 bg-card/60 hover:bg-card transition-all shadow-sm"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase text-blue-500 font-bold">Deep Dive</span>
+                <span className="text-xs font-mono uppercase text-amber-500 font-bold">Deep Dive</span>
                 <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:translate-x-0.5" />
               </div>
-              <h3 className="mt-2 text-base font-bold text-foreground group-hover:text-blue-500 transition-colors">
+              <h3 className="mt-2 text-base font-bold text-foreground group-hover:text-amber-500 transition-colors">
                 Computer Architecture &amp; CPU Caches
               </h3>
               <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
@@ -328,7 +328,7 @@ export const Home: React.FC = () => {
         <div className="pt-4 text-center">
           <Link
             href={steps[0].path}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-lg transition-colors shadow-lg shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-full font-bold text-lg transition-colors shadow-xs border border-amber-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             <PlayCircle className="w-6 h-6" />
             Start Learning

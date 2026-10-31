@@ -46,7 +46,7 @@ export const MemoryBasics: React.FC = () => {
 
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <Database className="w-5 h-5 text-blue-500" />
+              <Database className="w-5 h-5 text-amber-500" />
               The Post-Office Box Analogy
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -79,7 +79,7 @@ export const MemoryBasics: React.FC = () => {
             </div>
 
             <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
-              <span className="text-xs font-mono font-bold text-blue-500 uppercase">
+              <span className="text-xs font-mono font-bold text-amber-500 uppercase">
                 2. ROM (Read-Only Memory)
               </span>
               <h4 className="font-bold text-foreground text-base">Read-Only / Permanent</h4>
@@ -111,7 +111,7 @@ export const MemoryBasics: React.FC = () => {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
               <div className="p-3.5 rounded-xl border border-border bg-muted/30 space-y-1">
-                <span className="font-mono font-bold text-blue-500">char (1 Byte)</span>
+                <span className="font-mono font-bold text-amber-500">char (1 Byte)</span>
                 <p className="text-foreground font-bold">Takes 1 Address</p>
                 <p className="text-muted-foreground text-[11px]">Example: <code className="font-mono">char c = &apos;A&apos;</code> occupies address <code className="font-mono">0x10</code>.</p>
               </div>
@@ -121,7 +121,7 @@ export const MemoryBasics: React.FC = () => {
                 <p className="text-muted-foreground text-[11px]">Example: <code className="font-mono">int a = 15</code> spans <code className="font-mono">0x10, 0x11, 0x12, 0x13</code>. The pointer points to <code className="font-mono">0x10</code>.</p>
               </div>
               <div className="p-3.5 rounded-xl border border-border bg-muted/30 space-y-1">
-                <span className="font-mono font-bold text-purple-500">Pointer / double (8 Bytes)</span>
+                <span className="font-mono font-bold text-emerald-500">Pointer / double (8 Bytes)</span>
                 <p className="text-foreground font-bold">Takes 8 Consecutive Addresses</p>
                 <p className="text-muted-foreground text-[11px]">Spans 8 consecutive bytes in 64-bit systems.</p>
               </div>
@@ -172,8 +172,8 @@ export const MemoryBasics: React.FC = () => {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 05 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

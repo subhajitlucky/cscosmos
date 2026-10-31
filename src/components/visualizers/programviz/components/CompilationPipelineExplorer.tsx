@@ -36,7 +36,7 @@ const PIPELINES: Record<LanguageKey, LanguagePipeline> = {
   c: {
     name: 'C / C++',
     badge: 'Ahead-Of-Time (AOT) Native Compilation',
-    badgeColor: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30',
+    badgeColor: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30',
     summary: 'Directly translated into native CPU machine instructions before you ever run it.',
     philosophy: 'Maximum execution speed and hardware control. The compiled binary runs directly on the bare CPU without any interpreter.',
     stages: [
@@ -267,7 +267,7 @@ export function CompilationPipelineExplorer() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-border/80">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+          <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
             Interactive Architecture Explorer
           </span>
           <h3 className="text-xl font-bold text-foreground">
@@ -285,9 +285,9 @@ export function CompilationPipelineExplorer() {
               aria-selected={activeLang === lang}
               onClick={() => handleSelectLang(lang)}
               className={cn(
-                "px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                "px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                 activeLang === lang
-                  ? "bg-blue-600 text-white shadow-sm"
+                  ? "bg-amber-500 text-zinc-950 font-bold shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -324,16 +324,16 @@ export function CompilationPipelineExplorer() {
                 type="button"
                 onClick={() => setActiveStageIdx(idx)}
                 className={cn(
-                  "p-3 rounded-xl border text-left transition-all flex flex-col justify-between gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  "p-3 rounded-xl border text-left transition-all flex flex-col justify-between gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                   isSelected
-                    ? "border-blue-500 bg-blue-500/10 shadow-md ring-2 ring-blue-500/30"
+                    ? "border-amber-500 bg-amber-500/10 shadow-md ring-2 ring-amber-500/30"
                     : "border-border bg-card hover:border-muted-foreground/40"
                 )}
               >
                 <div className="flex items-center justify-between">
                   <span className={cn(
                     "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold font-mono",
-                    isSelected ? "bg-blue-600 text-white" : "bg-muted text-muted-foreground"
+                    isSelected ? "bg-amber-500 text-zinc-950 font-bold" : "bg-muted text-muted-foreground"
                   )}>
                     {stage.step}
                   </span>
@@ -355,7 +355,7 @@ export function CompilationPipelineExplorer() {
         {/* Stage Narrative and Telemetry */}
         <div className="space-y-4">
           <div>
-            <span className="text-xs font-mono text-blue-500 font-bold block mb-1">
+            <span className="text-xs font-mono text-amber-500 font-bold block mb-1">
               Stage {activeStage.step} of {pipeline.stages.length}
             </span>
             <h4 className="text-lg font-bold text-foreground">
@@ -397,7 +397,7 @@ export function CompilationPipelineExplorer() {
             <span>Code / Binary Representation:</span>
             <span>{pipeline.name}</span>
           </div>
-          <pre className="p-4 overflow-x-auto text-[11px] leading-relaxed text-blue-300 flex-1">
+          <pre className="p-4 overflow-x-auto text-[11px] leading-relaxed text-amber-300 flex-1">
             <code>{activeStage.codeSnippet}</code>
           </pre>
           <div className="px-4 py-2 bg-slate-900/40 text-[10px] text-slate-400 border-t border-slate-800/80">

@@ -138,12 +138,12 @@ export function Problems() {
     <div className="space-y-8">
       {/* Header */}
       <header className="space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-500 text-xs font-mono font-semibold">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-500 text-xs font-mono font-semibold">
           <CheckSquare className="w-3.5 h-3.5" />
           <span>100 Interactive Practice Challenges</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-          Systems <span className="text-blue-500">Practice Arena</span>
+          Systems <span className="text-amber-500">Practice Arena</span>
         </h1>
         <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           Master the complete execution lifecycle with 100 comprehensive questions covering CPU microarchitecture,
@@ -155,7 +155,7 @@ export function Problems() {
       <div className="p-6 rounded-2xl border border-border/80 bg-card shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-blue-500/10 text-blue-500">
+            <div className="p-3 rounded-xl bg-amber-500/10 text-amber-500">
               <Trophy className="w-6 h-6" />
             </div>
             <div>
@@ -173,7 +173,7 @@ export function Problems() {
             <button
               type="button"
               onClick={resetAllProgress}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset</span>
@@ -185,7 +185,7 @@ export function Problems() {
         <div className="space-y-1.5">
           <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
             <div
-              className="bg-blue-600 h-3 rounded-full transition-all duration-500"
+              className="bg-amber-500 h-3 rounded-full transition-all duration-500"
               style={{ width: `${percent}%` }}
             />
           </div>
@@ -206,7 +206,7 @@ export function Problems() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search in 100 questions (e.g. registers, stack, syscall, binary)..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl border border-border/80 bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-9 pr-4 py-2 rounded-xl border border-border/80 bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
 
@@ -214,7 +214,7 @@ export function Problems() {
             <select
               value={selectedDifficulty}
               onChange={(e) => setSelectedDifficulty(e.target.value)}
-              className="py-2 px-3 rounded-xl border border-border/80 bg-card text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="py-2 px-3 rounded-xl border border-border/80 bg-card text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
             >
               <option value="all">All Difficulties</option>
               <option value="Beginner">Beginner</option>
@@ -230,9 +230,9 @@ export function Problems() {
             type="button"
             onClick={() => setSelectedTopic('all')}
             className={cn(
-              'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+              'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
               selectedTopic === 'all'
-                ? 'bg-blue-600 text-white font-semibold'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow-xs'
                 : 'bg-card border border-border/80 text-muted-foreground hover:text-foreground'
             )}
           >
@@ -248,14 +248,14 @@ export function Problems() {
                 type="button"
                 onClick={() => setSelectedTopic(cat.id)}
                 className={cn(
-                  'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   isCatActive
-                    ? 'bg-blue-600 text-white font-semibold'
+                    ? 'bg-amber-500 text-zinc-950 font-bold shadow-xs'
                     : 'bg-card border border-border/80 text-muted-foreground hover:text-foreground'
                 )}
               >
                 <span>{cat.name}</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', isCatActive ? 'bg-white/20' : 'bg-muted')}>
+                <span className={cn('text-[10px] font-mono px-1 rounded', isCatActive ? 'bg-zinc-950/20 text-zinc-950' : 'bg-muted')}>
                   {count}
                 </span>
               </button>
@@ -272,16 +272,16 @@ export function Problems() {
             {/* Top metadata */}
             <div className="flex items-center justify-between gap-2 border-b border-border/80 pb-4">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-500 font-mono text-xs font-bold">
+                <span className="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 font-mono text-xs font-bold">
                   Question #{activeProblem.id}
                 </span>
                 <Link
                   href={steps.find((s) => s.step === activeProblem.topicNumber)?.path || '#'}
-                  className="text-xs text-muted-foreground hover:text-blue-500 font-medium hidden sm:inline-flex items-center gap-1.5 transition-colors group"
+                  className="text-xs text-muted-foreground hover:text-amber-500 font-medium hidden sm:inline-flex items-center gap-1.5 transition-colors group"
                   title={`Go to Lesson ${activeProblem.topicNumber}: ${activeProblem.category}`}
                 >
                   <span>Topic {activeProblem.topicNumber}: {activeProblem.category}</span>
-                  <BookOpen className="w-3.5 h-3.5 text-muted-foreground/70 group-hover:text-blue-500 transition-colors" />
+                  <BookOpen className="w-3.5 h-3.5 text-muted-foreground/70 group-hover:text-amber-500 transition-colors" />
                 </Link>
               </div>
 
@@ -289,9 +289,9 @@ export function Problems() {
                 <span
                   className={cn(
                     'px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase',
-                    activeProblem.difficulty === 'Beginner' && 'bg-emerald-500/10 text-emerald-500',
-                    activeProblem.difficulty === 'Intermediate' && 'bg-blue-500/10 text-blue-500',
-                    activeProblem.difficulty === 'Advanced' && 'bg-purple-500/10 text-purple-500'
+                    activeProblem.difficulty === 'Beginner' && 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20',
+                    activeProblem.difficulty === 'Intermediate' && 'bg-amber-500/10 text-amber-500 border border-amber-500/20',
+                    activeProblem.difficulty === 'Advanced' && 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
                   )}
                 >
                   {activeProblem.difficulty}
@@ -337,7 +337,7 @@ export function Problems() {
                     disabled={answered}
                     onClick={() => recordAnswer(activeProblem.id, idx, isCorrectOption)}
                     className={cn(
-                      'w-full text-left p-4 rounded-xl border transition-all flex items-start gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                      'w-full text-left p-4 rounded-xl border transition-all flex items-start gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                       buttonStyle
                     )}
                   >
@@ -359,11 +359,11 @@ export function Problems() {
                     'p-5 rounded-xl border mt-4 space-y-2',
                     activeAnswer.isCorrect
                       ? 'border-emerald-500/30 bg-emerald-500/5'
-                      : 'border-blue-500/30 bg-blue-500/5'
+                      : 'border-amber-500/30 bg-amber-500/5'
                   )}
                 >
                   <div className="flex items-center gap-2">
-                    <Sparkles className={cn('w-4 h-4', activeAnswer.isCorrect ? 'text-emerald-500' : 'text-blue-500')} />
+                    <Sparkles className={cn('w-4 h-4', activeAnswer.isCorrect ? 'text-emerald-500' : 'text-amber-500')} />
                     <span className="text-xs font-bold text-foreground">
                       {activeAnswer.isCorrect ? 'Correct! Technical Explanation:' : 'Explanation & Core Takeaway:'}
                     </span>
@@ -377,7 +377,7 @@ export function Problems() {
                     </span>
                     <Link
                       href={steps.find((s) => s.step === activeProblem.topicNumber)?.path || '#'}
-                      className="inline-flex items-center gap-1 font-semibold text-blue-500 hover:text-blue-600 transition-colors"
+                      className="inline-flex items-center gap-1 font-semibold text-amber-500 hover:text-amber-400 transition-colors"
                     >
                       <span>Study Full Lesson</span>
                       <ArrowRight className="w-3 h-3" />
@@ -396,7 +396,7 @@ export function Problems() {
                   if (prevProblem) setSelectedId(prevProblem.id);
                 }}
                 className={cn(
-                  'flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   prevProblem
                     ? 'border border-border text-foreground hover:bg-muted/50'
                     : 'opacity-30 cursor-not-allowed border border-border text-muted-foreground'
@@ -413,9 +413,9 @@ export function Problems() {
                   if (nextProblem) setSelectedId(nextProblem.id);
                 }}
                 className={cn(
-                  'flex items-center gap-1.5 px-5 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'flex items-center gap-1.5 px-5 py-2 rounded-lg text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   nextProblem
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                    ? 'bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold shadow-xs'
                     : 'opacity-30 cursor-not-allowed bg-muted text-muted-foreground'
                 )}
               >
@@ -446,7 +446,7 @@ export function Problems() {
               <span>Missed</span>
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
               <span>Selected</span>
             </span>
           </div>
@@ -459,7 +459,7 @@ export function Problems() {
 
               let cellStyle = 'bg-muted/40 text-muted-foreground hover:bg-muted';
               if (isSelected) {
-                cellStyle = 'bg-blue-600 text-white font-bold ring-2 ring-blue-400';
+                cellStyle = 'bg-amber-500 text-zinc-950 font-bold ring-2 ring-amber-400 shadow-xs';
               } else if (answer?.isCorrect) {
                 cellStyle = 'bg-emerald-500 text-white font-bold';
               } else if (answer && !answer.isCorrect) {
@@ -473,7 +473,7 @@ export function Problems() {
                   onClick={() => setSelectedId(prob.id)}
                   aria-label={`Jump to Question ${prob.id}`}
                   className={cn(
-                    'h-8 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                    'h-8 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                     cellStyle
                   )}
                 >

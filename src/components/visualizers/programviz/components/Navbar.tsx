@@ -91,7 +91,7 @@ export function Navbar() {
           <Link
             href="/fullstack"
             aria-label="Back to Full Stack domain"
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border/80 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border/80 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Full Stack</span>
@@ -99,9 +99,9 @@ export function Navbar() {
 
           <Link
             href={TOPIC_BASE_PATH}
-            className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg"
+            className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-lg"
           >
-            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-mono font-bold flex items-center justify-center text-xs shadow-xs transition-transform group-hover:scale-105">
+            <div className="w-8 h-8 rounded-lg bg-amber-500 text-zinc-950 font-mono font-black flex items-center justify-center text-xs shadow-xs transition-transform group-hover:scale-105">
               PC
             </div>
             <div className="flex flex-col">
@@ -126,9 +126,9 @@ export function Navbar() {
                 href={item.href}
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
-                  'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   isActive
-                    ? 'bg-blue-600 text-white font-semibold shadow-xs'
+                    ? 'bg-amber-500 text-zinc-950 font-bold shadow-xs'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                 )}
               >
@@ -138,7 +138,7 @@ export function Navbar() {
                   <span
                     className={cn(
                       'ml-1 px-1.5 py-0.5 text-[10px] font-mono font-bold rounded-full',
-                      isActive ? 'bg-white/20 text-white' : 'bg-blue-500/10 text-blue-500'
+                      isActive ? 'bg-zinc-950/20 text-zinc-950' : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
                     )}
                   >
                     {item.badge}
@@ -154,13 +154,13 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             aria-label="Toggle Theme"
           >
             {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-yellow-400" />
+              <Sun className="w-4 h-4 text-amber-400" />
             ) : (
-              <Moon className="w-4 h-4 text-blue-600" />
+              <Moon className="w-4 h-4 text-amber-500" />
             )}
           </button>
 
@@ -170,7 +170,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open navigation menu"
             aria-expanded={mobileMenuOpen}
-            className="md:hidden p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="md:hidden p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             <Menu className="w-4 h-4" />
           </button>
@@ -194,7 +194,7 @@ export function Navbar() {
           >
             <div className="flex items-center justify-between pb-4 border-b border-border/80">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-mono font-bold flex items-center justify-center text-xs">
+                <div className="w-7 h-7 rounded-lg bg-amber-500 text-zinc-950 font-mono font-bold flex items-center justify-center text-xs">
                   PC
                 </div>
                 <span className="font-bold text-sm text-foreground">Program Cosmos</span>
@@ -203,7 +203,7 @@ export function Navbar() {
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
                 aria-label="Close navigation menu"
-                className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -225,7 +225,7 @@ export function Navbar() {
                     className={cn(
                       'flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
                       isActive
-                        ? 'bg-blue-600 text-white font-semibold'
+                        ? 'bg-amber-500 text-zinc-950 font-bold'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                     )}
                   >
@@ -234,7 +234,7 @@ export function Navbar() {
                       <span>{item.label}</span>
                     </div>
                     {item.badge && (
-                      <span className="px-1.5 py-0.5 text-[10px] font-mono font-bold rounded-full bg-blue-500/20 text-blue-400">
+                      <span className="px-1.5 py-0.5 text-[10px] font-mono font-bold rounded-full bg-amber-500/20 text-amber-500">
                         {item.badge}
                       </span>
                     )}
@@ -258,7 +258,7 @@ export function Navbar() {
                     className={cn(
                       'flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors',
                       isActive
-                        ? 'bg-muted text-blue-500 font-semibold'
+                        ? 'bg-muted text-amber-500 font-semibold'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
                     )}
                   >

@@ -45,8 +45,8 @@ const INITIAL_PROCESSES: ProcessInfo[] = [
     pid: 102,
     name: 'Code Editor (VS Code)',
     icon: Code2,
-    color: 'text-blue-500',
-    bgActive: 'bg-blue-500/10 border-blue-500',
+    color: 'text-amber-500',
+    bgActive: 'bg-amber-500/10 border-amber-500',
     pc: 0,
     maxPc: 4,
     instructions: [
@@ -61,8 +61,8 @@ const INITIAL_PROCESSES: ProcessInfo[] = [
     pid: 103,
     name: 'Web Browser (Chrome)',
     icon: Globe,
-    color: 'text-purple-500',
-    bgActive: 'bg-purple-500/10 border-purple-500',
+    color: 'text-emerald-500',
+    bgActive: 'bg-emerald-500/10 border-emerald-500',
     pc: 0,
     maxPc: 4,
     instructions: [
@@ -169,7 +169,7 @@ export function ProcessSchedulerSimulator() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-border/80">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-purple-500 font-bold">
+          <span className="text-xs font-mono uppercase tracking-wider text-emerald-500 font-bold">
             OS Multitasking Simulator
           </span>
           <h3 className="text-xl font-bold text-foreground">
@@ -181,7 +181,7 @@ export function ProcessSchedulerSimulator() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold shadow-xs transition-colors"
           >
             {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
             {isPlaying ? 'Pause' : 'Start Auto-Play'}
@@ -213,13 +213,13 @@ export function ProcessSchedulerSimulator() {
       </p>
 
       {/* Central CPU Core & Active Process Display */}
-      <div className="relative p-6 rounded-2xl border-2 border-dashed border-blue-500/40 bg-blue-500/5 dark:bg-blue-500/10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="relative p-6 rounded-2xl border-2 border-dashed border-amber-500/40 bg-amber-500/5 dark:bg-amber-500/10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg">
+          <div className="w-16 h-16 rounded-2xl bg-amber-500 text-zinc-950 font-bold flex items-center justify-center shadow-lg">
             <Cpu className="w-8 h-8" />
           </div>
           <div>
-            <span className="text-xs font-mono uppercase text-blue-500 font-bold block">
+            <span className="text-xs font-mono uppercase text-amber-500 font-bold block">
               Physical CPU Core #0
             </span>
             <h4 className="text-lg font-extrabold text-foreground">
@@ -314,7 +314,7 @@ export function ProcessSchedulerSimulator() {
                     className={cn(
                       "px-2 py-1 rounded truncate transition-colors",
                       isCurrent && proc.pc === i
-                        ? "bg-blue-600 text-white font-bold"
+                        ? "bg-amber-500 text-zinc-950 font-bold font-bold"
                         : "text-muted-foreground"
                     )}
                   >
@@ -329,7 +329,7 @@ export function ProcessSchedulerSimulator() {
 
       {/* Narrative Telemetry Log */}
       <div className="p-4 rounded-xl border border-border bg-muted/40 font-mono text-xs flex items-center gap-3">
-        <Clock className="w-4 h-4 text-blue-500 shrink-0" />
+        <Clock className="w-4 h-4 text-amber-500 shrink-0" />
         <span className="text-foreground leading-relaxed">{log}</span>
       </div>
     </div>

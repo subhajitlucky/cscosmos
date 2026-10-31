@@ -46,7 +46,7 @@ export const DataRepresentation: React.FC = () => {
 
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <ToggleLeft className="w-5 h-5 text-blue-500" />
+              <ToggleLeft className="w-5 h-5 text-amber-500" />
               The Light Switch Analogy
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -68,7 +68,7 @@ export const DataRepresentation: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
-              <span className="text-xs font-mono font-bold text-blue-500 uppercase">
+              <span className="text-xs font-mono font-bold text-amber-500 uppercase">
                 1. Decimal (Base 10)
               </span>
               <h4 className="font-bold text-foreground text-base">Human Intuition</h4>
@@ -91,7 +91,7 @@ export const DataRepresentation: React.FC = () => {
             </div>
 
             <div className="p-5 rounded-2xl border border-border bg-card space-y-2">
-              <span className="text-xs font-mono font-bold text-purple-500 uppercase">
+              <span className="text-xs font-mono font-bold text-emerald-500 uppercase">
                 3. Hexadecimal (Base 16)
               </span>
               <h4 className="font-bold text-foreground text-base">Programmer Shorthand</h4>
@@ -104,9 +104,9 @@ export const DataRepresentation: React.FC = () => {
           </div>
 
           {/* Multi-byte Integers & Endianness Section */}
-          <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-4">
+          <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-4">
             <h4 className="font-bold text-foreground text-base flex items-center gap-2">
-              <Binary className="w-5 h-5 text-blue-500" />
+              <Binary className="w-5 h-5 text-amber-500" />
               What About Numbers Greater Than 255? Multi-Byte Integers &amp; Endianness
             </h4>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -115,7 +115,7 @@ export const DataRepresentation: React.FC = () => {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-3.5 rounded-xl border border-border bg-card space-y-1">
-                <span className="font-mono font-bold text-blue-500 block">16-Bit Integer (2 Bytes)</span>
+                <span className="font-mono font-bold text-amber-500 block">16-Bit Integer (2 Bytes)</span>
                 <p className="text-foreground font-bold">Up to 65,535</p>
                 <p className="text-muted-foreground text-[11px]">$2^{16}$ unique states. Used for small audio samples.</p>
               </div>
@@ -125,7 +125,7 @@ export const DataRepresentation: React.FC = () => {
                 <p className="text-muted-foreground text-[11px]">The standard <code className="font-mono">int</code> in C and Java. Covers almost all everyday counts.</p>
               </div>
               <div className="p-3.5 rounded-xl border border-border bg-card space-y-1">
-                <span className="font-mono font-bold text-purple-500 block">64-Bit Integer (8 Bytes)</span>
+                <span className="font-mono font-bold text-emerald-500 block">64-Bit Integer (8 Bytes)</span>
                 <p className="text-foreground font-bold">Up to 18.4 Quintillion</p>
                 <p className="text-muted-foreground text-[11px]">Virtually infinite. Used for 64-bit RAM addresses and timestamps.</p>
               </div>
@@ -178,7 +178,7 @@ export const DataRepresentation: React.FC = () => {
           kind="trace-memory"
           question="A C program stores the 32-bit integer 42 (hex 0x0000002A) at RAM address 0x10 on an x86 (Little-Endian) computer. What byte value sits at the very first address, 0x10?"
           options={[
-            '0x00 — because numbers are read left-to-right',
+            '0x00 — because numbers are read left-',
             '0x2A (decimal 42) — because Little-Endian puts the least significant byte first',
             '0x42 — the decimal digits are stored directly',
             '0xFF — default memory fill byte',
@@ -194,8 +194,8 @@ export const DataRepresentation: React.FC = () => {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 02 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

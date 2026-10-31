@@ -39,7 +39,7 @@ export const ExecutionSummary: React.FC = () => {
               The Symphony of Modern Computing
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              When you write <code className="font-mono text-blue-500">int a = 15; int b = 27;</code>, millions of transistors, operating system kernel routines, 
+              When you write <code className="font-mono text-amber-500">int a = 15; int b = 27;</code>, millions of transistors, operating system kernel routines, 
               memory buses, and graphics pipelines coordinate with nanosecond precision. 
               No single component does everything—software and hardware work in complete harmony.
             </p>
@@ -47,7 +47,7 @@ export const ExecutionSummary: React.FC = () => {
 
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-blue-500" />
+              <Lightbulb className="w-5 h-5 text-amber-500" />
               The Rocket Flight Plan Analogy
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -72,91 +72,91 @@ export const ExecutionSummary: React.FC = () => {
 
           <div className="space-y-3 text-xs leading-relaxed text-muted-foreground">
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">1</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">1</span>
               <div>
                 <strong className="text-foreground">Source Code:</strong> Written by the developer in high-level C expressions (<code className="font-mono">int a = 15; int b = 27;</code>).
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">2</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">2</span>
               <div>
                 <strong className="text-foreground">Storage (SSD):</strong> Saved to persistent disk as UTF-8 text bytes in <code className="font-mono">main.c</code>.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">3</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">3</span>
               <div>
                 <strong className="text-foreground">Compiler:</strong> GCC translates C into native x86 machine instructions inside object file <code className="font-mono">main.o</code>.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">4</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">4</span>
               <div>
                 <strong className="text-foreground">Linker:</strong> Stitches <code className="font-mono">main.o</code> with <code className="font-mono">libc</code> (for <code className="font-mono">printf</code>) to produce executable binary <code className="font-mono">program.exe</code>.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">5</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">5</span>
               <div>
                 <strong className="text-foreground">User Launch:</strong> User runs <code className="font-mono">./program</code>. The shell requests process launch from the OS.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">6</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">6</span>
               <div>
                 <strong className="text-foreground">Process Creation:</strong> OS Kernel creates Process ID (PID) and allocates an isolated virtual address space.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">7</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">7</span>
               <div>
                 <strong className="text-foreground">Memory Mapping:</strong> OS Loader copies machine code into RAM and initializes the Stack Pointer (SP).
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">8</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">8</span>
               <div>
                 <strong className="text-foreground">CPU Fetch &amp; Execute (a = 15):</strong> PC = 0x00. CPU fetches <code className="font-mono">MOV R0, 15</code> and executes; R0 = 15.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">9</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">9</span>
               <div>
                 <strong className="text-foreground">CPU Fetch &amp; Execute (b = 27):</strong> PC = 0x01. CPU fetches <code className="font-mono">MOV R1, 27</code> and executes; R1 = 27.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">10</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">10</span>
               <div>
                 <strong className="text-foreground">ALU Addition:</strong> PC = 0x02. ALU adds R0 + R1 ($15 + 27 = 42$). Result 42 written to Accumulator and RAM stack address 0x10.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">11</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">11</span>
               <div>
                 <strong className="text-foreground">System Call &amp; ASCII Formatting:</strong> <code className="font-mono">printf</code> converts the integer 42 into two ASCII character bytes: <code className="font-mono">&apos;4&apos; (0x34)</code> and <code className="font-mono">&apos;2&apos; (0x32)</code>. It then invokes the <code className="font-mono">sys_write</code> system call, safely switching the CPU from User Mode to Kernel Mode.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">12</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">12</span>
               <div>
                 <strong className="text-foreground">Device Output:</strong> The terminal driver writes the ASCII character codes into the GPU framebuffer. The display hardware illuminates RGB subpixels on your physical monitor to render the glyphs &quot;42&quot;.
               </div>
             </div>
 
             <div className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold shrink-0 font-mono">13</span>
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold shrink-0 font-mono">13</span>
               <div>
                 <strong className="text-foreground">Termination:</strong> Program returns 0. OS Kernel reclaims address space and terminates the process.
               </div>
@@ -228,10 +228,10 @@ export const ExecutionSummary: React.FC = () => {
             <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">
               ✓ Hardware Architecture
             </span>
-            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-700 dark:text-blue-300">
+            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300">
               ✓ Memory Layout &amp; Stack
             </span>
-            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300">
+            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">
               ✓ Multitasking &amp; Context Switching
             </span>
             <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300">

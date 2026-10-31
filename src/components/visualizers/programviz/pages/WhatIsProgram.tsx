@@ -45,7 +45,7 @@ export const WhatIsProgram: React.FC = () => {
 
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <FileCode className="w-5 h-5 text-blue-500" />
+              <FileCode className="w-5 h-5 text-amber-500" />
               The Music Box &amp; Sheet Music Analogy
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -62,7 +62,7 @@ export const WhatIsProgram: React.FC = () => {
           theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
         )}>
           <div className="text-center space-y-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+            <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
               The Fundamental Journey
             </span>
             <h3 className="text-xl font-bold text-foreground">
@@ -73,7 +73,7 @@ export const WhatIsProgram: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative pt-4">
             {/* Step 1: Human Source Code */}
             <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
                 1
               </div>
               <h4 className="font-bold text-foreground text-sm">Source Code</h4>
@@ -115,7 +115,7 @@ export const WhatIsProgram: React.FC = () => {
 
             {/* Step 4: CPU Execution & Output */}
             <div className="p-4 rounded-xl border border-border bg-card flex flex-col items-center text-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold">
                 4
               </div>
               <h4 className="font-bold text-foreground text-sm">CPU Execution</h4>
@@ -139,9 +139,9 @@ export const WhatIsProgram: React.FC = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl border-2 border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10 space-y-2">
+            <div className="p-6 rounded-2xl border-2 border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10 space-y-2">
               <div className="flex items-center gap-2">
-                <Cpu className="w-5 h-5 text-blue-500" />
+                <Cpu className="w-5 h-5 text-amber-500" />
                 <h4 className="font-bold text-foreground text-base">1. Code (The Verbs)</h4>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
@@ -204,8 +204,8 @@ export const WhatIsProgram: React.FC = () => {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 01 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

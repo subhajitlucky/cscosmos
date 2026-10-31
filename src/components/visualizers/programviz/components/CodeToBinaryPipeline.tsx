@@ -196,7 +196,7 @@ export const CodeToBinaryPipeline: React.FC = () => {
       {/* Header & Pipeline Mode Selector */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-5 border-slate-200 dark:border-slate-800">
         <div>
-          <div className="flex items-center gap-2 text-xs uppercase font-extrabold tracking-widest text-blue-600 dark:text-blue-400">
+          <div className="flex items-center gap-2 text-xs uppercase font-extrabold tracking-widest text-amber-600 dark:text-amber-400">
             <Terminal className="w-4 h-4" />
             <span>Interactive Architecture Pipeline</span>
           </div>
@@ -222,7 +222,7 @@ export const CodeToBinaryPipeline: React.FC = () => {
             className={cn(
               'px-3.5 py-1.5 rounded-lg transition-all',
               pipelineType === 'compiled'
-                ? 'bg-blue-600 text-white shadow'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow'
                 : 'text-slate-600 dark:text-slate-400 hover:text-foreground'
             )}
           >
@@ -236,7 +236,7 @@ export const CodeToBinaryPipeline: React.FC = () => {
             className={cn(
               'px-3.5 py-1.5 rounded-lg transition-all',
               pipelineType === 'interpreted'
-                ? 'bg-blue-600 text-white shadow'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow'
                 : 'text-slate-600 dark:text-slate-400 hover:text-foreground'
             )}
           >
@@ -266,9 +266,9 @@ export const CodeToBinaryPipeline: React.FC = () => {
                 type="button"
                 onClick={() => setSelectedStageIndex(idx)}
                 className={cn(
-                  'group relative text-left p-3.5 rounded-2xl border transition-all duration-200 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                  'group relative text-left p-3.5 rounded-2xl border transition-all duration-200 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                   isSelected
-                    ? 'border-blue-500 bg-blue-50/70 dark:bg-blue-950/40 shadow-md ring-1 ring-blue-500'
+                    ? 'border-amber-500 bg-amber-50/70 dark:bg-zinc-900 dark:bg-zinc-900 shadow-md ring-1 ring-amber-500'
                     : isPast
                     ? 'border-emerald-500/40 bg-emerald-50/30 dark:bg-emerald-950/20'
                     : 'border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
@@ -279,7 +279,7 @@ export const CodeToBinaryPipeline: React.FC = () => {
                     className={cn(
                       'w-8 h-8 rounded-lg flex items-center justify-center transition-colors',
                       isSelected
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-amber-500 text-zinc-950 font-bold'
                         : isPast
                         ? 'bg-emerald-600/20 text-emerald-600 dark:text-emerald-400'
                         : 'bg-slate-200 dark:bg-slate-800 text-slate-500'
@@ -326,7 +326,7 @@ export const CodeToBinaryPipeline: React.FC = () => {
               </h4>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Key tool or subsystem:{' '}
-                <span className="font-mono font-semibold text-blue-600 dark:text-blue-400">
+                <span className="font-mono font-semibold text-amber-600 dark:text-amber-400">
                   {currentStage.tool}
                 </span>
               </p>
@@ -345,7 +345,7 @@ export const CodeToBinaryPipeline: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedStageIndex((prev) => prev + 1)}
-                  className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition flex items-center gap-1 shadow"
+                  className="px-3 py-1.5 rounded-lg bg-amber-500 text-zinc-950 font-bold text-xs font-medium hover:bg-amber-700 transition flex items-center gap-1 shadow"
                 >
                   <span>Next Stage</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -357,14 +357,14 @@ export const CodeToBinaryPipeline: React.FC = () => {
           {/* 3-Column Transformation Matrix */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             <div className="p-3.5 rounded-xl border bg-card border-border space-y-1">
-              <span className="font-bold uppercase tracking-wider text-[10px] text-blue-500 block">
+              <span className="font-bold uppercase tracking-wider text-[10px] text-amber-500 block">
                 Incoming Input
               </span>
               <p className="text-muted-foreground leading-relaxed">{currentStage.input}</p>
             </div>
 
             <div className="p-3.5 rounded-xl border bg-card border-border space-y-1">
-              <span className="font-bold uppercase tracking-wider text-[10px] text-purple-500 block">
+              <span className="font-bold uppercase tracking-wider text-[10px] text-emerald-500 block">
                 What the Machine Does
               </span>
               <p className="text-muted-foreground leading-relaxed">{currentStage.process}</p>
@@ -382,7 +382,7 @@ export const CodeToBinaryPipeline: React.FC = () => {
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs font-semibold">
               <span className="text-muted-foreground">Concrete Representation at this stage:</span>
-              <span className="text-[10px] font-mono text-blue-500 uppercase">Live Preview</span>
+              <span className="text-[10px] font-mono text-amber-500 uppercase">Live Preview</span>
             </div>
             <pre className="rounded-xl p-4 bg-slate-950 text-slate-200 font-mono text-xs overflow-x-auto border border-slate-800 leading-relaxed shadow-inner">
               <code>{currentStage.codeSnippet}</code>
@@ -390,10 +390,10 @@ export const CodeToBinaryPipeline: React.FC = () => {
           </div>
 
           {/* Takeaway Insight */}
-          <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-slate-800 dark:text-slate-300 leading-relaxed flex items-start gap-2.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-slate-800 dark:text-slate-300 leading-relaxed flex items-start gap-2.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
             <p>
-              <strong className="text-blue-600 dark:text-blue-400">Architectural Note: </strong>
+              <strong className="text-amber-600 dark:text-amber-400">Architectural Note: </strong>
               {currentStage.explanation}
             </p>
           </div>

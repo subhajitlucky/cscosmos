@@ -20,8 +20,8 @@ const STAGES = [
     stepNumber: '1',
     title: 'Fetch',
     icon: Search,
-    color: 'text-blue-500',
-    borderColor: 'border-blue-500',
+    color: 'text-amber-500',
+    borderColor: 'border-amber-500',
     summary: 'The CPU reads the next instruction from memory.',
     action: 'The Control Unit looks at the address in the Program Counter (PC), reaches out over the memory bus into RAM, and copies the instruction bytes into the Instruction Register (IR). Then, the PC automatically increments.',
   },
@@ -30,8 +30,8 @@ const STAGES = [
     stepNumber: '2',
     title: 'Decode',
     icon: RefreshCw,
-    color: 'text-purple-500',
-    borderColor: 'border-purple-500',
+    color: 'text-emerald-500',
+    borderColor: 'border-emerald-500',
     summary: 'The Control Unit translates the binary opcode.',
     action: 'The Control Unit interprets the pattern of bits. It determines: "Is this an ADD, a MOV, or a JUMP? Which registers need to be read? Which ALU circuit needs to be activated?"',
   },
@@ -92,7 +92,7 @@ export const InstructionCycle: React.FC = () => {
 
           <div className="p-6 rounded-2xl border border-border bg-card space-y-3">
             <h3 className="font-bold text-foreground text-base flex items-center gap-2">
-              <RotateCw className="w-5 h-5 text-blue-500" />
+              <RotateCw className="w-5 h-5 text-amber-500" />
               The Factory Assembly Line Analogy
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -111,7 +111,7 @@ export const InstructionCycle: React.FC = () => {
           theme === 'dark' ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
         )}>
           <div className="text-center space-y-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-blue-500 font-bold">
+            <span className="text-xs font-mono uppercase tracking-wider text-amber-500 font-bold">
               The 4-Stage Model
             </span>
             <h3 className="text-xl font-bold text-foreground">
@@ -126,14 +126,14 @@ export const InstructionCycle: React.FC = () => {
                 type="button"
                 onClick={() => setActiveStage(idx)}
                 className={cn(
-                  "p-4 rounded-xl border-2 text-left transition-all flex flex-col justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                  "p-4 rounded-xl border-2 text-left transition-all flex flex-col justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                   activeStage === idx
-                    ? "border-blue-500 bg-blue-500/10 shadow-lg scale-[1.02]"
+                    ? "border-amber-500 bg-amber-500/10 shadow-lg scale-[1.02]"
                     : "border-border bg-card hover:border-muted-foreground/30"
                 )}
               >
                 <div className="flex items-center justify-between">
-                  <span className={cn("text-xs font-mono font-bold px-2 py-0.5 rounded", activeStage === idx ? "bg-blue-600 text-white" : "bg-muted text-muted-foreground")}>
+                  <span className={cn("text-xs font-mono font-bold px-2 py-0.5 rounded", activeStage === idx ? "bg-amber-500 text-zinc-950 font-bold" : "bg-muted text-muted-foreground")}>
                     Phase {stage.stepNumber}
                   </span>
                   <stage.icon className={cn("w-5 h-5", stage.color)} />
@@ -148,7 +148,7 @@ export const InstructionCycle: React.FC = () => {
 
           {/* Active Stage Narrative */}
           <div className="p-6 rounded-xl border border-border bg-card space-y-2">
-            <span className="text-xs font-mono font-bold text-blue-500 uppercase block">
+            <span className="text-xs font-mono font-bold text-amber-500 uppercase block">
               What Happens Behind the Silicon:
             </span>
             <h4 className="text-lg font-bold text-foreground">
@@ -171,7 +171,7 @@ export const InstructionCycle: React.FC = () => {
                 Step through real instructions one clock tick at a time. Watch the Program Counter advance, registers update, and the ALU add 15 + 27.
               </p>
             </div>
-            <span className="text-xs font-mono px-3 py-1 rounded-full bg-blue-500/10 text-blue-500 font-bold self-start">
+            <span className="text-xs font-mono px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 font-bold self-start">
               Simplified Educational CPU Model
             </span>
           </div>
@@ -222,8 +222,8 @@ export const InstructionCycle: React.FC = () => {
         />
 
         {/* Section I: Summary */}
-        <div className="p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10 space-y-3">
-          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-blue-500">
+        <div className="p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 dark:bg-amber-500/10 space-y-3">
+          <h4 className="font-bold text-foreground text-sm uppercase tracking-wider text-amber-500">
             Lesson 04 Key Takeaways
           </h4>
           <ul className="space-y-1.5 text-xs text-muted-foreground leading-relaxed">

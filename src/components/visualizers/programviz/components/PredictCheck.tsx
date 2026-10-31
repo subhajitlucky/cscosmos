@@ -63,7 +63,7 @@ export function PredictCheck({
         return {
           title: 'Active Learning — Predict Register Values',
           icon: Cpu,
-          badgeColor: 'text-purple-600 dark:text-purple-400',
+          badgeColor: 'text-emerald-600 dark:text-emerald-400',
         };
       case 'why-operation':
         return {
@@ -76,7 +76,7 @@ export function PredictCheck({
         return {
           title: 'Quick Check — Predict Before You Scroll On',
           icon: Lightbulb,
-          badgeColor: 'text-blue-600 dark:text-blue-400',
+          badgeColor: 'text-amber-600 dark:text-amber-400',
         };
     }
   };
@@ -94,7 +94,7 @@ export function PredictCheck({
   return (
     <section
       aria-label="Active learning check"
-      className="rounded-2xl border border-blue-500/30 bg-blue-500/5 dark:bg-blue-500/10 p-6 space-y-4 my-8"
+      className="rounded-2xl border border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10 p-6 space-y-4 my-8"
     >
       <div className="flex items-center justify-between">
         <div className={cn("flex items-center gap-2", config.badgeColor)}>
@@ -131,10 +131,10 @@ export function PredictCheck({
               onClick={() => setSelected(i)}
               aria-pressed={isPicked}
               className={cn(
-                'text-left rounded-xl border px-4 py-3 text-xs sm:text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                'text-left rounded-xl border px-4 py-3 text-xs sm:text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                 showCorrect && 'border-emerald-500 bg-emerald-500/15 text-emerald-800 dark:text-emerald-200 font-bold shadow-sm',
                 isPicked && !showCorrect && 'border-red-500 bg-red-500/15 text-red-800 dark:text-red-200 font-bold',
-                !isPicked && !showCorrect && 'border-border bg-card text-foreground hover:border-blue-400 hover:bg-muted/40',
+                !isPicked && !showCorrect && 'border-border bg-card text-foreground hover:border-amber-400 hover:bg-muted/40',
               )}
             >
               <div className="flex items-start gap-2">
