@@ -37,6 +37,11 @@ import {
   ShieldAlert,
   Globe,
   Wifi,
+  Cog,
+  ArrowDown,
+  Layers,
+  Cpu,
+  Zap,
 } from 'lucide-react';
 
 // ============================================================================
@@ -1271,29 +1276,51 @@ export function TotpInteractiveTheater() {
               )}
 
               {currentStep === 4 && (
-                /* Step 5: Parallel OTP Generation */
-                <div className="space-y-3 p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/10 text-center">
-                  <div className="flex items-center justify-between text-[10px] font-mono text-zinc-600 dark:text-zinc-400">
-                    <span className="font-bold text-zinc-900 dark:text-zinc-200">CSCosmos</span>
+                /* Step 5: Parallel Cryptographic Mixer Engine */
+                <div className="space-y-2 p-3 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/10 text-center">
+                  <div className="flex items-center justify-between text-[10px] font-mono">
+                    <span className="font-bold text-zinc-900 dark:text-zinc-200">Phone Mixer Engine</span>
                     <span className="text-emerald-700 dark:text-emerald-400 font-bold">Window #{currentWindow}</span>
                   </div>
 
-                  <div className="space-y-1 py-1">
-                    <div className="text-[9px] uppercase font-mono text-zinc-500 dark:text-zinc-400 font-bold">Generated TOTP Code</div>
-                    <div className="text-3xl font-black font-mono tracking-widest text-emerald-600 dark:text-emerald-400 drop-shadow-sm">
+                  {/* Funnel Inputs */}
+                  <div className="grid grid-cols-2 gap-1 text-[9px] font-mono">
+                    <div className="p-1 rounded-md bg-white dark:bg-black/60 border border-zinc-200 dark:border-zinc-800 text-center">
+                      <span className="text-zinc-500 text-[8px] uppercase block">Input: Secret</span>
+                      <span className="font-bold text-emerald-700 dark:text-emerald-400 truncate block">JBSWY3D...</span>
+                    </div>
+                    <div className="p-1 rounded-md bg-white dark:bg-black/60 border border-zinc-200 dark:border-zinc-800 text-center">
+                      <span className="text-zinc-500 text-[8px] uppercase block">Input: Window</span>
+                      <span className="font-bold text-blue-600 dark:text-blue-400 block">#{currentWindow}</span>
+                    </div>
+                  </div>
+
+                  {/* Funnel Arrows */}
+                  <div className="flex justify-around text-zinc-400 py-0.5">
+                    <ArrowDown className="w-3.5 h-3.5 animate-bounce text-emerald-500" />
+                    <ArrowDown className="w-3.5 h-3.5 animate-bounce text-blue-500" />
+                  </div>
+
+                  {/* Active Rotating Gear Mixer */}
+                  <div className="p-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center gap-1.5">
+                    <Cog className="w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-spin" style={{ animationDuration: '3s' }} />
+                    <span className="text-[10px] font-mono font-bold text-emerald-800 dark:text-emerald-300">
+                      HMAC-SHA1 Mixer
+                    </span>
+                    <Cog className="w-3.5 h-3.5 text-emerald-500 animate-spin" style={{ animationDuration: '2s', animationDirection: 'reverse' }} />
+                  </div>
+
+                  {/* Generated Code */}
+                  <div className="py-0.5">
+                    <div className="text-2xl font-black font-mono tracking-widest text-emerald-600 dark:text-emerald-400">
                       482 910
                     </div>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-2 text-xs font-mono text-zinc-700 dark:text-zinc-300">
-                    <div className="w-5 h-5 rounded-full border border-emerald-500 flex items-center justify-center text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">
-                      {secondsRemaining}
+                    <div className="flex items-center justify-center gap-1.5 text-[10px] font-mono text-zinc-600 dark:text-zinc-400">
+                      <div className="w-4 h-4 rounded-full border border-emerald-500 flex items-center justify-center text-[9px] text-emerald-700 dark:text-emerald-400 font-bold">
+                        {secondsRemaining}
+                      </div>
+                      <span>{secondsRemaining}s remaining in window</span>
                     </div>
-                    <span>{secondsRemaining}s remaining in window</span>
-                  </div>
-
-                  <div className="p-2 rounded-xl bg-white dark:bg-black/60 border border-zinc-200 dark:border-zinc-800 text-[10px] text-zinc-600 dark:text-zinc-400 leading-tight">
-                    Computed via HMAC-SHA1(Secret, Window)
                   </div>
                 </div>
               )}
@@ -1366,18 +1393,36 @@ export function TotpInteractiveTheater() {
           )}
 
           {currentStep === 1 && (
-            <div className="space-y-3 max-w-xs">
-              <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-200 space-y-1.5">
+            <div className="space-y-3 max-w-xs w-full">
+              <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-200 space-y-2">
                 <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
                   <Camera className="w-4 h-4" />
-                  <span>Optical Ray Transfer</span>
+                  <span>Optical Photon Transfer</span>
                 </div>
-                <div className="flex items-center justify-center gap-1 text-emerald-600 dark:text-emerald-400 py-1">
-                  <ArrowLeft className="w-4 h-4 animate-ping" />
-                  <span className="font-mono text-xs font-bold">◄ ◄ ◄ Light Beam ◄ ◄ ◄</span>
+
+                {/* Animated Optical Laser Cone */}
+                <div className="relative w-full h-12 flex items-center justify-center">
+                  <svg className="w-full h-full" viewBox="0 0 200 40">
+                    <defs>
+                      <linearGradient id="optBeam" x1="1" y1="0" x2="0" y2="0">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#34d399" stopOpacity="0.1" />
+                      </linearGradient>
+                    </defs>
+                    <polygon points="190,5 190,35 10,22 10,18" fill="url(#optBeam)" className="opacity-50 animate-pulse" />
+                    <line x1="185" y1="20" x2="15" y2="20" stroke="#10b981" strokeWidth="2" strokeDasharray="6 4" className="animate-pulse" />
+                    <circle cx="140" cy="20" r="3" fill="#10b981" className="animate-ping" style={{ animationDuration: '1.2s' }} />
+                    <circle cx="70" cy="20" r="3" fill="#34d399" className="animate-ping" style={{ animationDuration: '1.2s', animationDelay: '0.4s' }} />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="font-mono text-[10px] font-bold text-emerald-800 dark:text-emerald-300 bg-white/90 dark:bg-zinc-900/90 px-2 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-600 shadow-xs">
+                      Photons ➔ Camera Lens
+                    </span>
+                  </div>
                 </div>
+
                 <p className="text-[11px] leading-relaxed text-zinc-700 dark:text-zinc-300">
-                  Photons of light travel from the laptop monitor into the phone camera lens.
+                  Photons of light travel through the air from the monitor into the camera lens.
                   <strong> ZERO network packets</strong> are transmitted.
                 </p>
               </div>
@@ -1465,12 +1510,29 @@ export function TotpInteractiveTheater() {
           )}
 
           {currentStep === 5 && (
-            <div className="space-y-3 max-w-xs">
+            <div className="space-y-3 max-w-xs w-full">
               <div className="p-3 rounded-2xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-center space-y-2">
                 <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-blue-900 dark:text-blue-300">
                   <Send className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <span>HTTPS Transmission</span>
                 </div>
+
+                {/* Animated Flying Packet Bridge */}
+                <div className="relative w-full h-8 flex items-center justify-center">
+                  <div className="w-full h-2 bg-blue-100 dark:bg-blue-950 rounded-full relative overflow-hidden border border-blue-200 dark:border-blue-800">
+                    <div
+                      className={`h-full w-14 rounded-full animate-pulse transition-all ${
+                        testVerificationMode === 'invalid' ? 'bg-rose-500' : 'bg-emerald-500'
+                      }`}
+                    />
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="px-2 py-0.5 rounded-full bg-white dark:bg-zinc-900 text-[9px] font-mono font-bold text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 shadow-xs">
+                      payload: &quot;{testVerificationMode === 'invalid' ? '999111' : '482910'}&quot;
+                    </span>
+                  </div>
+                </div>
+
                 <div className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-mono text-[11px] text-zinc-800 dark:text-zinc-200 text-left space-y-0.5">
                   <div className="text-blue-600 dark:text-blue-400 font-bold">POST /api/auth/verify</div>
                   <div>
@@ -1480,7 +1542,7 @@ export function TotpInteractiveTheater() {
                 </div>
                 <div className="flex items-center justify-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold text-xs py-0.5">
                   <ArrowRight className="w-4 h-4 animate-pulse" />
-                  <span>Sending Code to Server</span>
+                  <span>Submitting Code to Server</span>
                 </div>
               </div>
             </div>
@@ -1647,23 +1709,46 @@ export function TotpInteractiveTheater() {
               )}
 
               {currentStep === 4 && (
-                /* Step 5: Server Expected Code Calculation */
-                <div className="space-y-3 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
-                  <div className="text-[10px] uppercase font-mono text-zinc-500 dark:text-zinc-400 font-bold">
-                    Server Calculated Expected Code
+                /* Step 5: Server Cryptographic Mixer Engine */
+                <div className="space-y-2 p-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/10 text-center">
+                  <div className="flex items-center justify-between text-[10px] font-mono">
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">Server Mixer Engine</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">Window #{currentWindow}</span>
                   </div>
 
-                  <div className="text-3xl font-black font-mono tracking-widest text-emerald-600 dark:text-emerald-400">
-                    482 910
+                  {/* Funnel Inputs */}
+                  <div className="grid grid-cols-2 gap-1 text-[9px] font-mono">
+                    <div className="p-1 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center">
+                      <span className="text-zinc-500 text-[8px] uppercase block">Input: Secret</span>
+                      <span className="font-bold text-emerald-700 dark:text-emerald-400 truncate block">JBSWY3D...</span>
+                    </div>
+                    <div className="p-1 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center">
+                      <span className="text-zinc-500 text-[8px] uppercase block">Input: Window</span>
+                      <span className="font-bold text-blue-600 dark:text-blue-400 block">#{currentWindow}</span>
+                    </div>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-left font-mono text-[10px] space-y-0.5 text-zinc-700 dark:text-zinc-300">
-                    <div>HMAC-SHA1(&quot;JBSWY3...&quot;, #{currentWindow})</div>
-                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">Expected: 482910</div>
+                  {/* Funnel Arrows */}
+                  <div className="flex justify-around text-zinc-400 py-0.5">
+                    <ArrowDown className="w-3.5 h-3.5 animate-bounce text-emerald-500" />
+                    <ArrowDown className="w-3.5 h-3.5 animate-bounce text-blue-500" />
                   </div>
 
-                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
-                    Awaiting HTTP submission from student login screen.
+                  {/* Active Rotating Gear Mixer */}
+                  <div className="p-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center gap-1.5">
+                    <Cog className="w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-spin" style={{ animationDuration: '3s' }} />
+                    <span className="text-[10px] font-mono font-bold text-emerald-800 dark:text-emerald-300">
+                      HMAC-SHA1 Mixer
+                    </span>
+                    <Cog className="w-3.5 h-3.5 text-emerald-500 animate-spin" style={{ animationDuration: '2s', animationDirection: 'reverse' }} />
+                  </div>
+
+                  {/* Expected Code */}
+                  <div className="py-0.5">
+                    <div className="text-2xl font-black font-mono tracking-widest text-emerald-600 dark:text-emerald-400">
+                      482 910
+                    </div>
+                    <span className="text-[9px] text-zinc-500 dark:text-zinc-400 font-mono">Expected Code</span>
                   </div>
                 </div>
               )}
@@ -2101,8 +2186,76 @@ export function generateBackupCodes(count = 8): string[] {
         </p>
 
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-          The secret is a standard algorithm called <strong>TOTP (Time-Based One-Time Password)</strong>:
+          The secret is a standard algorithm called <strong>TOTP (Time-Based One-Time Password)</strong>, defined in RFC 6238.
+          Here is how it works under the hood:
         </p>
+
+        {/* Core Theoretical Foundations: How TOTP Works Step-by-Step */}
+        <div className="grid sm:grid-cols-2 gap-3.5 pt-1">
+          <div className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-2">
+            <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold font-mono text-xs">
+              <Key className="w-4 h-4" />
+              <span>1. The One-Time Shared Secret</span>
+            </div>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              When you enable 2FA, the website server generates a random 160-bit cryptographic key (e.g., <code className="font-mono text-emerald-700 dark:text-emerald-300 font-bold">JBSWY3DPEHPK3PXP</code>). 
+              It encodes this key into a QR code. Your phone camera scans it once, storing it locally in its secure keychain.
+              <strong> After this initial pairing, the phone never needs internet access again!</strong>
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-2">
+            <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold font-mono text-xs">
+              <Clock className="w-4 h-4" />
+              <span>2. Universal 30-Second Time Windows</span>
+            </div>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Instead of counters, TOTP uses standard Unix epoch time (seconds since Jan 1, 1970). 
+              Both devices divide current time by 30 seconds: 
+              <code className="block mt-1 p-1 rounded bg-zinc-100 dark:bg-zinc-900 font-mono text-[11px] text-zinc-800 dark:text-zinc-200">
+                Window = Floor(Unix Timestamp / 30)
+              </code>
+              Because world time moves identically on Earth, both clocks land on the exact same window number (e.g. #59079001) simultaneously.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-2">
+            <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold font-mono text-xs">
+              <Cpu className="w-4 h-4" />
+              <span>3. Deterministic Local Math (HMAC-SHA1)</span>
+            </div>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Both devices feed the exact same Shared Secret and Time Window into an HMAC-SHA1 hashing function. 
+              The resulting hash is truncated down to 6 numeric digits:
+              <code className="block mt-1 p-1 rounded bg-zinc-100 dark:bg-zinc-900 font-mono text-[11px] text-emerald-700 dark:text-emerald-400 font-bold">
+                HMAC-SHA1(Secret, Window) ➔ 482 910
+              </code>
+              Identical inputs + identical algorithm = identical 6-digit result, completely offline.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-2">
+            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold font-mono text-xs">
+              <ShieldCheck className="w-4 h-4" />
+              <span>4. Server Verification & Replay Defense</span>
+            </div>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              You type the 6 digits into the website. The server simply verifies whether your submitted number matches the expected number it calculated. 
+              Because codes expire after 30 seconds, an attacker who intercepts an old OTP cannot reuse it later (protecting against <strong>replay attacks</strong>).
+            </p>
+          </div>
+        </div>
+
+        {/* Transition to Interactive Animation */}
+        <div className="pt-2">
+          <div className="flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-100">
+            <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Interactive Visual Simulation: Step-by-Step in Action</span>
+          </div>
+          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-0.5">
+            Follow the live visual demonstration below to see how the phone and server interact, compute, and verify codes without ongoing network connectivity:
+          </p>
+        </div>
 
         {/* Step-by-Step Interactive TOTP Animation */}
         <TotpInteractiveTheater />
