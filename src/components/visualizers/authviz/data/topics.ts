@@ -26,36 +26,37 @@ export const AUTH_TOPICS: AuthTopic[] = [
     "title": "Authentication vs Authorization & Identity Management Foundations",
     "category": "authz-rbac",
     "difficulty": "Beginner",
-    "summary": "Authentication verifies identity ('Who are you?'), whereas Authorization evaluates permissions ('What are you allowed to do?'). Conflating these two concepts causes severe architectural vulnerabilities, such as mistaking an authenticated session for an authorized administrative action.",
-    "whyExists": "In any multi-user application, identifying an entity and granting access to resources are distinct security boundaries. An application must first establish trust in an identity (Authentication - 401 Unauthorized if invalid) before it can evaluate access policies (Authorization - 403 Forbidden if not permitted).",
-    "mentalModel": "The Airport Passport Control vs Boarding Gate: Handing your passport to the border officer proves your citizenship and identity (Authentication). Once stamped, you cannot simply walk onto Flight 402; the gate agent must check whether your ticket grants you a seat on that specific plane (Authorization).",
-    "architectureDiagram": "[ Client / User ]\n       \u2502\n       \u25bc (1) Presents Credentials (Password, TOTP, WebAuthn)\n[ Authentication Engine (AuthN) ] \u2500\u2500 (401 Unauthorized if failed)\n       \u2502 (Verified Identity: user_id = 42)\n       \u25bc (2) Evaluates Access Policy (Role, Tenant, Resource)\n[ Authorization Engine (AuthZ) ] \u2500\u2500 (403 Forbidden if denied)\n       \u2502 (Access Granted)\n       \u25bc (3) Execute Business Operation\n[ Resource Database / API ]",
-    "cosmosAppStory": "CosmosApp launches its platform. When Alice submits her username and password, CosmosApp performs Authentication (AuthN). Once Alice is verified, CosmosApp checks whether Alice is authorized to access the 'Project Apollo' billing records (AuthZ). If Alice is not on the finance team, CosmosApp responds with 403 Forbidden.",
+    "summary": "Authentication verifies identity ('Who are you?'), whereas Authorization evaluates permissions ('What are you allowed to do?'). Understanding this distinction is the essential foundation of application security.",
+    "whyExists": "Every multi-user application needs to identify users and control access. An application must first verify an identity (Authentication - 401 Unauthorized if invalid) before it can check what that user is allowed to do (Authorization - 403 Forbidden if not permitted).",
+    "mentalModel": "The Airport Passport Control vs Boarding Gate: Handing your passport to the border officer proves your citizenship and identity (Authentication). Once stamped, you cannot simply walk onto any plane; the gate agent must check whether your ticket grants you a seat on that specific flight (Authorization).",
+    "architectureDiagram": "[ User / Client ]\n       │\n       ▼ (1) Submits Credentials (Password, OTP, Biometrics)\n[ Authentication Check ] ── (401 Unauthorized if invalid)\n       │ (Identity Verified: Alice, Employee)\n       ▼ (2) Evaluates Permissions for Requested Resource\n[ Authorization Check ]  ── (403 Forbidden if not permitted)\n       │ (Access Granted)\n       ▼ (3) Returns Requested Data\n[ Application Database / Document ]",
+    "cosmosAppStory": "In CosmosApp, Alice logs in with her username and password. CosmosApp performs Authentication (AuthN). Once Alice is verified as an authentic employee, she attempts to open a financial billing spreadsheet. CosmosApp performs Authorization (AuthZ) to check her role permissions. Because Alice works in Marketing rather than Finance, CosmosApp safely responds with 403 Forbidden.",
     "stepByStep": [
-      "Step 1: Client submits authentication credentials (e.g., credentials or cryptographic assertion) to the identity endpoint.",
-      "Step 2: Identity provider verifies credentials against stored cryptographic hashes; if invalid, immediately returns HTTP 401 Unauthorized.",
-      "Step 3: Identity context is established and attached to the request (e.g. user_id, organization_id, assigned_roles).",
-      "Step 4: Request reaches the Policy Enforcement Point (PEP) guarding the requested API route.",
-      "Step 5: Authorization engine checks user permissions against resource constraints; if disallowed, returns HTTP 403 Forbidden.",
-      "Step 6: If authorized, the resource controller processes the request and returns HTTP 200 OK."
+      "Step 1: Alice submits her login credentials (email and password) to the application.",
+      "Step 2: The server verifies her credentials and confirms her identity (Authentication: Alice is logged in).",
+      "Step 3: Alice clicks on a restricted billing report URL (/company/billing.pdf).",
+      "Step 4: The server checks whether Alice's role has permission to view financial files (Authorization check).",
+      "Step 5: Access is denied with HTTP 403 Forbidden because Marketing employees cannot view billing reports.",
+      "Step 6: Alice remains logged in, but the restricted document is safely protected."
     ],
     "misconceptions": [
-      "HTTP 401 means 'Forbidden' (In HTTP specs, 401 means 'Unauthenticated / Credentials Required', while 403 means 'Authenticated but Forbidden').",
-      "A valid user session or JWT automatically means the user can perform any operation."
+      "Logging in gives a user permission to access everything in the application.",
+      "Authentication and authorization are just different words for the same thing.",
+      "Having a valid login session or token automatically grants access to every database record."
     ],
-    "codeSnippet": "// CosmosApp Middleware: Clear separation of AuthN and AuthZ\nexport async function authMiddleware(req: Request) {\n  // 1. AUTHENTICATION: Prove WHO the caller is\n  const session = await getSessionFromCookie(req);\n  if (!session) {\n    return new Response(JSON.stringify({ error: \"Authentication required\" }), { status: 401 });\n  }\n\n  // 2. AUTHORIZATION: Prove WHAT the caller is allowed to do\n  const hasPermission = await checkPolicy({\n    userId: session.userId,\n    action: \"document:delete\",\n    resourceId: req.params.docId\n  });\n\n  if (!hasPermission) {\n    return new Response(JSON.stringify({ error: \"Access denied\" }), { status: 403 });\n  }\n\n  return next();\n}",
+    "codeSnippet": "// Simple, beginner-friendly route handler separating AuthN and AuthZ\nexport async function handleDocumentRequest(req: Request) {\n  // 1. AUTHENTICATION: Who are you?\n  const user = await getAuthenticatedUser(req);\n  if (!user) {\n    return new Response(\"Please log in first.\", { status: 401 });\n  }\n\n  // 2. AUTHORIZATION: What are you allowed to do?\n  if (!user.permissions.includes(\"documents:edit\")) {\n    return new Response(\"You do not have permission to edit documents.\", { status: 403 });\n  }\n\n  return new Response(\"Document updated successfully!\", { status: 200 });\n}",
     "takeaways": [
-      "Authentication establishes identity (401 Unauthorized); Authorization determines permissions (403 Forbidden).",
-      "Never allow the authentication layer to grant implicit access without a distinct authorization policy check.",
-      "Always log authentication failures as potential credential attacks and authorization failures as potential privilege escalation or BOLA attempts."
+      "Authentication answers 'Who are you?' and fails with 401 Unauthorized.",
+      "Authorization answers 'What are you allowed to do?' and fails with 403 Forbidden.",
+      "Authentication must always happen before authorization can be evaluated."
     ],
     "commonPitfall": {
-      "mistake": "Returning 401 Unauthorized when an authenticated user tries to access another tenant's record.",
-      "fix": "Return 403 Forbidden (or 404 Not Found to prevent enumeration) because the caller is fully authenticated (identity is known), but their authorization does not permit accessing that specific tenant resource."
+      "mistake": "Returning 401 Unauthorized when an already logged-in user tries to access an administrative page.",
+      "fix": "Return 403 Forbidden because the user is already authenticated (their identity is known), but they simply lack the necessary administrative permission."
     },
     "knowledgeCheck": {
-      "question": "Which HTTP status code should be returned when a valid, authenticated standard user attempts to delete an organization-wide billing profile without administrative privileges?",
-      "answer": "HTTP 403 Forbidden (The caller is recognized and authenticated, but lacks the necessary authorization permissions for this action)."
+      "question": "Which HTTP status code should a server return when a logged-in employee without manager privileges attempts to approve a team payroll report?",
+      "answer": "HTTP 403 Forbidden. The user's identity is authenticated and known, but their role lacks the authorization permission required to approve payroll."
     },
     "nextTopicId": "passwords-salting-argon2id"
   },

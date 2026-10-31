@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { AUTH_TOPICS } from '../data/topics';
 import TopicAnimationTheater from '../components/TopicAnimationTheater';
+import Topic1Foundations from '../components/Topic1Foundations';
 
 export default function ConceptDetail({ topicId }: { topicId: string }) {
   const currentIndex = AUTH_TOPICS.findIndex((t) => t.id === topicId);
@@ -79,20 +80,24 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         </p>
       </div>
 
-      {/* Interactive Step-by-Step Visual Concept Explainer */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between text-xs text-muted-foreground font-semibold">
-          <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-            <Sparkles className="w-4 h-4" /> Interactive Visual Concept Explainer
-          </span>
-          <span className="font-mono text-[11px] text-muted-foreground">Step-by-Step Educational Simulation</span>
-        </div>
-        <TopicAnimationTheater
-          topicId={topic.id}
-          topicTitle={topic.title}
-          category={topic.category}
-        />
-      </div>
+      {topic.id === 'authn-vs-authz-foundations' ? (
+        <Topic1Foundations />
+      ) : (
+        <>
+          {/* Interactive Step-by-Step Visual Concept Explainer */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between text-xs text-muted-foreground font-semibold">
+              <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                <Sparkles className="w-4 h-4" /> Interactive Visual Concept Explainer
+              </span>
+              <span className="font-mono text-[11px] text-muted-foreground">Step-by-Step Educational Simulation</span>
+            </div>
+            <TopicAnimationTheater
+              topicId={topic.id}
+              topicTitle={topic.title}
+              category={topic.category}
+            />
+          </div>
 
       {/* 2. Why This Concept Exists */}
       {topic.whyExists && (
@@ -288,6 +293,8 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
             </div>
           )}
         </div>
+      )}
+        </>
       )}
 
       {/* 12. Bottom Navigation */}
