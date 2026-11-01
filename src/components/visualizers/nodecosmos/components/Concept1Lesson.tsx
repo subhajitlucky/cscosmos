@@ -16,7 +16,6 @@ import {
   Zap,
   Sparkles,
   FileCode,
-  Check,
   RotateCcw,
   Eye,
   AlertTriangle,
@@ -28,8 +27,6 @@ export function Concept1Lesson() {
   const [q1, setQ1] = useState<string | null>(null);
   const [q2, setQ2] = useState<string | null>(null);
   const [q3, setQ3] = useState<string | null>(null);
-  const [q4Answer, setQ4Answer] = useState<string>('');
-  const [q4Submitted, setQ4Submitted] = useState<boolean>(false);
   const [q4Revealed, setQ4Revealed] = useState<boolean>(false);
 
   // Score calculation
@@ -37,7 +34,7 @@ export function Concept1Lesson() {
     (q1 !== null ? 1 : 0) +
     (q2 !== null ? 1 : 0) +
     (q3 !== null ? 1 : 0) +
-    (q4Submitted || q4Revealed ? 1 : 0);
+    (q4Revealed ? 1 : 0);
 
   return (
     <div className="space-y-12">
@@ -844,45 +841,24 @@ Welcome, Subhajit`}</pre>
                 Question 4: What is the primary difference between JavaScript and Node.js?
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Explain in your own words before checking the faculty model answer.
+                Reflect on your answer, then click below to reveal the faculty model answer.
               </p>
             </div>
-            {(q4Submitted || q4Revealed) && (
+            {q4Revealed && (
               <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full font-mono bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400">
-                Completed
+                Revealed
               </span>
             )}
           </div>
 
-          <div className="space-y-3">
-            <textarea
-              value={q4Answer}
-              onChange={(e) => setQ4Answer(e.target.value)}
-              placeholder="Write your explanation here (e.g., JavaScript is the language syntax, whereas Node.js is...)"
-              rows={3}
-              className="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 font-sans text-xs sm:text-sm focus:border-emerald-500 dark:focus:border-emerald-500 outline-none leading-relaxed transition resize-y"
-            />
-
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                onClick={() => {
-                  setQ4Submitted(true);
-                  setQ4Revealed(true);
-                }}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-xs flex items-center gap-1.5"
-              >
-                <Check className="w-3.5 h-3.5" />
-                <span>Submit &amp; Compare with Model Answer</span>
-              </button>
-
-              <button
-                onClick={() => setQ4Revealed(!q4Revealed)}
-                className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-semibold transition flex items-center gap-1.5"
-              >
-                <Eye className="w-3.5 h-3.5" />
-                <span>{q4Revealed ? 'Hide Model Answer' : 'Peek Model Answer'}</span>
-              </button>
-            </div>
+          <div className="pt-1">
+            <button
+              onClick={() => setQ4Revealed(!q4Revealed)}
+              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2 shadow-2xs"
+            >
+              <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>{q4Revealed ? 'Hide Model Answer' : 'Peek Model Answer'}</span>
+            </button>
           </div>
 
           {q4Revealed && (
