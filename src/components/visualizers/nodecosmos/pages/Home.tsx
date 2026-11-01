@@ -4,9 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
-  Bookmark,
   BookOpen,
+  CheckCircle2,
   Flame,
+  FlaskConical,
   HelpCircle,
   RefreshCw,
   Server,
@@ -16,7 +17,7 @@ import {
   Waves,
 } from 'lucide-react';
 import { NODE_TOPICS } from '../data/topics';
-import { NODE_FLASHCARDS } from '../data/flashcards';
+import { NODE_PROBLEMS } from '../data/problems';
 
 export default function Home() {
   return (
@@ -44,16 +45,16 @@ export default function Home() {
             <BookOpen className="w-4 h-4" /> Explore {NODE_TOPICS.length} Concepts
           </Link>
           <Link
-            href="/nodecosmos/event-loop"
+            href="/nodecosmos/lab"
             className="px-6 py-3 rounded-2xl border border-emerald-500/30 bg-card hover:bg-emerald-500/10 text-foreground font-bold text-xs uppercase tracking-wider transition flex items-center gap-2"
           >
-            <RefreshCw className="w-4 h-4 text-emerald-500" /> Event Loop Lab
+            <FlaskConical className="w-4 h-4 text-emerald-500" /> Simulation Lab
           </Link>
           <Link
-            href="/nodecosmos/playground"
+            href="/nodecosmos/problems"
             className="px-6 py-3 rounded-2xl border border-border hover:bg-muted text-foreground font-bold text-xs uppercase tracking-wider transition flex items-center gap-2"
           >
-            <Terminal className="w-4 h-4" /> Node.js Playground
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Practice Challenges
           </Link>
         </div>
 
@@ -68,29 +69,29 @@ export default function Home() {
 
           <div className="p-4 rounded-2xl border border-border bg-card/60 text-left space-y-1">
             <div className="text-2xl sm:text-3xl font-extrabold font-mono text-foreground">
-              4 Labs
+              5
             </div>
-            <div className="text-xs text-muted-foreground font-semibold">Interactive Simulators</div>
+            <div className="text-xs text-muted-foreground font-semibold">Simulation Engines</div>
           </div>
 
           <div className="p-4 rounded-2xl border border-border bg-card/60 text-left space-y-1">
             <div className="text-2xl sm:text-3xl font-extrabold font-mono text-foreground">
-              6 Phases
+              6
             </div>
-            <div className="text-xs text-muted-foreground font-semibold">Libuv Loop &amp; Microtasks</div>
+            <div className="text-xs text-muted-foreground font-semibold">Libuv Loop Phases</div>
           </div>
 
           <div className="p-4 rounded-2xl border border-border bg-card/60 text-left space-y-1">
             <div className="text-2xl sm:text-3xl font-extrabold font-mono text-foreground">
-              {NODE_FLASHCARDS.length}
+              {NODE_PROBLEMS.length}
             </div>
-            <div className="text-xs text-muted-foreground font-semibold">Staff Interview Cards</div>
+            <div className="text-xs text-muted-foreground font-semibold">Practice Challenges</div>
           </div>
         </div>
       </section>
 
-      {/* Primary Navigation Hub Cards */}
-      <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+      {/* Primary Navigation Hub Cards: Concepts, Lab, Problems */}
+      <section className="grid sm:grid-cols-3 gap-6 pt-2">
         <Link
           href="/nodecosmos/concepts"
           className="p-6 rounded-3xl bg-card border border-border/80 hover:border-emerald-500/50 hover:shadow-lg transition-all space-y-3 group flex flex-col justify-between"
@@ -100,7 +101,7 @@ export default function Home() {
               <BookOpen className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-500 transition-colors">
-              {NODE_TOPICS.length} In-Depth Lessons
+              Concepts ({NODE_TOPICS.length} Lessons)
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
               V8 bindings, AsyncLocalStorage, Slab allocator, process signals, and graceful shutdown architectures.
@@ -113,18 +114,18 @@ export default function Home() {
         </Link>
 
         <Link
-          href="/nodecosmos/event-loop"
+          href="/nodecosmos/lab"
           className="p-6 rounded-3xl bg-card border border-border/80 hover:border-emerald-500/50 hover:shadow-lg transition-all space-y-3 group flex flex-col justify-between"
         >
           <div className="space-y-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
-              <RefreshCw className="w-5 h-5" />
+              <FlaskConical className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-500 transition-colors">
-              Event Loop Lab
+              Runtime Lab
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Step through Timers, Pending, Poll, and Check phases with VIP microtask queues.
+              Unified interactive suite for 6-phase loop stepper, thread pool saturation, streams flow, and V8 garbage collection.
             </p>
           </div>
           <div className="pt-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
@@ -134,43 +135,22 @@ export default function Home() {
         </Link>
 
         <Link
-          href="/nodecosmos/flashcards"
+          href="/nodecosmos/problems"
           className="p-6 rounded-3xl bg-card border border-border/80 hover:border-emerald-500/50 hover:shadow-lg transition-all space-y-3 group flex flex-col justify-between"
         >
           <div className="space-y-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
-              <HelpCircle className="w-5 h-5" />
+              <CheckCircle2 className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-500 transition-colors">
-              Senior Flashcards
+              Practice Problems
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Master tough Node.js interview questions on thread pool saturation, backpressure, and V8 memory slabs.
+              Test your knowledge on microtasks, thread pool saturation, backpressure, and V8 memory management.
             </p>
           </div>
           <div className="pt-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-            <span>Practice Cards</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-          </div>
-        </Link>
-
-        <Link
-          href="/nodecosmos/cheatsheet"
-          className="p-6 rounded-3xl bg-card border border-border/80 hover:border-emerald-500/50 hover:shadow-lg transition-all space-y-3 group flex flex-col justify-between"
-        >
-          <div className="space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
-              <Bookmark className="w-5 h-5" />
-            </div>
-            <h3 className="text-lg font-bold text-foreground group-hover:text-emerald-500 transition-colors">
-              Production Cheatsheet
-            </h3>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Production-ready recipes for pipeline streaming, AbortSignal timeouts, and graceful shutdown handling.
-            </p>
-          </div>
-          <div className="pt-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-            <span>View Cheatsheet</span>
+            <span>Solve Challenges</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </div>
         </Link>

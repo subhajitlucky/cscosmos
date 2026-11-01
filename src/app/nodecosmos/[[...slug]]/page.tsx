@@ -12,12 +12,16 @@ import Playground from '@/components/visualizers/nodecosmos/pages/Playground';
 import Flashcards from '@/components/visualizers/nodecosmos/pages/Flashcards';
 import CheatSheet from '@/components/visualizers/nodecosmos/pages/CheatSheet';
 import MemoryLab from '@/components/visualizers/nodecosmos/pages/MemoryLab';
+import Lab from '@/components/visualizers/nodecosmos/pages/Lab';
+import Problems from '@/components/visualizers/nodecosmos/pages/Problems';
 import { NODE_TOPICS } from '@/components/visualizers/nodecosmos/data/topics';
 
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [
     { slug: [] },
     { slug: ['concepts'] },
+    { slug: ['lab'] },
+    { slug: ['problems'] },
     { slug: ['event-loop'] },
     { slug: ['streams-lab'] },
     { slug: ['thread-pool'] },
@@ -51,6 +55,10 @@ export default async function NodeCosmosPage({
     } else {
       content = <Concepts />;
     }
+  } else if (first === 'lab') {
+    content = <Lab />;
+  } else if (first === 'problems') {
+    content = <Problems />;
   } else if (first === 'event-loop') {
     content = <EventLoopLab />;
   } else if (first === 'streams-lab') {
