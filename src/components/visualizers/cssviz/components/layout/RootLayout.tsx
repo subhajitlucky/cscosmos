@@ -11,10 +11,9 @@ type RootLayoutProps = {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <div className="relative min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-primary/25 blur-[100px]" />
-        <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-secondary/30 blur-[110px]" />
-        <div className="absolute bottom-10 left-1/3 h-64 w-64 rounded-full bg-accent/20 blur-[120px]" />
+      <div className="hidden dark:block pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-amber-500/10 blur-[100px]" />
+        <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-indigo-500/10 blur-[110px]" />
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col">

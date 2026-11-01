@@ -32,13 +32,13 @@ test.describe('css-cosmos fullstack smoke', () => {
   test('renders concepts page with tracks, search, and deep-dive links', async ({ page }) => {
     await page.goto(`${BASE}/concepts`);
 
-    await expect(page.getByRole('heading', { level: 1, name: /CSS Concepts: From Foundations to Advanced Architecture/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'CSS Concepts' })).toBeVisible();
     await expect(page.getByPlaceholder(/Search concepts/i)).toBeVisible();
 
-    // Verify track cards exist
-    await expect(page.getByRole('heading', { level: 2, name: /1\. Syntax, Cascade & Foundations/i })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: /2\. Modern Layout Systems/i })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: /6\. Modern CSS Architecture/i })).toBeVisible();
+    // Verify track headings exist
+    await expect(page.getByRole('heading', { level: 2, name: /1\. Selectors & Cascade/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: /2\. Box Model & Geometry/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: /3\. Flexbox & Grid Systems/i })).toBeVisible();
 
     // Test search filter
     await page.getByPlaceholder(/Search concepts/i).fill('subgrid');
@@ -59,7 +59,7 @@ test.describe('css-cosmos fullstack smoke', () => {
     // Test preset switching
     const bentoBtn = page.getByRole('button', { name: /Bento Grid/i });
     await bentoBtn.click();
-    await expect(bentoBtn).toHaveClass(/border-primary/);
+    await expect(bentoBtn).toHaveClass(/border-slate-900/);
   });
 
   test('renders problem arena with 100 CSS challenges', async ({ page }) => {

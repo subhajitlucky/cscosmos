@@ -398,16 +398,16 @@ export default function CssLab() {
     <PageTransition>
       <div className="max-w-7xl mx-auto space-y-4 py-2">
         {/* Header */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary font-bold">
+            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-amber-600 dark:text-amber-400 font-bold">
               <FlaskConical className="h-4 w-4" />
               <span>CSS Tinker Lab · Live Playground</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
               Interactive CSS Sandbox
             </h1>
-            <p className="text-xs text-muted-text">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Tinker with modern CSS properties in real-time. Switch presets, tweak values, and test across device viewports.
             </p>
           </div>
@@ -415,7 +415,7 @@ export default function CssLab() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => loadPreset(currentPreset)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-mono text-muted-text hover:text-slate-900 dark:hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-mono text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors shadow-xs"
               title="Reset code to default preset"
             >
               <RotateCcw className="h-3 w-3" />
@@ -424,7 +424,7 @@ export default function CssLab() {
 
             <button
               onClick={copyCss}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-mono text-muted-text hover:text-slate-900 dark:hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-mono text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors shadow-xs"
             >
               {copied ? (
                 <>
@@ -443,7 +443,7 @@ export default function CssLab() {
 
         {/* Preset Selector Chips */}
         <div className="space-y-1.5">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-muted-text font-bold">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">
             Interactive Presets:
           </span>
           <div className="flex items-center gap-2 overflow-x-auto pb-1">
@@ -454,8 +454,8 @@ export default function CssLab() {
                 className={cn(
                   'px-3 py-1.5 rounded-xl text-xs font-medium border transition-colors shrink-0 text-left flex items-center gap-2',
                   activePreset === p.id
-                    ? 'border-primary bg-primary/10 text-primary font-bold shadow-xs'
-                    : 'border-border bg-surface text-muted-text hover:text-slate-900 dark:hover:text-white'
+                    ? 'border-slate-900 bg-slate-900 text-white dark:border-white dark:bg-white dark:text-slate-950 font-bold shadow-xs'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 )}
               >
                 <span>{p.name}</span>
@@ -544,19 +544,19 @@ export default function CssLab() {
           {/* Right Column (6 cols): Preview Frame with Viewport Switcher */}
           <div className="lg:col-span-6 space-y-2 flex flex-col">
             {/* Viewport Control Bar */}
-            <div className="h-10 rounded-xl border border-border bg-surface flex items-center justify-between px-3 text-xs">
+            <div className="h-10 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-3 text-xs shadow-xs">
               <div className="flex items-center gap-2">
-                <span className="text-muted-text font-mono text-[11px] uppercase tracking-wider">
+                <span className="text-slate-500 dark:text-slate-400 font-mono text-[11px] uppercase tracking-wider">
                   Viewport:
                 </span>
-                <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-border">
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-800">
                   <button
                     onClick={() => setViewportWidth('100%')}
                     className={cn(
                       'px-2 py-1 rounded text-xs flex items-center gap-1 font-mono transition-colors',
                       viewportWidth === '100%'
-                        ? 'bg-surface text-slate-900 dark:text-white font-bold shadow-xs'
-                        : 'text-muted-text hover:text-slate-900 dark:hover:text-white'
+                        ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-bold shadow-xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     )}
                     title="Desktop 100%"
                   >
@@ -617,10 +617,10 @@ export default function CssLab() {
             </div>
 
             {/* Preview Frame */}
-            <div className="rounded-xl border border-border bg-slate-200/50 dark:bg-slate-950 p-2 sm:p-4 overflow-x-auto min-h-[500px] flex justify-center">
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 p-2 sm:p-4 overflow-x-auto min-h-[500px] flex justify-center">
               <div
                 style={{ width: viewportWidth }}
-                className="h-[480px] sm:h-[500px] bg-white rounded-lg border border-border shadow-sm overflow-hidden transition-all duration-300"
+                className="h-[480px] sm:h-[500px] bg-white rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-all duration-300"
               >
                 <iframe
                   title="CSS Tinker Sandbox"

@@ -62,9 +62,9 @@ export default function ProblemList() {
     <PageTransition>
       <div className="max-w-6xl mx-auto space-y-8 py-4">
         {/* Header & Stats */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-border pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 dark:border-slate-800 pb-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary font-bold">
+            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-amber-600 dark:text-amber-400 font-bold">
               <Trophy className="h-4 w-4" />
               <span>Practice Arena · 100 CSS Problems</span>
             </div>
@@ -77,16 +77,16 @@ export default function ProblemList() {
           </div>
 
           {/* Progress Card */}
-          <div className="rounded-xl border border-border bg-surface p-4 sm:min-w-[260px] space-y-2 shrink-0">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:min-w-[260px] space-y-2 shrink-0 shadow-xs">
             <div className="flex items-center justify-between text-xs font-mono">
-              <span className="text-muted-text">Progress</span>
+              <span className="text-slate-500 dark:text-slate-400">Progress</span>
               <span className="font-bold text-slate-900 dark:text-white">
                 {solvedCount} / {cssProblems.length} Solved ({progressPercent}%)
               </span>
             </div>
             <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
               <div
-                className="h-full bg-primary transition-all duration-500 rounded-full"
+                className="h-full bg-amber-500 transition-all duration-500 rounded-full"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -98,18 +98,18 @@ export default function ProblemList() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Box */}
             <div className="relative flex-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-text" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search challenges by name, number, or keyword..."
-                className="w-full rounded-xl border border-border bg-surface pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
               />
             </div>
 
             {/* Difficulty Tabs */}
-            <div className="flex items-center gap-1 bg-surface p-1 rounded-xl border border-border self-start sm:self-auto overflow-x-auto max-w-full">
+            <div className="flex items-center gap-1 bg-white dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 self-start sm:self-auto overflow-x-auto max-w-full shadow-xs">
               {['All', 'Easy', 'Medium', 'Hard'].map((diff) => {
                 const count =
                   diff === 'All'
@@ -122,8 +122,8 @@ export default function ProblemList() {
                     className={cn(
                       'px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap',
                       filterDifficulty === diff
-                        ? 'bg-primary text-slate-950 font-bold'
-                        : 'text-muted-text hover:text-slate-900 dark:hover:text-white'
+                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-bold shadow-xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     )}
                   >
                     {diff} ({count})
@@ -135,7 +135,7 @@ export default function ProblemList() {
 
           {/* Category Chips */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-            <span className="text-muted-text text-[11px] font-mono uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+            <span className="text-slate-500 dark:text-slate-400 text-[11px] font-mono uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
               <Filter className="h-3 w-3" /> Topic:
             </span>
             {categories.map((cat) => (
@@ -145,8 +145,8 @@ export default function ProblemList() {
                 className={cn(
                   'px-2.5 py-1 rounded-md text-xs transition-colors shrink-0 border',
                   filterCategory === cat
-                    ? 'border-primary bg-primary/10 text-primary font-bold'
-                    : 'border-border bg-surface text-muted-text hover:text-slate-900 dark:hover:text-white'
+                    ? 'border-slate-900 bg-slate-900 text-white dark:border-white dark:bg-white dark:text-slate-950 font-bold shadow-xs'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 )}
               >
                 {cat}
@@ -180,7 +180,7 @@ export default function ProblemList() {
                 <Link
                   key={problem.id}
                   href={`/fullstack/css-cosmos/problems/${problem.id}`}
-                  className="flex items-center justify-between gap-4 p-4 rounded-xl border border-border bg-surface hover:border-primary/60 transition-all group hover:shadow-xs"
+                  className="flex items-center justify-between gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-600 transition-all group hover:shadow-xs"
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     <div
@@ -188,7 +188,7 @@ export default function ProblemList() {
                         'w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 border',
                         isSolved
                           ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                          : 'border-border bg-slate-100 dark:bg-slate-800 text-muted-text group-hover:text-primary group-hover:border-primary/40'
+                          : 'border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 group-hover:border-amber-500/40'
                       )}
                     >
                       {isSolved ? (
@@ -200,7 +200,7 @@ export default function ProblemList() {
 
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-primary transition-colors truncate">
+                        <h3 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors truncate">
                           {problem.title}
                         </h3>
                         {isSolved && (
@@ -209,14 +209,14 @@ export default function ProblemList() {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-muted-text truncate max-w-xl">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 truncate max-w-xl">
                         {problem.description}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2.5 shrink-0">
-                    <span className="hidden md:inline-block px-2.5 py-0.5 rounded text-[11px] font-mono bg-slate-100 dark:bg-slate-800 text-muted-text border border-border">
+                    <span className="hidden md:inline-block px-2.5 py-0.5 rounded text-[11px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">
                       {problem.category}
                     </span>
                     <span
