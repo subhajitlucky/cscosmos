@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Home from '@/components/visualizers/websecureviz/pages/Home';
+import Concepts from '@/components/visualizers/websecureviz/pages/Concepts';
 import Lab from '@/components/visualizers/websecureviz/pages/Lab';
 import Problems from '@/components/visualizers/websecureviz/pages/Problems';
 import TopicLesson from '@/components/visualizers/websecureviz/pages/TopicLesson';
@@ -15,6 +16,7 @@ import { siteConfig } from '@/config/site';
 export function generateStaticParams() {
   return [
     { slug: [] },
+    { slug: ['concepts'] },
     { slug: ['lab'] },
     { slug: ['problems'] },
     { slug: ['about'] },
@@ -56,6 +58,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const first = slug && slug.length > 0 ? slug[0] : '';
   const second = slug && slug.length > 1 ? slug[1] : '';
+
+  if (first === 'concepts') {
+    return pageMetadata(
+      'Web Security Concepts & Mental Models - CSCosmos',
+      `All ${securityTopics.length} core architectural modules of modern browser security and defense.`,
+      `${TOPIC_BASE_PATH}/concepts`
+    );
+  }
 
   if (first === 'topics') {
     const topic = securityTopics.find((t) => t.id === second);
@@ -101,6 +111,22 @@ export async function generateMetadata({
 
 function buildJsonLd(first: string, second: string) {
   const provider = { '@type': 'Organization', name: 'CSCosmos', url: siteConfig.url };
+
+  if (first === 'concepts') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Web Security Core Curriculum',
+      numberOfItems: securityTopics.length,
+      itemListElement: securityTopics.map((topic, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: topic.name,
+        url: `${siteConfig.url}${TOPIC_BASE_PATH}/topics/${topic.id}`,
+      })),
+      provider,
+    };
+  }
 
   if (first === 'topics') {
     const topic = securityTopics.find((item) => item.id === second);
@@ -166,7 +192,9 @@ export default async function WebSecurityPage({
 
   let content = <Home />;
 
-  if (firstSegment === 'lab' || firstSegment === 'simulations') {
+  if (firstSegment === 'concepts') {
+    content = <Concepts />;
+  } else if (firstSegment === 'lab' || firstSegment === 'simulations') {
     content = <Lab />;
   } else if (firstSegment === 'problems' || firstSegment === 'exercises') {
     content = <Problems />;

@@ -127,7 +127,7 @@ export function ClickjackingVisual() {
               Click the button below to instantly deposit your bonus reward.
             </p>
             <div className="pt-2">
-              <button className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-sm px-6 py-3 rounded-xl shadow-lg border border-amber-300 transform transition-transform">
+              <button className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm px-6 py-3 rounded-xl shadow-lg border border-amber-500/30 transform transition-transform">
                 Claim Reward Now &rarr;
               </button>
             </div>

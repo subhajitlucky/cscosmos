@@ -50,6 +50,11 @@ export default function Footer() {
           </h4>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li>
+              <Link href={`${TOPIC_BASE_PATH}/concepts`} className="font-semibold text-foreground hover:underline">
+                All 8 Core Concepts &rarr;
+              </Link>
+            </li>
+            <li>
               <Link href={`${TOPIC_BASE_PATH}/topics/same-origin-policy`} className="hover:text-foreground transition-colors">
                 Same-Origin Policy
               </Link>

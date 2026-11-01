@@ -195,7 +195,7 @@ export default function Lab() {
   return (
     <div className="space-y-8 pb-16">
       {/* Hero Header */}
-      <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card via-card/90 to-red-950/15 p-6 sm:p-8">
+      <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-500">

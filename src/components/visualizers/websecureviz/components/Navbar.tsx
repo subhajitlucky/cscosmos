@@ -4,7 +4,19 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme as useCSCosmosTheme } from '@/context/useTheme';
-import { ShieldAlert, BookOpen, FlaskConical, CheckSquare, Moon, Sun, ArrowLeft, Menu, X, ChevronDown } from 'lucide-react';
+import {
+  ShieldAlert,
+  Globe,
+  BookOpen,
+  FlaskConical,
+  CheckSquare,
+  Moon,
+  Sun,
+  ArrowLeft,
+  Menu,
+  X,
+  ChevronDown,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ENGINE_BASE_PATH, TOPIC_BASE_PATH } from '../data/topic';
 import { securityTopics } from '../data/topics';
@@ -13,7 +25,13 @@ const NAV_ITEMS = [
   {
     href: TOPIC_BASE_PATH,
     match: ENGINE_BASE_PATH,
-    label: 'Curriculum',
+    label: 'Overview',
+    icon: Globe,
+  },
+  {
+    href: `${TOPIC_BASE_PATH}/concepts`,
+    match: `${ENGINE_BASE_PATH}/concepts`,
+    label: 'Concepts (8)',
     icon: BookOpen,
   },
   {
@@ -46,6 +64,9 @@ export default function Navbar() {
 
   const isActive = (match: string) => {
     if (match === ENGINE_BASE_PATH) {
+      return normalizedPath === match;
+    }
+    if (match === `${ENGINE_BASE_PATH}/concepts`) {
       return (
         normalizedPath === match ||
         normalizedPath.startsWith(`${ENGINE_BASE_PATH}/topics`) ||
@@ -86,51 +107,70 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-1.5 md:flex" aria-label="Main navigation">
-          {/* Topics Quick Dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setTopicsDropdownOpen((prev) => !prev)}
-              onBlur={() => setTimeout(() => setTopicsDropdownOpen(false), 200)}
-              className={cn(
-                'flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
-                isActive(ENGINE_BASE_PATH)
-                  ? 'bg-foreground text-background shadow-xs'
-                  : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
-              )}
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>Topics (8)</span>
-              <ChevronDown className="w-3.5 h-3.5 opacity-70" />
-            </button>
-
-            {topicsDropdownOpen && (
-              <div className="absolute top-full left-0 mt-1.5 w-72 rounded-xl border border-border bg-popover/95 p-1.5 shadow-xl backdrop-blur-md z-50">
-                <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  Security Modules
-                </div>
-                <div className="max-h-80 overflow-y-auto space-y-0.5">
-                  {securityTopics.map((t, idx) => (
-                    <Link
-                      key={t.id}
-                      href={`${TOPIC_BASE_PATH}/topics/${t.id}`}
-                      className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-popover-foreground hover:bg-muted transition-colors"
-                      onClick={() => setTopicsDropdownOpen(false)}
-                    >
-                      <span className="truncate pr-2">
-                        {idx + 1}. {t.name}
-                      </span>
-                      <span className="text-[10px] text-muted-foreground shrink-0">{t.estimatedTime}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {NAV_ITEMS.slice(1).map((item) => {
+          {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.match);
+
+            if (item.match === `${ENGINE_BASE_PATH}/concepts`) {
+              return (
+                <div key={item.href} className="relative flex items-center">
+                  <Link
+                    href={item.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={cn(
+                      'flex items-center gap-1.5 rounded-l-lg px-3 py-2 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+                      active
+                        ? 'bg-foreground text-background shadow-xs'
+                        : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                    )}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span>{item.label}</span>
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() => setTopicsDropdownOpen((prev) => !prev)}
+                    onBlur={() => setTimeout(() => setTopicsDropdownOpen(false), 200)}
+                    aria-label="Open topics dropdown"
+                    className={cn(
+                      'flex items-center justify-center rounded-r-lg px-1.5 py-2 text-xs transition-all border-l',
+                      active
+                        ? 'bg-foreground text-background border-background/20'
+                        : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground border-border/40'
+                    )}
+                  >
+                    <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+                  </button>
+
+                  {topicsDropdownOpen && (
+                    <div className="absolute top-full left-0 mt-1.5 w-72 rounded-xl border border-border bg-popover p-1.5 shadow-xl z-50">
+                      <div className="px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">
+                        Security Modules
+                      </div>
+                      <div className="max-h-80 overflow-y-auto space-y-0.5">
+                        {securityTopics.map((t, idx) => (
+                          <Link
+                            key={t.id}
+                            href={`${TOPIC_BASE_PATH}/topics/${t.id}`}
+                            className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-popover-foreground hover:bg-muted transition-colors"
+                            onClick={() => setTopicsDropdownOpen(false)}
+                          >
+                            <span className="truncate pr-2">
+                              {idx + 1}. {t.name}
+                            </span>
+                            <span className="text-[10px] font-mono text-muted-foreground shrink-0">
+                              {t.estimatedTime}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={item.href}
@@ -140,7 +180,7 @@ export default function Navbar() {
                   'flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                   active
                     ? 'bg-foreground text-background shadow-xs'
-                    : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground',
+                    : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                 )}
               >
                 <Icon className="w-4 h-4" />
@@ -187,7 +227,7 @@ export default function Navbar() {
           className="border-t border-border bg-background px-4 py-3 md:hidden space-y-1"
         >
           <div className="mx-auto flex max-w-7xl flex-col gap-1">
-            <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+            <div className="px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">
               Main Navigation
             </div>
             {NAV_ITEMS.map((item) => {
@@ -203,7 +243,7 @@ export default function Navbar() {
                     'flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                     active
                       ? 'bg-foreground text-background font-semibold'
-                      : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground',
+                      : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -212,7 +252,7 @@ export default function Navbar() {
               );
             })}
 
-            <div className="pt-2 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground border-t border-border">
+            <div className="pt-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground border-t border-border">
               Modules
             </div>
             <div className="grid grid-cols-1 gap-1 max-h-48 overflow-y-auto">

@@ -244,8 +244,8 @@ export default function TopicLesson({ topicId }: TopicLessonProps) {
         </section>
       )}
 
-      {/* Arena CTA */}
-      <section className="rounded-2xl border border-red-500/30 bg-gradient-to-r from-red-500/10 via-red-500/5 to-transparent p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      {/* Arena CTA - Solid, No Gradients */}
+      <section className="rounded-2xl border border-border bg-card p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="space-y-1">
           <h3 className="text-base font-bold text-foreground">
             Test Your Knowledge on {topic.name}
