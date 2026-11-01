@@ -14,17 +14,17 @@ const ENDPOINTS = [
     path: "/api/topics",
     description: "Full topic catalog with domain, status, description, and absolute URL.",
     sample: `{
-  "count": 245,
+  "count": 257,
   "generatedAt": "2026-10-20T...",
   "topics": [
     {
       "id": 1,
       "name": "How Programs Execute",
-      "domain": "fullstack",
+      "domain": "corecs",
       "slug": "program-cosmos",
       "status": "active",
-      "url": "https://cscosmos.vercel.app/fullstack/program-cosmos",
-      "crossListedDomains": []
+      "url": "https://cscosmos.vercel.app/corecs/program-cosmos",
+      "crossListedDomains": ["fullstack"]
     }
   ]
 }`,

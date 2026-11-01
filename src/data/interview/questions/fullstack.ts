@@ -1241,7 +1241,7 @@ EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'ada@example.com';
       { q: 'How do idempotency keys differ from a unique constraint?', a: 'The key is the semantic contract the client carries across retries; the constraint is the enforcement mechanism that makes the contract real in storage. You need both — the key without the constraint is theater.' },
       { q: 'What should the user see while the outcome is unknown?', a: 'An explicit pending state, honestly surfaced: "payment processing", with the final state arriving via polling or webhook push. Never fake success, and never leave "failed" as a default for an unknown outcome — that invites a harmful retry.' },
     ],
-    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/advanced/systemdesignviz' },
   },
   {
     slug: 'csv-pipeline-10m-rows-live-progress',
@@ -1371,7 +1371,7 @@ EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'ada@example.com';
       { q: 'Why Redis pub/sub and not the queue itself for progress?', a: 'Progress is ephemeral and lossy-by-design: Postgres holds the truth, so a lost progress event is a cosmetic delay, not a correctness bug. Reusing the durable queue for chatty progress would add retention and replay burden for data nobody needs to replay.' },
       { q: 'How do you test a pipeline like this?', a: 'Chaos and invariants: kill workers mid-chunk and assert row counts and constraint violations; fire concurrent uploads from multiple tenants and assert fairness; replay every message twice and assert the outputs are bit-identical.' },
     ],
-    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/advanced/systemdesignviz' },
   },
   {
     slug: 'collaborative-editor-ot-crdt-conflicts',
@@ -1500,6 +1500,6 @@ EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'ada@example.com';
       { q: 'Why is last-write-wins the wrong default for a document?', a: 'Granularity: replacing whole paragraphs because of one keystroke discards paragraphs of legitimate work. Even character-level LWW without identity misapplies stale offsets — you need identity or transformation, not a timestamp.' },
       { q: 'How do you guarantee every user sees the same document?', a: 'Deterministic convergence: OT applies the same op order and the same transform rules at every site; CRDT merges are commutative, associative, and idempotent by construction. Either way, convergence is a property of the algorithm — the network only decides when, not what.' },
     ],
-    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/advanced/systemdesignviz' },
   },
 ];

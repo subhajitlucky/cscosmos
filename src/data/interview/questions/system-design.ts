@@ -127,7 +127,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
       { q: 'How do you count clicks without slowing redirects?', a: 'Emit the click asynchronously to a queue or log and aggregate offline; the redirect only waits for the cache lookup.' },
       { q: 'What about link abuse and spam?', a: 'Rate-limit per API key and IP, scan destinations against malware blocklists, and keep a takedown path with expiring links.' },
     ],
-    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/advanced/systemdesignviz' },
   },
   {
     slug: 'consistent-hashing-virtual-nodes',
@@ -254,7 +254,7 @@ export const systemDesignQuestions: InterviewQuestion[] = [
       { q: 'What happens to a dead node\'s keys?', a: 'They fall clockwise to the next node. With replication factor R, reads fail over to a replica instantly and a background process rebuilds the lost copies.' },
       { q: 'Can consistent hashing guarantee even distribution?', a: 'No. With enough vnodes it bounds imbalance to a few percent in expectation, but hot keys and heterogeneous nodes still need load-aware scheduling.' },
     ],
-    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/advanced/systemdesignviz' },
   },
   {
     slug: 'rate-limiter-design',
@@ -403,6 +403,6 @@ return 0    -- deny`,
       { q: 'What should happen if Redis is unreachable?', a: 'Decide the policy explicitly: fail open to protect availability or fail closed for fraud-sensitive routes, and fall back to a local limiter in the meantime.' },
       { q: 'How do you limit per user and per IP at the same time?', a: 'Keep multiple buckets per request (user, API key, IP) and reject if any one denies; each bucket enforces one dimension of fairness or protection.' },
     ],
-    relatedEngine: { label: 'Explore the System Design visualizer', href: '/fullstack/systemdesignviz' },
+    relatedEngine: { label: 'Explore the System Design visualizer', href: '/advanced/systemdesignviz' },
   },
 ];

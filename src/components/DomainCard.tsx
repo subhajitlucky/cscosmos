@@ -31,7 +31,7 @@ const DOMAIN_META: Record<
   fullstack: {
     index: '01',
     icon: Code2,
-    tags: ['CPU Cycle', 'Event Loop', 'React VDOM'],
+    tags: ['HTTP Caching', 'React RSC', 'Testing Pyramid'],
   },
   dsa: {
     index: '02',
@@ -82,6 +82,8 @@ export function DomainCard({ domain }: DomainCardProps) {
     (t) => t.domain === domain.domainKey || t.crossListedDomains?.includes(domain.domainKey)
   );
   const activeCount = domainTopics.filter((t) => t.status === 'active').length;
+  const ownedCount = domainTopics.filter((t) => t.domain === domain.domainKey).length;
+  const sharedCount = domainTopics.length - ownedCount;
 
   return (
     <Link
@@ -134,7 +136,9 @@ export function DomainCard({ domain }: DomainCardProps) {
         )}
 
         <div className="mt-auto pt-3 border-t border-border/40 flex items-center justify-between text-xs font-mono font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-          <span>{domainTopics.length} Modules</span>
+          <span>
+            {ownedCount} Core{sharedCount > 0 ? ` + ${sharedCount} Shared` : ''}
+          </span>
           <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
             Enter Domain <ArrowRight className="h-3 w-3" />
           </span>

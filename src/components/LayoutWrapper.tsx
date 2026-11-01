@@ -49,6 +49,7 @@ const SELF_CONTAINED_SUBSITE_ROUTES = new Set([
   '/synccosmos',
   '/systemdesignviz',
   '/tailwindcosmos',
+  '/testing',
   '/tsviz',
   '/vuecosmos',
   '/wasmcosmos',

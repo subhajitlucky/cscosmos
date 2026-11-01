@@ -57,9 +57,9 @@ const createTopic = (name: string, domain: DomainKey, options?: TopicOptions): T
 export const topics: Topic[] = [
     // Full Stack Development
     // 1. Foundations
-    createTopic("How Programs Execute (CPU, Memory, I/O)", "fullstack", { status: 'active', slug: 'program-cosmos' }),
+    createTopic("How Programs Execute (CPU, Memory, I/O)", "corecs", { status: 'active', slug: 'program-cosmos', crossListedDomains: ['fullstack'] }),
     createTopic("HTTP & Web Protocols (Headers, Caching)", "fullstack", { status: 'active', slug: 'webprotocols' }),
-    createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', slug: 'websecurity' }),
+    createTopic("Web Security (XSS, CSRF, CSP, CORS)", "fullstack", { status: 'active', slug: 'websecurity', crossListedDomains: ['security'] }),
     createTopic("HTML & Accessibility (Semantics, ARIA)", "fullstack", { status: 'active', slug: 'html-cosmos' }),
     createTopic("CSS Visualizer (Box Model, Flexbox, Grid)", "fullstack", { status: 'active', slug: 'css-cosmos' }),
     createTopic("JavaScript Visualizer (Execution, Async, Memory)", "fullstack", { status: 'active', slug: 'jsviz' }),
@@ -72,9 +72,9 @@ export const topics: Topic[] = [
     createTopic("Vue Visualizer (Reactivity, Templates)", "fullstack", { status: 'active', slug: 'vuecosmos' }),
     createTopic("Svelte / SvelteKit Visualizer (Compiler, Reactivity)", "fullstack", { status: 'active', slug: 'sveltecosmos' }),
     createTopic("TailwindCSS Playground (Utility-First CSS)", "fullstack", { status: 'active', slug: 'tailwindcosmos' }),
-    createTopic("WebAssembly Internals (Wasm & Linear Memory)", "fullstack", { status: 'active', slug: 'wasmcosmos' }),
-    createTopic("Spatial Computing & XR (3D UI, WebXR)", "fullstack", { status: 'active', slug: 'xrcosmos' }),
-    createTopic("Cross-Platform Internals (React Native Bridge vs Skia)", "fullstack", { status: 'active', slug: 'crossplatformviz' }),
+    createTopic("WebAssembly Internals (Wasm & Linear Memory)", "advanced", { status: 'active', slug: 'wasmcosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("Spatial Computing & XR (3D UI, WebXR)", "advanced", { status: 'active', slug: 'xrcosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("Cross-Platform Internals (React Native Bridge vs Skia)", "advanced", { status: 'active', slug: 'crossplatformviz', crossListedDomains: ['fullstack'] }),
 
     // 3. Backend & Runtime
     createTopic("Node.js Runtime (Event Loop, libuv)", "fullstack" , { status: 'active', slug: 'nodecosmos' }),
@@ -82,7 +82,7 @@ export const topics: Topic[] = [
     createTopic("Rust Backend Internals (Ownership, Concurrency)", "fullstack", { status: 'active', slug: 'rustviz' }),
     createTopic("Python FastAPI Backend (Async, Dependency Injection)", "fullstack", { status: 'active', slug: 'fastapicosmos' }),
     createTopic("API Design (REST, GraphQL)", "fullstack" , { status: 'active', slug: 'apiviz' }),
-    createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', slug: 'authviz' }),
+    createTopic("Authentication & Authorization (JWT, OAuth2)", "fullstack" , { status: 'active', slug: 'authviz', crossListedDomains: ['security'] }),
 
     // 4. Data & State
     createTopic("SQL Visualizer (Queries, Indexes)", "fullstack", { status: 'active', slug: 'sqlcosmos' }),
@@ -91,13 +91,24 @@ export const topics: Topic[] = [
     createTopic("Real-Time Sync Algorithms (CRDTs & OT)", "fullstack", { status: 'active', slug: 'synccosmos' }),
 
     // 5. Architecture & Scale
-    createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "fullstack", { status: 'active', slug: 'dockercosmos', crossListedDomains: ['devops'] }),
-    createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack", { status: 'active', slug: 'mqviz' }),
-    createTopic("Microservices Architecture (Services, Failures)", "fullstack", { status: 'active', slug: 'microservicesviz' }),
-    createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "fullstack", { status: 'active', slug: 'lldcosmos' }),
-    createTopic("System Design & Scalability (Caching, Sharding)", "fullstack", { status: 'active', slug: 'systemdesignviz' }),
-    createTopic("AI Application Engineering (RAG, Agents, Vector Search)", "fullstack", { status: 'active', slug: 'aicosmos' }),
-    createTopic("Testing & Quality Engineering (TDD, BDD, Property-Based)", "fullstack"),
+    createTopic("Docker & Kubernetes Visualizer (Containers, Pods)", "devops", { status: 'active', slug: 'dockercosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("Message Queues Visualizer (Pub/Sub, Retries)", "fullstack", { status: 'active', slug: 'mqviz', crossListedDomains: ['advanced'] }),
+    createTopic("Microservices Architecture (Services, Failures)", "advanced", { status: 'active', slug: 'microservicesviz', crossListedDomains: ['fullstack'] }),
+    createTopic("Object-Oriented Design & Patterns (SOLID, LLD)", "advanced", { status: 'active', slug: 'lldcosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("System Design & Scalability (Caching, Sharding)", "advanced", { status: 'active', slug: 'systemdesignviz', crossListedDomains: ['fullstack'] }),
+    createTopic("AI Application Engineering (RAG, Agents, Vector Search)", "ai", { status: 'active', slug: 'aicosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("Testing & Quality Engineering (TDD, BDD, Property-Based)", "fullstack", { status: 'active', slug: 'testing' }),
+    createTopic("State Management & Data Fetching (Redux, TanStack Query)", "fullstack", { slug: 'state-management-data-fetching' }),
+    createTopic("Forms & Validation (React Hook Form, Zod)", "fullstack", { slug: 'forms-validation' }),
+    createTopic("Web Accessibility (WCAG, ARIA, Keyboard)", "fullstack", { slug: 'accessibility' }),
+    createTopic("Performance & Core Web Vitals (LCP, INP, CLS)", "fullstack", { slug: 'web-performance' }),
+    createTopic("Build Tools & Monorepos (Vite, Turbopack, pnpm)", "fullstack", { slug: 'build-tools-monorepos' }),
+    createTopic("ORM & Database Migrations (Prisma, Drizzle)", "fullstack", { slug: 'orm-migrations' }),
+    createTopic("Background Jobs & Scheduling (Queues, Cron)", "fullstack", { slug: 'background-jobs' }),
+    createTopic("Fullstack Architecture (Monolith, API Gateway, Caching)", "fullstack", { slug: 'fullstack-architecture' }),
+    createTopic("Product Integrations (Payments, Email, Uploads, Search)", "fullstack", { slug: 'product-integrations' }),
+    createTopic("Web Encryption (AES, TLS, KMS, Key Rotation)", "fullstack", { slug: 'web-encryption' }),
+    createTopic("AI Integration for Web Apps (LLM APIs, RAG, Guardrails)", "fullstack", { slug: 'ai-integration' }),
 
     // Data Structures & Algorithms
     createTopic("Array Visualizer (Memory, Indexing)", "dsa", { status: 'active', slug: 'arrayviz' }),
@@ -165,7 +176,8 @@ export const topics: Topic[] = [
     createTopic("Shared Security & Restaking (EigenLayer & AVS)", "web3"),
     createTopic("DePIN (Decentralized Physical Infrastructure Networks)", "web3"),
 
-    // Cybersecurity & Ethical Hacking    createTopic("Network Defense & Traffic Analysis (Wireshark, Firewalls)", "security"),
+    // Cybersecurity & Ethical Hacking
+    createTopic("Network Defense & Traffic Analysis (Wireshark, Firewalls)", "security"),
     createTopic("Software Defined Radio (SDR) & Signal Hacking", "security", { status: 'active', slug: 'software-defined-radio-sdr-and-signal-hacking' }),
     createTopic("Penetration Testing & Red Teaming (Exploits, C2)", "security", { status: 'active', slug: 'penetration-testing-and-red-teaming-exploits-c2' }),
     createTopic("Digital Forensics & Incident Response (DFIR)", "security", { status: 'active', slug: 'digital-forensics-and-incident-response-dfir' }),
@@ -300,7 +312,7 @@ export const topics: Topic[] = [
     createTopic("C & C++ Systems Programming (Memory, Pointers)", "corecs"),
     createTopic("Java & JVM Internals (Garbage Collection, Bytecode)", "corecs", { status: 'active', slug: 'java-and-jvm-internals-garbage-collection-bytecode' }),
     createTopic("Computer Architecture (CPU, Caches)", "corecs", { status: 'active', slug: 'computer-architecture-cpu-caches' }),
-    createTopic("Computer Networks Internals (TCP/IP)", "corecs", { status: 'active', slug: 'computer-networks-internals-tcpip' }),
+    createTopic("Computer Networks Internals (TCP/IP)", "corecs", { status: 'active', slug: 'computer-networks-internals-tcpip', crossListedDomains: ['fullstack'] }),
     createTopic("Database Internals (Indexes, Transactions)", "corecs", { status: 'active', slug: 'database-internals-indexes-transactions' }),
     createTopic("Compilers & Runtime Internals (AST, Bytecode)", "corecs", { status: 'active', slug: 'compilers-and-runtime-internals-ast-bytecode' }),
     createTopic("Theory of Computation (Automata, Languages, Complexity)", "corecs", { status: 'active', slug: 'theory-of-computation-automata-languages-complexity' }),
@@ -312,18 +324,20 @@ export const topics: Topic[] = [
     createTopic("Formal Methods & TLA+ (The Math of Correctness)", "corecs", { status: 'active', slug: 'formal-methods-and-tla-the-math-of-correctness' }),
 
     // DevOps / Cloud / Engineering
-    createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', slug: 'gitcosmos' }),
-    createTopic("Kubernetes & Orchestration (Scheduling)", "devops" , { status: 'active', slug: 'k8scosmos' }),
-    createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops" , { status: 'active', slug: 'cloudcosmos' }),
-    createTopic("CI/CD Pipeline Visualizer (Build, Deploy)", "devops"),
-    createTopic("Infrastructure as Code (Terraform)", "devops"),
-    createTopic("Load Balancing (Traffic Distribution)", "devops" , { status: 'active', slug: 'loadbalancing' }),
-    createTopic("Rate Limiting (Throttling)", "devops"),
-    createTopic("Observability Systems (Logs, Metrics)", "devops"),
+    createTopic("Git & Version Control (Commits, Branches)", "devops" , { status: 'active', slug: 'gitcosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("Kubernetes & Orchestration (Scheduling)", "devops" , { status: 'active', slug: 'k8scosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("Cloud Architecture Visualizer (AWS, Scaling)", "devops" , { status: 'active', slug: 'cloudcosmos', crossListedDomains: ['fullstack'] }),
+    createTopic("CI/CD Pipeline Visualizer (Build, Deploy)", "devops", { crossListedDomains: ['fullstack'] }),
+    createTopic("Infrastructure as Code (Terraform)", "devops", { crossListedDomains: ['fullstack'] }),
+    createTopic("Load Balancing (Traffic Distribution)", "devops" , { status: 'active', slug: 'loadbalancing', crossListedDomains: ['fullstack'] }),
+    createTopic("Rate Limiting (Throttling)", "devops", { crossListedDomains: ['fullstack'] }),
+    createTopic("Observability Systems (Logs, Metrics)", "devops", { crossListedDomains: ['fullstack'] }),
+    createTopic("Secrets Management (Vault, KMS, Rotation)", "devops", { slug: 'secrets-management', crossListedDomains: ['fullstack'] }),
     createTopic("Site Reliability Engineering (SLIs, SLOs)", "devops"),
     createTopic("Disaster Recovery (Backups)", "devops"),
     createTopic("Chaos Engineering (Failure Injection)", "devops"),
-    createTopic("eBPF & Low-Level Observability (Kernel Hooks, Sandboxing)", "devops"),    createTopic("FinOps & Cloud Economics (Cost Optimization, Carbon Tracking)", "devops"),
+    createTopic("eBPF & Low-Level Observability (Kernel Hooks, Sandboxing)", "devops"),
+    createTopic("FinOps & Cloud Economics (Cost Optimization, Carbon Tracking)", "devops"),
     createTopic("Platform Engineering & Internal Developer Portals (IDPs)", "devops"),
 
     // Advanced Engineering & Systems

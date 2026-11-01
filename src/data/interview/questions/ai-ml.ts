@@ -125,7 +125,7 @@ export const aiMlQuestions: InterviewQuestion[] = [
       { q: 'Would scaling help if we avoided softmax entirely?', a: 'Yes in spirit — the goal is keeping pre-activation variance near one. Alternatives such as QK normalization bound the dot product regardless of d_k.' },
       { q: 'What happens if you divide by √d_k twice?', a: 'The logits become too small, the softmax flattens toward uniform attention, and the model loses its ability to focus — the mirror image of saturation.' },
     ],
-    relatedEngine: { label: 'Explore the AI visualizer', href: '/fullstack/aicosmos' },
+    relatedEngine: { label: 'Explore the AI visualizer', href: '/ai/aicosmos' },
   },
   {
     slug: 'rag-end-to-end-pipeline',
@@ -255,7 +255,7 @@ export const aiMlQuestions: InterviewQuestion[] = [
       { q: 'How do you evaluate a RAG system?', a: 'Score retrieval separately (recall@k, MRR) and generation separately (faithfulness to context, answer correctness, citation accuracy) on a labeled set of question-answer-source triples.' },
       { q: 'How would you handle multi-hop questions?', a: 'Decompose the question into sub-questions, retrieve per step, and feed intermediate answers back into the next retrieval — or let an agent iterate with tools until it can answer.' },
     ],
-    relatedEngine: { label: 'Explore the AI visualizer', href: '/fullstack/aicosmos' },
+    relatedEngine: { label: 'Explore the AI visualizer', href: '/ai/aicosmos' },
   },
   {
     slug: 'backpropagation-gradient-flow',
@@ -383,6 +383,6 @@ export const aiMlQuestions: InterviewQuestion[] = [
       { q: 'What exactly does the optimizer do with the gradients?', a: 'It updates each parameter in the negative gradient direction scaled by the learning rate, optionally with momentum or adaptive per-parameter scaling like Adam.' },
       { q: 'How do residual connections fight vanishing gradients?', a: 'They add an identity path around each block, so the local Jacobian contains an identity term that carries the gradient through without shrinking.' },
     ],
-    relatedEngine: { label: 'Explore the AI visualizer', href: '/fullstack/aicosmos' },
+    relatedEngine: { label: 'Explore the AI visualizer', href: '/ai/aicosmos' },
   },
 ];

@@ -48,8 +48,8 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
   {
     title: 'Program Execution & CPU Cycle',
     badge: 'ENGINE // 01',
-    domain: 'Full Stack',
-    url: '/fullstack/program-cosmos',
+    domain: 'Core CS',
+    url: '/corecs/program-cosmos',
     description:
       'Step-by-step CPU instruction cycle: fetch, decode, execute, and writeback. Inspect registers, ALU operations, stack memory frames, and hardware I/O.',
     topicsCovered: ['Fetch-Decode Cycle', 'Call Stack Frames', 'I/O Syscalls'],
@@ -78,8 +78,8 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
   {
     title: 'Docker & Linux Kernel Isolation',
     badge: 'ENGINE // 04',
-    domain: 'Full Stack / DevOps',
-    url: '/fullstack/dockercosmos',
+    domain: 'DevOps',
+    url: '/devops/dockercosmos',
     description:
       'Deconstruct containers into Linux kernel primitives: PID/NET namespaces, cgroups v2 resource limits, and OverlayFS layered union filesystems.',
     topicsCovered: ['Namespaces', 'Cgroups v2', 'OverlayFS Layers'],
