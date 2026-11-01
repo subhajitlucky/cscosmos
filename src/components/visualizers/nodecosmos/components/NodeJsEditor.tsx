@@ -167,6 +167,37 @@ export function NodeJsEditor({
       return timerId;
     };
 
+    const customV8 = {
+      getHeapStatistics: () => ({
+        total_heap_size: 9699328,
+        total_heap_size_executable: 524288,
+        total_physical_size: 9699328,
+        total_available_size: 2197815296,
+        used_heap_size: 5849088,
+        heap_size_limit: 2197815296,
+        malloced_memory: 16384,
+        peak_malloced_memory: 1105920,
+        does_zap_garbage: 0,
+        number_of_native_contexts: 2,
+        number_of_detached_contexts: 0,
+      }),
+      getHeapSpaceStatistics: () => [
+        { space_name: 'new_space', space_size: 1048576, space_used_size: 524288, space_available_size: 524288 },
+        { space_name: 'old_space', space_size: 6291456, space_used_size: 4718592, space_available_size: 1572864 },
+        { space_name: 'code_space', space_size: 1048576, space_used_size: 524288, space_available_size: 524288 },
+        { space_name: 'map_space', space_size: 1048576, space_used_size: 524288, space_available_size: 524288 },
+        { space_name: 'large_object_space', space_size: 2097152, space_used_size: 1048576, space_available_size: 1048576 },
+      ],
+    };
+
+    const customRequire = (moduleName: string) => {
+      const clean = moduleName.replace(/^node:/, '');
+      if (clean === 'v8') return customV8;
+      if (clean === 'buffer') return { Buffer: customBuffer };
+      if (clean === 'process') return customProcess;
+      return {};
+    };
+
     const customSetImmediate = (handler: () => void) => {
       const timerId = window.setTimeout(() => {
         try {
@@ -185,6 +216,8 @@ export function NodeJsEditor({
         'console',
         'process',
         'Buffer',
+        'v8',
+        'require',
         'setTimeout',
         'clearTimeout',
         'setImmediate',
@@ -196,6 +229,8 @@ export function NodeJsEditor({
         customConsole,
         customProcess,
         customBuffer,
+        customV8,
+        customRequire,
         customSetTimeout,
         window.clearTimeout,
         customSetImmediate,

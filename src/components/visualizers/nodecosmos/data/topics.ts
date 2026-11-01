@@ -155,19 +155,19 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #5 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Core concept #5: The V8 JavaScript Engine—Ignition bytecode interpreter, TurboFan JIT compiler, Hidden Classes (Shapes), Inline Caching, and Generational Garbage Collection.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for V8 JavaScript Engine: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #5: V8 JavaScript Engine\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring V8 JavaScript Engine in Node.js runtime');\n",
+    "mentalModel": "Conceptual mental model for V8 JavaScript Engine: A high-speed racecar factory where Ignition designs fast standardized prototypes (bytecode) and TurboFan precision-machines high-stress parts into aerospace-grade titanium (native machine code) for sections that take repeated punishment.",
+    "codeSnippet": "// Concept #5: Inspecting V8 Engine Heap Statistics\nconst v8 = require('node:v8');\nconst stats = v8.getHeapStatistics();\nconsole.log('V8 Version:', process.versions.v8);\nconsole.log('Heap Limit:', Math.round(stats.heap_size_limit / 1024 / 1024), 'MB');",
     "takeaways": [
-      "Master the core operational principles of V8 JavaScript Engine.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "Ignition translates AST into compact bytecode and collects runtime type feedback vectors.",
+      "TurboFan compiles hot functions into optimized machine assembly, but deoptimizes if speculative type assumptions break.",
+      "Hidden Classes (Shapes) and Inline Caches (IC) give JavaScript objects native C++ memory offset performance when property order is preserved."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding V8 JavaScript Engine concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for V8 JavaScript Engine."
+      "mistake": "Mutating object shapes dynamically with 'delete obj.prop' or inconsistent property order, degrading lookups into slow dictionary hash tables.",
+      "fix": "Always initialize object properties in the same sequence in constructors and use 'obj.prop = undefined' instead of deleting keys."
     },
     "nextTopicId": "libuv-introduction",
     "prevTopicId": "node-js-vs-browser-javascript"
