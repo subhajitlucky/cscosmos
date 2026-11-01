@@ -103,19 +103,19 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #3 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Core concept #3: The Node.js Runtime Environment—global execution scope, process host telemetry, V8 heap vs native C++ Buffer memory, and OS lifecycle.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Node.js Runtime Environment: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #3: Node.js Runtime Environment\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Node.js Runtime Environment in Node.js runtime');\n",
+    "mentalModel": "Conceptual mental model for Node.js Runtime Environment: An OS host container with V8 as the execution engine, globalThis as the top-level scope, process as the cockpit telemetry panel, and Libuv as the active handle coordinator.",
+    "codeSnippet": "// Concept #3: Node.js Runtime Environment\nconsole.log('PID:', process.pid);\nconsole.log('RSS Memory:', Math.round(process.memoryUsage().rss / 1024 / 1024), 'MB');\nconst buf = Buffer.from('Native C++ Slab');\nconsole.log('Buffer length:', buf.length);",
     "takeaways": [
-      "Master the core operational principles of Node.js Runtime Environment.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "The Node.js runtime process bundles V8 heap memory with native C++ memory slabs (Buffers) outside the V8 heap.",
+      "The process object connects JavaScript logic to the underlying operating system kernel (PIDs, env, signals, memory telemetry).",
+      "The process lifecycle terminates cleanly only when Libuv's active handle reference count reaches zero."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Node.js Runtime Environment concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Node.js Runtime Environment."
+      "mistake": "Assuming unclosed timers or lingering socket connections will exit automatically when the main script ends.",
+      "fix": "Call timer.unref() on background timers and explicitly close open sockets and database pools before process teardown."
     },
     "nextTopicId": "node-js-vs-browser-javascript",
     "prevTopicId": "node-js-architecture"

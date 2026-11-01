@@ -101,10 +101,58 @@ export function NodeJsEditor({
       arch: 'x64',
       title: 'node',
       pid: 1042,
-      env: { NODE_ENV: 'development', USER: 'subhajit' },
+      env: { NODE_ENV: 'development', USER: 'subhajit', PATH: '/usr/local/bin:/usr/bin' },
       uptime: () => 48.3,
-      argv: ['/usr/local/bin/node', '/home/subhajit/project/hello.js'],
+      cwd: () => '/home/subhajit/project',
+      memoryUsage: () => ({
+        rss: 35651584,
+        heapTotal: 9699328,
+        heapUsed: 5849088,
+        external: 1474560,
+        arrayBuffers: 131072,
+      }),
+      argv: ['/usr/local/bin/node', '/home/subhajit/project/app.js'],
       exit: (code = 0) => pushLog('warn', `process.exit(${code}) called`),
+      nextTick: (callback: () => void) => {
+        queueMicrotask(() => {
+          try {
+            callback();
+          } catch (err: any) {
+            pushLog('error', `nextTick Error: ${err?.message || err}`);
+          }
+        });
+      },
+    };
+
+    const customBuffer = {
+      from: (input: string | number[]) => {
+        const str = typeof input === 'string' ? input : String.fromCharCode(...input);
+        return {
+          toString: (encoding = 'utf8') => {
+            if (encoding === 'hex') {
+              return Array.from(str)
+                .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
+                .join('');
+            }
+            if (encoding === 'base64') {
+              try {
+                return btoa(str);
+              } catch {
+                return str;
+              }
+            }
+            return str;
+          },
+          length: str.length,
+          byteLength: str.length,
+        };
+      },
+      alloc: (size: number, fill = 0) => ({
+        length: size,
+        byteLength: size,
+        toString: () => `<Buffer ${size} bytes (allocated outside V8 heap)>`,
+      }),
+      isBuffer: (obj: any) => Boolean(obj && typeof obj === 'object' && 'byteLength' in obj),
     };
 
     const customSetTimeout = (handler: () => void, ms = 0) => {
@@ -119,16 +167,41 @@ export function NodeJsEditor({
       return timerId;
     };
 
+    const customSetImmediate = (handler: () => void) => {
+      const timerId = window.setTimeout(() => {
+        try {
+          handler();
+        } catch (err: any) {
+          pushLog('error', `Immediate Error: ${err?.message || err}`);
+        }
+      }, 0);
+      activeTimersRef.current.push(timerId);
+      return timerId;
+    };
+
     try {
       // Execute the user code in sandbox
       const executor = new Function(
         'console',
         'process',
+        'Buffer',
         'setTimeout',
         'clearTimeout',
+        'setImmediate',
+        'clearImmediate',
+        'global',
         code
       );
-      executor(customConsole, customProcess, customSetTimeout, window.clearTimeout);
+      executor(
+        customConsole,
+        customProcess,
+        customBuffer,
+        customSetTimeout,
+        window.clearTimeout,
+        customSetImmediate,
+        window.clearTimeout,
+        window
+      );
     } catch (err: any) {
       pushLog('error', `${err?.name || 'Error'}: ${err?.message || err}`);
     } finally {
