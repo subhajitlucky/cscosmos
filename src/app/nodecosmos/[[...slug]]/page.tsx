@@ -11,6 +11,7 @@ import ThreadPoolLab from '@/components/visualizers/nodecosmos/pages/ThreadPoolL
 import Playground from '@/components/visualizers/nodecosmos/pages/Playground';
 import Flashcards from '@/components/visualizers/nodecosmos/pages/Flashcards';
 import CheatSheet from '@/components/visualizers/nodecosmos/pages/CheatSheet';
+import MemoryLab from '@/components/visualizers/nodecosmos/pages/MemoryLab';
 import { NODE_TOPICS } from '@/components/visualizers/nodecosmos/data/topics';
 
 export function generateStaticParams() {
@@ -23,6 +24,7 @@ export function generateStaticParams() {
     { slug: ['playground'] },
     { slug: ['flashcards'] },
     { slug: ['cheatsheet'] },
+    { slug: ['memory-lab'] },
   ];
 
   NODE_TOPICS.forEach((topic) => {
@@ -61,6 +63,8 @@ export default async function NodeCosmosPage({
     content = <Flashcards />;
   } else if (first === 'cheatsheet') {
     content = <CheatSheet />;
+  } else if (first === 'memory-lab') {
+    content = <MemoryLab />;
   } else if (first !== '') {
     notFound();
   }

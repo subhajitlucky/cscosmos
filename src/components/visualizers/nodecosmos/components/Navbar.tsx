@@ -19,6 +19,7 @@ export function Navbar() {
   ];
 
   const toolsLinks = [
+    { label: 'V8 Memory & Leaks Lab', href: '/nodecosmos/memory-lab', icon: HardDrive },
     { label: 'Senior Flashcards', href: '/nodecosmos/flashcards', icon: HelpCircle },
     { label: 'Node Production Cheat Sheet', href: '/nodecosmos/cheatsheet', icon: Bookmark },
   ];

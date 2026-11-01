@@ -5,6 +5,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Sparkles, Terminal, XCircle } from 'lucide-react';
 import { NODE_TOPICS } from '../data/topics';
+import { LibuvEventLoopStepper } from '../components/LibuvEventLoopStepper';
+import { ThreadPoolVisualizer } from '../components/ThreadPoolVisualizer';
+import { StreamsBackpressureLab } from '../components/StreamsBackpressureLab';
+import { V8MemoryVisualizer } from '../components/V8MemoryVisualizer';
+import { EventEmitterVisualizer } from '../components/EventEmitterVisualizer';
+import { ClusterVsWorkerLab } from '../components/ClusterVsWorkerLab';
 
 export default function ConceptDetail({ topicId }: { topicId: string }) {
   const topic = NODE_TOPICS.find((t) => t.id === topicId);
@@ -98,6 +104,79 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
           </p>
         </div>
       </div>
+
+      {/* Embedded Interactive Simulators for Relevant Topics */}
+      {topic.id === 'libuv-event-loop-6-phases' && (
+        <div className="pt-6 border-t border-border space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              Interactive Lab
+            </span>
+            <h2 className="text-xl font-bold text-foreground">Libuv 6-Phase Event Loop Simulator</h2>
+          </div>
+          <LibuvEventLoopStepper />
+        </div>
+      )}
+
+      {topic.id === 'libuv-threadpool-saturation' && (
+        <div className="pt-6 border-t border-border space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              Interactive Lab
+            </span>
+            <h2 className="text-xl font-bold text-foreground">Libuv Worker Thread Pool Saturation Simulator</h2>
+          </div>
+          <ThreadPoolVisualizer />
+        </div>
+      )}
+
+      {topic.id === 'node-streams-backpressure' && (
+        <div className="pt-6 border-t border-border space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              Interactive Lab
+            </span>
+            <h2 className="text-xl font-bold text-foreground">Node.js Streams &amp; Backpressure Flow Simulator</h2>
+          </div>
+          <StreamsBackpressureLab />
+        </div>
+      )}
+
+      {topic.id === 'garbage-collection-v8-scavenger' && (
+        <div className="pt-6 border-t border-border space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              Interactive Lab
+            </span>
+            <h2 className="text-xl font-bold text-foreground">V8 Generational Garbage Collector Simulator</h2>
+          </div>
+          <V8MemoryVisualizer />
+        </div>
+      )}
+
+      {topic.id === 'eventemitter-memory-leaks' && (
+        <div className="pt-6 border-t border-border space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              Interactive Lab
+            </span>
+            <h2 className="text-xl font-bold text-foreground">EventEmitter Listener Memory Leak Simulator</h2>
+          </div>
+          <EventEmitterVisualizer />
+        </div>
+      )}
+
+      {topic.id === 'clustering-vs-worker-threads' && (
+        <div className="pt-6 border-t border-border space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              Interactive Lab
+            </span>
+            <h2 className="text-xl font-bold text-foreground">Process Clustering vs Worker Threads Simulator</h2>
+          </div>
+          <ClusterVsWorkerLab />
+        </div>
+      )}
 
       {/* Next Lesson Navigation */}
       {nextTopic && (
