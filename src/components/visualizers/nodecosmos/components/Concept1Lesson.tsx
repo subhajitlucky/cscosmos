@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  GraduationCap,
   BookOpen,
   CheckCircle2,
   XCircle,
@@ -42,26 +41,6 @@ export function Concept1Lesson() {
 
   return (
     <div className="space-y-12">
-      {/* Professor Preamble Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-            <GraduationCap className="w-6 h-6" />
-          </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
-                CSCosmos Engineering Faculty &bull; Roadmap 2027
-              </span>
-            </div>
-            <p className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100 leading-snug">
-              &ldquo;Let&apos;s begin! We&apos;ll study all 280 concepts sequentially, from beginner to expert.
-              I&apos;ll teach you like a university professor teaching a student who is learning the subject from scratch, but our goal is to reach professional engineering level.&rdquo;
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Lesson Header */}
       <div className="space-y-4 border-b border-slate-200 dark:border-slate-800 pb-8">
         <div className="flex flex-wrap items-center gap-2">
