@@ -17,27 +17,49 @@ console.log("End");
 
     examples: [
         {
-            code: `// 1. The Single Thread Trap
-console.log("A");
+            code: `// 1. The Single Thread Trap & Queue Priority
+console.log("A: Synchronous start");
 
-setTimeout(() => console.log("B"), 0);
+setTimeout(() => {
+  console.log("B: Macrotask timer fired (0ms)");
+}, 0);
 
-// Long loop blocks the stack!
-for (let i = 0; i < 1000000000; i++) {} 
-
-console.log("C");
-
-// Output: A, C, (Wait for loop), B`,
-            explanation: "Even with a 0ms delay, `setTimeout` cannot run until the Call Stack is empty. The long loop blocks the stack, preventing the Event Loop from processing the task queue."
-        },
-        {
-            code: `// 2. DOM Events & Loop
-// Click listeners are tasks
-button.addEventListener('click', () => {
-  console.log("Clicked!");
+Promise.resolve().then(() => {
+  console.log("P: Microtask promise resolved");
 });
 
-// The loop waits for the user to trigger the task.`,
+// Simulating brief synchronous CPU work (100ms)
+const start = Date.now();
+while (Date.now() - start < 100) {}
+
+console.log("C: Synchronous finish");
+
+// Expected Order: A -> C -> P (microtasks first) -> B (macrotasks after)`,
+            explanation: "Even with a 0ms delay, `setTimeout` cannot run until the Call Stack is empty and all pending Microtasks are completely drained."
+        },
+        {
+            code: `// 2. DOM Events & Task Queue Simulation
+const buttonMock = {
+  listeners: {},
+  addEventListener(event, callback) {
+    this.listeners[event] = callback;
+    console.log(\`Web API: Registered "\${event}" event listener\`);
+  },
+  trigger(event) {
+    console.log(\`User Action: Triggered "\${event}" event\`);
+    // Browser Web APIs push event callbacks onto the Task Queue
+    setTimeout(() => {
+      if (this.listeners[event]) this.listeners[event]();
+    }, 0);
+  }
+};
+
+buttonMock.addEventListener('click', () => {
+  console.log("Task Queue: Click callback processed by Event Loop!");
+});
+
+buttonMock.trigger('click');
+console.log("Call Stack: Synchronous dispatch finished.");`,
             explanation: "The browser's 'Web APIs' handle the event listening. When the click happens, they push the callback onto the Task Queue for the Event Loop to pick up."
         }
     ],

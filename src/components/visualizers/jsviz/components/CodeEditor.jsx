@@ -1,16 +1,25 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { Play, Trash2, Terminal, Code } from 'lucide-react';
 import { useTheme } from '@/context/useTheme';
 
-const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
-    const { theme } = useTheme();
+const CodeEditor = ({ initialCode = '', onRun, readOnly = false, className = '' }) => {
+    const { theme, resolvedTheme } = useTheme();
+    const currentTheme = resolvedTheme || (theme === 'system'
+        ? (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : theme) || 'dark';
+    const isDark = currentTheme === 'dark';
+    const monacoTheme = isDark ? 'vs-dark' : 'vs';
+
     const [code, setCode] = useState(initialCode);
-    const outputRef = React.useRef(null);
+    const outputRef = useRef(null);
+    const pendingTimerRef = useRef(null);
+    const originalConsoleLogRef = useRef(null);
+    const originalConsoleErrorRef = useRef(null);
 
     // Update internal state when prop changes
-    React.useEffect(() => {
+    useEffect(() => {
         setCode(initialCode);
     }, [initialCode]);
 
@@ -18,24 +27,40 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
     const [isError, setIsError] = useState(false);
 
     const handleEditorChange = (value) => {
-        setCode(value);
+        setCode(value || '');
     };
 
+    const restoreConsole = () => {
+        if (originalConsoleLogRef.current) {
+            console.log = originalConsoleLogRef.current;
+            originalConsoleLogRef.current = null;
+        }
+        if (originalConsoleErrorRef.current) {
+            console.error = originalConsoleErrorRef.current;
+            originalConsoleErrorRef.current = null;
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            if (pendingTimerRef.current) clearTimeout(pendingTimerRef.current);
+            restoreConsole();
+        };
+    }, []);
+
     const executeCode = () => {
+        if (pendingTimerRef.current) {
+            clearTimeout(pendingTimerRef.current);
+            pendingTimerRef.current = null;
+        }
+        restoreConsole();
+
         setOutput([]);
         setIsError(false);
 
         const localLogs = [];
-        const originalConsoleLog = console.log;
-        const originalConsoleError = console.error;
-        let restored = false;
-
-        const restoreConsole = () => {
-            if (restored) return;
-            console.log = originalConsoleLog;
-            console.error = originalConsoleError;
-            restored = true;
-        };
+        originalConsoleLogRef.current = console.log;
+        originalConsoleErrorRef.current = console.error;
 
         const pushLog = (isErr, args) => {
             if (isErr) setIsError(true);
@@ -54,7 +79,6 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
                 })
                 .join(' ');
             localLogs.push(line);
-            // Batch updates for better performance
             setOutput([...localLogs]);
         };
 
@@ -73,10 +97,10 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
         } catch (error) {
             pushLog(true, [error.toString()]);
         } finally {
-            // allow async logs to arrive, then restore console
-            setTimeout(() => {
+            pendingTimerRef.current = setTimeout(() => {
                 restoreConsole();
                 if (onRun) onRun(code, localLogs, isError);
+                pendingTimerRef.current = null;
             }, FLUSH_DELAY);
         }
     };
@@ -87,16 +111,22 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
     };
 
     // Auto-scroll console to bottom when output changes
-    React.useEffect(() => {
+    useEffect(() => {
         if (outputRef.current) {
             outputRef.current.scrollTop = outputRef.current.scrollHeight;
         }
     }, [output]);
 
     return (
-        <div className="flex flex-col h-full border-l border-brand-border" style={{ backgroundColor: 'var(--bg-surface)' }}>
+        <div 
+            className={`flex flex-col h-full w-full min-h-[460px] border border-brand-border rounded-lg overflow-hidden ${className}`} 
+            style={{ backgroundColor: 'var(--bg-surface)' }}
+        >
             {/* Toolbar */}
-            <div className="flex items-center justify-between px-4 py-2 border-b border-brand-border" style={{ backgroundColor: 'var(--bg-surface)' }}>
+            <div 
+                className="flex items-center justify-between px-4 py-2 border-b border-brand-border flex-shrink-0" 
+                style={{ backgroundColor: 'var(--bg-surface)' }}
+            >
                 <div className="flex items-center space-x-2">
                     <Code size={14} style={{ color: 'var(--accent-main)' }} />
                     <span className="text-xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Editor_Pane</span>
@@ -105,7 +135,7 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
                     {!readOnly && (
                         <button
                             onClick={executeCode}
-                            className="neo-btn px-3 py-1 text-xs flex items-center gap-2"
+                            className="neo-btn px-3 py-1 text-xs flex items-center gap-2 transition-transform active:scale-95"
                         >
                             <Play size={12} fill="currentColor" />
                             EXECUTE
@@ -115,31 +145,44 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false }) => {
             </div>
 
             {/* Editor & Console Split */}
-            <div className="flex-grow flex flex-col h-full overflow-hidden">
-                <div className="flex-1 overflow-hidden relative" style={{ minHeight: '200px' }}>
-                    <Editor
-                        height="100%"
-                        defaultLanguage="javascript"
-                        value={code}
-                        theme={theme === 'dark' ? 'vs-dark' : 'vs-light'}
-                        onChange={handleEditorChange}
-                        options={{
-                            minimap: { enabled: false },
-                            fontSize: 13,
-                            fontFamily: "'JetBrains Mono', monospace",
-                            scrollBeyondLastLine: false,
-                            readOnly: readOnly,
-                            automaticLayout: true,
-                            padding: { top: 16 },
-                            renderLineHighlight: 'line',
-                            cursorBlinking: 'solid',
-                        }}
-                    />
+            <div className="flex-1 flex flex-col min-h-0 w-full overflow-hidden">
+                {/* Monaco Editor Container with Absolute Pinning */}
+                <div 
+                    className="flex-1 min-h-[220px] relative w-full overflow-hidden" 
+                    style={{ backgroundColor: isDark ? '#1e1e1e' : '#fffffe' }}
+                >
+                    <div className="absolute inset-0 w-full h-full">
+                        <Editor
+                            height="100%"
+                            width="100%"
+                            defaultLanguage="javascript"
+                            value={code}
+                            theme={monacoTheme}
+                            onChange={handleEditorChange}
+                            options={{
+                                minimap: { enabled: false },
+                                fontSize: 13,
+                                fontFamily: "'JetBrains Mono', monospace",
+                                scrollBeyondLastLine: false,
+                                readOnly: readOnly,
+                                automaticLayout: true,
+                                padding: { top: 16 },
+                                renderLineHighlight: 'line',
+                                cursorBlinking: 'solid',
+                            }}
+                        />
+                    </div>
                 </div>
 
-                {/* Console Output - Fixed height section */}
-                <div className="h-[40%] flex-shrink-0 flex flex-col border-t border-brand-border" style={{ backgroundColor: 'var(--bg-main)' }}>
-                    <div className="px-4 py-1.5 border-b border-brand-border flex justify-between items-center flex-shrink-0" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                {/* Console Output - Dedicated section */}
+                <div 
+                    className="h-44 sm:h-48 flex-shrink-0 flex flex-col border-t border-brand-border min-h-0" 
+                    style={{ backgroundColor: 'var(--bg-main)' }}
+                >
+                    <div 
+                        className="px-4 py-1.5 border-b border-brand-border flex justify-between items-center flex-shrink-0" 
+                        style={{ backgroundColor: 'var(--bg-surface)' }}
+                    >
                         <div className="flex items-center space-x-2">
                             <Terminal size={12} style={{ color: 'var(--text-main)' }} />
                             <span className="text-xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-main)' }}>Console_Output</span>

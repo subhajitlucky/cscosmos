@@ -149,9 +149,9 @@ const Problem = ({ problemId: propProblemId }) => {
                 </div>
 
                 {/* Right: Code Editor */}
-                <div className="w-full lg:w-[600px] border-t lg:border-t-0 lg:border-l flex flex-col" style={{ borderColor: 'var(--border-main)', backgroundColor: '#1e1e1e', minHeight: '500px' }}>
-                    <div className="px-4 py-2 border-b flex items-center justify-between" style={{ borderColor: 'var(--border-main)', backgroundColor: '#252526' }}>
-                        <span className="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2">
+                <div className="w-full lg:w-[600px] border-t lg:border-t-0 lg:border-l flex flex-col" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-surface)', minHeight: '500px' }}>
+                    <div className="px-4 py-2 border-b flex items-center justify-between" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
+                        <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-muted)' }}>
                             <Terminal size={14} /> Solution Editor
                         </span>
                         <div className="flex space-x-1">
@@ -160,8 +160,8 @@ const Problem = ({ problemId: propProblemId }) => {
                             <div className="w-2 h-2 rounded-full bg-green-500"></div>
                         </div>
                     </div>
-                    <div className="flex-grow">
-                        <CodeEditor initialCode={code} onRun={runTests} />
+                    <div className="flex-grow flex flex-col min-h-0">
+                        <CodeEditor initialCode={code} onRun={runTests} className="border-0 rounded-none" />
                     </div>
                 </div>
             </div>

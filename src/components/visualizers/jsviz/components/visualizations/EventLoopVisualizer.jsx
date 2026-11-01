@@ -91,26 +91,38 @@ const EventLoopVisualizer = ({ hasMicro, hasMacro }) => {
                     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
                 }
                 .micro-node {
-                    background: #f5f3ff;
+                    background: rgba(139, 92, 246, 0.12);
+                    border: 1px solid rgba(139, 92, 246, 0.35);
                     border-left: 4px solid #8b5cf6;
                     padding: 10px;
                     font-family: monospace;
                     font-size: 11px;
-                    color: #5b21b6;
+                    color: #6d28d9;
                     border-radius: 4px;
                     margin-bottom: 8px;
                     box-shadow: 0 2px 4px rgba(139, 92, 246, 0.1);
                 }
+                .dark .micro-node {
+                    background: rgba(139, 92, 246, 0.22);
+                    border-color: rgba(139, 92, 246, 0.5);
+                    color: #ddd6fe;
+                }
                 .macro-node {
-                    background: #fff7ed;
+                    background: rgba(249, 115, 22, 0.12);
+                    border: 1px solid rgba(249, 115, 22, 0.35);
                     border-left: 4px solid #f97316;
                     padding: 10px;
                     font-family: monospace;
                     font-size: 11px;
-                    color: #9a3412;
+                    color: #c2410c;
                     border-radius: 4px;
                     margin-bottom: 8px;
                     box-shadow: 0 2px 4px rgba(249, 115, 22, 0.1);
+                }
+                .dark .macro-node {
+                    background: rgba(249, 115, 22, 0.22);
+                    border-color: rgba(249, 115, 22, 0.5);
+                    color: #fed7aa;
                 }
                 .tag {
                     position: absolute;
@@ -141,7 +153,7 @@ const EventLoopVisualizer = ({ hasMicro, hasMacro }) => {
                         {hasMicro ? (
                             <div className="micro-node">RESOLVED_PROMISE</div>
                         ) : (
-                            <div className="text-[10px] text-gray-300 font-mono italic text-center py-8">No_Tasks</div>
+                            <div className="text-[10px] font-mono italic text-center py-8 opacity-60" style={{ color: 'var(--text-muted)' }}>No_Tasks</div>
                         )}
                     </div>
                 </div>
@@ -151,7 +163,7 @@ const EventLoopVisualizer = ({ hasMicro, hasMacro }) => {
                         {hasMacro ? (
                             <div className="macro-node">SET_TIMEOUT_CB</div>
                         ) : (
-                            <div className="text-[10px] text-gray-300 font-mono italic text-center py-8">No_Tasks</div>
+                            <div className="text-[10px] font-mono italic text-center py-8 opacity-60" style={{ color: 'var(--text-muted)' }}>No_Tasks</div>
                         )}
                     </div>
                 </div>

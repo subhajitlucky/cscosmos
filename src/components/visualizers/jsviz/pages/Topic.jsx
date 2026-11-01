@@ -15,7 +15,7 @@ import Sidebar from '../components/Sidebar';
 import useStore from '../store/useStore';
 import { 
     CheckSquare, Code, Lightbulb, BookOpen, Cpu, Layers, Copy, 
-    Check, ArrowLeft, ArrowRight, Menu, X 
+    Check, ArrowLeft, ArrowRight, Menu, X, Sparkles 
 } from 'lucide-react';
 
 const Topic = ({ topicId: propTopicId }) => {
@@ -186,21 +186,42 @@ const Topic = ({ topicId: propTopicId }) => {
                 </div>
 
                 {/* 3. Sandboxed Interactive Code Execution Editor (Full Width) */}
-                <div className="neo-card p-0 flex flex-col min-h-[450px] overflow-hidden shadow-xl" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                <div className="neo-card p-0 flex flex-col h-[520px] min-h-[480px] overflow-hidden shadow-xl" style={{ backgroundColor: 'var(--bg-surface)' }}>
                     <CodeEditor initialCode={code} onRun={handleRun} />
                 </div>
 
                 {/* 4. Detailed Concept Markdown Breakdown */}
-                {content?.explanation && (
+                {(content?.explanation || content?.definition) && (
                     <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
                             <Lightbulb size={20} className="text-brand-lime" /> Concept Deep-Dive
                         </h3>
                         <div className="prose dark:prose-invert max-w-none font-mono text-sm sm:text-base leading-relaxed space-y-4" style={{ color: 'var(--text-main)' }}>
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                {content.explanation}
+                                {content.explanation || content.definition}
                             </ReactMarkdown>
                         </div>
+                    </div>
+                )}
+
+                {/* 5. Production Use Cases & Patterns */}
+                {content?.useCases && content.useCases.length > 0 && (
+                    <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                        <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
+                            <Sparkles size={20} className="text-brand-lime" /> Practical Use Cases &amp; Patterns
+                        </h3>
+                        <ul className="space-y-3 font-mono text-sm" style={{ color: 'var(--text-muted)' }}>
+                            {content.useCases.map((useCase, idx) => (
+                                <li key={idx} className="flex items-start gap-2.5">
+                                    <span className="text-brand-lime font-bold mt-0.5 select-none">❯</span>
+                                    <div className="leading-relaxed">
+                                        <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ p: ({ children }) => <span>{children}</span> }}>
+                                            {useCase}
+                                        </ReactMarkdown>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 )}
 
