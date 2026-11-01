@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils';
 
 // Import visualizers
 import { OriginIsolation } from '../components/visuals/OriginIsolation';
+import { OriginTupleComparator } from '../components/visuals/OriginTupleComparator';
 import { CorsPreflight } from '../components/visuals/CorsPreflight';
 import { XssInjection } from '../components/visuals/XssInjection';
 import { CsrfFlow } from '../components/visuals/CsrfFlow';
@@ -160,18 +161,24 @@ export default function TopicLesson({ topicId }: TopicLessonProps) {
                 {sec.content && (
                   <p className="text-sm text-foreground/85 leading-relaxed">{sec.content}</p>
                 )}
-                {sec.subItems && sec.subItems.length > 0 && (
-                  <ul className="grid grid-cols-1 gap-2 pt-2">
-                    {sec.subItems.map((item, itemIdx) => (
-                      <li
-                        key={itemIdx}
-                        className="rounded-lg border border-border/60 bg-background/60 p-3 text-xs space-y-1"
-                      >
-                        <strong className="text-foreground font-mono block">{item.label}</strong>
-                        <span className="text-muted-foreground">{item.description}</span>
-                      </li>
-                    ))}
-                  </ul>
+                {sec.title.includes('Origin Tuple') ? (
+                  <div className="pt-2">
+                    <OriginTupleComparator />
+                  </div>
+                ) : (
+                  sec.subItems && sec.subItems.length > 0 && (
+                    <ul className="grid grid-cols-1 gap-2 pt-2">
+                      {sec.subItems.map((item, itemIdx) => (
+                        <li
+                          key={itemIdx}
+                          className="rounded-lg border border-border/60 bg-background/60 p-3 text-xs space-y-1"
+                        >
+                          <strong className="text-foreground font-mono block">{item.label}</strong>
+                          <span className="text-muted-foreground">{item.description}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )
                 )}
                 {sec.code && (
                   <pre className="rounded-lg bg-zinc-950 p-3.5 font-mono text-xs text-zinc-100 overflow-x-auto mt-2">
@@ -236,9 +243,18 @@ export default function TopicLesson({ topicId }: TopicLessonProps) {
           </div>
 
           {topic.content.codeExample.explanation && (
-            <div className="rounded-lg border border-border bg-muted/40 p-3.5 text-xs text-foreground/80 leading-relaxed">
-              <strong>Security Analysis: </strong>
-              {topic.content.codeExample.explanation}
+            <div className="rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/5 p-6 sm:p-7 space-y-3 shadow-xs">
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <span className="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  Security Analysis &amp; Core Architectural Rule
+                </span>
+              </div>
+              <p className="text-base sm:text-lg font-semibold text-foreground leading-relaxed pl-1 sm:pl-2">
+                {topic.content.codeExample.explanation}
+              </p>
             </div>
           )}
         </section>
