@@ -60,7 +60,7 @@ export function CspBuilder() {
     }
   ];
 
-  const checkAllowed = (res: any) => {
+  const checkAllowed = (res: { origin: string }) => {
       if (res.origin === 'self') return allowSelf;
       if (res.origin === 'google') return allowGoogle;
       if (res.origin === 'inline') return allowInline;
