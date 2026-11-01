@@ -167,7 +167,7 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
     };
 
     return (
-        <div className="w-full h-full relative overflow-hidden" style={{ backgroundColor: 'transparent' }}>
+        <div className="w-full min-h-full relative" style={{ backgroundColor: 'transparent' }}>
             {renderContent()}
         </div>
     );

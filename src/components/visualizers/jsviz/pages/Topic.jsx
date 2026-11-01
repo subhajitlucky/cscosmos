@@ -170,7 +170,7 @@ const Topic = ({ topicId: propTopicId }) => {
                 </div>
 
                 {/* 2. Interactive Mental Model Simulation Canvas (Full Width) */}
-                <div className="neo-card p-6 border-2 flex flex-col overflow-hidden shadow-xl" style={{ borderColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
+                <div className="neo-card p-6 border-2 flex flex-col shadow-xl" style={{ borderColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
                     <div className="flex items-center justify-between pb-4 border-b mb-4" style={{ borderColor: 'var(--border-main)' }}>
                         <h3 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
                             <Layers size={18} className="text-brand-lime" /> Mental Model Realtime Simulation
@@ -180,7 +180,7 @@ const Topic = ({ topicId: propTopicId }) => {
                         </span>
                     </div>
 
-                    <div className="min-h-[480px] sm:min-h-[560px] lg:h-[640px] w-full relative overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
+                    <div className="min-h-[480px] w-full relative rounded-lg border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
                         <VisualizerCanvas topicId={topic.id} code={code} isRunning={isRunning} />
                     </div>
                 </div>

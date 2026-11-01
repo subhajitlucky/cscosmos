@@ -399,7 +399,7 @@ export default function EventLoopVisualizer({ hasMicro = false, hasMacro = false
     const loopStatus = getLoopStatus();
 
     return (
-        <div className="h-full w-full flex flex-col p-3 sm:p-5 overflow-y-auto space-y-4" style={{ backgroundColor: 'var(--bg-surface)' }}>
+        <div className="w-full flex flex-col p-3 sm:p-5 space-y-4" style={{ backgroundColor: 'var(--bg-surface)' }}>
             {/* Top Toolbar: Presets & Controls */}
             <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl border border-brand-border" style={{ backgroundColor: 'var(--bg-main)' }}>
                 {/* Preset Selector */}
