@@ -129,19 +129,19 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #4 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Core concept #4: Node.js vs. Browser JavaScript—host environments, DOM vs. system I/O, security sandboxing, global scopes, and the CommonJS module wrapper.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Node.js vs Browser JavaScript: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #4: Node.js vs Browser JavaScript\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Node.js vs Browser JavaScript in Node.js runtime');\n",
+    "mentalModel": "Conceptual mental model for Node.js vs Browser JavaScript: Two actors reading from the same script (ECMAScript syntax), but one performs on a theatrical stage behind safety glass (Browser Sandbox), while the other operates heavy machinery on a factory floor (Node.js OS Host).",
+    "codeSnippet": "// Concept #4: Safe Environment Detection\nconst isBrowser = typeof window !== 'undefined';\nconst isNode = typeof process !== 'undefined' && Boolean(process.versions?.node);\nconsole.log({ isBrowser, isNode, globalScope: typeof globalThis });",
     "takeaways": [
-      "Master the core operational principles of Node.js vs Browser JavaScript.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "ECMAScript defines core syntax, data types, and computation, but zero I/O capabilities.",
+      "Browsers execute untrusted code in a strict sandbox with DOM/CORS; Node.js executes trusted backend code with direct OS permissions.",
+      "Node.js wraps CommonJS files in an invisible IIFE function, keeping top-level variables isolated from the global namespace."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Node.js vs Browser JavaScript concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Node.js vs Browser JavaScript."
+      "mistake": "Invoking browser DOM globals (window, document, localStorage) during Server-Side Rendering (SSR) in Node.js.",
+      "fix": "Guard browser-only code with typeof window !== 'undefined' or isolate within client-side lifecycle hooks like useEffect()."
     },
     "nextTopicId": "v8-javascript-engine",
     "prevTopicId": "node-js-runtime-environment"
