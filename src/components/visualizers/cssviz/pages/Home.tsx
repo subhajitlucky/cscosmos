@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, BookOpen, FlaskConical, Sparkles } from 'lucide-react';
+import { ArrowRight, BookOpen, FlaskConical, Sparkles, Trophy } from 'lucide-react';
 import GlassCard from '@/components/visualizers/cssviz/components/common/GlassCard';
 import PageTransition from '@/components/visualizers/cssviz/components/common/PageTransition';
 import SectionHeader from '@/components/visualizers/cssviz/components/common/SectionHeader';
@@ -51,14 +51,19 @@ const Home = () => {
           <div className="flex flex-col justify-center gap-3 pt-2 sm:flex-row">
             <Button
               as={Link}
-              href={firstTopic ? `${BASE}/topics${firstTopic.path}` : `${BASE}/concepts`}
+              href={`${BASE}/concepts`}
               size="lg"
             >
-              Start learning
+              Explore Concepts
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button as={Link} href={`${BASE}/visualizers`} variant="secondary" size="lg">
-              Explore visualizers
+            <Button as={Link} href={`${BASE}/lab`} variant="secondary" size="lg">
+              <FlaskConical className="h-4 w-4 mr-1.5" />
+              CSS Tinker Lab
+            </Button>
+            <Button as={Link} href={`${BASE}/problems`} variant="secondary" size="lg">
+              <Trophy className="h-4 w-4 mr-1.5" />
+              100 Challenges
             </Button>
           </div>
         </div>
@@ -103,7 +108,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="mt-12 grid gap-4 md:grid-cols-2">
+      <section className="mt-12 grid gap-4 md:grid-cols-3">
         <GlassCard>
           <Link href={`${BASE}/concepts`} className="group flex h-full flex-col gap-3 p-6">
             <div className="flex items-center justify-between">
@@ -111,15 +116,15 @@ const Home = () => {
                 <BookOpen className="h-5 w-5" />
               </span>
               <span className="font-mono text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
-                {topics.length} topics
+                Core Tracks
               </span>
             </div>
             <div className="space-y-1">
               <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
-                Core concepts
+                All CSS Concepts
               </h2>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                The full curriculum, grouped from foundation to advanced.
+                Foundations, layout, typography, responsive, motion, and modern 2026 specs.
               </p>
             </div>
             <span className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-primary">
@@ -130,25 +135,50 @@ const Home = () => {
         </GlassCard>
 
         <GlassCard>
-          <Link href={`${BASE}/visualizers`} className="group flex h-full flex-col gap-3 p-6">
+          <Link href={`${BASE}/lab`} className="group flex h-full flex-col gap-3 p-6">
             <div className="flex items-center justify-between">
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/15 text-primary">
                 <FlaskConical className="h-5 w-5" />
               </span>
               <span className="font-mono text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
-                {labCount} labs
+                Playground
               </span>
             </div>
             <div className="space-y-1">
               <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
-                Visualizer labs
+                CSS Tinker Lab
               </h2>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                Tweak layout, color, and motion live, then copy the CSS.
+                Live code editor, real-time preview, device viewports, and presets.
               </p>
             </div>
             <span className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-primary">
-              Open all labs
+              Launch Tinker Lab
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        </GlassCard>
+
+        <GlassCard>
+          <Link href={`${BASE}/problems`} className="group flex h-full flex-col gap-3 p-6">
+            <div className="flex items-center justify-between">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/15 text-primary">
+                <Trophy className="h-5 w-5" />
+              </span>
+              <span className="font-mono text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                100 Problems
+              </span>
+            </div>
+            <div className="space-y-1">
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
+                Practice Arena
+              </h2>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Solve 100 hands-on CSS challenges with instant automated testing.
+              </p>
+            </div>
+            <span className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-primary">
+              Start Challenges
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </span>
           </Link>

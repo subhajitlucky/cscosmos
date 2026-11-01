@@ -3,16 +3,22 @@ import { notFound } from 'next/navigation';
 import RootLayout from '@/components/visualizers/cssviz/components/layout/RootLayout';
 import Home from '@/components/visualizers/cssviz/pages/Home';
 import Concepts from '@/components/visualizers/cssviz/pages/Concepts';
-import Visualizers from '@/components/visualizers/cssviz/pages/Visualizers';
+import CssLab from '@/components/visualizers/cssviz/pages/CssLab';
+import ProblemList from '@/components/visualizers/cssviz/pages/ProblemList';
+import ProblemSolver from '@/components/visualizers/cssviz/pages/ProblemSolver';
 import TopicPage from '@/components/visualizers/cssviz/pages/topics/TopicPage';
 import { topics } from '@/components/visualizers/cssviz/data/topics';
+import { cssProblems } from '@/components/visualizers/cssviz/data/problems';
 
 export function generateStaticParams() {
     const topicParams = topics.map(topic => ({ slug: ['topics', topic.path.replace(/^\//, '')] }));
+    const problemParams = cssProblems.map(p => ({ slug: ['problems', String(p.id)] }));
     return [
         { slug: [] },
         { slug: ['concepts'] },
-        { slug: ['visualizers'] },
+        { slug: ['lab'] },
+        { slug: ['problems'] },
+        ...problemParams,
         ...topicParams,
     ];
 }
@@ -26,8 +32,14 @@ export default async function CssCosmosPage({ params }: { params: Promise<{ slug
 
     if (firstSegment === 'concepts') {
         content = <Concepts />;
-    } else if (firstSegment === 'visualizers') {
-        content = <Visualizers />;
+    } else if (firstSegment === 'lab') {
+        content = <CssLab />;
+    } else if (firstSegment === 'problems') {
+        if (secondSegment) {
+            content = <ProblemSolver problemId={secondSegment} />;
+        } else {
+            content = <ProblemList />;
+        }
     } else if (firstSegment === 'topics') {
         const foundTopic = topics.find(t => t.path.replace(/^\//, '') === secondSegment);
         if (!foundTopic) {

@@ -7,14 +7,23 @@ import { Button } from '../ui/Button';
 import ThemeToggle from '../ui/ThemeToggle';
 import { cn } from '../../utils/cn';
 
+const BASE = '/fullstack/css-cosmos';
+
 const links = [
-  { href: '/css-cosmos', label: 'Home' },
-  { href: '/css-cosmos/visualizers', label: 'Visualizers' },
-  { href: '/css-cosmos/concepts', label: 'Concepts' },
+  { href: `${BASE}`, label: 'Home' },
+  { href: `${BASE}/concepts`, label: 'Concepts' },
+  { href: `${BASE}/lab`, label: 'CSS Lab' },
+  { href: `${BASE}/problems`, label: 'Challenges (100 Qs)' },
 ];
 
 const Navbar = () => {
   const pathname = usePathname();
+
+  const isLinkActive = (href: string) => {
+    const normPath = (pathname || '').replace(/^\/fullstack/, '');
+    const normHref = href.replace(/^\/fullstack/, '');
+    return normHref === '/css-cosmos' ? normPath === '/css-cosmos' : normPath.startsWith(normHref);
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-glass bg-surface/85 backdrop-blur-xl transition-colors duration-300">
@@ -24,7 +33,7 @@ const Navbar = () => {
             <ArrowLeft size={14} />
             <span>CSCosmos</span>
           </Link>
-          <Link href="/css-cosmos" className="group flex items-center gap-3 text-body-text transition-colors">
+          <Link href={BASE} className="group flex items-center gap-3 text-body-text transition-colors">
             <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-2xl bg-amber-500 shadow-sm">
               <Sparkles className="h-5 w-5 text-slate-900" />
             </div>
@@ -37,7 +46,7 @@ const Navbar = () => {
 
         <nav className="hidden items-center gap-2 rounded-full border border-glass bg-surface/60 px-2 py-1 text-sm text-body-text backdrop-blur-lg transition-colors lg:flex">
           {links.map((link) => {
-            const isActive = link.href === '/css-cosmos' ? pathname === '/css-cosmos' : pathname.startsWith(link.href);
+            const isActive = isLinkActive(link.href);
             return (
               <Link
                 key={link.href}
@@ -57,12 +66,12 @@ const Navbar = () => {
           <ThemeToggle />
           <Button
             as={Link}
-            href="/css-cosmos/topics/flexbox"
+            href={`${BASE}/lab`}
             size="sm"
             variant="secondary"
             className="hidden sm:inline-flex"
           >
-            Start learning
+            Open Lab
           </Button>
         </div>
       </div>

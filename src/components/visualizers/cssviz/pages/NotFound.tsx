@@ -13,14 +13,14 @@ const NotFound = () => (
           <p className="text-xs uppercase tracking-[0.2em] text-primary">404</p>
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Page not found</h1>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            The CSS galaxy is vast, but this route doesn’t exist. Choose a visualizer or head back to the home nebula.
+            The CSS galaxy is vast, but this route doesn’t exist. Head back home or jump into the CSS Tinker Lab.
           </p>
           <div className="flex items-center justify-center gap-3">
-            <Button as={Link} href="/css-cosmos" size="lg">
+            <Button as={Link} href="/fullstack/css-cosmos" size="lg">
               Home
             </Button>
-            <Button as={Link} href="/css-cosmos/visualizers" variant="secondary" size="lg">
-              Visualizers
+            <Button as={Link} href="/fullstack/css-cosmos/lab" variant="secondary" size="lg">
+              CSS Lab
             </Button>
           </div>
         </div>

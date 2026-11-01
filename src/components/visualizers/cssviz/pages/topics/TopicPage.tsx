@@ -57,7 +57,7 @@ const TopicPage = ({ topic }: { topic: Topic }) => {
     <PageTransition>
       <div className="space-y-10">
         <div className="flex flex-col gap-4">
-          <Link href="/css-cosmos" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">
+          <Link href="/fullstack/css-cosmos" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">
             <ArrowLeft className="h-4 w-4" />
             Back to CSS Universe
           </Link>
@@ -75,8 +75,8 @@ const TopicPage = ({ topic }: { topic: Topic }) => {
                   ))}
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <Button as={Link} href="/css-cosmos/visualizers" variant="secondary">
-                    Explore visualizers
+                  <Button as={Link} href="/fullstack/css-cosmos/lab" variant="secondary">
+                    Tinker in CSS Lab
                   </Button>
                 </div>
               </div>
@@ -184,7 +184,7 @@ const TopicPage = ({ topic }: { topic: Topic }) => {
                     <p className="text-xs uppercase tracking-[0.18em] text-primary">{item.difficulty}</p>
                     <h4 className="text-lg font-semibold text-slate-900 dark:text-white">{item.name}</h4>
                     <p className="text-sm text-slate-600 dark:text-slate-300">{item.summary}</p>
-                    <Link className="text-sm font-semibold text-primary hover:text-slate-900 dark:hover:text-white" href={`/css-cosmos/topics${item.path}`}>
+                    <Link className="text-sm font-semibold text-primary hover:text-slate-900 dark:hover:text-white" href={`/fullstack/css-cosmos/topics${item.path}`}>
                       View page
                     </Link>
                   </div>
