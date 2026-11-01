@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { NODE_TOPICS } from '../data/topics';
 import { Concept1Lesson } from '../components/Concept1Lesson';
+import { Concept2Lesson } from '../components/Concept2Lesson';
 
 export default function ConceptDetail({ topicId }: { topicId: string }) {
   const topic = NODE_TOPICS.find((t) => t.id === topicId);
@@ -39,11 +40,13 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         <ArrowLeft className="w-3.5 h-3.5" /> Back to all {NODE_TOPICS.length} Concepts
       </Link>
 
-      {/* Concept 1 Special Pedagogical Lesson Experience */}
+      {/* Interactive Pedagogical Lesson Experiences */}
       {topic.number === 1 ? (
         <Concept1Lesson />
+      ) : topic.number === 2 ? (
+        <Concept2Lesson />
       ) : (
-        /* Coming Soon Template for Concepts 2-280 */
+        /* Coming Soon Template for Concepts 3-280 */
         <>
           {/* Title & Metadata */}
           <div className="space-y-3">

@@ -77,19 +77,19 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #2 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Core concept #2: The 4-tier internal engine—V8 JavaScript execution, Libuv OS multiplexing, native C++ bindings, and worker thread pool boundaries.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Node.js Architecture: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #2: Node.js Architecture\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Node.js Architecture in Node.js runtime');\n",
+    "mentalModel": "Conceptual mental model for Node.js Architecture: A single waiter (Event Loop) taking all orders rapidly, while kitchen staff (OS kernel & Libuv thread pool) prepare the food in the background.",
+    "codeSnippet": "// Concept #2: Node.js Architecture\nconsole.log('1. Main thread execution');\nsetTimeout(() => console.log('3. Libuv timer callback'), 0);\nconsole.log('2. Synchronous completion');\n",
     "takeaways": [
-      "Master the core operational principles of Node.js Architecture.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "JavaScript execution and the event loop run on a single main thread without thread-per-request overhead.",
+      "Network I/O is non-blocking via OS kernel multiplexers (epoll, kqueue, IOCP) without using worker threads.",
+      "Blocking file system, crypto, and zlib tasks are offloaded to Libuv's background thread pool (UV_THREADPOOL_SIZE)."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Node.js Architecture concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Node.js Architecture."
+      "mistake": "Running heavy CPU loops or massive synchronous operations on the main thread, freezing the event loop for all other clients.",
+      "fix": "Keep the main thread unblocked; offload CPU-intensive algorithms to worker_threads or cluster child processes."
     },
     "nextTopicId": "node-js-runtime-environment",
     "prevTopicId": "introduction-to-node-js"
