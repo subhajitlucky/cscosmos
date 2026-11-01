@@ -51,19 +51,19 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #1 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Core concept #1: The V8 JavaScript Engine and Node.js Runtime APIs bridging OS primitives to run JavaScript independently of web browsers.",
+    "status": "ready",
     "stability": "Stable",
     "mentalModel": "Conceptual mental model for Introduction to Node.js: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #1: Introduction to Node.js\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Introduction to Node.js in Node.js runtime');\n",
+    "codeSnippet": "// Concept #1: Introduction to Node.js\nconsole.log('Hello, Node.js!');\nconst name = 'Subhajit';\nconsole.log(`Welcome, ${name}`);\n",
     "takeaways": [
-      "Master the core operational principles of Introduction to Node.js.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "Node.js is a runtime environment, not a programming language or framework.",
+      "V8 compiles and executes JavaScript code; Node.js provides OS host capabilities.",
+      "Modern JavaScript runs outside browsers to power servers, CLIs, build tools, and AI agents."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Introduction to Node.js concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Introduction to Node.js."
+      "mistake": "Assuming browser DOM globals (window, document) or Web APIs are universally present in headless Node.js.",
+      "fix": "Use Node.js core APIs (node:fs, node:os, process, globalThis) for host system tasks and isolate DOM operations."
     },
     "nextTopicId": "node-js-architecture",
     "prevTopicId": null
