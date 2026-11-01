@@ -18,6 +18,7 @@ export function GET() {
       description: topic.shortDescription,
       url: `${siteConfig.url}${topic.canonicalPath}`,
       crossListedDomains: topic.crossListedDomains ?? [],
+      curriculumTags: topic.curriculumTags ?? [],
     })),
     domains: domains.map((domain) => ({
       key: domain.domainKey,

@@ -57,3 +57,39 @@ describe('topics', () => {
     }
   })
 })
+
+describe('fullstack curriculum split', () => {
+  const fullstackTopics = topics.filter(
+    (topic) =>
+      topic.domain === 'fullstack' || topic.crossListedDomains?.includes('fullstack'),
+  )
+  const owned = fullstackTopics.filter((topic) => topic.domain === 'fullstack')
+  const shared = fullstackTopics.filter((topic) => topic.domain !== 'fullstack')
+
+  it('only cross-lists genuine shared topics into fullstack', () => {
+    expect(shared.map((topic) => topic.slug).sort()).toEqual(
+      ['authviz', 'dockercosmos', 'gitcosmos', 'web-encryption', 'websecurity'].sort(),
+    )
+  })
+
+  it('keeps 24 core topics and 6 electives', () => {
+    expect(owned.filter((topic) => topic.curriculumTags?.includes('core'))).toHaveLength(24)
+    expect(owned.filter((topic) => topic.curriculumTags?.includes('elective'))).toHaveLength(6)
+  })
+
+  it('tags every owned topic as exactly one of core or elective', () => {
+    for (const topic of owned) {
+      const track = (topic.curriculumTags ?? []).filter(
+        (tag) => tag === 'core' || tag === 'elective',
+      )
+      expect(track).toHaveLength(1)
+    }
+  })
+
+  it('places every core topic in a core section', () => {
+    const sections = ['foundations', 'frontend', 'backend', 'architecture']
+    for (const topic of owned.filter((item) => item.curriculumTags?.includes('core'))) {
+      expect(topic.curriculumTags?.some((tag) => sections.includes(tag))).toBe(true)
+    }
+  })
+})

@@ -60,19 +60,19 @@ export default function Home() {
           className="flex flex-wrap justify-center gap-3 pt-2"
         >
           <Link
-            href="/authviz/concepts"
+            href="/security/authviz/concepts"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-7 py-3.5 text-base font-bold text-white transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             Start Curriculum <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
-            href="/authviz/lab"
+            href="/security/authviz/lab"
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-7 py-3.5 text-base font-bold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             <FlaskConical className="w-4 h-4 text-emerald-500" /> Simulation Lab
           </Link>
           <Link
-            href="/authviz/problems"
+            href="/security/authviz/problems"
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-7 py-3.5 text-base font-bold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             <CheckSquare className="w-4 h-4 text-emerald-500" /> Practice (60 Qs)
@@ -82,7 +82,7 @@ export default function Home() {
         {/* 3 Main Navbar Feature Navigation Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 text-left w-full">
           <Link
-            href="/authviz/concepts"
+            href="/security/authviz/concepts"
             className="group p-5 rounded-2xl border border-border/80 bg-card hover:bg-muted/40 hover:border-emerald-500/40 hover:shadow-xs transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
@@ -103,7 +103,7 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/authviz/lab"
+            href="/security/authviz/lab"
             className="group p-5 rounded-2xl border border-border/80 bg-card hover:bg-muted/40 hover:border-emerald-500/40 hover:shadow-xs transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
@@ -124,7 +124,7 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/authviz/problems"
+            href="/security/authviz/problems"
             className="group p-5 rounded-2xl border border-border/80 bg-card hover:bg-muted/40 hover:border-emerald-500/40 hover:shadow-xs transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
@@ -196,7 +196,7 @@ export default function Home() {
         </p>
         <div className="pt-2">
           <Link
-            href={`/authviz/concepts/${AUTH_TOPICS[0].id}`}
+            href={`/security/authviz/concepts/${AUTH_TOPICS[0].id}`}
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             <PlayCircle className="w-5 h-5" /> Start Lesson 1: PKCE Flow

@@ -51,7 +51,7 @@ export default function Navbar() {
   const { resolvedTheme, setTheme } = useCSCosmosTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Normalise so active states work whether URL is canonical (/fullstack/websecurity) or rewritten (/websecurity)
+  // Normalise so active states work whether URL is canonical (/security/websecurity) or rewritten (/websecurity)
   const normalizedPath = pathname.replace(TOPIC_BASE_PATH, ENGINE_BASE_PATH);
 
   useEffect(() => {

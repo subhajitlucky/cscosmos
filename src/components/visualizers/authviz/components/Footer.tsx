@@ -17,19 +17,19 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
-          <Link href="/authviz/concepts" className="hover:text-foreground transition-colors">
+          <Link href="/security/authviz/concepts" className="hover:text-foreground transition-colors">
             Concepts
           </Link>
-          <Link href="/authviz/lab" className="hover:text-foreground transition-colors">
+          <Link href="/security/authviz/lab" className="hover:text-foreground transition-colors">
             Simulation Lab
           </Link>
-          <Link href="/authviz/problems" className="hover:text-foreground transition-colors">
+          <Link href="/security/authviz/problems" className="hover:text-foreground transition-colors">
             Practice Problems
           </Link>
-          <Link href="/authviz/flashcards" className="hover:text-foreground transition-colors">
+          <Link href="/security/authviz/flashcards" className="hover:text-foreground transition-colors">
             Flashcards
           </Link>
-          <Link href="/authviz/cheatsheet" className="hover:text-foreground transition-colors">
+          <Link href="/security/authviz/cheatsheet" className="hover:text-foreground transition-colors">
             Cheat Sheet
           </Link>
           <Link href="/topics" className="hover:text-foreground font-semibold flex items-center gap-1">

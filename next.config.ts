@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 import { engineRoutes } from './src/data/engine-routes';
+import { topics } from './src/data/topics';
 
 // Canonical URL: /[domain]/[topicSlug]
 // Engine URL:    /[enginePath]  (currently the same value as topicSlug)
@@ -49,6 +50,38 @@ const moduleRedirects = [
 ].map((redirect) => ({ ...redirect, permanent: true }));
 
 canonicalRedirects.push(...moduleRedirects);
+
+// Topics that used to be listed under fullstack now live in another domain.
+// Keep old /fullstack/<slug> links working, but send them to the canonical URL.
+// Cross-listed topics are excluded because those are intentionally served from
+// both domains through the rewrite rules below.
+const legacyFullstackRedirects = topics
+  .filter(
+    (topic) =>
+      topic.domain !== 'fullstack' && !topic.crossListedDomains?.includes('fullstack'),
+  )
+  .flatMap((topic) => [
+    {
+      source: `/fullstack/${topic.slug}`,
+      destination: `/${topic.domain}/${topic.slug}`,
+      permanent: true,
+    },
+    {
+      source: `/fullstack/${topic.slug}/:path*`,
+      destination: `/${topic.domain}/${topic.slug}/:path*`,
+      permanent: true,
+    },
+  ]);
+
+canonicalRedirects.push(...legacyFullstackRedirects);
+
+// The standalone Web Accessibility topic was removed because HTML &
+// Accessibility covers the same material. Keep old links working.
+canonicalRedirects.push({
+  source: '/fullstack/accessibility',
+  destination: '/fullstack/html-cosmos',
+  permanent: true,
+});
 
 const seenEnginePaths = new Set<string>();
 

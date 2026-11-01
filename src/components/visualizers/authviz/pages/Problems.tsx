@@ -323,7 +323,7 @@ export default function Problems() {
                 </span>
 
                 <Link
-                  href={`/authviz/concepts/${currentProblem.topicId}`}
+                  href={`/security/authviz/concepts/${currentProblem.topicId}`}
                   className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                   title="Study corresponding lesson"
                 >

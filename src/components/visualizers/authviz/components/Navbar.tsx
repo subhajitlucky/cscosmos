@@ -21,14 +21,14 @@ export function Navbar() {
   const [toolsOpen, setToolsOpen] = useState(false);
 
   const primaryLinks = [
-    { label: 'Concepts', href: '/authviz/concepts', icon: BookOpen },
-    { label: 'Lab', href: '/authviz/lab', icon: FlaskConical },
-    { label: 'Problems', href: '/authviz/problems', icon: CheckSquare },
+    { label: 'Concepts', href: '/security/authviz/concepts', icon: BookOpen },
+    { label: 'Lab', href: '/security/authviz/lab', icon: FlaskConical },
+    { label: 'Problems', href: '/security/authviz/problems', icon: CheckSquare },
   ];
 
   const toolsLinks = [
-    { label: 'Security Flashcards', href: '/authviz/flashcards', icon: HelpCircle },
-    { label: 'RFC Cheat Sheet', href: '/authviz/cheatsheet', icon: Bookmark },
+    { label: 'Security Flashcards', href: '/security/authviz/flashcards', icon: HelpCircle },
+    { label: 'RFC Cheat Sheet', href: '/security/authviz/cheatsheet', icon: Bookmark },
   ];
 
   const isToolsActive = toolsLinks.some(
@@ -48,7 +48,7 @@ export function Navbar() {
             <span className="hidden sm:inline">CSCosmos</span>
           </Link>
 
-          <Link href="/authviz" className="flex items-center gap-2.5 group">
+          <Link href="/security/authviz" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white font-mono font-extrabold flex items-center justify-center text-sm shadow-xs group-hover:scale-105 transition-transform">
               <ShieldCheck className="w-4 h-4" />
             </div>
@@ -67,13 +67,13 @@ export function Navbar() {
         <nav className="flex items-center gap-1 sm:gap-2">
           {primaryLinks.map((item) => {
             const Icon = item.icon;
-            // Match exact href or sub-routes (e.g. /authviz/concepts/..., /authviz/lab, /authviz/*-lab)
+            // Match exact href or sub-routes (e.g. /security/authviz/concepts/..., /security/authviz/lab, /security/authviz/*-lab)
             const isActive =
               pathname === item.href ||
-              (item.href === '/authviz/concepts' && pathname?.startsWith('/authviz/concepts')) ||
-              (item.href === '/authviz/lab' &&
-                (pathname?.startsWith('/authviz/lab') || pathname?.endsWith('-lab'))) ||
-              (item.href === '/authviz/problems' && pathname?.startsWith('/authviz/problems'));
+              (item.href === '/security/authviz/concepts' && pathname?.startsWith('/security/authviz/concepts')) ||
+              (item.href === '/security/authviz/lab' &&
+                (pathname?.startsWith('/security/authviz/lab') || pathname?.endsWith('-lab'))) ||
+              (item.href === '/security/authviz/problems' && pathname?.startsWith('/security/authviz/problems'));
 
             return (
               <Link

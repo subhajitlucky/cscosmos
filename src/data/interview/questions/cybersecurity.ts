@@ -165,7 +165,7 @@ const safeJson = JSON.stringify(bio);        // NOT safe alone in <script>: esca
         a: 'No. The script still executes in your origin. HttpOnly only stops it from reading cookies, so it limits session-token theft but not actions performed as the user.',
       },
     ],
-    relatedEngine: { label: 'Explore the Web Security visualizer', href: '/fullstack/websecurity' },
+    relatedEngine: { label: 'Explore the Web Security visualizer', href: '/security/websecurity' },
   },
   {
     slug: 'jwt-localstorage-risk',
@@ -320,7 +320,7 @@ document.cookie; // '' — the token is not here`,
         a: 'Stateless JWTs cannot be revoked on their own. Use short expiries with refresh rotation and reuse detection, or add server-side state such as a jti denylist or token version.',
       },
     ],
-    relatedEngine: { label: 'Explore the Auth visualizer', href: '/fullstack/authviz' },
+    relatedEngine: { label: 'Explore the Auth visualizer', href: '/security/authviz' },
   },
   {
     slug: 'csrf-how-and-samesite',
@@ -481,7 +481,7 @@ fetch('https://bank.com/transfer', {
         a: 'No, they complement each other. SameSite is browser-enforced but can be bypassed by older clients or subdomain deployments, while a verified token proves the request came from your page. Use both.',
       },
     ],
-    relatedEngine: { label: 'Explore the Web Security visualizer', href: '/fullstack/websecurity' },
+    relatedEngine: { label: 'Explore the Web Security visualizer', href: '/security/websecurity' },
   },
   {
     slug: 'login-csrf-oauth-state',
@@ -618,6 +618,6 @@ if (req.query.state !== req.cookies.oauth_state) {
         a: 'No. A signature proves the server created the URL; it does not bind the callback to the browser. Treat the signed session ID as a routing hint, not as proof of user intent.',
       },
     ],
-    relatedEngine: { label: 'Explore the Web Security visualizer', href: '/fullstack/websecurity' },
+    relatedEngine: { label: 'Explore the Web Security visualizer', href: '/security/websecurity' },
   },
 ];

@@ -54,7 +54,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
       {/* Top Navigation */}
       <div className="flex items-center justify-between text-xs text-muted-foreground border-b border-border/60 pb-4">
         <Link
-          href="/authviz/concepts"
+          href="/security/authviz/concepts"
           className="inline-flex items-center gap-1.5 hover:text-foreground font-semibold transition"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Curriculum
@@ -307,7 +307,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
       <div className="pt-8 border-t border-border flex flex-wrap items-center justify-between gap-4">
         {prevTopic ? (
           <Link
-            href={`/authviz/concepts/${prevTopic.id}`}
+            href={`/security/authviz/concepts/${prevTopic.id}`}
             className="px-4 py-2.5 rounded-xl bg-card border border-border hover:bg-muted text-foreground text-xs font-semibold flex items-center gap-2 transition"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
@@ -319,7 +319,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
 
         <div className="flex items-center gap-3">
           <Link
-            href="/authviz/lab"
+            href="/security/authviz/lab"
             className="px-4 py-2.5 rounded-xl bg-muted border border-border hover:bg-muted/80 text-foreground text-xs font-semibold transition"
           >
             Interactive Labs
@@ -327,7 +327,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
 
           {nextTopic && (
             <Link
-              href={`/authviz/concepts/${nextTopic.id}`}
+              href={`/security/authviz/concepts/${nextTopic.id}`}
               className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm flex items-center gap-2"
             >
               <span className="line-clamp-1 max-w-[220px]">Next: {nextTopic.title}</span>

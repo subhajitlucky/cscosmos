@@ -64,7 +64,7 @@ export default function Concepts() {
           return (
             <Link
               key={topic.id}
-              href={`/authviz/concepts/${topic.id}`}
+              href={`/security/authviz/concepts/${topic.id}`}
               className="p-5 rounded-2xl bg-card border border-border/80 hover:border-emerald-500/50 hover:bg-muted/30 transition-all flex flex-col justify-between group space-y-4 shadow-xs"
             >
               <div className="space-y-3">

@@ -24,7 +24,8 @@ const ENDPOINTS = [
       "slug": "program-cosmos",
       "status": "active",
       "url": "https://cscosmos.vercel.app/corecs/program-cosmos",
-      "crossListedDomains": ["fullstack"]
+      "crossListedDomains": [],
+      "curriculumTags": []
     }
   ]
 }`,

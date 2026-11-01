@@ -89,12 +89,12 @@ export function Navbar() {
         {/* Left: Hub backlink & Logo */}
         <div className="flex items-center gap-3 sm:gap-4">
           <Link
-            href="/fullstack"
-            aria-label="Back to Full Stack domain"
+            href="/corecs"
+            aria-label="Back to Core Computer Science domain"
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border/80 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Full Stack</span>
+            <span className="hidden sm:inline">Core CS</span>
           </Link>
 
           <Link

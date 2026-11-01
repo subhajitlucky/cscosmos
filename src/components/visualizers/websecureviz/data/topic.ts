@@ -1,4 +1,4 @@
-export const TOPIC_BASE_PATH = '/fullstack/websecurity';
+export const TOPIC_BASE_PATH = '/security/websecurity';
 export const ENGINE_BASE_PATH = '/websecurity';
 
 export interface TopicMeta {
@@ -12,7 +12,7 @@ export interface TopicMeta {
 
 export const topicMeta: TopicMeta = {
   title: 'Web Security (XSS, CSRF, CSP, CORS)',
-  domain: 'fullstack',
+  domain: 'security',
   level: 'intermediate',
   duration: '50 min',
   status: 'active',
