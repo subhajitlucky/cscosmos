@@ -3,14 +3,17 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Sparkles, Terminal, XCircle } from 'lucide-react';
+import {
+  AlertCircle,
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Sparkles,
+  Terminal,
+  XCircle,
+} from 'lucide-react';
 import { NODE_TOPICS } from '../data/topics';
-import { LibuvEventLoopStepper } from '../components/LibuvEventLoopStepper';
-import { ThreadPoolVisualizer } from '../components/ThreadPoolVisualizer';
-import { StreamsBackpressureLab } from '../components/StreamsBackpressureLab';
-import { V8MemoryVisualizer } from '../components/V8MemoryVisualizer';
-import { EventEmitterVisualizer } from '../components/EventEmitterVisualizer';
-import { ClusterVsWorkerLab } from '../components/ClusterVsWorkerLab';
 
 export default function ConceptDetail({ topicId }: { topicId: string }) {
   const topic = NODE_TOPICS.find((t) => t.id === topicId);
@@ -18,6 +21,10 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
   if (!topic) {
     notFound();
   }
+
+  const prevTopic = topic.prevTopicId
+    ? NODE_TOPICS.find((t) => t.id === topic.prevTopicId)
+    : null;
 
   const nextTopic = topic.nextTopicId
     ? NODE_TOPICS.find((t) => t.id === topic.nextTopicId)
@@ -29,25 +36,53 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         href="/nodecosmos/concepts"
         className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground font-semibold transition"
       >
-        <ArrowLeft className="w-3.5 h-3.5" /> Back to {NODE_TOPICS.length} Concepts
+        <ArrowLeft className="w-3.5 h-3.5" /> Back to all {NODE_TOPICS.length} Concepts
       </Link>
 
+      {/* Title & Metadata */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-            {topic.category} • {topic.difficulty}
+            Module {topic.moduleNumber}: {topic.moduleName}
+          </span>
+          <span className="px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground text-xs font-mono font-bold">
+            {topic.level} Level
+          </span>
+          <span
+            className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-bold ${
+              topic.stability === 'Experimental'
+                ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
+                : 'bg-muted text-muted-foreground'
+            }`}
+          >
+            {topic.stability || 'Stable'}
           </span>
         </div>
+
         <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
           {topic.title}
         </h1>
+
         <p className="text-base text-muted-foreground leading-relaxed">
           {topic.summary}
         </p>
       </div>
 
+      {/* Coming Soon Notice */}
+      <div className="p-5 rounded-2xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
+        <Clock className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+        <div className="space-y-1">
+          <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            Roadmap 2027 &bull; In Active Authoring
+          </div>
+          <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed">
+            This lesson is concept #{topic.number} of the 280-topic Node.js learning roadmap. Full interactive simulators, execution traces, and hands-on exercises will be progressively rolled out.
+          </p>
+        </div>
+      </div>
+
       {/* Mental Model Analogy Card */}
-      <div className="p-6 rounded-3xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 space-y-2">
+      <div className="p-6 rounded-3xl bg-muted/40 border border-border space-y-2">
         <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
           <Sparkles className="w-4 h-4" /> Intuitive Mental Model
         </div>
@@ -60,7 +95,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
       <div className="space-y-3">
         <div className="flex items-center justify-between text-xs text-muted-foreground font-semibold">
           <span className="flex items-center gap-1.5">
-            <Terminal className="w-4 h-4 text-emerald-500" /> Node.js ESM / CJS Implementation
+            <Terminal className="w-4 h-4 text-emerald-500" /> Node.js Implementation Preview
           </span>
           <span className="font-mono text-[11px]">Node.js v22 LTS</span>
         </div>
@@ -77,7 +112,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
           {topic.takeaways.map((item, idx) => (
             <li key={idx} className="flex items-start gap-2">
-              <span className="text-emerald-500 font-bold">•</span>
+              <span className="text-emerald-500 font-bold">&bull;</span>
               <span>{item}</span>
             </li>
           ))}
@@ -105,91 +140,30 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         </div>
       </div>
 
-      {/* Embedded Interactive Simulators for Relevant Topics */}
-      {topic.id === 'libuv-event-loop-6-phases' && (
-        <div className="pt-6 border-t border-border space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              Interactive Lab
-            </span>
-            <h2 className="text-xl font-bold text-foreground">Libuv 6-Phase Event Loop Simulator</h2>
-          </div>
-          <LibuvEventLoopStepper />
-        </div>
-      )}
+      {/* Sequential Roadmap Navigation: Prev & Next */}
+      <div className="pt-6 border-t border-border flex flex-wrap items-center justify-between gap-3">
+        {prevTopic ? (
+          <Link
+            href={`/nodecosmos/concepts/${prevTopic.id}`}
+            className="px-5 py-2.5 rounded-2xl border border-border hover:bg-muted text-foreground font-bold text-xs uppercase tracking-wider transition flex items-center gap-2"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span className="truncate max-w-[200px]">Prev: {prevTopic.title}</span>
+          </Link>
+        ) : (
+          <div />
+        )}
 
-      {topic.id === 'libuv-threadpool-saturation' && (
-        <div className="pt-6 border-t border-border space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              Interactive Lab
-            </span>
-            <h2 className="text-xl font-bold text-foreground">Libuv Worker Thread Pool Saturation Simulator</h2>
-          </div>
-          <ThreadPoolVisualizer />
-        </div>
-      )}
-
-      {topic.id === 'node-streams-backpressure' && (
-        <div className="pt-6 border-t border-border space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              Interactive Lab
-            </span>
-            <h2 className="text-xl font-bold text-foreground">Node.js Streams &amp; Backpressure Flow Simulator</h2>
-          </div>
-          <StreamsBackpressureLab />
-        </div>
-      )}
-
-      {topic.id === 'garbage-collection-v8-scavenger' && (
-        <div className="pt-6 border-t border-border space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              Interactive Lab
-            </span>
-            <h2 className="text-xl font-bold text-foreground">V8 Generational Garbage Collector Simulator</h2>
-          </div>
-          <V8MemoryVisualizer />
-        </div>
-      )}
-
-      {topic.id === 'eventemitter-memory-leaks' && (
-        <div className="pt-6 border-t border-border space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              Interactive Lab
-            </span>
-            <h2 className="text-xl font-bold text-foreground">EventEmitter Listener Memory Leak Simulator</h2>
-          </div>
-          <EventEmitterVisualizer />
-        </div>
-      )}
-
-      {topic.id === 'clustering-vs-worker-threads' && (
-        <div className="pt-6 border-t border-border space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              Interactive Lab
-            </span>
-            <h2 className="text-xl font-bold text-foreground">Process Clustering vs Worker Threads Simulator</h2>
-          </div>
-          <ClusterVsWorkerLab />
-        </div>
-      )}
-
-      {/* Next Lesson Navigation */}
-      {nextTopic && (
-        <div className="pt-6 border-t border-border flex justify-end">
+        {nextTopic && (
           <Link
             href={`/nodecosmos/concepts/${nextTopic.id}`}
-            className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-md flex items-center gap-2"
+            className="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm flex items-center gap-2 ml-auto"
           >
-            <span>Next: {nextTopic.title}</span>
-            <ArrowRight className="w-4 h-4" />
+            <span className="truncate max-w-[200px]">Next: {nextTopic.title}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
