@@ -137,7 +137,7 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
             case 'callstack':
                 return <CallStackVisualizer frames={visualization.frames} />;
             case 'eventloop':
-                return <EventLoopVisualizer hasMicro={visualization.hasMicro} hasMacro={visualization.hasMacro} />;
+                return <EventLoopVisualizer hasMicro={visualization.hasMicro} hasMacro={visualization.hasMacro} code={safeCode} isRunning={isRunning} />;
             case 'prototype':
                 return <PrototypeVisualizer chain={visualization.chain} />;
             case 'arrays':

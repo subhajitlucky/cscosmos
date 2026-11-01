@@ -180,7 +180,7 @@ const Topic = ({ topicId: propTopicId }) => {
                         </span>
                     </div>
 
-                    <div className="h-[380px] sm:h-[480px] lg:h-[560px] w-full relative overflow-hidden rounded border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
+                    <div className="min-h-[480px] sm:min-h-[560px] lg:h-[640px] w-full relative overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-main)', backgroundColor: 'var(--bg-main)' }}>
                         <VisualizerCanvas topicId={topic.id} code={code} isRunning={isRunning} />
                     </div>
                 </div>
