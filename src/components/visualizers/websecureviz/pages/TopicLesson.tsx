@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 // Import visualizers
 import { OriginIsolation } from '../components/visuals/OriginIsolation';
 import { OriginTupleComparator } from '../components/visuals/OriginTupleComparator';
+import { CorsHeadersExplorer } from '../components/visuals/CorsHeadersExplorer';
 import { CorsPreflight } from '../components/visuals/CorsPreflight';
 import { XssInjection } from '../components/visuals/XssInjection';
 import { CsrfFlow } from '../components/visuals/CsrfFlow';
@@ -155,18 +156,21 @@ export default function TopicLesson({ topicId }: TopicLessonProps) {
         <section className="space-y-6">
           <h2 className="text-xl font-bold text-foreground">Technical Deep Dive</h2>
           <div className="space-y-4">
-            {topic.content.detailedSections.map((sec, idx) => (
-              <div key={idx} className="rounded-xl border border-border bg-card p-6 space-y-3">
-                <h3 className="text-base font-bold text-foreground">{sec.title}</h3>
-                {sec.content && (
-                  <p className="text-sm text-foreground/85 leading-relaxed">{sec.content}</p>
-                )}
-                {sec.title.includes('Origin Tuple') ? (
-                  <div className="pt-2">
-                    <OriginTupleComparator />
-                  </div>
-                ) : (
-                  sec.subItems && sec.subItems.length > 0 && (
+            {topic.content.detailedSections.map((sec, idx) => {
+              if (sec.title.includes('Origin Tuple')) {
+                return <OriginTupleComparator key={idx} />;
+              }
+              if (sec.title.includes('CORS Response Headers')) {
+                return <CorsHeadersExplorer key={idx} />;
+              }
+
+              return (
+                <div key={idx} className="rounded-xl border border-border bg-card p-6 space-y-3">
+                  <h3 className="text-base font-bold text-foreground">{sec.title}</h3>
+                  {sec.content && (
+                    <p className="text-sm text-foreground/85 leading-relaxed">{sec.content}</p>
+                  )}
+                  {sec.subItems && sec.subItems.length > 0 && (
                     <ul className="grid grid-cols-1 gap-2 pt-2">
                       {sec.subItems.map((item, itemIdx) => (
                         <li
@@ -178,15 +182,15 @@ export default function TopicLesson({ topicId }: TopicLessonProps) {
                         </li>
                       ))}
                     </ul>
-                  )
-                )}
-                {sec.code && (
-                  <pre className="rounded-lg bg-zinc-950 p-3.5 font-mono text-xs text-zinc-100 overflow-x-auto mt-2">
-                    {sec.code}
-                  </pre>
-                )}
-              </div>
-            ))}
+                  )}
+                  {sec.code && (
+                    <pre className="rounded-lg bg-zinc-950 p-3.5 font-mono text-xs text-zinc-100 overflow-x-auto mt-2">
+                      {sec.code}
+                    </pre>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
