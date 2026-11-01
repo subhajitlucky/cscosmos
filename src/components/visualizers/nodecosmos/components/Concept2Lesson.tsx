@@ -90,21 +90,21 @@ export function Concept2Lesson() {
               In classic server frameworks, when an HTTP request arrives, the operating system creates or assigns a dedicated thread to handle it. That thread sits idle and <strong>blocks</strong> while waiting for database queries, network responses, or disk files.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-3 pt-2 text-xs">
-              <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span className="font-bold text-rose-600 dark:text-rose-400 font-mono uppercase">
+            <div className="grid sm:grid-cols-2 gap-3 pt-2">
+              <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="font-bold text-rose-600 dark:text-rose-400 font-mono text-xs sm:text-sm uppercase">
                   1. Memory Footprint Exhaustion
                 </span>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   Each OS thread allocates 1 MB to 2 MB of stack memory. Handling 10,000 concurrent connections requires up to 20 GB of RAM just for idle thread stacks!
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span className="font-bold text-rose-600 dark:text-rose-400 font-mono uppercase">
+              <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="font-bold text-rose-600 dark:text-rose-400 font-mono text-xs sm:text-sm uppercase">
                   2. CPU Context Switching Thrashing
                 </span>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   The CPU core wastes massive clock cycles saving registers and switching thread states instead of running actual application logic.
                 </p>
               </div>
@@ -144,15 +144,15 @@ export function Concept2Lesson() {
                   L1
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
                     JavaScript Application Layer
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
                     Your application scripts, npm packages, Express, NestJS, and user code.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900 shrink-0">
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900 shrink-0">
                 Pure JavaScript
               </span>
             </div>
@@ -164,15 +164,15 @@ export function Concept2Lesson() {
                   L2
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
                     Node.js Core APIs &amp; C++ Bindings (Node-API)
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
                     Standard built-ins (<code className="font-mono text-emerald-600 dark:text-emerald-400">node:fs</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:http</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:crypto</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:net</code>) and native C++ wrappers.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 shrink-0">
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 shrink-0">
                 JS &harr; C++ Bridge
               </span>
             </div>
@@ -188,74 +188,74 @@ export function Concept2Lesson() {
                     <h3 className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-slate-100">
                       Native C/C++ Engine Core (The Heavy Lifters)
                     </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                    <p className="text-sm text-slate-600 dark:text-slate-300">
                       High-performance low-level libraries compiled directly into the Node.js executable binary.
                     </p>
                   </div>
                 </div>
-                <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 shrink-0">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 shrink-0">
                   Compiled Native C/C++
                 </span>
               </div>
 
               {/* Engine dependencies breakdown */}
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
                   <div className="flex items-center gap-2">
                     <Cpu className="w-4 h-4 text-blue-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">V8 (Google)</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">V8 (Google)</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     Compiles JavaScript to machine code; manages the heap and garbage collection.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
                   <div className="flex items-center gap-2">
                     <Activity className="w-4 h-4 text-emerald-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">libuv</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">libuv</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     Provides the 6-phase Event Loop, OS non-blocking I/O, and the C++ worker thread pool.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-purple-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">OpenSSL</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">OpenSSL</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     Cryptographic ciphers, SHA hashing, TLS/SSL secure sockets, and HTTPS certificates.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
                   <div className="flex items-center gap-2">
                     <Binary className="w-4 h-4 text-indigo-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">zlib</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">zlib</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     Fast streaming data compression and decompression (gzip, deflate, brotli).
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
                   <div className="flex items-center gap-2">
                     <Globe className="w-4 h-4 text-cyan-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">llhttp</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">llhttp</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     Ultra-fast, zero-allocation C parser for incoming HTTP 1.1 and HTTP/2 headers and payloads.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
                   <div className="flex items-center gap-2">
                     <Zap className="w-4 h-4 text-amber-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">c-ares</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">c-ares</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     Asynchronous, non-blocking DNS request and resolver library in C.
                   </p>
                 </div>
@@ -269,15 +269,15 @@ export function Concept2Lesson() {
                   L4
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
                     Operating System Kernel Layer (epoll / kqueue / IOCP)
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
                     Kernel notification multiplexers: Linux (<code className="font-mono">epoll</code>), macOS (<code className="font-mono">kqueue</code>), Windows (<code className="font-mono">IOCP</code>).
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900 shrink-0">
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900 shrink-0">
                 OS Kernel
               </span>
             </div>
@@ -317,35 +317,35 @@ export function Concept2Lesson() {
                   <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
                     Main Thread (0 Threads Used)
                   </h3>
-                  <p className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400">
+                  <p className="text-xs sm:text-sm font-mono text-emerald-600 dark:text-emerald-400">
                     Handled via OS Kernel Non-Blocking epoll
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-600 dark:text-slate-300">
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 The operating system kernel directly notifies Node.js when network packets or timers arrive. No worker threads are spawned:
               </p>
 
-              <div className="space-y-2 text-xs">
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
+              <div className="space-y-2.5 text-sm">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
                   <div>
                     <strong className="text-slate-900 dark:text-slate-100">TCP &amp; HTTP Sockets:</strong> Listening, receiving requests, and streaming responses over network.
                   </div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
                   <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Timers:</strong> Threshold tracking for <code className="font-mono text-emerald-600 dark:text-emerald-400">setTimeout</code> and <code className="font-mono text-emerald-600 dark:text-emerald-400">setInterval</code>.
+                    <strong className="text-slate-900 dark:text-slate-100">Timers:</strong> Threshold tracking for <code className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">setTimeout</code> and <code className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">setInterval</code>.
                   </div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
                   <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Microtasks:</strong> Immediate resolution of <code className="font-mono text-emerald-600 dark:text-emerald-400">process.nextTick</code> and Promise callbacks.
+                    <strong className="text-slate-900 dark:text-slate-100">Microtasks:</strong> Immediate resolution of <code className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">process.nextTick</code> and Promise callbacks.
                   </div>
                 </div>
               </div>
@@ -361,35 +361,35 @@ export function Concept2Lesson() {
                   <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
                     Libuv Thread Pool (Default: 4 Threads)
                   </h3>
-                  <p className="text-[11px] font-mono text-purple-600 dark:text-purple-400">
+                  <p className="text-xs sm:text-sm font-mono text-purple-600 dark:text-purple-400">
                     Configured via UV_THREADPOOL_SIZE
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-600 dark:text-slate-300">
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 Operating systems do not provide universal asynchronous primitives for disk or CPU tasks. These are offloaded to Libuv threads:
               </p>
 
-              <div className="space-y-2 text-xs">
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
+              <div className="space-y-2.5 text-sm">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-purple-500 shrink-0 mt-1.5" />
                   <div>
-                    <strong className="text-slate-900 dark:text-slate-100">File System Operations:</strong> All asynchronous <code className="font-mono text-purple-600 dark:text-purple-400">fs.readFile</code>, <code className="font-mono text-purple-600 dark:text-purple-400">fs.writeFile</code> calls.
+                    <strong className="text-slate-900 dark:text-slate-100">File System Operations:</strong> All asynchronous <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">fs.readFile</code>, <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">fs.writeFile</code> calls.
                   </div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-purple-500 shrink-0 mt-1.5" />
                   <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Heavy Crypto:</strong> Password hashing (<code className="font-mono text-purple-600 dark:text-purple-400">crypto.pbkdf2</code>, <code className="font-mono text-purple-600 dark:text-purple-400">crypto.scrypt</code>) and key generation.
+                    <strong className="text-slate-900 dark:text-slate-100">Heavy Crypto:</strong> Password hashing (<code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">crypto.pbkdf2</code>, <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">crypto.scrypt</code>) and key generation.
                   </div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-purple-500 shrink-0 mt-1.5" />
                   <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Compression &amp; DNS:</strong> <code className="font-mono text-purple-600 dark:text-purple-400">zlib</code> compression blocks and synchronous <code className="font-mono text-purple-600 dark:text-purple-400">dns.lookup()</code> calls.
+                    <strong className="text-slate-900 dark:text-slate-100">Compression &amp; DNS:</strong> <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">zlib</code> compression blocks and synchronous <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">dns.lookup()</code> calls.
                   </div>
                 </div>
               </div>
@@ -413,8 +413,8 @@ export function Concept2Lesson() {
           </p>
 
           <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-bold uppercase tracking-wider text-[11px]">
+            <table className="w-full text-left text-sm sm:text-base">
+              <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-bold uppercase tracking-wider text-xs">
                 <tr>
                   <th className="py-3.5 px-4">Metric / Dimension</th>
                   <th className="py-3.5 px-4">Thread-Per-Request (Apache/Tomcat)</th>
@@ -529,27 +529,27 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-6 rounded-3xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900 space-y-3">
-              <div className="flex items-center gap-2 text-rose-700 dark:text-rose-400 font-bold text-sm">
+              <div className="flex items-center gap-2 text-rose-700 dark:text-rose-400 font-bold text-sm sm:text-base">
                 <AlertTriangle className="w-4 h-4 shrink-0" />
                 <span>Trap #1: Event Loop Starvation</span>
               </div>
-              <p className="text-xs text-rose-950 dark:text-rose-200 leading-relaxed">
+              <p className="text-sm text-rose-950 dark:text-rose-200 leading-relaxed">
                 If you execute a heavy CPU calculation (e.g. recursive Fibonacci, parsing a 100MB JSON payload, or an exponential Regex) on the main thread, the single thread freezes! No other incoming HTTP sockets, timers, or promises can be processed until that function finishes.
               </p>
-              <div className="p-3 rounded-2xl bg-white/70 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900 text-xs text-rose-900 dark:text-rose-300 font-mono">
+              <div className="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900 text-sm font-mono text-rose-900 dark:text-rose-300">
                 Rule: &ldquo;Don&apos;t block the Event Loop!&rdquo; Offload heavy CPU work to <code className="font-bold">worker_threads</code>.
               </div>
             </div>
 
             <div className="p-6 rounded-3xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 space-y-3">
-              <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-sm">
+              <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-sm sm:text-base">
                 <AlertTriangle className="w-4 h-4 shrink-0" />
                 <span>Trap #2: Thread Pool Exhaustion</span>
               </div>
-              <p className="text-xs text-amber-950 dark:text-amber-200 leading-relaxed">
+              <p className="text-sm text-amber-950 dark:text-amber-200 leading-relaxed">
                 By default, <code className="font-mono">UV_THREADPOOL_SIZE</code> is 4. If your server receives 4 simultaneous heavy password hashing requests (<code className="font-mono">crypto.pbkdf2</code>), all 4 worker threads are occupied. A 5th task&mdash;even a simple file read&mdash;must queue and wait until a thread frees up!
               </p>
-              <div className="p-3 rounded-2xl bg-white/70 dark:bg-slate-900/80 border border-amber-200 dark:border-amber-900 text-xs text-amber-900 dark:text-amber-300 font-mono">
+              <div className="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-900/80 border border-amber-200 dark:border-amber-900 text-sm font-mono text-amber-900 dark:text-amber-300">
                 Remedy: Scale via <code className="font-bold">process.env.UV_THREADPOOL_SIZE = 16</code> or cluster processes.
               </div>
             </div>
@@ -627,10 +627,10 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
                 <button
                   key={option.id}
                   onClick={() => setQ1(option.id)}
-                  className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
                 >
                   <span className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs shrink-0">
+                    <span className="w-7 h-7 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
                       {option.id}
                     </span>
                     <span>{option.text}</span>
@@ -651,7 +651,7 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
 
           {q1 && (
             <div
-              className={`p-4 rounded-2xl text-xs leading-relaxed ${
+              className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base leading-relaxed ${
                 q1 === 'C'
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
                   : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
@@ -659,7 +659,7 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
             >
               {q1 === 'C' ? (
                 <p>
-                  <strong>Correct!</strong> Your JavaScript code and the Event Loop execute on a single thread. However, low-level blocking tasks (file system, crypto, zlib) are offloaded to Libuv&apos;s C++ worker thread pool (<code className="font-mono">UV_THREADPOOL_SIZE</code>).
+                  <strong>Correct!</strong> Your JavaScript code and the Event Loop execute on a single thread. However, low-level blocking tasks (file system, crypto, zlib) are offloaded to Libuv&apos;s C++ worker thread pool (<code className="font-mono font-bold">UV_THREADPOOL_SIZE</code>).
                 </p>
               ) : (
                 <p>
@@ -715,10 +715,10 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
                 <button
                   key={option.id}
                   onClick={() => setQ2(option.id)}
-                  className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
                 >
                   <span className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs shrink-0">
+                    <span className="w-7 h-7 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
                       {option.id}
                     </span>
                     <span>{option.text}</span>
@@ -739,7 +739,7 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
 
           {q2 && (
             <div
-              className={`p-4 rounded-2xl text-xs leading-relaxed ${
+              className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base leading-relaxed ${
                 q2 === 'B'
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
                   : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
@@ -747,11 +747,11 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
             >
               {q2 === 'B' ? (
                 <p>
-                  <strong>Spot on!</strong> <code className="font-mono">libuv</code> is the multi-platform C library specifically designed for Node.js to provide the 6-phase event loop, asynchronous I/O abstractions, and the worker thread pool.
+                  <strong>Spot on!</strong> <code className="font-mono font-bold">libuv</code> is the multi-platform C library specifically designed for Node.js to provide the 6-phase event loop, asynchronous I/O abstractions, and the worker thread pool.
                 </p>
               ) : (
                 <p>
-                  <strong>Correction:</strong> It is <code className="font-mono">libuv</code>. V8 only executes JavaScript and manages heap memory; OpenSSL handles encryption; and Express is a high-level userland framework.
+                  <strong>Correction:</strong> It is <code className="font-mono font-bold">libuv</code>. V8 only executes JavaScript and manages heap memory; OpenSSL handles encryption; and Express is a high-level userland framework.
                 </p>
               )}
             </div>
@@ -806,10 +806,10 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
                 <button
                   key={option.id}
                   onClick={() => setQ3(option.id)}
-                  className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
                 >
                   <span className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs shrink-0">
+                    <span className="w-7 h-7 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
                       {option.id}
                     </span>
                     <span>{option.text}</span>
@@ -830,7 +830,7 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
 
           {q3 && (
             <div
-              className={`p-4 rounded-2xl text-xs leading-relaxed ${
+              className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base leading-relaxed ${
                 q3 === 'B'
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
                   : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
@@ -838,11 +838,11 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
             >
               {q3 === 'B' ? (
                 <p>
-                  <strong>Exactly!</strong> Operating systems provide kernel notification systems (<code className="font-mono">epoll</code> on Linux, <code className="font-mono">kqueue</code> on macOS, <code className="font-mono">IOCP</code> on Windows). The single main thread registers file descriptors and only wakes up when the OS confirms that data has arrived.
+                  <strong>Exactly!</strong> Operating systems provide kernel notification systems (<code className="font-mono font-bold">epoll</code> on Linux, <code className="font-mono font-bold">kqueue</code> on macOS, <code className="font-mono font-bold">IOCP</code> on Windows). The single main thread registers file descriptors and only wakes up when the OS confirms that data has arrived.
                 </p>
               ) : (
                 <p>
-                  <strong>Correction:</strong> Node.js uses OS kernel non-blocking multiplexing (<code className="font-mono">epoll</code>/<code className="font-mono">kqueue</code>). It does not create a thread per socket, and it does not drop active connections.
+                  <strong>Correction:</strong> Node.js uses OS kernel non-blocking multiplexing (<code className="font-mono font-bold">epoll</code>/<code className="font-mono font-bold">kqueue</code>). It does not create a thread per socket, and it does not drop active connections.
                 </p>
               )}
             </div>
@@ -853,10 +853,10 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
         <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+              <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
                 Question 4: What is the architectural difference when an HTTP network request arrives vs. when fs.readFile() is executed?
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                 Reflect on how each path interacts with the operating system and worker threads, then click below to reveal the faculty model answer.
               </p>
             </div>
@@ -870,7 +870,7 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
           <div className="pt-1">
             <button
               onClick={() => setQ4Revealed(!q4Revealed)}
-              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2 shadow-2xs"
+              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-bold transition flex items-center gap-2 shadow-2xs"
             >
               <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>{q4Revealed ? 'Hide Model Answer' : 'Peek Model Answer'}</span>
@@ -878,19 +878,19 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
           </div>
 
           {q4Revealed && (
-            <div className="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 space-y-3 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-400 font-bold uppercase tracking-wider text-xs">
+            <div className="p-5 sm:p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 space-y-3.5 text-sm sm:text-base text-slate-800 dark:text-slate-200">
+              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-400 font-bold uppercase tracking-wider text-xs sm:text-sm">
                 <Sparkles className="w-4 h-4" /> Professor&apos;s Engineering Model Answer
               </div>
 
               <div className="space-y-3 leading-relaxed">
                 <p>
-                  <strong>1. Incoming HTTP Network Request (OS Kernel Multiplexing):</strong> Handled directly by the main thread via Libuv and the OS kernel (<code className="font-mono">epoll</code> on Linux, <code className="font-mono">kqueue</code> on macOS). <em>Zero worker threads from the thread pool are used</em>. The OS kernel notifies the event loop when data packets arrive, allowing millions of open sockets to be monitored concurrently without thread overhead.
+                  <strong>1. Incoming HTTP Network Request (OS Kernel Multiplexing):</strong> Handled directly by the main thread via Libuv and the OS kernel (<code className="font-mono font-bold">epoll</code> on Linux, <code className="font-mono font-bold">kqueue</code> on macOS). <em>Zero worker threads from the thread pool are used</em>. The OS kernel notifies the event loop when data packets arrive, allowing millions of open sockets to be monitored concurrently without thread overhead.
                 </p>
                 <p>
                   <strong>2. fs.readFile() Execution (Libuv Thread Pool Offloading):</strong> Standard operating systems do not provide universal asynchronous file system syscalls. Therefore, Libuv <em>offloads the blocking synchronous read syscall to one of its 4 background C++ worker threads</em>. Once the worker thread finishes reading the file chunk into a buffer, it pushes the callback into the event loop poll queue to be executed on the main JavaScript thread.
                 </p>
-                <div className="p-3 rounded-xl bg-white/70 dark:bg-slate-900/80 border border-emerald-300 dark:border-emerald-800 text-xs text-slate-700 dark:text-slate-300 font-mono">
+                <div className="p-3.5 rounded-xl bg-white/70 dark:bg-slate-900/80 border border-emerald-300 dark:border-emerald-800 text-sm font-mono text-slate-700 dark:text-slate-300">
                   Architectural Summary: Network I/O = Kernel Event Demultiplexer &bull; File &amp; Crypto I/O = Libuv Thread Pool
                 </div>
               </div>
@@ -903,20 +903,20 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
       <section className="space-y-6 pt-4 border-t border-slate-200 dark:border-slate-800">
         <div className="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 space-y-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">
+            <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">
               <BookOpen className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
                 CSCosmos Pedagogical Learning Rule
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 The university-grade 7-step mastery process followed across all 280 concepts:
               </p>
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1 text-xs font-medium text-slate-700 dark:text-slate-300">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1 text-sm font-medium text-slate-700 dark:text-slate-300">
             {[
               'Explanation from zero.',
               'Internal working.',
@@ -928,17 +928,17 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
             ].map((step, idx) => (
               <div
                 key={idx}
-                className="p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-2.5"
+                className="p-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-2.5"
               >
-                <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 text-xs font-mono font-bold flex items-center justify-center shrink-0">
+                <span className="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 text-xs sm:text-sm font-mono font-bold flex items-center justify-center shrink-0">
                   {idx + 1}
                 </span>
-                <span className="text-slate-800 dark:text-slate-200 text-xs font-medium">{step}</span>
+                <span className="text-slate-800 dark:text-slate-200 text-sm font-medium">{step}</span>
               </div>
             ))}
           </div>
 
-          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
             <strong className="text-slate-900 dark:text-slate-100">Your turn:</strong> Verify all 4 assessment questions above. Once complete, you are fully prepared to advance to Concept 3 using the navigation below.
           </div>
         </div>

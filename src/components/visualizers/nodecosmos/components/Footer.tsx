@@ -7,12 +7,12 @@ import { ArrowLeft, Server } from 'lucide-react';
 export function Footer() {
   return (
     <footer className="w-full border-t border-border/80 bg-card/40 py-8 px-4 sm:px-6 transition-colors mt-auto">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-muted-foreground">
         <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded-md bg-emerald-600 text-white font-mono font-bold text-[10px] flex items-center justify-center shadow-xs">
-            <Server className="w-3.5 h-3.5" />
+          <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-mono font-bold text-xs flex items-center justify-center shadow-xs">
+            <Server className="w-4 h-4" />
           </div>
-          <span className="font-semibold text-foreground">NodeCosmos</span>
+          <span className="font-semibold text-foreground text-sm">NodeCosmos</span>
           <span className="text-muted-foreground/80 hidden sm:inline">&bull; 280-Concept Node.js Curriculum &amp; Runtime Labs</span>
         </div>
 

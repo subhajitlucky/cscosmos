@@ -93,7 +93,7 @@ console.log('1.5. Sync End');`
 `console.log('1. Sync Start');\nsetTimeout(() => console.log('5. setTimeout (Timers)'), 0);\nsetImmediate(() => console.log('4. setImmediate (Check)'));\nPromise.resolve().then(() => console.log('3. Promise.then (Microtask)'));\nprocess.nextTick(() => console.log('2. process.nextTick (VIP)'));\nconsole.log('1.5. Sync End');`
                 );
               }}
-              className="px-2.5 py-1 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-[11px]"
+              className="px-3 py-1.5 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-xs sm:text-sm"
             >
               Event Loop Order
             </button>
@@ -103,7 +103,7 @@ console.log('1.5. Sync End');`
 `import fs from 'fs';\nconst stream = fs.createReadStream('./huge.mp4', { highWaterMark: 64 * 1024 });\nstream.on('data', (chunk) => console.log('Read chunk:', chunk.length));`
                 );
               }}
-              className="px-2.5 py-1 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-[11px]"
+              className="px-3 py-1.5 rounded-lg bg-card hover:bg-muted border border-border text-foreground font-mono text-xs sm:text-sm"
             >
               Stream Pipeline
             </button>
@@ -111,17 +111,17 @@ console.log('1.5. Sync End');`
 
           <button
             onClick={handleRun}
-            className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition shadow-md flex items-center gap-1.5"
+            className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm transition shadow-md flex items-center gap-1.5"
           >
-            <Play className="w-3.5 h-3.5 fill-current" />
+            <Play className="w-4 h-4 fill-current" />
             <span>Show Preset Trace</span>
           </button>
         </div>
       </div>
 
       {/* Terminal Output */}
-      <div className="p-6 rounded-3xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-xs shadow-inner">
-        <div className="flex items-center justify-between text-slate-400 text-[11px] border-b border-slate-800 pb-2">
+      <div className="p-6 rounded-3xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-sm shadow-inner">
+        <div className="flex items-center justify-between text-slate-400 text-xs sm:text-sm border-b border-slate-800 pb-2">
           <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
             <Terminal className="w-3.5 h-3.5" /> Simulated trace (node script.js stdout):
           </span>

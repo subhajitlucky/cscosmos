@@ -35,9 +35,9 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
     <div className="space-y-8 pb-20 max-w-4xl mx-auto px-4 sm:px-6 pt-10">
       <Link
         href="/nodecosmos/concepts"
-        className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground font-semibold transition"
+        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground font-semibold transition"
       >
-        <ArrowLeft className="w-3.5 h-3.5" /> Back to all {NODE_TOPICS.length} Concepts
+        <ArrowLeft className="w-4 h-4" /> Back to all {NODE_TOPICS.length} Concepts
       </Link>
 
       {/* Interactive Pedagogical Lesson Experiences */}
@@ -81,10 +81,10 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
           <div className="p-5 rounded-2xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
             <Clock className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                 Roadmap 2027 &bull; In Active Authoring
               </div>
-              <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed">
+              <p className="text-sm text-foreground/80 leading-relaxed">
                 This lesson is concept #{topic.number} of the 280-topic Node.js learning roadmap. Full interactive simulators, execution traces, and hands-on exercises will be progressively rolled out.
               </p>
             </div>
@@ -92,7 +92,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
 
           {/* Mental Model Analogy Card */}
           <div className="p-6 rounded-3xl bg-muted/40 border border-border space-y-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+            <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4" /> Intuitive Mental Model
             </div>
             <p className="text-sm sm:text-base text-foreground font-medium leading-relaxed">
@@ -102,23 +102,23 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
 
           {/* Code Snippet */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs text-muted-foreground font-semibold">
+            <div className="flex items-center justify-between text-xs sm:text-sm text-muted-foreground font-semibold">
               <span className="flex items-center gap-1.5">
                 <Terminal className="w-4 h-4 text-emerald-500" /> Node.js Implementation Preview
               </span>
-              <span className="font-mono text-[11px]">Node.js v22 LTS</span>
+              <span className="font-mono text-xs">Node.js v22 LTS</span>
             </div>
-            <pre className="p-5 rounded-3xl bg-slate-950 text-emerald-300 font-mono text-xs overflow-x-auto border border-border shadow-inner whitespace-pre-wrap leading-relaxed">
+            <pre className="p-5 rounded-3xl bg-slate-950 text-emerald-300 font-mono text-sm overflow-x-auto border border-border shadow-inner whitespace-pre-wrap leading-relaxed">
               {topic.codeSnippet}
             </pre>
           </div>
 
           {/* Key Takeaways */}
           <div className="p-6 rounded-3xl bg-card border border-border space-y-4">
-            <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-bold text-foreground flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Key Architectural Takeaways
             </h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+            <ul className="space-y-2 text-sm text-muted-foreground">
               {topic.takeaways.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="text-emerald-500 font-bold">&bull;</span>
@@ -131,19 +131,19 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
           {/* Pitfall & Fix */}
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
+              <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
                 <XCircle className="w-4 h-4" /> Common Production Mistake
               </div>
-              <p className="text-xs text-rose-900 dark:text-rose-200 leading-relaxed font-medium">
+              <p className="text-sm text-rose-900 dark:text-rose-200 leading-relaxed font-medium">
                 {topic.commonPitfall.mistake}
               </p>
             </div>
 
             <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4" /> Recommended Solution
               </div>
-              <p className="text-xs text-emerald-900 dark:text-emerald-200 leading-relaxed font-medium">
+              <p className="text-sm text-emerald-900 dark:text-emerald-200 leading-relaxed font-medium">
                 {topic.commonPitfall.fix}
               </p>
             </div>
@@ -156,9 +156,9 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         {prevTopic ? (
           <Link
             href={`/nodecosmos/concepts/${prevTopic.id}`}
-            className="px-5 py-2.5 rounded-2xl border border-border hover:bg-muted text-foreground font-bold text-xs uppercase tracking-wider transition flex items-center gap-2"
+            className="px-5 py-2.5 rounded-2xl border border-border hover:bg-muted text-foreground font-bold text-xs sm:text-sm uppercase tracking-wider transition flex items-center gap-2"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+            <ArrowLeft className="w-4 h-4" />
             <span className="truncate max-w-[200px]">Prev: {prevTopic.title}</span>
           </Link>
         ) : (
@@ -168,10 +168,10 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         {nextTopic && (
           <Link
             href={`/nodecosmos/concepts/${nextTopic.id}`}
-            className="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm flex items-center gap-2 ml-auto"
+            className="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition shadow-sm flex items-center gap-2 ml-auto"
           >
             <span className="truncate max-w-[200px]">Next: {nextTopic.title}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
         )}
       </div>

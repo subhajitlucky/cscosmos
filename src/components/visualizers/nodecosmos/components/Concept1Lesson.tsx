@@ -75,13 +75,17 @@ export function Concept1Lesson() {
           <p>Imagine you know JavaScript.</p>
           <p>You can write:</p>
 
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 text-emerald-300 p-4 font-mono text-xs sm:text-sm">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 text-emerald-300 p-4 font-mono text-sm shadow-inner">
             <code>console.log(&quot;Hello World&quot;);</code>
           </div>
 
-          <p>But where does this JavaScript code run?</p>
+          <p className="font-semibold text-slate-900 dark:text-slate-100 text-base sm:text-lg">
+            Where does this JavaScript code run?
+          </p>
 
-          <p>Traditionally, JavaScript runs inside browsers.</p>
+          <p>
+            Traditionally, JavaScript runs inside <strong>browsers</strong>. Every modern browser bundles a dedicated JavaScript engine:
+          </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
             {[
@@ -94,10 +98,10 @@ export function Concept1Lesson() {
                 key={b.name}
                 className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50"
               >
-                <div className="font-semibold text-slate-900 dark:text-slate-100 text-xs sm:text-sm">
+                <div className="font-semibold text-slate-900 dark:text-slate-100 text-sm">
                   {b.name}
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-mono">
                   {b.engine}
                 </div>
               </div>
@@ -107,10 +111,10 @@ export function Concept1Lesson() {
           <p>JavaScript allows websites to respond to user interactions.</p>
 
           <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 space-y-2.5">
-            <p className="font-bold text-slate-900 dark:text-slate-100">
+            <p className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
               But what if you want to use JavaScript to:
             </p>
-            <ul className="space-y-1.5 list-disc list-inside text-slate-700 dark:text-slate-300 text-sm">
+            <ul className="space-y-1.5 list-disc list-inside text-slate-700 dark:text-slate-300 text-sm sm:text-base">
               <li>Create a server?</li>
               <li>Read files from your computer?</li>
               <li>Access the operating system?</li>
@@ -148,8 +152,8 @@ export function Concept1Lesson() {
 
           {/* Definition Breakdown Table */}
           <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-bold uppercase tracking-wider text-[11px]">
+            <table className="w-full text-left text-sm sm:text-base">
+              <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-bold uppercase tracking-wider text-xs">
                 <tr>
                   <th className="py-3 px-4 w-1/3">Term</th>
                   <th className="py-3 px-4">Meaning</th>
@@ -236,47 +240,47 @@ export function Concept1Lesson() {
                       <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-base sm:text-lg">
                         A. V8 JavaScript Engine
                       </h3>
-                      <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                      <p className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400">
                         Execution Core &bull; Written in C++
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                   V8 is Google&apos;s open-source, high-performance JavaScript and WebAssembly engine (the same engine powering Google Chrome).
                 </p>
 
                 <div className="space-y-2 pt-1">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono">
+                  <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono">
                     Core Responsibilities:
                   </span>
 
                   <div className="space-y-2">
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">AST Parsing:</strong> Parses raw JavaScript source text into an Abstract Syntax Tree.
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">Ignition Interpreter:</strong> Compiles the syntax tree directly into compact bytecode.
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">TurboFan JIT Compiler:</strong> Optimizes frequent &ldquo;hot&rdquo; code paths directly into machine code.
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">Garbage Collector:</strong> Automates memory allocation and scavenges unreachable heap objects.
                       </div>
                     </div>
@@ -297,47 +301,47 @@ export function Concept1Lesson() {
                       <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-base sm:text-lg">
                         B. Node.js Runtime APIs
                       </h3>
-                      <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                      <p className="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400">
                         Host Bridge &bull; C++ Bindings &amp; OS Primitives
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                   Node.js provides host capabilities that JavaScript engines cannot access inside sandboxed web browsers.
                 </p>
 
                 <div className="space-y-2 pt-1">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono">
+                  <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono">
                     System Capabilities Provided:
                   </span>
 
                   <div className="space-y-2">
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">File System Access:</strong> Read, write, and stream files on disk via <code className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">node:fs</code>.
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">Network Sockets:</strong> Create HTTP, HTTPS, TCP, and UDP servers with <code className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">node:http</code> &amp; <code className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">node:net</code>.
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">Cryptography:</strong> Encryption, decryption, hashes, and HMAC signatures with <code className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">node:crypto</code>.
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
-                      <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-3">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-2" />
+                      <div className="text-sm text-slate-700 dark:text-slate-300">
                         <strong className="text-slate-900 dark:text-slate-100">Concurrency:</strong> Spawn OS child processes and thread workers with <code className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">worker_threads</code>.
                       </div>
                     </div>
@@ -349,40 +353,40 @@ export function Concept1Lesson() {
 
           {/* Code Example & Architectural Breakdown */}
           <div className="space-y-3 pt-2">
-            <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm">
+            <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
               Example: How V8 and Node.js work together in code:
             </p>
 
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 text-emerald-300 p-4 font-mono text-xs sm:text-sm overflow-x-auto shadow-inner">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 text-emerald-300 p-4 font-mono text-sm overflow-x-auto shadow-inner">
               <pre>{`const fs = require("node:fs");
 
 fs.writeFileSync("hello.txt", "Hello from Node.js!");`}</pre>
             </div>
 
             <div className="grid sm:grid-cols-3 gap-3 pt-1">
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span className="font-mono text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="font-mono text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400 uppercase">
                   1. require(&quot;node:fs&quot;)
                 </span>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   Loads the Node.js built-in C++ filesystem binding into the JavaScript runtime.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span className="font-mono text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="font-mono text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400 uppercase">
                   2. fs.writeFileSync(...)
                 </span>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   Issues an OS kernel system call (<code className="font-mono">open</code> / <code className="font-mono">write</code>) to persist the file to disk.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-                <span className="font-mono text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="font-mono text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400 uppercase">
                   3. Unified Partnership
                 </span>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   V8 executes the JavaScript syntax; Node.js performs the low-level operating system work.
                 </p>
               </div>
@@ -404,8 +408,8 @@ fs.writeFileSync("hello.txt", "Hello from Node.js!");`}</pre>
           <p>Let&apos;s compare the two environments side-by-side:</p>
 
           <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-bold uppercase tracking-wider text-[11px]">
+            <table className="w-full text-left text-sm sm:text-base">
+              <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-bold uppercase tracking-wider text-xs">
                 <tr>
                   <th className="py-3 px-4">Feature</th>
                   <th className="py-3 px-4">Browser</th>
@@ -474,7 +478,7 @@ fs.writeFileSync("hello.txt", "Hello from Node.js!");`}</pre>
             </table>
           </div>
 
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 italic leading-relaxed">
             <strong>An important detail:</strong> Modern browsers and Node.js share many JavaScript and Web APIs (such as <code className="font-mono">fetch</code>, <code className="font-mono">URL</code>, <code className="font-mono">EventTarget</code>, and <code className="font-mono">TextEncoder</code>), but their runtime host environments, security models, and underlying system privileges are completely different.
           </p>
         </div>
@@ -494,8 +498,8 @@ fs.writeFileSync("hello.txt", "Hello from Node.js!");`}</pre>
             In a traditional local environment, you create a file named <code className="font-mono font-bold text-slate-900 dark:text-emerald-300">hello.js</code>, write your code, and run it via terminal:
           </p>
 
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 text-emerald-300 p-4 font-mono text-xs sm:text-sm">
-            <div className="text-slate-500 text-[11px] pb-2 border-b border-slate-800 mb-2">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 text-emerald-300 p-4 font-mono text-sm">
+            <div className="text-slate-400 text-xs pb-2 border-b border-slate-800 mb-2">
               // hello.js
             </div>
             <pre>{`console.log("Hello, Node.js!");
@@ -507,30 +511,30 @@ console.log(\`Welcome, \${name}\`);`}</pre>
 
           <p>Open your terminal and execute:</p>
 
-          <div className="rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-4 py-2.5 font-mono text-xs text-slate-800 dark:text-emerald-400 flex items-center gap-2">
-            <span className="text-slate-400">$</span>
+          <div className="rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-4 py-2.5 font-mono text-sm text-slate-800 dark:text-emerald-400 flex items-center gap-2">
+            <span className="text-slate-400 font-bold">$</span>
             <code>node hello.js</code>
           </div>
 
           <p>Output:</p>
 
-          <div className="rounded-xl bg-slate-950 text-slate-100 p-3.5 font-mono text-xs border border-slate-800">
+          <div className="rounded-xl bg-slate-950 text-slate-100 p-4 font-mono text-sm border border-slate-800">
             <pre>{`Hello, Node.js!
 Welcome, Subhajit`}</pre>
           </div>
 
-          <p className="font-medium text-emerald-600 dark:text-emerald-400">
+          <p className="font-semibold text-emerald-600 dark:text-emerald-400 text-base">
             Congratulations! You&apos;ve executed JavaScript outside a browser.
           </p>
 
           {/* Embedded Live Runner */}
           <div className="pt-2">
             <div className="mb-3 flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 font-mono">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-2 font-mono">
                 <Terminal className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Live In-Browser Code Runner &bull; Try It Yourself!
               </span>
-              <span className="text-[11px] text-slate-500 font-mono">
+              <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-mono">
                 Runs instantly &bull; No terminal setup needed
               </span>
             </div>
@@ -624,16 +628,16 @@ Welcome, Subhajit`}</pre>
             ].map((app) => (
               <div
                 key={app.num}
-                className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-start gap-3 shadow-xs hover:border-emerald-500/50 transition"
+                className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-start gap-3.5 shadow-xs hover:border-emerald-500/50 transition"
               >
                 <span className="font-mono font-bold text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 px-2 py-0.5 rounded-lg shrink-0 mt-0.5">
                   {app.num}
                 </span>
                 <div className="space-y-1">
-                  <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm">
+                  <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
                     {app.title}
                   </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {app.desc}
                   </p>
                 </div>
@@ -641,7 +645,7 @@ Welcome, Subhajit`}</pre>
             ))}
           </div>
 
-          <p className="pt-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
+          <p className="pt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium">
             For example, <span className="font-semibold text-slate-900 dark:text-slate-200">npm</span>,{' '}
             <span className="font-semibold text-slate-900 dark:text-slate-200">Vite</span>, and many modern developer ecosystems run directly on top of Node.js.
           </p>
@@ -674,7 +678,7 @@ Welcome, Subhajit`}</pre>
         {/* QUESTION 1 */}
         <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+            <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
               Question 1: What exactly is Node.js?
             </h3>
             {q1 && (
@@ -690,7 +694,7 @@ Welcome, Subhajit`}</pre>
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {[
               { id: 'A', text: 'A programming language based on JavaScript.' },
               {
@@ -719,10 +723,10 @@ Welcome, Subhajit`}</pre>
                 <button
                   key={option.id}
                   onClick={() => setQ1(option.id)}
-                  className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs shrink-0">
+                  <span className="flex items-center gap-3.5">
+                    <span className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
                       {option.id}
                     </span>
                     <span>{option.text}</span>
@@ -743,7 +747,7 @@ Welcome, Subhajit`}</pre>
 
           {q1 && (
             <div
-              className={`p-4 rounded-2xl text-xs leading-relaxed ${
+              className={`p-4 rounded-2xl text-sm sm:text-base leading-relaxed ${
                 q1 === 'B'
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
                   : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
@@ -765,7 +769,7 @@ Welcome, Subhajit`}</pre>
         {/* QUESTION 2 */}
         <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+            <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
               Question 2: Which technology is responsible for executing JavaScript in Node.js?
             </h3>
             {q2 && (
@@ -781,7 +785,7 @@ Welcome, Subhajit`}</pre>
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {[
               { id: 'A', text: 'Express.js' },
               { id: 'B', text: 'libuv' },
@@ -807,10 +811,10 @@ Welcome, Subhajit`}</pre>
                 <button
                   key={option.id}
                   onClick={() => setQ2(option.id)}
-                  className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs shrink-0">
+                  <span className="flex items-center gap-3.5">
+                    <span className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
                       {option.id}
                     </span>
                     <span>{option.text}</span>
@@ -831,7 +835,7 @@ Welcome, Subhajit`}</pre>
 
           {q2 && (
             <div
-              className={`p-4 rounded-2xl text-xs leading-relaxed ${
+              className={`p-4 rounded-2xl text-sm sm:text-base leading-relaxed ${
                 q2 === 'C'
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
                   : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
@@ -853,7 +857,7 @@ Welcome, Subhajit`}</pre>
         {/* QUESTION 3 */}
         <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+            <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
               Question 3: Can Node.js execute JavaScript without opening a browser?
             </h3>
             {q3 && (
@@ -893,15 +897,15 @@ Welcome, Subhajit`}</pre>
                 <button
                   key={option.id}
                   onClick={() => setQ3(option.id.charAt(0))}
-                  className={`p-3.5 rounded-2xl border text-center text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition ${btnStyle}`}
+                  className={`p-4 rounded-2xl border text-center text-sm sm:text-base font-bold flex items-center justify-center gap-2 transition ${btnStyle}`}
                 >
                   <span>{option.text}</span>
                   {isSelected && (
                     <span>
                       {isCorrect ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                       ) : (
-                        <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                        <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
                       )}
                     </span>
                   )}
@@ -912,7 +916,7 @@ Welcome, Subhajit`}</pre>
 
           {q3 && (
             <div
-              className={`p-4 rounded-2xl text-xs leading-relaxed ${
+              className={`p-4 rounded-2xl text-sm sm:text-base leading-relaxed ${
                 q3 === 'A'
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
                   : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
@@ -935,10 +939,10 @@ Welcome, Subhajit`}</pre>
         <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+              <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
                 Question 4: What is the primary difference between JavaScript and Node.js?
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                 Reflect on your answer, then click below to reveal the faculty model answer.
               </p>
             </div>
@@ -952,7 +956,7 @@ Welcome, Subhajit`}</pre>
           <div className="pt-1">
             <button
               onClick={() => setQ4Revealed(!q4Revealed)}
-              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2 shadow-2xs"
+              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-bold transition flex items-center gap-2 shadow-2xs"
             >
               <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>{q4Revealed ? 'Hide Model Answer' : 'Peek Model Answer'}</span>
@@ -960,19 +964,19 @@ Welcome, Subhajit`}</pre>
           </div>
 
           {q4Revealed && (
-            <div className="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 space-y-3 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-400 font-bold uppercase tracking-wider text-xs">
+            <div className="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 space-y-3 text-sm sm:text-base text-slate-800 dark:text-slate-200">
+              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-400 font-bold uppercase tracking-wider text-xs sm:text-sm">
                 <Sparkles className="w-4 h-4" /> Professor&apos;s Engineering Model Answer
               </div>
 
-              <div className="space-y-2 leading-relaxed">
+              <div className="space-y-2.5 leading-relaxed">
                 <p>
                   <strong>1. JavaScript is the programming language specification (ECMAScript).</strong> It defines the syntax, keywords, operators, primitives, and standard object semantics (functions, prototypes, arrays, promises).
                 </p>
                 <p>
                   <strong>2. Node.js is the host runtime environment.</strong> It bundles Google&apos;s V8 engine with low-level C++ system libraries (libuv, OpenSSL, zlib, c-ares) to provide direct operating system access, file I/O, socket networking, and event loop concurrency.
                 </p>
-                <div className="p-3 rounded-xl bg-white/70 dark:bg-slate-900/80 border border-emerald-300 dark:border-emerald-800 text-xs text-slate-700 dark:text-slate-300 font-mono">
+                <div className="p-3.5 rounded-xl bg-white/70 dark:bg-slate-900/80 border border-emerald-300 dark:border-emerald-800 text-sm font-mono text-slate-700 dark:text-slate-300">
                   Formula: Node.js = V8 Engine + libuv (I/O &amp; Event Loop) + C++ System Bindings + Core JS APIs
                 </div>
               </div>
@@ -985,20 +989,20 @@ Welcome, Subhajit`}</pre>
       <section className="space-y-6 pt-4 border-t border-slate-200 dark:border-slate-800">
         <div className="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 space-y-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">
+            <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">
               <BookOpen className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
                 CSCosmos Pedagogical Learning Rule
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 The university-grade 7-step mastery process followed across all 280 concepts:
               </p>
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1 text-xs font-medium text-slate-700 dark:text-slate-300">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1 text-sm font-medium text-slate-700 dark:text-slate-300">
             {[
               'Explanation from zero.',
               'Internal working.',
@@ -1012,15 +1016,15 @@ Welcome, Subhajit`}</pre>
                 key={idx}
                 className="p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-2.5"
               >
-                <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 text-xs font-mono font-bold flex items-center justify-center shrink-0">
+                <span className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 text-xs sm:text-sm font-mono font-bold flex items-center justify-center shrink-0">
                   {idx + 1}
                 </span>
-                <span className="text-slate-800 dark:text-slate-200 text-xs font-medium">{step}</span>
+                <span className="text-slate-800 dark:text-slate-200 text-sm font-medium">{step}</span>
               </div>
             ))}
           </div>
 
-          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
             <strong className="text-slate-900 dark:text-slate-100">Your turn:</strong> Verify all 4 assessment questions above. Once complete, you are fully prepared to advance to Concept 2 using the navigation below.
           </div>
         </div>

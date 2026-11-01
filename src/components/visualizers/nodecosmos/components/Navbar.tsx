@@ -22,9 +22,9 @@ export function Navbar() {
         <div className="flex items-center gap-3 sm:gap-4">
           <Link
             href="/topics"
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border/80 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/80 text-xs sm:text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span className="hidden sm:inline">CSCosmos</span>
           </Link>
 
@@ -32,14 +32,14 @@ export function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-sm shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
               <Server className="w-4 h-4" />
             </div>
-            <span className="font-extrabold text-sm tracking-tight text-foreground">
+            <span className="font-extrabold text-base tracking-tight text-foreground">
               NodeCosmos
             </span>
           </Link>
         </div>
 
         {/* Center: Nav links (Only Concepts, Lab, Problems) */}
-        <nav className="flex items-center gap-1 sm:gap-1.5">
+        <nav className="flex items-center gap-1 sm:gap-2">
           {navLinks.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -48,13 +48,13 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                   isActive
                     ? 'bg-emerald-600 text-white shadow-xs'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-4 h-4" />
                 <span>{item.label}</span>
               </Link>
             );
