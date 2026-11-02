@@ -279,15 +279,59 @@ export function NodeJsEditor({
       }
     }
 
+    const customFsPromises = {
+      readFile: async (_path: string, _encoding?: string) => {
+        return `{\n  "name": "cscosmos",\n  "version": "1.0.0",\n  "description": "Computer Science Visualizer Platform"\n}`;
+      },
+      writeFile: async (_path: string, _data: unknown) => {
+        return undefined;
+      },
+    };
+
+    const customFs = {
+      readFileSync: (_path: string, _encoding?: string) => {
+        return `{\n  "name": "cscosmos",\n  "version": "1.0.0",\n  "description": "Computer Science Visualizer Platform"\n}`;
+      },
+      readFile: (_path: string, ...args: unknown[]) => {
+        const cb = args.find((a): a is (err: Error | null, data?: string) => void => typeof a === 'function');
+        if (cb) {
+          window.setTimeout(() => {
+            cb(null, `{\n  "name": "cscosmos",\n  "version": "1.0.0"\n}`);
+          }, 20);
+        }
+      },
+      writeFileSync: (_path: string, _data: unknown) => undefined,
+      promises: customFsPromises,
+    };
+
     const customRequire = (moduleName: string) => {
       const clean = moduleName.replace(/^node:/, '');
       if (clean === 'v8') return customV8;
-      if (clean === 'buffer') return { Buffer: customBuffer };
+      if (clean === 'buffer') return { Buffer: customBuffer, default: { Buffer: customBuffer } };
       if (clean === 'process') return customProcess;
       if (clean === 'events') {
         const fn: any = CustomEventEmitter;
         fn.EventEmitter = CustomEventEmitter;
+        fn.default = CustomEventEmitter;
         return fn;
+      }
+      if (clean === 'fs/promises') return customFsPromises;
+      if (clean === 'fs') return customFs;
+      if (clean === 'path') {
+        return {
+          join: (...parts: string[]) => parts.join('/'),
+          resolve: (...parts: string[]) => '/' + parts.join('/'),
+          basename: (p: string) => p.split('/').pop() || '',
+          dirname: (p: string) => p.split('/').slice(0, -1).join('/') || '/',
+        };
+      }
+      if (clean === 'util') {
+        return {
+          promisify: (fn: any) => (...args: any[]) =>
+            new Promise((resolve, reject) => {
+              fn(...args, (err: any, res: any) => (err ? reject(err) : resolve(res)));
+            }),
+        };
       }
       return {};
     };
@@ -304,15 +348,25 @@ export function NodeJsEditor({
       return timerId;
     };
 
+    // Temporarily attach globals to window scope for seamless access without parameter collisions
+    const win = window as any;
+    const prevV8 = win.v8;
+    const prevEventEmitter = win.EventEmitter;
+    const prevSetImmediate = win.setImmediate;
+    const prevClearImmediate = win.clearImmediate;
+
+    win.v8 = customV8;
+    win.EventEmitter = CustomEventEmitter;
+    win.setImmediate = customSetImmediate;
+    win.clearImmediate = window.clearTimeout;
+
     try {
       // Execute the user code in sandbox
       const executor = new Function(
         'console',
         'process',
         'Buffer',
-        'v8',
         'require',
-        'EventEmitter',
         'setTimeout',
         'clearTimeout',
         'setImmediate',
@@ -324,9 +378,7 @@ export function NodeJsEditor({
         customConsole,
         customProcess,
         customBuffer,
-        customV8,
         customRequire,
-        CustomEventEmitter,
         customSetTimeout,
         window.clearTimeout,
         customSetImmediate,
@@ -336,6 +388,10 @@ export function NodeJsEditor({
     } catch (err: any) {
       pushLog('error', `${err?.name || 'Error'}: ${err?.message || err}`);
     } finally {
+      win.v8 = prevV8;
+      win.EventEmitter = prevEventEmitter;
+      win.setImmediate = prevSetImmediate;
+      win.clearImmediate = prevClearImmediate;
       setIsRunning(false);
     }
   };
