@@ -181,19 +181,19 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #6 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Core concept #6: Introduction to libuv—OS kernel multiplexers (epoll, kqueue, IOCP), the 4-pillar architecture, C++ worker thread pool, and the 6-phase event loop.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for libuv Introduction: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #6: libuv Introduction\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring libuv Introduction in Node.js runtime');\n",
+    "mentalModel": "Conceptual mental model for libuv Introduction: A master air-traffic controller (the Event Loop) managing thousands of incoming non-blocking radio signals (OS sockets) directly, while dispatching heavy physical ground cargo (disk I/O and crypto) to a dedicated 4-person ground crew (the worker thread pool).",
+    "codeSnippet": "// Concept #6: Inspecting libuv and multiplexer\nconsole.log('libuv Version:', process.versions.uv);\nconsole.log('Kernel Subsystem:', process.platform === 'linux' ? 'epoll' : process.platform === 'darwin' ? 'kqueue' : 'IOCP');\nconst t = setTimeout(() => {}, 1000);\nt.unref(); // decrement libuv active handle counter",
     "takeaways": [
-      "Master the core operational principles of libuv Introduction.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "libuv abstracts fragmented OS notification systems (Linux epoll, macOS kqueue, Windows IOCP) into a unified C API.",
+      "Network sockets run with zero worker threads via direct OS kernel multiplexing.",
+      "Blocking file I/O, DNS lookups, and crypto hashing are offloaded to libuv's 4-thread worker pool (UV_THREADPOOL_SIZE)."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding libuv Introduction concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for libuv Introduction."
+      "mistake": "Saturating the 4 default libuv threads with simultaneous heavy crypto or file operations, freezing subsequent file reads and DNS queries.",
+      "fix": "Scale the worker pool using 'UV_THREADPOOL_SIZE=16' or switch to non-blocking network DNS via 'dns.promises.resolve*'."
     },
     "nextTopicId": "node-js-execution-model",
     "prevTopicId": "v8-javascript-engine"
