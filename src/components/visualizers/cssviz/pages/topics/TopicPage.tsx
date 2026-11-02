@@ -8,6 +8,8 @@ import PageTransition from '@/components/visualizers/cssviz/components/common/Pa
 import GlassCard from '@/components/visualizers/cssviz/components/common/GlassCard';
 import SectionHeader from '@/components/visualizers/cssviz/components/common/SectionHeader';
 import { Button } from '@/components/visualizers/cssviz/components/ui/Button';
+
+// Labs
 import AnimationLab from '@/components/visualizers/cssviz/components/visualizers/AnimationLab';
 import BoxModelLab from '@/components/visualizers/cssviz/components/visualizers/BoxModelLab';
 import ColorLab from '@/components/visualizers/cssviz/components/visualizers/ColorLab';
@@ -25,8 +27,112 @@ import MediaQueriesLab from '@/components/visualizers/cssviz/components/visualiz
 import ContainerQueriesLab from '@/components/visualizers/cssviz/components/visualizers/ContainerQueriesLab';
 import UnitsFunctionsLab from '@/components/visualizers/cssviz/components/visualizers/UnitsFunctionsLab';
 import GenericVisualizer from '@/components/visualizers/cssviz/components/visualizers/GenericVisualizer';
+
+// Concept Lessons (All 41 Concepts Rebuilt)
 import SelectorsConceptLesson from '@/components/visualizers/cssviz/components/concepts/SelectorsConceptLesson';
+import CascadeConceptLesson from '@/components/visualizers/cssviz/components/concepts/CascadeConceptLesson';
+import PseudoClassesConceptLesson from '@/components/visualizers/cssviz/components/concepts/PseudoClassesConceptLesson';
+import IsWhereHasConceptLesson from '@/components/visualizers/cssviz/components/concepts/IsWhereHasConceptLesson';
+import CascadeLayersConceptLesson from '@/components/visualizers/cssviz/components/concepts/CascadeLayersConceptLesson';
+import BoxModelConceptLesson from '@/components/visualizers/cssviz/components/concepts/BoxModelConceptLesson';
+import DisplayModesConceptLesson from '@/components/visualizers/cssviz/components/concepts/DisplayModesConceptLesson';
+import PositioningConceptLesson from '@/components/visualizers/cssviz/components/concepts/PositioningConceptLesson';
+import FloatsConceptLesson from '@/components/visualizers/cssviz/components/concepts/FloatsConceptLesson';
+import FlexboxConceptLesson from '@/components/visualizers/cssviz/components/concepts/FlexboxConceptLesson';
+import GridConceptLesson from '@/components/visualizers/cssviz/components/concepts/GridConceptLesson';
+import SubgridConceptLesson from '@/components/visualizers/cssviz/components/concepts/SubgridConceptLesson';
+import MultiColumnConceptLesson from '@/components/visualizers/cssviz/components/concepts/MultiColumnConceptLesson';
+import UnitsConceptLesson from '@/components/visualizers/cssviz/components/concepts/UnitsConceptLesson';
+import FunctionsConceptLesson from '@/components/visualizers/cssviz/components/concepts/FunctionsConceptLesson';
+import VariablesConceptLesson from '@/components/visualizers/cssviz/components/concepts/VariablesConceptLesson';
+import ColorsConceptLesson from '@/components/visualizers/cssviz/components/concepts/ColorsConceptLesson';
+import BackgroundsConceptLesson from '@/components/visualizers/cssviz/components/concepts/BackgroundsConceptLesson';
+import BordersConceptLesson from '@/components/visualizers/cssviz/components/concepts/BordersConceptLesson';
+import ShadowsConceptLesson from '@/components/visualizers/cssviz/components/concepts/ShadowsConceptLesson';
+import FiltersConceptLesson from '@/components/visualizers/cssviz/components/concepts/FiltersConceptLesson';
+import ClippingConceptLesson from '@/components/visualizers/cssviz/components/concepts/ClippingConceptLesson';
+import TypographyConceptLesson from '@/components/visualizers/cssviz/components/concepts/TypographyConceptLesson';
+import FontsConceptLesson from '@/components/visualizers/cssviz/components/concepts/FontsConceptLesson';
+import ResponsiveConceptLesson from '@/components/visualizers/cssviz/components/concepts/ResponsiveConceptLesson';
+import MediaQueriesConceptLesson from '@/components/visualizers/cssviz/components/concepts/MediaQueriesConceptLesson';
+import ContainerQueriesConceptLesson from '@/components/visualizers/cssviz/components/concepts/ContainerQueriesConceptLesson';
+import AccessibilityConceptLesson from '@/components/visualizers/cssviz/components/concepts/AccessibilityConceptLesson';
+import PrintStylingConceptLesson from '@/components/visualizers/cssviz/components/concepts/PrintStylingConceptLesson';
+import TransitionsConceptLesson from '@/components/visualizers/cssviz/components/concepts/TransitionsConceptLesson';
+import AnimationsConceptLesson from '@/components/visualizers/cssviz/components/concepts/AnimationsConceptLesson';
+import Transforms3DConceptLesson from '@/components/visualizers/cssviz/components/concepts/Transforms3DConceptLesson';
+import MotionPathConceptLesson from '@/components/visualizers/cssviz/components/concepts/MotionPathConceptLesson';
+import RenderingPipelineConceptLesson from '@/components/visualizers/cssviz/components/concepts/RenderingPipelineConceptLesson';
+import ReflowRepaintConceptLesson from '@/components/visualizers/cssviz/components/concepts/ReflowRepaintConceptLesson';
+import GpuAccelerationConceptLesson from '@/components/visualizers/cssviz/components/concepts/GpuAccelerationConceptLesson';
+import CssArchitectureConceptLesson from '@/components/visualizers/cssviz/components/concepts/CssArchitectureConceptLesson';
+import CssDebuggingConceptLesson from '@/components/visualizers/cssviz/components/concepts/CssDebuggingConceptLesson';
+import HoudiniPaintConceptLesson from '@/components/visualizers/cssviz/components/concepts/HoudiniPaintConceptLesson';
+import HoudiniTypedOmConceptLesson from '@/components/visualizers/cssviz/components/concepts/HoudiniTypedOmConceptLesson';
+import HoudiniLayoutConceptLesson from '@/components/visualizers/cssviz/components/concepts/HoudiniLayoutConceptLesson';
+
 import { topics, type Topic, type VisualizerKey } from '@/components/visualizers/cssviz/data/topics';
+
+const conceptLessons: Partial<Record<string, React.ComponentType>> = {
+  // Track 1: Selectors & Specificity
+  '/selectors': SelectorsConceptLesson,
+  '/cascade': CascadeConceptLesson,
+  '/pseudo-classes': PseudoClassesConceptLesson,
+  '/is-where-has': IsWhereHasConceptLesson,
+  '/cascade-layers': CascadeLayersConceptLesson,
+
+  // Track 2: Box Model & Geometry
+  '/box-model': BoxModelConceptLesson,
+  '/display': DisplayModesConceptLesson,
+  '/floats': FloatsConceptLesson,
+  '/positioning': PositioningConceptLesson,
+
+  // Track 3: Flexbox & Grid
+  '/flexbox': FlexboxConceptLesson,
+  '/grid': GridConceptLesson,
+  '/subgrid': SubgridConceptLesson,
+  '/multicolumn': MultiColumnConceptLesson,
+
+  // Track 4: Units, Math & Custom Properties
+  '/units': UnitsConceptLesson,
+  '/functions': FunctionsConceptLesson,
+  '/variables': VariablesConceptLesson,
+
+  // Track 5: Visual Styling & Color
+  '/colors': ColorsConceptLesson,
+  '/backgrounds': BackgroundsConceptLesson,
+  '/borders': BordersConceptLesson,
+  '/shadows': ShadowsConceptLesson,
+  '/filters': FiltersConceptLesson,
+  '/clipping': ClippingConceptLesson,
+
+  // Track 6: Typography & Text
+  '/typography': TypographyConceptLesson,
+  '/fonts': FontsConceptLesson,
+
+  // Track 7: Responsive & Component Architecture
+  '/responsive': ResponsiveConceptLesson,
+  '/media-queries': MediaQueriesConceptLesson,
+  '/container-queries': ContainerQueriesConceptLesson,
+  '/css-a11y': AccessibilityConceptLesson,
+  '/print': PrintStylingConceptLesson,
+
+  // Track 8: Transitions & Animation
+  '/transitions': TransitionsConceptLesson,
+  '/animations': AnimationsConceptLesson,
+  '/3d': Transforms3DConceptLesson,
+  '/motion-path': MotionPathConceptLesson,
+
+  // Track 9: Engine Internals, Architecture & Houdini
+  '/rendering': RenderingPipelineConceptLesson,
+  '/reflow': ReflowRepaintConceptLesson,
+  '/gpu': GpuAccelerationConceptLesson,
+  '/architecture': CssArchitectureConceptLesson,
+  '/debugging': CssDebuggingConceptLesson,
+  '/houdini-paint': HoudiniPaintConceptLesson,
+  '/houdini-typedom': HoudiniTypedOmConceptLesson,
+  '/houdini-layout': HoudiniLayoutConceptLesson,
+};
 
 const visualizers: Partial<Record<VisualizerKey, ReactElement>> = {
   flexbox: <FlexboxLab />,
@@ -48,106 +154,86 @@ const visualizers: Partial<Record<VisualizerKey, ReactElement>> = {
 };
 
 const TopicPage = ({ topic }: { topic: Topic }) => {
-  if (topic.path === '/selectors') {
+  const CustomLesson = conceptLessons[topic.path];
+  if (CustomLesson) {
     return (
       <PageTransition>
-        <SelectorsConceptLesson />
+        <CustomLesson />
       </PageTransition>
     );
   }
 
-  const related = topics
-    .filter((item) => item.path !== topic.path && item.tags.some((tag) => topic.tags.includes(tag)))
-    .slice(0, 3);
-
   const visualizer = topic.visualizer ? visualizers[topic.visualizer] : null;
+  const related = topics.filter((t) => t.path !== topic.path && t.difficulty === topic.difficulty).slice(0, 3);
 
   return (
     <PageTransition>
-      <div className="space-y-10">
-        <div className="flex flex-col gap-4">
-          <Link href="/fullstack/css-cosmos/concepts" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white group transition-colors">
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+      <div className="space-y-12">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Link
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-slate-900 dark:hover:text-white"
+            href="/fullstack/css-cosmos/concepts"
+          >
+            <ArrowLeft className="h-4 w-4" />
             Back to Concepts
           </Link>
-          <GlassCard>
-            <div className="grid gap-6 p-6 lg:grid-cols-[2fr,1fr]">
-              <div className="space-y-3">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary">{topic.difficulty}</p>
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">{topic.name}</h1>
-                <p className="text-slate-600 dark:text-slate-200">{topic.summary}</p>
-                <div className="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-300">
-                  {topic.tags.slice(0, 5).map((tag) => (
-                    <span key={tag} className="rounded-full bg-slate-100 dark:bg-white/10 px-3 py-1">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-3 pt-2">
-                  <Button as={Link} href="/fullstack/css-cosmos/lab" variant="secondary">
-                    Tinker in CSS Lab
-                  </Button>
-                </div>
-              </div>
-              <div className="space-y-3 rounded-2xl border border-slate-200/60 dark:border-white/10 bg-white/40 dark:bg-white/5 p-4 text-sm text-slate-600 dark:text-slate-200">
-                <p className="text-xs uppercase tracking-[0.18em] text-primary">Learning checklist</p>
-                <ul className="space-y-2">
-                  {topic.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-start gap-2">
-                      <span className="mt-[6px] h-2 w-2 rounded-full bg-primary" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </GlassCard>
+          <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            <span>Difficulty</span>
+            <span className="rounded-full border border-slate-300 dark:border-white/10 px-2 py-0.5 text-slate-700 dark:text-slate-200">
+              {topic.difficulty}
+            </span>
+          </div>
         </div>
 
         <GlassCard>
-          <div className="grid gap-4 p-5 md:grid-cols-3">
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-[0.18em] text-primary">Definition</p>
-              <p className="text-sm text-slate-600 dark:text-slate-300">{topic.summary}</p>
+          <div className="space-y-6 p-6 sm:p-8">
+            <div className="space-y-3">
+              <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                Deep Dive
+              </span>
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-slate-900 dark:text-white">{topic.name}</h1>
+              <p className="max-w-2xl text-base text-slate-600 dark:text-slate-300 sm:text-lg">{topic.summary}</p>
             </div>
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-[0.18em] text-primary">Syntax</p>
-              <div className="rounded-lg border border-slate-200/70 bg-slate-50 p-3 font-mono text-xs text-slate-800 shadow-sm dark:border-white/12 dark:bg-slate-900/60 dark:text-slate-100">
-                {topic.bullets[0] ?? 'See visualizer for syntax examples.'}
-              </div>
+
+            <div className="flex flex-wrap gap-2">
+              {topic.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-lg border border-slate-200/80 dark:border-white/10 bg-slate-100/60 dark:bg-white/5 px-2.5 py-1 text-xs text-slate-700 dark:text-slate-300"
+                >
+                  #{tag}
+                </span>
+              ))}
             </div>
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-[0.18em] text-primary">Example</p>
-              <div className="rounded-lg border border-slate-200/70 bg-slate-50 p-3 text-sm text-slate-700 shadow-sm dark:border-white/12 dark:bg-slate-900/60 dark:text-slate-200">
-                Use the visualizer below to apply these properties and see the result live.
-              </div>
+
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Button as="a" href="#visualizer">
+                Launch Interactive Lab
+              </Button>
+              <Button as={Link} variant="ghost" href="/fullstack/css-cosmos/challenges">
+                Take a Challenge <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
         </GlassCard>
 
-        <div className="grid gap-4 lg:grid-cols-[1.6fr,1fr]">
-          <GlassCard>
-            <div className="space-y-4 p-5">
-              <SectionHeader
-                eyebrow="Deep dive"
-                title="Why this matters"
-                subtitle="Principles, mental models, and debugging clues tailored to the topic."
-              />
-              <div className="grid gap-3 text-sm text-slate-600 dark:text-slate-300 md:grid-cols-2">
-                <div className="rounded-xl border border-slate-200/60 dark:border-white/10 bg-white/40 dark:bg-white/5 p-4">
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Visual intuition</h4>
-                  <p className="mt-2">
-                    Each property is paired with motion or color feedback so you build muscle memory, not just recall
-                    syntax.
-                  </p>
-                </div>
-                <div className="rounded-xl border border-slate-200/60 dark:border-white/10 bg-white/40 dark:bg-white/5 p-4">
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Copy-ready CSS</h4>
-                  <p className="mt-2">
-                    Controls emit exact CSS you can copy. Use it as a starter token or paste into DevTools for instant
-                    validation.
-                  </p>
-                </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          <GlassCard className="md:col-span-2">
+            <div className="space-y-4 p-6">
+              <SectionHeader title="Core mental models" subtitle="What happens under the hood." />
+              <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p>
+                  Every property here coordinates with browser layout engines. Rather than memorizing values, connect
+                  them to document flow, stacking contexts, and device constraints.
+                </p>
+                <ul className="list-disc space-y-1 pl-5 text-slate-700 dark:text-slate-200">
+                  {topic.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="grid gap-3 pt-4 sm:grid-cols-2">
                 <div className="rounded-xl border border-slate-200/60 dark:border-white/10 bg-white/40 dark:bg-white/5 p-4">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Performance notes</h4>
                   <p className="mt-2">
