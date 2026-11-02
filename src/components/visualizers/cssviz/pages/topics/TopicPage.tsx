@@ -25,6 +25,7 @@ import MediaQueriesLab from '@/components/visualizers/cssviz/components/visualiz
 import ContainerQueriesLab from '@/components/visualizers/cssviz/components/visualizers/ContainerQueriesLab';
 import UnitsFunctionsLab from '@/components/visualizers/cssviz/components/visualizers/UnitsFunctionsLab';
 import GenericVisualizer from '@/components/visualizers/cssviz/components/visualizers/GenericVisualizer';
+import SelectorsConceptLesson from '@/components/visualizers/cssviz/components/concepts/SelectorsConceptLesson';
 import { topics, type Topic, type VisualizerKey } from '@/components/visualizers/cssviz/data/topics';
 
 const visualizers: Partial<Record<VisualizerKey, ReactElement>> = {
@@ -47,6 +48,14 @@ const visualizers: Partial<Record<VisualizerKey, ReactElement>> = {
 };
 
 const TopicPage = ({ topic }: { topic: Topic }) => {
+  if (topic.path === '/selectors') {
+    return (
+      <PageTransition>
+        <SelectorsConceptLesson />
+      </PageTransition>
+    );
+  }
+
   const related = topics
     .filter((item) => item.path !== topic.path && item.tags.some((tag) => topic.tags.includes(tag)))
     .slice(0, 3);
@@ -57,9 +66,9 @@ const TopicPage = ({ topic }: { topic: Topic }) => {
     <PageTransition>
       <div className="space-y-10">
         <div className="flex flex-col gap-4">
-          <Link href="/fullstack/css-cosmos" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">
-            <ArrowLeft className="h-4 w-4" />
-            Back to CSS Universe
+          <Link href="/fullstack/css-cosmos/concepts" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white group transition-colors">
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Back to Concepts
           </Link>
           <GlassCard>
             <div className="grid gap-6 p-6 lg:grid-cols-[2fr,1fr]">
