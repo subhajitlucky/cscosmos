@@ -21,6 +21,7 @@ import { Concept5Lesson } from '../components/Concept5Lesson';
 import { Concept6Lesson } from '../components/Concept6Lesson';
 import { Concept7Lesson } from '../components/Concept7Lesson';
 import { Concept8Lesson } from '../components/Concept8Lesson';
+import { Concept9Lesson } from '../components/Concept9Lesson';
 
 export default function ConceptDetail({ topicId }: { topicId: string }) {
   const topic = NODE_TOPICS.find((t) => t.id === topicId);
@@ -63,8 +64,10 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         <Concept7Lesson />
       ) : topic.number === 8 ? (
         <Concept8Lesson />
+      ) : topic.number === 9 ? (
+        <Concept9Lesson />
       ) : (
-        /* Coming Soon Template for Concepts 9-280 */
+        /* Coming Soon Template for Concepts 10-280 */
         <>
           {/* Title & Metadata */}
           <div className="space-y-3">

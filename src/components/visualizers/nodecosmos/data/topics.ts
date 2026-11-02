@@ -261,19 +261,20 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #9 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Master Blocking vs Non-Blocking I/O: the physical latency gap, POSIX O_NONBLOCK mechanics, CPU-bound vs I/O-bound blocking, the startup vs runtime readFileSync rule, and avoiding the Zalgo antipattern.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Blocking vs Non-Blocking I/O: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #9: Blocking vs Non-Blocking I/O\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Blocking vs Non-Blocking I/O in Node.js runtime');\n",
+    "mentalModel": "The Non-Blocking Kernel Bridge: Offloading physical device latency to OS kernel demultiplexers and libuv worker pools, allowing a single JavaScript thread to interleave thousands of concurrent requests without sleeping.",
+    "codeSnippet": "// Non-Blocking I/O in Node.js\nconst fs = require('node:fs/promises');\n\nconsole.log('1. Initiating non-blocking file read...');\nfs.readFile('package.json', 'utf8')\n  .then((data) => console.log('3. File read complete (non-blocking)'))\n  .catch(console.error);\n\nconsole.log('2. Main thread continues immediately without waiting!');",
     "takeaways": [
-      "Master the core operational principles of Blocking vs Non-Blocking I/O.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "I/O operations (network, disk) take millions of CPU cycles; blocking puts the calling thread into uninterruptible kernel sleep.",
+      "POSIX O_NONBLOCK allows system calls like read() to return immediately with EAGAIN instead of sleeping.",
+      "Synchronous APIs (*Sync) are acceptable during startup initialization, but catastrophic inside per-request handlers.",
+      "async/await only yields on Promise boundaries; CPU-bound computations still block the single JavaScript Call Stack."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Blocking vs Non-Blocking I/O concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Blocking vs Non-Blocking I/O."
+      "mistake": "Using fs.readFileSync inside express/fastify route handlers, or writing functions with unpredictable mixed sync/async execution (Zalgo antipattern).",
+      "fix": "Use fs.promises and streaming for request-time I/O, and wrap cached results in process.nextTick() to guarantee 100% asynchronous consistency."
     },
     "nextTopicId": "synchronous-vs-asynchronous-execution",
     "prevTopicId": "event-driven-architecture"
