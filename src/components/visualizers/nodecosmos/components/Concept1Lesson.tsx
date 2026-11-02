@@ -56,12 +56,14 @@ export function Concept1Lesson() {
         </div>
 
         {/* Minimal Architecture Flowchart */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 text-slate-200 font-mono text-xs sm:text-sm overflow-x-auto">
-          <div className="text-slate-400 text-xs mb-3 pb-2 border-b border-slate-800 font-sans font-medium flex items-center justify-between">
-            <span>Runtime Architecture</span>
-            <span>C++ &amp; OS Layer</span>
-          </div>
-          <pre className="text-emerald-400 font-medium">{`┌────────────────────────────────────────────────────────┐
+        <div className="flex justify-center my-6">
+          <div className="w-full max-w-2xl rounded-2xl bg-slate-950 border border-slate-800 p-5 sm:p-6 shadow-sm">
+            <div className="text-slate-400 text-xs mb-4 pb-2.5 border-b border-slate-800 font-mono flex items-center justify-between">
+              <span className="font-semibold text-slate-300">Runtime Architecture</span>
+              <span className="text-slate-500">C++ &amp; OS Layer</span>
+            </div>
+            <div className="flex justify-center overflow-x-auto py-2">
+              <pre className="text-emerald-400 font-mono text-xs sm:text-sm font-medium leading-relaxed select-none">{`┌────────────────────────────────────────────────────────┐
 │                   Your JavaScript Code                 │
 └───────────────────────────┬────────────────────────────┘
                             │
@@ -83,9 +85,11 @@ export function Concept1Lesson() {
               │     Operating System      │
               │  (Disk, Sockets, Kernel)  │
               └───────────────────────────┘`}</pre>
+            </div>
+          </div>
         </div>
 
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 italic">
+        <p className="text-center text-xs sm:text-sm text-slate-500 dark:text-slate-400 italic">
           Key distinction: Node.js is <strong>not</strong> a programming language, and it is <strong>not</strong> a framework. It is an execution host (runtime) for JavaScript.
         </p>
       </section>
