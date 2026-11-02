@@ -342,19 +342,20 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Installation & CLI",
-    "summary": "Core concept #12 of the 2027 Node.js Curriculum Roadmap (Node.js Installation & CLI). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Master Node.js version management: PATH mutation vs symlinks vs shims, project version pinning (.nvmrc, .node-version, engines), and resolving native C++ ABI (NODE_MODULE_VERSION) mismatches.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Node.js Version Management: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Installation & CLI subsystem.",
-    "codeSnippet": "// Concept #12: Node.js Version Management\n// Module 2: Node.js Installation & CLI (Beginner Level)\nconsole.log('Exploring Node.js Version Management in Node.js runtime');\n",
+    "mentalModel": "Multi-Runtime Router: A user-space mechanism that intercepts the shell 'node' command via PATH prepending, symlink redirection, or binary shims to bind the active execution context to the project-declared Node version.",
+    "codeSnippet": "// Concept #12: Node.js Version Management & SemVer Validation\n// Inspect active runtime and validate against project engines constraint\nconst activeVersion = process.version;\nconst activeMajor = parseInt(activeVersion.replace('v', '').split('.')[0], 10);\nconst requiredRange = '>=20.0.0 <23.0.0';\n\nconsole.log('Active Node.js Binary  :', process.execPath);\nconsole.log('Active Version String  :', activeVersion);\nconsole.log('Active Native ABI (ABI):', process.versions.modules);\nconsole.log('Engine Requirement     :', requiredRange);\nconsole.log('Runtime Compatible?    :', activeMajor >= 20 && activeMajor < 23);\n",
     "takeaways": [
-      "Master the core operational principles of Node.js Version Management.",
-      "Understand interactions with Node.js runtime and Node.js Installation & CLI.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "Version managers eliminate cross-project dependency conflicts and avoid the security risk of sudo package manager installations.",
+      "The three core version manager mechanisms are shell $PATH mutation (NVM), symlink switching (FNM), and shim interception (Volta).",
+      "Enforce team parity across local, CI, and production by pairing .nvmrc with package.json 'engines' and 'engine-strict=true' in .npmrc.",
+      "Native C++ modules depend on NODE_MODULE_VERSION; switching Node versions requires recompilation unless modules are written using Node-API (N-API)."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Node.js Version Management concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Node.js Version Management."
+      "mistake": "Relying on advisory 'engines' fields without 'engine-strict=true', allowing developers to install dependencies with mismatched local Node versions that crash in CI or production.",
+      "fix": "Add 'engine-strict=true' to project .npmrc and link CI pipelines to .nvmrc via 'node-version-file' in your GitHub Actions workflow."
     },
     "nextTopicId": "node-version-manager-nvm",
     "prevTopicId": "installing-node-js"
