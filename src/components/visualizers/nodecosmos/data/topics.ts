@@ -207,19 +207,20 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #7 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Master the Node.js Execution Model: single-threaded JavaScript Call Stack, multi-threaded OS process architecture (libuv workers & V8 GC threads), Run-to-Completion invariant, and microtask vs macrotask scheduling priority.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Node.js Execution Model: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #7: Node.js Execution Model\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Node.js Execution Model in Node.js runtime');\n",
+    "mentalModel": "Single-Threaded JS Stack + Multi-Threaded Host Process: An event-driven reactive conductor that delegates I/O to OS kernel multiplexers (epoll/kqueue) and CPU/disk workloads to libuv background workers.",
+    "codeSnippet": "// Microtask vs Macrotask Execution Order in Node.js\nconsole.log('1. Synchronous frame');\n\nsetTimeout(() => console.log('5. Macrotask (Timers phase)'), 0);\nsetImmediate(() => console.log('6. Macrotask (Check phase)'));\n\nPromise.resolve().then(() => console.log('3. Microtask (Promise Queue)'));\nprocess.nextTick(() => console.log('2. Microtask (nextTick Queue)'));\n\nconsole.log('4. Synchronous end');",
     "takeaways": [
-      "Master the core operational principles of Node.js Execution Model.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "JavaScript execution on the V8 Call Stack is single-threaded and strictly enforces Run-to-Completion.",
+      "The underlying Node.js OS process is multi-threaded (7–11 OS threads: libuv pool, V8 GC, TurboFan JIT).",
+      "Network connections use 0 worker threads; they are registered directly with OS kernel multiplexers (epoll/kqueue).",
+      "Microtasks (process.nextTick, Promise.then) drain completely before the event loop advances to the next phase."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Node.js Execution Model concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Node.js Execution Model."
+      "mistake": "Blocking the main thread with heavy synchronous computations or recursive process.nextTick loops, starving the event loop from servicing network I/O and health checks.",
+      "fix": "Offload CPU-bound tasks to worker_threads or external queue workers, and use setImmediate instead of process.nextTick for recursive scheduling."
     },
     "nextTopicId": "event-driven-architecture",
     "prevTopicId": "libuv-introduction"
