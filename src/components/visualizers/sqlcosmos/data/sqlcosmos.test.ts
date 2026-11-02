@@ -43,16 +43,26 @@ describe('sqlcosmos data integrity', () => {
     }
   });
 
-  it('defines 18 interview flashcards with valid difficulties and tips', () => {
-    expect(SQL_FLASHCARDS.length).toBeGreaterThanOrEqual(18);
+  it('defines 50 interview flashcards with valid difficulties and tips', () => {
+    expect(SQL_FLASHCARDS).toHaveLength(50);
     const validDifficulties = new Set(['Junior', 'Mid', 'Senior', 'Staff']);
+    const validCategories = new Set([
+      'Indexing & Performance',
+      'Query Execution',
+      'Transactions & MVCC',
+      'Architecture',
+    ]);
+    const ids = new Set<string>();
 
     for (const card of SQL_FLASHCARDS) {
       expect(card.id).toBeTruthy();
+      expect(ids.has(card.id)).toBe(false);
+      ids.add(card.id);
       expect(card.question.length).toBeGreaterThan(15);
       expect(card.answer.length).toBeGreaterThan(30);
       expect(card.tip.length).toBeGreaterThan(15);
       expect(validDifficulties.has(card.difficulty)).toBe(true);
+      expect(validCategories.has(card.category)).toBe(true);
     }
   });
 

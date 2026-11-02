@@ -92,7 +92,7 @@ export async function generateMetadata({
     },
     'flashcards': {
       title: 'Senior Database Engineering Flashcards | SQLCosmos - CSCosmos',
-      desc: '18 high-yield database engineering questions covering B+ Trees, Leftmost Prefix, MVCC, and write skew.',
+      desc: '50 high-yield database engineering questions covering B+ Trees, Leftmost Prefix, MVCC, and write skew.',
     },
     'cheatsheet': {
       title: 'SQL Performance & Analytics Cheat Sheet | SQLCosmos - CSCosmos',

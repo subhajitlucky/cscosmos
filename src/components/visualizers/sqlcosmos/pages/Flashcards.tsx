@@ -30,7 +30,7 @@ export default function Flashcards() {
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-border bg-muted/30 text-muted-foreground font-mono text-xs">
           <Database className="w-3.5 h-3.5" />
-          <span>Spaced recall trainer • 18 staff/senior questions</span>
+          <span>Spaced recall trainer • {SQL_FLASHCARDS.length} staff/senior questions</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
           SQL &amp; Database Senior Interview Flashcards

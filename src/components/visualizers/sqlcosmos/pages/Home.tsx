@@ -10,6 +10,7 @@ import {
   Terminal,
 } from 'lucide-react';
 import { SQL_TOPICS } from '../data/topics';
+import { SQL_FLASHCARDS } from '../data/flashcards';
 
 export default function Home() {
   return (
@@ -63,7 +64,7 @@ export default function Home() {
             <div className="text-xs text-muted-foreground font-medium">B+ Tree stepper</div>
           </div>
           <div className="p-3.5 rounded-xl border border-border bg-card text-left">
-            <div className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-foreground">18</div>
+            <div className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-foreground">{SQL_FLASHCARDS.length}</div>
             <div className="text-xs text-muted-foreground font-medium">Staff flashcards</div>
           </div>
         </div>
@@ -112,7 +113,7 @@ export default function Home() {
             Senior Engineering Flashcards
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            18 high-yield database interview questions on Write Skew, Serializable Snapshot Isolation, and deadlocks.
+            {SQL_FLASHCARDS.length} high-yield database interview questions on Write Skew, Serializable Snapshot Isolation, and deadlocks.
           </p>
         </Link>
       </section>
