@@ -190,11 +190,103 @@ export function NodeJsEditor({
       ],
     };
 
+    class CustomEventEmitter {
+      private _events: Record<string, Function[]> = Object.create(null);
+      private _maxListeners = 10;
+
+      on(event: string, listener: Function) {
+        if (!this._events[event]) {
+          this._events[event] = [];
+        }
+        this._events[event].push(listener);
+        if (this._events[event].length > this._maxListeners) {
+          pushLog(
+            'warn',
+            `MaxListenersExceededWarning: Possible EventEmitter memory leak detected. ${this._events[event].length} ${event} listeners added to [EventEmitter]. Use emitter.setMaxListeners() to increase limit.`
+          );
+        }
+        return this;
+      }
+
+      addListener(event: string, listener: Function) {
+        return this.on(event, listener);
+      }
+
+      once(event: string, listener: Function) {
+        const wrapper = (...args: any[]) => {
+          this.off(event, wrapper);
+          listener.apply(this, args);
+        };
+        (wrapper as any).listener = listener;
+        return this.on(event, wrapper);
+      }
+
+      emit(event: string, ...args: any[]) {
+        if (event === 'error' && (!this._events['error'] || this._events['error'].length === 0)) {
+          const err =
+            args[0] instanceof Error
+              ? args[0]
+              : new Error(`Unhandled 'error' event: ${args[0] || 'Unknown error'}`);
+          throw err;
+        }
+        const listeners = this._events[event];
+        if (!listeners || listeners.length === 0) return false;
+        const copy = [...listeners];
+        for (const fn of copy) {
+          fn.apply(this, args);
+        }
+        return true;
+      }
+
+      off(event: string, listener: Function) {
+        if (!this._events[event]) return this;
+        this._events[event] = this._events[event].filter(
+          (fn) => fn !== listener && (fn as any).listener !== listener
+        );
+        return this;
+      }
+
+      removeListener(event: string, listener: Function) {
+        return this.off(event, listener);
+      }
+
+      removeAllListeners(event?: string) {
+        if (event) {
+          delete this._events[event];
+        } else {
+          this._events = Object.create(null);
+        }
+        return this;
+      }
+
+      listenerCount(event: string) {
+        return this._events[event]?.length || 0;
+      }
+
+      rawListeners(event: string) {
+        return [...(this._events[event] || [])];
+      }
+
+      setMaxListeners(n: number) {
+        this._maxListeners = n;
+        return this;
+      }
+
+      getMaxListeners() {
+        return this._maxListeners;
+      }
+    }
+
     const customRequire = (moduleName: string) => {
       const clean = moduleName.replace(/^node:/, '');
       if (clean === 'v8') return customV8;
       if (clean === 'buffer') return { Buffer: customBuffer };
       if (clean === 'process') return customProcess;
+      if (clean === 'events') {
+        const fn: any = CustomEventEmitter;
+        fn.EventEmitter = CustomEventEmitter;
+        return fn;
+      }
       return {};
     };
 
@@ -218,6 +310,7 @@ export function NodeJsEditor({
         'Buffer',
         'v8',
         'require',
+        'EventEmitter',
         'setTimeout',
         'clearTimeout',
         'setImmediate',
@@ -231,6 +324,7 @@ export function NodeJsEditor({
         customBuffer,
         customV8,
         customRequire,
+        CustomEventEmitter,
         customSetTimeout,
         window.clearTimeout,
         customSetImmediate,

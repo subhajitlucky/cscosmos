@@ -234,19 +234,20 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #8 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Master Event-Driven Architecture in Node.js: hardware interrupt foundations, the pub-sub pattern, internal mechanics of EventEmitter, synchronous emission guarantees, and preventing production listener memory leaks.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Event-Driven Architecture: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #8: Event-Driven Architecture\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Event-Driven Architecture in Node.js runtime');\n",
+    "mentalModel": "The Interrupt Dispatcher: Decoupled producers emit named events into an in-memory registry, synchronously executing registered reactive listener callbacks without continuous polling.",
+    "codeSnippet": "const EventEmitter = require('node:events');\nconst hub = new EventEmitter();\n\n// Register reactive consumer\nhub.on('orderPlaced', (orderId, total) => {\n  console.log(`Processing Order #${orderId}: $${total}`);\n});\n\n// Producer emits event synchronously\nhub.emit('orderPlaced', 1042, 89.99);",
     "takeaways": [
-      "Master the core operational principles of Event-Driven Architecture.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "Event-Driven Architecture inverts the polling tax by using reactive push notifications inspired by hardware interrupts.",
+      "EventEmitter.emit() executes registered listener callbacks SYNCHRONOUSLY on the current V8 Call Stack.",
+      "Emitting in class constructors requires deferral via process.nextTick() to allow callers time to attach listeners.",
+      "Unhandled 'error' events crash the entire Node.js process; always register an error listener or use pipelines."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Event-Driven Architecture concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Event-Driven Architecture."
+      "mistake": "Emitting an 'error' event with zero registered listeners, or attaching unbounded listeners to global singletons inside request handlers causing memory leaks.",
+      "fix": "Always attach an .on('error', handler) on every emitter, and use emitter.once() or AbortSignal to auto-cleanup per-request listeners."
     },
     "nextTopicId": "blocking-vs-non-blocking-i-o",
     "prevTopicId": "node-js-execution-model"
