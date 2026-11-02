@@ -208,18 +208,18 @@ export function Concept1Lesson() {
 
       {/* 5. Live Code Lab */}
       <section className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div>
           <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Terminal className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             Try It: In-Browser Node.js Runtime
           </h2>
-          <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
-            Interactive Editor
-          </span>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Edit JavaScript on the left and click <strong>Run Code</strong> (or press <kbd className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300">⌘+Enter</kbd>) to observe real-time output in the terminal on the right.
+          </p>
         </div>
 
         <NodeJsEditor
-          title="Concept 1: Runtime Inspection"
+          title="Node.js v22 REPL Lab"
           initialCode={`// Inspect the Node.js process environment
 console.log("=== Node.js Process & Runtime ===");
 console.log("Node Version :", process.version);

@@ -108,6 +108,7 @@ export function NodeJsEditor({
   };
 
   const handleRun = () => {
+    setActiveTab('terminal');
     clearOutput();
     setIsRunning(true);
 
@@ -503,30 +504,30 @@ export function NodeJsEditor({
   };
 
   const editorContent = (
-    <div className={`rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl overflow-hidden transition-all ${isFullscreen ? 'h-full max-h-[90vh] flex flex-col' : ''}`}>
-      {/* Mac-Style Top Window Chrome */}
-      <div className="px-4 sm:px-5 py-3.5 bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 select-none">
-        <div className="flex items-center gap-3">
-          {/* Frosted Window Controls */}
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-rose-500/90 border border-rose-600/40 inline-block shadow-2xs" />
-            <span className="w-3 h-3 rounded-full bg-amber-500/90 border border-amber-600/40 inline-block shadow-2xs" />
-            <span className="w-3 h-3 rounded-full bg-emerald-500/90 border border-emerald-600/40 inline-block shadow-2xs" />
+    <div
+      className={`rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-sm overflow-hidden flex flex-col ${
+        isFullscreen ? 'h-full max-h-[92vh]' : ''
+      }`}
+    >
+      {/* Top Bar: Title, System Pill & Controls */}
+      <div className="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 select-none">
+        <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1.5 opacity-60">
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
+            <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
           </div>
 
-          <div className="h-4 w-px bg-slate-300 dark:bg-slate-800" />
+          <div className="h-3.5 w-px bg-slate-800" />
 
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
-              <Terminal className="w-3.5 h-3.5" />
-            </div>
-            <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 font-mono tracking-tight">
+            <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="text-xs sm:text-sm font-semibold text-slate-200 font-mono">
               {title}
             </span>
           </div>
 
-          <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-mono text-xs font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-emerald-400 border border-slate-700/60 hidden sm:inline-block">
             Node.js v22 LTS
           </span>
         </div>
@@ -536,8 +537,8 @@ export function NodeJsEditor({
           <button
             onClick={handleRun}
             disabled={isRunning}
-            title="Execute Code (⌘+Enter)"
-            className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm hover:shadow-[0_0_15px_rgba(16,185,129,0.35)] flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            title="Execute Code (⌘+Enter / Ctrl+Enter)"
+            className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-semibold text-xs transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
           >
             <Play className={`w-3.5 h-3.5 fill-current ${isRunning ? 'animate-spin' : ''}`} />
             <span>{isRunning ? 'Running...' : 'Run Code'}</span>
@@ -546,16 +547,16 @@ export function NodeJsEditor({
           <button
             onClick={handleCopy}
             title="Copy Code"
-            className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+            className="px-2.5 py-1.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 hover:text-white hover:border-slate-700 transition text-xs font-medium flex items-center gap-1 cursor-pointer"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            <span className="hidden sm:inline">{copied ? 'Copied!' : 'Copy'}</span>
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
           </button>
 
           <button
             onClick={handleReset}
-            title="Reset to Initial Code"
-            className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400 transition text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+            title="Reset Code"
+            className="px-2.5 py-1.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 hover:text-white hover:border-slate-700 transition text-xs font-medium flex items-center gap-1 cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Reset</span>
@@ -563,19 +564,19 @@ export function NodeJsEditor({
 
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            title={isFullscreen ? 'Exit Fullscreen (Esc)' : 'Expand Fullscreen'}
-            className="p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+            title={isFullscreen ? 'Exit Fullscreen (Esc)' : 'Fullscreen'}
+            className="p-1.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 hover:text-white hover:border-slate-700 transition cursor-pointer"
           >
             {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
 
-      {/* Preset Pills */}
+      {/* Preset Selector Bar */}
       {presets && presets.length > 0 && (
-        <div className="px-4 sm:px-5 py-2 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800/80 flex items-center gap-2 overflow-x-auto select-none">
-          <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider shrink-0 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-emerald-500" /> Presets:
+        <div className="px-4 py-2 bg-slate-900/90 border-b border-slate-800/80 flex items-center gap-2 overflow-x-auto select-none">
+          <span className="text-[11px] font-semibold text-slate-500 font-mono uppercase tracking-wider shrink-0">
+            Examples:
           </span>
           {presets.map((preset, idx) => (
             <button
@@ -592,10 +593,10 @@ export function NodeJsEditor({
                   },
                 ]);
               }}
-              className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition shrink-0 cursor-pointer ${
+              className={`px-2.5 py-1 rounded-md text-xs font-mono transition shrink-0 cursor-pointer ${
                 selectedPreset === idx
-                  ? 'bg-emerald-600 text-white font-semibold shadow-xs'
-                  : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400'
+                  ? 'bg-slate-800 text-emerald-400 font-semibold border border-slate-700'
+                  : 'bg-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
               }`}
             >
               {preset.label}
@@ -604,198 +605,186 @@ export function NodeJsEditor({
         </div>
       )}
 
-      {/* Code Editor Body with Line Numbers */}
-      <div className={`relative bg-slate-950 text-slate-100 font-mono text-xs sm:text-sm flex ${isFullscreen ? 'flex-1 overflow-hidden' : ''}`}>
-        {/* Line Numbers Gutter */}
-        <div className="select-none py-4 px-3 bg-slate-950 text-slate-600 border-r border-slate-800/80 text-right font-mono text-xs leading-6 shrink-0">
-          {Array.from({ length: Math.max(lineCount, 6) }).map((_, i) => (
-            <div key={i}>{i + 1}</div>
-          ))}
-        </div>
-
-        {/* Textarea */}
-        <div className="relative flex-1">
-          <textarea
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            onKeyDown={handleTextareaKeyDown}
-            rows={isFullscreen ? 16 : Math.max(7, Math.min(14, lineCount + 1))}
-            spellCheck={false}
-            className="w-full h-full p-4 bg-transparent text-emerald-300 font-mono text-xs sm:text-sm outline-none resize-none leading-6 placeholder:text-slate-600 selection:bg-emerald-500/30"
-            placeholder="// Type or paste your Node.js code here..."
-          />
-        </div>
-      </div>
-
-      {/* Editor Status Bar */}
-      <div className="px-4 py-1.5 bg-slate-900 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 select-none">
-        <div className="flex items-center gap-3">
-          <span>file: <strong className="text-slate-200">main.mjs</strong></span>
-          <span>lines: <strong className="text-slate-200">{lineCount}</strong></span>
-          <span>chars: <strong className="text-slate-200">{code.length}</strong></span>
-        </div>
-        <div className="flex items-center gap-3 text-slate-500">
-          <span className="hidden sm:inline">Shortcut: <strong className="text-emerald-400">⌘+Enter</strong></span>
-          <span className="text-slate-400 font-semibold">Node.js Engine Active</span>
-        </div>
-      </div>
-
-      {/* Output Console / Inspector Tabs */}
-      <div className="border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 flex-1 flex flex-col">
-        {/* Tab Header Bar */}
-        <div className="px-4 sm:px-5 py-2 bg-slate-200/70 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setActiveTab('terminal')}
-              className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'terminal'
-                  ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-2xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-              }`}
-            >
-              <Terminal className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Terminal (stdout / stderr)</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('inspector')}
-              className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'inspector'
-                  ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-2xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-              }`}
-            >
-              <Activity className="w-3.5 h-3.5 text-blue-500" />
-              <span>Process &amp; V8 Inspector</span>
-            </button>
+      {/* 2-Column Grid: Code Editor (Left) & Output Terminal (Right) */}
+      <div className={`grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800 bg-slate-950 ${isFullscreen ? 'flex-1' : ''}`}>
+        {/* Left Column: Code Editor */}
+        <div className="flex flex-col h-[340px] lg:h-[380px]">
+          {/* Subheader */}
+          <div className="px-3.5 py-2 bg-slate-900/90 border-b border-slate-800/80 flex items-center justify-between text-xs font-mono select-none">
+            <span className="text-slate-300 font-medium flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400/80" />
+              main.mjs
+            </span>
+            <span className="text-slate-500 text-[11px]">JavaScript Editor</span>
           </div>
 
-          <div className="flex items-center gap-3">
-            {execStats && (
-              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${execStats.status === 'error' ? 'bg-rose-500' : 'bg-emerald-500'}`} />
-                <span>Exit: {execStats.exitCode}</span>
-                <span>•</span>
-                <span>{execStats.duration}ms</span>
-              </span>
-            )}
-
-            {logs.length > 0 && activeTab === 'terminal' && (
-              <button
-                onClick={clearOutput}
-                className="text-xs text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 flex items-center gap-1 transition cursor-pointer"
-                title="Clear Output"
-              >
-                <Trash2 className="w-3 h-3" /> Clear
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Tab 1: Terminal Logs */}
-        {activeTab === 'terminal' && (
-          <div className="p-4 min-h-[100px] max-h-[260px] overflow-y-auto space-y-1.5 font-mono text-xs sm:text-sm bg-slate-950 text-slate-200 selection:bg-emerald-500/30">
-            {logs.length === 0 ? (
-              <div className="text-slate-500 italic py-2">
-                Terminal idle. Click &quot;Run Code&quot; (or ⌘+Enter) to execute.
-              </div>
-            ) : (
-              logs.map((log) => {
-                if (log.type === 'error') {
-                  return (
-                    <div
-                      key={log.id}
-                      className="text-rose-400 flex items-start gap-2 bg-rose-950/20 p-1.5 rounded-lg border border-rose-900/40"
-                    >
-                      <span className="text-rose-500 font-bold shrink-0">&gt;</span>
-                      <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
-                    </div>
-                  );
-                }
-                if (log.type === 'warn') {
-                  return (
-                    <div
-                      key={log.id}
-                      className="text-amber-300 flex items-start gap-2 bg-amber-950/20 p-1.5 rounded-lg border border-amber-900/40"
-                    >
-                      <span className="text-amber-500 font-bold shrink-0">&gt;</span>
-                      <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
-                    </div>
-                  );
-                }
-                if (log.type === 'info') {
-                  return (
-                    <div
-                      key={log.id}
-                      className="text-slate-400 italic flex items-start gap-2 py-0.5"
-                    >
-                      <span className="text-emerald-500 shrink-0">&gt;</span>
-                      <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
-                    </div>
-                  );
-                }
-                return (
-                  <div
-                    key={log.id}
-                    className="text-emerald-300 flex items-start gap-2 py-0.5"
-                  >
-                    <span className="text-emerald-500 font-bold shrink-0">&gt;</span>
-                    <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
-                  </div>
-                );
-              })
-            )}
-          </div>
-        )}
-
-        {/* Tab 2: Runtime & V8 Engine Inspector */}
-        {activeTab === 'inspector' && (
-          <div className="p-4 bg-slate-950 text-slate-200 text-xs font-mono space-y-4 max-h-[260px] overflow-y-auto">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                <span className="text-[10px] uppercase text-slate-500 font-bold">V8 Engine</span>
-                <div className="text-emerald-400 font-bold text-xs sm:text-sm">v12.4.254</div>
-              </div>
-
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                <span className="text-[10px] uppercase text-slate-500 font-bold">libuv Event Loop</span>
-                <div className="text-blue-400 font-bold text-xs sm:text-sm">v1.48.0</div>
-              </div>
-
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                <span className="text-[10px] uppercase text-slate-500 font-bold">OpenSSL Cryptography</span>
-                <div className="text-purple-400 font-bold text-xs sm:text-sm">v3.0.15</div>
-              </div>
-
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                <span className="text-[10px] uppercase text-slate-500 font-bold">Node-API (N-API)</span>
-                <div className="text-amber-400 font-bold text-xs sm:text-sm">v9 • ABI 127</div>
-              </div>
+          {/* Textarea + Line Numbers */}
+          <div className="flex-1 flex overflow-hidden bg-slate-950 font-mono text-xs sm:text-sm">
+            <div className="select-none py-3 px-2.5 bg-slate-950 text-slate-600 border-r border-slate-900 text-right font-mono text-xs leading-6 shrink-0 w-10">
+              {Array.from({ length: Math.max(lineCount, 6) }).map((_, i) => (
+                <div key={i}>{i + 1}</div>
+              ))}
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-2.5">
-              <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+            <textarea
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              onKeyDown={handleTextareaKeyDown}
+              spellCheck={false}
+              className="flex-1 p-3 bg-transparent text-emerald-300 font-mono text-xs sm:text-sm outline-none resize-none leading-6 placeholder:text-slate-600 selection:bg-emerald-500/30 overflow-y-auto"
+              placeholder="// Type Node.js code here..."
+            />
+          </div>
+
+          {/* Left Footer */}
+          <div className="px-3.5 py-1.5 bg-slate-900/80 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500 select-none">
+            <span>⌘+Enter to Run</span>
+            <span>{lineCount} lines</span>
+          </div>
+        </div>
+
+        {/* Right Column: Terminal Output */}
+        <div className="flex flex-col h-[340px] lg:h-[380px]">
+          {/* Subheader */}
+          <div className="px-3.5 py-2 bg-slate-900/90 border-b border-slate-800/80 flex items-center justify-between text-xs font-mono select-none">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveTab('terminal')}
+                className={`px-2 py-0.5 rounded transition cursor-pointer ${
+                  activeTab === 'terminal'
+                    ? 'text-slate-200 bg-slate-800 font-semibold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                Output (stdout)
+              </button>
+              <button
+                onClick={() => setActiveTab('inspector')}
+                className={`px-2 py-0.5 rounded transition cursor-pointer ${
+                  activeTab === 'inspector'
+                    ? 'text-slate-200 bg-slate-800 font-semibold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                Runtime Inspector
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2.5">
+              {execStats && (
+                <span className="text-[11px] text-slate-400">
+                  Exit: {execStats.exitCode} • {execStats.duration}ms
+                </span>
+              )}
+              {logs.length > 0 && activeTab === 'terminal' && (
+                <button
+                  onClick={clearOutput}
+                  className="text-[11px] text-slate-400 hover:text-rose-400 transition flex items-center gap-1 cursor-pointer"
+                  title="Clear Console"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  <span>Clear</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Terminal Logs Body */}
+          {activeTab === 'terminal' && (
+            <div className="flex-1 p-3 overflow-y-auto space-y-1 font-mono text-xs sm:text-sm bg-slate-950 text-slate-200 selection:bg-emerald-500/30">
+              {logs.length === 0 ? (
+                <div className="text-slate-500 italic py-2">
+                  Ready to execute. Click &quot;Run Code&quot; to evaluate your JavaScript.
+                </div>
+              ) : (
+                logs.map((log) => {
+                  if (log.type === 'error') {
+                    return (
+                      <div
+                        key={log.id}
+                        className="text-rose-400 flex items-start gap-2 bg-rose-950/20 px-2 py-1 rounded border border-rose-900/40"
+                      >
+                        <span className="text-rose-500 font-bold shrink-0">&gt;</span>
+                        <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
+                      </div>
+                    );
+                  }
+                  if (log.type === 'warn') {
+                    return (
+                      <div
+                        key={log.id}
+                        className="text-amber-300 flex items-start gap-2 bg-amber-950/20 px-2 py-1 rounded border border-amber-900/40"
+                      >
+                        <span className="text-amber-500 font-bold shrink-0">&gt;</span>
+                        <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
+                      </div>
+                    );
+                  }
+                  if (log.type === 'info') {
+                    return (
+                      <div
+                        key={log.id}
+                        className="text-slate-400 italic flex items-start gap-2 py-0.5"
+                      >
+                        <span className="text-emerald-500 shrink-0">&gt;</span>
+                        <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div
+                      key={log.id}
+                      className="text-emerald-300 flex items-start gap-2 py-0.5"
+                    >
+                      <span className="text-emerald-500 font-bold shrink-0">&gt;</span>
+                      <pre className="whitespace-pre-wrap leading-relaxed">{log.message}</pre>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          )}
+
+          {/* Inspector Body */}
+          {activeTab === 'inspector' && (
+            <div className="flex-1 p-3.5 bg-slate-950 text-slate-200 text-xs font-mono space-y-3 overflow-y-auto">
+              <div className="grid grid-cols-2 gap-2">
+                <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase">V8 Engine</span>
+                  <div className="text-emerald-400 font-semibold">v12.4.254</div>
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase">libuv Event Loop</span>
+                  <div className="text-blue-400 font-semibold">v1.48.0</div>
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase">Crypto (OpenSSL)</span>
+                  <div className="text-purple-400 font-semibold">v3.0.15</div>
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase">Node-API ABI</span>
+                  <div className="text-amber-400 font-semibold">ABI 127</div>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800 space-y-1">
                 <div className="flex items-center justify-between text-slate-400 text-[11px]">
-                  <span>V8 Heap Allocated</span>
-                  <span className="text-emerald-400 font-bold">5.8 MB / 9.7 MB</span>
+                  <span>V8 Heap Usage</span>
+                  <span className="text-emerald-400 font-semibold">5.8 MB / 9.7 MB</span>
                 </div>
                 <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
                   <div className="h-full bg-emerald-500 rounded-full" style={{ width: '60%' }} />
                 </div>
               </div>
-
-              <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
-                <div className="flex items-center justify-between text-slate-400 text-[11px]">
-                  <span>Process Architecture</span>
-                  <span className="text-blue-400 font-bold">Linux x64 (PID 1042)</span>
-                </div>
-                <div className="text-[10px] text-slate-500 truncate">
-                  ExecPath: /usr/local/bin/node
-                </div>
-              </div>
             </div>
+          )}
+
+          {/* Right Footer */}
+          <div className="px-3.5 py-1.5 bg-slate-900/80 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500 select-none">
+            <span>Process PID: 1042</span>
+            <span>{logs.length} output line(s)</span>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
