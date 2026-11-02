@@ -288,19 +288,20 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Fundamentals",
-    "summary": "Core concept #10 of the 2027 Node.js Curriculum Roadmap (Node.js Fundamentals). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Master Synchronous vs Asynchronous Execution: the 3 eras of asynchrony (Error-First Callbacks, Promises, and Async/Await), V8 heap suspension mechanics, concurrent orchestration with Promise.all, and the forEach async trap.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Synchronous vs Asynchronous Execution: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Fundamentals subsystem.",
-    "codeSnippet": "// Concept #10: Synchronous vs Asynchronous Execution\n// Module 1: Node.js Fundamentals (Beginner Level)\nconsole.log('Exploring Synchronous vs Asynchronous Execution in Node.js runtime');\n",
+    "mentalModel": "Temporal Stack Decoupling: Initiating actions that register future continuation microtasks in V8 heap closures, allowing the main thread to pop frames and service concurrent traffic without blocking.",
+    "codeSnippet": "// Modern Async/Await with Concurrent Orchestration\nasync function loadDashboard() {\n  console.log('1. Fetching user and metrics concurrently...');\n  const [user, metrics] = await Promise.all([\n    fetchUser(101),\n    fetchMetrics()\n  ]);\n  console.log('2. Loaded data for:', user.name);\n}",
     "takeaways": [
-      "Master the core operational principles of Synchronous vs Asynchronous Execution.",
-      "Understand interactions with Node.js runtime and Node.js Fundamentals.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "Synchronous execution couples line order to physical time; asynchronous execution defers continuation to future event loop ticks.",
+      "V8 async/await is built on Generator suspension: awaiting yields the stack frame and schedules resumption via the Microtask Queue.",
+      "Independent asynchronous operations should run concurrently with Promise.all() rather than in sequential waterfall awaits.",
+      "Array.prototype.forEach does NOT await Promises; always use for...of or Promise.all(items.map(...)) for async iteration."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Synchronous vs Asynchronous Execution concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Synchronous vs Asynchronous Execution."
+      "mistake": "Leaving floating promises unhandled (triggering process-crashing ERR_UNHANDLED_REJECTION) or omitting 'return' after invoking error-first callbacks (causing duplicate header errors).",
+      "fix": "Always await promises or attach .catch(), and always write 'return callback(err);' to enforce single-invocation contracts."
     },
     "nextTopicId": "installing-node-js",
     "prevTopicId": "blocking-vs-non-blocking-i-o"
