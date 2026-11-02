@@ -1,114 +1,195 @@
 'use client';
 
-'use client';
-
-import { ArrowRight, Database, Zap, Cpu, Network, Binary } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import Link from 'next/link';
+import {
+  BookOpen,
+  CheckCircle2,
+  Database,
+  HelpCircle,
+  Terminal,
+  Cpu,
+  Layers,
+  Server,
+  Network,
+  FileCode2,
+  ArrowRight
+} from 'lucide-react';
+import { MONGO_TOPICS } from '../data/topics';
+import { MONGO_FLASHCARDS } from '../data/flashcards';
 
-export function Home() {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, x: -30 },
-    show: { opacity: 1, x: 0 }
-  };
-
+export default function Home() {
   return (
-    <div className="relative flex flex-col items-start text-left">
-      <motion.div 
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="w-full space-y-32"
-      >
-        {/* Technical Hero */}
-        <div className="space-y-16">
-          <motion.div variants={item} className="flex items-center gap-6">
-            <div className="h-px w-16 bg-emerald-500" />
-            <div className="px-4 py-2 border-2 border-emerald-500 text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em] bg-emerald-500/5 shadow-[0_0_20px_rgba(0,237,100,0.1)] italic">
-              STORAGE_PROTOCOL_INIT_V3.5
-            </div>
-          </motion.div>
-
-          <motion.div variants={item} className="space-y-10">
-            <h1 className="text-8xl md:text-[10rem] font-black tracking-[calc(-0.05em)] leading-[0.8] uppercase italic">
-              Deconstruct <br/> 
-              <span className="text-emerald-400 text-glow font-black">MongoDB</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-emerald-400/60 max-w-2xl font-bold leading-relaxed uppercase border-l-8 border-emerald-500/20 pl-10 italic">
-              A high-fidelity diagnostic terminal for architecting distributed document stores. Stop querying. Start understanding.
-            </p>
-          </motion.div>
-
-          <motion.div variants={item} className="flex flex-col sm:flex-row gap-8">
-            <Link 
-              href="/mongocosmos/learn"
-              className="h-20 px-16 bg-emerald-500 text-black font-black text-sm tracking-[0.3em] uppercase hover:bg-emerald-400 transition-all flex items-center justify-center gap-4 shadow-[0_0_30px_rgba(0,237,100,0.3)] active:scale-95 italic"
-            >
-              ACCESS_KERNEL
-              <ArrowRight className="w-6 h-6" />
-            </Link>
-            <Link 
-              href="/mongocosmos/playground"
-              className="h-20 px-16 border-4 border-emerald-500/20 text-emerald-400/60 font-black text-sm tracking-[0.3em] uppercase hover:border-emerald-500/40 hover:text-emerald-400 transition-all flex items-center justify-center gap-4 italic"
-            >
-              QUERY_PROBE
-              <Binary className="w-5 h-5" />
-            </Link>
-          </motion.div>
+    <div className="space-y-16 pb-24 max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+      {/* Hero Section */}
+      <section className="space-y-6 max-w-4xl mx-auto text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-border/80 bg-muted/30 text-muted-foreground font-mono text-xs">
+          <Database className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+          <span>Document engine architecture &amp; visualizers</span>
         </div>
 
-        {/* Real-time Architecture Breakdown */}
-        <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full">
-          <div className="p-12 border-4 border-emerald-500/10 dark:bg-black/40 bg-white/60 space-y-6 relative overflow-hidden group hover:border-emerald-500 transition-all duration-500">
-            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
-              <Cpu className="w-32 h-32 text-emerald-400" />
-            </div>
-            <div className="w-12 h-12 border-2 border-emerald-500/20 flex items-center justify-center bg-emerald-500/5">
-              <Cpu className="w-6 h-6 text-emerald-400" />
-            </div>
-            <h3 className="text-2xl font-black uppercase italic tracking-tight">WiredTiger Engine</h3>
-            <p className="text-xs font-bold text-emerald-400/40 uppercase leading-relaxed">
-              B-Tree index concurrency and lock-free cache algorithms.
-            </p>
-          </div>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground leading-tight">
+          Master MongoDB &amp; Document Engine Architecture
+        </h1>
 
-          <div className="p-12 border-4 border-emerald-500/10 dark:bg-black/40 bg-white/60 space-y-6 relative overflow-hidden group hover:border-emerald-500 transition-all duration-500">
-            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
-              <Network className="w-32 h-32 text-emerald-400" />
-            </div>
-            <div className="w-12 h-12 border-2 border-emerald-500/20 flex items-center justify-center bg-emerald-500/5">
-              <Network className="w-6 h-6 text-emerald-400" />
-            </div>
-            <h3 className="text-2xl font-black uppercase italic tracking-tight">Replica Consensus</h3>
-            <p className="text-xs font-bold text-emerald-400/40 uppercase leading-relaxed">
-              Raft-like election mechanisms with write-concern durability.
-            </p>
-          </div>
+        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+          Interactive visualizers for BSON binary serialization, WiredTiger cache page eviction, checkpoint snapshots, multi-stage aggregation pipelines, Raft-based replica elections, and horizontal cluster sharding.
+        </p>
 
-          <div className="p-12 border-4 border-emerald-500/10 dark:bg-black/40 bg-white/60 space-y-6 relative overflow-hidden group hover:border-emerald-500 transition-all duration-500">
-            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
-              <Database className="w-32 h-32 text-emerald-400" />
+        {/* Hero Actions (One Primary, One Secondary) */}
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <Link
+            href="/mongocosmos/concepts"
+            className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-colors shadow-xs flex items-center gap-2"
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Explore {MONGO_TOPICS.length} Concepts</span>
+          </Link>
+
+          <Link
+            href="/mongocosmos/playground"
+            className="px-5 py-2.5 rounded-lg border border-border bg-card hover:bg-muted/40 text-foreground font-semibold text-xs transition-colors shadow-xs flex items-center gap-2"
+          >
+            <Terminal className="w-4 h-4" />
+            <span>MQL Playground</span>
+          </Link>
+        </div>
+
+        {/* Engine Metrics Strip */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-border/60">
+          <div className="p-3.5 rounded-xl border border-border bg-card text-left">
+            <div className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-foreground">
+              {MONGO_TOPICS.length}
             </div>
-            <div className="w-12 h-12 border-2 border-emerald-500/20 flex items-center justify-center bg-emerald-500/5">
-              <Database className="w-6 h-6 text-emerald-400" />
-            </div>
-            <h3 className="text-2xl font-black uppercase italic tracking-tight">Sharded Clusters</h3>
-            <p className="text-xs font-bold text-emerald-400/40 uppercase leading-relaxed">
-              Horizontal data partitioning via range and hashed shard keys.
-            </p>
+            <div className="text-xs text-muted-foreground font-medium">Engine lessons</div>
           </div>
-        </motion.div>
-      </motion.div>
+          <div className="p-3.5 rounded-xl border border-border bg-card text-left">
+            <div className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-foreground">4</div>
+            <div className="text-xs text-muted-foreground font-medium">Interactive labs</div>
+          </div>
+          <div className="p-3.5 rounded-xl border border-border bg-card text-left">
+            <div className="text-xl sm:text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400">16 MB</div>
+            <div className="text-xs text-muted-foreground font-medium">Max BSON limit</div>
+          </div>
+          <div className="p-3.5 rounded-xl border border-border bg-card text-left">
+            <div className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-foreground">
+              {MONGO_FLASHCARDS.length}
+            </div>
+            <div className="text-xs text-muted-foreground font-medium">Staff flashcards</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Primary Navigation Cards */}
+      <section className="grid sm:grid-cols-3 gap-6 pt-4">
+        <Link
+          href="/mongocosmos/concepts"
+          className="p-6 rounded-xl bg-card border border-border hover:border-foreground/40 shadow-xs transition-colors space-y-3 group"
+        >
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/50 text-foreground flex items-center justify-center font-bold">
+            <BookOpen className="w-4 h-4" />
+          </div>
+          <h3 className="text-base font-bold text-foreground group-hover:underline">
+            {MONGO_TOPICS.length} Core Concepts
+          </h3>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            From BSON data types, WiredTiger cache internals, and covered index scans to multi-stage pipelines and distributed Raft consensus.
+          </p>
+        </Link>
+
+        <Link
+          href="/mongocosmos/problems"
+          className="p-6 rounded-xl bg-card border border-border hover:border-foreground/40 shadow-xs transition-colors space-y-3 group"
+        >
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/50 text-foreground flex items-center justify-center font-bold">
+            <CheckCircle2 className="w-4 h-4" />
+          </div>
+          <h3 className="text-base font-bold text-foreground group-hover:underline">
+            50 Practice Problems
+          </h3>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Solve real-world MQL queries and pipeline aggregations evaluated directly against in-memory BSON collections with unit checks.
+          </p>
+        </Link>
+
+        <Link
+          href="/mongocosmos/flashcards"
+          className="p-6 rounded-xl bg-card border border-border hover:border-foreground/40 shadow-xs transition-colors space-y-3 group"
+        >
+          <div className="w-9 h-9 rounded-lg border border-border bg-muted/50 text-foreground flex items-center justify-center font-bold">
+            <HelpCircle className="w-4 h-4" />
+          </div>
+          <h3 className="text-base font-bold text-foreground group-hover:underline">
+            {MONGO_FLASHCARDS.length} Senior Flashcards
+          </h3>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            High-yield questions on WiredTiger hazard pointers, write skew, readConcern majority, ESR indexing rules, and chunk migrations.
+          </p>
+        </Link>
+      </section>
+
+      {/* Interactive Labs Grid */}
+      <section className="space-y-4 pt-4 border-t border-border/60">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-foreground">Interactive Engine Simulators</h2>
+            <p className="text-xs text-muted-foreground">Directly manipulate document engine internals in sandbox labs</p>
+          </div>
+          <Link
+            href="/mongocosmos/cheatsheet"
+            className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+          >
+            <span>View Cheatsheet</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            href="/mongocosmos/wiredtiger-lab"
+            className="p-4 rounded-xl border border-border bg-card hover:border-foreground/40 transition-colors space-y-2 group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+              <Cpu className="w-4 h-4" />
+            </div>
+            <h4 className="text-sm font-bold text-foreground group-hover:underline">WiredTiger Cache Lab</h4>
+            <p className="text-xs text-muted-foreground">Dirty page ratio, LRU eviction server, and 60-second checkpoint flushes.</p>
+          </Link>
+
+          <Link
+            href="/mongocosmos/agg-lab"
+            className="p-4 rounded-xl border border-border bg-card hover:border-foreground/40 transition-colors space-y-2 group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+              <Layers className="w-4 h-4" />
+            </div>
+            <h4 className="text-sm font-bold text-foreground group-hover:underline">Aggregation Pipeline</h4>
+            <p className="text-xs text-muted-foreground">Step through multi-stage transforms ($match, $group, $unwind) and RAM limits.</p>
+          </Link>
+
+          <Link
+            href="/mongocosmos/replica-lab"
+            className="p-4 rounded-xl border border-border bg-card hover:border-foreground/40 transition-colors space-y-2 group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
+              <Server className="w-4 h-4" />
+            </div>
+            <h4 className="text-sm font-bold text-foreground group-hover:underline">Replica Consensus Lab</h4>
+            <p className="text-xs text-muted-foreground">Raft heartbeats, election quorum, and writeConcern: majority replication.</p>
+          </Link>
+
+          <Link
+            href="/mongocosmos/sharding-lab"
+            className="p-4 rounded-xl border border-border bg-card hover:border-foreground/40 transition-colors space-y-2 group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+              <Network className="w-4 h-4" />
+            </div>
+            <h4 className="text-sm font-bold text-foreground group-hover:underline">Sharding Cluster Lab</h4>
+            <p className="text-xs text-muted-foreground">mongos targeted routing, scatter-gather queries, and chunk migration.</p>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
