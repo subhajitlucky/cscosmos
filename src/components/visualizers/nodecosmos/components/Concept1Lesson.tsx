@@ -27,6 +27,7 @@ export function Concept1Lesson() {
   const [q2, setQ2] = useState<string | null>(null);
   const [q3, setQ3] = useState<string | null>(null);
   const [q4Revealed, setQ4Revealed] = useState<boolean>(false);
+  const [selectedEnv, setSelectedEnv] = useState<'browser' | 'node'>('node');
 
   // Score calculation
   const totalCompleted =
@@ -209,6 +210,80 @@ export function Concept1Lesson() {
             <span>
               <strong>Remember:</strong> Node.js is <em>NOT</em> a programming language. It is <em>NOT</em> a framework. It is a <strong>runtime environment</strong>.
             </span>
+          </div>
+
+          {/* Interactive Environment Comparator Widget */}
+          <div className="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-emerald-500" />
+                <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
+                  Interactive Environment Anatomy: Browser Sandbox vs. Node.js Runtime
+                </h3>
+              </div>
+              <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-mono">
+                <button
+                  onClick={() => setSelectedEnv('browser')}
+                  className={`px-3 py-1.5 rounded-lg font-bold transition cursor-pointer ${
+                    selectedEnv === 'browser'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  Web Browser Sandbox
+                </button>
+                <button
+                  onClick={() => setSelectedEnv('node')}
+                  className={`px-3 py-1.5 rounded-lg font-bold transition cursor-pointer ${
+                    selectedEnv === 'node'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  Node.js OS Runtime
+                </button>
+              </div>
+            </div>
+
+            {selectedEnv === 'browser' ? (
+              <div className="grid sm:grid-cols-2 gap-3 pt-2 text-xs font-mono">
+                <div className="p-3.5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 space-y-1.5">
+                  <span className="font-bold text-blue-700 dark:text-blue-300">Global Root Object</span>
+                  <div className="text-slate-700 dark:text-slate-300">window, document, navigator, location</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 space-y-1.5">
+                  <span className="font-bold text-blue-700 dark:text-blue-300">Filesystem Access</span>
+                  <div className="text-slate-700 dark:text-slate-300">Strictly prohibited (sandbox isolation)</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 space-y-1.5">
+                  <span className="font-bold text-blue-700 dark:text-blue-300">Network Layer</span>
+                  <div className="text-slate-700 dark:text-slate-300">fetch(), XMLHttpRequest, WebSockets (CORS enforced)</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 space-y-1.5">
+                  <span className="font-bold text-blue-700 dark:text-blue-300">Process &amp; OS Primitives</span>
+                  <div className="text-slate-700 dark:text-slate-300">None &bull; Isolated in renderer tab memory</div>
+                </div>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 gap-3 pt-2 text-xs font-mono">
+                <div className="p-3.5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 space-y-1.5">
+                  <span className="font-bold text-emerald-700 dark:text-emerald-300">Global Root Object</span>
+                  <div className="text-slate-700 dark:text-slate-300">globalThis, process, Buffer, setImmediate</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 space-y-1.5">
+                  <span className="font-bold text-emerald-700 dark:text-emerald-300">Filesystem Access</span>
+                  <div className="text-slate-700 dark:text-slate-300">Full POSIX disk access via node:fs / node:fs/promises</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 space-y-1.5">
+                  <span className="font-bold text-emerald-700 dark:text-emerald-300">Network Layer</span>
+                  <div className="text-slate-700 dark:text-slate-300">Arbitrary TCP/UDP sockets, node:http servers (No CORS)</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 space-y-1.5">
+                  <span className="font-bold text-emerald-700 dark:text-emerald-300">Process &amp; OS Primitives</span>
+                  <div className="text-slate-700 dark:text-slate-300">process.env, process.exit(), node:os, node:child_process</div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

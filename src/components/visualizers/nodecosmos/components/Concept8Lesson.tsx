@@ -31,6 +31,7 @@ import {
   Volume2,
 } from 'lucide-react';
 import { NodeJsEditor } from './NodeJsEditor';
+import { EventEmitterVisualizer } from './EventEmitterVisualizer';
 
 export function Concept8Lesson() {
   // Interactive quiz state
@@ -593,6 +594,11 @@ console.log("Notice the MaxListenersExceededWarning generated in the console abo
               <strong>Production Fix:</strong> Use <code className="font-mono font-bold">emitter.once()</code> for single events, or modern AbortSignal: <code className="font-mono font-bold">emitter.on(&apos;event&apos;, fn, &#123; signal: req.signal &#125;)</code> to auto-remove when the connection closes.
             </div>
           </div>
+        </div>
+
+        {/* Interactive EventEmitter Memory Leak & Listener Visualizer */}
+        <div className="pt-2">
+          <EventEmitterVisualizer />
         </div>
       </section>
 

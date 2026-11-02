@@ -32,6 +32,7 @@ export function Concept2Lesson() {
   const [q2, setQ2] = useState<string | null>(null);
   const [q3, setQ3] = useState<string | null>(null);
   const [q4Revealed, setQ4Revealed] = useState<boolean>(false);
+  const [activeLayer, setActiveLayer] = useState<number>(3);
 
   // Score calculation
   const totalCompleted =
@@ -135,17 +136,25 @@ export function Concept2Lesson() {
             When you type <code className="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-900 dark:text-emerald-300">node app.js</code>, your request cascades through 4 distinct architectural layers:
           </p>
 
-          {/* 4 Layers Visual Grid */}
+          {/* 4 Layers Interactive Stack */}
           <div className="space-y-3.5">
             {/* Layer 1 */}
-            <div className="p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div
+              onClick={() => setActiveLayer(1)}
+              className={`p-5 rounded-3xl border transition cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+                activeLayer === 1
+                  ? 'border-amber-500 bg-amber-50/40 dark:bg-amber-950/20 shadow-md ring-2 ring-amber-500/30'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
+              }`}
+            >
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
                   L1
                 </div>
                 <div>
-                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
-                    JavaScript Application Layer
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <span>JavaScript Application Layer</span>
+                    {activeLayer === 1 && <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 font-mono font-semibold">Active Layer</span>}
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-300">
                     Your application scripts, npm packages, Express, NestJS, and user code.
@@ -158,14 +167,22 @@ export function Concept2Lesson() {
             </div>
 
             {/* Layer 2 */}
-            <div className="p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div
+              onClick={() => setActiveLayer(2)}
+              className={`p-5 rounded-3xl border transition cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+                activeLayer === 2
+                  ? 'border-emerald-500 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-md ring-2 ring-emerald-500/30'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
+              }`}
+            >
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
                   L2
                 </div>
                 <div>
-                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
-                    Node.js Core APIs &amp; C++ Bindings (Node-API)
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <span>Node.js Core APIs &amp; C++ Bindings (Node-API)</span>
+                    {activeLayer === 2 && <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 font-mono font-semibold">Active Layer</span>}
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-300">
                     Standard built-ins (<code className="font-mono text-emerald-600 dark:text-emerald-400">node:fs</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:http</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:crypto</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:net</code>) and native C++ wrappers.
@@ -178,15 +195,23 @@ export function Concept2Lesson() {
             </div>
 
             {/* Layer 3 */}
-            <div className="p-6 rounded-3xl border-2 border-emerald-500/40 bg-slate-50/70 dark:bg-slate-900/90 shadow-sm space-y-4">
+            <div
+              onClick={() => setActiveLayer(3)}
+              className={`p-6 rounded-3xl border-2 transition cursor-pointer shadow-sm space-y-4 ${
+                activeLayer === 3
+                  ? 'border-blue-500 bg-blue-50/20 dark:bg-blue-950/20 shadow-md ring-2 ring-blue-500/30'
+                  : 'border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/90'
+              }`}
+            >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div className="flex items-center gap-3.5">
                   <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
                     L3
                   </div>
                   <div>
-                    <h3 className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-slate-100">
-                      Native C/C++ Engine Core (The Heavy Lifters)
+                    <h3 className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                      <span>Native C/C++ Engine Core (The Heavy Lifters)</span>
+                      {activeLayer === 3 && <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-600 font-mono font-semibold">Active Layer</span>}
                     </h3>
                     <p className="text-sm text-slate-600 dark:text-slate-300">
                       High-performance low-level libraries compiled directly into the Node.js executable binary.
@@ -263,14 +288,22 @@ export function Concept2Lesson() {
             </div>
 
             {/* Layer 4 */}
-            <div className="p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div
+              onClick={() => setActiveLayer(4)}
+              className={`p-5 rounded-3xl border transition cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+                activeLayer === 4
+                  ? 'border-rose-500 bg-rose-50/40 dark:bg-rose-950/20 shadow-md ring-2 ring-rose-500/30'
+                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
+              }`}
+            >
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
                   L4
                 </div>
                 <div>
-                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
-                    Operating System Kernel Layer (epoll / kqueue / IOCP)
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <span>Operating System Kernel Layer (epoll / kqueue / IOCP)</span>
+                    {activeLayer === 4 && <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-600 font-mono font-semibold">Active Layer</span>}
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-300">
                     Kernel notification multiplexers: Linux (<code className="font-mono">epoll</code>), macOS (<code className="font-mono">kqueue</code>), Windows (<code className="font-mono">IOCP</code>).

@@ -27,6 +27,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { NodeJsEditor } from './NodeJsEditor';
+import { V8MemoryVisualizer } from './V8MemoryVisualizer';
 
 export function Concept5Lesson() {
   // Interactive quiz state
@@ -358,6 +359,11 @@ delete a.x; // Drops into slow dictionary mode!`}</pre>
                 <strong>Mark-Sweep-Compact Algorithm:</strong> Traverses the entire heap graph (Marking), sweeps dead memory, and defragments memory pages (Compacting). Runs concurrently in background threads via Orinoco to avoid freezing JavaScript.
               </div>
             </div>
+          </div>
+
+          {/* Interactive V8 Memory & Garbage Collection Visualizer */}
+          <div className="pt-2">
+            <V8MemoryVisualizer />
           </div>
         </div>
       </section>

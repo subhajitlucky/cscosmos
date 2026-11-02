@@ -26,6 +26,8 @@ import {
   FolderOpen,
 } from 'lucide-react';
 import { NodeJsEditor } from './NodeJsEditor';
+import { LibuvEventLoopStepper } from './LibuvEventLoopStepper';
+import { ThreadPoolVisualizer } from './ThreadPoolVisualizer';
 
 export function Concept6Lesson() {
   // Interactive quiz state
@@ -276,6 +278,11 @@ export function Concept6Lesson() {
               </ul>
             </div>
           </div>
+
+          {/* Interactive Thread Pool Visualizer */}
+          <div className="pt-2">
+            <ThreadPoolVisualizer />
+          </div>
         </div>
       </section>
 
@@ -349,6 +356,11 @@ export function Concept6Lesson() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Interactive Event Loop Phase Stepper */}
+          <div className="pt-2">
+            <LibuvEventLoopStepper />
           </div>
         </div>
       </section>
