@@ -74,6 +74,23 @@ test.describe('sqlcosmos smoke', () => {
     await expect(page.getByText('Answer:', { exact: false })).toBeVisible();
   });
 
+  test('allows jumping directly to specific flashcards via selector and directory', async ({ page }) => {
+    await page.goto(`${CANONICAL_PATH}/flashcards`);
+
+    // Jump using dropdown selector
+    const select = page.getByRole('combobox', { name: /Jump to specific question/i });
+    await expect(select).toBeVisible();
+    await select.selectOption({ value: 'sf-18' });
+
+    // Verify card updated to Deadlocks question heading
+    await expect(page.getByRole('heading', { name: /prevent and resolve database Deadlocks/i })).toBeVisible();
+
+    // Toggle Directory and jump to question 22 (Keyset Pagination)
+    await page.getByRole('button', { name: /Directory/i }).click();
+    await page.getByRole('button', { name: /OFFSET 1000000 LIMIT 20/i }).click();
+    await expect(page.getByRole('heading', { name: /Keyset \(Cursor\) Pagination/i })).toBeVisible();
+  });
+
   test('navbar provides clean links to concepts, playground, problems, and flashcards', async ({ page }) => {
     await page.goto(CANONICAL_PATH);
 
