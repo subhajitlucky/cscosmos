@@ -190,11 +190,13 @@ export function NodeJsEditor({
       ],
     };
 
+    type Listener = (...args: any[]) => void;
+
     class CustomEventEmitter {
-      private _events: Record<string, Function[]> = Object.create(null);
+      private _events: Record<string, Listener[]> = Object.create(null);
       private _maxListeners = 10;
 
-      on(event: string, listener: Function) {
+      on(event: string, listener: Listener) {
         if (!this._events[event]) {
           this._events[event] = [];
         }
@@ -208,11 +210,11 @@ export function NodeJsEditor({
         return this;
       }
 
-      addListener(event: string, listener: Function) {
+      addListener(event: string, listener: Listener) {
         return this.on(event, listener);
       }
 
-      once(event: string, listener: Function) {
+      once(event: string, listener: Listener) {
         const wrapper = (...args: any[]) => {
           this.off(event, wrapper);
           listener.apply(this, args);
@@ -238,7 +240,7 @@ export function NodeJsEditor({
         return true;
       }
 
-      off(event: string, listener: Function) {
+      off(event: string, listener: Listener) {
         if (!this._events[event]) return this;
         this._events[event] = this._events[event].filter(
           (fn) => fn !== listener && (fn as any).listener !== listener
@@ -246,7 +248,7 @@ export function NodeJsEditor({
         return this;
       }
 
-      removeListener(event: string, listener: Function) {
+      removeListener(event: string, listener: Listener) {
         return this.off(event, listener);
       }
 
