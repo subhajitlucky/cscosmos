@@ -33,9 +33,9 @@ const CONCEPT_TRACKS: ConceptTrack[] = [
     topics: [
       { name: 'Selectors & Specificity', difficulty: 'Foundation', path: '/selectors' },
       { name: 'Cascade & Inheritance', difficulty: 'Foundation', path: '/cascade' },
-      { name: 'Pseudo-Classes & Elements', difficulty: 'Foundation', path: '/selectors' },
-      { name: ':is(), :where(), and :has()', difficulty: 'Intermediate', path: '/selectors' },
-      { name: 'Cascade Layers (@layer)', difficulty: 'Intermediate', path: '/cascade' },
+      { name: 'Pseudo-Classes & Elements', difficulty: 'Foundation', path: '/pseudo-classes' },
+      { name: ':is(), :where(), and :has()', difficulty: 'Intermediate', path: '/is-where-has' },
+      { name: 'Cascade Layers (@layer)', difficulty: 'Intermediate', path: '/cascade-layers' },
     ],
   },
   {
@@ -54,7 +54,7 @@ const CONCEPT_TRACKS: ConceptTrack[] = [
     topics: [
       { name: 'Flexbox Layout', difficulty: 'Foundation', path: '/flexbox' },
       { name: 'CSS Grid', difficulty: 'Intermediate', path: '/grid' },
-      { name: 'CSS Subgrid', difficulty: 'Advanced', path: '/grid' },
+      { name: 'CSS Subgrid', difficulty: 'Advanced', path: '/subgrid' },
       { name: 'Multi-Column Layout', difficulty: 'Intermediate', path: '/multicolumn' },
     ],
   },

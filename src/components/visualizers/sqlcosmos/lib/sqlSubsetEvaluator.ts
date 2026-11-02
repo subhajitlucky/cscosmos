@@ -30,9 +30,9 @@ export interface SqlResult {
 }
 
 export const SUPPORTED_SQL_SCOPE =
-  'SELECT * or a column list, FROM users/orders (with optional alias), one INNER JOIN ... ON a.x = b.y, and WHERE conditions (= != <> > < >= <=) joined by AND.';
+  'SELECT * or a column list, FROM a table (with optional alias), one INNER JOIN ... ON a.x = b.y, and WHERE conditions (= != <> > < >= <=) joined by AND.';
 
-const TABLES: Record<string, SqlTable> = {
+export const TABLES: Record<string, SqlTable> = {
   users: {
     columns: ['id', 'name', 'email', 'role', 'country'],
     rows: [
@@ -49,6 +49,73 @@ const TABLES: Record<string, SqlTable> = {
       { id: 102, user_id: 1, product: 'Magic Mouse', total: 99.0 },
       { id: 103, user_id: 2, product: 'Mechanical Keyboard', total: 150.0 },
       { id: 104, user_id: 3, product: '4K Monitor', total: 450.0 },
+    ],
+  },
+  products: {
+    columns: ['id', 'name', 'category', 'price', 'stock'],
+    rows: [
+      { id: 1, name: 'MacBook Pro', category: 'Hardware', price: 2499, stock: 15 },
+      { id: 2, name: 'Magic Mouse', category: 'Peripherals', price: 99, stock: 45 },
+      { id: 3, name: 'Mechanical Keyboard', category: 'Peripherals', price: 150, stock: 30 },
+      { id: 4, name: '4K Monitor', category: 'Displays', price: 450, stock: 20 },
+      { id: 5, name: 'USB-C Dock', category: 'Accessories', price: 89, stock: 60 },
+      { id: 6, name: 'Noise-Canceling Headphones', category: 'Audio', price: 349, stock: 12 },
+      { id: 7, name: 'Webcam 1080p', category: 'Hardware', price: 119, stock: 25 },
+      { id: 8, name: 'Standing Desk Mat', category: 'Accessories', price: 59, stock: 40 },
+    ],
+  },
+  departments: {
+    columns: ['id', 'name', 'budget', 'floor'],
+    rows: [
+      { id: 1, name: 'Engineering', budget: 500000, floor: 3 },
+      { id: 2, name: 'Design', budget: 200000, floor: 2 },
+      { id: 3, name: 'Infrastructure', budget: 350000, floor: 3 },
+      { id: 4, name: 'Security', budget: 250000, floor: 4 },
+    ],
+  },
+  employees: {
+    columns: ['id', 'name', 'department_id', 'title', 'salary', 'experience_years'],
+    rows: [
+      { id: 1, name: 'Alice', department_id: 1, title: 'Principal Architect', salary: 185000, experience_years: 10 },
+      { id: 2, name: 'Bob', department_id: 1, title: 'Senior Software Engineer', salary: 145000, experience_years: 6 },
+      { id: 3, name: 'Charlie', department_id: 3, title: 'Site Reliability Engineer', salary: 135000, experience_years: 5 },
+      { id: 4, name: 'Diana', department_id: 2, title: 'Product Design Lead', salary: 130000, experience_years: 7 },
+      { id: 5, name: 'Evan', department_id: 2, title: 'Design Systems Engineer', salary: 110000, experience_years: 4 },
+      { id: 6, name: 'Fiona', department_id: 4, title: 'Security Operations Engineer', salary: 140000, experience_years: 6 },
+      { id: 7, name: 'George', department_id: 1, title: 'Junior Backend Developer', salary: 92000, experience_years: 2 },
+      { id: 8, name: 'Hannah', department_id: 3, title: 'DevOps Specialist', salary: 125000, experience_years: 4 },
+    ],
+  },
+  customers: {
+    columns: ['id', 'name', 'tier', 'city', 'country', 'credit_limit'],
+    rows: [
+      { id: 1, name: 'Acme Corp', tier: 'Enterprise', city: 'San Francisco', country: 'US', credit_limit: 50000 },
+      { id: 2, name: 'Globex Ltd', tier: 'Enterprise', city: 'London', country: 'UK', credit_limit: 45000 },
+      { id: 3, name: 'Initech', tier: 'Growth', city: 'Austin', country: 'US', credit_limit: 20000 },
+      { id: 4, name: 'Umbrella Tech', tier: 'Starter', city: 'Toronto', country: 'CA', credit_limit: 10000 },
+      { id: 5, name: 'Soylent AI', tier: 'Growth', city: 'Berlin', country: 'DE', credit_limit: 25000 },
+    ],
+  },
+  invoices: {
+    columns: ['id', 'customer_id', 'amount', 'status', 'year'],
+    rows: [
+      { id: 501, customer_id: 1, amount: 12000, status: 'paid', year: 2026 },
+      { id: 502, customer_id: 1, amount: 15500, status: 'paid', year: 2026 },
+      { id: 503, customer_id: 2, amount: 8000, status: 'pending', year: 2026 },
+      { id: 504, customer_id: 3, amount: 4500, status: 'paid', year: 2025 },
+      { id: 505, customer_id: 4, amount: 2200, status: 'pending', year: 2026 },
+      { id: 506, customer_id: 5, amount: 9500, status: 'paid', year: 2026 },
+    ],
+  },
+  servers: {
+    columns: ['id', 'hostname', 'region', 'status', 'cores', 'ram_gb'],
+    rows: [
+      { id: 1, hostname: 'prod-api-01', region: 'us-east', status: 'active', cores: 16, ram_gb: 64 },
+      { id: 2, hostname: 'prod-api-02', region: 'us-east', status: 'active', cores: 16, ram_gb: 64 },
+      { id: 3, hostname: 'prod-db-master', region: 'us-east', status: 'active', cores: 32, ram_gb: 128 },
+      { id: 4, hostname: 'prod-cache-01', region: 'eu-west', status: 'active', cores: 8, ram_gb: 32 },
+      { id: 5, hostname: 'staging-app-01', region: 'us-west', status: 'idle', cores: 4, ram_gb: 16 },
+      { id: 6, hostname: 'backup-node-01', region: 'eu-west', status: 'maintenance', cores: 8, ram_gb: 32 },
     ],
   },
 };

@@ -12,6 +12,7 @@ import { cssProblems } from '@/components/visualizers/cssviz/data/problems';
 
 export function generateStaticParams() {
     const topicParams = topics.map(topic => ({ slug: ['topics', topic.path.replace(/^\//, '')] }));
+    const directTopicParams = topics.map(topic => ({ slug: [topic.path.replace(/^\//, '')] }));
     const problemParams = cssProblems.map(p => ({ slug: ['problems', String(p.id)] }));
     return [
         { slug: [] },
@@ -20,6 +21,7 @@ export function generateStaticParams() {
         { slug: ['problems'] },
         ...problemParams,
         ...topicParams,
+        ...directTopicParams,
     ];
 }
 

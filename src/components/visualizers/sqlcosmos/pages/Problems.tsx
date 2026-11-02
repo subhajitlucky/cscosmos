@@ -27,6 +27,7 @@ import {
 } from '../data/problems';
 import {
   evaluateSql,
+  TABLES,
   type SqlRow,
   type SqlResult,
 } from '../lib/sqlSubsetEvaluator';
@@ -39,26 +40,7 @@ const DIFFICULTIES: ('All' | ProblemDifficulty)[] = [
   'Expert',
 ];
 
-const SAMPLE_SCHEMAS: Record<string, { columns: string[]; rows: SqlRow[] }> = {
-  users: {
-    columns: ['id', 'name', 'email', 'role', 'country'],
-    rows: [
-      { id: 1, name: 'Alice', email: 'alice@test.com', role: 'admin', country: 'US' },
-      { id: 2, name: 'Bob', email: 'bob@test.com', role: 'developer', country: 'CA' },
-      { id: 3, name: 'Charlie', email: 'charlie@test.com', role: 'developer', country: 'US' },
-      { id: 4, name: 'Diana', email: 'diana@test.com', role: 'designer', country: 'UK' },
-    ],
-  },
-  orders: {
-    columns: ['id', 'user_id', 'product', 'total'],
-    rows: [
-      { id: 101, user_id: 1, product: 'MacBook Pro', total: 2499.0 },
-      { id: 102, user_id: 1, product: 'Magic Mouse', total: 99.0 },
-      { id: 103, user_id: 2, product: 'Mechanical Keyboard', total: 150.0 },
-      { id: 104, user_id: 3, product: '4K Monitor', total: 450.0 },
-    ],
-  },
-};
+const SAMPLE_SCHEMAS = TABLES;
 
 export default function Problems() {
   const [selectedId, setSelectedId] = useState<string>(SQL_PROBLEMS[0].id);
