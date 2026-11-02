@@ -124,8 +124,218 @@ const PRESETS: Preset[] = [
 }`,
   },
   {
+    id: 'box-model',
+    name: '3. Box-Sizing & Outline Offsets',
+    category: 'Layout',
+    description: 'Compare content-box vs border-box math, border radius, and non-reflowing outline-offset.',
+    html: `<div class="box-arena">
+  <div class="demo-box content-box-mode">
+    <h3>content-box</h3>
+    <p>Rendered size = Declared width + padding + border (280px total!)</p>
+  </div>
+  <div class="demo-box border-box-mode">
+    <h3>border-box</h3>
+    <p>Rendered size = Strictly 200px (padding & border absorbed inside!)</p>
+  </div>
+</div>`,
+    css: `.box-arena {
+  display: flex;
+  gap: 32px;
+  padding: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.demo-box {
+  width: 200px;
+  height: 140px;
+  padding: 24px;
+  border: 8px solid #3b82f6;
+  border-radius: 16px;
+  outline: 3px dashed #10b981;
+  outline-offset: 6px; /* Non-reflowing visual halo outside border */
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.demo-box h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+.demo-box p {
+  margin: 0;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.content-box-mode {
+  box-sizing: content-box;
+}
+
+.border-box-mode {
+  box-sizing: border-box;
+}`,
+  },
+  {
+    id: 'translate-transforms',
+    name: '4. GPU Translate, Scale & Rotate',
+    category: 'Transforms',
+    description: 'Hardware-accelerated 2D/3D transformations that move on the compositor without layout reflow.',
+    html: `<div class="transform-stage">
+  <div class="card card-ghost">
+    <span>Ghost Slot (Normal Flow)</span>
+  </div>
+  <div class="card card-active">
+    <h3>GPU Transformed</h3>
+    <p>Hover to activate dynamic 3D translate and scale elevation!</p>
+    <div class="badge">translate3d(0, -16px, 0)</div>
+  </div>
+</div>`,
+    css: `.transform-stage {
+  padding: 60px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.card {
+  width: 260px;
+  height: 160px;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.card-ghost {
+  border: 2px dashed #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.card-active {
+  position: absolute;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: white;
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+  /* GPU Compositor Transition */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.card-active:hover {
+  /* Translate lifts up 16px and scales 1.05x with subtle 2deg rotation */
+  transform: translate3d(0, -16px, 0) scale(1.05) rotate(-1.5deg);
+  box-shadow: 0 25px 35px -5px rgba(99, 102, 241, 0.6);
+}
+
+.card-active h3 {
+  margin: 0 0 8px 0;
+}
+
+.card-active p {
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1.4;
+  margin: 0 0 16px 0;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 11px;
+}`,
+  },
+  {
+    id: 'keyframe-bounce',
+    name: '5. Kinetic Squash & Stretch Animation',
+    category: 'Motion',
+    description: 'Realistic gravity bounce keyframes engineered with cubic-bezier elastic overshoot and impact deformation.',
+    html: `<div class="bounce-stage">
+  <div class="rubber-orb"></div>
+  <div class="shadow-disc"></div>
+  <div class="floor-line"></div>
+</div>`,
+    css: `.bounce-stage {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 40px;
+  position: relative;
+}
+
+.rubber-orb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
+  box-shadow: 0 8px 20px rgba(244, 63, 94, 0.5);
+  animation: gravity-bounce 1.3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.shadow-disc {
+  width: 70px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+  animation: shadow-scale 1.3s ease-in-out infinite;
+  filter: blur(2px);
+}
+
+.floor-line {
+  width: 240px;
+  height: 2px;
+  background: #cbd5e1;
+  margin-top: -6px;
+}
+
+@keyframes gravity-bounce {
+  0% {
+    transform: translateY(-110px) scale(1, 1);
+  }
+  45% {
+    transform: translateY(0px) scale(1.25, 0.75); /* Squash on impact */
+  }
+  60% {
+    transform: translateY(-40px) scale(0.9, 1.15); /* Stretch ascending */
+  }
+  80% {
+    transform: translateY(0px) scale(1.05, 0.95);
+  }
+  100% {
+    transform: translateY(-110px) scale(1, 1);
+  }
+}
+
+@keyframes shadow-scale {
+  0%, 100% {
+    transform: scale(0.5);
+    opacity: 0.2;
+  }
+  45% {
+    transform: scale(1.3);
+    opacity: 0.6;
+  }
+}`,
+  },
+  {
     id: '3d-flip',
-    name: '3. 3D Perspective Card Flip',
+    name: '6. 3D Perspective Card Flip',
     category: 'Motion & 3D',
     description: 'Interactive card flip using perspective, preserve-3d, and backface-visibility.',
     html: `<div class="scene">
@@ -186,7 +396,7 @@ const PRESETS: Preset[] = [
   },
   {
     id: 'glassmorphism',
-    name: '4. Glassmorphism & Backdrop Blur',
+    name: '7. Glassmorphism & Backdrop Blur',
     category: 'Visuals',
     description: 'Modern translucent frosted glass using backdrop-filter and layered shadows.',
     html: `<div class="glass-scene">
@@ -255,7 +465,7 @@ const PRESETS: Preset[] = [
   },
   {
     id: 'container-queries',
-    name: '5. Container Queries (@container)',
+    name: '8. Container Queries (@container)',
     category: 'Responsive',
     description: 'Component adapts directly to parent container width, independent of viewport.',
     html: `<div class="resizable-wrapper">
@@ -311,7 +521,7 @@ const PRESETS: Preset[] = [
   },
   {
     id: 'clamp-fluid',
-    name: '6. Fluid clamp() Scaling',
+    name: '9. Fluid clamp() Scaling',
     category: 'Typography',
     description: 'Fluid scaling formula that smoothly scales font and spacing between limits.',
     html: `<div class="fluid-stage">
