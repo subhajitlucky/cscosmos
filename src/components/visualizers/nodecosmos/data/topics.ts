@@ -315,19 +315,20 @@ export const NODE_TOPICS: NodeTopic[] = [
     "level": "Beginner",
     "difficulty": "Beginner",
     "category": "Node.js Installation & CLI",
-    "summary": "Core concept #11 of the 2027 Node.js Curriculum Roadmap (Node.js Installation & CLI). Covers foundational mechanics, runtime behavior, and best practices.",
-    "status": "coming-soon",
+    "summary": "Master installing Node.js: runtime binary architecture (V8, libuv, OpenSSL), Active LTS vs Current release cycles, version managers vs OS package managers, and avoiding sudo security traps.",
+    "status": "ready",
     "stability": "Stable",
-    "mentalModel": "Conceptual mental model for Installing Node.js: Visualizing how Node.js abstracts OS primitives and executes within the Node.js Installation & CLI subsystem.",
-    "codeSnippet": "// Concept #11: Installing Node.js\n// Module 2: Node.js Installation & CLI (Beginner Level)\nconsole.log('Exploring Installing Node.js in Node.js runtime');\n",
+    "mentalModel": "Single-Binary Runtime Package: A statically linked C++ executable deployed to user-space $PATH directories, evaluated via even-numbered Active LTS release stability.",
+    "codeSnippet": "// Concept #11: Installing Node.js & Runtime Diagnostics\n// Verify runtime binary, release channel, and core dependencies\nconsole.log('Node Binary Path:', process.execPath);\nconsole.log('Installed Version:', process.version);\nconsole.log('Architecture:', process.arch);\nconsole.log('V8 Engine Version:', process.versions.v8);\nconsole.log('libuv Version:', process.versions.uv);\nconsole.log('OpenSSL Version:', process.versions.openssl);\n",
     "takeaways": [
-      "Master the core operational principles of Installing Node.js.",
-      "Understand interactions with Node.js runtime and Node.js Installation & CLI.",
-      "Apply production-ready architectural patterns in scalable applications."
+      "Node.js installs as a single statically linked C++ binary bundling V8, libuv, OpenSSL, zlib, and c-ares.",
+      "Even-numbered releases (v18, v20, v22) enter Active LTS for 30 months; odd-numbered releases are 6-month experimental builds unsuitable for production.",
+      "Always install Node.js via user-space version managers (fnm, nvm) to prevent sudo permission traps and isolate project dependencies.",
+      "Verify CPU architecture (process.arch) on Apple Silicon to prevent running x86_64 binaries under Rosetta 2 emulation."
     ],
     "commonPitfall": {
-      "mistake": "Misunderstanding Installing Node.js concurrency, memory lifecycle, or asynchronous guarantees.",
-      "fix": "Follow official Node.js runtime best practices and documentation guidelines for Installing Node.js."
+      "mistake": "Using 'sudo npm install -g' or deploying odd-numbered Current versions (e.g., v21, v23) to production environments.",
+      "fix": "Install Node.js via user-space version managers (fnm/nvm) and mandate even-numbered Active LTS versions in production Dockerfiles and CI/CD pipelines."
     },
     "nextTopicId": "node-js-version-management",
     "prevTopicId": "synchronous-vs-asynchronous-execution"
