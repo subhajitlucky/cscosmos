@@ -17,8 +17,8 @@ export interface SqlProblem {
 }
 
 export const SQL_PROBLEMS: SqlProblem[] = [
-  // EASY (1-10)
-  {
+  // EASY (1-30)
+{
     id: 'ch-1',
     title: 'Filter Developers',
     difficulty: 'Easy',
@@ -31,7 +31,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '2 rows (Bob, Charlie) with developer role',
     validate: (rows) => rows.length === 2 && rows.every((r) => r.role === 'developer'),
   },
-  {
+{
     id: 'ch-2',
     title: 'High-Value Orders',
     difficulty: 'Easy',
@@ -44,7 +44,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '2 rows (MacBook Pro $2499, 4K Monitor $450)',
     validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.total) > 200),
   },
-  {
+{
     id: 'ch-3',
     title: 'US Customers',
     difficulty: 'Easy',
@@ -61,7 +61,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('name') &&
       cols.includes('country'),
   },
-  {
+{
     id: 'ch-4',
     title: 'Budget Purchases',
     difficulty: 'Easy',
@@ -75,7 +75,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 2 && rows.every((r) => Number(r.total) <= 150),
   },
-  {
+{
     id: 'ch-5',
     title: 'Designer Profile Lookup',
     difficulty: 'Easy',
@@ -92,7 +92,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('name') &&
       cols.includes('email'),
   },
-  {
+{
     id: 'ch-6',
     title: 'Canadian User Search',
     difficulty: 'Easy',
@@ -105,7 +105,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Bob, Canadian developer)',
     validate: (rows) => rows.length === 1 && rows[0].country === 'CA' && rows[0].name === 'Bob',
   },
-  {
+{
     id: 'ch-7',
     title: 'Top Tier Hardware Purchases',
     difficulty: 'Easy',
@@ -118,7 +118,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (MacBook Pro at $2499.0)',
     validate: (rows) => rows.length === 1 && Number(rows[0].total) >= 1000,
   },
-  {
+{
     id: 'ch-8',
     title: 'Customer Contact Roster',
     difficulty: 'Easy',
@@ -135,7 +135,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('email') &&
       !cols.includes('id'),
   },
-  {
+{
     id: 'ch-9',
     title: 'Display Hardware Catalog',
     difficulty: 'Easy',
@@ -148,7 +148,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row for order #104 ($450.0)',
     validate: (rows) => rows.length === 1 && rows[0].product === '4K Monitor',
   },
-  {
+{
     id: 'ch-10',
     title: 'Sub-100 Dollar Accessories',
     difficulty: 'Easy',
@@ -161,10 +161,286 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Magic Mouse at $99.0)',
     validate: (rows) => rows.length === 1 && Number(rows[0].total) < 100,
   },
-
-  // INTERMEDIATE (11-18)
-  {
+{
     id: 'ch-11',
+    title: 'All Hardware Products',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Query all products from the products table where the category is "Hardware".',
+    hint: "SELECT * FROM products WHERE category = 'Hardware';",
+    initialSql: "SELECT * FROM products WHERE category = 'Hardware';",
+    solutionSql: "SELECT * FROM products WHERE category = 'Hardware';",
+    tablesUsed: ['products'],
+    expectedOutputSummary: '2 rows (MacBook Pro, Webcam 1080p)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => r.category === 'Hardware'),
+  },
+{
+    id: 'ch-12',
+    title: 'High-Stock Inventory',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Select all products whose current stock is greater than or equal to 40 units.',
+    hint: 'SELECT * FROM products WHERE stock >= 40;',
+    initialSql: 'SELECT * FROM products WHERE stock >= 40;',
+    solutionSql: 'SELECT * FROM products WHERE stock >= 40;',
+    tablesUsed: ['products'],
+    expectedOutputSummary: '3 rows (Magic Mouse, USB-C Dock, Standing Desk Mat)',
+    validate: (rows) => rows.length === 3 && rows.every((r) => Number(r.stock) >= 40),
+  },
+{
+    id: 'ch-13',
+    title: 'Product Pricing Directory',
+    difficulty: 'Easy',
+    category: 'Projections',
+    description: 'Project only the name and price columns for all products in inventory.',
+    hint: 'SELECT name, price FROM products;',
+    initialSql: 'SELECT name, price FROM products;',
+    solutionSql: 'SELECT name, price FROM products;',
+    tablesUsed: ['products'],
+    expectedOutputSummary: '8 rows containing only name and price columns',
+    validate: (rows, cols) =>
+      rows.length === 8 &&
+      cols.includes('name') &&
+      cols.includes('price') &&
+      !cols.includes('id'),
+  },
+{
+    id: 'ch-14',
+    title: 'Display Category Products',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Select all product records classified under category "Displays".',
+    hint: "SELECT * FROM products WHERE category = 'Displays';",
+    initialSql: "SELECT * FROM products WHERE category = 'Displays';",
+    solutionSql: "SELECT * FROM products WHERE category = 'Displays';",
+    tablesUsed: ['products'],
+    expectedOutputSummary: '1 row (4K Monitor at $450)',
+    validate: (rows) => rows.length === 1 && rows[0].name === '4K Monitor',
+  },
+{
+    id: 'ch-15',
+    title: 'Audio Hardware Catalog',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Find all items in products belonging to the "Audio" category.',
+    hint: "SELECT * FROM products WHERE category = 'Audio';",
+    initialSql: "SELECT * FROM products WHERE category = 'Audio';",
+    solutionSql: "SELECT * FROM products WHERE category = 'Audio';",
+    tablesUsed: ['products'],
+    expectedOutputSummary: '1 row (Noise-Canceling Headphones at $349)',
+    validate: (rows) => rows.length === 1 && rows[0].name === 'Noise-Canceling Headphones',
+  },
+{
+    id: 'ch-16',
+    title: 'Department Floor Lookup',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Query all departments located on floor 3.',
+    hint: 'SELECT * FROM departments WHERE floor = 3;',
+    initialSql: 'SELECT * FROM departments WHERE floor = 3;',
+    solutionSql: 'SELECT * FROM departments WHERE floor = 3;',
+    tablesUsed: ['departments'],
+    expectedOutputSummary: '2 rows (Engineering and Infrastructure)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.floor) === 3),
+  },
+{
+    id: 'ch-17',
+    title: 'Large Budget Departments',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Select all departments with an annual budget greater than or equal to 300000.',
+    hint: 'SELECT * FROM departments WHERE budget >= 300000;',
+    initialSql: 'SELECT * FROM departments WHERE budget >= 300000;',
+    solutionSql: 'SELECT * FROM departments WHERE budget >= 300000;',
+    tablesUsed: ['departments'],
+    expectedOutputSummary: '2 rows (Engineering $500k, Infrastructure $350k)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.budget) >= 300000),
+  },
+{
+    id: 'ch-18',
+    title: 'Department Names and Budgets',
+    difficulty: 'Easy',
+    category: 'Projections',
+    description: 'Select only the name and budget columns for all departments.',
+    hint: 'SELECT name, budget FROM departments;',
+    initialSql: 'SELECT name, budget FROM departments;',
+    solutionSql: 'SELECT name, budget FROM departments;',
+    tablesUsed: ['departments'],
+    expectedOutputSummary: '4 rows containing only name and budget',
+    validate: (rows, cols) =>
+      rows.length === 4 &&
+      cols.includes('name') &&
+      cols.includes('budget') &&
+      !cols.includes('id'),
+  },
+{
+    id: 'ch-19',
+    title: 'High-Earner Employees',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Select all employees with a salary strictly greater than 140000.',
+    hint: 'SELECT * FROM employees WHERE salary > 140000;',
+    initialSql: 'SELECT * FROM employees WHERE salary > 140000;',
+    solutionSql: 'SELECT * FROM employees WHERE salary > 140000;',
+    tablesUsed: ['employees'],
+    expectedOutputSummary: '2 rows (Alice $185k, Bob $145k)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.salary) > 140000),
+  },
+{
+    id: 'ch-20',
+    title: 'Senior Tenured Staff',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Query all employees who have 6 or more years of experience (experience_years >= 6).',
+    hint: 'SELECT * FROM employees WHERE experience_years >= 6;',
+    initialSql: 'SELECT * FROM employees WHERE experience_years >= 6;',
+    solutionSql: 'SELECT * FROM employees WHERE experience_years >= 6;',
+    tablesUsed: ['employees'],
+    expectedOutputSummary: '4 rows (Alice 10yr, Bob 6yr, Diana 7yr, Fiona 6yr)',
+    validate: (rows) => rows.length === 4 && rows.every((r) => Number(r.experience_years) >= 6),
+  },
+{
+    id: 'ch-21',
+    title: 'Employee Title Roster',
+    difficulty: 'Easy',
+    category: 'Projections',
+    description: 'Select the name, title, and salary columns for all employees.',
+    hint: 'SELECT name, title, salary FROM employees;',
+    initialSql: 'SELECT name, title, salary FROM employees;',
+    solutionSql: 'SELECT name, title, salary FROM employees;',
+    tablesUsed: ['employees'],
+    expectedOutputSummary: '8 rows with name, title, and salary',
+    validate: (rows, cols) =>
+      rows.length === 8 &&
+      cols.includes('name') &&
+      cols.includes('title') &&
+      cols.includes('salary'),
+  },
+{
+    id: 'ch-22',
+    title: 'Enterprise Tier Customers',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Select all customers classified as "Enterprise" tier.',
+    hint: "SELECT * FROM customers WHERE tier = 'Enterprise';",
+    initialSql: "SELECT * FROM customers WHERE tier = 'Enterprise';",
+    solutionSql: "SELECT * FROM customers WHERE tier = 'Enterprise';",
+    tablesUsed: ['customers'],
+    expectedOutputSummary: '2 rows (Acme Corp, Globex Ltd)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => r.tier === 'Enterprise'),
+  },
+{
+    id: 'ch-23',
+    title: 'High Credit Limit Accounts',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Query all customer accounts with a credit limit greater than 30000.',
+    hint: 'SELECT * FROM customers WHERE credit_limit > 30000;',
+    initialSql: 'SELECT * FROM customers WHERE credit_limit > 30000;',
+    solutionSql: 'SELECT * FROM customers WHERE credit_limit > 30000;',
+    tablesUsed: ['customers'],
+    expectedOutputSummary: '2 rows (Acme Corp $50k, Globex Ltd $45k)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.credit_limit) > 30000),
+  },
+{
+    id: 'ch-24',
+    title: 'German Customer Directory',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Query all customer records located in Germany (country = "DE").',
+    hint: "SELECT * FROM customers WHERE country = 'DE';",
+    initialSql: "SELECT * FROM customers WHERE country = 'DE';",
+    solutionSql: "SELECT * FROM customers WHERE country = 'DE';",
+    tablesUsed: ['customers'],
+    expectedOutputSummary: '1 row (Soylent AI in Berlin)',
+    validate: (rows) => rows.length === 1 && rows[0].country === 'DE',
+  },
+{
+    id: 'ch-25',
+    title: 'Pending Invoice Records',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Select all invoices where status is "pending".',
+    hint: "SELECT * FROM invoices WHERE status = 'pending';",
+    initialSql: "SELECT * FROM invoices WHERE status = 'pending';",
+    solutionSql: "SELECT * FROM invoices WHERE status = 'pending';",
+    tablesUsed: ['invoices'],
+    expectedOutputSummary: '2 rows (invoice #503 $8000, invoice #505 $2200)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => r.status === 'pending'),
+  },
+{
+    id: 'ch-26',
+    title: 'Five-Figure Invoices',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Query all invoices where the amount is greater than or equal to 10000.',
+    hint: 'SELECT * FROM invoices WHERE amount >= 10000;',
+    initialSql: 'SELECT * FROM invoices WHERE amount >= 10000;',
+    solutionSql: 'SELECT * FROM invoices WHERE amount >= 10000;',
+    tablesUsed: ['invoices'],
+    expectedOutputSummary: '2 rows (invoice #501 $12000, invoice #502 $15500)',
+    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.amount) >= 10000),
+  },
+{
+    id: 'ch-27',
+    title: 'Active Production Servers',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Select all servers from the servers table where status is "active".',
+    hint: "SELECT * FROM servers WHERE status = 'active';",
+    initialSql: "SELECT * FROM servers WHERE status = 'active';",
+    solutionSql: "SELECT * FROM servers WHERE status = 'active';",
+    tablesUsed: ['servers'],
+    expectedOutputSummary: '4 rows (prod-api-01, prod-api-02, prod-db-master, prod-cache-01)',
+    validate: (rows) => rows.length === 4 && rows.every((r) => r.status === 'active'),
+  },
+{
+    id: 'ch-28',
+    title: 'High-Density Compute Nodes',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Select all servers with 16 or more CPU cores (cores >= 16).',
+    hint: 'SELECT * FROM servers WHERE cores >= 16;',
+    initialSql: 'SELECT * FROM servers WHERE cores >= 16;',
+    solutionSql: 'SELECT * FROM servers WHERE cores >= 16;',
+    tablesUsed: ['servers'],
+    expectedOutputSummary: '3 rows (prod-api-01 16, prod-api-02 16, prod-db-master 32)',
+    validate: (rows) => rows.length === 3 && rows.every((r) => Number(r.cores) >= 16),
+  },
+{
+    id: 'ch-29',
+    title: 'Large Memory Fleet',
+    difficulty: 'Easy',
+    category: 'Threshold Filtering',
+    description: 'Find all servers with ram_gb greater than 32.',
+    hint: 'SELECT * FROM servers WHERE ram_gb > 32;',
+    initialSql: 'SELECT * FROM servers WHERE ram_gb > 32;',
+    solutionSql: 'SELECT * FROM servers WHERE ram_gb > 32;',
+    tablesUsed: ['servers'],
+    expectedOutputSummary: '3 rows (prod-api-01 64GB, prod-api-02 64GB, prod-db-master 128GB)',
+    validate: (rows) => rows.length === 3 && rows.every((r) => Number(r.ram_gb) > 32),
+  },
+{
+    id: 'ch-30',
+    title: 'European Infrastructure Fleet',
+    difficulty: 'Easy',
+    category: 'Filtering & Predicates',
+    description: 'Select the hostname and region for all servers provisioned in "eu-west".',
+    hint: "SELECT hostname, region FROM servers WHERE region = 'eu-west';",
+    initialSql: "SELECT hostname, region FROM servers WHERE region = 'eu-west';",
+    solutionSql: "SELECT hostname, region FROM servers WHERE region = 'eu-west';",
+    tablesUsed: ['servers'],
+    expectedOutputSummary: '2 rows (prod-cache-01, backup-node-01)',
+    validate: (rows, cols) =>
+      rows.length === 2 &&
+      rows.every((r) => r.region === 'eu-west') &&
+      cols.includes('hostname') &&
+      cols.includes('region'),
+  },
+
+  // INTERMEDIATE (31-60)
+{
+    id: 'ch-31',
     title: 'Relational Inner Join',
     difficulty: 'Intermediate',
     category: 'Joins & Relations',
@@ -180,8 +456,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('product') &&
       rows.every((r) => Number(r.total || r['o.total']) > 100),
   },
-  {
-    id: 'ch-12',
+{
+    id: 'ch-32',
     title: 'Developer Equipment Orders',
     difficulty: 'Intermediate',
     category: 'Joins & Relations',
@@ -195,8 +471,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 2 &&
       rows.every((r) => r.role === 'developer' || r['u.role'] === 'developer'),
   },
-  {
-    id: 'ch-13',
+{
+    id: 'ch-33',
     title: 'US Orders Spending Audit',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -214,8 +490,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
         return country === 'US' && total > 200;
       }),
   },
-  {
-    id: 'ch-14',
+{
+    id: 'ch-34',
     title: 'Non-Developer Purchasing Audit',
     difficulty: 'Intermediate',
     category: 'Joins & Negation',
@@ -229,8 +505,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 2 &&
       rows.every((r) => (r.role ?? r['u.role']) !== 'developer'),
   },
-  {
-    id: 'ch-15',
+{
+    id: 'ch-35',
     title: 'Admin Hardware Orders',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -244,8 +520,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 2 &&
       rows.every((r) => (r.email ?? r['u.email']) === 'alice@test.com'),
   },
-  {
-    id: 'ch-16',
+{
+    id: 'ch-36',
     title: 'Canadian Procurement Record',
     difficulty: 'Intermediate',
     category: 'Multi-Table Filtering',
@@ -259,8 +535,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].country ?? rows[0]['u.country']) === 'CA',
   },
-  {
-    id: 'ch-17',
+{
+    id: 'ch-37',
     title: 'Column Aliasing & Presentation',
     difficulty: 'Intermediate',
     category: 'Aliasing & Projection',
@@ -275,8 +551,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('customer_name') &&
       cols.includes('item_ordered'),
   },
-  {
-    id: 'ch-18',
+{
+    id: 'ch-38',
     title: 'Mid-Range Peripherals',
     difficulty: 'Intermediate',
     category: 'Range Compound Conditions',
@@ -290,402 +566,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 2 &&
       rows.every((r) => Number(r.total) > 100 && Number(r.total) < 500),
   },
-
-  // ADVANCED (19-23)
-  {
-    id: 'ch-19',
-    title: 'High-Value US Developer Purchases',
-    difficulty: 'Advanced',
-    category: 'Compound Multi-Condition Joins',
-    description: 'Find all purchases where the user is a "developer", resides in "US", and the order total is 400 or greater.',
-    hint: "SELECT u.name, u.role, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role = 'developer' AND u.country = 'US' AND o.total >= 400;",
-    initialSql: "SELECT u.name, u.role, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role = 'developer' AND u.country = 'US' AND o.total >= 400;",
-    solutionSql: "SELECT u.name, u.role, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role = 'developer' AND u.country = 'US' AND o.total >= 400;",
-    tablesUsed: ['users', 'orders'],
-    expectedOutputSummary: '1 row (Charlie: 4K Monitor at $450.0)',
-    validate: (rows) =>
-      rows.length === 1 &&
-      (rows[0].name === 'Charlie' || rows[0]['u.name'] === 'Charlie'),
-  },
-  {
-    id: 'ch-20',
-    title: 'Multi-Condition Exclusion Filter',
-    difficulty: 'Advanced',
-    category: 'Exclusion & Compound Logic',
-    description: 'Select all orders from the orders table where total is strictly greater than 100 AND product != "Magic Mouse".',
-    hint: "SELECT * FROM orders WHERE total > 100 AND product != 'Magic Mouse';",
-    initialSql: "SELECT * FROM orders WHERE total > 100 AND product != 'Magic Mouse';",
-    solutionSql: "SELECT * FROM orders WHERE total > 100 AND product != 'Magic Mouse';",
-    tablesUsed: ['orders'],
-    expectedOutputSummary: '3 rows excluding Magic Mouse',
-    validate: (rows) =>
-      rows.length === 3 &&
-      rows.every((r) => Number(r.total) > 100 && r.product !== 'Magic Mouse'),
-  },
-  {
-    id: 'ch-21',
-    title: 'Cross-Border Procurement Audit',
-    difficulty: 'Advanced',
-    category: 'Relational Projection & Filtering',
-    description: 'Join users and orders to list all transactions where country != "US" AND total >= 100.',
-    hint: "SELECT u.name, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country != 'US' AND o.total >= 100;",
-    initialSql: "SELECT u.name, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country != 'US' AND o.total >= 100;",
-    solutionSql: "SELECT u.name, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country != 'US' AND o.total >= 100;",
-    tablesUsed: ['users', 'orders'],
-    expectedOutputSummary: '1 row (Bob in CA with $150 transaction)',
-    validate: (rows) =>
-      rows.length === 1 &&
-      (rows[0].country ?? rows[0]['u.country']) === 'CA',
-  },
-  {
-    id: 'ch-22',
-    title: 'Role-Based Budget Sourcing',
-    difficulty: 'Advanced',
-    category: 'Compound Relational Predicates',
-    description: 'Find all orders placed by users where role != "admin" AND total <= 200.',
-    hint: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role != 'admin' AND o.total <= 200;",
-    initialSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role != 'admin' AND o.total <= 200;",
-    solutionSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role != 'admin' AND o.total <= 200;",
-    tablesUsed: ['users', 'orders'],
-    expectedOutputSummary: '1 row (Bob, developer with $150 keyboard)',
-    validate: (rows) =>
-      rows.length === 1 &&
-      (rows[0].name === 'Bob' || rows[0]['u.name'] === 'Bob'),
-  },
-  {
-    id: 'ch-23',
-    title: 'Strict Multi-Predicate User Scan',
-    difficulty: 'Advanced',
-    category: 'Exact Multi-Predicate Match',
-    description: 'Select all users whose country is "US" AND role = "developer" AND id >= 3.',
-    hint: "SELECT * FROM users WHERE country = 'US' AND role = 'developer' AND id >= 3;",
-    initialSql: "SELECT * FROM users WHERE country = 'US' AND role = 'developer' AND id >= 3;",
-    solutionSql: "SELECT * FROM users WHERE country = 'US' AND role = 'developer' AND id >= 3;",
-    tablesUsed: ['users'],
-    expectedOutputSummary: '1 row (Charlie: id=3, US developer)',
-    validate: (rows) =>
-      rows.length === 1 && rows[0].name === 'Charlie',
-  },
-
-  // EXPERT (24-25)
-  {
-    id: 'ch-24',
-    title: 'Enterprise Boundary Spend Join',
-    difficulty: 'Expert',
-    category: 'Complex Enterprise Queries',
-    description: 'Join users and orders selecting customer email, product, and total where u.country = "US" AND o.total > 50 AND o.total < 2000.',
-    hint: "SELECT u.email, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country = 'US' AND o.total > 50 AND o.total < 2000;",
-    initialSql: "SELECT u.email, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country = 'US' AND o.total > 50 AND o.total < 2000;",
-    solutionSql: "SELECT u.email, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country = 'US' AND o.total > 50 AND o.total < 2000;",
-    tablesUsed: ['users', 'orders'],
-    expectedOutputSummary: '2 rows (Alice Magic Mouse $99, Charlie 4K Monitor $450)',
-    validate: (rows, cols) =>
-      rows.length === 2 &&
-      cols.includes('email') &&
-      cols.includes('product') &&
-      rows.every((r) => {
-        const total = Number(r.total ?? r['o.total']);
-        return total > 50 && total < 2000;
-      }),
-  },
-  {
-    id: 'ch-25',
-    title: 'High-Cap Enterprise Expenditure Audit',
-    difficulty: 'Expert',
-    category: 'Schema Audit & Constraint Check',
-    description: 'Perform a qualified join to verify transactions of $2000 or greater placed by users located in "US".',
-    hint: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total >= 2000 AND u.country = 'US';",
-    initialSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total >= 2000 AND u.country = 'US';",
-    solutionSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total >= 2000 AND u.country = 'US';",
-    tablesUsed: ['users', 'orders'],
-    expectedOutputSummary: '1 row (Alice, admin, MacBook Pro $2499.0)',
-    validate: (rows) =>
-      rows.length === 1 &&
-      (rows[0].name === 'Alice' || rows[0]['u.name'] === 'Alice') &&
-      Number(rows[0].total ?? rows[0]['o.total']) >= 2000,
-  },
-
-  // EASY (26-45)
-  {
-    id: 'ch-26',
-    title: 'All Hardware Products',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Query all products from the products table where the category is "Hardware".',
-    hint: "SELECT * FROM products WHERE category = 'Hardware';",
-    initialSql: "SELECT * FROM products WHERE category = 'Hardware';",
-    solutionSql: "SELECT * FROM products WHERE category = 'Hardware';",
-    tablesUsed: ['products'],
-    expectedOutputSummary: '2 rows (MacBook Pro, Webcam 1080p)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => r.category === 'Hardware'),
-  },
-  {
-    id: 'ch-27',
-    title: 'High-Stock Inventory',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Select all products whose current stock is greater than or equal to 40 units.',
-    hint: 'SELECT * FROM products WHERE stock >= 40;',
-    initialSql: 'SELECT * FROM products WHERE stock >= 40;',
-    solutionSql: 'SELECT * FROM products WHERE stock >= 40;',
-    tablesUsed: ['products'],
-    expectedOutputSummary: '3 rows (Magic Mouse, USB-C Dock, Standing Desk Mat)',
-    validate: (rows) => rows.length === 3 && rows.every((r) => Number(r.stock) >= 40),
-  },
-  {
-    id: 'ch-28',
-    title: 'Product Pricing Directory',
-    difficulty: 'Easy',
-    category: 'Projections',
-    description: 'Project only the name and price columns for all products in inventory.',
-    hint: 'SELECT name, price FROM products;',
-    initialSql: 'SELECT name, price FROM products;',
-    solutionSql: 'SELECT name, price FROM products;',
-    tablesUsed: ['products'],
-    expectedOutputSummary: '8 rows containing only name and price columns',
-    validate: (rows, cols) =>
-      rows.length === 8 &&
-      cols.includes('name') &&
-      cols.includes('price') &&
-      !cols.includes('id'),
-  },
-  {
-    id: 'ch-29',
-    title: 'Display Category Products',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Select all product records classified under category "Displays".',
-    hint: "SELECT * FROM products WHERE category = 'Displays';",
-    initialSql: "SELECT * FROM products WHERE category = 'Displays';",
-    solutionSql: "SELECT * FROM products WHERE category = 'Displays';",
-    tablesUsed: ['products'],
-    expectedOutputSummary: '1 row (4K Monitor at $450)',
-    validate: (rows) => rows.length === 1 && rows[0].name === '4K Monitor',
-  },
-  {
-    id: 'ch-30',
-    title: 'Audio Hardware Catalog',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Find all items in products belonging to the "Audio" category.',
-    hint: "SELECT * FROM products WHERE category = 'Audio';",
-    initialSql: "SELECT * FROM products WHERE category = 'Audio';",
-    solutionSql: "SELECT * FROM products WHERE category = 'Audio';",
-    tablesUsed: ['products'],
-    expectedOutputSummary: '1 row (Noise-Canceling Headphones at $349)',
-    validate: (rows) => rows.length === 1 && rows[0].name === 'Noise-Canceling Headphones',
-  },
-  {
-    id: 'ch-31',
-    title: 'Department Floor Lookup',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Query all departments located on floor 3.',
-    hint: 'SELECT * FROM departments WHERE floor = 3;',
-    initialSql: 'SELECT * FROM departments WHERE floor = 3;',
-    solutionSql: 'SELECT * FROM departments WHERE floor = 3;',
-    tablesUsed: ['departments'],
-    expectedOutputSummary: '2 rows (Engineering and Infrastructure)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.floor) === 3),
-  },
-  {
-    id: 'ch-32',
-    title: 'Large Budget Departments',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Select all departments with an annual budget greater than or equal to 300000.',
-    hint: 'SELECT * FROM departments WHERE budget >= 300000;',
-    initialSql: 'SELECT * FROM departments WHERE budget >= 300000;',
-    solutionSql: 'SELECT * FROM departments WHERE budget >= 300000;',
-    tablesUsed: ['departments'],
-    expectedOutputSummary: '2 rows (Engineering $500k, Infrastructure $350k)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.budget) >= 300000),
-  },
-  {
-    id: 'ch-33',
-    title: 'Department Names and Budgets',
-    difficulty: 'Easy',
-    category: 'Projections',
-    description: 'Select only the name and budget columns for all departments.',
-    hint: 'SELECT name, budget FROM departments;',
-    initialSql: 'SELECT name, budget FROM departments;',
-    solutionSql: 'SELECT name, budget FROM departments;',
-    tablesUsed: ['departments'],
-    expectedOutputSummary: '4 rows containing only name and budget',
-    validate: (rows, cols) =>
-      rows.length === 4 &&
-      cols.includes('name') &&
-      cols.includes('budget') &&
-      !cols.includes('id'),
-  },
-  {
-    id: 'ch-34',
-    title: 'High-Earner Employees',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Select all employees with a salary strictly greater than 140000.',
-    hint: 'SELECT * FROM employees WHERE salary > 140000;',
-    initialSql: 'SELECT * FROM employees WHERE salary > 140000;',
-    solutionSql: 'SELECT * FROM employees WHERE salary > 140000;',
-    tablesUsed: ['employees'],
-    expectedOutputSummary: '2 rows (Alice $185k, Bob $145k)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.salary) > 140000),
-  },
-  {
-    id: 'ch-35',
-    title: 'Senior Tenured Staff',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Query all employees who have 6 or more years of experience (experience_years >= 6).',
-    hint: 'SELECT * FROM employees WHERE experience_years >= 6;',
-    initialSql: 'SELECT * FROM employees WHERE experience_years >= 6;',
-    solutionSql: 'SELECT * FROM employees WHERE experience_years >= 6;',
-    tablesUsed: ['employees'],
-    expectedOutputSummary: '4 rows (Alice 10yr, Bob 6yr, Diana 7yr, Fiona 6yr)',
-    validate: (rows) => rows.length === 4 && rows.every((r) => Number(r.experience_years) >= 6),
-  },
-  {
-    id: 'ch-36',
-    title: 'Employee Title Roster',
-    difficulty: 'Easy',
-    category: 'Projections',
-    description: 'Select the name, title, and salary columns for all employees.',
-    hint: 'SELECT name, title, salary FROM employees;',
-    initialSql: 'SELECT name, title, salary FROM employees;',
-    solutionSql: 'SELECT name, title, salary FROM employees;',
-    tablesUsed: ['employees'],
-    expectedOutputSummary: '8 rows with name, title, and salary',
-    validate: (rows, cols) =>
-      rows.length === 8 &&
-      cols.includes('name') &&
-      cols.includes('title') &&
-      cols.includes('salary'),
-  },
-  {
-    id: 'ch-37',
-    title: 'Enterprise Tier Customers',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Select all customers classified as "Enterprise" tier.',
-    hint: "SELECT * FROM customers WHERE tier = 'Enterprise';",
-    initialSql: "SELECT * FROM customers WHERE tier = 'Enterprise';",
-    solutionSql: "SELECT * FROM customers WHERE tier = 'Enterprise';",
-    tablesUsed: ['customers'],
-    expectedOutputSummary: '2 rows (Acme Corp, Globex Ltd)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => r.tier === 'Enterprise'),
-  },
-  {
-    id: 'ch-38',
-    title: 'High Credit Limit Accounts',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Query all customer accounts with a credit limit greater than 30000.',
-    hint: 'SELECT * FROM customers WHERE credit_limit > 30000;',
-    initialSql: 'SELECT * FROM customers WHERE credit_limit > 30000;',
-    solutionSql: 'SELECT * FROM customers WHERE credit_limit > 30000;',
-    tablesUsed: ['customers'],
-    expectedOutputSummary: '2 rows (Acme Corp $50k, Globex Ltd $45k)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.credit_limit) > 30000),
-  },
-  {
+{
     id: 'ch-39',
-    title: 'German Customer Directory',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Query all customer records located in Germany (country = "DE").',
-    hint: "SELECT * FROM customers WHERE country = 'DE';",
-    initialSql: "SELECT * FROM customers WHERE country = 'DE';",
-    solutionSql: "SELECT * FROM customers WHERE country = 'DE';",
-    tablesUsed: ['customers'],
-    expectedOutputSummary: '1 row (Soylent AI in Berlin)',
-    validate: (rows) => rows.length === 1 && rows[0].country === 'DE',
-  },
-  {
-    id: 'ch-40',
-    title: 'Pending Invoice Records',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Select all invoices where status is "pending".',
-    hint: "SELECT * FROM invoices WHERE status = 'pending';",
-    initialSql: "SELECT * FROM invoices WHERE status = 'pending';",
-    solutionSql: "SELECT * FROM invoices WHERE status = 'pending';",
-    tablesUsed: ['invoices'],
-    expectedOutputSummary: '2 rows (invoice #503 $8000, invoice #505 $2200)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => r.status === 'pending'),
-  },
-  {
-    id: 'ch-41',
-    title: 'Five-Figure Invoices',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Query all invoices where the amount is greater than or equal to 10000.',
-    hint: 'SELECT * FROM invoices WHERE amount >= 10000;',
-    initialSql: 'SELECT * FROM invoices WHERE amount >= 10000;',
-    solutionSql: 'SELECT * FROM invoices WHERE amount >= 10000;',
-    tablesUsed: ['invoices'],
-    expectedOutputSummary: '2 rows (invoice #501 $12000, invoice #502 $15500)',
-    validate: (rows) => rows.length === 2 && rows.every((r) => Number(r.amount) >= 10000),
-  },
-  {
-    id: 'ch-42',
-    title: 'Active Production Servers',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Select all servers from the servers table where status is "active".',
-    hint: "SELECT * FROM servers WHERE status = 'active';",
-    initialSql: "SELECT * FROM servers WHERE status = 'active';",
-    solutionSql: "SELECT * FROM servers WHERE status = 'active';",
-    tablesUsed: ['servers'],
-    expectedOutputSummary: '4 rows (prod-api-01, prod-api-02, prod-db-master, prod-cache-01)',
-    validate: (rows) => rows.length === 4 && rows.every((r) => r.status === 'active'),
-  },
-  {
-    id: 'ch-43',
-    title: 'High-Density Compute Nodes',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Select all servers with 16 or more CPU cores (cores >= 16).',
-    hint: 'SELECT * FROM servers WHERE cores >= 16;',
-    initialSql: 'SELECT * FROM servers WHERE cores >= 16;',
-    solutionSql: 'SELECT * FROM servers WHERE cores >= 16;',
-    tablesUsed: ['servers'],
-    expectedOutputSummary: '3 rows (prod-api-01 16, prod-api-02 16, prod-db-master 32)',
-    validate: (rows) => rows.length === 3 && rows.every((r) => Number(r.cores) >= 16),
-  },
-  {
-    id: 'ch-44',
-    title: 'Large Memory Fleet',
-    difficulty: 'Easy',
-    category: 'Threshold Filtering',
-    description: 'Find all servers with ram_gb greater than 32.',
-    hint: 'SELECT * FROM servers WHERE ram_gb > 32;',
-    initialSql: 'SELECT * FROM servers WHERE ram_gb > 32;',
-    solutionSql: 'SELECT * FROM servers WHERE ram_gb > 32;',
-    tablesUsed: ['servers'],
-    expectedOutputSummary: '3 rows (prod-api-01 64GB, prod-api-02 64GB, prod-db-master 128GB)',
-    validate: (rows) => rows.length === 3 && rows.every((r) => Number(r.ram_gb) > 32),
-  },
-  {
-    id: 'ch-45',
-    title: 'European Infrastructure Fleet',
-    difficulty: 'Easy',
-    category: 'Filtering & Predicates',
-    description: 'Select the hostname and region for all servers provisioned in "eu-west".',
-    hint: "SELECT hostname, region FROM servers WHERE region = 'eu-west';",
-    initialSql: "SELECT hostname, region FROM servers WHERE region = 'eu-west';",
-    solutionSql: "SELECT hostname, region FROM servers WHERE region = 'eu-west';",
-    tablesUsed: ['servers'],
-    expectedOutputSummary: '2 rows (prod-cache-01, backup-node-01)',
-    validate: (rows, cols) =>
-      rows.length === 2 &&
-      rows.every((r) => r.region === 'eu-west') &&
-      cols.includes('hostname') &&
-      cols.includes('region'),
-  },
-
-  // INTERMEDIATE (46-67)
-  {
-    id: 'ch-46',
     title: 'Budget Peripherals Scan',
     difficulty: 'Intermediate',
     category: 'Range Compound Conditions',
@@ -697,8 +579,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Magic Mouse $99, stock 45)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Magic Mouse',
   },
-  {
-    id: 'ch-47',
+{
+    id: 'ch-40',
     title: 'Mid-Tier Product Pricing',
     difficulty: 'Intermediate',
     category: 'Range Compound Conditions',
@@ -712,8 +594,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 3 &&
       rows.every((r) => Number(r.price) >= 100 && Number(r.price) <= 400),
   },
-  {
-    id: 'ch-48',
+{
+    id: 'ch-41',
     title: 'Low-Stock Urgent Replenishment',
     difficulty: 'Intermediate',
     category: 'Range Compound Conditions',
@@ -727,8 +609,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 3 &&
       rows.every((r) => Number(r.stock) < 25 && Number(r.price) >= 100),
   },
-  {
-    id: 'ch-49',
+{
+    id: 'ch-42',
     title: 'Department Staff Inner Join',
     difficulty: 'Intermediate',
     category: 'Joins & Relations',
@@ -744,8 +626,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('dept_name') &&
       cols.includes('salary'),
   },
-  {
-    id: 'ch-50',
+{
+    id: 'ch-43',
     title: 'Engineering Department Staff',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -759,8 +641,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 3 &&
       rows.every((r) => r.name === 'Alice' || r.name === 'Bob' || r.name === 'George'),
   },
-  {
-    id: 'ch-51',
+{
+    id: 'ch-44',
     title: 'Design Department Salaries',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -773,8 +655,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 2 && rows.every((r) => Number(r.salary) > 100000),
   },
-  {
-    id: 'ch-52',
+{
+    id: 'ch-45',
     title: 'Third-Floor Staff Roster',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -788,8 +670,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 5 &&
       rows.every((r) => Number(r.floor ?? r['d.floor']) === 3),
   },
-  {
-    id: 'ch-53',
+{
+    id: 'ch-46',
     title: 'Customer Invoices Inner Join',
     difficulty: 'Intermediate',
     category: 'Joins & Relations',
@@ -805,8 +687,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('amount') &&
       cols.includes('status'),
   },
-  {
-    id: 'ch-54',
+{
+    id: 'ch-47',
     title: 'Paid Customer Invoices',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -820,8 +702,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 4 &&
       rows.every((r) => (r.status ?? r['i.status']) === 'paid'),
   },
-  {
-    id: 'ch-55',
+{
+    id: 'ch-48',
     title: 'Pending Enterprise Receivables',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -835,8 +717,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Globex Ltd' || rows[0]['c.name'] === 'Globex Ltd'),
   },
-  {
-    id: 'ch-56',
+{
+    id: 'ch-49',
     title: 'US Customer Billing Audit',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -856,8 +738,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
           r['c.name'] === 'Initech'
       ),
   },
-  {
-    id: 'ch-57',
+{
+    id: 'ch-50',
     title: 'Active US-East Infrastructure',
     difficulty: 'Intermediate',
     category: 'Compound Predicates',
@@ -871,8 +753,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 3 &&
       rows.every((r) => r.region === 'us-east' && r.status === 'active'),
   },
-  {
-    id: 'ch-58',
+{
+    id: 'ch-51',
     title: 'Non-Active Server Audit',
     difficulty: 'Intermediate',
     category: 'Negation & Filtering',
@@ -885,8 +767,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 2 && rows.every((r) => r.status !== 'active'),
   },
-  {
-    id: 'ch-59',
+{
+    id: 'ch-52',
     title: 'High-Spec European Nodes',
     difficulty: 'Intermediate',
     category: 'Compound Predicates',
@@ -900,8 +782,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 2 &&
       rows.every((r) => r.region === 'eu-west' && Number(r.ram_gb) >= 32),
   },
-  {
-    id: 'ch-60',
+{
+    id: 'ch-53',
     title: 'Junior Staff Identification',
     difficulty: 'Intermediate',
     category: 'Threshold Filtering',
@@ -913,8 +795,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (George, Junior Backend Developer with 2 years)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'George',
   },
-  {
-    id: 'ch-61',
+{
+    id: 'ch-54',
     title: 'Security Staff Compensation',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -926,8 +808,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Fiona, Security Operations Engineer $140k)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Fiona',
   },
-  {
-    id: 'ch-62',
+{
+    id: 'ch-55',
     title: 'Accessory Stock Audit',
     difficulty: 'Intermediate',
     category: 'Compound Predicates',
@@ -939,8 +821,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Standing Desk Mat at $59)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Standing Desk Mat',
   },
-  {
-    id: 'ch-63',
+{
+    id: 'ch-56',
     title: 'Fiscal Year 2026 Billings',
     difficulty: 'Intermediate',
     category: 'Compound Predicates',
@@ -954,8 +836,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 4 &&
       rows.every((r) => Number(r.year) === 2026 && Number(r.amount) > 5000),
   },
-  {
-    id: 'ch-64',
+{
+    id: 'ch-57',
     title: 'Growth Tier Accounts',
     difficulty: 'Intermediate',
     category: 'Filtering & Predicates',
@@ -969,8 +851,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 2 &&
       rows.every((r) => r.name === 'Initech' || r.name === 'Soylent AI'),
   },
-  {
-    id: 'ch-65',
+{
+    id: 'ch-58',
     title: 'Custom Aliased Employee Compensation',
     difficulty: 'Intermediate',
     category: 'Aliasing & Projection',
@@ -985,8 +867,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       cols.includes('full_name') &&
       cols.includes('annual_pay'),
   },
-  {
-    id: 'ch-66',
+{
+    id: 'ch-59',
     title: 'Server Compute Core Density',
     difficulty: 'Intermediate',
     category: 'Compound Predicates',
@@ -1000,8 +882,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 4 &&
       rows.every((r) => Number(r.cores) >= 8 && Number(r.cores) <= 16),
   },
-  {
-    id: 'ch-67',
+{
+    id: 'ch-60',
     title: 'High-Value Invoices in 2026',
     difficulty: 'Intermediate',
     category: 'Joins & Filtering',
@@ -1020,9 +902,83 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       ),
   },
 
-  // ADVANCED (68-87)
-  {
-    id: 'ch-68',
+  // ADVANCED (61-85)
+{
+    id: 'ch-61',
+    title: 'High-Value US Developer Purchases',
+    difficulty: 'Advanced',
+    category: 'Compound Multi-Condition Joins',
+    description: 'Find all purchases where the user is a "developer", resides in "US", and the order total is 400 or greater.',
+    hint: "SELECT u.name, u.role, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role = 'developer' AND u.country = 'US' AND o.total >= 400;",
+    initialSql: "SELECT u.name, u.role, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role = 'developer' AND u.country = 'US' AND o.total >= 400;",
+    solutionSql: "SELECT u.name, u.role, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role = 'developer' AND u.country = 'US' AND o.total >= 400;",
+    tablesUsed: ['users', 'orders'],
+    expectedOutputSummary: '1 row (Charlie: 4K Monitor at $450.0)',
+    validate: (rows) =>
+      rows.length === 1 &&
+      (rows[0].name === 'Charlie' || rows[0]['u.name'] === 'Charlie'),
+  },
+{
+    id: 'ch-62',
+    title: 'Multi-Condition Exclusion Filter',
+    difficulty: 'Advanced',
+    category: 'Exclusion & Compound Logic',
+    description: 'Select all orders from the orders table where total is strictly greater than 100 AND product != "Magic Mouse".',
+    hint: "SELECT * FROM orders WHERE total > 100 AND product != 'Magic Mouse';",
+    initialSql: "SELECT * FROM orders WHERE total > 100 AND product != 'Magic Mouse';",
+    solutionSql: "SELECT * FROM orders WHERE total > 100 AND product != 'Magic Mouse';",
+    tablesUsed: ['orders'],
+    expectedOutputSummary: '3 rows excluding Magic Mouse',
+    validate: (rows) =>
+      rows.length === 3 &&
+      rows.every((r) => Number(r.total) > 100 && r.product !== 'Magic Mouse'),
+  },
+{
+    id: 'ch-63',
+    title: 'Cross-Border Procurement Audit',
+    difficulty: 'Advanced',
+    category: 'Relational Projection & Filtering',
+    description: 'Join users and orders to list all transactions where country != "US" AND total >= 100.',
+    hint: "SELECT u.name, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country != 'US' AND o.total >= 100;",
+    initialSql: "SELECT u.name, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country != 'US' AND o.total >= 100;",
+    solutionSql: "SELECT u.name, u.country, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country != 'US' AND o.total >= 100;",
+    tablesUsed: ['users', 'orders'],
+    expectedOutputSummary: '1 row (Bob in CA with $150 transaction)',
+    validate: (rows) =>
+      rows.length === 1 &&
+      (rows[0].country ?? rows[0]['u.country']) === 'CA',
+  },
+{
+    id: 'ch-64',
+    title: 'Role-Based Budget Sourcing',
+    difficulty: 'Advanced',
+    category: 'Compound Relational Predicates',
+    description: 'Find all orders placed by users where role != "admin" AND total <= 200.',
+    hint: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role != 'admin' AND o.total <= 200;",
+    initialSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role != 'admin' AND o.total <= 200;",
+    solutionSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.role != 'admin' AND o.total <= 200;",
+    tablesUsed: ['users', 'orders'],
+    expectedOutputSummary: '1 row (Bob, developer with $150 keyboard)',
+    validate: (rows) =>
+      rows.length === 1 &&
+      (rows[0].name === 'Bob' || rows[0]['u.name'] === 'Bob'),
+  },
+{
+    id: 'ch-65',
+    title: 'Strict Multi-Predicate User Scan',
+    difficulty: 'Advanced',
+    category: 'Exact Multi-Predicate Match',
+    description: 'Select all users whose country is "US" AND role = "developer" AND id >= 3.',
+    hint: "SELECT * FROM users WHERE country = 'US' AND role = 'developer' AND id >= 3;",
+    initialSql: "SELECT * FROM users WHERE country = 'US' AND role = 'developer' AND id >= 3;",
+    solutionSql: "SELECT * FROM users WHERE country = 'US' AND role = 'developer' AND id >= 3;",
+    tablesUsed: ['users'],
+    expectedOutputSummary: '1 row (Charlie: id=3, US developer)',
+    validate: (rows) =>
+      rows.length === 1 && rows[0].name === 'Charlie',
+  },
+{
+    id: 'ch-66',
     title: 'High-Tenure Engineering Leadership',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1040,8 +996,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
           Number(r.salary) >= 145000
       ),
   },
-  {
-    id: 'ch-69',
+{
+    id: 'ch-67',
     title: 'Cross-Department Senior Compensation Audit',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1054,8 +1010,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 3 && rows.every((r) => Number(r.salary) > 130000),
   },
-  {
-    id: 'ch-70',
+{
+    id: 'ch-68',
     title: 'Enterprise Customer Paid Revenue Audit',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1073,8 +1029,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
           Number(r.amount) >= 10000
       ),
   },
-  {
-    id: 'ch-71',
+{
+    id: 'ch-69',
     title: 'SRE Fleet Capacity Qualification',
     difficulty: 'Advanced',
     category: 'Multi-Predicate Fleet Audit',
@@ -1093,8 +1049,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
           Number(r.ram_gb) >= 64
       ),
   },
-  {
-    id: 'ch-72',
+{
+    id: 'ch-70',
     title: 'High-Value Inventory Stock Ratio',
     difficulty: 'Advanced',
     category: 'Compound Threshold Filter',
@@ -1108,8 +1064,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 3 &&
       rows.every((r) => Number(r.price) >= 300 && Number(r.stock) <= 20),
   },
-  {
-    id: 'ch-73',
+{
+    id: 'ch-71',
     title: 'Non-US Enterprise Accounts',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1123,8 +1079,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Globex Ltd' || rows[0]['c.name'] === 'Globex Ltd'),
   },
-  {
-    id: 'ch-74',
+{
+    id: 'ch-72',
     title: 'Infrastructure SRE Staff Audit',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1136,8 +1092,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Charlie, Site Reliability Engineer $135k)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Charlie',
   },
-  {
-    id: 'ch-75',
+{
+    id: 'ch-73',
     title: 'Mid-Market German Revenue Check',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1151,8 +1107,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Soylent AI' || rows[0]['c.name'] === 'Soylent AI'),
   },
-  {
-    id: 'ch-76',
+{
+    id: 'ch-74',
     title: 'Database Master Server Verification',
     difficulty: 'Advanced',
     category: 'Multi-Predicate Fleet Audit',
@@ -1165,8 +1121,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (prod-db-master with 32 cores, 128GB RAM)',
     validate: (rows) => rows.length === 1 && rows[0].hostname === 'prod-db-master',
   },
-  {
-    id: 'ch-77',
+{
+    id: 'ch-75',
     title: 'Design Department Leadership Compensation',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1178,8 +1134,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Diana, Product Design Lead $130k)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Diana',
   },
-  {
-    id: 'ch-78',
+{
+    id: 'ch-76',
     title: 'High-Volume Accessory Stock',
     difficulty: 'Advanced',
     category: 'Compound Predicates',
@@ -1191,8 +1147,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (USB-C Dock at $89, 60 stock)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'USB-C Dock',
   },
-  {
-    id: 'ch-79',
+{
+    id: 'ch-77',
     title: 'Starter Tier Billing Exception',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1206,8 +1162,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Umbrella Tech' || rows[0]['c.name'] === 'Umbrella Tech'),
   },
-  {
-    id: 'ch-80',
+{
+    id: 'ch-78',
     title: 'Experienced Security Personnel',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1219,8 +1175,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Fiona, Security Operations Engineer)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Fiona',
   },
-  {
-    id: 'ch-81',
+{
+    id: 'ch-79',
     title: 'High-Credit Growth Accounts',
     difficulty: 'Advanced',
     category: 'Compound Predicates',
@@ -1232,8 +1188,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Soylent AI with $25k limit)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Soylent AI',
   },
-  {
-    id: 'ch-82',
+{
+    id: 'ch-80',
     title: 'Mid-Priced Hardware Accessories',
     difficulty: 'Advanced',
     category: 'Compound Predicates',
@@ -1245,8 +1201,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (Webcam 1080p at $119)',
     validate: (rows) => rows.length === 1 && rows[0].name === 'Webcam 1080p',
   },
-  {
-    id: 'ch-83',
+{
+    id: 'ch-81',
     title: 'Floor 3 High-Salary Talent',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1259,8 +1215,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 2 && rows.every((r) => Number(r.salary) >= 140000),
   },
-  {
-    id: 'ch-84',
+{
+    id: 'ch-82',
     title: 'European Maintenance Fleet Identification',
     difficulty: 'Advanced',
     category: 'Compound Predicates',
@@ -1272,8 +1228,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (backup-node-01)',
     validate: (rows) => rows.length === 1 && rows[0].hostname === 'backup-node-01',
   },
-  {
-    id: 'ch-85',
+{
+    id: 'ch-83',
     title: 'Prior Fiscal Year Historical Billings',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1287,8 +1243,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Initech' || rows[0]['c.name'] === 'Initech'),
   },
-  {
-    id: 'ch-86',
+{
+    id: 'ch-84',
     title: 'High-Yield Production API Cluster',
     difficulty: 'Advanced',
     category: 'Multi-Predicate Fleet Audit',
@@ -1306,8 +1262,8 @@ export const SQL_PROBLEMS: SqlProblem[] = [
           Number(r.ram_gb) === 64
       ),
   },
-  {
-    id: 'ch-87',
+{
+    id: 'ch-85',
     title: 'Design Systems Engineering Audit',
     difficulty: 'Advanced',
     category: 'Compound Multi-Condition Joins',
@@ -1320,8 +1276,44 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) => rows.length === 1 && rows[0].name === 'Evan',
   },
 
-  // EXPERT (88-100)
-  {
+  // EXPERT (86-100)
+{
+    id: 'ch-86',
+    title: 'Enterprise Boundary Spend Join',
+    difficulty: 'Expert',
+    category: 'Complex Enterprise Queries',
+    description: 'Join users and orders selecting customer email, product, and total where u.country = "US" AND o.total > 50 AND o.total < 2000.',
+    hint: "SELECT u.email, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country = 'US' AND o.total > 50 AND o.total < 2000;",
+    initialSql: "SELECT u.email, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country = 'US' AND o.total > 50 AND o.total < 2000;",
+    solutionSql: "SELECT u.email, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE u.country = 'US' AND o.total > 50 AND o.total < 2000;",
+    tablesUsed: ['users', 'orders'],
+    expectedOutputSummary: '2 rows (Alice Magic Mouse $99, Charlie 4K Monitor $450)',
+    validate: (rows, cols) =>
+      rows.length === 2 &&
+      cols.includes('email') &&
+      cols.includes('product') &&
+      rows.every((r) => {
+        const total = Number(r.total ?? r['o.total']);
+        return total > 50 && total < 2000;
+      }),
+  },
+{
+    id: 'ch-87',
+    title: 'High-Cap Enterprise Expenditure Audit',
+    difficulty: 'Expert',
+    category: 'Schema Audit & Constraint Check',
+    description: 'Perform a qualified join to verify transactions of $2000 or greater placed by users located in "US".',
+    hint: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total >= 2000 AND u.country = 'US';",
+    initialSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total >= 2000 AND u.country = 'US';",
+    solutionSql: "SELECT u.name, u.role, o.product, o.total FROM users u JOIN orders o ON u.id = o.user_id WHERE o.total >= 2000 AND u.country = 'US';",
+    tablesUsed: ['users', 'orders'],
+    expectedOutputSummary: '1 row (Alice, admin, MacBook Pro $2499.0)',
+    validate: (rows) =>
+      rows.length === 1 &&
+      (rows[0].name === 'Alice' || rows[0]['u.name'] === 'Alice') &&
+      Number(rows[0].total ?? rows[0]['o.total']) >= 2000,
+  },
+{
     id: 'ch-88',
     title: 'Enterprise Top-Tier Paid Invoices Audit',
     difficulty: 'Expert',
@@ -1337,7 +1329,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       (rows[0].name === 'Acme Corp' || rows[0]['c.name'] === 'Acme Corp') &&
       Number(rows[0].amount ?? rows[0]['i.amount']) > 14000,
   },
-  {
+{
     id: 'ch-89',
     title: 'Principal Architect Compensation Verification',
     difficulty: 'Expert',
@@ -1352,7 +1344,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Alice' || rows[0]['e.name'] === 'Alice'),
   },
-  {
+{
     id: 'ch-90',
     title: 'Multi-Condition Inventory Liquidity Audit',
     difficulty: 'Expert',
@@ -1373,7 +1365,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
           Number(r.stock) <= 35
       ),
   },
-  {
+{
     id: 'ch-91',
     title: 'SRE Production Fleet High-Memory Threshold',
     difficulty: 'Expert',
@@ -1386,7 +1378,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     expectedOutputSummary: '1 row (prod-db-master with 32 cores and 128GB RAM)',
     validate: (rows) => rows.length === 1 && rows[0].hostname === 'prod-db-master',
   },
-  {
+{
     id: 'ch-92',
     title: 'Non-US Enterprise Pending Billing Inspection',
     difficulty: 'Expert',
@@ -1401,7 +1393,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Globex Ltd' || rows[0]['c.name'] === 'Globex Ltd'),
   },
-  {
+{
     id: 'ch-93',
     title: 'Engineering Staff Mid-Career Benchmark',
     difficulty: 'Expert',
@@ -1416,7 +1408,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Bob' || rows[0]['e.name'] === 'Bob'),
   },
-  {
+{
     id: 'ch-94',
     title: 'German Mid-Tier Fiscal 2026 Audit',
     difficulty: 'Expert',
@@ -1431,7 +1423,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Soylent AI' || rows[0]['c.name'] === 'Soylent AI'),
   },
-  {
+{
     id: 'ch-95',
     title: 'Critical Infrastructure Floor 3 Budget Join',
     difficulty: 'Expert',
@@ -1445,7 +1437,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 3 && rows.every((r) => Number(r.salary) >= 135000),
   },
-  {
+{
     id: 'ch-96',
     title: 'Staging Server Resource Underutilization',
     difficulty: 'Expert',
@@ -1459,7 +1451,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 1 && rows[0].hostname === 'staging-app-01',
   },
-  {
+{
     id: 'ch-97',
     title: 'Growth Tier Texas Receivable Audit',
     difficulty: 'Expert',
@@ -1474,7 +1466,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Initech' || rows[0]['c.name'] === 'Initech'),
   },
-  {
+{
     id: 'ch-98',
     title: 'Security Floor 4 Budget Alignment',
     difficulty: 'Expert',
@@ -1489,7 +1481,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
       rows.length === 1 &&
       (rows[0].name === 'Fiona' || rows[0]['e.name'] === 'Fiona'),
   },
-  {
+{
     id: 'ch-99',
     title: 'High-Volume Peripheral Inventory Valuation',
     difficulty: 'Expert',
@@ -1503,7 +1495,7 @@ export const SQL_PROBLEMS: SqlProblem[] = [
     validate: (rows) =>
       rows.length === 1 && rows[0].name === 'Mechanical Keyboard',
   },
-  {
+{
     id: 'ch-100',
     title: 'Enterprise Fleet Dual-Region Master Audit',
     difficulty: 'Expert',

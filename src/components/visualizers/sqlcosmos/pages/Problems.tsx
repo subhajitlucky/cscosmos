@@ -40,6 +40,13 @@ const DIFFICULTIES: ('All' | ProblemDifficulty)[] = [
   'Expert',
 ];
 
+const DIFFICULTY_WEIGHT: Record<ProblemDifficulty, number> = {
+  Easy: 1,
+  Intermediate: 2,
+  Advanced: 3,
+  Expert: 4,
+};
+
 const SAMPLE_SCHEMAS = TABLES;
 
 export default function Problems() {
@@ -147,7 +154,7 @@ export default function Problems() {
     setEvalFeedback('');
   };
 
-  // Filter problems for the table
+  // Filter problems for the table (always ordered from Easy to Expert)
   const filteredProblems = useMemo(() => {
     return SQL_PROBLEMS.filter((p) => {
       const matchesDiff = filter === 'All' || p.difficulty === filter;
@@ -158,7 +165,7 @@ export default function Problems() {
         p.description.toLowerCase().includes(q) ||
         p.category.toLowerCase().includes(q);
       return matchesDiff && matchesSearch;
-    });
+    }).sort((a, b) => DIFFICULTY_WEIGHT[a.difficulty] - DIFFICULTY_WEIGHT[b.difficulty]);
   }, [filter, searchQuery]);
 
   const currentIndex = SQL_PROBLEMS.findIndex((p) => p.id === activeProblem.id);
