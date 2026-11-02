@@ -1,681 +1,341 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import {
-  BookOpen,
   CheckCircle2,
   XCircle,
-  HelpCircle,
   Terminal,
-  Cpu,
-  Layers,
-  Globe,
-  Server,
-  Zap,
-  Sparkles,
-  FileCode,
-  RotateCcw,
-  Eye,
   AlertTriangle,
-  HardDrive,
-  Activity,
-  ShieldCheck,
-  Binary,
-  ArrowRight,
+  Server,
+  Layers,
+  HelpCircle,
 } from 'lucide-react';
 import { NodeJsEditor } from './NodeJsEditor';
 
 export function Concept2Lesson() {
-  // Interactive quiz state
+  // Assessment state
   const [q1, setQ1] = useState<string | null>(null);
   const [q2, setQ2] = useState<string | null>(null);
   const [q3, setQ3] = useState<string | null>(null);
-  const [q4Revealed, setQ4Revealed] = useState<boolean>(false);
-  const [activeLayer, setActiveLayer] = useState<number>(3);
 
-  // Score calculation
-  const totalCompleted =
-    (q1 !== null ? 1 : 0) +
-    (q2 !== null ? 1 : 0) +
-    (q3 !== null ? 1 : 0) +
-    (q4Revealed ? 1 : 0);
+  const completedCount = [q1, q2, q3].filter(Boolean).length;
 
   return (
-    <div className="space-y-12">
-      {/* Lesson Header */}
-      <div className="space-y-4 border-b border-slate-200 dark:border-slate-800 pb-8">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800 text-xs font-bold uppercase tracking-wider font-mono">
-            Node.js &mdash; Lesson 02/280
-          </span>
-          <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 text-xs font-semibold">
-            Level: Beginner
-          </span>
-          <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 text-xs font-semibold">
-            Category: Node.js Fundamentals
-          </span>
-          <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300 border border-blue-200 dark:border-blue-900 text-xs font-semibold">
-            Estimated learning time: 25&ndash;35 minutes
-          </span>
+    <div className="space-y-12 w-full">
+      {/* 1. Header */}
+      <header className="space-y-3 border-b border-slate-200 dark:border-slate-800 pb-6">
+        <div className="flex items-center gap-2 text-xs font-mono font-medium text-slate-500 dark:text-slate-400">
+          <span>Module 1: Node.js Fundamentals</span>
+          <span>&bull;</span>
+          <span>Concept 02 of 280</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-          Concept 2: Node.js Architecture
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          Node.js Architecture
         </h1>
-        <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-          Deconstructing the internal engine: the 4-tier stack, V8 execution, Libuv OS multiplexing, native C/C++ bindings, and the critical distinction between the single JavaScript main thread and asynchronous worker threads.
+
+        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+          Deconstructing the internal engine: how Google V8, libuv, native C++ bindings, and OS kernel multiplexers coordinate to run high-throughput applications on a single JavaScript main thread.
         </p>
-      </div>
+      </header>
 
-      {/* SECTION 1: THE CORE PROBLEM */}
-      <section className="space-y-5">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
-          <span className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400">
-            1
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight">First, understand the problem</h2>
+      {/* 2. Core Idea: The 4-Tier Internal Engine */}
+      <section className="space-y-4">
+        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <Layers className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          The Core Idea: The 4-Tier Internal Engine
+        </h2>
+
+        <div className="space-y-3 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base max-w-4xl">
+          <p>
+            Before Node.js, classic server software (like Apache or Tomcat) followed a <strong>thread-per-request model</strong>: whenever a client connected, the operating system allocated a dedicated thread. Handling 10,000 concurrent requests required 20 GB of RAM just for idle thread stacks, and CPU cores wasted massive clock cycles on context switching (the famous <em>C10K Problem</em>).
+          </p>
+          <p>
+            Node.js revolutionized this by decoupling JavaScript execution from operating system I/O. It organizes responsibilities into a <strong>4-tier architecture</strong>: your JavaScript code runs sequentially on a single main thread, while low-level disk, network, and cryptographic tasks are offloaded to OS kernel multiplexers (<code className="font-mono text-xs">epoll</code>, <code className="font-mono text-xs">kqueue</code>, <code className="font-mono text-xs">IOCP</code>) or a background worker pool managed by <strong>libuv</strong>.
+          </p>
         </div>
 
-        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-          <p>
-            To understand why Node.js is architected the way it is, you must understand how traditional backend servers worked before 2009.
-          </p>
+        {/* Minimal Architecture Flowchart */}
+        <div className="flex justify-center my-6">
+          <div className="w-full max-w-2xl rounded-2xl bg-slate-950 border border-slate-800 p-5 sm:p-6 shadow-sm">
+            <div className="text-slate-400 text-xs mb-4 pb-2.5 border-b border-slate-800 font-mono flex items-center justify-between">
+              <span className="font-semibold text-slate-300">Internal Architecture</span>
+              <span className="text-slate-500">4-Tier System Stack</span>
+            </div>
+            <div className="flex justify-center overflow-x-auto py-2">
+              <pre className="text-emerald-400 font-mono text-xs sm:text-sm font-medium leading-relaxed select-none">{`┌────────────────────────────────────────────────────────┐
+│           Tier 1: JavaScript Application & APIs        │
+│      (Your Code, node:fs, node:http, node:crypto)      │
+└───────────────────────────┬────────────────────────────┘
+                            │
+              ┌─────────────┴─────────────┐
+              ▼                           ▼
+┌───────────────────────────┐ ┌───────────────────────────┐
+│   Tier 2A: Google V8      │ │ Tier 2B: Node-API & C++   │
+│  (AST, JIT Machine Code)  │ │  (System Call Bridges)    │
+└─────────────┬─────────────┘ └─────────────┬─────────────┘
+              │                             │
+              └─────────────┬───────────────┘
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│           Tier 3: libuv Event Loop & Thread Pool       │
+│       (Event Demultiplexer + 4 Background Threads)     │
+└───────────────────────────┬────────────────────────────┘
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│          Tier 4: Operating System Kernel Primitives    │
+│       (epoll: Linux, kqueue: macOS, IOCP: Windows)     │
+└────────────────────────────────────────────────────────┘`}</pre>
+            </div>
+          </div>
+        </div>
 
-          <div className="p-5 sm:p-6 rounded-3xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3">
-            <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base flex items-center gap-2">
-              <Server className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              The Traditional Model: Multi-Threaded Thread-Per-Request (Apache / Tomcat)
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              In classic server frameworks, when an HTTP request arrives, the operating system creates or assigns a dedicated thread to handle it. That thread sits idle and <strong>blocks</strong> while waiting for database queries, network responses, or disk files.
-            </p>
+        <p className="text-center text-xs sm:text-sm text-slate-500 dark:text-slate-400 italic">
+          Key architectural insight: JavaScript logic executes on a single main thread, while I/O is offloaded non-blockingly to libuv and the OS kernel.
+        </p>
+      </section>
 
-            <div className="grid sm:grid-cols-2 gap-3 pt-2">
-              <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                <span className="font-bold text-rose-600 dark:text-rose-400 font-mono text-xs sm:text-sm uppercase">
-                  1. Memory Footprint Exhaustion
+      {/* 3. Two Essential Examples */}
+      <section className="space-y-5">
+        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <Server className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          Two Essential Examples
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Example 1 */}
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  Example 1
                 </span>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Each OS thread allocates 1 MB to 2 MB of stack memory. Handling 10,000 concurrent connections requires up to 20 GB of RAM just for idle thread stacks!
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  The Single Main Thread &amp; Process Footprint
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                  Every Node.js instance boots with a single main thread running the event loop. The runtime baseline memory footprint is orders of magnitude smaller than multi-threaded servers.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                <span className="font-bold text-rose-600 dark:text-rose-400 font-mono text-xs sm:text-sm uppercase">
-                  2. CPU Context Switching Thrashing
+              <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto space-y-1">
+                <div className="text-slate-500">// thread-info.mjs</div>
+                <div><span className="text-emerald-400">import</span> &#123; isMainThread, threadId &#125; <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:worker_threads&apos;</span>;</div>
+                <div className="pt-2 text-slate-500">// 1. Inspect main execution thread</div>
+                <div><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;Is Main Thread? :&apos;</span>, isMainThread);</div>
+                <div><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;Thread ID       :&apos;</span>, threadId); <span className="text-slate-500">// 0 = main thread</span></div>
+                <div className="pt-2 text-slate-500">// 2. Check process heap allocation</div>
+                <div><span className="text-emerald-400">const</span> mem = process.<span className="text-blue-400">memoryUsage</span>();</div>
+                <div><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">`Heap Used       : &#36;&#123;(mem.heapUsed / 1e6).toFixed(1)&#125; MB`</span>);</div>
+              </div>
+            </div>
+
+            <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside pt-2">
+              <li><code className="font-mono">threadId === 0</code> confirms all user JavaScript runs on the single primary thread.</li>
+              <li>Baseline heap is typically under 30 MB, enabling high density container deployments.</li>
+            </ul>
+          </div>
+
+          {/* Example 2 */}
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  Example 2
                 </span>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  The CPU core wastes massive clock cycles saving registers and switching thread states instead of running actual application logic.
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  Libuv Offloading to Background Thread Pool
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                  Expensive cryptographic and filesystem operations are not executed on the main thread. Libuv routes them to a background worker pool (<code className="font-mono text-xs">UV_THREADPOOL_SIZE</code>).
                 </p>
               </div>
-            </div>
-          </div>
 
-          <p className="font-semibold text-slate-900 dark:text-slate-100">
-            This became famous in software engineering history as the <strong>C10K Problem</strong>: how do you serve 10,000 concurrent clients on commodity hardware without running out of RAM or CPU cycles?
-          </p>
-
-          <p className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 font-medium">
-            <strong>The Node.js Architectural Breakthrough:</strong> Instead of dedicating a thread per request, Node.js runs all JavaScript logic on a <em>single event loop thread</em> and offloads all I/O operations non-blockingly to the operating system kernel.
-          </p>
-        </div>
-      </section>
-
-      {/* SECTION 2: THE 4-TIER ARCHITECTURE */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
-          <span className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400">
-            2
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight">The 4-Tier Node.js Architecture</h2>
-        </div>
-
-        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-          <p>
-            When you type <code className="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-900 dark:text-emerald-300">node app.js</code>, your request cascades through 4 distinct architectural layers:
-          </p>
-
-          {/* 4 Layers Interactive Stack */}
-          <div className="space-y-3.5">
-            {/* Layer 1 */}
-            <div
-              onClick={() => setActiveLayer(1)}
-              className={`p-5 rounded-3xl border transition cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
-                activeLayer === 1
-                  ? 'border-amber-500 bg-amber-50/40 dark:bg-amber-950/20 shadow-md ring-2 ring-amber-500/30'
-                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
-                  L1
-                </div>
-                <div>
-                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                    <span>JavaScript Application Layer</span>
-                    {activeLayer === 1 && <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 font-mono font-semibold">Active Layer</span>}
-                  </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">
-                    Your application scripts, npm packages, Express, NestJS, and user code.
-                  </p>
-                </div>
-              </div>
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900 shrink-0">
-                Pure JavaScript
-              </span>
-            </div>
-
-            {/* Layer 2 */}
-            <div
-              onClick={() => setActiveLayer(2)}
-              className={`p-5 rounded-3xl border transition cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
-                activeLayer === 2
-                  ? 'border-emerald-500 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-md ring-2 ring-emerald-500/30'
-                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
-                  L2
-                </div>
-                <div>
-                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                    <span>Node.js Core APIs &amp; C++ Bindings (Node-API)</span>
-                    {activeLayer === 2 && <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 font-mono font-semibold">Active Layer</span>}
-                  </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">
-                    Standard built-ins (<code className="font-mono text-emerald-600 dark:text-emerald-400">node:fs</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:http</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:crypto</code>, <code className="font-mono text-emerald-600 dark:text-emerald-400">node:net</code>) and native C++ wrappers.
-                  </p>
-                </div>
-              </div>
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 shrink-0">
-                JS &harr; C++ Bridge
-              </span>
-            </div>
-
-            {/* Layer 3 */}
-            <div
-              onClick={() => setActiveLayer(3)}
-              className={`p-6 rounded-3xl border-2 transition cursor-pointer shadow-sm space-y-4 ${
-                activeLayer === 3
-                  ? 'border-blue-500 bg-blue-50/20 dark:bg-blue-950/20 shadow-md ring-2 ring-blue-500/30'
-                  : 'border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/90'
-              }`}
-            >
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-                <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
-                    L3
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                      <span>Native C/C++ Engine Core (The Heavy Lifters)</span>
-                      {activeLayer === 3 && <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-600 font-mono font-semibold">Active Layer</span>}
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-300">
-                      High-performance low-level libraries compiled directly into the Node.js executable binary.
-                    </p>
-                  </div>
-                </div>
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 shrink-0">
-                  Compiled Native C/C++
-                </span>
-              </div>
-
-              {/* Engine dependencies breakdown */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-blue-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">V8 (Google)</span>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Compiles JavaScript to machine code; manages the heap and garbage collection.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-emerald-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">libuv</span>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Provides the 6-phase Event Loop, OS non-blocking I/O, and the C++ worker thread pool.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-purple-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">OpenSSL</span>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Cryptographic ciphers, SHA hashing, TLS/SSL secure sockets, and HTTPS certificates.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <Binary className="w-4 h-4 text-indigo-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">zlib</span>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Fast streaming data compression and decompression (gzip, deflate, brotli).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <Globe className="w-4 h-4 text-cyan-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">llhttp</span>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Ultra-fast, zero-allocation C parser for incoming HTTP 1.1 and HTTP/2 headers and payloads.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-amber-500" />
-                    <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">c-ares</span>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Asynchronous, non-blocking DNS request and resolver library in C.
-                  </p>
-                </div>
+              <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto space-y-1">
+                <div className="text-slate-500">// crypto-pool.mjs</div>
+                <div><span className="text-emerald-400">import</span> crypto <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:crypto&apos;</span>;</div>
+                <div className="pt-2"><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;1. Dispatching hash to libuv pool...&apos;</span>);</div>
+                <div className="pt-1">crypto.<span className="text-blue-400">pbkdf2</span>(<span className="text-amber-300">&apos;pass&apos;</span>, <span className="text-amber-300">&apos;salt&apos;</span>, <span className="text-purple-400">100000</span>, <span className="text-purple-400">64</span>, <span className="text-amber-300">&apos;sha512&apos;</span>, () =&gt; &#123;</div>
+                <div className="pl-4"><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;3. Hash finished on libuv worker thread&apos;</span>);</div>
+                <div>&#125;);</div>
+                <div className="pt-1"><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;2. Main thread is free and responsive!&apos;</span>);</div>
               </div>
             </div>
 
-            {/* Layer 4 */}
-            <div
-              onClick={() => setActiveLayer(4)}
-              className={`p-5 rounded-3xl border transition cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
-                activeLayer === 4
-                  ? 'border-rose-500 bg-rose-50/40 dark:bg-rose-950/20 shadow-md ring-2 ring-rose-500/30'
-                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 flex items-center justify-center font-mono font-bold text-sm shrink-0">
-                  L4
-                </div>
-                <div>
-                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                    <span>Operating System Kernel Layer (epoll / kqueue / IOCP)</span>
-                    {activeLayer === 4 && <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-600 font-mono font-semibold">Active Layer</span>}
-                  </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">
-                    Kernel notification multiplexers: Linux (<code className="font-mono">epoll</code>), macOS (<code className="font-mono">kqueue</code>), Windows (<code className="font-mono">IOCP</code>).
-                  </p>
-                </div>
-              </div>
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900 shrink-0">
-                OS Kernel
-              </span>
-            </div>
+            <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside pt-2">
+              <li>Notice log #2 executes before log #3: the main thread does not block waiting for the hash.</li>
+              <li>Libuv handles the computation on a background worker thread, then queues the completion callback.</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* SECTION 3: SINGLE THREAD VS THREAD POOL */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
-          <span className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400">
-            3
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight">The Single Thread vs. Thread Pool Distinction</h2>
-        </div>
+      {/* 4. Model Comparison Table */}
+      <section className="space-y-4">
+        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          Traditional Multi-Threaded vs. Node.js Event-Driven Architecture
+        </h2>
 
-        <div className="space-y-5 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-          <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-sm font-semibold flex items-center gap-3">
-            <span className="text-xl">⚠️</span>
-            <span>
-              <strong>Crucial Engineering Fact:</strong> Node.js is <em>NOT</em> completely single-threaded! JavaScript execution runs on a single main thread, but Libuv maintains a pool of C++ worker threads in the background.
-            </span>
-          </div>
-
-          <p>
-            Understanding which operations run on the <strong>single main thread</strong> versus which operations get offloaded to the <strong>Libuv thread pool</strong> is one of the most critical topics in backend engineering:
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Box 1: Main Thread OS Multiplexing */}
-            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4 shadow-xs">
-              <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-bold">
-                  <Activity className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
-                    Main Thread (0 Threads Used)
-                  </h3>
-                  <p className="text-xs sm:text-sm font-mono text-emerald-600 dark:text-emerald-400">
-                    Handled via OS Kernel Non-Blocking epoll
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                The operating system kernel directly notifies Node.js when network packets or timers arrive. No worker threads are spawned:
-              </p>
-
-              <div className="space-y-2.5 text-sm">
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
-                  <div>
-                    <strong className="text-slate-900 dark:text-slate-100">TCP &amp; HTTP Sockets:</strong> Listening, receiving requests, and streaming responses over network.
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
-                  <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Timers:</strong> Threshold tracking for <code className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">setTimeout</code> and <code className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">setInterval</code>.
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
-                  <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Microtasks:</strong> Immediate resolution of <code className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">process.nextTick</code> and Promise callbacks.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Box 2: Thread Pool Offloading */}
-            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4 shadow-xs">
-              <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <div className="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 flex items-center justify-center font-bold">
-                  <Cpu className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
-                    Libuv Thread Pool (Default: 4 Threads)
-                  </h3>
-                  <p className="text-xs sm:text-sm font-mono text-purple-600 dark:text-purple-400">
-                    Configured via UV_THREADPOOL_SIZE
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                Operating systems do not provide universal asynchronous primitives for disk or CPU tasks. These are offloaded to Libuv threads:
-              </p>
-
-              <div className="space-y-2.5 text-sm">
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-purple-500 shrink-0 mt-1.5" />
-                  <div>
-                    <strong className="text-slate-900 dark:text-slate-100">File System Operations:</strong> All asynchronous <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">fs.readFile</code>, <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">fs.writeFile</code> calls.
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-purple-500 shrink-0 mt-1.5" />
-                  <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Heavy Crypto:</strong> Password hashing (<code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">crypto.pbkdf2</code>, <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">crypto.scrypt</code>) and key generation.
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex items-start gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-purple-500 shrink-0 mt-1.5" />
-                  <div>
-                    <strong className="text-slate-900 dark:text-slate-100">Compression &amp; DNS:</strong> <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">zlib</code> compression blocks and synchronous <code className="font-mono text-purple-600 dark:text-purple-400 font-semibold">dns.lookup()</code> calls.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-semibold text-xs uppercase tracking-wider">
+              <tr>
+                <th className="py-3 px-4 w-1/4">Architectural Metric</th>
+                <th className="py-3 px-4 w-3/8">Multi-Threaded (Apache / Tomcat)</th>
+                <th className="py-3 px-4 w-3/8">Node.js (V8 + libuv)</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+              <tr>
+                <td className="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">Concurrency Model</td>
+                <td className="py-3 px-4">1 OS Thread per client connection</td>
+                <td className="py-3 px-4 font-medium text-emerald-700 dark:text-emerald-400">1 Event Loop Thread + Asynchronous I/O Multiplexing</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">RAM per 10k Connections</td>
+                <td className="py-3 px-4">~10 GB – 20 GB (1–2 MB stack memory per thread)</td>
+                <td className="py-3 px-4 font-medium text-emerald-700 dark:text-emerald-400">~30 MB – 50 MB total process heap</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">CPU Context Switching</td>
+                <td className="py-3 px-4">High context switching overhead between threads</td>
+                <td className="py-3 px-4 font-medium text-emerald-700 dark:text-emerald-400">Near-zero context switching on single main thread</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">I/O Handling</td>
+                <td className="py-3 px-4">Thread blocks and sleeps during I/O wait</td>
+                <td className="py-3 px-4 font-medium text-emerald-700 dark:text-emerald-400">Non-blocking notification via epoll / kqueue / IOCP</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">Ideal Workload</td>
+                <td className="py-3 px-4">Heavy synchronous CPU number-crunching</td>
+                <td className="py-3 px-4 font-medium text-emerald-700 dark:text-emerald-400">High-throughput I/O, REST APIs, WebSockets, Streaming</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      {/* SECTION 4: ARCHITECTURAL COMPARISON TABLE */}
-      <section className="space-y-5">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
-          <span className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400">
-            4
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight">Architectural Comparison: Thread-per-Request vs. Node.js</h2>
-        </div>
-
-        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-          <p>
-            Here is how Node.js compares against the traditional multi-threaded server architecture:
+      {/* 5. Live Code Lab */}
+      <section className="space-y-4">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <Terminal className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            Try It: Inspecting Internal Architecture
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Execute the presets below to observe the single-threaded execution timing and inspect runtime dependency versions.
           </p>
-
-          <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs">
-            <table className="w-full text-left text-sm sm:text-base">
-              <thead className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-bold uppercase tracking-wider text-xs">
-                <tr>
-                  <th className="py-3.5 px-4">Metric / Dimension</th>
-                  <th className="py-3.5 px-4">Thread-Per-Request (Apache/Tomcat)</th>
-                  <th className="py-3.5 px-4">Node.js Event-Driven Engine</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900">
-                {[
-                  {
-                    metric: 'Concurrency Model',
-                    trad: '1 Thread spawned per active client',
-                    node: '1 Main Event Loop + OS Multiplexing (epoll)',
-                  },
-                  {
-                    metric: 'Memory per Connection',
-                    trad: '1 MB to 2 MB (Stack allocation)',
-                    node: '~2 KB to 4 KB (Socket descriptor state)',
-                  },
-                  {
-                    metric: '10,000 Concurrent Idle Clients',
-                    trad: '10 GB – 20 GB RAM (Server crash)',
-                    node: '< 50 MB RAM (Effortless scalability)',
-                  },
-                  {
-                    metric: 'CPU Context Switching',
-                    trad: 'Heavy; CPU thrashes between threads',
-                    node: 'Zero context switching for network sockets',
-                  },
-                  {
-                    metric: 'I/O Handling',
-                    trad: 'Thread blocks synchronously during I/O',
-                    node: 'Non-blocking asynchronous event notification',
-                  },
-                  {
-                    metric: 'Best Suited For',
-                    trad: 'Heavy synchronous CPU computation',
-                    node: 'High-throughput I/O, WebSockets, REST APIs',
-                  },
-                ].map((row, idx) => (
-                  <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                    <td className="py-3.5 px-4 font-semibold text-slate-900 dark:text-slate-100">
-                      {row.metric}
-                    </td>
-                    <td className="py-3.5 px-4 text-slate-600 dark:text-slate-400">
-                      {row.trad}
-                    </td>
-                    <td className="py-3.5 px-4 font-semibold text-emerald-600 dark:text-emerald-400">
-                      {row.node}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 5: INTERACTIVE CODE LAB */}
-      <section className="space-y-5">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
-          <span className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400">
-            5
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight">Interactive Architecture Lab: Non-Blocking Execution</h2>
         </div>
 
-        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-          <p>
-            Experience how the Node.js V8 execution stack and the Libuv timer queue coordinate asynchronous operations. Notice how synchronous execution finishes completely <em>before</em> any scheduled asynchronous callback runs:
-          </p>
+        <NodeJsEditor
+          title="Concept 2: Architecture Lab"
+          initialCode={`// Preset 1: Single-Threaded Non-Blocking Execution Order
+console.log("1. [Main Thread] Script execution begins synchronously");
 
-          <NodeJsEditor
-            title="Concept 2 Code Lab: Non-Blocking Execution Trace"
-            initialCode={`console.log("1. [Main Thread] Sync JavaScript task begins");
-
+// Asynchronous timer callback registered with libuv
 setTimeout(() => {
-  console.log("3. [Libuv Timers Phase] Timer callback fired by runtime!");
-}, 200);
+  console.log("4. [libuv Timer] Callback executed by event loop after delay");
+}, 150);
 
-console.log("2. [Main Thread] Sync JavaScript task finishes");`}
-            presets={[
-              {
-                label: '1. Event Loop Timing Order',
-                code: `console.log("1. [Main Thread] Sync JavaScript task begins");\n\nsetTimeout(() => {\n  console.log("3. [Libuv Timers Phase] Timer callback fired by runtime!");\n}, 200);\n\nconsole.log("2. [Main Thread] Sync JavaScript task finishes");`,
-              },
-              {
-                label: '2. Inspect Environment & Architecture',
-                code: `console.log("=== Node.js Engine Architecture Info ===");\nconsole.log("Node version   :", process.version);\nconsole.log("V8 version     :", process.versions.v8);\nconsole.log("libuv version  :", process.versions.uv);\nconsole.log("CPU Architecture:", process.arch);\nconsole.log("Platform       :", process.platform);\nconsole.log("Process PID    :", process.pid);`,
-              },
-              {
-                label: '3. Multi-Timer Race',
-                code: `console.log("[Start] Scheduling 3 asynchronous tasks");\n\nsetTimeout(() => console.log("--> Task C (300ms delay completed)"), 300);\nsetTimeout(() => console.log("--> Task A (100ms delay completed)"), 100);\nsetTimeout(() => console.log("--> Task B (200ms delay completed)"), 200);\n\nconsole.log("[End] Main thread is now free to accept new incoming events!");`,
-              },
-            ]}
-          />
-        </div>
+// Promise microtask queued
+Promise.resolve().then(() => {
+  console.log("3. [Microtask] Promise microtask ran before next event loop tick");
+});
+
+console.log("2. [Main Thread] Synchronous script execution completed");`}
+          presets={[
+            {
+              label: '1. Execution Order & Timing',
+              code: `// Preset 1: Single-Threaded Non-Blocking Execution Order
+console.log("1. [Main Thread] Script execution begins synchronously");
+
+// Asynchronous timer callback registered with libuv
+setTimeout(() => {
+  console.log("4. [libuv Timer] Callback executed by event loop after delay");
+}, 150);
+
+// Promise microtask queued
+Promise.resolve().then(() => {
+  console.log("3. [Microtask] Promise microtask ran before next event loop tick");
+});
+
+console.log("2. [Main Thread] Synchronous script execution completed");`,
+            },
+            {
+              label: '2. Runtime Dependencies & V8 Info',
+              code: `// Preset 2: Inspecting Node.js Engine Components
+console.log("=== Node.js Engine Architecture ===");
+console.log("Node Version :", process.version);
+console.log("V8 Engine    :", process.versions.v8);
+console.log("libuv Version:", process.versions.uv);
+console.log("OpenSSL      :", process.versions.openssl);
+console.log("zlib         :", process.versions.zlib);
+console.log("Active PID   :", process.pid);
+console.log("Platform     :", process.platform, process.arch);`,
+            },
+          ]}
+        />
       </section>
 
-      {/* SECTION 6: TWO CRITICAL ENGINEERING FAILURE MODES */}
-      <section className="space-y-5">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
-          <span className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400">
-            6
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight">Two Critical Production Failure Modes</h2>
+      {/* 6. Key Production Trap */}
+      <section className="p-5 rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-semibold text-sm sm:text-base">
+          <AlertTriangle className="w-5 h-5 shrink-0" />
+          <span>The Golden Rule: Beware of Libuv Thread Pool Starvation</span>
         </div>
-
-        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-          <p>
-            Because Node.js runs all JavaScript logic on a single thread and offloads blocking tasks to 4 worker threads, production engineering bugs usually fall into one of two traps:
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-6 rounded-3xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900 space-y-3">
-              <div className="flex items-center gap-2 text-rose-700 dark:text-rose-400 font-bold text-sm sm:text-base">
-                <AlertTriangle className="w-4 h-4 shrink-0" />
-                <span>Trap #1: Event Loop Starvation</span>
-              </div>
-              <p className="text-sm text-rose-950 dark:text-rose-200 leading-relaxed">
-                If you execute a heavy CPU calculation (e.g. recursive Fibonacci, parsing a 100MB JSON payload, or an exponential Regex) on the main thread, the single thread freezes! No other incoming HTTP sockets, timers, or promises can be processed until that function finishes.
-              </p>
-              <div className="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900 text-sm font-mono text-rose-900 dark:text-rose-300">
-                Rule: &ldquo;Don&apos;t block the Event Loop!&rdquo; Offload heavy CPU work to <code className="font-bold">worker_threads</code>.
-              </div>
-            </div>
-
-            <div className="p-6 rounded-3xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 space-y-3">
-              <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-sm sm:text-base">
-                <AlertTriangle className="w-4 h-4 shrink-0" />
-                <span>Trap #2: Thread Pool Exhaustion</span>
-              </div>
-              <p className="text-sm text-amber-950 dark:text-amber-200 leading-relaxed">
-                By default, <code className="font-mono">UV_THREADPOOL_SIZE</code> is 4. If your server receives 4 simultaneous heavy password hashing requests (<code className="font-mono">crypto.pbkdf2</code>), all 4 worker threads are occupied. A 5th task&mdash;even a simple file read&mdash;must queue and wait until a thread frees up!
-              </p>
-              <div className="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-900/80 border border-amber-200 dark:border-amber-900 text-sm font-mono text-amber-900 dark:text-amber-300">
-                Remedy: Scale via <code className="font-bold">process.env.UV_THREADPOOL_SIZE = 16</code> or cluster processes.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 7: CHECK YOUR UNDERSTANDING (INTERACTIVE QUIZ) */}
-      <section className="space-y-6 pt-4 border-t border-slate-200 dark:border-slate-800">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
-            <span className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-mono font-bold text-sm">
-              7
-            </span>
-            <h2 className="text-2xl font-bold tracking-tight">Check Your Understanding</h2>
-          </div>
-
-          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1 rounded-full text-xs font-mono font-bold">
-            <span className="text-slate-600 dark:text-slate-400">Progress:</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-extrabold">
-              {totalCompleted} / 4 Completed
-            </span>
-          </div>
-        </div>
-
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-          Verify your architectural comprehension of Node.js engine layers, Libuv, and concurrency before advancing to Concept 3.
+        <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          By default, libuv creates a thread pool of only <strong>4 background worker threads</strong> (<code className="font-mono text-xs">UV_THREADPOOL_SIZE=4</code>). If your backend fires 5 simultaneous filesystem reads or cryptographic hashes, the 5th operation must wait in queue until one of the first 4 completes. In high-traffic services dealing with extensive disk or crypto operations, increase this pool via environment variable: <code className="font-mono text-xs font-bold text-amber-700 dark:text-amber-400">UV_THREADPOOL_SIZE=16 node server.js</code>.
         </p>
+      </section>
 
-        {/* QUESTION 1 */}
-        <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
-              Question 1: Is Node.js truly single-threaded?
-            </h3>
-            {q1 && (
-              <span
-                className={`text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full font-mono ${
-                  q1 === 'C'
-                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400'
-                    : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-400'
-                }`}
-              >
-                {q1 === 'C' ? 'Correct' : 'Needs Review'}
-              </span>
-            )}
+      {/* 7. Knowledge Self-Check */}
+      <section className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <HelpCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            Check Your Understanding
+          </h2>
+          <span className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">
+            {completedCount}/3 answered
+          </span>
+        </div>
+
+        {/* Q1 */}
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
+          <div className="font-medium text-sm sm:text-base text-slate-900 dark:text-slate-100">
+            1. How does Node.js achieve high concurrency despite running JavaScript on a single thread?
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-2">
             {[
-              { id: 'A', text: 'Yes, Node.js never uses more than one thread for anything under any circumstances.' },
-              { id: 'B', text: 'No, every incoming HTTP request spawns a new operating system thread.' },
-              {
-                id: 'C',
-                text: 'JavaScript executes on a single main thread, but Libuv uses a background worker thread pool for blocking tasks like file I/O and crypto.',
-              },
-              { id: 'D', text: 'Node.js is only single-threaded on Windows; on Linux it is multi-threaded.' },
+              { id: 'A', text: 'It creates a new OS thread for every incoming HTTP connection' },
+              { id: 'B', text: 'It delegates non-blocking I/O to OS kernel event mechanisms (epoll/kqueue) and a background thread pool via libuv', correct: true },
+              { id: 'C', text: 'It compiles all JavaScript into bytecode ahead of deployment' },
+              { id: 'D', text: 'It restricts all web traffic to synchronous queuing' },
             ].map((option) => {
               const isSelected = q1 === option.id;
-              const isCorrect = option.id === 'C';
-              let btnStyle =
-                'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700';
-
-              if (isSelected) {
-                if (isCorrect) {
-                  btnStyle =
-                    'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 font-semibold ring-1 ring-emerald-500';
-                } else {
-                  btnStyle =
-                    'border-rose-500 bg-rose-50 dark:bg-rose-950/60 text-rose-900 dark:text-rose-200 font-semibold ring-1 ring-rose-500';
-                }
-              }
-
               return (
                 <button
                   key={option.id}
                   onClick={() => setQ1(option.id)}
-                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition flex items-center justify-between cursor-pointer ${
+                    isSelected
+                      ? option.correct
+                        ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 font-medium'
+                        : 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 font-medium'
+                      : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300'
+                  }`}
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
-                      {option.id}
-                    </span>
-                    <span>{option.text}</span>
+                  <span>
+                    <strong className="font-mono mr-2">{option.id}.</strong> {option.text}
                   </span>
                   {isSelected && (
-                    <span>
-                      {isCorrect ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
-                      )}
-                    </span>
+                    option.correct ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
+                    )
                   )}
                 </button>
               );
@@ -683,87 +343,55 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
           </div>
 
           {q1 && (
-            <div
-              className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base leading-relaxed ${
-                q1 === 'C'
-                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
-                  : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
-              }`}
-            >
-              {q1 === 'C' ? (
-                <p>
-                  <strong>Correct!</strong> Your JavaScript code and the Event Loop execute on a single thread. However, low-level blocking tasks (file system, crypto, zlib) are offloaded to Libuv&apos;s C++ worker thread pool (<code className="font-mono font-bold">UV_THREADPOOL_SIZE</code>).
-                </p>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 pt-1">
+              {q1 === 'B' ? (
+                <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                  Correct. Node.js uses an event-driven non-blocking I/O model powered by libuv, freeing the single JavaScript main thread from waiting on slow network or disk tasks.
+                </span>
               ) : (
-                <p>
-                  <strong>Correction:</strong> Option {q1} is incorrect. The single thread applies only to JavaScript execution and the event loop. Libuv spawns a default pool of 4 C++ worker threads to execute synchronous OS syscalls in the background.
-                </p>
+                <span className="text-rose-600 dark:text-rose-400">
+                  Incorrect. Node.js avoids allocating a thread per connection—that was the legacy multi-threaded model that caused the C10K memory exhaustion problem.
+                </span>
               )}
-            </div>
+            </p>
           )}
         </div>
 
-        {/* QUESTION 2 */}
-        <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
-              Question 2: Which library in Layer 3 provides the Event Loop and Worker Thread Pool to Node.js?
-            </h3>
-            {q2 && (
-              <span
-                className={`text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full font-mono ${
-                  q2 === 'B'
-                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400'
-                    : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-400'
-                }`}
-              >
-                {q2 === 'B' ? 'Correct' : 'Needs Review'}
-              </span>
-            )}
+        {/* Q2 */}
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
+          <div className="font-medium text-sm sm:text-base text-slate-900 dark:text-slate-100">
+            2. Which component of Node.js is responsible for executing the JavaScript code?
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-2">
             {[
-              { id: 'A', text: 'V8' },
-              { id: 'B', text: 'libuv' },
+              { id: 'A', text: 'libuv' },
+              { id: 'B', text: 'Google V8 Engine', correct: true },
               { id: 'C', text: 'OpenSSL' },
-              { id: 'D', text: 'Express' },
+              { id: 'D', text: 'zlib' },
             ].map((option) => {
               const isSelected = q2 === option.id;
-              const isCorrect = option.id === 'B';
-              let btnStyle =
-                'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700';
-
-              if (isSelected) {
-                if (isCorrect) {
-                  btnStyle =
-                    'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 font-semibold ring-1 ring-emerald-500';
-                } else {
-                  btnStyle =
-                    'border-rose-500 bg-rose-50 dark:bg-rose-950/60 text-rose-900 dark:text-rose-200 font-semibold ring-1 ring-rose-500';
-                }
-              }
-
               return (
                 <button
                   key={option.id}
                   onClick={() => setQ2(option.id)}
-                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition flex items-center justify-between cursor-pointer ${
+                    isSelected
+                      ? option.correct
+                        ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 font-medium'
+                        : 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 font-medium'
+                      : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300'
+                  }`}
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
-                      {option.id}
-                    </span>
-                    <span>{option.text}</span>
+                  <span>
+                    <strong className="font-mono mr-2">{option.id}.</strong> {option.text}
                   </span>
                   {isSelected && (
-                    <span>
-                      {isCorrect ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
-                      )}
-                    </span>
+                    option.correct ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
+                    )
                   )}
                 </button>
               );
@@ -771,90 +399,55 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
           </div>
 
           {q2 && (
-            <div
-              className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base leading-relaxed ${
-                q2 === 'B'
-                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
-                  : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
-              }`}
-            >
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 pt-1">
               {q2 === 'B' ? (
-                <p>
-                  <strong>Spot on!</strong> <code className="font-mono font-bold">libuv</code> is the multi-platform C library specifically designed for Node.js to provide the 6-phase event loop, asynchronous I/O abstractions, and the worker thread pool.
-                </p>
+                <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                  Correct. V8 parses, compiles, and optimizes JavaScript into native machine code, while libuv manages asynchronous I/O and the event loop.
+                </span>
               ) : (
-                <p>
-                  <strong>Correction:</strong> It is <code className="font-mono font-bold">libuv</code>. V8 only executes JavaScript and manages heap memory; OpenSSL handles encryption; and Express is a high-level userland framework.
-                </p>
+                <span className="text-rose-600 dark:text-rose-400">
+                  Incorrect. Google V8 compiles and executes JavaScript. libuv handles I/O and the event loop, OpenSSL handles cryptography, and zlib handles compression.
+                </span>
               )}
-            </div>
+            </p>
           )}
         </div>
 
-        {/* QUESTION 3 */}
-        <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
-              Question 3: How does Node.js handle 10,000 concurrent network sockets without creating 10,000 threads?
-            </h3>
-            {q3 && (
-              <span
-                className={`text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full font-mono ${
-                  q3 === 'B'
-                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400'
-                    : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-400'
-                }`}
-              >
-                {q3 === 'B' ? 'Correct' : 'Needs Review'}
-              </span>
-            )}
+        {/* Q3 */}
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
+          <div className="font-medium text-sm sm:text-base text-slate-900 dark:text-slate-100">
+            3. What is the default size of the libuv background thread pool?
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-2">
             {[
-              { id: 'A', text: 'It creates a hidden thread pool with 10,000 threads.' },
-              {
-                id: 'B',
-                text: 'It relies on operating system kernel multiplexing primitives (epoll, kqueue, IOCP) that monitor all sockets non-blockingly on one thread.',
-              },
-              { id: 'C', text: 'It drops old connections when new ones arrive to save RAM.' },
-              { id: 'D', text: 'It executes all network requests synchronously.' },
+              { id: 'A', text: '1 thread' },
+              { id: 'B', text: '4 threads', correct: true },
+              { id: 'C', text: '16 threads' },
+              { id: 'D', text: 'Unlimited threads' },
             ].map((option) => {
               const isSelected = q3 === option.id;
-              const isCorrect = option.id === 'B';
-              let btnStyle =
-                'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700';
-
-              if (isSelected) {
-                if (isCorrect) {
-                  btnStyle =
-                    'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 font-semibold ring-1 ring-emerald-500';
-                } else {
-                  btnStyle =
-                    'border-rose-500 bg-rose-50 dark:bg-rose-950/60 text-rose-900 dark:text-rose-200 font-semibold ring-1 ring-rose-500';
-                }
-              }
-
               return (
                 <button
                   key={option.id}
                   onClick={() => setQ3(option.id)}
-                  className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition ${btnStyle}`}
+                  className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition flex items-center justify-between cursor-pointer ${
+                    isSelected
+                      ? option.correct
+                        ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 font-medium'
+                        : 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 font-medium'
+                      : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300'
+                  }`}
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center font-mono font-bold text-xs sm:text-sm shrink-0">
-                      {option.id}
-                    </span>
-                    <span>{option.text}</span>
+                  <span>
+                    <strong className="font-mono mr-2">{option.id}.</strong> {option.text}
                   </span>
                   {isSelected && (
-                    <span>
-                      {isCorrect ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
-                      )}
-                    </span>
+                    option.correct ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
+                    )
                   )}
                 </button>
               );
@@ -862,118 +455,18 @@ console.log("2. [Main Thread] Sync JavaScript task finishes");`}
           </div>
 
           {q3 && (
-            <div
-              className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base leading-relaxed ${
-                q3 === 'B'
-                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900'
-                  : 'bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-200 dark:border-rose-900'
-              }`}
-            >
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 pt-1">
               {q3 === 'B' ? (
-                <p>
-                  <strong>Exactly!</strong> Operating systems provide kernel notification systems (<code className="font-mono font-bold">epoll</code> on Linux, <code className="font-mono font-bold">kqueue</code> on macOS, <code className="font-mono font-bold">IOCP</code> on Windows). The single main thread registers file descriptors and only wakes up when the OS confirms that data has arrived.
-                </p>
-              ) : (
-                <p>
-                  <strong>Correction:</strong> Node.js uses OS kernel non-blocking multiplexing (<code className="font-mono font-bold">epoll</code>/<code className="font-mono font-bold">kqueue</code>). It does not create a thread per socket, and it does not drop active connections.
-                </p>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* QUESTION 4: PEEK / HIDE MODEL ANSWER */}
-        <div className="p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4 shadow-xs">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-slate-100">
-                Question 4: What is the architectural difference when an HTTP network request arrives vs. when fs.readFile() is executed?
-              </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Reflect on how each path interacts with the operating system and worker threads, then click below to reveal the faculty model answer.
-              </p>
-            </div>
-            {q4Revealed && (
-              <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full font-mono bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400">
-                Revealed
-              </span>
-            )}
-          </div>
-
-          <div className="pt-1">
-            <button
-              onClick={() => setQ4Revealed(!q4Revealed)}
-              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-bold transition flex items-center gap-2 shadow-2xs"
-            >
-              <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>{q4Revealed ? 'Hide Model Answer' : 'Peek Model Answer'}</span>
-            </button>
-          </div>
-
-          {q4Revealed && (
-            <div className="p-5 sm:p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 space-y-3.5 text-sm sm:text-base text-slate-800 dark:text-slate-200">
-              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-400 font-bold uppercase tracking-wider text-xs sm:text-sm">
-                <Sparkles className="w-4 h-4" /> Professor&apos;s Engineering Model Answer
-              </div>
-
-              <div className="space-y-3 leading-relaxed">
-                <p>
-                  <strong>1. Incoming HTTP Network Request (OS Kernel Multiplexing):</strong> Handled directly by the main thread via Libuv and the OS kernel (<code className="font-mono font-bold">epoll</code> on Linux, <code className="font-mono font-bold">kqueue</code> on macOS). <em>Zero worker threads from the thread pool are used</em>. The OS kernel notifies the event loop when data packets arrive, allowing millions of open sockets to be monitored concurrently without thread overhead.
-                </p>
-                <p>
-                  <strong>2. fs.readFile() Execution (Libuv Thread Pool Offloading):</strong> Standard operating systems do not provide universal asynchronous file system syscalls. Therefore, Libuv <em>offloads the blocking synchronous read syscall to one of its 4 background C++ worker threads</em>. Once the worker thread finishes reading the file chunk into a buffer, it pushes the callback into the event loop poll queue to be executed on the main JavaScript thread.
-                </p>
-                <div className="p-3.5 rounded-xl bg-white/70 dark:bg-slate-900/80 border border-emerald-300 dark:border-emerald-800 text-sm font-mono text-slate-700 dark:text-slate-300">
-                  Architectural Summary: Network I/O = Kernel Event Demultiplexer &bull; File &amp; Crypto I/O = Libuv Thread Pool
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* SECTION 8: PEDAGOGICAL LEARNING RULE */}
-      <section className="space-y-6 pt-4 border-t border-slate-200 dark:border-slate-800">
-        <div className="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 space-y-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">
-              <BookOpen className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
-                CSCosmos Pedagogical Learning Rule
-              </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                The university-grade 7-step mastery process followed across all 280 concepts:
-              </p>
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1 text-sm font-medium text-slate-700 dark:text-slate-300">
-            {[
-              'Explanation from zero.',
-              'Internal working.',
-              'Real-world examples.',
-              'Practical coding exercise.',
-              'Interview questions.',
-              'Knowledge assessment.',
-              'Move to next concept only after mastering current one.',
-            ].map((step, idx) => (
-              <div
-                key={idx}
-                className="p-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-2.5"
-              >
-                <span className="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 text-xs sm:text-sm font-mono font-bold flex items-center justify-center shrink-0">
-                  {idx + 1}
+                <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                  Correct. The default is 4 threads (UV_THREADPOOL_SIZE=4). It can be configured up to 1024 threads for I/O heavy workloads.
                 </span>
-                <span className="text-slate-800 dark:text-slate-200 text-sm font-medium">{step}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            <strong className="text-slate-900 dark:text-slate-100">Your turn:</strong> Verify all 4 assessment questions above. Once complete, you are fully prepared to advance to Concept 3 using the navigation below.
-          </div>
+              ) : (
+                <span className="text-rose-600 dark:text-rose-400">
+                  Incorrect. By default, libuv allocates exactly 4 worker threads for filesystem, DNS lookups, and crypto tasks.
+                </span>
+              )}
+            </p>
+          )}
         </div>
       </section>
     </div>
