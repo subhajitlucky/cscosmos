@@ -135,7 +135,7 @@ export default function ConceptDetail({ topicId }: { topicId: string }) {
         />
       </div>
 
-      <div className="space-y-8 pb-32 max-w-4xl mx-auto px-4 sm:px-6 pt-6">
+      <div className="space-y-8 pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         {/* Sticky Glassmorphic Header Bar */}
         <header className="sticky top-2 z-40 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 rounded-2xl px-4 py-2.5 shadow-sm flex items-center justify-between gap-3 select-none">
           {/* Breadcrumb Navigation */}

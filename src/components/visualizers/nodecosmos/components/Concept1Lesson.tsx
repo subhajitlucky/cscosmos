@@ -21,7 +21,7 @@ export function Concept1Lesson() {
   const completedCount = [q1, q2, q3].filter(Boolean).length;
 
   return (
-    <div className="space-y-12 max-w-4xl mx-auto">
+    <div className="space-y-12 w-full">
       {/* 1. Header */}
       <header className="space-y-3 border-b border-slate-200 dark:border-slate-800 pb-6">
         <div className="flex items-center gap-2 text-xs font-mono font-medium text-slate-500 dark:text-slate-400">
@@ -91,72 +91,78 @@ export function Concept1Lesson() {
       </section>
 
       {/* 3. Two Essential Examples */}
-      <section className="space-y-6">
+      <section className="space-y-5">
         <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
           <Server className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           Two Essential Examples
         </h2>
 
-        {/* Example 1 */}
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-4">
-          <div>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              Example 1
-            </span>
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-              Operating System &amp; Filesystem Access
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-              Browser JavaScript cannot touch the file system. In Node.js, built-in modules like <code className="font-mono text-slate-800 dark:text-slate-200">node:os</code> and <code className="font-mono text-slate-800 dark:text-slate-200">node:fs/promises</code> speak directly to the OS kernel.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Example 1 */}
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  Example 1
+                </span>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  Operating System &amp; Filesystem Access
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                  Browser JavaScript cannot touch the file system. In Node.js, built-in modules like <code className="font-mono text-slate-800 dark:text-slate-200">node:os</code> and <code className="font-mono text-slate-800 dark:text-slate-200">node:fs/promises</code> speak directly to the OS kernel.
+                </p>
+              </div>
+
+              <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto space-y-1">
+                <div className="text-slate-500">// system-check.mjs</div>
+                <div><span className="text-emerald-400">import</span> os <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:os&apos;</span>;</div>
+                <div><span className="text-emerald-400">import</span> fs <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:fs/promises&apos;</span>;</div>
+                <div className="pt-2 text-slate-500">// 1. Inspect physical hardware</div>
+                <div><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">`OS: &#36;&#123;os.type()&#125; | Cores: &#36;&#123;os.cpus().length&#125; | Free RAM: &#36;&#123;(os.freemem() / 1e9).toFixed(1)&#125; GB`</span>);</div>
+                <div className="pt-2 text-slate-500">// 2. Write and read directly on disk</div>
+                <div><span className="text-emerald-400">await</span> fs.<span className="text-blue-400">writeFile</span>(<span className="text-amber-300">&apos;server.log&apos;</span>, <span className="text-amber-300">`Booted at &#36;&#123;new Date().toISOString()&#125;\n`</span>);</div>
+                <div><span className="text-emerald-400">const</span> log = <span className="text-emerald-400">await</span> fs.<span className="text-blue-400">readFile</span>(<span className="text-amber-300">&apos;server.log&apos;</span>, <span className="text-amber-300">&apos;utf-8&apos;</span>);</div>
+                <div><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;Saved Log:&apos;</span>, log.<span className="text-blue-400">trim</span>());</div>
+              </div>
+            </div>
+
+            <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside pt-2">
+              <li><code className="font-mono">os.cpus()</code> retrieves hardware thread count directly from host kernel tables.</li>
+              <li><code className="font-mono">fs.writeFile</code> invokes POSIX system calls (<code className="font-mono">open</code>, <code className="font-mono">write</code>, <code className="font-mono">close</code>) to persist bytes to disk.</li>
+            </ul>
           </div>
 
-          <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto space-y-1">
-            <div className="text-slate-500">// system-check.mjs</div>
-            <div><span className="text-emerald-400">import</span> os <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:os&apos;</span>;</div>
-            <div><span className="text-emerald-400">import</span> fs <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:fs/promises&apos;</span>;</div>
-            <div className="pt-2 text-slate-500">// 1. Inspect physical hardware</div>
-            <div><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">`OS: &#36;&#123;os.type()&#125; | Cores: &#36;&#123;os.cpus().length&#125; | Free RAM: &#36;&#123;(os.freemem() / 1e9).toFixed(1)&#125; GB`</span>);</div>
-            <div className="pt-2 text-slate-500">// 2. Write and read directly on disk</div>
-            <div><span className="text-emerald-400">await</span> fs.<span className="text-blue-400">writeFile</span>(<span className="text-amber-300">&apos;server.log&apos;</span>, <span className="text-amber-300">`Booted at &#36;&#123;new Date().toISOString()&#125;\n`</span>);</div>
-            <div><span className="text-emerald-400">const</span> log = <span className="text-emerald-400">await</span> fs.<span className="text-blue-400">readFile</span>(<span className="text-amber-300">&apos;server.log&apos;</span>, <span className="text-amber-300">&apos;utf-8&apos;</span>);</div>
-            <div><span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;Saved Log:&apos;</span>, log.<span className="text-blue-400">trim</span>());</div>
+          {/* Example 2 */}
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  Example 2
+                </span>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  A Standalone HTTP Web Server in 6 Lines
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                  Node.js doesn&apos;t require an external application server (such as Apache or NGINX) to run your code. The runtime itself creates and manages TCP sockets and HTTP connections.
+                </p>
+              </div>
+
+              <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto space-y-1">
+                <div className="text-slate-500">// server.mjs</div>
+                <div><span className="text-emerald-400">import</span> http <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:http&apos;</span>;</div>
+                <div className="pt-2"><span className="text-emerald-400">const</span> server = http.<span className="text-blue-400">createServer</span>((req, res) =&gt; &#123;</div>
+                <div className="pl-4">res.<span className="text-blue-400">writeHead</span>(<span className="text-purple-400">200</span>, &#123; <span className="text-amber-300">&apos;Content-Type&apos;</span>: <span className="text-amber-300">&apos;application/json&apos;</span> &#125;);</div>
+                <div className="pl-4">res.<span className="text-blue-400">end</span>(<span className="text-cyan-400">JSON</span>.<span className="text-blue-400">stringify</span>(&#123; status: <span className="text-amber-300">&apos;ok&apos;</span>, uptime: process.<span className="text-blue-400">uptime</span>() &#125;));</div>
+                <div>&#125;);</div>
+                <div className="pt-2">server.<span className="text-blue-400">listen</span>(<span className="text-purple-400">3000</span>, () =&gt; <span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;Server running on port 3000&apos;</span>));</div>
+              </div>
+            </div>
+
+            <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside pt-2">
+              <li><code className="font-mono">http.createServer</code> registers a callback triggered whenever a client socket completes an HTTP request.</li>
+              <li>Thousands of incoming requests can be served asynchronously on a single thread without allocating a dedicated OS thread per connection.</li>
+            </ul>
           </div>
-
-          <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside">
-            <li><code className="font-mono">os.cpus()</code> retrieves hardware thread count directly from host kernel tables.</li>
-            <li><code className="font-mono">fs.writeFile</code> invokes POSIX system calls (<code className="font-mono">open</code>, <code className="font-mono">write</code>, <code className="font-mono">close</code>) to persist bytes to disk.</li>
-          </ul>
-        </div>
-
-        {/* Example 2 */}
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-4">
-          <div>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              Example 2
-            </span>
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-              A Standalone HTTP Web Server in 6 Lines
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-              Node.js doesn&apos;t require an external application server (such as Apache or NGINX) to run your code. The runtime itself creates and manages TCP sockets and HTTP connections.
-            </p>
-          </div>
-
-          <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto space-y-1">
-            <div className="text-slate-500">// server.mjs</div>
-            <div><span className="text-emerald-400">import</span> http <span className="text-emerald-400">from</span> <span className="text-amber-300">&apos;node:http&apos;</span>;</div>
-            <div className="pt-2"><span className="text-emerald-400">const</span> server = http.<span className="text-blue-400">createServer</span>((req, res) =&gt; &#123;</div>
-            <div className="pl-4">res.<span className="text-blue-400">writeHead</span>(<span className="text-purple-400">200</span>, &#123; <span className="text-amber-300">&apos;Content-Type&apos;</span>: <span className="text-amber-300">&apos;application/json&apos;</span> &#125;);</div>
-            <div className="pl-4">res.<span className="text-blue-400">end</span>(<span className="text-cyan-400">JSON</span>.<span className="text-blue-400">stringify</span>(&#123; status: <span className="text-amber-300">&apos;ok&apos;</span>, uptime: process.<span className="text-blue-400">uptime</span>() &#125;));</div>
-            <div>&#125;);</div>
-            <div className="pt-2">server.<span className="text-blue-400">listen</span>(<span className="text-purple-400">3000</span>, () =&gt; <span className="text-cyan-400">console</span>.<span className="text-blue-400">log</span>(<span className="text-amber-300">&apos;Server running on port 3000&apos;</span>));</div>
-          </div>
-
-          <ul className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside">
-            <li><code className="font-mono">http.createServer</code> registers a callback triggered whenever a client socket completes an HTTP request.</li>
-            <li>Thousands of incoming requests can be served asynchronously on a single thread without allocating a dedicated OS thread per connection.</li>
-          </ul>
         </div>
       </section>
 
