@@ -96,12 +96,33 @@ export function NodeJsEditor({
 
     const customProcess = {
       version: 'v22.11.0',
-      versions: { node: '22.11.0', v8: '12.4.254.20-node.15', uv: '1.48.0' },
+      versions: {
+        node: '22.11.0',
+        v8: '12.4.254.20-node.15',
+        uv: '1.48.0',
+        zlib: '1.3.0.1-motley-7d77fb7',
+        brotli: '1.1.0',
+        ares: '1.33.1',
+        modules: '127',
+        nghttp2: '1.63.0',
+        napi: '9',
+        llhttp: '9.2.1',
+        openssl: '3.0.15+quic',
+        cldr: '45.0',
+        icu: '75.1',
+        tz: '2024a',
+        unicode: '15.1',
+      },
       platform: 'linux',
       arch: 'x64',
       title: 'node',
+      execPath: '/usr/local/bin/node',
       pid: 1042,
-      env: { NODE_ENV: 'development', USER: 'subhajit', PATH: '/usr/local/bin:/usr/bin' },
+      env: {
+        NODE_ENV: 'development',
+        USER: 'subhajit',
+        PATH: '/home/subhajit/.nvm/versions/node/v22.11.0/bin:/usr/local/bin:/usr/bin:/bin',
+      },
       uptime: () => 48.3,
       cwd: () => '/home/subhajit/project',
       memoryUsage: () => ({
@@ -117,8 +138,8 @@ export function NodeJsEditor({
         queueMicrotask(() => {
           try {
             callback();
-          } catch (err: any) {
-            pushLog('error', `nextTick Error: ${err?.message || err}`);
+          } catch (err: unknown) {
+            pushLog('error', `nextTick Error: ${err instanceof Error ? err.message : String(err)}`);
           }
         });
       },

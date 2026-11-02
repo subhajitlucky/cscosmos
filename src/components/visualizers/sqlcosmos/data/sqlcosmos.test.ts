@@ -70,8 +70,8 @@ describe('sqlcosmos data integrity', () => {
     }
   });
 
-  it('defines 25 practice problems across all 4 difficulty levels that evaluate correctly', () => {
-    expect(SQL_PROBLEMS).toHaveLength(25);
+  it('defines 100 practice problems across all 4 difficulty levels that evaluate correctly', () => {
+    expect(SQL_PROBLEMS).toHaveLength(100);
 
     const diffs = new Set(SQL_PROBLEMS.map((p) => p.difficulty));
     expect(diffs).toEqual(new Set(['Easy', 'Intermediate', 'Advanced', 'Expert']));
