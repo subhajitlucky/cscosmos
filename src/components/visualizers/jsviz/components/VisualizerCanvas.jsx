@@ -189,8 +189,8 @@ const VisualizerCanvas = ({ topicId, code, isRunning, onCodeChange }) => {
             default:
                 return (
                     <div className="flex items-center justify-center h-full flex-col gap-4">
-                        <div className="w-12 h-12 border-4 border-dashed border-gray-200 rounded-full animate-spin"></div>
-                        <span className="text-[10px] font-mono text-gray-400 tracking-widest uppercase">Initializing_Dedicated_Vis...</span>
+                        <div className="w-12 h-12 border-4 border-dashed border-zinc-400 dark:border-zinc-700 rounded-full animate-spin"></div>
+                        <span className="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-semibold tracking-wider uppercase">Initializing_Dedicated_Vis...</span>
                     </div>
                 );
         }

@@ -49,10 +49,10 @@ const Learn = () => {
                             Structured 100-concept master roadmap. Primitives, closures, asynchronous runtime, and V8 internals.
                         </p>
                         <div className="flex items-center gap-2.5 mt-3">
-                            <span className="text-[11px] font-mono px-2 py-0.5 rounded border border-brand-lime/40 bg-brand-lime/10 text-brand-lime font-bold">
+                            <span className="text-xs font-mono px-2.5 py-1 rounded border border-emerald-300 dark:border-brand-lime/40 bg-emerald-50 dark:bg-brand-lime/10 text-emerald-800 dark:text-brand-lime font-bold">
                                 100 CONCEPTS
                             </span>
-                            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                            <span className="text-xs sm:text-sm font-mono text-zinc-700 dark:text-zinc-300 font-medium">
                                 {progress.completedTopics ? progress.completedTopics.length : 0} / 100 COMPLETED
                             </span>
                         </div>
@@ -79,10 +79,10 @@ const Learn = () => {
                         <button
                             key={mod.id}
                             onClick={() => setActiveCategory(mod.id)}
-                            className={`px-3 py-1 rounded text-xs font-mono whitespace-nowrap transition-all border ${
+                            className={`px-3 py-1 rounded-lg text-xs font-mono whitespace-nowrap transition-all border ${
                                 activeCategory === mod.id
-                                    ? 'border-brand-lime bg-brand-lime/10 text-brand-lime font-bold shadow-sm'
-                                    : 'border-brand-border text-gray-500 dark:text-gray-400 hover:text-[var(--text-main)] hover:border-gray-500'
+                                    ? 'border-emerald-600 dark:border-brand-lime bg-emerald-50 dark:bg-brand-lime/10 text-emerald-800 dark:text-brand-lime font-bold shadow-sm'
+                                    : 'border-zinc-300 dark:border-brand-border text-zinc-700 dark:text-gray-300 hover:text-zinc-950 dark:hover:text-white hover:border-zinc-400 bg-white dark:bg-transparent'
                             }`}
                         >
                             {mod.label}
@@ -96,12 +96,12 @@ const Learn = () => {
                         <div key={category.title}>
                             <div className="flex items-center justify-between mb-3 border-b border-brand-border/40 pb-2">
                                 <div className="flex items-center">
-                                    <div className="w-2.5 h-2.5 bg-brand-lime mr-3 shadow-[0_0_8px_var(--accent-main)]"></div>
+                                    <div className="w-2.5 h-2.5 bg-emerald-600 dark:bg-brand-lime mr-3 shadow-[0_0_8px_var(--accent-main)]"></div>
                                     <h2 className="text-sm sm:text-base font-bold uppercase tracking-wider" style={{ color: 'var(--text-main)' }}>
                                         {category.title}
                                     </h2>
                                 </div>
-                                <span className="text-[10px] font-mono text-gray-500">
+                                <span className="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-semibold">
                                     {category.items.length} Concepts
                                 </span>
                             </div>
@@ -117,20 +117,20 @@ const Learn = () => {
                                         >
                                             <div>
                                                 <div className="flex justify-between items-center mb-1.5">
-                                                    <span className="font-mono text-[10px] text-gray-500 dark:text-gray-400 font-bold">
+                                                    <span className="font-mono text-xs text-zinc-600 dark:text-zinc-400 font-bold">
                                                         #{String(index + 1).padStart(2, '0')}
                                                     </span>
                                                     {isCompleted && (
-                                                        <CheckSquare size={13} className="text-brand-lime" />
+                                                        <CheckSquare size={14} className="text-emerald-600 dark:text-brand-lime" />
                                                     )}
                                                 </div>
 
-                                                <h3 className="text-xs sm:text-sm font-semibold group-hover:text-brand-lime transition-colors leading-snug line-clamp-2" style={{ color: 'var(--text-main)' }}>
+                                                <h3 className="text-xs sm:text-sm font-semibold group-hover:text-emerald-700 dark:group-hover:text-brand-lime transition-colors leading-snug line-clamp-2" style={{ color: 'var(--text-main)' }}>
                                                     {topic.title}
                                                 </h3>
                                             </div>
 
-                                            <div className="w-full h-0.5 bg-brand-border mt-2.5 group-hover:bg-brand-lime transition-colors"></div>
+                                            <div className="w-full h-0.5 bg-brand-border mt-2.5 group-hover:bg-emerald-600 dark:group-hover:bg-brand-lime transition-colors"></div>
                                         </Link>
                                     );
                                 })}

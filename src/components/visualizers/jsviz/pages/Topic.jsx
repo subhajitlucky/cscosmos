@@ -137,7 +137,7 @@ const Topic = ({ topicId: propTopicId }) => {
 
                         <div>
                             <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-mono text-brand-lime uppercase tracking-widest font-bold">
+                                <span className="text-xs sm:text-sm font-mono font-bold text-emerald-700 dark:text-brand-lime uppercase tracking-wider">
                                     Concept {String(currentIndex + 1).padStart(2, '0')} // {topic.category || 'Core JavaScript'}
                                 </span>
                             </div>
@@ -193,18 +193,18 @@ const Topic = ({ topicId: propTopicId }) => {
                 <div className="neo-card p-6 border-l-4" style={{ borderLeftColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
                     <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
-                            <BookOpen size={18} className="text-brand-lime" />
-                            <h2 className="text-xs font-bold uppercase tracking-widest text-brand-lime">
+                            <BookOpen size={18} className="text-emerald-600 dark:text-brand-lime" />
+                            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-800 dark:text-brand-lime">
                                 Core Objective
                             </h2>
                         </div>
                         {content?.phases && (
-                            <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border border-brand-lime/40 bg-brand-lime/10 text-brand-lime">
+                            <span className="text-xs font-mono font-bold px-3 py-1 rounded border border-emerald-300 dark:border-brand-lime/40 bg-emerald-50 dark:bg-brand-lime/10 text-emerald-800 dark:text-brand-lime">
                                 5-PHASE MASTER GUIDE
                             </span>
                         )}
                     </div>
-                    <p className="text-sm sm:text-base font-mono leading-relaxed" style={{ color: 'var(--text-main)' }}>
+                    <p className="text-sm sm:text-base font-mono leading-relaxed text-zinc-800 dark:text-zinc-200">
                         {content?.definition || topic.description}
                     </p>
                 </div>
@@ -214,76 +214,76 @@ const Topic = ({ topicId: propTopicId }) => {
                     <div className="neo-card p-6 sm:p-8 border-2 border-brand-border/60" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <div className="flex items-center justify-between border-b border-brand-border/50 pb-4 mb-6">
                             <div className="flex items-center gap-2.5">
-                                <span className="text-xs font-bold font-mono px-2 py-0.5 rounded bg-brand-lime/10 border border-brand-lime text-brand-lime">
+                                <span className="text-xs sm:text-sm font-bold font-mono px-2.5 py-1 rounded bg-emerald-100 dark:bg-brand-lime/10 border border-emerald-400 dark:border-brand-lime text-emerald-800 dark:text-brand-lime">
                                     PHASE 01
                                 </span>
-                                <h3 className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
+                                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                                     {content.analogy.headline}
                                 </h3>
                             </div>
-                            <span className="text-xs font-mono text-gray-500 hidden sm:inline">First Principles Intuition</span>
+                            <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-semibold hidden sm:inline">First Principles Intuition</span>
                         </div>
 
-                        <p className="text-sm font-mono leading-relaxed mb-6" style={{ color: 'var(--text-muted)' }}>
+                        <p className="text-sm sm:text-base font-mono leading-relaxed mb-6 text-zinc-800 dark:text-zinc-200">
                             {content.analogy.intro}
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Sticky Notes (Primitives) */}
-                            <div className="p-5 rounded-xl border border-brand-lime/40 bg-brand-lime/5 flex flex-col justify-between shadow-md">
+                            <div className="p-5 rounded-xl border border-emerald-300 dark:border-emerald-500/30 bg-emerald-50/60 dark:bg-emerald-950/20 flex flex-col justify-between shadow-sm">
                                 <div>
                                     <div className="flex items-center justify-between mb-3">
                                         <div className="flex items-center gap-2">
-                                            <StickyNote size={18} className="text-brand-lime" />
-                                            <h4 className="text-sm font-bold text-brand-lime uppercase tracking-wider">
+                                            <StickyNote size={20} className="text-emerald-700 dark:text-brand-lime" />
+                                            <h4 className="text-sm sm:text-base font-bold text-emerald-900 dark:text-brand-lime uppercase tracking-wider">
                                                 {content.analogy.primitives.title}
                                             </h4>
                                         </div>
-                                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-brand-lime/20 text-brand-lime">
+                                        <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded bg-emerald-100 dark:bg-brand-lime/20 text-emerald-800 dark:text-brand-lime border border-emerald-300 dark:border-brand-lime/40">
                                             {content.analogy.primitives.badge}
                                         </span>
                                     </div>
-                                    <p className="text-xs sm:text-sm font-mono leading-relaxed mb-4 text-[var(--text-main)]">
+                                    <p className="text-xs sm:text-sm font-mono leading-relaxed mb-4 text-zinc-800 dark:text-zinc-200">
                                         {content.analogy.primitives.description}
                                     </p>
-                                    <div className="p-3 rounded-lg bg-black/40 border border-brand-lime/20 font-mono text-xs text-brand-lime leading-relaxed mb-4">
+                                    <div className="p-3.5 rounded-lg bg-emerald-100/80 dark:bg-zinc-900/90 border border-emerald-300 dark:border-brand-lime/30 font-mono text-xs sm:text-sm text-emerald-950 dark:text-brand-lime leading-relaxed mb-4">
                                         💡 <strong>The Punchline:</strong> {content.analogy.primitives.punchline}
                                     </div>
                                 </div>
-                                <ul className="space-y-1.5 border-t border-brand-lime/20 pt-3 text-[11px] font-mono text-[var(--text-muted)]">
+                                <ul className="space-y-2 border-t border-emerald-200 dark:border-emerald-500/20 pt-3 text-xs sm:text-sm font-mono text-zinc-800 dark:text-zinc-300">
                                     {content.analogy.primitives.traits.map((t, i) => (
-                                        <li key={i} className="flex items-center gap-1.5">
-                                            <span className="text-brand-lime">✔</span> {t}
+                                        <li key={i} className="flex items-center gap-2">
+                                            <span className="text-emerald-600 dark:text-brand-lime font-bold">✔</span> {t}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
 
                             {/* Locker Keys (Objects & Arrays) */}
-                            <div className="p-5 rounded-xl border border-blue-500/40 bg-blue-500/5 flex flex-col justify-between shadow-md">
+                            <div className="p-5 rounded-xl border border-blue-300 dark:border-blue-500/30 bg-blue-50/60 dark:bg-blue-950/20 flex flex-col justify-between shadow-sm">
                                 <div>
                                     <div className="flex items-center justify-between mb-3">
                                         <div className="flex items-center gap-2">
-                                            <Key size={18} className="text-blue-400" />
-                                            <h4 className="text-sm font-bold text-blue-400 uppercase tracking-wider">
+                                            <Key size={20} className="text-blue-600 dark:text-blue-400" />
+                                            <h4 className="text-sm sm:text-base font-bold text-blue-900 dark:text-blue-300 uppercase tracking-wider">
                                                 {content.analogy.objects.title}
                                             </h4>
                                         </div>
-                                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-300">
+                                        <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-500/40">
                                             {content.analogy.objects.badge}
                                         </span>
                                     </div>
-                                    <p className="text-xs sm:text-sm font-mono leading-relaxed mb-4 text-[var(--text-main)]">
+                                    <p className="text-xs sm:text-sm font-mono leading-relaxed mb-4 text-zinc-800 dark:text-zinc-200">
                                         {content.analogy.objects.description}
                                     </p>
-                                    <div className="p-3 rounded-lg bg-black/40 border border-blue-500/20 font-mono text-xs text-blue-300 leading-relaxed mb-4">
+                                    <div className="p-3.5 rounded-lg bg-blue-100/80 dark:bg-zinc-900/90 border border-blue-300 dark:border-blue-500/30 font-mono text-xs sm:text-sm text-blue-950 dark:text-blue-300 leading-relaxed mb-4">
                                         🔑 <strong>The Punchline:</strong> {content.analogy.objects.punchline}
                                     </div>
                                 </div>
-                                <ul className="space-y-1.5 border-t border-blue-500/20 pt-3 text-[11px] font-mono text-[var(--text-muted)]">
+                                <ul className="space-y-2 border-t border-blue-200 dark:border-blue-500/20 pt-3 text-xs sm:text-sm font-mono text-zinc-800 dark:text-zinc-300">
                                     {content.analogy.objects.traits.map((t, i) => (
-                                        <li key={i} className="flex items-center gap-1.5">
-                                            <span className="text-blue-400">✔</span> {t}
+                                        <li key={i} className="flex items-center gap-2">
+                                            <span className="text-blue-600 dark:text-blue-400 font-bold">✔</span> {t}
                                         </li>
                                     ))}
                                 </ul>
@@ -297,47 +297,47 @@ const Topic = ({ topicId: propTopicId }) => {
                     <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <div className="flex items-center justify-between border-b border-brand-border/50 pb-4 mb-6">
                             <div className="flex items-center gap-2.5">
-                                <span className="text-xs font-bold font-mono px-2 py-0.5 rounded bg-brand-lime/10 border border-brand-lime text-brand-lime">
+                                <span className="text-xs sm:text-sm font-bold font-mono px-2.5 py-1 rounded bg-emerald-100 dark:bg-brand-lime/10 border border-emerald-400 dark:border-brand-lime text-emerald-800 dark:text-brand-lime">
                                     PHASE 02
                                 </span>
-                                <h3 className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
+                                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                                     {content.kingdoms.headline}
                                 </h3>
                             </div>
-                            <span className="text-xs font-mono text-gray-500 hidden sm:inline">The 7 Primitives vs Objects</span>
+                            <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-semibold hidden sm:inline">The 7 Primitives vs Objects</span>
                         </div>
 
-                        <p className="text-xs sm:text-sm font-mono leading-relaxed mb-6" style={{ color: 'var(--text-muted)' }}>
+                        <p className="text-sm sm:text-base font-mono leading-relaxed mb-6 text-zinc-800 dark:text-zinc-200">
                             {content.kingdoms.subheadline}
                         </p>
 
                         <div className="space-y-8">
                             {/* Kingdom 1: Primitives */}
                             <div>
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="w-2.5 h-2.5 rounded-full bg-brand-lime"></span>
-                                    <h4 className="text-sm font-bold uppercase tracking-wider text-brand-lime">
+                                <div className="flex items-center gap-2.5 mb-3">
+                                    <span className="w-3 h-3 rounded-full bg-emerald-500 dark:bg-brand-lime"></span>
+                                    <h4 className="text-sm sm:text-base font-bold uppercase tracking-wider text-emerald-800 dark:text-brand-lime">
                                         {content.kingdoms.kingdom1.name}
                                     </h4>
-                                    <span className="text-[10px] font-mono text-gray-400">
+                                    <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-medium">
                                         ({content.kingdoms.kingdom1.description})
                                     </span>
                                 </div>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                                     {content.kingdoms.kingdom1.types.map((type, idx) => (
-                                        <div key={idx} className="p-3.5 rounded-lg border border-brand-border/60 bg-[var(--bg-main)] flex flex-col justify-between">
+                                        <div key={idx} className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm flex flex-col justify-between">
                                             <div>
-                                                <div className="flex items-center justify-between mb-1">
-                                                    <span className="font-mono text-xs font-bold text-brand-lime">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="font-mono text-xs sm:text-sm font-bold text-emerald-700 dark:text-brand-lime">
                                                         {type.name}
                                                     </span>
-                                                    <span className="text-[9px] font-mono text-gray-500">#{idx + 1}</span>
+                                                    <span className="text-xs font-mono font-bold text-zinc-500 dark:text-zinc-400">#{idx + 1}</span>
                                                 </div>
-                                                <div className="font-mono text-xs text-gray-300 bg-black/40 px-2 py-1 rounded mb-2 overflow-x-auto">
+                                                <div className="font-mono text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-black/70 border border-zinc-200 dark:border-zinc-800 px-3 py-1.5 rounded-lg mb-2.5 overflow-x-auto font-medium">
                                                     {type.example}
                                                 </div>
                                             </div>
-                                            <p className="text-[11px] font-mono text-[var(--text-muted)] leading-tight">
+                                            <p className="text-xs sm:text-sm font-mono text-zinc-700 dark:text-zinc-300 leading-normal">
                                                 {type.explain}
                                             </p>
                                         </div>
@@ -347,30 +347,30 @@ const Topic = ({ topicId: propTopicId }) => {
 
                             {/* Kingdom 2: Objects */}
                             <div>
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
-                                    <h4 className="text-sm font-bold uppercase tracking-wider text-blue-400">
+                                <div className="flex items-center gap-2.5 mb-3">
+                                    <span className="w-3 h-3 rounded-full bg-blue-500"></span>
+                                    <h4 className="text-sm sm:text-base font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400">
                                         {content.kingdoms.kingdom2.name}
                                     </h4>
-                                    <span className="text-[10px] font-mono text-gray-400">
+                                    <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-medium">
                                         ({content.kingdoms.kingdom2.description})
                                     </span>
                                 </div>
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                                     {content.kingdoms.kingdom2.types.map((type, idx) => (
-                                        <div key={idx} className="p-3.5 rounded-lg border border-blue-500/30 bg-[var(--bg-main)] flex flex-col justify-between">
+                                        <div key={idx} className="p-4 rounded-xl border border-blue-200 dark:border-blue-900/40 bg-white dark:bg-zinc-900/60 shadow-sm flex flex-col justify-between">
                                             <div>
-                                                <div className="flex items-center justify-between mb-1">
-                                                    <span className="font-mono text-xs font-bold text-blue-300">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="font-mono text-xs sm:text-sm font-bold text-blue-700 dark:text-blue-300">
                                                         {type.name}
                                                     </span>
-                                                    <span className="text-[9px] font-mono text-blue-400/60">Container</span>
+                                                    <span className="text-xs font-mono font-bold text-blue-700 dark:text-blue-400">Container</span>
                                                 </div>
-                                                <div className="font-mono text-xs text-blue-200 bg-black/40 px-2 py-1 rounded mb-2 overflow-x-auto">
+                                                <div className="font-mono text-xs sm:text-sm text-zinc-900 dark:text-blue-200 bg-blue-50/70 dark:bg-black/70 border border-blue-200 dark:border-zinc-800 px-3 py-1.5 rounded-lg mb-2.5 overflow-x-auto font-medium">
                                                     {type.example}
                                                 </div>
                                             </div>
-                                            <p className="text-[11px] font-mono text-[var(--text-muted)] leading-tight">
+                                            <p className="text-xs sm:text-sm font-mono text-zinc-700 dark:text-zinc-300 leading-normal">
                                                 {type.explain}
                                             </p>
                                         </div>
@@ -385,14 +385,14 @@ const Topic = ({ topicId: propTopicId }) => {
                 <div ref={visualizerRef} className="neo-card p-6 border-2 flex flex-col shadow-xl" style={{ borderColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
                     <div className="flex items-center justify-between pb-4 border-b mb-4" style={{ borderColor: 'var(--border-main)' }}>
                         <div className="flex items-center gap-2.5">
-                            <span className="text-xs font-bold font-mono px-2 py-0.5 rounded bg-brand-lime/10 border border-brand-lime text-brand-lime">
+                            <span className="text-xs sm:text-sm font-bold font-mono px-2.5 py-1 rounded bg-emerald-100 dark:bg-brand-lime/10 border border-emerald-400 dark:border-brand-lime text-emerald-800 dark:text-brand-lime">
                                 PHASE 03
                             </span>
-                            <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                                <Layers size={18} className="text-brand-lime" /> Realtime Stack &amp; Heap Simulation Canvas
+                            <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider flex items-center gap-2 text-zinc-900 dark:text-zinc-100">
+                                <Layers size={18} className="text-emerald-600 dark:text-brand-lime" /> Realtime Stack &amp; Heap Simulation Canvas
                             </h3>
                         </div>
-                        <span className="text-xs font-mono px-3 py-1 rounded bg-[rgba(var(--accent-main-rgb),0.1)] text-brand-lime font-bold">
+                        <span className="text-xs font-mono px-3 py-1 rounded bg-emerald-50 dark:bg-[rgba(var(--accent-main-rgb),0.1)] text-emerald-800 dark:text-brand-lime font-bold border border-emerald-300 dark:border-brand-lime/30">
                             INTERACTIVE_CANVAS
                         </span>
                     </div>
@@ -406,18 +406,18 @@ const Topic = ({ topicId: propTopicId }) => {
                         <div className="mt-6 pt-6 border-t border-brand-border/40">
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
                                 <div className="flex items-center gap-2">
-                                    <Play size={15} className="text-brand-lime" />
-                                    <h4 className="text-xs font-bold font-mono uppercase tracking-wider text-brand-lime">
+                                    <Play size={16} className="text-emerald-600 dark:text-brand-lime" />
+                                    <h4 className="text-xs sm:text-sm font-bold font-mono uppercase tracking-wider text-emerald-800 dark:text-brand-lime">
                                         Guided Line-by-Line Execution Stepper:
                                     </h4>
                                 </div>
-                                <span className="text-xs font-mono text-gray-500">
+                                <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-semibold">
                                     Step {activeStepperStep + 1} of {content.stepperSteps.length}
                                 </span>
                             </div>
 
                             {/* Stepper Progress Tabs */}
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 mb-4">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mb-4">
                                 {content.stepperSteps.map((step, idx) => (
                                     <button
                                         key={idx}
@@ -425,36 +425,36 @@ const Topic = ({ topicId: propTopicId }) => {
                                             setActiveStepperStep(idx);
                                             loadCodeAndVisualize(step.code);
                                         }}
-                                        className={`p-2 rounded text-left border font-mono text-xs transition-all ${
+                                        className={`p-2.5 rounded-lg text-left border font-mono text-xs sm:text-sm transition-all ${
                                             activeStepperStep === idx
-                                                ? 'border-brand-lime bg-brand-lime/10 text-brand-lime font-bold shadow-sm'
-                                                : 'border-brand-border/60 hover:border-gray-500 text-gray-400'
+                                                ? 'border-emerald-500 dark:border-brand-lime bg-emerald-50 dark:bg-brand-lime/10 text-emerald-800 dark:text-brand-lime font-bold shadow-sm'
+                                                : 'border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 text-zinc-700 dark:text-zinc-300 bg-white dark:bg-zinc-900/40'
                                         }`}
                                     >
-                                        <div className="text-[10px] opacity-70">Step {step.stepNumber}</div>
-                                        <div className="truncate font-semibold">{step.label.split(' ')[0]} {step.label.split(' ')[1]}</div>
+                                        <div className="text-xs font-bold text-zinc-500 dark:text-zinc-400">Step {step.stepNumber}</div>
+                                        <div className="truncate font-semibold mt-0.5">{step.label.split(' ')[0]} {step.label.split(' ')[1]}</div>
                                     </button>
                                 ))}
                             </div>
 
                             {/* Current Step Detail Card */}
                             {content.stepperSteps[activeStepperStep] && (
-                                <div className="p-4 rounded-xl border border-brand-border/80 bg-[var(--bg-main)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                                    <div className="space-y-1.5">
+                                <div className="p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                                    <div className="space-y-2">
                                         <div className="flex items-center gap-2">
-                                            <span className="text-xs font-bold font-mono text-brand-lime">
+                                            <span className="text-xs sm:text-sm font-bold font-mono text-emerald-800 dark:text-brand-lime">
                                                 Step {content.stepperSteps[activeStepperStep].stepNumber}: {content.stepperSteps[activeStepperStep].label}
                                             </span>
                                         </div>
-                                        <div className="font-mono text-xs text-green-300 bg-black/60 px-3 py-1.5 rounded inline-block">
+                                        <div className="font-mono text-xs sm:text-sm text-zinc-900 dark:text-green-300 bg-zinc-100 dark:bg-black/80 border border-zinc-300 dark:border-zinc-700 px-3 py-1.5 rounded-md inline-block font-semibold">
                                             {content.stepperSteps[activeStepperStep].code}
                                         </div>
-                                        <p className="text-xs font-mono text-[var(--text-muted)] leading-relaxed">
+                                        <p className="text-xs sm:text-sm font-mono text-zinc-800 dark:text-zinc-200 leading-relaxed">
                                             💡 {content.stepperSteps[activeStepperStep].explanation}
                                         </p>
                                     </div>
 
-                                    <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+                                    <div className="flex items-center gap-2.5 w-full md:w-auto justify-end">
                                         <button
                                             disabled={activeStepperStep === 0}
                                             onClick={() => {
@@ -462,7 +462,7 @@ const Topic = ({ topicId: propTopicId }) => {
                                                 setActiveStepperStep(prev);
                                                 loadCodeAndVisualize(content.stepperSteps[prev].code);
                                             }}
-                                            className="px-3 py-1.5 rounded border border-brand-border text-xs font-mono font-bold disabled:opacity-30 hover:border-brand-lime transition-colors"
+                                            className="px-3.5 py-1.5 rounded border border-zinc-300 dark:border-zinc-700 text-xs sm:text-sm font-mono font-bold text-zinc-800 dark:text-zinc-200 disabled:opacity-30 hover:border-emerald-500 transition-colors"
                                         >
                                             Previous
                                         </button>
@@ -473,9 +473,9 @@ const Topic = ({ topicId: propTopicId }) => {
                                                 setActiveStepperStep(next);
                                                 loadCodeAndVisualize(content.stepperSteps[next].code);
                                             }}
-                                            className="px-4 py-1.5 rounded bg-brand-lime text-black font-bold text-xs font-mono disabled:opacity-30 hover:opacity-90 transition-opacity flex items-center gap-1"
+                                            className="px-4 py-1.5 rounded bg-emerald-600 dark:bg-brand-lime text-white dark:text-black font-bold text-xs sm:text-sm font-mono disabled:opacity-30 hover:opacity-90 transition-opacity flex items-center gap-1.5 shadow-sm"
                                         >
-                                            Next Step <ArrowRight size={13} />
+                                            Next Step <ArrowRight size={14} />
                                         </button>
                                     </div>
                                 </div>
@@ -487,10 +487,10 @@ const Topic = ({ topicId: propTopicId }) => {
                 {/* 5. Sandboxed Interactive Code Execution Editor */}
                 <div className="neo-card p-0 flex flex-col h-[520px] min-h-[480px] overflow-hidden shadow-xl" style={{ backgroundColor: 'var(--bg-surface)' }}>
                     <div className="px-5 py-3 border-b flex justify-between items-center bg-[var(--bg-main)] border-brand-border">
-                        <span className="text-xs font-mono font-bold text-brand-lime flex items-center gap-1.5">
+                        <span className="text-xs sm:text-sm font-mono font-bold text-emerald-800 dark:text-brand-lime flex items-center gap-1.5">
                             <Code size={16} /> LIVE CODE EXECUTION SANDBOX
                         </span>
-                        <span className="text-[10px] font-mono text-gray-500">
+                        <span className="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium">
                             Type custom code &amp; click Run to update memory above
                         </span>
                     </div>
@@ -502,43 +502,43 @@ const Topic = ({ topicId: propTopicId }) => {
                     <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <div className="flex items-center justify-between border-b border-brand-border/50 pb-4 mb-6">
                             <div className="flex items-center gap-2.5">
-                                <span className="text-xs font-bold font-mono px-2 py-0.5 rounded bg-brand-lime/10 border border-brand-lime text-brand-lime">
+                                <span className="text-xs sm:text-sm font-bold font-mono px-2.5 py-1 rounded bg-emerald-100 dark:bg-brand-lime/10 border border-emerald-400 dark:border-brand-lime text-emerald-800 dark:text-brand-lime">
                                     PHASE 04
                                 </span>
-                                <h3 className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
+                                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                                     The 4 Golden Rules &amp; Common Traps
                                 </h3>
                             </div>
-                            <span className="text-xs font-mono text-gray-500 hidden sm:inline">Everyday Interview Questions</span>
+                            <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-semibold hidden sm:inline">Everyday Interview Questions</span>
                         </div>
 
                         <div className="space-y-6">
                             {content.goldenRules.map((rule, idx) => (
-                                <div key={idx} className="p-5 rounded-xl border border-brand-border/60 bg-[var(--bg-main)]">
+                                <div key={idx} className="p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm">
                                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
-                                        <h4 className="text-sm font-bold text-brand-lime font-mono">
+                                        <h4 className="text-sm sm:text-base font-bold text-emerald-800 dark:text-brand-lime font-mono">
                                             {rule.title}
                                         </h4>
                                         <button
                                             onClick={() => loadCodeAndVisualize(rule.trapCode)}
-                                            className="px-2.5 py-1 rounded bg-brand-lime/10 border border-brand-lime/40 text-brand-lime hover:bg-brand-lime hover:text-black font-mono text-[11px] font-bold transition-all flex items-center gap-1"
+                                            className="px-3 py-1.5 rounded bg-emerald-50 dark:bg-brand-lime/10 border border-emerald-300 dark:border-brand-lime/40 text-emerald-800 dark:text-brand-lime hover:bg-emerald-600 hover:text-white dark:hover:bg-brand-lime dark:hover:text-black font-mono text-xs font-bold transition-all flex items-center gap-1.5"
                                         >
-                                            <Play size={11} /> Try in Visualizer
+                                            <Play size={12} /> Try in Visualizer
                                         </button>
                                     </div>
 
-                                    <div className="rounded-lg overflow-hidden border border-brand-border/40 mb-3 bg-black/90">
+                                    <div className="rounded-lg overflow-hidden border border-zinc-300 dark:border-zinc-800 mb-3 bg-zinc-950">
                                         <SyntaxHighlighter
                                             language="javascript"
                                             style={vscDarkPlus}
-                                            customStyle={{ margin: 0, padding: '12px 16px', background: 'transparent', fontSize: '12px' }}
+                                            customStyle={{ margin: 0, padding: '14px 16px', background: 'transparent', fontSize: '13px' }}
                                         >
                                             {rule.trapCode}
                                         </SyntaxHighlighter>
                                     </div>
 
-                                    <p className="text-xs font-mono text-[var(--text-muted)] leading-relaxed">
-                                        💡 <strong>Why this happens:</strong> {rule.why}
+                                    <p className="text-xs sm:text-sm font-mono text-zinc-800 dark:text-zinc-200 leading-relaxed">
+                                        💡 <strong className="text-zinc-900 dark:text-zinc-100">Why this happens:</strong> {rule.why}
                                     </p>
                                 </div>
                             ))}
@@ -551,47 +551,47 @@ const Topic = ({ topicId: propTopicId }) => {
                     <div className="space-y-6">
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                                <Code size={20} className="text-brand-lime" /> Comprehensive Code Demonstrations
+                                <Code size={20} className="text-emerald-600 dark:text-brand-lime" /> Comprehensive Code Demonstrations
                             </h3>
-                            <span className="text-xs font-mono text-gray-500">{content.examples.length} Scenarios</span>
+                            <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-semibold">{content.examples.length} Scenarios</span>
                         </div>
 
                         <div className="space-y-6">
                             {content.examples.map((ex, index) => (
-                                <div key={index} className="neo-card overflow-hidden" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                                <div key={index} className="neo-card overflow-hidden shadow-sm" style={{ backgroundColor: 'var(--bg-surface)' }}>
                                     <div 
                                         className="px-5 py-3 border-b flex justify-between items-center"
                                         style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-main)' }}
                                     >
-                                        <span className="text-xs font-mono font-bold" style={{ color: 'var(--text-muted)' }}>
+                                        <span className="text-xs sm:text-sm font-mono font-bold text-zinc-800 dark:text-zinc-200">
                                             // {ex.title || `Example ${index + 1}`}
                                         </span>
                                         <div className="flex items-center gap-2">
                                             <button
                                                 onClick={() => loadCodeAndVisualize(ex.code)}
-                                                className="text-xs font-mono font-bold text-brand-lime hover:bg-brand-lime hover:text-black transition-colors bg-[rgba(var(--accent-main-rgb),0.1)] px-3 py-1.5 border border-brand-lime/30 rounded flex items-center gap-1.5"
+                                                className="text-xs sm:text-sm font-mono font-bold text-emerald-800 dark:text-brand-lime hover:bg-emerald-600 hover:text-white dark:hover:bg-brand-lime dark:hover:text-black transition-colors bg-emerald-50 dark:bg-[rgba(var(--accent-main-rgb),0.1)] px-3 py-1.5 border border-emerald-300 dark:border-brand-lime/30 rounded-lg flex items-center gap-1.5"
                                             >
                                                 <Play size={12} /> VISUALIZE THIS
                                             </button>
                                             <button
                                                 onClick={() => handleCopy(ex.code, index)}
-                                                className="text-xs font-mono font-bold text-gray-400 hover:text-white transition-opacity px-2.5 py-1.5 border border-brand-border rounded"
+                                                className="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-opacity px-2.5 py-1.5 border border-zinc-300 dark:border-brand-border rounded-lg"
                                             >
-                                                {copiedIndex === index ? <Check size={14} className="text-brand-lime" /> : <Copy size={14} />}
+                                                {copiedIndex === index ? <Check size={14} className="text-emerald-600 dark:text-brand-lime" /> : <Copy size={14} />}
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="p-5 overflow-x-auto text-xs sm:text-sm bg-black/90">
+                                    <div className="p-5 overflow-x-auto text-xs sm:text-sm bg-zinc-950">
                                         <SyntaxHighlighter
                                             language="javascript"
                                             style={vscDarkPlus}
-                                            customStyle={{ margin: 0, padding: 0, background: 'transparent' }}
+                                            customStyle={{ margin: 0, padding: 0, background: 'transparent', fontSize: '13px' }}
                                         >
                                             {ex.code}
                                         </SyntaxHighlighter>
                                     </div>
                                     {ex.explanation && (
-                                        <div className="px-5 py-3.5 border-t text-xs sm:text-sm font-mono leading-relaxed" style={{ borderColor: 'var(--border-main)', color: 'var(--text-muted)' }}>
+                                        <div className="px-5 py-3.5 border-t text-xs sm:text-sm font-mono leading-relaxed text-zinc-800 dark:text-zinc-200" style={{ borderColor: 'var(--border-main)' }}>
                                             💡 {ex.explanation}
                                         </div>
                                     )}
@@ -606,14 +606,14 @@ const Topic = ({ topicId: propTopicId }) => {
                     <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <div className="flex items-center justify-between border-b border-brand-border/50 pb-4 mb-6">
                             <div className="flex items-center gap-2.5">
-                                <span className="text-xs font-bold font-mono px-2 py-0.5 rounded bg-brand-lime/10 border border-brand-lime text-brand-lime">
+                                <span className="text-xs sm:text-sm font-bold font-mono px-2.5 py-1 rounded bg-emerald-100 dark:bg-brand-lime/10 border border-emerald-400 dark:border-brand-lime text-emerald-800 dark:text-brand-lime">
                                     PHASE 05
                                 </span>
-                                <h3 className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
+                                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                                     Knowledge Check: Test Your Mental Model
                                 </h3>
                             </div>
-                            <span className="text-xs font-mono text-gray-500 hidden sm:inline">3-Question Quick Quiz</span>
+                            <span className="text-xs sm:text-sm font-mono text-zinc-600 dark:text-zinc-400 font-semibold hidden sm:inline">3-Question Quick Quiz</span>
                         </div>
 
                         <div className="space-y-6">
@@ -622,18 +622,18 @@ const Topic = ({ topicId: propTopicId }) => {
                                 const hasAnswered = selectedOptionIdx !== undefined;
 
                                 return (
-                                    <div key={q.id} className="p-5 rounded-xl border border-brand-border/60 bg-[var(--bg-main)]">
+                                    <div key={q.id} className="p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-mono font-bold text-brand-lime">Question {qIdx + 1}:</span>
-                                            <span className="text-xs sm:text-sm font-bold text-[var(--text-main)]">{q.question}</span>
+                                            <span className="text-xs sm:text-sm font-mono font-bold text-emerald-800 dark:text-brand-lime">Question {qIdx + 1}:</span>
+                                            <span className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100">{q.question}</span>
                                         </div>
 
                                         {q.code && (
-                                            <div className="rounded-lg overflow-hidden border border-brand-border/40 my-3 bg-black/80">
+                                            <div className="rounded-lg overflow-hidden border border-zinc-300 dark:border-zinc-800 my-3 bg-zinc-950">
                                                 <SyntaxHighlighter
                                                     language="javascript"
                                                     style={vscDarkPlus}
-                                                    customStyle={{ margin: 0, padding: '10px 14px', background: 'transparent', fontSize: '12px' }}
+                                                    customStyle={{ margin: 0, padding: '12px 16px', background: 'transparent', fontSize: '13px' }}
                                                 >
                                                     {q.code}
                                                 </SyntaxHighlighter>
@@ -643,13 +643,13 @@ const Topic = ({ topicId: propTopicId }) => {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 mt-3">
                                             {q.options.map((option, optIdx) => {
                                                 const isSelected = selectedOptionIdx === optIdx;
-                                                let btnStyle = 'border-brand-border/60 hover:border-gray-400 text-[var(--text-muted)]';
+                                                let btnStyle = 'border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 text-zinc-800 dark:text-zinc-200 bg-zinc-50/50 dark:bg-zinc-900/40';
 
                                                 if (hasAnswered) {
                                                     if (option.correct) {
-                                                        btnStyle = 'border-green-500 bg-green-500/15 text-green-400 font-bold';
+                                                        btnStyle = 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold ring-1 ring-emerald-500';
                                                     } else if (isSelected && !option.correct) {
-                                                        btnStyle = 'border-red-500 bg-red-500/15 text-red-400 font-bold';
+                                                        btnStyle = 'border-red-600 bg-red-50 dark:bg-red-950/40 text-red-900 dark:text-red-300 font-bold ring-1 ring-red-500';
                                                     }
                                                 }
 
@@ -657,21 +657,21 @@ const Topic = ({ topicId: propTopicId }) => {
                                                     <button
                                                         key={optIdx}
                                                         onClick={() => handleSelectQuizOption(q.id, optIdx)}
-                                                        className={`p-3 rounded-lg border text-left font-mono text-xs transition-all flex items-center justify-between ${btnStyle}`}
+                                                        className={`p-3 rounded-lg border text-left font-mono text-xs sm:text-sm transition-all flex items-center justify-between ${btnStyle}`}
                                                     >
                                                         <span>{option.text}</span>
-                                                        {hasAnswered && option.correct && <CheckCircle2 size={16} className="text-green-400 ml-2" />}
-                                                        {hasAnswered && isSelected && !option.correct && <XCircle size={16} className="text-red-400 ml-2" />}
+                                                        {hasAnswered && option.correct && <CheckCircle2 size={16} className="text-emerald-600 dark:text-green-400 ml-2 shrink-0" />}
+                                                        {hasAnswered && isSelected && !option.correct && <XCircle size={16} className="text-red-600 dark:text-red-400 ml-2 shrink-0" />}
                                                     </button>
                                                 );
                                             })}
                                         </div>
 
                                         {hasAnswered && (
-                                            <div className={`mt-3 p-3 rounded-lg text-xs font-mono leading-relaxed border ${
+                                            <div className={`mt-3.5 p-3.5 rounded-lg text-xs sm:text-sm font-mono leading-relaxed border ${
                                                 q.options[selectedOptionIdx].correct 
-                                                    ? 'border-green-500/30 bg-green-500/10 text-green-300'
-                                                    : 'border-amber-500/30 bg-amber-500/10 text-amber-300'
+                                                    ? 'border-emerald-400 dark:border-green-500/30 bg-emerald-50 dark:bg-green-500/10 text-emerald-950 dark:text-green-300 font-medium'
+                                                    : 'border-amber-400 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 text-amber-950 dark:text-amber-300 font-medium'
                                             }`}>
                                                 {q.options[selectedOptionIdx].correct ? '🎉 ' : '💡 '}
                                                 {q.options[selectedOptionIdx].explanation}
@@ -688,9 +688,9 @@ const Topic = ({ topicId: propTopicId }) => {
                 {content?.memoryModel && (
                     <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                            <Cpu size={20} className="text-brand-lime" /> V8 Engine &amp; Hardware Memory Model
+                            <Cpu size={20} className="text-emerald-600 dark:text-brand-lime" /> V8 Engine &amp; Hardware Memory Model
                         </h3>
-                        <div className="prose dark:prose-invert max-w-none font-mono text-sm leading-relaxed space-y-3" style={{ color: 'var(--text-muted)' }}>
+                        <div className="prose dark:prose-invert max-w-none font-mono text-sm sm:text-base leading-relaxed space-y-3 text-zinc-800 dark:text-zinc-200">
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                 {content.memoryModel}
                             </ReactMarkdown>
@@ -702,12 +702,12 @@ const Topic = ({ topicId: propTopicId }) => {
                 {content?.useCases && content.useCases.length > 0 && (
                     <div className="neo-card p-6 sm:p-8" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <h3 className="text-lg font-bold mb-4 uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--text-main)' }}>
-                            <Sparkles size={20} className="text-brand-lime" /> Practical Engineering Use Cases
+                            <Sparkles size={20} className="text-emerald-600 dark:text-brand-lime" /> Practical Engineering Use Cases
                         </h3>
-                        <ul className="space-y-3 font-mono text-sm" style={{ color: 'var(--text-muted)' }}>
+                        <ul className="space-y-3 font-mono text-sm sm:text-base text-zinc-800 dark:text-zinc-200">
                             {content.useCases.map((useCase, idx) => (
                                 <li key={idx} className="flex items-start gap-2.5">
-                                    <span className="text-brand-lime font-bold mt-0.5 select-none">❯</span>
+                                    <span className="text-emerald-600 dark:text-brand-lime font-bold mt-0.5 select-none">❯</span>
                                     <div className="leading-relaxed">
                                         <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ p: ({ children }) => <span>{children}</span> }}>
                                             {useCase}
@@ -727,10 +727,10 @@ const Topic = ({ topicId: propTopicId }) => {
                             className="neo-card p-5 flex flex-col items-start group text-left max-w-[48%] transition-transform hover:-translate-y-1"
                             style={{ backgroundColor: 'var(--bg-surface)' }}
                         >
-                            <span className="text-xs font-mono text-[var(--text-muted)] flex items-center gap-1 group-hover:text-brand-lime transition-colors">
-                                <ArrowLeft size={12} /> PREVIOUS_MODULE
+                            <span className="text-xs sm:text-sm font-mono font-bold text-zinc-600 dark:text-zinc-400 flex items-center gap-1 group-hover:text-emerald-600 dark:group-hover:text-brand-lime transition-colors">
+                                <ArrowLeft size={14} /> PREVIOUS_MODULE
                             </span>
-                            <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5" style={{ color: 'var(--text-main)' }}>
+                            <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5 text-zinc-900 dark:text-zinc-100">
                                 {prevTopic.title}
                             </span>
                         </Link>
@@ -742,10 +742,10 @@ const Topic = ({ topicId: propTopicId }) => {
                             className="neo-card p-5 flex flex-col items-end group text-right max-w-[48%] transition-transform hover:-translate-y-1"
                             style={{ backgroundColor: 'var(--bg-surface)' }}
                         >
-                            <span className="text-xs font-mono text-[var(--text-muted)] flex items-center gap-1 group-hover:text-brand-lime transition-colors">
-                                NEXT_MODULE <ArrowRight size={12} />
+                            <span className="text-xs sm:text-sm font-mono font-bold text-zinc-600 dark:text-zinc-400 flex items-center gap-1 group-hover:text-emerald-600 dark:group-hover:text-brand-lime transition-colors">
+                                NEXT_MODULE <ArrowRight size={14} />
                             </span>
-                            <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5" style={{ color: 'var(--text-main)' }}>
+                            <span className="text-sm sm:text-base font-bold truncate w-full mt-1.5 text-zinc-900 dark:text-zinc-100">
                                 {nextTopic.title}
                             </span>
                         </Link>
