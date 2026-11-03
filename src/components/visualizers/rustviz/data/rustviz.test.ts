@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { rustConcepts, rustCategories } from './concepts';
+import { rustProblems, RUST_PROBLEM_CATEGORIES } from './problems';
+import { rustInterviewQuestions, RUST_INTERVIEW_CATEGORIES } from './interview';
 import { rustPitfalls } from './pitfalls';
 import { rustFlashcards } from './flashcards';
 import { ownershipScenarios } from './simulations';
@@ -26,6 +28,37 @@ describe('RustViz Data Integrity', () => {
     const comingSoonConcepts = rustConcepts.filter((c) => c.isComingSoon);
     expect(liveConcepts.length).toBe(5);
     expect(comingSoonConcepts.length).toBe(95);
+  });
+
+  it('validates all 100 coding problems', () => {
+    expect(rustProblems.length).toBe(100);
+
+    rustProblems.forEach((problem, idx) => {
+      expect(problem.number).toBe(idx + 1);
+      expect(problem.id).toBeTruthy();
+      expect(problem.title).toBeTruthy();
+      expect(problem.slug).toBeTruthy();
+      expect(problem.starterCode).toBeTruthy();
+      expect(['Easy', 'Medium', 'Hard']).toContain(problem.difficulty);
+      expect(RUST_PROBLEM_CATEGORIES).toContain(problem.category);
+      expect(problem.isComingSoon).toBe(true);
+    });
+  });
+
+  it('validates all 100 interview questions', () => {
+    expect(rustInterviewQuestions.length).toBe(100);
+
+    rustInterviewQuestions.forEach((q, idx) => {
+      expect(q.number).toBe(idx + 1);
+      expect(q.id).toBeTruthy();
+      expect(q.title).toBeTruthy();
+      expect(q.slug).toBeTruthy();
+      expect(q.summary).toBeTruthy();
+      expect(['Junior', 'Mid-Level', 'Senior', 'Staff']).toContain(q.difficulty);
+      expect(['Essential', 'High', 'Common']).toContain(q.frequency);
+      expect(RUST_INTERVIEW_CATEGORIES).toContain(q.category);
+      expect(q.isComingSoon).toBe(true);
+    });
   });
 
   it('validates 7 compiler pitfall diagnostics', () => {

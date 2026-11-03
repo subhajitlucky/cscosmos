@@ -7,11 +7,11 @@ import {
   ShieldCheck, 
   Layers, 
   Cpu, 
-  AlertTriangle, 
   ArrowRight, 
   BookOpen,
   FlaskConical,
-  CheckSquare,
+  Code2,
+  HelpCircle,
   PlayCircle
 } from 'lucide-react';
 import { rustConcepts } from '../data/concepts';
@@ -42,30 +42,36 @@ export function Home() {
           An interactive visual engine to master Rust&apos;s ownership transfers, borrow checker invariants, non-lexical lifetimes, smart pointer layouts, and multi-threaded Tokio concurrency.
         </p>
 
-        {/* Primary Action Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 pt-2">
+        {/* Primary Action Buttons: The 4 Core Hubs */}
+        <div className="flex flex-wrap justify-center gap-2.5 pt-2">
           <Link
             href="/rustviz/concepts"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--rust-primary)] hover:bg-[var(--rust-primary-hover)] px-7 py-3.5 text-sm font-bold text-white transition-all shadow-sm active:scale-95"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--rust-primary)] hover:bg-[var(--rust-primary-hover)] px-5 py-3 text-xs sm:text-sm font-bold text-white transition-all shadow-sm active:scale-95"
           >
-            <BookOpen className="w-4 h-4" /> Start Curriculum
+            <BookOpen className="w-4 h-4" /> 100 Concepts
           </Link>
           <Link
-            href="/rustviz/ownership-lab"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:bg-[var(--rust-surface-2)] hover:border-[var(--rust-primary-border)] px-7 py-3.5 text-sm font-bold text-[var(--rust-text)] transition-all"
+            href="/rustviz/lab"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:bg-[var(--rust-surface-2)] hover:border-[var(--rust-primary-border)] px-5 py-3 text-xs sm:text-sm font-bold text-[var(--rust-text)] transition-all"
           >
             <FlaskConical className="w-4 h-4 text-[var(--rust-primary)]" /> Simulation Lab
           </Link>
           <Link
-            href="/rustviz/pitfalls"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:bg-[var(--rust-surface-2)] hover:border-[var(--rust-primary-border)] px-7 py-3.5 text-sm font-bold text-[var(--rust-text)] transition-all"
+            href="/rustviz/problems"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:bg-[var(--rust-surface-2)] hover:border-[var(--rust-primary-border)] px-5 py-3 text-xs sm:text-sm font-bold text-[var(--rust-text)] transition-all"
           >
-            <CheckSquare className="w-4 h-4 text-amber-500" /> Practice Pitfalls
+            <Code2 className="w-4 h-4 text-emerald-500" /> 100 Problems
+          </Link>
+          <Link
+            href="/rustviz/interview"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:bg-[var(--rust-surface-2)] hover:border-[var(--rust-primary-border)] px-5 py-3 text-xs sm:text-sm font-bold text-[var(--rust-text)] transition-all"
+          >
+            <HelpCircle className="w-4 h-4 text-cyan-500" /> 100 Interview Q&amp;A
           </Link>
         </div>
 
-        {/* 3 Main Hub Navigation Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 text-left w-full">
+        {/* 4 Clean Hub Navigation Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-8 text-left w-full">
           
           <Link
             href="/rustviz/concepts"
@@ -77,24 +83,24 @@ export function Home() {
               </div>
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-base text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
-                  Core Concepts
+                  Concepts
                 </h3>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[var(--rust-primary-light)] text-[var(--rust-primary)]">
-                  100 Concepts
+                  100 Lessons
                 </span>
               </div>
               <p className="text-xs text-[var(--rust-muted)] leading-relaxed">
-                Structured 100-concept curriculum spanning syntax, ownership, lifetimes, traits, async Tokio, and systems internals.
+                Step-by-step curriculum from basic primitives to memory models, lifetimes, and systems internals.
               </p>
             </div>
             <div className="pt-4 mt-3 border-t border-[var(--rust-border-subtle)] flex items-center justify-between text-xs font-semibold text-[var(--rust-primary)]">
-              <span>View Full Syllabus</span>
+              <span>Explore Concepts</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </Link>
 
           <Link
-            href="/rustviz/ownership-lab"
+            href="/rustviz/lab"
             className="rust-card group p-5 rounded-2xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
@@ -103,44 +109,70 @@ export function Home() {
               </div>
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-base text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
-                  Simulation Labs
+                  Simulation Lab
                 </h3>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[var(--rust-cyan-light)] text-[var(--rust-cyan)]">
-                  5 Engines
+                  All Engines
                 </span>
               </div>
               <p className="text-xs text-[var(--rust-muted)] leading-relaxed">
-                Interactive memory engines for stack fat pointers, heap allocation, borrow checker NLL scopes, and Tokio message queues.
+                Interactive memory engines for stack fat pointers, heap allocation, borrow checker scopes, and Tokio channels.
               </p>
             </div>
             <div className="pt-4 mt-3 border-t border-[var(--rust-border-subtle)] flex items-center justify-between text-xs font-semibold text-[var(--rust-primary)]">
-              <span>Launch Studio</span>
+              <span>Launch Lab</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </Link>
 
           <Link
-            href="/rustviz/pitfalls"
+            href="/rustviz/problems"
+            className="rust-card group p-5 rounded-2xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-500 w-fit border border-emerald-500/20">
+                <Code2 className="w-5 h-5" />
+              </div>
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold text-base text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
+                  Problems
+                </h3>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500">
+                  100 Drills
+                </span>
+              </div>
+              <p className="text-xs text-[var(--rust-muted)] leading-relaxed">
+                LeetCode-style problems spanning syntax, zero-copy slices, smart pointers, and multi-threaded systems.
+              </p>
+            </div>
+            <div className="pt-4 mt-3 border-t border-[var(--rust-border-subtle)] flex items-center justify-between text-xs font-semibold text-[var(--rust-primary)]">
+              <span>Solve Problems</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          <Link
+            href="/rustviz/interview"
             className="rust-card group p-5 rounded-2xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between"
           >
             <div className="space-y-3">
               <div className="p-2.5 rounded-xl bg-[var(--rust-amber-light)] text-[var(--rust-amber)] w-fit border border-[var(--rust-amber-border)]">
-                <AlertTriangle className="w-5 h-5" />
+                <HelpCircle className="w-5 h-5" />
               </div>
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-base text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
-                  Diagnostics &amp; Drills
+                  Interview Q&amp;A
                 </h3>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[var(--rust-amber-light)] text-[var(--rust-amber)]">
-                  7 Errors
+                  100 Questions
                 </span>
               </div>
               <p className="text-xs text-[var(--rust-muted)] leading-relaxed">
-                Master compiler diagnostics (E0382, E0502, E0597) with side-by-side fixes, spaced-repetition flashcards, and cheat sheets.
+                Step-by-step clear explanations and concrete examples to master Rust technical interviews with ease.
               </p>
             </div>
             <div className="pt-4 mt-3 border-t border-[var(--rust-border-subtle)] flex items-center justify-between text-xs font-semibold text-[var(--rust-primary)]">
-              <span>Start Practice</span>
+              <span>Review Q&amp;A</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </Link>
@@ -170,15 +202,13 @@ export function Home() {
           </p>
         </div>
 
-        <div className="rust-card p-6 border border-[var(--rust-border)] rounded-2xl bg-[var(--rust-surface)] space-y-3">
-          <div className="p-2.5 rounded-xl bg-[var(--rust-purple-light)] text-[var(--rust-purple)] w-fit border border-[var(--rust-purple-border)] mb-1">
-            <Cpu className="w-6 h-6" />
-          </div>
-          <h3 className="text-base font-bold text-[var(--rust-text)]">Fearless Concurrency</h3>
-          <p className="text-xs text-[var(--rust-muted)] leading-relaxed">
-            Send + Sync thread safety trait bounds, atomic reference counting (Arc), and asynchronous mpsc channel message passing via the Tokio runtime.
-          </p>
+        <div className="rust-card p-6 border border-[var(--rust-border)] rounded-2xl bg-[var(--rust-purple-light)] text-[var(--rust-purple)] w-fit border border-[var(--rust-purple-border)] mb-1">
+          <Cpu className="w-6 h-6" />
         </div>
+        <h3 className="text-base font-bold text-[var(--rust-text)]">Fearless Concurrency</h3>
+        <p className="text-xs text-[var(--rust-muted)] leading-relaxed">
+          Send + Sync thread safety trait bounds, atomic reference counting (Arc), and asynchronous mpsc channel message passing via the Tokio runtime.
+        </p>
       </section>
 
       {/* Bottom Call to Action */}
@@ -197,10 +227,10 @@ export function Home() {
             <PlayCircle className="w-4 h-4" /> Start Lesson 1: {firstConcept.title}
           </Link>
           <Link
-            href="/rustviz/ownership-lab"
+            href="/rustviz/lab"
             className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-text)] rounded-xl font-bold text-xs uppercase tracking-wider transition-colors"
           >
-            Launch Ownership Lab <ArrowRight className="w-4 h-4" />
+            Launch Simulation Lab <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

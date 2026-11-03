@@ -4,59 +4,76 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
-  Terminal, 
-  Layers, 
-  ShieldCheck, 
-  Clock, 
-  GitBranch, 
-  Cpu, 
-  AlertTriangle, 
   BookOpen, 
-  Bookmark, 
+  FlaskConical, 
+  Code2, 
+  HelpCircle, 
   Menu, 
   X,
   ArrowLeft,
-  Flame,
-  ChevronDown
+  Flame
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
 
-  const primaryLinks = [
-    { name: 'Concepts', href: '/rustviz/concepts', icon: BookOpen },
-    { name: 'Ownership Lab', href: '/rustviz/ownership-lab', icon: Layers },
-    { name: 'Borrow Checker', href: '/rustviz/borrow-checker', icon: ShieldCheck },
-    { name: 'Lifetimes', href: '/rustviz/lifetimes-lab', icon: Clock },
+  const navLinks = [
+    { 
+      name: 'Concepts', 
+      href: '/rustviz/concepts', 
+      icon: BookOpen,
+      badge: '100 Lessons'
+    },
+    { 
+      name: 'Lab', 
+      href: '/rustviz/lab', 
+      icon: FlaskConical,
+      badge: 'Experiment'
+    },
+    { 
+      name: 'Problems', 
+      href: '/rustviz/problems', 
+      icon: Code2,
+      badge: '100 LeetCode'
+    },
+    { 
+      name: 'Interview Questions', 
+      href: '/rustviz/interview', 
+      icon: HelpCircle,
+      badge: '100 Q&A'
+    },
   ];
 
-  const toolsLinks = [
-    { name: 'Smart Pointers (Rc/Arc)', href: '/rustviz/smart-pointers', icon: Cpu, desc: 'Box, Rc, Arc, & RefCell heaps' },
-    { name: 'Tokio & Channels Lab', href: '/rustviz/concurrency-lab', icon: GitBranch, desc: 'MPSC queues & thread safety' },
-    { name: 'Top Compiler Pitfalls', href: '/rustviz/pitfalls', icon: AlertTriangle, desc: 'E0382, E0502 diagnostics' },
-    { name: 'Memory Flashcards', href: '/rustviz/flashcards', icon: Bookmark, desc: 'Spaced repetition drills' },
-    { name: 'Cheat Sheet', href: '/rustviz/cheatsheet', icon: Terminal, desc: 'Quick syntax & CLI reference' },
-  ];
-
-  const allLinks = [...primaryLinks, ...toolsLinks];
-
-  const isPrimaryActive = (href: string) => {
+  const isLinkActive = (href: string) => {
     if (href === '/rustviz/concepts') {
       return pathname.startsWith('/rustviz/concepts');
     }
+    if (href === '/rustviz/lab') {
+      return (
+        pathname.startsWith('/rustviz/lab') ||
+        pathname === '/rustviz/ownership-lab' ||
+        pathname === '/rustviz/borrow-checker' ||
+        pathname === '/rustviz/lifetimes-lab' ||
+        pathname === '/rustviz/smart-pointers' ||
+        pathname === '/rustviz/concurrency-lab'
+      );
+    }
+    if (href === '/rustviz/problems') {
+      return pathname.startsWith('/rustviz/problems');
+    }
+    if (href === '/rustviz/interview') {
+      return pathname.startsWith('/rustviz/interview');
+    }
     return pathname === href;
   };
-
-  const isToolsActive = toolsLinks.some((link) => pathname === link.href);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[var(--rust-border)] bg-[var(--rust-surface-95)] backdrop-blur-md transition-colors">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
-        {/* Brand & CSCosmos Hub Link */}
+        {/* Brand & CSCosmos Hub Return */}
         <div className="flex items-center space-x-3 sm:space-x-4">
           <Link
             href="/topics"
@@ -80,73 +97,31 @@ export function Navbar() {
                   v1.85
                 </span>
               </div>
-              <p className="text-[10px] text-[var(--rust-muted)] font-mono hidden sm:block">Backend Internals & Memory Engine</p>
+              <p className="text-[10px] text-[var(--rust-muted)] font-mono hidden sm:block">Backend Internals &amp; Memory Engine</p>
             </div>
           </Link>
         </div>
 
-        {/* Desktop Nav Items */}
-        <nav className="hidden lg:flex items-center space-x-1.5">
-          {primaryLinks.map((link) => {
+        {/* Desktop Nav Items: 4 Core Sections */}
+        <nav className="hidden md:flex items-center space-x-1 sm:space-x-2">
+          {navLinks.map((link) => {
             const Icon = link.icon;
-            const active = isPrimaryActive(link.href);
+            const active = isLinkActive(link.href);
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`flex items-center space-x-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
+                className={`flex items-center space-x-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all ${
                   active
-                    ? 'bg-[var(--rust-primary-light)] text-[var(--rust-primary)] border border-[var(--rust-primary-border)] font-semibold shadow-sm'
+                    ? 'bg-[var(--rust-primary-light)] text-[var(--rust-primary)] border border-[var(--rust-primary-border)] shadow-sm'
                     : 'text-[var(--rust-muted)] hover:bg-[var(--rust-surface-2)] hover:text-[var(--rust-text)]'
                 }`}
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="h-4 w-4" />
                 <span>{link.name}</span>
               </Link>
             );
           })}
-
-          {/* Tools & Labs Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setToolsDropdownOpen((prev) => !prev)}
-              onBlur={() => setTimeout(() => setToolsDropdownOpen(false), 200)}
-              className={`flex items-center space-x-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
-                isToolsActive
-                  ? 'bg-[var(--rust-primary-light)] text-[var(--rust-primary)] border border-[var(--rust-primary-border)] font-semibold'
-                  : 'text-[var(--rust-muted)] hover:bg-[var(--rust-surface-2)] hover:text-[var(--rust-text)]'
-              }`}
-            >
-              <span>Labs &amp; Tools</span>
-              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${toolsDropdownOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {toolsDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 p-2 rounded-xl bg-[var(--rust-surface)] border border-[var(--rust-border)] shadow-2xl space-y-1 z-50">
-                {toolsLinks.map((tool) => {
-                  const Icon = tool.icon;
-                  const active = pathname === tool.href;
-                  return (
-                    <Link
-                      key={tool.name}
-                      href={tool.href}
-                      className={`flex items-start gap-2.5 px-3 py-2 rounded-lg text-xs transition-colors ${
-                        active
-                          ? 'bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-semibold'
-                          : 'text-[var(--rust-text)] hover:bg-[var(--rust-surface-2)]'
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 mt-0.5 text-[var(--rust-primary)] shrink-0" />
-                      <div>
-                        <div className="font-semibold leading-tight">{tool.name}</div>
-                        <div className="text-[10px] text-[var(--rust-muted)] leading-tight mt-0.5">{tool.desc}</div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </div>
         </nav>
 
         {/* Right Actions: Theme Toggle & Mobile Menu */}
@@ -156,7 +131,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--rust-border)] bg-[var(--rust-surface-2)] text-[var(--rust-text)] lg:hidden hover:border-[var(--rust-primary-border)] transition-colors"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--rust-border)] bg-[var(--rust-surface-2)] text-[var(--rust-text)] md:hidden hover:border-[var(--rust-primary-border)] transition-colors"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -166,24 +141,29 @@ export function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="border-b border-[var(--rust-border)] bg-[var(--rust-surface)] px-4 py-4 lg:hidden max-h-[80vh] overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {allLinks.map((link) => {
+        <div className="border-b border-[var(--rust-border)] bg-[var(--rust-surface)] px-4 py-4 md:hidden">
+          <div className="flex flex-col space-y-2">
+            {navLinks.map((link) => {
               const Icon = link.icon;
-              const active = isPrimaryActive(link.href);
+              const active = isLinkActive(link.href);
               return (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center space-x-2.5 rounded-lg p-2.5 text-xs font-medium transition-colors ${
+                  className={`flex items-center justify-between rounded-xl p-3 text-xs font-semibold transition-colors ${
                     active
-                      ? 'bg-[var(--rust-primary-light)] text-[var(--rust-primary)] border border-[var(--rust-primary-border)] font-semibold'
+                      ? 'bg-[var(--rust-primary-light)] text-[var(--rust-primary)] border border-[var(--rust-primary-border)]'
                       : 'text-[var(--rust-muted)] hover:bg-[var(--rust-surface-2)] hover:text-[var(--rust-text)]'
                   }`}
                 >
-                  <Icon className="h-4 w-4 text-[var(--rust-primary)] shrink-0" />
-                  <span>{link.name}</span>
+                  <div className="flex items-center space-x-2.5">
+                    <Icon className="h-4 w-4 text-[var(--rust-primary)] shrink-0" />
+                    <span>{link.name}</span>
+                  </div>
+                  <span className="text-[10px] font-mono text-[var(--rust-muted)] px-2 py-0.5 rounded bg-[var(--rust-surface-2)]">
+                    {link.badge}
+                  </span>
                 </Link>
               );
             })}

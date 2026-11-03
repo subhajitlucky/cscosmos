@@ -8,6 +8,11 @@ import { Footer } from '@/components/visualizers/rustviz/components/Footer';
 import { Home } from '@/components/visualizers/rustviz/pages/Home';
 import { Concepts } from '@/components/visualizers/rustviz/pages/Concepts';
 import { ConceptDetail } from '@/components/visualizers/rustviz/pages/ConceptDetail';
+import { Lab } from '@/components/visualizers/rustviz/pages/Lab';
+import { Problems } from '@/components/visualizers/rustviz/pages/Problems';
+import { ProblemDetail } from '@/components/visualizers/rustviz/pages/ProblemDetail';
+import { Interview } from '@/components/visualizers/rustviz/pages/Interview';
+import { InterviewDetail } from '@/components/visualizers/rustviz/pages/InterviewDetail';
 import { OwnershipLab } from '@/components/visualizers/rustviz/pages/OwnershipLab';
 import { BorrowCheckerLab } from '@/components/visualizers/rustviz/pages/BorrowCheckerLab';
 import { LifetimesLab } from '@/components/visualizers/rustviz/pages/LifetimesLab';
@@ -30,6 +35,20 @@ export default function EngineMount({ slug }: { slug: string[] }) {
       View = <ConceptDetail slug={second} />;
     } else {
       View = <Concepts />;
+    }
+  } else if (first === 'lab') {
+    View = <Lab />;
+  } else if (first === 'problems') {
+    if (second) {
+      View = <ProblemDetail slug={second} />;
+    } else {
+      View = <Problems />;
+    }
+  } else if (first === 'interview') {
+    if (second) {
+      View = <InterviewDetail slug={second} />;
+    } else {
+      View = <Interview />;
     }
   } else if (first === 'ownership-lab') {
     View = <OwnershipLab />;

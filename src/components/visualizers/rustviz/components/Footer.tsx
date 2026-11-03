@@ -37,65 +37,60 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Interactive Labs */}
+          {/* Col 2: Core Platform Hubs */}
           <div>
-            <h4 className="font-bold text-[var(--rust-text)] uppercase tracking-wider text-[11px] mb-3">Interactive Engines</h4>
+            <h4 className="font-bold text-[var(--rust-text)] uppercase tracking-wider text-[11px] mb-3">Core Hubs</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/rustviz/ownership-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Ownership &amp; Move Lab <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                <Link href="/rustviz/concepts" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  100 Concepts Syllabus <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
                 </Link>
               </li>
               <li>
-                <Link href="/rustviz/borrow-checker" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Borrow Checker &amp; NLL <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                <Link href="/rustviz/lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  Simulation &amp; Experiment Lab <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
                 </Link>
               </li>
               <li>
-                <Link href="/rustviz/lifetimes-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Lifetimes &amp; Variance <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                <Link href="/rustviz/problems" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  100 Practice Problems <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
                 </Link>
               </li>
               <li>
-                <Link href="/rustviz/smart-pointers" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Smart Pointers (Rc/Arc) <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                </Link>
-              </li>
-              <li>
-                <Link href="/rustviz/concurrency-lab" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
-                  Tokio &amp; Channels Lab <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                <Link href="/rustviz/interview" className="hover:text-[var(--rust-primary)] transition-colors flex items-center">
+                  100 Interview Questions <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Resources & Hub */}
+          {/* Col 3: Simulation Engines */}
           <div>
-            <h4 className="font-bold text-[var(--rust-text)] uppercase tracking-wider text-[11px] mb-3">Reference &amp; Hub</h4>
+            <h4 className="font-bold text-[var(--rust-text)] uppercase tracking-wider text-[11px] mb-3">Simulation Engines</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/rustviz/concepts" className="hover:text-[var(--rust-primary)] transition-colors">
-                  100 Concepts Blueprint
+                <Link href="/rustviz/ownership-lab" className="hover:text-[var(--rust-primary)] transition-colors">
+                  Ownership &amp; Move Lab
                 </Link>
               </li>
               <li>
-                <Link href="/rustviz/pitfalls" className="hover:text-[var(--rust-primary)] transition-colors">
-                  Top Compiler Errors
+                <Link href="/rustviz/borrow-checker" className="hover:text-[var(--rust-primary)] transition-colors">
+                  Borrow Checker &amp; NLL
                 </Link>
               </li>
               <li>
-                <Link href="/rustviz/flashcards" className="hover:text-[var(--rust-primary)] transition-colors">
-                  Memory Flashcards
+                <Link href="/rustviz/lifetimes-lab" className="hover:text-[var(--rust-primary)] transition-colors">
+                  Lifetimes &amp; Variance
                 </Link>
               </li>
               <li>
-                <Link href="/rustviz/cheatsheet" className="hover:text-[var(--rust-primary)] transition-colors">
-                  Rust Architecture Cheat Sheet
+                <Link href="/rustviz/smart-pointers" className="hover:text-[var(--rust-primary)] transition-colors">
+                  Smart Pointers (Rc/Arc)
                 </Link>
               </li>
               <li>
                 <Link href="/topics" className="text-[var(--rust-primary)] hover:underline font-semibold flex items-center pt-2">
-                  Explore All CSCosmos Visualizers <ExternalLink className="ml-1 h-3 w-3" />
+                  All CSCosmos Visualizers <ExternalLink className="ml-1 h-3 w-3" />
                 </Link>
               </li>
             </ul>
