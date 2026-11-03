@@ -129,16 +129,16 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false, className = '' 
             >
                 <div className="flex items-center space-x-2">
                     <Code size={14} style={{ color: 'var(--accent-main)' }} />
-                    <span className="text-xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-muted)' }}>Editor_Pane</span>
+                    <span className="text-xs font-bold uppercase tracking-wider font-mono text-zinc-700 dark:text-zinc-300">JavaScript Editor</span>
                 </div>
                 <div className="flex space-x-2">
                     {!readOnly && (
                         <button
                             onClick={executeCode}
-                            className="neo-btn px-3 py-1 text-xs flex items-center gap-2 transition-transform active:scale-95"
+                            className="neo-btn px-3 py-1 text-xs flex items-center gap-1.5 transition-transform active:scale-95 font-bold"
                         >
-                            <Play size={12} fill="currentColor" />
-                            EXECUTE
+                            <Play size={12} fill="currentColor" className="text-emerald-500" />
+                            Run Code
                         </button>
                     )}
                 </div>
@@ -185,7 +185,7 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false, className = '' 
                     >
                         <div className="flex items-center space-x-2">
                             <Terminal size={12} style={{ color: 'var(--text-main)' }} />
-                            <span className="text-xs font-bold uppercase tracking-widest font-mono" style={{ color: 'var(--text-main)' }}>Console_Output</span>
+                            <span className="text-xs font-bold uppercase tracking-wider font-mono text-zinc-700 dark:text-zinc-300">Console Output</span>
                         </div>
                         <button
                             onClick={clearConsole}

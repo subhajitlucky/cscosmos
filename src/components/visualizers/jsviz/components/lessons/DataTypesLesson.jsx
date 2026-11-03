@@ -14,7 +14,8 @@ import {
   Clock,
   Sparkles,
   ArrowRight,
-  HelpCircle
+  HelpCircle,
+  Info
 } from 'lucide-react';
 import CodeEditor from '../CodeEditor';
 import VisualizerCanvas from '../VisualizerCanvas';
@@ -25,19 +26,55 @@ export function DataTypesLesson({ topic, content }) {
   // Quick Quiz Answers state
   const [quizAnswers, setQuizAnswers] = useState({});
 
+  const [activePresetIndex, setActivePresetIndex] = useState(0);
+
+  const presets = [
+    {
+      id: 'primitives',
+      title: '1. Primitives',
+      badge: 'By Value',
+      description: 'Primitives create independent copies on the stack: changing scoreB never affects scoreA.',
+      code: `// 1. Primitives: Copied by Value into Stack Slots
+let scoreA = 100;
+let scoreB = scoreA; // Independent stack copy
+
+scoreB = 250; // Only scoreB is modified
+
+console.log("scoreA:", scoreA); // 100 (Untouched!)
+console.log("scoreB:", scoreB); // 250`
+    },
+    {
+      id: 'objects',
+      title: '2. Objects',
+      badge: 'By Reference',
+      description: 'Objects share memory pointers: modifying userB.name mutates userA as well!',
+      code: `// 2. Objects: Copied by Reference (Shared Pointer)
+let userA = { name: "Alice", role: "admin" };
+let userB = userA; // userB points to the SAME object!
+
+userB.name = "Bob"; // Mutates shared heap object!
+
+console.log("userA:", userA.name); // "Bob" (Mutated!)
+console.log("userB:", userB.name); // "Bob"`
+    },
+    {
+      id: 'cloning',
+      title: '3. Safe Cloning',
+      badge: '{ ...spread }',
+      description: 'Object spread creates a brand-new object in the heap, protecting userA from mutations.',
+      code: `// 3. Defensive Cloning with Object Spread {...}
+let userA = { name: "Alice", role: "admin" };
+let userB = { ...userA }; // Brand-new independent heap allocation!
+
+userB.name = "Bob"; // Modifies userB only!
+
+console.log("userA:", userA.name); // "Alice" (Protected!)
+console.log("userB:", userB.name); // "Bob"`
+    }
+  ];
+
   // Interactive Live Studio State
-  const [liveCode, setLiveCode] = useState(`// 1. Primitive: Copied by Value
-let countA = 10;
-let countB = countA;
-countB = 99;
-
-// 2. Reference: Copied by Reference
-let userA = { name: "Alice" };
-let userB = userA;
-userB.name = "Bob";
-
-console.log("countA is still:", countA); // 10
-console.log("userA was changed to:", userA.name); // "Bob"`);
+  const [liveCode, setLiveCode] = useState(presets[0].code);
   const [isRunning, setIsRunning] = useState(false);
 
   const handleCopy = (code, id) => {
@@ -60,36 +97,6 @@ console.log("userA was changed to:", userA.name); // "Bob"`);
     setIsRunning(true);
     setTimeout(() => setIsRunning(false), 200);
   };
-
-  const presets = [
-    {
-      label: "1. Primitives (By Value)",
-      code: `let num1 = 42;
-let num2 = num1;
-num2 = 100;
-
-console.log("num1:", num1); // 42 (Untouched)
-console.log("num2:", num2); // 100`
-    },
-    {
-      label: "2. Objects (By Reference)",
-      code: `let player1 = { name: "Alex", score: 50 };
-let player2 = player1;
-player2.score = 99;
-
-console.log("player1 score:", player1.score); // 99 (Shared!)
-console.log("player2 score:", player2.score); // 99`
-    },
-    {
-      label: "3. Safe Cloning ({ ... })",
-      code: `let config1 = { theme: "dark", volume: 80 };
-let config2 = { ...config1 }; // Creates a new independent copy
-config2.theme = "light";
-
-console.log("config1:", config1.theme); // "dark" (Protected!)
-console.log("config2:", config2.theme); // "light"`
-    }
-  ];
 
   return (
     <div className="space-y-10 w-full">
@@ -613,43 +620,63 @@ console.log("config2:", config2.theme); // "light"`
           7. LIVE INTERACTIVE MEMORY STUDIO
          ========================================================================= */}
       <section className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Play className="w-5 h-5 text-emerald-700 dark:text-brand-lime" />
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
-              Live Memory Studio
-            </h2>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Play className="w-5 h-5 text-emerald-700 dark:text-brand-lime" />
+              <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
+                Live Memory Studio
+              </h2>
+            </div>
+
+            {/* Segmented Preset Switcher */}
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+              {presets.map((preset, idx) => {
+                const isActive = activePresetIndex === idx;
+                return (
+                  <button
+                    key={preset.id}
+                    onClick={() => {
+                      setActivePresetIndex(idx);
+                      handleRunCode(preset.code);
+                    }}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                      isActive
+                        ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 shadow-xs font-bold border border-zinc-200 dark:border-zinc-700'
+                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                    }`}
+                  >
+                    <span>{preset.title}</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                      isActive 
+                        ? 'bg-emerald-100 dark:bg-brand-lime/20 text-emerald-800 dark:text-brand-lime font-bold'
+                        : 'bg-zinc-200/70 dark:bg-zinc-800 text-zinc-500'
+                    }`}>
+                      {preset.badge}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Quick Presets */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-xs font-mono font-bold text-zinc-500 mr-1">Load Preset:</span>
-            {presets.map((preset, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleRunCode(preset.code)}
-                className="px-2.5 py-1 rounded-md text-xs font-mono border border-zinc-200 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-[var(--text-main)] hover:border-zinc-400 transition-colors"
-              >
-                {preset.label}
-              </button>
-            ))}
+          {/* Preset Context Guidance Banner */}
+          <div className="px-3.5 py-2 rounded-lg bg-zinc-100/70 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 flex items-center gap-2">
+            <Info size={14} className="text-emerald-600 dark:text-brand-lime shrink-0" />
+            <span>{presets[activePresetIndex].description}</span>
           </div>
         </div>
-
-        <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-          Type custom JavaScript or select a preset above. Watch the live engine allocate values on the stack and objects on the heap:
-        </p>
 
         {/* Split Screen Studio */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
           
           {/* Editor Container */}
-          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[500px]">
+          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[520px]">
             <CodeEditor initialCode={liveCode} onRun={handleRunCode} className="border-0 rounded-none h-full" />
           </div>
 
           {/* Memory Visualizer Canvas Container */}
-          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[500px] bg-white dark:bg-zinc-950">
+          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[520px] bg-white dark:bg-zinc-950">
             <VisualizerCanvas topicId="data-types" code={liveCode} isRunning={isRunning} onCodeChange={handleRunCode} />
           </div>
 
