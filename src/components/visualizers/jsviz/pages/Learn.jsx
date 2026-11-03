@@ -69,25 +69,24 @@ const Learn = () => {
                                         <Link
                                             key={topic.id}
                                             href={`/jsviz/topic/${topic.id}`}
-                                            className="group neo-card p-6 relative flex flex-col h-full"
+                                            className="group neo-card p-5 relative flex flex-col justify-between h-full"
                                         >
-                                            <div className="flex justify-between items-start mb-4">
-                                                <span className="font-mono text-xs text-gray-600 dark:text-gray-400">
-                                                    {String(index + 1).padStart(2, '0')}
-                                                </span>
-                                                {isCompleted && (
-                                                    <CheckSquare size={18} className="text-brand-lime" />
-                                                )}
+                                            <div>
+                                                <div className="flex justify-between items-start mb-3">
+                                                    <span className="font-mono text-xs text-gray-600 dark:text-gray-400">
+                                                        {String(index + 1).padStart(2, '0')}
+                                                    </span>
+                                                    {isCompleted && (
+                                                        <CheckSquare size={18} className="text-brand-lime" />
+                                                    )}
+                                                </div>
+
+                                                <h3 className="text-base sm:text-lg font-bold group-hover:text-brand-lime transition-colors leading-snug" style={{ color: 'var(--text-main)' }}>
+                                                    {topic.title}
+                                                </h3>
                                             </div>
 
-                                            <h3 className="text-xl font-bold mb-2 group-hover:text-brand-lime transition-colors" style={{ color: 'var(--text-main)' }}>
-                                                {topic.title}
-                                            </h3>
-                                            <p className="text-sm font-mono leading-relaxed mb-6" style={{ color: 'var(--text-muted)' }}>
-                                                {topic.description}
-                                            </p>
-
-                                            <div className="w-full h-1 bg-brand-border mt-auto group-hover:bg-brand-lime transition-colors"></div>
+                                            <div className="w-full h-1 bg-brand-border mt-4 group-hover:bg-brand-lime transition-colors"></div>
                                         </Link>
                                     );
                                 })}
