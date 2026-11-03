@@ -110,10 +110,10 @@ const Topic = ({ topicId: propTopicId }) => {
         <div className="min-h-screen pt-16 flex flex-col transition-colors duration-300" style={{ backgroundColor: 'var(--bg-main)' }}>
             {/* Topic Header Bar */}
             <header 
-                className="border-b px-4 py-3 sm:px-6 sticky top-16 z-20 backdrop-blur-md transition-colors duration-300"
+                className="border-b px-4 sm:px-6 lg:px-8 py-3 sticky top-16 z-20 backdrop-blur-md transition-colors duration-300"
                 style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-main)' }}
             >
-                <div className="max-w-[1700px] mx-auto flex flex-wrap justify-between items-center gap-3">
+                <div className="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-3">
                     <div className="flex items-center gap-3">
                         <Link 
                             href="/jsviz/learn" 
@@ -186,8 +186,8 @@ const Topic = ({ topicId: propTopicId }) => {
                 </div>
             )}
 
-            {/* Single-Column Spacious Horizontal Flow Layout */}
-            <div className="max-w-[1700px] mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-12">
+            {/* Single-Column Focused "Fit" Learning Layout */}
+            <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-10">
                 
                 {/* 1. Topic Objective & Overview Banner */}
                 <div className="neo-card p-6 border-l-4" style={{ borderLeftColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
@@ -417,7 +417,7 @@ const Topic = ({ topicId: propTopicId }) => {
                             </div>
 
                             {/* Stepper Progress Tabs */}
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mb-4">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-4">
                                 {content.stepperSteps.map((step, idx) => (
                                     <button
                                         key={idx}
