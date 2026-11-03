@@ -113,7 +113,7 @@ const Topic = ({ topicId: propTopicId }) => {
                 className="border-b px-4 sm:px-6 lg:px-8 py-3 sticky top-16 z-20 backdrop-blur-md transition-colors duration-300"
                 style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-main)' }}
             >
-                <div className="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-3">
+                <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
                     <div className="flex items-center gap-3">
                         <Link 
                             href="/jsviz/learn" 
@@ -187,7 +187,7 @@ const Topic = ({ topicId: propTopicId }) => {
             )}
 
             {/* Single-Column Focused "Fit" Learning Layout */}
-            <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+            <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-12">
                 
                 {/* 1. Topic Objective & Overview Banner */}
                 <div className="neo-card p-6 border-l-4" style={{ borderLeftColor: 'var(--accent-main)', backgroundColor: 'var(--bg-surface)' }}>
