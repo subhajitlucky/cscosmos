@@ -1,9 +1,9 @@
 const dataTypes = {
     title: "Data Types & Memory Model",
     subtitle: "Primitives vs. Reference Types in Memory",
-    definition: "JavaScript has two data categories: **Primitives** (stored directly by value on the Call Stack) and **Objects** (stored dynamically on the Memory Heap and accessed via pointers). Primitives copy as independent values; objects share reference pointers.",
+    definition: "JavaScript has two data categories: Primitives (stored directly by value on the Call Stack) and Objects (stored dynamically on the Memory Heap and accessed via pointers). Primitives copy as independent values; objects share reference pointers.",
     
-    // Core Architecture: Stack (By Value) vs. Heap (By Reference)
+    // Core Architecture
     architecture: {
         headline: "Stack (By Value) vs. Heap (By Reference)",
         intro: "How JavaScript allocates and accesses data in memory:",
@@ -55,7 +55,7 @@ const dataTypes = {
         }
     ],
 
-    // The Complete Type Catalog (Concise & Bite-Sized)
+    // The Complete Type Catalog
     typeCatalog: {
         headline: "The JavaScript Type System",
         subheadline: "7 Primitives (Value types) + 1 Reference Type (Object).",
@@ -83,7 +83,7 @@ const dataTypes = {
         }
     },
 
-    // 4 Quick Stepper Steps (Clean & punchy)
+    // 4 Quick Stepper Steps
     stepperSteps: [
         {
             stepNumber: 1,
@@ -118,14 +118,14 @@ const dataTypes = {
     // 2 Essential Common Traps
     goldenRules: [
         {
-            title: "Trap 1: Accidental Mutation via Shared Reference",
+            title: "Trap 1: Shared Reference Mutation",
             trapCode: `const a = { role: "admin" };
 const b = a; // Copies the pointer, not the object!
 b.role = "guest";
 
 console.log(a.role); // "guest" (Mutated!)
 
-// ✅ Fix: Use shallow clone or deep clone:
+// Fix: Use shallow clone or deep clone:
 const safeB = { ...a };`,
             why: "Object assignment copies only the memory pointer. Use spread {...} to copy shallow properties independently."
         },
@@ -136,7 +136,7 @@ str[0] = "H"; // Silently fails!
 
 console.log(str); // "hello" (Unchanged)
 
-// ✅ Fix: Construct a new string:
+// Fix: Construct a new string:
 str = "H" + str.slice(1); // "Hello"`,
             why: "Primitives cannot be modified in-place. Replace the whole variable with a new value instead."
         }
@@ -199,7 +199,7 @@ console.log(userA.name); // "Alex" (Shared pointer!)`,
     ],
 
     useCases: [
-        "**State Immutability (React)**: Always clone objects (`{ ...state }`) so component re-render checks detect state updates.",
+        "**State Immutability (React)**: Always clone objects ({ ...state }) so component re-render checks detect state updates.",
         "**Memory Efficiency**: Use primitives for counters and flags to avoid heap allocation and garbage collection overhead."
     ],
 
