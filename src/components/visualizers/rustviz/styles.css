@@ -31,8 +31,8 @@
   --rust-border-subtle: rgba(240, 246, 252, 0.05);
   
   --rust-text: #ffffff;
-  --rust-muted: #cbd5e1;
-  --rust-subtle: #94a3b8;
+  --rust-muted: #e2e8f0;
+  --rust-subtle: #cbd5e1;
 
   /* Pre-mixed translucent tokens.
      Tailwind v3 cannot apply an opacity modifier to an arbitrary var() colour:
@@ -102,8 +102,8 @@ html:not(.dark) .rustviz-root,
   --rust-border-subtle: rgba(15, 23, 42, 0.06);
   
   --rust-text: #020617;
-  --rust-muted: #334155;
-  --rust-subtle: #475569;
+  --rust-muted: #1e293b;
+  --rust-subtle: #334155;
 }
 
 /* Dark Theme Variables */
@@ -124,8 +124,8 @@ html[data-theme='dark'] .rustviz-root,
   --rust-border-subtle: rgba(240, 246, 252, 0.05);
   
   --rust-text: #ffffff;
-  --rust-muted: #cbd5e1;
-  --rust-subtle: #94a3b8;
+  --rust-muted: #e2e8f0;
+  --rust-subtle: #cbd5e1;
 }
 
 .rustviz-root .font-mono {

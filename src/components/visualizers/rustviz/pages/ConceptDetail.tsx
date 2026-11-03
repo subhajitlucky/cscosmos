@@ -109,28 +109,28 @@ export function ConceptDetail({ slug }: { slug: string }) {
       </div>
 
       {/* Concept Header */}
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="px-2.5 py-0.5 rounded-md bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-mono text-xs font-medium border border-[var(--rust-primary-border)]">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="px-3 py-1 rounded-lg bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-mono text-sm font-semibold border border-[var(--rust-primary-border)]">
             Concept #{String(concept.number).padStart(3, '0')}
           </span>
-          <span className="px-2.5 py-0.5 rounded-md bg-[var(--rust-surface-2)] text-[var(--rust-muted)] text-xs font-medium border border-[var(--rust-border)]">
+          <span className="px-3 py-1 rounded-lg bg-[var(--rust-surface-2)] text-[var(--rust-text)] text-sm font-medium border border-[var(--rust-border)]">
             {concept.category}
           </span>
-          <span className="text-xs text-[var(--rust-muted)] flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[var(--rust-surface-2)] border border-[var(--rust-border)]">
-            <Clock className="h-3.5 w-3.5" />
+          <span className="text-sm text-[var(--rust-text)] font-medium flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[var(--rust-surface-2)] border border-[var(--rust-border)]">
+            <Clock className="h-4 w-4 text-[var(--rust-primary)]" />
             {concept.readTime}
           </span>
-          <span className="text-xs font-medium px-2.5 py-0.5 rounded-md bg-[var(--rust-surface-2)] text-[var(--rust-muted)] border border-[var(--rust-border)]">
+          <span className="text-sm font-semibold px-3 py-1 rounded-lg bg-[var(--rust-surface-2)] text-[var(--rust-text)] border border-[var(--rust-border)]">
             {concept.difficulty}
           </span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-semibold text-[var(--rust-text)] tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[var(--rust-text)] tracking-tight">
           {concept.title}
         </h1>
 
-        <p className="text-base text-[var(--rust-muted)] font-normal leading-relaxed">
+        <p className="text-base sm:text-lg text-[var(--rust-text)] font-normal leading-relaxed">
           {concept.summary}
         </p>
       </div>
