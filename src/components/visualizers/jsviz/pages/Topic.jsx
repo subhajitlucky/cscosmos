@@ -289,6 +289,38 @@ const Topic = ({ topicId: propTopicId }) => {
                                 </ul>
                             </div>
                         </div>
+
+                        {/* Visual Mental Model Cheat Sheet */}
+                        {content?.comparisonTable && (
+                            <div className="mt-8 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-900/60 shadow-sm">
+                                <div className="px-5 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/90 flex flex-wrap items-center justify-between gap-2">
+                                    <span className="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                                        ⚡ Quick Comparison Cheat Sheet: Primitives vs Objects
+                                    </span>
+                                    <span className="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium">Memory &amp; Copying Rules</span>
+                                </div>
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left font-mono text-xs sm:text-sm border-collapse">
+                                        <thead>
+                                            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-100/70 dark:bg-zinc-900/40 text-zinc-900 dark:text-zinc-100 font-bold">
+                                                <th className="p-3.5 sm:px-5">Concept</th>
+                                                <th className="p-3.5 sm:px-5 text-emerald-800 dark:text-brand-lime">The 7 Primitives (Sticky Note)</th>
+                                                <th className="p-3.5 sm:px-5 text-blue-700 dark:text-blue-300">Objects &amp; Arrays (Locker Key)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+                                            {content.comparisonTable.map((row, rIdx) => (
+                                                <tr key={rIdx} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors">
+                                                    <td className="p-3.5 sm:px-5 font-bold text-zinc-900 dark:text-zinc-100 whitespace-nowrap">{row.feature}</td>
+                                                    <td className="p-3.5 sm:px-5 text-zinc-700 dark:text-zinc-300">{row.primitive}</td>
+                                                    <td className="p-3.5 sm:px-5 text-zinc-700 dark:text-zinc-300">{row.object}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -423,7 +455,7 @@ const Topic = ({ topicId: propTopicId }) => {
                                         key={idx}
                                         onClick={() => {
                                             setActiveStepperStep(idx);
-                                            loadCodeAndVisualize(step.code);
+                                            loadCodeAndVisualize(step.fullCode || step.code);
                                         }}
                                         className={`p-2.5 rounded-lg text-left border font-mono text-xs sm:text-sm transition-all ${
                                             activeStepperStep === idx
@@ -460,7 +492,7 @@ const Topic = ({ topicId: propTopicId }) => {
                                             onClick={() => {
                                                 const prev = activeStepperStep - 1;
                                                 setActiveStepperStep(prev);
-                                                loadCodeAndVisualize(content.stepperSteps[prev].code);
+                                                loadCodeAndVisualize(content.stepperSteps[prev].fullCode || content.stepperSteps[prev].code);
                                             }}
                                             className="px-3.5 py-1.5 rounded border border-zinc-300 dark:border-zinc-700 text-xs sm:text-sm font-mono font-bold text-zinc-800 dark:text-zinc-200 disabled:opacity-30 hover:border-emerald-500 transition-colors"
                                         >
@@ -471,7 +503,7 @@ const Topic = ({ topicId: propTopicId }) => {
                                             onClick={() => {
                                                 const next = activeStepperStep + 1;
                                                 setActiveStepperStep(next);
-                                                loadCodeAndVisualize(content.stepperSteps[next].code);
+                                                loadCodeAndVisualize(content.stepperSteps[next].fullCode || content.stepperSteps[next].code);
                                             }}
                                             className="px-4 py-1.5 rounded bg-emerald-600 dark:bg-brand-lime text-white dark:text-black font-bold text-xs sm:text-sm font-mono disabled:opacity-30 hover:opacity-90 transition-opacity flex items-center gap-1.5 shadow-sm"
                                         >

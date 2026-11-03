@@ -1,62 +1,96 @@
 const dataTypes = {
-    title: "Data Types & Values",
+    title: "Data Types & Memory Model",
     subtitle: "The Foundation of All JavaScript Programs",
-    definition: "Everything in JavaScript is a piece of data. Just like in the real world where you have words, numbers, and storage boxes, JavaScript sorts all data into two main families: **The 7 Primitives** (simple values) and **Objects** (containers).",
+    definition: "Why does JavaScript have data types? Think of a computer as a fast but literal robot. If you ask it to calculate 5 + 5, it does math and gives you 10. But if you type '5' + '5', it glues words together like speech bubbles and gives you '55'! Data types tell JavaScript: What is this value, and where should it live in memory? In JavaScript, every piece of data belongs to just two families: The 7 Primitives (simple values in your pocket) and Objects (big storage containers in a warehouse).",
     
     // The 5-Year-Old Mental Model
     analogy: {
-        headline: "The 5-Year-Old Mental Model: Sticky Notes vs. Locker Keys",
-        intro: "To understand JavaScript data types, you only need to imagine two everyday things: a Sticky Note and a Train Station Locker Key.",
+        headline: "Phase 1: The 5-Year-Old Intuition (Sticky Notes vs. Locker Keys)",
+        intro: "To master JavaScript data types and never get confused by 'pass-by-value' or 'pass-by-reference', you only ever need to picture two real-world objects: a Sticky Note in your pocket, and a Train Station Locker Key.",
         primitives: {
-            title: "Primitives = Sticky Notes in Your Pocket",
-            badge: "Simple & Independent",
-            description: "Imagine writing the number '42' on a tiny yellow sticky note and putting it in your pocket. If your friend asks for your number, you write '42' on a brand new sticky note and hand it to them.",
-            punchline: "If your friend scribbles on their sticky note and changes it to '99', YOUR sticky note in your pocket STILL says '42'! You are completely independent.",
+            title: "The 7 Primitives = Sticky Notes in Your Pocket",
+            badge: "Independent & Direct",
+            description: "Imagine writing the number '42' on a tiny yellow sticky note and putting it in your pocket. If a friend asks for your number, you write '42' on a brand-new sticky note and hand it to them.",
+            punchline: "If your friend scribbles on their sticky note and changes it to '99', YOUR note in your pocket STILL says '42'! Both notes are completely independent.",
             traits: [
                 "Stored directly in fast pocket memory (The Stack)",
-                "Copied by Value (Everyone gets their own separate copy)",
-                "Immutable (You can replace the note, but you can't mutate the number 42 into a 50)"
+                "Copied by Value (Everyone gets their own separate photocopy)",
+                "Immutable (You can replace the note, but you cannot change the number 42 into a 50)"
             ]
         },
         objects: {
-            title: "Objects & Arrays = A Locker Key with a Locker Number",
+            title: "Objects & Arrays = Locker Keys with a Locker Address",
             badge: "Shared Containers",
-            description: "Now imagine a giant toy box. It's way too big to fit in your pocket! So it lives in a big storage room (The Heap). Inside your pocket, you only keep the Locker Key labeled '#Locker-402'.",
-            punchline: "If you give your friend a copy of your key (let friend = me), you BOTH hold keys to the EXACT SAME LOCKER. If your friend opens Locker 402 and replaces the toy with a robot, you open Locker 402 with your key and see the robot too!",
+            description: "Now imagine a giant toy chest. It is way too heavy to carry in your pocket! So it lives in a big warehouse (The Heap). In your pocket, you only hold a small metal key stamped with the locker address '#0x4F12'.",
+            punchline: "If you give your friend a copy of your key (let friend = me), you BOTH hold keys to the EXACT SAME LOCKER. If your friend unlocks Locker #0x4F12 and adds a toy robot, you unlock it and see the robot too!",
             traits: [
-                "The container lives in big storage (The Heap)",
+                "The big container lives in warehouse storage (The Heap)",
                 "Your variable only holds the Memory Address (The Key)",
-                "Copied by Reference (Sharing the key means sharing the same contents)"
+                "Copied by Reference (Sharing the key means sharing the same locker contents)"
             ]
         }
     },
 
+    // The Mental Model Cheat Sheet
+    comparisonTable: [
+        {
+            feature: "Real-World Analogy",
+            primitive: "Sticky Note in your pocket",
+            object: "Key to a big storage locker"
+        },
+        {
+            feature: "Where It Lives",
+            primitive: "The Stack (Fast, direct CPU pocket)",
+            object: "The Heap (Large warehouse storage)"
+        },
+        {
+            feature: "What Variable Holds",
+            primitive: "The direct value itself (e.g. 100, 'hello')",
+            object: "A Memory Address pointer (e.g. #0x4F12)"
+        },
+        {
+            feature: "When You Copy (b = a)",
+            primitive: "Makes an independent photocopy of the value",
+            object: "Duplicates the key; both open the SAME locker"
+        },
+        {
+            feature: "Can You Mutate It?",
+            primitive: "No (Immutable). You replace the whole note.",
+            object: "Yes (Mutable). You edit what's inside the locker."
+        },
+        {
+            feature: "Equality Check (a === b)",
+            primitive: "Checks if values are identical (100 === 100)",
+            object: "Checks if keys point to the exact same locker"
+        }
+    ],
+
     // The Two Kingdoms Overview
     kingdoms: {
-        headline: "The Two Kingdoms of JavaScript",
+        headline: "Phase 2: The Two Kingdoms of JavaScript",
         subheadline: "Every single piece of data in JavaScript belongs to one of these two kingdoms.",
         kingdom1: {
             name: "Kingdom 1: The 7 Primitives",
             badge: "Values in Pockets",
-            description: "Simple, lightweight, indestructible values. They cannot be modified in-place.",
+            description: "Lightweight, independent, direct values. Fast and stored directly on the Stack.",
             types: [
-                { name: "Number", example: "42, 3.14, -5", explain: "Any integer or decimal number for math and counting." },
-                { name: "String", example: '"Hello", \'JavaScript\'', explain: "Text wrapped in quotes. Words, letters, or sentences." },
-                { name: "Boolean", example: "true or false", explain: "A light switch: either ON (true) or OFF (false)." },
-                { name: "Undefined", example: "undefined", explain: "An empty slot. The computer says: 'I haven't been given a value yet!'" },
-                { name: "Null", example: "null", explain: "A deliberate empty box. The developer says: 'I intentionally put nothing here!'" },
-                { name: "BigInt", example: "9007199254740995n", explain: "Super-large integers that exceed normal Number size limits." },
-                { name: "Symbol", example: "Symbol('id')", explain: "A guaranteed unique secret token that never collides with anything else." }
+                { name: "Number", example: "42, 3.14, -10", explain: "Any integer or decimal number. Used for math, counting, and physics." },
+                { name: "String", example: '"Hello", \'JavaScript\'', explain: "Text wrapped in quotes. Quotes act like speech bubbles for words and letters." },
+                { name: "Boolean", example: "true or false", explain: "A light switch: either ON (true) or OFF (false). Used for if/else decisions." },
+                { name: "Undefined", example: "undefined", explain: "An unassigned slot. The computer says: 'You declared this, but haven't given it a value!'" },
+                { name: "Null", example: "null", explain: "Deliberately empty. The developer says: 'I intentionally set this to empty (like an empty plate).'" },
+                { name: "BigInt", example: "9007199254740995n", explain: "Giant integers beyond 9 quadrillion. Used for high-precision science and crypto." },
+                { name: "Symbol", example: "Symbol('id')", explain: "A secret VIP badge guaranteed 100% unique in the universe. Never collides with anything." }
             ]
         },
         kingdom2: {
             name: "Kingdom 2: The Object Kingdom",
             badge: "Containers in Warehouses",
-            description: "Complex structures that group multiple values together. They are mutable.",
+            description: "Bulky structures that bundle multiple values together. Mutable and stored in the Heap.",
             types: [
-                { name: "Plain Object {}", example: '{ name: "Alice", age: 20 }', explain: "A labeled container of key-value pairs (like a contact card)." },
-                { name: "Array []", example: '[10, 20, 30], ["Apple", "Orange"]', explain: "An ordered checklist of items indexed by position numbers (0, 1, 2)." },
-                { name: "Function () {}", example: 'function greet() { ... }', explain: "A reusable recipe of actions that can be stored, passed, and executed." }
+                { name: "Plain Object {}", example: '{ name: "Alice", score: 95 }', explain: "A labeled box with named stickers (properties). Ideal for user profiles and records." },
+                { name: "Array []", example: '["Apple", "Banana", "Cherry"]', explain: "An ordered grocery checklist indexed by position numbers (0, 1, 2...). Keeps order." },
+                { name: "Function () {}", example: 'function jump() { return "up"; }', explain: "A reusable recipe of actions that can be saved, passed around, and executed." }
             ]
         }
     },
@@ -95,117 +129,100 @@ const dataTypes = {
         }
     ],
 
-    // Stepper Demo Scenarios (Interactive Step-by-Step walkthrough)
+    // Stepper Demo Scenarios (Interactive Step-by-Step walkthrough with cumulative fullCode)
     stepperSteps: [
         {
             stepNumber: 1,
-            label: "Create a Primitive Value",
+            label: "Create Primitive (Sticky Note)",
             code: "let score = 100;",
-            stackPreview: [{ name: "score", value: "100", isRef: false }],
-            heapPreview: [],
-            explanation: "JavaScript creates a slot on the Stack named 'score' and directly stores the number 100 inside it."
+            fullCode: "let score = 100;",
+            explanation: "JavaScript creates a personal slot on the Stack named 'score' and directly writes the number 100 inside it."
         },
         {
             stepNumber: 2,
-            label: "Copy the Primitive (Sticky Note Copy)",
+            label: "Copy Primitive (Duplicate Note)",
             code: "let copy = score;",
-            stackPreview: [
-                { name: "score", value: "100", isRef: false },
-                { name: "copy", value: "100", isRef: false }
-            ],
-            heapPreview: [],
-            explanation: "JavaScript copies the actual value 100 into a brand new slot named 'copy'. Both slots are completely independent!"
+            fullCode: "let score = 100;\nlet copy = score;",
+            explanation: "JavaScript reads the 100 from 'score' and photocopies it onto a brand-new slot named 'copy'. Both have their own 100."
         },
         {
             stepNumber: 3,
-            label: "Modify the Copy",
+            label: "Modify Copy (Safe & Independent)",
             code: "copy = 200;",
-            stackPreview: [
-                { name: "score", value: "100", isRef: false },
-                { name: "copy", value: "200", isRef: false }
-            ],
-            heapPreview: [],
-            explanation: "Only 'copy' changes to 200. 'score' is still 100! Your friend scratched their note, but yours is safe."
+            fullCode: "let score = 100;\nlet copy = score;\ncopy = 200;",
+            explanation: "Only 'copy' changes to 200. 'score' is still 100! Your friend scribbled on their note, but your note in your pocket is safe."
         },
         {
             stepNumber: 4,
-            label: "Create an Object (The Warehouse Locker)",
+            label: "Create Object (Warehouse Locker)",
             code: "let user1 = { name: 'Alice' };",
-            stackPreview: [
-                { name: "user1", value: "0x4F12", isRef: true }
-            ],
-            heapPreview: [
-                { addr: "0x4F12", content: "{ name: 'Alice' }" }
-            ],
-            explanation: "The object { name: 'Alice' } is placed in the Heap at address 0x4F12. 'user1' on the Stack only holds the Locker Key '0x4F12'!"
+            fullCode: "let user1 = { name: 'Alice' };",
+            explanation: "The object is too bulky for your pocket, so it gets stored in the Heap warehouse (Locker #0x4F12). 'user1' on the Stack only holds the Locker Key!"
         },
         {
             stepNumber: 5,
-            label: "Copy the Object (Sharing the Locker Key)",
+            label: "Copy Object (Sharing the Key)",
             code: "let user2 = user1;",
-            stackPreview: [
-                { name: "user1", value: "0x4F12", isRef: true },
-                { name: "user2", value: "0x4F12", isRef: true }
-            ],
-            heapPreview: [
-                { addr: "0x4F12", content: "{ name: 'Alice' }" }
-            ],
-            explanation: "We did NOT duplicate the object! We only handed 'user2' a duplicate key to locker 0x4F12."
+            fullCode: "let user1 = { name: 'Alice' };\nlet user2 = user1;",
+            explanation: "We did NOT duplicate the object! We only handed 'user2' a duplicate key to locker #0x4F12. Both people hold keys to the exact same locker."
         },
         {
             stepNumber: 6,
             label: "Mutate via user2 (The Shared Surprise)",
             code: "user2.name = 'Bob';",
-            stackPreview: [
-                { name: "user1", value: "0x4F12", isRef: true },
-                { name: "user2", value: "0x4F12", isRef: true }
-            ],
-            heapPreview: [
-                { addr: "0x4F12", content: "{ name: 'Bob' }" }
-            ],
-            explanation: "user2 used their key to open locker 0x4F12 and changed the name to 'Bob'. When user1 checks user1.name, they see 'Bob' too!"
+            fullCode: "let user1 = { name: 'Alice' };\nlet user2 = user1;\nuser2.name = 'Bob';",
+            explanation: "user2 unlocked Locker #0x4F12 and painted the name 'Bob'. When user1 unlocks the locker with their key, they see 'Bob' too!"
         }
     ],
 
     // Four Golden Rules / Everyday Traps
     goldenRules: [
         {
-            title: "Rule 1: Primitives are Immutable (You Can't Edit Letters in a String)",
+            title: "Rule 1: Primitives are Immutable (Strings Cannot Be Edited In-Place)",
             trapCode: `let greeting = "Hello";
 greeting[0] = "J"; // ❌ Silently does nothing!
 console.log(greeting); // Still "Hello"
 
-// ✅ The Correct Way: Make a new string
+// ✅ The Correct Way: Make a brand-new string
 greeting = "J" + greeting.slice(1);
 console.log(greeting); // "Jello"`,
-            why: "Primitives cannot be cracked open and mutated. To change a word or number, you replace the entire value."
+            why: "Primitives cannot be cracked open and edited. They are carved in stone. To change text or a number, you replace the entire value with a new one."
         },
         {
-            title: "Rule 2: undefined vs. null (The Toilet Paper Analogy)",
-            trapCode: `let delivery;
-console.log(delivery); // undefined ("The box hasn't arrived yet")
+            title: "Rule 2: 🎮 The Classic Game Bug: Shared Locker Keys",
+            trapCode: `// Oops! Both players share the same locker key:
+let player1 = { name: "Hero", health: 100 };
+let player2 = player1; 
 
-let wallet = null;
-console.log(wallet);   // null ("The wallet is intentionally empty")`,
-            why: "undefined is JavaScript's default for variables that have not been initialized. null is an intentional choice made by you (the programmer) to say 'this is intentionally empty'."
+// Monster attacks Player 2:
+player2.health -= 30;
+
+console.log("Player 2 Health:", player2.health); // 70
+console.log("Player 1 Health:", player1.health); // 70 (Wait! Player 1 took damage too!)
+
+// ✅ The Fix: Give Player 2 their OWN independent locker:
+let safePlayer2 = { ...player1 };`,
+            why: "Because player2 was assigned player1, both variables pointed to the same heap locker. To protect player1, use the spread operator {...} or structuredClone() to allocate an independent locker."
         },
         {
-            title: "Rule 3: The 1995 Bug: Why typeof null === 'object'",
+            title: "Rule 3: undefined vs. null (The Mailbox Analogy)",
+            trapCode: `let mailbox;
+console.log(mailbox); // undefined ("The mail carrier hasn't delivered anything yet")
+
+let emptyBox = null;
+console.log(emptyBox); // null ("The owner intentionally checked and marked it empty")`,
+            why: "undefined is JavaScript's default for variables that have not been assigned. null is an intentional choice made by you (the programmer) to say: 'I deliberately set this slot to empty'."
+        },
+        {
+            title: "Rule 4: The 1995 Engine Quirk: Why typeof null === 'object'",
             trapCode: `console.log(typeof "hello"); // "string"
 console.log(typeof 42);      // "number"
 console.log(typeof true);    // "boolean"
 
-// The famous 30-year-old bug:
-console.log(typeof null);    // "object" ⚠️ (Not actually an object!)`,
-            why: "In 1995, Brendan Eich created JS in 10 days. The engine used type tags in memory: '000' meant object. Null was a pointer to address 0x00 (all zeroes), so the check mistakenly reported 'object'. It has never been fixed because changing it would break millions of legacy websites!"
-        },
-        {
-            title: "Rule 4: Arrays and Functions are Actually Objects!",
-            trapCode: `const list = [1, 2, 3];
-console.log(typeof list); // "object" (Arrays are objects with index keys!)
-
-console.log(Array.isArray(list)); // true ✅ (Always use Array.isArray to check)`,
-            why: "In JavaScript, arrays are specialized objects where property keys are numbers (0, 1, 2) with an automatic .length property."
+// The famous 30-year-old JavaScript engine quirk:
+console.log(typeof null);    // "object" ⚠️ (null is NOT an object!)
+console.log(Array.isArray([1, 2])); // true ✅ (Always check arrays with Array.isArray)`,
+            why: "In 1995, Brendan Eich created JS in 10 days. The original engine stored type tags in memory: '000' meant object. Null was represented as pointer 0x00 (all zeroes), so the type check mistakenly reported 'object'. It has never been changed because fixing it would break legacy websites!"
         }
     ],
 
