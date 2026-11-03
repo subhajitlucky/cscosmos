@@ -27,8 +27,16 @@ const Learn = () => {
                             CURRICULUM
                         </h1>
                         <p className="font-mono max-w-xl" style={{ color: 'var(--text-muted)' }}>
-                            Structured learning path. From primitives to asynchronous patterns.
+                            Structured 100-concept learning path. From primitives and engine mechanics to modern async architecture.
                         </p>
+                        <div className="flex items-center gap-3 mt-4">
+                            <span className="text-xs font-mono px-2.5 py-1 rounded border border-brand-lime/40 bg-brand-lime/10 text-brand-lime font-bold">
+                                100 CONCEPTS
+                            </span>
+                            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                                {progress.completedTopics ? progress.completedTopics.length : 0} / 100 COMPLETED
+                            </span>
+                        </div>
                     </div>
 
                     <div className="w-full md:w-auto mt-8 md:mt-0">

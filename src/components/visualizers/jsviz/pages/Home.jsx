@@ -54,8 +54,8 @@ const Home = () => {
             <div className="border-b border-brand-border" style={{ backgroundColor: 'var(--bg-surface)' }}>
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-border">
                     <div className="p-12 text-center group hover:bg-brand-black transition-colors" style={{ backgroundColor: 'var(--bg-surface)' }}>
-                        <div className="text-4xl font-bold mb-2 font-mono group-hover:text-brand-lime transition-colors" style={{ color: 'var(--text-main)' }}>50+</div>
-                        <div className="text-sm uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Algorithms</div>
+                        <div className="text-4xl font-bold mb-2 font-mono group-hover:text-brand-lime transition-colors" style={{ color: 'var(--text-main)' }}>100</div>
+                        <div className="text-sm uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Concepts</div>
                     </div>
                     <div className="p-12 text-center group hover:bg-brand-black transition-colors" style={{ backgroundColor: 'var(--bg-surface)' }}>
                         <div className="text-4xl font-bold mb-2 font-mono group-hover:text-brand-lime transition-colors" style={{ color: 'var(--text-main)' }}>100%</div>

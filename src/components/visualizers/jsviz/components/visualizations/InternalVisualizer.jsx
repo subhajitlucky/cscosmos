@@ -98,6 +98,98 @@ const InternalVisualizer = ({ topicId, code }) => {
             );
         }
 
+        if (['v8-compiler-pipeline', 'deoptimization'].includes(topicId)) {
+            return (
+                <div className="flex flex-col items-center justify-center h-full gap-6">
+                    <div className="flex items-center gap-4 text-xs font-mono">
+                        <div className="p-3 border border-yellow-500/30 rounded-lg bg-yellow-500/10 text-yellow-400 text-center">
+                            <span className="block font-bold">Parser / Scanner</span>
+                            <span className="text-[9px] opacity-70">Source -&gt; AST</span>
+                        </div>
+                        <span className="text-brand-lime font-bold">➔</span>
+                        <div className="p-3 border border-blue-500/30 rounded-lg bg-blue-500/10 text-blue-400 text-center">
+                            <span className="block font-bold">Ignition</span>
+                            <span className="text-[9px] opacity-70">Bytecode &amp; Profiler</span>
+                        </div>
+                        <span className="text-brand-lime font-bold">➔</span>
+                        <div className="p-3 border border-green-500/30 rounded-lg bg-green-500/10 text-green-400 text-center">
+                            <span className="block font-bold">TurboFan</span>
+                            <span className="text-[9px] opacity-70">JIT Machine Code</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-[var(--text-muted)]">
+                        <Zap size={12} className="text-brand-lime animate-pulse" />
+                        <span>Type Feedback: Monomorphic speculative execution active</span>
+                    </div>
+                </div>
+            );
+        }
+
+        if (['garbage-collection', 'memory-leaks'].includes(topicId)) {
+            return (
+                <div className="flex flex-col items-center justify-center h-full gap-6 font-mono">
+                    <div className="grid grid-cols-2 gap-6 w-full max-w-md">
+                        <div className="p-4 border border-brand-lime/30 rounded-lg bg-brand-lime/5 text-center">
+                            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-brand-lime mb-2">
+                                <Cpu size={14} /> Young Generation
+                            </div>
+                            <span className="text-[10px] text-[var(--text-muted)] block">Scavenger (Semi-Spaces)</span>
+                            <span className="text-[9px] text-green-400 mt-1 block">Fast O(survivors) collection</span>
+                        </div>
+                        <div className="p-4 border border-purple-500/30 rounded-lg bg-purple-500/5 text-center">
+                            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-purple-400 mb-2">
+                                <Cpu size={14} /> Old Generation
+                            </div>
+                            <span className="text-[10px] text-[var(--text-muted)] block">Mark-Sweep-Compact</span>
+                            <span className="text-[9px] text-purple-400 mt-1 block">Long-lived survivor heap</span>
+                        </div>
+                    </div>
+                    <span className="text-[10px] text-[var(--text-muted)]">Tri-color marking (White / Grey / Black) active</span>
+                </div>
+            );
+        }
+
+        if (['dom-event-propagation', 'custom-events'].includes(topicId)) {
+            return (
+                <div className="flex flex-col items-center justify-center h-full gap-4 font-mono">
+                    <div className="flex flex-col items-center gap-2">
+                        <div className="px-6 py-2 border border-blue-500/30 bg-blue-500/10 text-blue-400 rounded text-xs">
+                            1. Capturing Phase (window ➔ target)
+                        </div>
+                        <span className="text-xs text-[var(--text-muted)]">▼</span>
+                        <div className="px-6 py-2 border-2 border-brand-lime bg-brand-lime/10 text-brand-lime font-bold rounded text-xs shadow-lg">
+                            2. Target Phase (element target)
+                        </div>
+                        <span className="text-xs text-[var(--text-muted)]">▲</span>
+                        <div className="px-6 py-2 border border-green-500/30 bg-green-500/10 text-green-400 rounded text-xs">
+                            3. Bubbling Phase (target ➔ window)
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        if (topicId === 'web-workers') {
+            return (
+                <div className="flex flex-col items-center justify-center h-full gap-6 font-mono">
+                    <div className="flex items-center gap-8">
+                        <div className="p-4 border border-blue-500/30 bg-blue-500/10 rounded-lg text-center">
+                            <span className="text-xs font-bold text-blue-400 block">Main Thread</span>
+                            <span className="text-[9px] text-[var(--text-muted)]">DOM &amp; UI Events (60 FPS)</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-1">
+                            <span className="text-[10px] text-brand-lime font-bold">postMessage</span>
+                            <span className="text-xs text-[var(--text-muted)]">⇄ structuredClone ⇄</span>
+                        </div>
+                        <div className="p-4 border border-orange-500/30 bg-orange-500/10 rounded-lg text-center">
+                            <span className="text-xs font-bold text-orange-400 block">Web Worker Thread</span>
+                            <span className="text-[9px] text-[var(--text-muted)]">Heavy Computation &amp; I/O</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div className="flex flex-col items-center justify-center h-full gap-4">
                 <div className="engine-core p-6 bg-[var(--bg-surface)] border border-[var(--border-main)] rounded-2xl shadow-2xl relative">

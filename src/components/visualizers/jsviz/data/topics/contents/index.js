@@ -51,6 +51,7 @@ import metaprogramming from './metaprogramming.js';
 import evalContent from './eval.js';
 import security from './security.js';
 import legacy from './legacy.js';
+import additionalTopics from './additionalTopics.js';
 
 export const topicContents = {
     'variables-scope': variablesScope,
@@ -105,6 +106,7 @@ export const topicContents = {
     'legacy': legacy,
     variables,
     functions: functionsContent,
+    ...additionalTopics,
 };
 
 export const getTopicContent = (topicId) => {

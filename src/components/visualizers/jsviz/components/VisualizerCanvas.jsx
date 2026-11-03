@@ -19,7 +19,7 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
             const safeCode = typeof code === 'string' ? code : '';
 
             // Logic for Variables, Scope, Operators, Property Descriptors, Legacy
-            if (['variables', 'variables-scope', 'operators', 'property-descriptors', 'legacy'].includes(topicId)) {
+            if (['variables', 'variables-scope', 'operators', 'property-descriptors', 'legacy', 'temporal-dead-zone', 'object-immutability', 'private-class-fields', 'weak-references', 'closure-loop-problem'].includes(topicId)) {
                 const varRegex = /(?:let|const|var)\s+(?:\{([\w\s,]+)\}|\[([\w\s,]+)\]|([\w$]+))\s*=\s*([^;]+);?/g;
                 let match;
                 const variables = [];
@@ -43,7 +43,7 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
                 setVisualization({ type: 'variables', variables });
             } 
             // Logic for Data Types (Stack vs Heap) & Memory Model
-            else if (['data-types', 'memory-model'].includes(topicId)) {
+            else if (['data-types', 'memory-model', 'typeof-detection', 'type-coercion', 'equality-comparison', 'truthy-falsy', 'numbers', 'bigint', 'strings', 'symbols', 'pass-by-value-reference', 'cloning-objects', 'symbols-registry'].includes(topicId)) {
                 const stackItems = [];
                 const heapItems = [];
                 const varRegex = /(?:let|const|var)\s+(?:\{([\w\s,]+)\}|\[([\w\s,]+)\]|([\w$]+))\s*=\s*([^;]+);?/g;
@@ -72,7 +72,7 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
                 setVisualization({ type: 'datatypes', stack: stackItems, heap: heapItems });
             }
             // Logic for Call Stack / Functions / Spec Internals / Eval
-            else if (['functions-basics', 'scope-chain', 'closures', 'execution-context', 'this-binding', 'function-methods', 'arguments-rest', 'arrow-functions', 'constructor-functions', 'classes', 'spec-internals', 'eval'].includes(topicId)) {
+            else if (['functions-basics', 'scope-chain', 'closures', 'execution-context', 'this-binding', 'function-methods', 'arguments-rest', 'arrow-functions', 'constructor-functions', 'classes', 'spec-internals', 'eval', 'call-stack', 'pure-functions', 'currying', 'recursion-tco', 'variable-shadowing', 'new-binding', 'lexical-this', 'class-inheritance'].includes(topicId)) {
                 const funcRegex = /function\s+([\w$]+)|([\w$]+)\s*\(|class\s+([\w$]+)/g;
                 let match;
                 const frames = ['Global Context'];
@@ -87,33 +87,33 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
                 setVisualization({ type: 'callstack', frames: frames.reverse() });
             }
             // Logic for Event Loop / Async
-            else if (['event-loop', 'microtasks', 'promises', 'async-await', 'callbacks', 'async-patterns', 'dynamic-imports'].includes(topicId)) {
+            else if (['event-loop', 'microtasks', 'promises', 'async-await', 'callbacks', 'async-patterns', 'dynamic-imports', 'promise-chaining', 'promise-combinators', 'async-error-handling', 'async-iteration', 'abort-controller', 'timers-animation', 'top-level-await', 'unhandled-rejections'].includes(topicId)) {
                 setVisualization({ 
                     type: 'eventloop',
-                    hasMicro: safeCode.includes('Promise') || safeCode.includes('await') || safeCode.includes('then'),
+                    hasMicro: safeCode.includes('Promise') || safeCode.includes('await') || safeCode.includes('then') || safeCode.includes('queueMicrotask'),
                     hasMacro: safeCode.includes('setTimeout') || safeCode.includes('setInterval')
                 });
             }
             // Logic for Prototype Chain / Security
-            else if (['prototype-chain', 'security'].includes(topicId)) {
+            else if (['prototype-chain', 'security', 'object-create', 'object-sandboxing'].includes(topicId)) {
                 setVisualization({ type: 'prototype', chain: ['Instance', 'Prototype', 'Object.prototype', 'null'] });
             }
             // Logic for Arrays / Iteration / Shared Memory / Typed Arrays
-            else if (['arrays', 'iteration-protocols', 'shared-memory', 'typed-arrays'].includes(topicId)) {
+            else if (['arrays', 'iteration-protocols', 'shared-memory', 'typed-arrays', 'array-methods-mutating', 'array-reduce-mastery', 'dataview', 'sparse-vs-dense-arrays', 'for-of-vs-for-in'].includes(topicId)) {
                 const arrayMatch = safeCode.match(/\[(.*?)\]/);
                 const items = arrayMatch ? arrayMatch[1].split(',').map(s => s.trim()) : ['1', '2', '3'];
                 setVisualization({ type: 'arrays', items });
             }
             // Logic for Metaprogramming
-            else if (topicId === 'metaprogramming') {
+            else if (['metaprogramming', 'reflect-api'].includes(topicId)) {
                 setVisualization({ type: 'metaprogramming' });
             }
             // Logic for Map/Set
-            else if (topicId === 'map-set') {
+            else if (['map-set', 'weakmap-weakset'].includes(topicId)) {
                 setVisualization({ type: 'mapset' });
             }
             // Logic for Generators
-            else if (topicId === 'generators') {
+            else if (['generators', 'advanced-generators'].includes(topicId)) {
                 setVisualization({ type: 'generator' });
             }
             else {
