@@ -53,7 +53,16 @@
   background-color: var(--rust-bg);
   color: var(--rust-text);
   min-height: 100vh;
+  overflow-x: clip;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Light Theme Variables */

@@ -64,20 +64,22 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
     <div className="space-y-12">
       
       {/* Visual Phase Navigation Bar */}
-      <div className="sticky top-20 z-30 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2.5 bg-[var(--rust-surface)]/95 backdrop-blur-md border-y border-[var(--rust-border)] flex items-center gap-1.5 overflow-x-auto scrollbar-none shadow-sm">
-        <span className="text-[11px] font-mono font-bold text-[var(--rust-muted)] uppercase shrink-0 mr-1 hidden sm:inline">
+      <div className="sticky top-20 z-30 py-2 px-3 sm:px-4 bg-[var(--rust-surface)]/95 backdrop-blur-md border border-[var(--rust-border)] rounded-2xl flex flex-wrap items-center justify-between gap-2 shadow-sm">
+        <span className="text-xs font-mono font-bold text-[var(--rust-muted)] uppercase shrink-0">
           Phases:
         </span>
-        {phases.map((phase) => (
-          <button
-            key={phase.id}
-            onClick={() => scrollToPhase(phase.id)}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap bg-[var(--rust-surface-2)] text-[var(--rust-muted)] hover:text-[var(--rust-text)] hover:bg-[var(--rust-border)] transition-colors border border-[var(--rust-border)]"
-          >
-            <span className="font-mono text-[10px] text-[var(--rust-primary)]">{phase.number}</span>
-            <span>{phase.title}</span>
-          </button>
-        ))}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {phases.map((phase) => (
+            <button
+              key={phase.id}
+              onClick={() => scrollToPhase(phase.id)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[var(--rust-surface-2)] text-[var(--rust-muted)] hover:text-[var(--rust-text)] hover:bg-[var(--rust-surface-3)] transition-colors border border-[var(--rust-border)]"
+            >
+              <span className="font-mono text-[10px] text-[var(--rust-primary)] font-bold">{phase.number}</span>
+              <span>{phase.title}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* =========================================================================
