@@ -13,6 +13,7 @@ import CodeEditor from '../components/CodeEditor';
 import VisualizerCanvas from '../components/VisualizerCanvas';
 import Sidebar from '../components/Sidebar';
 import useStore from '../store/useStore';
+import { DataTypesLesson } from '../components/lessons/DataTypesLesson';
 import { 
     CheckSquare, Code, BookOpen, Cpu, Layers, Copy, 
     Check, ArrowLeft, ArrowRight, Menu, X, Sparkles,
@@ -196,8 +197,12 @@ const Topic = ({ topicId: propTopicId }) => {
             {/* Main Content Workspace */}
             <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 space-y-6">
                 
-                {/* 1. Sleek 1-Liner Concept Strip */}
-                <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+                {id === 'data-types' ? (
+                    <DataTypesLesson topic={topic} content={content} />
+                ) : (
+                    <>
+                        {/* 1. Sleek 1-Liner Concept Strip */}
+                        <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
                     <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-brand-lime shrink-0"></div>
                         <p className="text-xs sm:text-sm font-mono text-zinc-800 dark:text-zinc-200 leading-snug">
@@ -586,6 +591,8 @@ const Topic = ({ topicId: propTopicId }) => {
                             </div>
                         )}
                     </div>
+                )}
+                    </>
                 )}
 
                 {/* Bottom Topic Pagination */}
