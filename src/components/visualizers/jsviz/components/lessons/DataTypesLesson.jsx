@@ -643,32 +643,14 @@ console.log("config2:", config2.theme); // "light"`
         {/* Split Screen Studio */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
           
-          {/* Editor */}
-          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[460px] bg-white dark:bg-zinc-900">
-            <div className="px-3.5 py-2 border-b flex justify-between items-center bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800">
-              <span className="text-xs font-mono font-bold text-[var(--text-main)] flex items-center gap-1.5">
-                <Code2 size={13} className="text-emerald-700 dark:text-brand-lime" />
-                JavaScript Code Editor
-              </span>
-              <span className="text-xs font-mono text-zinc-500">Edit &amp; click Run</span>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <CodeEditor initialCode={liveCode} onRun={handleRunCode} />
-            </div>
+          {/* Editor Container */}
+          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[500px]">
+            <CodeEditor initialCode={liveCode} onRun={handleRunCode} className="border-0 rounded-none h-full" />
           </div>
 
-          {/* Memory Visualizer Canvas */}
-          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[460px] bg-zinc-50 dark:bg-zinc-950">
-            <div className="px-3.5 py-2 border-b flex justify-between items-center bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800">
-              <span className="text-xs font-mono font-bold text-[var(--text-main)] flex items-center gap-1.5">
-                <Database size={13} className="text-blue-600 dark:text-blue-400" />
-                Live Memory Inspector (Stack &amp; Heap)
-              </span>
-              <span className="text-xs font-mono text-zinc-500">Real-Time Simulation</span>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <VisualizerCanvas topicId="data-types" code={liveCode} isRunning={isRunning} onCodeChange={handleRunCode} />
-            </div>
+          {/* Memory Visualizer Canvas Container */}
+          <div className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-xs h-[500px] bg-white dark:bg-zinc-950">
+            <VisualizerCanvas topicId="data-types" code={liveCode} isRunning={isRunning} onCodeChange={handleRunCode} />
           </div>
 
         </div>
