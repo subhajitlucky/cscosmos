@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { rustConcepts } from '../data/concepts';
 import { rustPitfalls } from '../data/pitfalls';
+import { VariablesAndMutabilityLesson } from '../components/lessons/VariablesAndMutabilityLesson';
 
 export function ConceptDetail({ slug }: { slug: string }) {
   const [copiedCode, setCopiedCode] = useState(false);
@@ -165,84 +166,92 @@ export function ConceptDetail({ slug }: { slug: string }) {
         </div>
       )}
 
-      {/* Key Takeaways Callout */}
-      <div className="rounded-2xl border border-[var(--rust-primary-border)] bg-[var(--rust-primary-light)]/40 p-6 space-y-3">
-        <div className="text-xs font-bold uppercase tracking-wider text-[var(--rust-primary)] flex items-center gap-1.5 font-mono">
-          <Sparkles className="h-4 w-4" />
-          <span>Core Systems Takeaways</span>
-        </div>
-        <ul className="space-y-2 text-xs sm:text-sm text-[var(--rust-text)]">
-          {concept.keyTakeaways.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2.5">
-              <CheckCircle2 className="h-4 w-4 text-[var(--rust-primary)] shrink-0 mt-0.5" />
-              <span className="leading-relaxed">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Idiomatic Code Implementation */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--rust-text)] flex items-center gap-1.5 font-mono">
-            <Code className="h-4 w-4 text-[var(--rust-primary)]" />
-            <span>Idiomatic Rust Implementation</span>
-          </span>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-[var(--rust-muted)] hidden sm:inline">Rust 2024</span>
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1 px-2.5 py-1 rounded bg-[var(--rust-surface-2)] border border-[var(--rust-border)] text-[10px] font-mono text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
-            >
-              {copiedCode ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
-              <span>{copiedCode ? 'Copied' : 'Copy'}</span>
-            </button>
+      {/* If Concept #001: Variables & Mutability -> Render Dedicated Phase-by-Phase Lesson */}
+      {concept.slug === 'variables-and-mutability' ? (
+        <VariablesAndMutabilityLesson concept={concept} />
+      ) : (
+        /* Standard Concept View for other live concepts */
+        <>
+          {/* Key Takeaways Callout */}
+          <div className="rounded-2xl border border-[var(--rust-primary-border)] bg-[var(--rust-primary-light)]/40 p-6 space-y-3">
+            <div className="text-xs font-bold uppercase tracking-wider text-[var(--rust-primary)] flex items-center gap-1.5 font-mono">
+              <Sparkles className="h-4 w-4" />
+              <span>Core Systems Takeaways</span>
+            </div>
+            <ul className="space-y-2 text-xs sm:text-sm text-[var(--rust-text)]">
+              {concept.keyTakeaways.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2.5">
+                  <CheckCircle2 className="h-4 w-4 text-[var(--rust-primary)] shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
 
-        <div className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 overflow-hidden">
-          <pre className="font-mono text-xs text-[var(--rust-text)] leading-relaxed overflow-x-auto bg-[var(--rust-bg)] p-4 rounded-lg border border-[var(--rust-border)]">
-            <code>{concept.codeExample}</code>
-          </pre>
-        </div>
-      </div>
-
-      {/* Deep Dive Explanations */}
-      <div className="space-y-6">
-        <h2 className="text-xl font-bold text-[var(--rust-text)] border-b border-[var(--rust-border)] pb-2">
-          Under the Hood: Compiler &amp; Memory Mechanics
-        </h2>
-
-        <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[var(--rust-muted)]">
-          {concept.explanation.map((para, idx) => (
-            <p key={idx}>{para}</p>
-          ))}
-        </div>
-
-        {concept.deepDive && (
-          <div className="space-y-4 pt-2">
-            {concept.deepDive.map((dive, dIdx) => (
-              <div 
-                key={dIdx} 
-                className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface-2)]/60 p-5 space-y-3"
-              >
-                <h3 className="text-sm font-bold text-[var(--rust-text)] flex items-center gap-2">
-                  <Layers className="h-4 w-4 text-[var(--rust-cyan)]" />
-                  <span>{dive.title}</span>
-                </h3>
-                <p className="text-xs text-[var(--rust-muted)] leading-relaxed whitespace-pre-line">
-                  {dive.content}
-                </p>
-                {dive.code && (
-                  <pre className="font-mono text-xs bg-[var(--rust-bg)] p-3.5 rounded-lg border border-[var(--rust-border)] text-[var(--rust-text)] overflow-x-auto">
-                    <code>{dive.code}</code>
-                  </pre>
-                )}
+          {/* Idiomatic Code Implementation */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--rust-text)] flex items-center gap-1.5 font-mono">
+                <Code className="h-4 w-4 text-[var(--rust-primary)]" />
+                <span>Idiomatic Rust Implementation</span>
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono text-[var(--rust-muted)] hidden sm:inline">Rust 2024</span>
+                <button
+                  onClick={handleCopy}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded bg-[var(--rust-surface-2)] border border-[var(--rust-border)] text-[10px] font-mono text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+                >
+                  {copiedCode ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
+                  <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+                </button>
               </div>
-            ))}
+            </div>
+
+            <div className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 overflow-hidden">
+              <pre className="font-mono text-xs text-[var(--rust-text)] leading-relaxed overflow-x-auto bg-[var(--rust-bg)] p-4 rounded-lg border border-[var(--rust-border)]">
+                <code>{concept.codeExample}</code>
+              </pre>
+            </div>
           </div>
-        )}
-      </div>
+
+          {/* Deep Dive Explanations */}
+          <div className="space-y-6">
+            <h2 className="text-xl font-bold text-[var(--rust-text)] border-b border-[var(--rust-border)] pb-2">
+              Under the Hood: Compiler &amp; Memory Mechanics
+            </h2>
+
+            <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[var(--rust-muted)]">
+              {concept.explanation.map((para, idx) => (
+                <p key={idx}>{para}</p>
+              ))}
+            </div>
+
+            {concept.deepDive && (
+              <div className="space-y-4 pt-2">
+                {concept.deepDive.map((dive, dIdx) => (
+                  <div 
+                    key={dIdx} 
+                    className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface-2)]/60 p-5 space-y-3"
+                  >
+                    <h3 className="text-sm font-bold text-[var(--rust-text)] flex items-center gap-2">
+                      <Layers className="h-4 w-4 text-[var(--rust-cyan)]" />
+                      <span>{dive.title}</span>
+                    </h3>
+                    <p className="text-xs text-[var(--rust-muted)] leading-relaxed whitespace-pre-line">
+                      {dive.content}
+                    </p>
+                    {dive.code && (
+                      <pre className="font-mono text-xs bg-[var(--rust-bg)] p-3.5 rounded-lg border border-[var(--rust-border)] text-[var(--rust-text)] overflow-x-auto">
+                        <code>{dive.code}</code>
+                      </pre>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
 
       {/* Related Compiler Errors & Pitfalls */}
       {relatedPitfalls.length > 0 && (
