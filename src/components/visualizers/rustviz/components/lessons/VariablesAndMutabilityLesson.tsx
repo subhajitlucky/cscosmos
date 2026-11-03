@@ -540,7 +540,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
               {memoryState === 'immutable' && (
                 <div className="p-4 rounded-lg border border-emerald-500/30 bg-emerald-500/5 space-y-2">
                   <div className="flex items-center justify-between text-emerald-400 font-sans">
-                    <span className="font-medium">x : i32</span>
+                    <span className="font-medium">x : i32 (Whole Number)</span>
                     <span className="text-xs flex items-center gap-1">
                       <Lock className="w-3 h-3" /> Locked
                     </span>
@@ -557,7 +557,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
               {memoryState === 'mutable_initial' && (
                 <div className="p-4 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-2">
                   <div className="flex items-center justify-between text-amber-400 font-sans">
-                    <span className="font-medium">mut x : i32</span>
+                    <span className="font-medium">mut x : i32 (Mutable Number)</span>
                     <span className="text-xs flex items-center gap-1">
                       <Unlock className="w-3 h-3" /> Writable
                     </span>
@@ -574,7 +574,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
               {memoryState === 'mutable_updated' && (
                 <div className="p-4 rounded-lg border border-amber-500/30 bg-amber-500/5 space-y-2">
                   <div className="flex items-center justify-between text-amber-400 font-sans">
-                    <span className="font-medium">mut x : i32</span>
+                    <span className="font-medium">mut x : i32 (Mutable Number)</span>
                     <span className="text-xs flex items-center gap-1">
                       <Unlock className="w-3 h-3" /> Overwritten
                     </span>
@@ -595,7 +595,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
                   </div>
                   <div className="p-4 rounded-lg border border-[var(--rust-primary-border)] bg-[var(--rust-primary-light)]/20 space-y-2">
                     <div className="flex items-center justify-between text-[var(--rust-primary)] font-sans">
-                      <span className="font-medium">New x : &amp;str</span>
+                      <span className="font-medium">New x : &amp;str (Text String)</span>
                       <span className="text-xs">New Stack Slot</span>
                     </div>
                     <div className="text-xl font-mono text-[var(--rust-text)]">
@@ -612,10 +612,19 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
             {/* Explanation of Hardware Mechanics */}
             <div className="flex flex-col justify-between space-y-4 text-sm text-[var(--rust-muted)] leading-relaxed">
               <div className="space-y-3">
-                <div className="flex items-center gap-1.5 text-xs font-medium text-[var(--rust-text)]">
-                  <Cpu className="w-4 h-4 text-[var(--rust-primary)]" />
-                  <span>Hardware &amp; Assembly Instructions</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs font-medium text-[var(--rust-text)]">
+                    <Cpu className="w-4 h-4 text-[var(--rust-primary)]" />
+                    <span>Hardware &amp; Assembly (Optional Peek)</span>
+                  </div>
+                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[var(--rust-surface-2)] text-[var(--rust-muted)] border border-[var(--rust-border-subtle)]">
+                    Under the hood
+                  </span>
                 </div>
+
+                <p className="text-xs text-[var(--rust-muted)]">
+                  💡 <em>You never have to write assembly in Rust!</em> Rust compiles your code into optimized machine instructions automatically:
+                </p>
                 
                 {memoryState === 'immutable' && (
                   <div className="space-y-2">
@@ -738,7 +747,8 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
                 <code>
                   <span className="text-pink-400">let</span> port = <span className="text-emerald-300">&quot;8080&quot;</span>; <span className="text-slate-400 italic">// Raw text input (&amp;str)</span>{'\n'}
                   <span className="text-pink-400">let</span> port: <span className="text-sky-300">u16</span> = port.<span className="text-sky-300">parse</span>().<span className="text-sky-300">unwrap</span>();{'\n'}
-                  <span className="text-slate-400 italic">// Now 'port' is a validated u16 number!</span>
+                  <span className="text-slate-400 italic">// .parse().unwrap() converts text to number!</span>{'\n'}
+                  <span className="text-slate-400 italic">// Now 'port' is safely a u16 number!</span>
                 </code>
               </pre>
             </div>
@@ -764,6 +774,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
                 <code>
                   <span className="text-pink-400">const</span> <span className="text-amber-300">MAX_CONNECTIONS</span>: <span className="text-sky-300">usize</span> = <span className="text-amber-300">10_000</span>;{'\n'}
                   <span className="text-pink-400">const</span> <span className="text-amber-300">TIMEOUT_SECONDS</span>: <span className="text-sky-300">u64</span> = <span className="text-amber-300">30</span>;{'\n'}
+                  <span className="text-slate-400 italic">// usize &amp; u64 = whole number counter types</span>{'\n'}
                   <span className="text-slate-400 italic">// Inlined into CPU instructions everywhere</span>
                 </code>
               </pre>
