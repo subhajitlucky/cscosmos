@@ -151,7 +151,7 @@ export function Concepts() {
                   : 'border-[var(--rust-border)]/60 bg-[var(--rust-surface)]/70 hover:border-[var(--rust-border)]'
               }`}
             >
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 
                 {/* Card Top: Number + Status Tag */}
                 <div className="flex items-center justify-between">
@@ -185,15 +185,10 @@ export function Concepts() {
                 }`}>
                   {concept.title}
                 </h3>
-
-                {/* Summary */}
-                <p className="text-xs text-[var(--rust-muted)] leading-relaxed line-clamp-2">
-                  {concept.summary}
-                </p>
               </div>
 
               {/* Bottom Action Strip */}
-              <div className="mt-5 pt-3 border-t border-[var(--rust-border-subtle)] flex items-center justify-between text-xs font-semibold">
+              <div className="mt-4 pt-3 border-t border-[var(--rust-border-subtle)] flex items-center justify-between text-xs font-semibold">
                 <span className="text-[10px] font-mono text-[var(--rust-muted)] uppercase">
                   {concept.difficulty} • {concept.readTime}
                 </span>
