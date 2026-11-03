@@ -121,7 +121,7 @@ console.log("userB:", userB.name); // "Bob"`
           Data Types &amp; Values
         </h1>
 
-        <p className="text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-3xl">
+        <p className="text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
           Everything in JavaScript is either a <strong className="text-[var(--text-main)] font-semibold">Primitive</strong> (a simple value like a number or word) or an <strong className="text-[var(--text-main)] font-semibold">Object</strong> (a collection of data). Understanding how they are copied is the foundation of all JavaScript code.
         </p>
       </header>

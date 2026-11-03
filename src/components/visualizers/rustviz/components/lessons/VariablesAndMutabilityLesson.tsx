@@ -120,7 +120,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
             </p>
 
             <div className="pt-2 border-t border-[var(--rust-border-subtle)] text-xs text-[var(--rust-muted)]">
-              Risk: Unintended mutations, hard-to-reproduce state bugs, data races.
+              Risk: Unintended changes, mysterious bugs, and code breaking unexpectedly.
             </div>
           </div>
 
@@ -154,7 +154,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
           <div className="space-y-1.5 text-sm text-[var(--rust-muted)] leading-relaxed font-normal">
             <span className="font-medium text-[var(--rust-text)]">Why does Rust do this?</span>
             <p>
-              When dozens of developers write complex code or run multi-threaded background tasks simultaneously, immutable variables guarantee that no thread or function can secretly modify shared data. It eliminates entire classes of concurrency bugs and unexpected side effects before your program ever runs.
+              Imagine 5 people trying to edit the same shared document or bank balance at the exact same second without asking—it becomes total chaos! By making variables locked by default, Rust guarantees that nobody can secretly change your data behind your back. Your code stays predictable, safe, and bug-free.
             </p>
           </div>
         </div>
@@ -176,6 +176,28 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
         <p className="text-base text-[var(--rust-muted)] leading-relaxed font-normal">
           Let’s watch what happens when you try to change a variable without permission. Rust stops you at compile time and explains the issue with a friendly suggestion.
         </p>
+
+        {/* Quick Beginner Syntax Decoder */}
+        <div className="p-4 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] space-y-2.5">
+          <div className="flex items-center gap-2 text-xs font-medium text-[var(--rust-text)]">
+            <Code2 className="w-4 h-4 text-[var(--rust-primary)]" />
+            <span>Quick Syntax Decoder (New to Rust?)</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-[var(--rust-muted)] leading-relaxed">
+            <div className="p-2.5 rounded-lg bg-[var(--rust-surface-2)]/60 border border-[var(--rust-border-subtle)] space-y-1">
+              <span className="font-mono text-[var(--rust-text)] font-medium">fn main() &#123; ... &#125;</span>
+              <p>The front door. Every Rust program starts executing inside this function.</p>
+            </div>
+            <div className="p-2.5 rounded-lg bg-[var(--rust-surface-2)]/60 border border-[var(--rust-border-subtle)] space-y-1">
+              <span className="font-mono text-[var(--rust-text)] font-medium">println!(&quot;...&quot;)</span>
+              <p>Prints text to the screen. The <code className="font-mono text-[var(--rust-text)]">!</code> means it is a built-in macro helper.</p>
+            </div>
+            <div className="p-2.5 rounded-lg bg-[var(--rust-surface-2)]/60 border border-[var(--rust-border-subtle)] space-y-1">
+              <span className="font-mono text-[var(--rust-text)] font-medium">&#123;&#125; (Curly brackets)</span>
+              <p>A fill-in-the-blank slot where Rust injects the value of your variable.</p>
+            </div>
+          </div>
+        </div>
 
         {/* Side-by-Side: Broken Code vs Fixed Code */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -340,7 +362,7 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
               </h3>
 
               <p className="text-xs sm:text-sm text-[var(--rust-muted)] leading-relaxed font-normal">
-                <code className="font-mono text-[var(--rust-text)]">let</code> variables run at runtime inside stack frames. <code className="font-mono text-[var(--rust-text)]">const</code> constants are hardcoded at compile time, never allow <code className="font-mono text-[var(--rust-text)]">mut</code>, and require explicit types.
+                <code className="font-mono text-[var(--rust-text)]">let</code> variables exist while your program runs. <code className="font-mono text-[var(--rust-text)]">const</code> constants are permanently locked before your code even starts, never allow <code className="font-mono text-[var(--rust-text)]">mut</code>, and must explicitly state their type.
               </p>
             </div>
 
@@ -348,8 +370,8 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
               <pre className="text-slate-100 leading-relaxed">
                 <code>
                   <span className="text-pink-400">const</span> <span className="text-amber-300">MAX</span>: <span className="text-sky-300">u32</span> = <span className="text-amber-300">100_000</span>;{'\n'}
-                  <span className="text-slate-400 italic">// Naming is SCREAMING_SNAKE</span>{'\n'}
-                  <span className="text-slate-400 italic">// Inlined into binary directly</span>
+                  <span className="text-slate-400 italic">// u32 = positive whole number (0 to 4.2B)</span>{'\n'}
+                  <span className="text-slate-400 italic">// Constants are ALL_CAPS by convention</span>
                 </code>
               </pre>
             </div>
@@ -367,16 +389,16 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
               </h3>
 
               <p className="text-xs sm:text-sm text-[var(--rust-muted)] leading-relaxed font-normal">
-                Need to convert string <code className="font-mono text-[var(--rust-text)]">&quot;42&quot;</code> to number <code className="font-mono text-[var(--rust-text)]">42</code>? Don&apos;t invent awkward names like <code className="font-mono text-[var(--rust-text)]">num_str</code>. Just repeat <code className="font-mono text-[var(--rust-text)]">let</code> to shadow the old binding!
+                Need to convert text <code className="font-mono text-[var(--rust-text)]">&quot;42&quot;</code> to number <code className="font-mono text-[var(--rust-text)]">42</code>? Don&apos;t invent awkward names like <code className="font-mono text-[var(--rust-text)]">num_str</code>. Just repeat <code className="font-mono text-[var(--rust-text)]">let</code> with the same name!
               </p>
             </div>
 
             <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 font-mono text-xs shadow-inner">
               <pre className="text-slate-100 leading-relaxed">
                 <code>
-                  <span className="text-pink-400">let</span> age = <span className="text-emerald-300">&quot;42&quot;</span>; <span className="text-slate-400 italic">// &amp;str</span>{'\n'}
-                  <span className="text-pink-400">let</span> age: <span className="text-sky-300">u32</span> = <span className="text-amber-300">42</span>; <span className="text-slate-400 italic">// u32!</span>{'\n'}
-                  <span className="text-slate-400 italic">// Clean &amp; idiomatic in Rust</span>
+                  <span className="text-pink-400">let</span> age = <span className="text-emerald-300">&quot;42&quot;</span>; <span className="text-slate-400 italic">// Text string (&amp;str)</span>{'\n'}
+                  <span className="text-pink-400">let</span> age: <span className="text-sky-300">u32</span> = <span className="text-amber-300">42</span>; <span className="text-slate-400 italic">// Whole number (u32)!</span>{'\n'}
+                  <span className="text-slate-400 italic">// Clean, safe, and idiomatic in Rust</span>
                 </code>
               </pre>
             </div>
@@ -431,16 +453,16 @@ export function VariablesAndMutabilityLesson({ concept }: { concept: RustConcept
                 </tr>
                 <tr className="hover:bg-[var(--rust-surface-2)]/40 transition-colors">
                   <td className="p-3.5 sm:px-5 font-medium text-[var(--rust-text)]">Type Annotation</td>
-                  <td className="p-3.5 sm:px-5">Optional (Inferred)</td>
-                  <td className="p-3.5 sm:px-5">Optional (Inferred)</td>
-                  <td className="p-3.5 sm:px-5 text-[var(--rust-primary)] font-medium">Mandatory</td>
-                  <td className="p-3.5 sm:px-5">Optional (Inferred)</td>
+                  <td className="p-3.5 sm:px-5">Optional (Rust auto-detects)</td>
+                  <td className="p-3.5 sm:px-5">Optional (Rust auto-detects)</td>
+                  <td className="p-3.5 sm:px-5 text-[var(--rust-primary)] font-medium">Mandatory (Must specify)</td>
+                  <td className="p-3.5 sm:px-5">Optional (Rust auto-detects)</td>
                 </tr>
                 <tr className="hover:bg-[var(--rust-surface-2)]/40 transition-colors">
                   <td className="p-3.5 sm:px-5 font-medium text-[var(--rust-text)]">Memory Location</td>
-                  <td className="p-3.5 sm:px-5">Stack or CPU Register</td>
-                  <td className="p-3.5 sm:px-5">Stack Frame Slot</td>
-                  <td className="p-3.5 sm:px-5">Inlined in Binary</td>
+                  <td className="p-3.5 sm:px-5">Stack (Fast Local Memory)</td>
+                  <td className="p-3.5 sm:px-5">Stack Slot (Overwritten)</td>
+                  <td className="p-3.5 sm:px-5">Embedded in App Binary</td>
                   <td className="p-3.5 sm:px-5">Brand-new Stack Slot</td>
                 </tr>
                 <tr className="hover:bg-[var(--rust-surface-2)]/40 transition-colors">
