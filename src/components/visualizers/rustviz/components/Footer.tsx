@@ -75,7 +75,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/rustviz/concepts" className="hover:text-[var(--rust-primary)] transition-colors">
-                  12 Deep Dive Concepts
+                  100 Concepts Blueprint
                 </Link>
               </li>
               <li>

@@ -6,9 +6,12 @@ import { ownershipScenarios } from './simulations';
 import { rustCheatSheet } from './cheatsheet';
 
 describe('RustViz Data Integrity', () => {
-  it('validates 12 core architectural concepts', () => {
-    expect(rustConcepts.length).toBe(12);
-    for (const concept of rustConcepts) {
+  it('validates all 100 architectural concepts', () => {
+    expect(rustConcepts.length).toBe(100);
+    
+    // Validate sequential 1-100 numbering
+    rustConcepts.forEach((concept, idx) => {
+      expect(concept.number).toBe(idx + 1);
       expect(concept.id).toBeTruthy();
       expect(concept.title).toBeTruthy();
       expect(concept.slug).toBeTruthy();
@@ -16,7 +19,13 @@ describe('RustViz Data Integrity', () => {
       expect(concept.keyTakeaways.length).toBeGreaterThan(0);
       expect(rustCategories).toContain(concept.category);
       expect(['Beginner', 'Intermediate', 'Advanced']).toContain(concept.difficulty);
-    }
+    });
+
+    // Validate first 5 concepts are live, rest are marked coming soon
+    const liveConcepts = rustConcepts.filter((c) => !c.isComingSoon);
+    const comingSoonConcepts = rustConcepts.filter((c) => c.isComingSoon);
+    expect(liveConcepts.length).toBe(5);
+    expect(comingSoonConcepts.length).toBe(95);
   });
 
   it('validates 7 compiler pitfall diagnostics', () => {

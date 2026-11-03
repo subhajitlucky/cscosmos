@@ -80,11 +80,11 @@ export function Home() {
                   Core Concepts
                 </h3>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[var(--rust-primary-light)] text-[var(--rust-primary)]">
-                  12 Lessons
+                  100 Concepts
                 </span>
               </div>
               <p className="text-xs text-[var(--rust-muted)] leading-relaxed">
-                Structured deep dives covering ownership &amp; move semantics, borrow checking, lifetimes, smart pointers, and Tokio async.
+                Structured 100-concept curriculum spanning syntax, ownership, lifetimes, traits, async Tokio, and systems internals.
               </p>
             </div>
             <div className="pt-4 mt-3 border-t border-[var(--rust-border-subtle)] flex items-center justify-between text-xs font-semibold text-[var(--rust-primary)]">

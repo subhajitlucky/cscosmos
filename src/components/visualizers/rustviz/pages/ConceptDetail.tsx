@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   ArrowLeft, 
@@ -10,71 +10,170 @@ import {
   Layers, 
   AlertTriangle, 
   ArrowRight, 
-  Sparkles 
+  Sparkles,
+  Lock,
+  ChevronLeft,
+  ChevronRight,
+  Copy,
+  Check,
+  BookOpen
 } from 'lucide-react';
 import { rustConcepts } from '../data/concepts';
 import { rustPitfalls } from '../data/pitfalls';
 
 export function ConceptDetail({ slug }: { slug: string }) {
-  const concept = rustConcepts.find((c) => c.slug === slug);
+  const [copiedCode, setCopiedCode] = useState(false);
+
+  const conceptIndex = rustConcepts.findIndex((c) => c.slug === slug);
+  const concept = conceptIndex !== -1 ? rustConcepts[conceptIndex] : null;
 
   if (!concept) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center space-y-4">
+      <div className="mx-auto max-w-2xl px-4 py-24 text-center space-y-4">
         <h2 className="text-2xl font-bold text-[var(--rust-text)]">Concept Not Found</h2>
-        <p className="text-xs text-[var(--rust-muted)]">The requested concept could not be found.</p>
-        <Link href="/rustviz/concepts" className="inline-flex items-center text-xs font-bold text-[var(--rust-primary)] hover:underline">
-          <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to all concepts
+        <p className="text-xs text-[var(--rust-muted)]">
+          The requested concept &quot;{slug}&quot; could not be found in the 100-concept curriculum.
+        </p>
+        <Link 
+          href="/rustviz/concepts" 
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--rust-primary)] hover:underline"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" /> Back to all 100 concepts
         </Link>
       </div>
     );
   }
 
+  const prevConcept = conceptIndex > 0 ? rustConcepts[conceptIndex - 1] : null;
+  const nextConcept = conceptIndex < rustConcepts.length - 1 ? rustConcepts[conceptIndex + 1] : null;
+
+  const handleCopy = () => {
+    if (concept.codeExample) {
+      navigator.clipboard.writeText(concept.codeExample);
+      setCopiedCode(true);
+      setTimeout(() => setCopiedCode(false), 2000);
+    }
+  };
+
+  const isLive = !concept.isComingSoon;
   const relatedPitfalls = rustPitfalls.filter((p) => concept.pitfallIds?.includes(p.id));
 
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       
-      {/* Top Nav & Breadcrumbs */}
-      <div className="flex items-center justify-between border-b border-[var(--rust-border)] pb-4">
+      {/* Top Navigation & Breadcrumbs */}
+      <div className="flex items-center justify-between border-b border-[var(--rust-border)] pb-4 text-xs font-medium">
         <Link
           href="/rustviz/concepts"
-          className="flex items-center text-xs font-semibold text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+          className="flex items-center gap-1.5 text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
         >
-          <ArrowLeft className="mr-1.5 h-4 w-4" />
-          <span>All Concepts</span>
+          <ArrowLeft className="h-4 w-4" />
+          <span>All 100 Concepts</span>
         </Link>
 
-        <div className="flex items-center space-x-3 text-xs font-mono">
-          <span className="px-2 py-0.5 rounded bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-bold uppercase text-[10px]">
-            {concept.category}
+        {/* Stepper controls */}
+        <div className="flex items-center gap-2">
+          {prevConcept ? (
+            <Link
+              href={`/rustviz/concepts/${prevConcept.slug}`}
+              className="p-1.5 rounded-lg border border-[var(--rust-border)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+              title={`Previous: #${prevConcept.number} ${prevConcept.title}`}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Link>
+          ) : (
+            <span className="p-1.5 opacity-30 cursor-not-allowed">
+              <ChevronLeft className="h-4 w-4" />
+            </span>
+          )}
+
+          <span className="font-mono text-xs text-[var(--rust-muted)] px-1">
+            #{String(concept.number).padStart(3, '0')} / 100
           </span>
-          <span className="text-[var(--rust-muted)] flex items-center">
-            <Clock className="mr-1 h-3 w-3" />
-            {concept.readTime}
-          </span>
+
+          {nextConcept ? (
+            <Link
+              href={`/rustviz/concepts/${nextConcept.slug}`}
+              className="p-1.5 rounded-lg border border-[var(--rust-border)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+              title={`Next: #${nextConcept.number} ${nextConcept.title}`}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Link>
+          ) : (
+            <span className="p-1.5 opacity-30 cursor-not-allowed">
+              <ChevronRight className="h-4 w-4" />
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Main Title & Summary */}
+      {/* Concept Header */}
       <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="px-2.5 py-1 rounded bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-mono text-xs font-bold">
+            Concept #{String(concept.number).padStart(3, '0')}
+          </span>
+          <span className="px-2.5 py-1 rounded bg-[var(--rust-surface-2)] text-[var(--rust-muted)] font-mono text-xs border border-[var(--rust-border)]">
+            {concept.category}
+          </span>
+          <span className="text-xs text-[var(--rust-muted)] font-mono flex items-center gap-1">
+            <Clock className="h-3.5 w-3.5" />
+            {concept.readTime}
+          </span>
+          <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[var(--rust-surface-2)] text-[var(--rust-muted)]">
+            {concept.difficulty}
+          </span>
+        </div>
+
         <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--rust-text)] tracking-tight">
           {concept.title}
         </h1>
-        <p className="text-base text-[var(--rust-muted)] leading-relaxed">
+
+        <p className="text-sm sm:text-base text-[var(--rust-muted)] leading-relaxed max-w-3xl">
           {concept.summary}
         </p>
       </div>
 
-      {/* Key Takeaways Callout Box */}
-      <div className="rounded-xl border border-[var(--rust-primary-border)] bg-[var(--rust-primary-light)] p-5 space-y-3">
-        <div className="text-xs font-bold uppercase tracking-wider text-[var(--rust-primary)] flex items-center">
-          <Sparkles className="mr-1.5 h-4 w-4" />
-          Key Architectural Takeaways
+      {/* If Coming Soon notice */}
+      {!isLive && (
+        <div className="rounded-2xl border border-dashed border-[var(--rust-border)] bg-[var(--rust-surface-2)]/40 p-8 sm:p-10 text-center space-y-4">
+          <div className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-[var(--rust-primary-light)] text-[var(--rust-primary)] border border-[var(--rust-primary-border)] mx-auto">
+            <Lock className="h-6 w-6" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-xl font-bold text-[var(--rust-text)]">
+              Full Breakdown Coming Soon
+            </h3>
+            <p className="text-xs sm:text-sm text-[var(--rust-muted)] max-w-lg mx-auto leading-relaxed">
+              Concept #{concept.number} is part of the comprehensive 100-concept Rust architecture curriculum. We are currently finalizing the writing style and layout on the first 5 foundational concepts.
+            </p>
+          </div>
+          <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/rustviz/concepts/variables-and-mutability"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--rust-primary)] hover:bg-[var(--rust-primary-hover)] text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
+            >
+              <BookOpen className="h-4 w-4" /> Start with Concept #001
+            </Link>
+            <Link
+              href="/rustviz/concepts"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-text)] rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
+            >
+              Browse 100 Blueprint
+            </Link>
+          </div>
         </div>
-        <ul className="space-y-2 text-xs text-[var(--rust-text)]">
+      )}
+
+      {/* Key Takeaways Callout */}
+      <div className="rounded-2xl border border-[var(--rust-primary-border)] bg-[var(--rust-primary-light)]/40 p-6 space-y-3">
+        <div className="text-xs font-bold uppercase tracking-wider text-[var(--rust-primary)] flex items-center gap-1.5 font-mono">
+          <Sparkles className="h-4 w-4" />
+          <span>Core Systems Takeaways</span>
+        </div>
+        <ul className="space-y-2 text-xs sm:text-sm text-[var(--rust-text)]">
           {concept.keyTakeaways.map((item, idx) => (
-            <li key={idx} className="flex items-start space-x-2">
+            <li key={idx} className="flex items-start gap-2.5">
               <CheckCircle2 className="h-4 w-4 text-[var(--rust-primary)] shrink-0 mt-0.5" />
               <span className="leading-relaxed">{item}</span>
             </li>
@@ -82,17 +181,26 @@ export function ConceptDetail({ slug }: { slug: string }) {
         </ul>
       </div>
 
-      {/* Code Example Showcase */}
+      {/* Idiomatic Code Implementation */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--rust-text)] flex items-center">
-            <Code className="mr-1.5 h-4 w-4 text-[var(--rust-primary)]" />
-            Idiomatic Code Implementation
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--rust-text)] flex items-center gap-1.5 font-mono">
+            <Code className="h-4 w-4 text-[var(--rust-primary)]" />
+            <span>Idiomatic Rust Implementation</span>
           </span>
-          <span className="text-[10px] font-mono text-[var(--rust-muted)]">Rust 2024 Edition</span>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-mono text-[var(--rust-muted)] hidden sm:inline">Rust 2024</span>
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1 px-2.5 py-1 rounded bg-[var(--rust-surface-2)] border border-[var(--rust-border)] text-[10px] font-mono text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+            >
+              {copiedCode ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
+              <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+            </button>
+          </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 shadow-sm">
+        <div className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 overflow-hidden">
           <pre className="font-mono text-xs text-[var(--rust-text)] leading-relaxed overflow-x-auto bg-[var(--rust-bg)] p-4 rounded-lg border border-[var(--rust-border)]">
             <code>{concept.codeExample}</code>
           </pre>
@@ -102,7 +210,7 @@ export function ConceptDetail({ slug }: { slug: string }) {
       {/* Deep Dive Explanations */}
       <div className="space-y-6">
         <h2 className="text-xl font-bold text-[var(--rust-text)] border-b border-[var(--rust-border)] pb-2">
-          Under the Hood: Compiler Mechanics
+          Under the Hood: Compiler &amp; Memory Mechanics
         </h2>
 
         <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[var(--rust-muted)]">
@@ -112,18 +220,21 @@ export function ConceptDetail({ slug }: { slug: string }) {
         </div>
 
         {concept.deepDive && (
-          <div className="space-y-6 pt-4">
+          <div className="space-y-4 pt-2">
             {concept.deepDive.map((dive, dIdx) => (
-              <div key={dIdx} className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] p-5 space-y-3 shadow-sm">
-                <h3 className="text-sm font-bold text-[var(--rust-text)] flex items-center">
-                  <Layers className="mr-2 h-4 w-4 text-[var(--rust-cyan)]" />
-                  {dive.title}
+              <div 
+                key={dIdx} 
+                className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface-2)]/60 p-5 space-y-3"
+              >
+                <h3 className="text-sm font-bold text-[var(--rust-text)] flex items-center gap-2">
+                  <Layers className="h-4 w-4 text-[var(--rust-cyan)]" />
+                  <span>{dive.title}</span>
                 </h3>
                 <p className="text-xs text-[var(--rust-muted)] leading-relaxed whitespace-pre-line">
                   {dive.content}
                 </p>
                 {dive.code && (
-                  <pre className="font-mono text-xs bg-[var(--rust-bg)] p-3 rounded-lg border border-[var(--rust-border)] text-[var(--rust-text)] overflow-x-auto">
+                  <pre className="font-mono text-xs bg-[var(--rust-bg)] p-3.5 rounded-lg border border-[var(--rust-border)] text-[var(--rust-text)] overflow-x-auto">
                     <code>{dive.code}</code>
                   </pre>
                 )}
@@ -135,10 +246,10 @@ export function ConceptDetail({ slug }: { slug: string }) {
 
       {/* Related Compiler Errors & Pitfalls */}
       {relatedPitfalls.length > 0 && (
-        <div className="space-y-4 pt-6 border-t border-[var(--rust-border)]">
-          <div className="text-sm font-bold text-[var(--rust-text)] flex items-center">
-            <AlertTriangle className="mr-2 h-4 w-4 text-rose-500" />
-            Common Compiler Errors Related to this Concept
+        <div className="space-y-4 pt-4 border-t border-[var(--rust-border)]">
+          <div className="text-sm font-bold text-[var(--rust-text)] flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-rose-500" />
+            <span>Common Compiler Errors for this Concept</span>
           </div>
 
           <div className="grid grid-cols-1 gap-3">
@@ -146,10 +257,10 @@ export function ConceptDetail({ slug }: { slug: string }) {
               <Link
                 key={pitfall.id}
                 href="/rustviz/pitfalls"
-                className="rounded-lg border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 flex items-center justify-between hover:border-rose-500/50 transition-colors group"
+                className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 flex items-center justify-between hover:border-rose-500/40 transition-colors group"
               >
                 <div>
-                  <div className="flex items-center space-x-2 font-mono text-xs font-bold text-rose-400">
+                  <div className="flex items-center gap-2 font-mono text-xs font-bold text-rose-400">
                     <span>{pitfall.code}</span>
                     <span className="text-[var(--rust-text)] font-sans">{pitfall.title}</span>
                   </div>
@@ -162,15 +273,43 @@ export function ConceptDetail({ slug }: { slug: string }) {
         </div>
       )}
 
-      {/* Footer Navigation */}
-      <div className="pt-6 border-t border-[var(--rust-border)] flex items-center justify-between">
-        <Link
-          href="/rustviz/ownership-lab"
-          className="inline-flex items-center text-xs font-bold text-[var(--rust-primary)] hover:underline"
-        >
-          <span>Open Interactive Memory Stepper</span>
-          <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-        </Link>
+      {/* Bottom Previous & Next Concept Navigation */}
+      <div className="pt-8 border-t border-[var(--rust-border)] grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {prevConcept ? (
+          <Link
+            href={`/rustviz/concepts/${prevConcept.slug}`}
+            className="rust-card p-4 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between group"
+          >
+            <div className="text-[10px] font-mono text-[var(--rust-muted)] uppercase flex items-center gap-1">
+              <ChevronLeft className="h-3 w-3" /> Previous Concept
+            </div>
+            <div className="mt-1 font-bold text-sm text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
+              #{String(prevConcept.number).padStart(3, '0')}: {prevConcept.title}
+            </div>
+          </Link>
+        ) : (
+          <div className="p-4 rounded-xl border border-dashed border-[var(--rust-border)] text-xs text-[var(--rust-muted)] font-mono flex items-center justify-center">
+            Beginning of Curriculum
+          </div>
+        )}
+
+        {nextConcept ? (
+          <Link
+            href={`/rustviz/concepts/${nextConcept.slug}`}
+            className="rust-card p-4 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between text-right group"
+          >
+            <div className="text-[10px] font-mono text-[var(--rust-muted)] uppercase flex items-center justify-end gap-1">
+              Next Concept <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 font-bold text-sm text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
+              #{String(nextConcept.number).padStart(3, '0')}: {nextConcept.title}
+            </div>
+          </Link>
+        ) : (
+          <div className="p-4 rounded-xl border border-dashed border-[var(--rust-border)] text-xs text-[var(--rust-muted)] font-mono flex items-center justify-center">
+            End of Curriculum
+          </div>
+        )}
       </div>
 
     </div>
