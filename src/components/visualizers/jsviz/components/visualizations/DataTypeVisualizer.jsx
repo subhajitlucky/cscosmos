@@ -1,162 +1,256 @@
 'use client';
-import React, { useEffect } from 'react';
-import anime from 'animejs';
 
-const DataTypeVisualizer = ({ stack, heap }) => {
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-        const animeFn = (anime && anime.default) || anime;
-        if (typeof animeFn !== 'function') return;
-        // Stack entries
-        animeFn({
-            targets: '.stack-frame-box',
-            translateX: [-100, 0],
-            opacity: [0, 1],
-            rotate: [10, 0],
-            delay: (animeFn.stagger || anime.stagger)(150),
-            easing: 'easeOutElastic(1, .8)'
-        });
+import React, { useState, useEffect } from 'react';
+import { Key, StickyNote, Box, Layers, HelpCircle, Check, ArrowRight, RefreshCw, Cpu, Database } from 'lucide-react';
 
-        // Heap blobs
-        animeFn({
-            targets: '.heap-blob',
-            scale: [0, 1],
-            opacity: [0, 1],
-            rotate: () => anime.random(-15, 15),
-            delay: (animeFn.stagger || anime.stagger)(200),
-            easing: 'easeOutElastic(1, .5)'
-        });
+const PRESETS = [
+    {
+        id: 'primitives',
+        label: '1. Primitives (Sticky Note Copy)',
+        icon: StickyNote,
+        badge: 'By Value',
+        code: `// 1. Primitives: Copied by Value (Sticky Notes)
+let myScore = 100;
+let friendScore = myScore; // Independent copy!
 
-        // Animation for reference lines (glow effect)
-        animeFn({
-            targets: '.ref-glow',
-            opacity: [0.2, 0.8],
-            duration: 1500,
-            loop: true,
-            direction: 'alternate',
-            easing: 'easeInOutQuad'
-        });
-    }, [stack, heap]);
+friendScore = 200; // Only friendScore changes!
+console.log(myScore);     // 100
+console.log(friendScore); // 200`
+    },
+    {
+        id: 'objects',
+        label: '2. Objects (The Shared Locker Key)',
+        icon: Key,
+        badge: 'By Reference',
+        code: `// 2. Objects: Copied by Reference (Locker Key)
+let user1 = { name: "Alice" };
+let user2 = user1; // Both receive the SAME locker key!
+
+user2.name = "Bob"; // Opens locker and updates name
+
+console.log(user1.name); // "Bob" (Affected!)
+console.log(user2.name); // "Bob"`
+    },
+    {
+        id: 'arrays',
+        label: '3. Arrays in Heap Memory',
+        icon: Box,
+        badge: 'Heap Array',
+        code: `// 3. Arrays are Objects stored in the Heap
+let shoppingList = ["Apples", "Milk"];
+let friendList = shoppingList; // Same memory reference!
+
+friendList.push("Cookies");
+
+console.log(shoppingList); // ["Apples", "Milk", "Cookies"]`
+    },
+    {
+        id: 'null-undefined',
+        label: '4. Null vs Undefined',
+        icon: HelpCircle,
+        badge: 'Empty States',
+        code: `// 4. Undefined (Unassigned) vs Null (Deliberately Empty)
+let packageDelivery; // undefined (Box hasn't arrived yet)
+let emptyWallet = null; // null (Deliberately empty wallet)
+let zeroCount = 0; // 0 (A valid primitive number!)`
+    }
+];
+
+const DataTypeVisualizer = ({ stack = [], heap = [], onSelectPreset }) => {
+    const [hoveredAddr, setHoveredAddr] = useState(null);
+
+    // Group references to see who points to which address
+    const refMap = {};
+    stack.forEach(s => {
+        if (s.isRef && s.value) {
+            refMap[s.value] = refMap[s.value] || [];
+            refMap[s.value].push(s.name);
+        }
+    });
 
     return (
-        <div className="h-full w-full flex p-4 gap-6 overflow-hidden" style={{ backgroundColor: 'transparent' }}>
-            <style>{`
-                .memory-sector {
-                    flex: 1;
-                    height: 100%;
-                    background: rgba(0,0,0,0.03);
-                    border: 2px solid var(--border-main);
-                    border-radius: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    overflow: hidden;
-                    position: relative;
-                }
-                .sector-header {
-                    padding: 14px;
-                    font-family: 'JetBrains Mono', monospace;
-                    font-size: 10px;
-                    font-weight: 900;
-                    text-transform: uppercase;
-                    border-bottom: 2px solid var(--border-main);
-                    background: var(--bg-surface);
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
-                .stack-frame-box {
-                    margin: 8px 12px;
-                    padding: 14px;
-                    background: var(--bg-surface);
-                    border: 2px solid var(--accent-main);
-                    border-radius: 8px;
-                    box-shadow: 4px 4px 0px var(--accent-main);
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-                .heap-blob {
-                    margin: 10px;
-                    padding: 16px;
-                    background: var(--bg-surface);
-                    border: 2px solid #3b82f6;
-                    border-radius: 16px;
-                    position: relative;
-                    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
-                }
-                .ref-glow {
-                    position: absolute;
-                    right: 8px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 8px;
-                    height: 8px;
-                    background: #3b82f6;
-                    border-radius: 50%;
-                    box-shadow: 0 0 15px #3b82f6;
-                }
-                .addr-chip {
-                    font-family: monospace;
-                    font-size: 8px;
-                    color: #3b82f6;
-                    background: rgba(59, 130, 246, 0.1);
-                    padding: 2px 6px;
-                    border-radius: 4px;
-                    margin-bottom: 8px;
-                    display: inline-block;
-                }
-                .content-text {
-                    font-size: 12px;
-                    color: var(--text-main);
-                    font-family: 'JetBrains Mono', monospace;
-                    word-break: break-all;
-                }
-            `}</style>
-
-            {/* CALL STACK SECTION */}
-            <div className="memory-sector">
-                <div className="sector-header" style={{ color: 'var(--accent-main)' }}>
-                    <span>⚡ LIFO_STACK</span>
-                    <span className="text-[8px] opacity-50">Fast_Access</span>
+        <div className="h-full w-full flex flex-col p-3 sm:p-5 gap-4 overflow-hidden" style={{ backgroundColor: 'var(--bg-main)' }}>
+            {/* Quick Interactive Presets Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-brand-border/40 pb-3">
+                <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono font-bold text-brand-lime uppercase tracking-wider flex items-center gap-1.5">
+                        <Layers size={13} /> Interactive Presets:
+                    </span>
                 </div>
-                <div className="flex-grow overflow-y-auto p-2 flex flex-col-reverse">
-                    {stack.map((s, i) => (
-                        <div key={i} className="stack-frame-box">
-                            <div className="flex flex-col">
-                                <span className="text-[8px] text-gray-500 font-mono mb-1">{s.name}</span>
-                                <span className={`text-xs font-bold ${s.isRef ? 'text-blue-500' : 'text-gray-800'}`} style={{ color: s.isRef ? '#3b82f6' : 'var(--text-main)' }}>
-                                    {s.value}
+                <div className="flex flex-wrap items-center gap-1.5">
+                    {PRESETS.map((preset) => {
+                        const Icon = preset.icon;
+                        return (
+                            <button
+                                key={preset.id}
+                                onClick={() => onSelectPreset && onSelectPreset(preset.code)}
+                                className="px-2.5 py-1 rounded text-xs font-mono font-medium border border-brand-border/60 hover:border-brand-lime hover:bg-brand-lime/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors flex items-center gap-1.5 shadow-sm"
+                                title={`Load "${preset.label}" into editor and visualizer`}
+                            >
+                                <Icon size={12} className="text-brand-lime" />
+                                <span>{preset.label.split(' ')[1]}</span>
+                                <span className="text-[9px] px-1 py-0.2 rounded bg-black/20 text-brand-lime font-bold">
+                                    {preset.badge}
+                                </span>
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {/* Split Screen Memory Architecture: Stack vs Heap */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[360px]">
+                {/* 1. THE STACK (Pocket Memory) */}
+                <div className="border border-brand-border rounded-xl flex flex-col overflow-hidden shadow-sm" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                    <div className="px-4 py-3 border-b border-brand-border flex items-center justify-between" style={{ backgroundColor: 'var(--bg-main)' }}>
+                        <div className="flex items-center gap-2">
+                            <Cpu size={15} className="text-brand-lime" />
+                            <div>
+                                <h4 className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--text-main)' }}>
+                                    THE STACK (Pocket Memory)
+                                </h4>
+                                <span className="text-[9px] font-mono text-[var(--text-muted)]">
+                                    Stores Primitive Values &amp; Locker Keys
                                 </span>
                             </div>
-                            {s.isRef && <div className="ref-glow"></div>}
                         </div>
-                    ))}
-                    <div className="mt-4 p-6 text-center text-[10px] text-gray-400 font-mono border-t border-dashed">
-                        --- SYSTEM_BASE ---
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-brand-lime/30 bg-brand-lime/10 text-brand-lime">
+                            {stack.length} Slots
+                        </span>
+                    </div>
+
+                    <div className="flex-1 p-3 overflow-y-auto space-y-2.5">
+                        {stack.map((item, idx) => {
+                            const isShared = item.isRef && (refMap[item.value]?.length || 0) > 1;
+                            const isHovered = hoveredAddr && hoveredAddr === item.value;
+
+                            return (
+                                <div
+                                    key={idx}
+                                    onMouseEnter={() => item.isRef && setHoveredAddr(item.value)}
+                                    onMouseLeave={() => setHoveredAddr(null)}
+                                    className={`p-3 rounded-lg border transition-all duration-150 ${
+                                        item.isRef
+                                            ? isHovered
+                                                ? 'border-blue-500 bg-blue-500/15 shadow-md'
+                                                : 'border-blue-500/40 bg-blue-500/5 hover:border-blue-500'
+                                            : 'border-brand-lime/40 bg-brand-lime/5 hover:border-brand-lime'
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between mb-1">
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="font-mono text-xs font-bold" style={{ color: 'var(--text-main)' }}>
+                                                {item.name}
+                                            </span>
+                                            <span className="text-[9px] font-mono text-gray-500">
+                                                ({item.isRef ? 'Reference Key' : 'Primitive'})
+                                            </span>
+                                        </div>
+                                        {item.isRef ? (
+                                            <span className="text-[10px] font-mono font-bold text-blue-400 bg-blue-500/20 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                                <Key size={10} /> {item.value}
+                                            </span>
+                                        ) : (
+                                            <span className="text-[10px] font-mono font-bold text-brand-lime bg-brand-lime/20 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                                <StickyNote size={10} /> {item.value}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {item.isRef && isShared && (
+                                        <div className="text-[9px] font-mono text-blue-300/80 mt-1 flex items-center gap-1">
+                                            <span>🔗 Shares locker with:</span>
+                                            <span className="font-bold underline">
+                                                {refMap[item.value].filter(n => n !== item.name).join(', ')}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+
+                        {stack.length === 0 && (
+                            <div className="h-full flex flex-col items-center justify-center p-8 text-center text-gray-500 font-mono text-xs">
+                                <StickyNote size={28} className="mb-2 opacity-40" />
+                                <span>Stack is currently empty.</span>
+                                <span className="text-[10px] opacity-60 mt-1">Write a variable like `let x = 10;` or pick a preset above!</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* 2. THE HEAP (Warehouse Storage) */}
+                <div className="border border-brand-border rounded-xl flex flex-col overflow-hidden shadow-sm" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                    <div className="px-4 py-3 border-b border-brand-border flex items-center justify-between" style={{ backgroundColor: 'var(--bg-main)' }}>
+                        <div className="flex items-center gap-2">
+                            <Database size={15} className="text-blue-400" />
+                            <div>
+                                <h4 className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--text-main)' }}>
+                                    THE HEAP (Warehouse Storage)
+                                </h4>
+                                <span className="text-[9px] font-mono text-[var(--text-muted)]">
+                                    Holds Big Objects, Arrays &amp; Shared Data
+                                </span>
+                            </div>
+                        </div>
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-blue-500/30 bg-blue-500/10 text-blue-400">
+                            {heap.length} Lockers
+                        </span>
+                    </div>
+
+                    <div className="flex-1 p-3 overflow-y-auto space-y-3">
+                        {heap.map((item, idx) => {
+                            const holders = refMap[item.addr] || [];
+                            const isHovered = hoveredAddr === item.addr;
+
+                            return (
+                                <div
+                                    key={idx}
+                                    onMouseEnter={() => setHoveredAddr(item.addr)}
+                                    onMouseLeave={() => setHoveredAddr(null)}
+                                    className={`p-3.5 rounded-lg border transition-all duration-150 ${
+                                        isHovered
+                                            ? 'border-blue-400 bg-blue-500/20 shadow-lg ring-1 ring-blue-400'
+                                            : 'border-blue-500/30 bg-blue-500/5 hover:border-blue-400'
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between mb-2">
+                                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-300">
+                                            LOCKER ADDR: {item.addr}
+                                        </span>
+                                        <span className="text-[10px] font-mono text-gray-400 flex items-center gap-1">
+                                            Keys held by: <strong className="text-brand-lime font-bold">{holders.join(', ') || 'Anonymous'}</strong>
+                                        </span>
+                                    </div>
+
+                                    <div className="p-2.5 rounded bg-black/70 border border-brand-border/40 font-mono text-xs text-blue-200 overflow-x-auto">
+                                        {item.content}
+                                    </div>
+                                </div>
+                            );
+                        })}
+
+                        {heap.length === 0 && (
+                            <div className="h-full flex flex-col items-center justify-center p-8 text-center text-gray-500 font-mono text-xs">
+                                <Box size={28} className="mb-2 opacity-40 text-blue-400" />
+                                <span>No objects currently stored in the Heap.</span>
+                                <span className="text-[10px] opacity-60 mt-1">Primitives stay entirely in the Stack; objects create warehouse lockers here!</span>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
 
-            {/* HEAP SECTION */}
-            <div className="memory-sector">
-                <div className="sector-header" style={{ color: '#3b82f6' }}>
-                    <span>📦 DYNAMIC_HEAP</span>
-                    <span className="text-[8px] opacity-50">Large_Memory</span>
-                </div>
-                <div className="flex-grow overflow-y-auto p-2">
-                    {heap.map((h, i) => (
-                        <div key={i} className="heap-blob">
-                            <div className="addr-chip">ADDR: {h.addr}</div>
-                            <div className="content-text">{h.content}</div>
-                        </div>
-                    ))}
-                    {heap.length === 0 && (
-                        <div className="h-full flex flex-col items-center justify-center opacity-20 scale-75">
-                            <div className="w-20 h-20 border-4 border-dashed rounded-full animate-spin"></div>
-                            <span className="mt-4 font-mono text-[10px]">No_Heap_Objects</span>
-                        </div>
-                    )}
-                </div>
+            {/* Bottom Insight Footer */}
+            <div className="px-3 py-2 rounded-lg border border-brand-border/40 bg-brand-surface/40 flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)]">
+                <span className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-brand-lime"></span>
+                    <span><strong>Green Cards</strong> = Primitives (Copied by value, own memory)</span>
+                </span>
+                <span className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                    <span><strong>Blue Cards</strong> = Reference Pointers (Shared Locker Keys in Heap)</span>
+                </span>
             </div>
         </div>
     );

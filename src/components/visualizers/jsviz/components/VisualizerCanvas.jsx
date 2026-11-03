@@ -11,7 +11,7 @@ import GeneratorVisualizer from './visualizations/GeneratorVisualizer';
 import InternalVisualizer from './visualizations/InternalVisualizer';
 import MetaprogrammingVisualizer from './visualizations/MetaprogrammingVisualizer';
 
-const VisualizerCanvas = ({ topicId, code, isRunning }) => {
+const VisualizerCanvas = ({ topicId, code, isRunning, onCodeChange }) => {
     const [visualization, setVisualization] = useState(null);
 
     useEffect(() => {
@@ -46,28 +46,58 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
             else if (['data-types', 'memory-model', 'typeof-detection', 'type-coercion', 'equality-comparison', 'truthy-falsy', 'numbers', 'bigint', 'strings', 'symbols', 'pass-by-value-reference', 'cloning-objects', 'symbols-registry'].includes(topicId)) {
                 const stackItems = [];
                 const heapItems = [];
-                const varRegex = /(?:let|const|var)\s+(?:\{([\w\s,]+)\}|\[([\w\s,]+)\]|([\w$]+))\s*=\s*([^;]+);?/g;
-                let match;
-                let loopGuard = 0;
-                while ((match = varRegex.exec(safeCode)) !== null && loopGuard++ < 50) {
-                    if (varRegex.lastIndex === match.index) varRegex.lastIndex++;
-                    const names = [];
-                    if (match[3]) names.push(match[3]);
-                    else if (match[1]) match[1].split(',').map(n => n.trim()).filter(n => n).forEach(n => names.push(n));
-                    else if (match[2]) match[2].split(',').map(n => n.trim()).filter(n => n).forEach(n => names.push(n));
 
-                    const val = (match[4] || '').trim();
-                    const isObj = val.startsWith('{') || val.startsWith('[') || val.includes('function') || val.includes('new ');
-                    
-                    names.forEach(name => {
-                        if (isObj) {
-                            const addr = `0x${Math.floor(Math.random()*16777215).toString(16).toUpperCase()}`;
+                // Line-by-line parsing to accurately trace assignments, references, and mutations
+                const lines = safeCode.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('//'));
+                let addrIndex = 0x4F12;
+
+                for (const line of lines) {
+                    const declMatch = line.match(/^(?:let|const|var)\s+([\w$]+)\s*=\s*(.+?);?$/);
+                    const assignMatch = line.match(/^([\w$]+)\s*=\s*(.+?);?$/);
+                    const propMutMatch = line.match(/^([\w$]+)\.([\w$]+)\s*=\s*(.+?);?$/);
+
+                    if (declMatch) {
+                        const name = declMatch[1];
+                        const val = declMatch[2].trim();
+
+                        const existing = stackItems.find(s => s.name === val);
+                        if (existing) {
+                            if (existing.isRef) {
+                                // Shared reference (same locker key)!
+                                stackItems.push({ name, value: existing.value, isRef: true });
+                            } else {
+                                stackItems.push({ name, value: existing.value, isRef: false });
+                            }
+                        } else if (val.startsWith('{') || val.startsWith('[') || val.includes('function') || val.includes('new ')) {
+                            const addr = `0x${(addrIndex += 0x18).toString(16).toUpperCase()}`;
                             stackItems.push({ name, value: addr, isRef: true });
                             heapItems.push({ addr, content: val });
                         } else {
                             stackItems.push({ name, value: val, isRef: false });
                         }
-                    });
+                    } else if (propMutMatch) {
+                        const objName = propMutMatch[1];
+                        const prop = propMutMatch[2];
+                        const propVal = propMutMatch[3].trim().replace(/['"]/g, '');
+                        const target = stackItems.find(s => s.name === objName);
+                        if (target && target.isRef) {
+                            const heapEntry = heapItems.find(h => h.addr === target.value);
+                            if (heapEntry) {
+                                if (heapEntry.content.includes(prop)) {
+                                    heapEntry.content = heapEntry.content.replace(new RegExp(`${prop}\\s*:\\s*['"][^'"]*['"]`), `${prop}: "${propVal}"`);
+                                } else {
+                                    heapEntry.content = heapEntry.content.replace(/\}$/, `, ${prop}: "${propVal}" }`);
+                                }
+                            }
+                        }
+                    } else if (assignMatch) {
+                        const name = assignMatch[1];
+                        const val = assignMatch[2].trim();
+                        const target = stackItems.find(s => s.name === name);
+                        if (target && !target.isRef) {
+                            target.value = val;
+                        }
+                    }
                 }
                 setVisualization({ type: 'datatypes', stack: stackItems, heap: heapItems });
             }
@@ -133,7 +163,7 @@ const VisualizerCanvas = ({ topicId, code, isRunning }) => {
             case 'variables':
                 return <VariableVisualizer variables={visualization.variables} />;
             case 'datatypes':
-                return <DataTypeVisualizer stack={visualization.stack} heap={visualization.heap} />;
+                return <DataTypeVisualizer stack={visualization.stack} heap={visualization.heap} onSelectPreset={onCodeChange} />;
             case 'callstack':
                 return <CallStackVisualizer frames={visualization.frames} />;
             case 'eventloop':
