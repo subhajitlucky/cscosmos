@@ -63,45 +63,45 @@ export function ConceptDetail({ slug }: { slug: string }) {
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       
       {/* Top Navigation & Breadcrumbs */}
-      <div className="flex items-center justify-between border-b border-[var(--rust-border)] pb-4 text-xs font-medium">
+      <div className="flex items-center justify-between border-b border-[var(--rust-border)] pb-4 text-sm font-semibold">
         <Link
           href="/rustviz/concepts"
-          className="flex items-center gap-1.5 text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+          className="flex items-center gap-2 text-[var(--rust-text)] hover:text-[var(--rust-primary)] transition-colors"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-4 w-4 text-[var(--rust-primary)]" />
           <span>All 100 Concepts</span>
         </Link>
 
         {/* Stepper controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           {prevConcept ? (
             <Link
               href={`/rustviz/concepts/${prevConcept.slug}`}
-              className="p-1.5 rounded-lg border border-[var(--rust-border)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+              className="p-2 rounded-xl border border-[var(--rust-border)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-text)] hover:text-[var(--rust-primary)] transition-colors shadow-xs"
               title={`Previous: #${prevConcept.number} ${prevConcept.title}`}
             >
               <ChevronLeft className="h-4 w-4" />
             </Link>
           ) : (
-            <span className="p-1.5 opacity-30 cursor-not-allowed">
+            <span className="p-2 border border-transparent opacity-20 cursor-not-allowed">
               <ChevronLeft className="h-4 w-4" />
             </span>
           )}
 
-          <span className="font-mono text-xs text-[var(--rust-muted)] px-1">
+          <span className="font-mono text-sm font-bold text-[var(--rust-text)] px-2">
             #{String(concept.number).padStart(3, '0')} / 100
           </span>
 
           {nextConcept ? (
             <Link
               href={`/rustviz/concepts/${nextConcept.slug}`}
-              className="p-1.5 rounded-lg border border-[var(--rust-border)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+              className="p-2 rounded-xl border border-[var(--rust-border)] hover:bg-[var(--rust-surface-2)] text-[var(--rust-text)] hover:text-[var(--rust-primary)] transition-colors shadow-xs"
               title={`Next: #${nextConcept.number} ${nextConcept.title}`}
             >
               <ChevronRight className="h-4 w-4" />
             </Link>
           ) : (
-            <span className="p-1.5 opacity-30 cursor-not-allowed">
+            <span className="p-2 border border-transparent opacity-20 cursor-not-allowed">
               <ChevronRight className="h-4 w-4" />
             </span>
           )}
@@ -111,26 +111,26 @@ export function ConceptDetail({ slug }: { slug: string }) {
       {/* Concept Header */}
       <div className="space-y-4">
         <div className="flex flex-wrap items-center gap-2.5">
-          <span className="px-2.5 py-1 rounded bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-mono text-xs font-bold">
+          <span className="px-3 py-1 rounded-lg bg-[var(--rust-primary-light)] text-[var(--rust-primary)] font-mono text-xs font-bold border border-[var(--rust-primary-border)] shadow-xs">
             Concept #{String(concept.number).padStart(3, '0')}
           </span>
-          <span className="px-2.5 py-1 rounded bg-[var(--rust-surface-2)] text-[var(--rust-muted)] font-mono text-xs border border-[var(--rust-border)]">
+          <span className="px-3 py-1 rounded-lg bg-[var(--rust-surface-2)] text-[var(--rust-text)] font-mono text-xs font-semibold border border-[var(--rust-border)] shadow-xs">
             {concept.category}
           </span>
-          <span className="text-xs text-[var(--rust-muted)] font-mono flex items-center gap-1">
-            <Clock className="h-3.5 w-3.5" />
+          <span className="text-xs text-[var(--rust-text)] font-mono font-semibold flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--rust-surface-2)] border border-[var(--rust-border)]">
+            <Clock className="h-3.5 w-3.5 text-[var(--rust-primary)]" />
             {concept.readTime}
           </span>
-          <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[var(--rust-surface-2)] text-[var(--rust-muted)]">
+          <span className="text-xs font-mono font-bold uppercase px-2.5 py-1 rounded-lg bg-[var(--rust-surface-2)] text-[var(--rust-text)] border border-[var(--rust-border)]">
             {concept.difficulty}
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--rust-text)] tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-[var(--rust-text)] tracking-tight leading-[1.15]">
           {concept.title}
         </h1>
 
-        <p className="text-sm sm:text-base text-[var(--rust-muted)] leading-relaxed max-w-3xl">
+        <p className="text-base sm:text-lg text-[var(--rust-text)] font-normal leading-relaxed max-w-4xl">
           {concept.summary}
         </p>
       </div>
@@ -196,10 +196,10 @@ export function ConceptDetail({ slug }: { slug: string }) {
                 <span>Idiomatic Rust Implementation</span>
               </span>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono text-[var(--rust-muted)] hidden sm:inline">Rust 2024</span>
+                <span className="text-xs font-mono font-bold text-[var(--rust-text)] hidden sm:inline">Rust 2024</span>
                 <button
                   onClick={handleCopy}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded bg-[var(--rust-surface-2)] border border-[var(--rust-border)] text-[10px] font-mono text-[var(--rust-muted)] hover:text-[var(--rust-text)] transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--rust-surface-2)] border border-[var(--rust-border)] text-xs font-mono font-bold text-[var(--rust-text)] hover:text-[var(--rust-primary)] transition-colors"
                 >
                   {copiedCode ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
                   <span>{copiedCode ? 'Copied' : 'Copy'}</span>
@@ -269,13 +269,13 @@ export function ConceptDetail({ slug }: { slug: string }) {
                 className="rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] p-4 flex items-center justify-between hover:border-rose-500/40 transition-colors group"
               >
                 <div>
-                  <div className="flex items-center gap-2 font-mono text-xs font-bold text-rose-400">
+                  <div className="flex items-center gap-2 font-mono text-sm font-bold text-rose-500">
                     <span>{pitfall.code}</span>
                     <span className="text-[var(--rust-text)] font-sans">{pitfall.title}</span>
                   </div>
-                  <p className="text-[11px] text-[var(--rust-muted)] mt-1">{pitfall.summary}</p>
+                  <p className="text-xs text-[var(--rust-text)] mt-1">{pitfall.summary}</p>
                 </div>
-                <ArrowRight className="h-4 w-4 text-[var(--rust-muted)] group-hover:text-rose-400 transition-colors shrink-0" />
+                <ArrowRight className="h-4 w-4 text-[var(--rust-text)] group-hover:text-rose-500 transition-colors shrink-0" />
               </Link>
             ))}
           </div>
@@ -287,17 +287,17 @@ export function ConceptDetail({ slug }: { slug: string }) {
         {prevConcept ? (
           <Link
             href={`/rustviz/concepts/${prevConcept.slug}`}
-            className="rust-card p-4 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between group"
+            className="rust-card p-5 rounded-2xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between group shadow-xs"
           >
-            <div className="text-[10px] font-mono text-[var(--rust-muted)] uppercase flex items-center gap-1">
-              <ChevronLeft className="h-3 w-3" /> Previous Concept
+            <div className="text-xs font-mono font-bold text-[var(--rust-primary)] uppercase flex items-center gap-1">
+              <ChevronLeft className="h-3.5 w-3.5" /> Previous Concept
             </div>
-            <div className="mt-1 font-bold text-sm text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
+            <div className="mt-1.5 font-bold text-base text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
               #{String(prevConcept.number).padStart(3, '0')}: {prevConcept.title}
             </div>
           </Link>
         ) : (
-          <div className="p-4 rounded-xl border border-dashed border-[var(--rust-border)] text-xs text-[var(--rust-muted)] font-mono flex items-center justify-center">
+          <div className="p-5 rounded-2xl border border-dashed border-[var(--rust-border)] text-sm text-[var(--rust-muted)] font-mono flex items-center justify-center">
             Beginning of Curriculum
           </div>
         )}
@@ -305,17 +305,17 @@ export function ConceptDetail({ slug }: { slug: string }) {
         {nextConcept ? (
           <Link
             href={`/rustviz/concepts/${nextConcept.slug}`}
-            className="rust-card p-4 rounded-xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between text-right group"
+            className="rust-card p-5 rounded-2xl border border-[var(--rust-border)] bg-[var(--rust-surface)] hover:border-[var(--rust-primary-border)] transition-all flex flex-col justify-between text-right group shadow-xs"
           >
-            <div className="text-[10px] font-mono text-[var(--rust-muted)] uppercase flex items-center justify-end gap-1">
-              Next Concept <ChevronRight className="h-3 w-3" />
+            <div className="text-xs font-mono font-bold text-[var(--rust-primary)] uppercase flex items-center justify-end gap-1">
+              Next Concept <ChevronRight className="h-3.5 w-3.5" />
             </div>
-            <div className="mt-1 font-bold text-sm text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
+            <div className="mt-1.5 font-bold text-base text-[var(--rust-text)] group-hover:text-[var(--rust-primary)] transition-colors">
               #{String(nextConcept.number).padStart(3, '0')}: {nextConcept.title}
             </div>
           </Link>
         ) : (
-          <div className="p-4 rounded-xl border border-dashed border-[var(--rust-border)] text-xs text-[var(--rust-muted)] font-mono flex items-center justify-center">
+          <div className="p-5 rounded-2xl border border-dashed border-[var(--rust-border)] text-sm text-[var(--rust-muted)] font-mono flex items-center justify-center">
             End of Curriculum
           </div>
         )}

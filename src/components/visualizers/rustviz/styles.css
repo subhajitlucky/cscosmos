@@ -30,9 +30,9 @@
   --rust-border: rgba(240, 246, 252, 0.1);
   --rust-border-subtle: rgba(240, 246, 252, 0.05);
   
-  --rust-text: #f0f6fc;
-  --rust-muted: #8b949e;
-  --rust-subtle: #484f58;
+  --rust-text: #ffffff;
+  --rust-muted: #cbd5e1;
+  --rust-subtle: #94a3b8;
 
   /* Pre-mixed translucent tokens.
      Tailwind v3 cannot apply an opacity modifier to an arbitrary var() colour:
@@ -101,9 +101,9 @@ html:not(.dark) .rustviz-root,
   --rust-border: rgba(15, 23, 42, 0.12);
   --rust-border-subtle: rgba(15, 23, 42, 0.06);
   
-  --rust-text: #0f172a;
-  --rust-muted: #64748b;
-  --rust-subtle: #94a3b8;
+  --rust-text: #020617;
+  --rust-muted: #334155;
+  --rust-subtle: #475569;
 }
 
 /* Dark Theme Variables */
@@ -123,9 +123,9 @@ html[data-theme='dark'] .rustviz-root,
   --rust-border: rgba(240, 246, 252, 0.1);
   --rust-border-subtle: rgba(240, 246, 252, 0.05);
   
-  --rust-text: #f0f6fc;
-  --rust-muted: #8b949e;
-  --rust-subtle: #484f58;
+  --rust-text: #ffffff;
+  --rust-muted: #cbd5e1;
+  --rust-subtle: #94a3b8;
 }
 
 .rustviz-root .font-mono {
