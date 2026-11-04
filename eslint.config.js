@@ -27,6 +27,7 @@ export default [
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       'no-useless-assignment': 'off',
+      'no-useless-escape': 'off',
     },
   },
 ];

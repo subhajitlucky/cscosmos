@@ -49,7 +49,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
       let title = ex.title;
       if (!title && ex.code) {
         const firstLine = ex.code.trim().split('\n')[0];
-        const match = firstLine.match(/^\/\/\s*(?:\d+[\.\:\-]\s*)?(.+)$/);
+        const match = firstLine.match(/^\/\/\s*(?:\d+[.:-]\s*)?(.+)$/);
         if (match && match[1]) {
           title = match[1].trim();
         }
@@ -359,7 +359,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
               let exTitle = ex.title;
               if (!exTitle && ex.code) {
                 const firstLine = ex.code.trim().split('\n')[0];
-                const match = firstLine.match(/^\/\/\s*(?:\d+[\.\:\-]\s*)?(.+)$/);
+                const match = firstLine.match(/^\/\/\s*(?:\d+[.:-]\s*)?(.+)$/);
                 if (match && match[1]) {
                   exTitle = match[1].trim();
                 }
