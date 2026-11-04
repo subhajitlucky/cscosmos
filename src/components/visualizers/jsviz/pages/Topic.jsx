@@ -12,7 +12,8 @@ import { WhatIsJsLesson } from '../components/lessons/WhatIsJsLesson';
 import { RuntimeEnvironmentsLesson } from '../components/lessons/RuntimeEnvironmentsLesson';
 import { EngineArchitectureLesson } from '../components/lessons/EngineArchitectureLesson';
 import { SyntaxExpressionsLesson } from '../components/lessons/SyntaxExpressionsLesson';
-import { JsConceptComingSoon } from '../components/lessons/JsConceptComingSoon';
+import { TypeDetectionLesson } from '../components/lessons/TypeDetectionLesson';
+import { JsConceptLesson } from '../components/lessons/JsConceptLesson';
 import { 
     CheckSquare, ArrowLeft, ArrowRight, Menu, X,
     SlidersHorizontal, CheckCheck
@@ -145,9 +146,12 @@ const Topic = ({ topicId: propTopicId }) => {
                     <SyntaxExpressionsLesson topic={topic} />
                 ) : id === 'data-types' || id === 'primitive-vs-non-primitive-data-types' ? (
                     <DataTypesLesson topic={topic} content={content} />
+                ) : id === 'type-detection-typeof-instanceof-tostring' || id === 'typeof-detection' ? (
+                    <TypeDetectionLesson topic={topic} content={content} />
                 ) : (
-                    <JsConceptComingSoon
+                    <JsConceptLesson
                         topic={topic}
+                        content={content}
                         conceptNumber={currentIndex + 1}
                     />
                 )}

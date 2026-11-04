@@ -52,6 +52,7 @@ import evalContent from './eval.js';
 import security from './security.js';
 import legacy from './legacy.js';
 import additionalTopics from './additionalTopics.js';
+import { TOPIC_SLUG_MAP, SPECIALIZED_TOPICS_2027 } from './curriculum2027.js';
 
 export const topicContents = {
     'variables-scope': variablesScope,
@@ -108,10 +109,19 @@ export const topicContents = {
     variables,
     functions: functionsContent,
     ...additionalTopics,
+    ...SPECIALIZED_TOPICS_2027,
 };
 
 export const getTopicContent = (topicId) => {
-    const raw = topicContents[topicId];
+    // 1. Direct hit on specialized or registered content
+    let raw = SPECIALIZED_TOPICS_2027[topicId] || topicContents[topicId];
+    
+    // 2. Mapped hit using the 2027 curriculum slug map
+    if (!raw && TOPIC_SLUG_MAP[topicId]) {
+        const mappedKey = TOPIC_SLUG_MAP[topicId];
+        raw = SPECIALIZED_TOPICS_2027[mappedKey] || topicContents[mappedKey];
+    }
+
     if (!raw) return null;
     return raw.default || raw;
 };

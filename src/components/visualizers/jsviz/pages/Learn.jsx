@@ -112,14 +112,7 @@ const Learn = () => {
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3">
                                 {category.items.map((topic, index) => {
                                     const isCompleted = progress.completedTopics.includes(topic.id);
-                                    const isReady = [
-                                        'what-is-javascript-history-evolution-ecmascript',
-                                        'javascript-runtime-environments-browser-vs-nodejs',
-                                        'javascript-engine-architecture-execution',
-                                        'javascript-syntax-statements-expressions',
-                                        'primitive-vs-non-primitive-data-types',
-                                        'data-types'
-                                    ].includes(topic.id);
+                                    const isReady = true;
                                     const displayNum = topic.number || index + 1;
 
                                     return (

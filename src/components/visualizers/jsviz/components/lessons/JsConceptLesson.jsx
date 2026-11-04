@@ -5,6 +5,7 @@ import {
   Clock,
   Sparkles,
   ArrowRight,
+  ArrowLeft,
   Code2,
   Terminal,
   Cpu,
@@ -14,6 +15,8 @@ import {
   Play,
   Info,
   CheckCircle2,
+  XCircle,
+  RotateCcw,
   AlertTriangle,
   Lightbulb
 } from 'lucide-react';
@@ -37,6 +40,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
   const [copiedSyntax, setCopiedSyntax] = useState(false);
   const [copiedExampleIndex, setCopiedExampleIndex] = useState(null);
   const [quizAnswers, setQuizAnswers] = useState({});
+  const [activeQuizIndex, setActiveQuizIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const studioRef = useRef(null);
 
@@ -133,59 +137,127 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
     }));
   };
 
-  // Build quiz questions: prioritize explicit quiz, fallback to smart concept check
+  const handleQuizReset = () => {
+    setQuizAnswers({});
+    setActiveQuizIndex(0);
+  };
+
+  // Build quiz questions: prioritize explicit quiz, fallback to smart 3-question check
   const quizList = useMemo(() => {
     if (content?.quiz && Array.isArray(content.quiz) && content.quiz.length > 0) {
-      return content.quiz;
+      return content.quiz.map((q, idx) => ({
+        id: q.id || `q-${idx + 1}`,
+        category: q.category || `Concept ${String(conceptNumber).padStart(2, '0')}`,
+        badgeClass: q.badgeClass || (
+          idx === 0
+            ? 'text-emerald-700 dark:text-brand-lime bg-emerald-500/10 border-emerald-500/20'
+            : idx === 1
+              ? 'text-blue-700 dark:text-blue-400 bg-blue-500/10 border-blue-500/20'
+              : 'text-purple-700 dark:text-purple-400 bg-purple-500/10 border-purple-500/20'
+        ),
+        title: q.title || q.question,
+        code: q.code || null,
+        options: (q.options || []).map((opt, optIdx) => ({
+          letter: opt.letter || (optIdx === 0 ? 'A' : optIdx === 1 ? 'B' : optIdx === 2 ? 'C' : 'D'),
+          label: opt.label || opt.text || (typeof opt === 'string' ? opt : `Option ${optIdx + 1}`),
+          correct: Boolean(opt.correct),
+          why: opt.why || opt.explanation || (opt.correct ? 'Correct! This matches JavaScript language semantics.' : 'Incorrect for this scenario.')
+        }))
+      }));
     }
 
     const list = [];
     const topicTitle = topic?.title || 'this feature';
+    const firstExample = content?.examples?.[0];
+    const firstTrap = content?.goldenRules?.[0];
 
-    // Question 1: Purpose
+    // Question 1: Purpose & Mental Model
     list.push({
       id: 'q1',
-      question: `What is the primary purpose of ${topicTitle} in JavaScript?`,
-      code: null,
+      category: 'Mental Model',
+      badgeClass: 'text-emerald-700 dark:text-brand-lime bg-emerald-500/10 border-emerald-500/20',
+      title: `What is the primary role of ${topicTitle}?`,
+      code: content?.syntax ? content.syntax.trim().split('\n').slice(0, 3).join('\n') : null,
       options: [
         {
-          text: content?.definition 
-            ? `${content.definition.replace(/`/g, '').slice(0, 110)}...` 
-            : `Provides structured language semantics for ${topicTitle}.`,
+          letter: 'A',
+          label: content?.definition 
+            ? `${content.definition.replace(/`/g, '').slice(0, 95)}...` 
+            : `Provides deterministic ECMAScript runtime semantics for ${topicTitle}.`,
           correct: true,
-          explanation: content?.definition || `Correct! This is the core purpose of ${topicTitle}.`
+          why: content?.definition || `Correct! This is the primary role of ${topicTitle}.`
         },
         {
-          text: `Directly manipulates GPU hardware registers without JavaScript engine validation.`,
+          letter: 'B',
+          label: `Bypasses JavaScript engine safety checks to modify low-level CPU registers directly.`,
           correct: false,
-          explanation: `JavaScript code executes within an ECMAScript host environment (such as V8 in Node.js or the browser).`
+          why: `JavaScript operates securely inside an ECMAScript host environment and cannot bypass safety abstractions.`
         }
       ]
     });
 
-    // Question 2: Behavior
-    if (content?.examples?.[0]?.code) {
-      list.push({
-        id: 'q2',
-        question: `How does JavaScript execute this pattern?`,
-        code: content.examples[0].code.slice(0, 220),
-        options: [
-          {
-            text: `Follows ECMAScript runtime evaluation rules for ${topicTitle}.`,
-            correct: true,
-            explanation: content.examples[0].explanation || `Correct! The JavaScript runtime handles this deterministically.`
-          },
-          {
-            text: `Immediately halts the script and forces a browser reload.`,
-            correct: false,
-            explanation: `Standard JavaScript statements do not crash the host browser process.`
-          }
-        ]
-      });
-    }
+    // Question 2: Runtime Execution & Behavior
+    list.push({
+      id: 'q2',
+      category: 'Runtime Behavior',
+      badgeClass: 'text-blue-700 dark:text-blue-400 bg-blue-500/10 border-blue-500/20',
+      title: `How does JavaScript evaluate this code pattern?`,
+      code: firstExample?.code ? firstExample.code.trim().slice(0, 180) : `// Executing ${topicTitle}\nconst result = true;`,
+      options: [
+        {
+          letter: 'A',
+          label: `Executes predictably according to JavaScript engine specification rules.`,
+          correct: true,
+          why: firstExample?.explanation || `Correct! The JavaScript runtime handles this deterministically.`
+        },
+        {
+          letter: 'B',
+          label: `Causes an unrecoverable engine crash and forces a browser process termination.`,
+          correct: false,
+          why: `Standard JavaScript execution does not trigger browser process termination.`
+        }
+      ]
+    });
+
+    // Question 3: Engineering Best Practice / Gotcha
+    list.push({
+      id: 'q3',
+      category: 'Engineering Takeaway',
+      badgeClass: 'text-amber-700 dark:text-amber-400 bg-amber-500/10 border-amber-500/20',
+      title: firstTrap ? `What is the main pitfall to avoid with ${topicTitle}?` : `What is the recommended best practice for ${topicTitle}?`,
+      code: firstTrap?.trapCode ? firstTrap.trapCode.trim() : null,
+      options: [
+        {
+          letter: 'A',
+          label: firstTrap 
+            ? `${firstTrap.title || 'Beware of subtle behavior differences and edge cases.'}`
+            : (content?.useCases?.[0] ? content.useCases[0].replace(/\*\*/g, '').slice(0, 90) : `Follow clean code principles and explicit typing conventions.`),
+          correct: true,
+          why: firstTrap?.why || `Correct! Adhering to this practice prevents bugs and improves code maintainability.`
+        },
+        {
+          letter: 'B',
+          label: `Ignore warnings because modern engines automatically patch broken logic at runtime.`,
+          correct: false,
+          why: `JavaScript engines execute the exact code written; they do not automatically rewrite logic bugs.`
+        }
+      ]
+    });
 
     return list;
-  }, [content, topic]);
+  }, [content, topic, conceptNumber]);
+
+  const totalQuizQuestions = quizList.length;
+  const currentQ = quizList[activeQuizIndex] || quizList[0];
+  const currentAnswerIdx = currentQ ? quizAnswers[currentQ.id] : undefined;
+  const isCurrentAnswered = currentAnswerIdx !== undefined;
+  const isCurrentCorrect = isCurrentAnswered && currentQ?.options[currentAnswerIdx]?.correct;
+
+  const answeredQuizCount = Object.keys(quizAnswers).length;
+  const correctQuizCount = quizList.filter(q => {
+    const ans = quizAnswers[q.id];
+    return ans !== undefined && q.options[ans]?.correct;
+  }).length;
 
   const activePreset = presets[activePresetIndex] || presets[0];
 
@@ -519,81 +591,206 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
       )}
 
       {/* =========================================================================
-          8. QUICK KNOWLEDGE CHECK (QUIZ)
+          8. QUICK KNOWLEDGE CHECK (QUIZ) - SINGLE-QUESTION FOCUSED STEPPER
          ========================================================================= */}
       {quizList.length > 0 && (
         <section className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-emerald-700 dark:text-brand-lime" />
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
-              Quick Knowledge Check
-            </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-200 dark:border-zinc-800 pb-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-emerald-700 dark:text-brand-lime" />
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
+                  Quick Knowledge Check
+                </h2>
+                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
+                  Test your understanding on these {totalQuizQuestions} questions (one by one):
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300">
+                Score: <strong className="text-emerald-700 dark:text-brand-lime">{correctQuizCount}</strong> / {totalQuizQuestions}
+              </span>
+              {answeredQuizCount > 0 && (
+                <button
+                  type="button"
+                  onClick={handleQuizReset}
+                  title="Reset all questions"
+                  className="flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Reset</span>
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {quizList.map((q, qIdx) => {
-              const selectedIdx = quizAnswers[q.id];
-              const hasAnswered = selectedIdx !== undefined;
+          {/* Question Selector Tabs */}
+          <div className="grid grid-cols-3 gap-2">
+            {quizList.map((q, idx) => {
+              const isTabActive = activeQuizIndex === idx;
+              const tabAnswer = quizAnswers[q.id];
+              const isTabAnswered = tabAnswer !== undefined;
+              const isTabCorrect = isTabAnswered && q.options[tabAnswer]?.correct;
 
               return (
-                <div 
-                  key={q.id || qIdx} 
-                  className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 space-y-3 flex flex-col justify-between shadow-xs"
+                <button
+                  key={q.id || idx}
+                  type="button"
+                  onClick={() => setActiveQuizIndex(idx)}
+                  className={`flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
+                    isTabActive
+                      ? 'border-emerald-600 dark:border-brand-lime bg-emerald-50/70 dark:bg-emerald-950/30 text-[var(--text-main)] shadow-xs ring-1 ring-emerald-500/20'
+                      : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                  }`}
                 >
-                  <div>
-                    <span className="text-xs font-mono font-bold uppercase text-emerald-800 dark:text-brand-lime">
-                      Question 0{qIdx + 1}
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold shrink-0 ${
+                      isTabActive
+                        ? 'bg-emerald-600 text-white dark:bg-brand-lime dark:text-slate-950'
+                        : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                    }`}>
+                      {idx + 1}
                     </span>
-                    <p className="text-xs sm:text-sm font-semibold text-[var(--text-main)] mt-1">
-                      {q.question}
-                    </p>
-
-                    {q.code && (
-                      <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 font-mono text-xs text-slate-100 my-2 overflow-x-auto">
-                        <code>{q.code}</code>
-                      </div>
-                    )}
-
-                    <div className="space-y-1.5 pt-2">
-                      {q.options.map((opt, optIdx) => {
-                        const isSelected = selectedIdx === optIdx;
-                        let btnStyle = 'border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 hover:border-zinc-400';
-
-                        if (hasAnswered) {
-                          if (opt.correct) {
-                            btnStyle = 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold';
-                          } else if (isSelected && !opt.correct) {
-                            btnStyle = 'border-rose-600 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-300 font-bold';
-                          }
-                        }
-
-                        return (
-                          <button
-                            key={optIdx}
-                            onClick={() => handleQuizSelect(q.id || `q-${qIdx}`, optIdx)}
-                            className={`w-full p-2.5 rounded-lg text-left text-xs font-mono transition-colors flex items-center justify-between border cursor-pointer ${btnStyle}`}
-                          >
-                            <span>{opt.text}</span>
-                            {hasAnswered && opt.correct && <CheckCircle2 size={13} className="text-emerald-600 dark:text-brand-lime shrink-0 ml-1" />}
-                          </button>
-                        );
-                      })}
+                    <div className="truncate">
+                      <span className="block text-xs font-semibold truncate text-[var(--text-main)]">
+                        {q.category}
+                      </span>
+                      <span className="hidden sm:block text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+                        Question {idx + 1}
+                      </span>
                     </div>
                   </div>
 
-                  {hasAnswered && (
-                    <div className={`p-2.5 rounded-lg text-xs leading-relaxed mt-2 border ${
-                      q.options[selectedIdx]?.correct
-                        ? 'border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-300'
-                        : 'border-rose-500/30 bg-rose-50 dark:bg-rose-950/30 text-rose-900 dark:text-rose-300'
-                    }`}>
-                      {q.options[selectedIdx]?.explanation || (q.options[selectedIdx]?.correct ? 'Correct!' : 'Review the concept above.')}
-                    </div>
+                  {isTabAnswered && (
+                    isTabCorrect ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 ml-1.5" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-rose-500 shrink-0 ml-1.5" />
+                    )
                   )}
-                </div>
+                </button>
               );
             })}
           </div>
+
+          {/* Focused Single Question Card */}
+          {currentQ && (
+            <div className="p-5 sm:p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 shadow-xs space-y-5">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className={`text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-md border ${currentQ.badgeClass || 'text-emerald-700 dark:text-brand-lime bg-emerald-500/10 border-emerald-500/20'}`}>
+                  Question {activeQuizIndex + 1} of {totalQuizQuestions} &bull; {currentQ.category}
+                </span>
+
+                {isCurrentAnswered && (
+                  <span className={`text-xs font-mono font-bold flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border ${
+                    isCurrentCorrect
+                      ? 'border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'
+                      : 'border-rose-500/30 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400'
+                  }`}>
+                    {isCurrentCorrect ? (
+                      <>
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Correct Answer
+                      </>
+                    ) : (
+                      <>
+                        <XCircle className="w-3.5 h-3.5" /> Incorrect
+                      </>
+                    )}
+                  </span>
+                )}
+              </div>
+
+              <h3 className="text-base sm:text-lg font-bold text-[var(--text-main)] leading-snug">
+                {currentQ.title}
+              </h3>
+
+              {currentQ.code && (
+                <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+                  <pre className="whitespace-pre">
+                    <code>{currentQ.code}</code>
+                  </pre>
+                </div>
+              )}
+
+              {/* Options */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {currentQ.options.map((opt, optIdx) => {
+                  const isSelected = currentAnswerIdx === optIdx;
+                  let btnStyle = 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/50 hover:border-emerald-500/60 dark:hover:border-brand-lime/60 hover:bg-emerald-50/30 dark:hover:bg-zinc-850';
+
+                  if (isCurrentAnswered) {
+                    if (opt.correct) {
+                      btnStyle = 'border-emerald-500 dark:border-brand-lime bg-emerald-50/80 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 font-semibold ring-1 ring-emerald-500/30';
+                    } else if (isSelected && !opt.correct) {
+                      btnStyle = 'border-rose-500 dark:border-rose-500 bg-rose-50/80 dark:bg-rose-950/40 text-rose-950 dark:text-rose-200 font-semibold ring-1 ring-rose-500/30';
+                    } else {
+                      btnStyle = 'border-zinc-200 dark:border-zinc-850 opacity-50 bg-zinc-100/50 dark:bg-zinc-900/30';
+                    }
+                  }
+
+                  return (
+                    <button
+                      key={optIdx}
+                      type="button"
+                      onClick={() => handleQuizSelect(currentQ.id, optIdx)}
+                      className={`p-3.5 sm:p-4 rounded-xl border text-left transition-all flex items-start gap-3 cursor-pointer group ${btnStyle}`}
+                    >
+                      <span className={`w-6 h-6 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 transition-colors ${
+                        isCurrentAnswered && opt.correct
+                          ? 'bg-emerald-600 text-white dark:bg-brand-lime dark:text-slate-950'
+                          : isCurrentAnswered && isSelected && !opt.correct
+                            ? 'bg-rose-600 text-white'
+                            : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 group-hover:bg-emerald-600 group-hover:text-white dark:group-hover:bg-brand-lime dark:group-hover:text-slate-950'
+                      }`}>
+                        {opt.letter}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-xs sm:text-sm leading-relaxed block text-[var(--text-main)]">
+                          {opt.label}
+                        </span>
+                        {isCurrentAnswered && isSelected && (
+                          <span className={`text-[11px] block mt-1.5 font-medium ${
+                            opt.correct ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
+                          }`}>
+                            {opt.why}
+                          </span>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Bottom Nav inside Question Card */}
+              <div className="flex items-center justify-between pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                <button
+                  type="button"
+                  disabled={activeQuizIndex === 0}
+                  onClick={() => setActiveQuizIndex((prev) => Math.max(0, prev - 1))}
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Previous</span>
+                </button>
+
+                <span className="text-xs font-mono text-zinc-500">
+                  {activeQuizIndex + 1} / {totalQuizQuestions}
+                </span>
+
+                <button
+                  type="button"
+                  disabled={activeQuizIndex === totalQuizQuestions - 1}
+                  onClick={() => setActiveQuizIndex((prev) => Math.min(totalQuizQuestions - 1, prev + 1))}
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-brand-lime dark:text-slate-950 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                >
+                  <span>Next Question</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          )}
         </section>
       )}
 
