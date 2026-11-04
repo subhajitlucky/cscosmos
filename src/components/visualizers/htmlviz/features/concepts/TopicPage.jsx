@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { htmlTags } from '../../data/html-tags';
 import BoxModelVisualizer from './Visualizers/BoxModelVisualizer';
 import { ArrowLeft, Code2, Sparkles } from 'lucide-react';
+import { BASE } from '../../constants';
 
 const VISUALIZERS = {
     'box-model': BoxModelVisualizer,
@@ -22,7 +23,7 @@ export default function TopicPage({ topicId: propTopicId }) {
 
     return (
         <div className="max-w-4xl mx-auto pb-20 pt-6">
-            <Link href="/html-cosmos/learn" className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-lime-600 dark:hover:text-lime-400 mb-6 transition-colors group text-sm font-medium">
+            <Link href={`${BASE}/learn`} className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-lime-600 dark:hover:text-lime-400 mb-6 transition-colors group text-sm font-medium">
                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Concepts
             </Link>
 
@@ -133,7 +134,7 @@ export default function TopicPage({ topicId: propTopicId }) {
 
                         <div className="p-3 bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
                             <Link
-                                href="/html-cosmos/playground"
+                                href={`${BASE}/playground`}
                                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-lime-400 text-slate-950 font-bold hover:bg-lime-300 text-sm transition-all duration-200"
                             >
                                 <Code2 size={16} />

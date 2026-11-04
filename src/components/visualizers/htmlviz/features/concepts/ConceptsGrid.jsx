@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { htmlTags } from '../../data/html-tags';
 import { Search, Grid, Map } from 'lucide-react';
 import clsx from 'clsx';
+import { BASE } from '../../constants';
 
 export default function ConceptsGrid() {
     const [search, setSearch] = useState('');
@@ -118,7 +119,7 @@ function TagCard({ tag }) {
     const Icon = tag.icon;
     return (
         <Link
-            href={`/html-cosmos/learn/${tag.id}`}
+            href={`${BASE}/learn/${tag.id}`}
             className="group relative bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-xl p-5 hover:border-lime-400/50 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md"
         >
             <div className="flex items-start justify-between mb-4">

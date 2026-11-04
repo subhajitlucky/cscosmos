@@ -6,10 +6,13 @@ import { usePathname } from 'next/navigation';
 import { Code2, BookOpen, Terminal, Trophy, Sun, Moon, Menu, X, ArrowLeft } from 'lucide-react';
 import clsx from 'clsx';
 import { useTheme as useCSCosmosTheme } from '@/context/useTheme';
+import { BASE } from '../../constants';
 
 const NavLink = ({ href, icon: Icon, children, className, onClick }) => {
     const pathname = usePathname();
-    const isActive = href === '/html-cosmos' ? pathname === '/html-cosmos' : pathname.startsWith(href);
+    const isActive = href === BASE
+        ? (pathname === BASE || pathname === '/html-cosmos')
+        : (pathname.startsWith(href) || pathname.startsWith(href.replace(BASE, '/html-cosmos')));
 
     return (
         <Link
@@ -57,7 +60,7 @@ export default function Navbar() {
                         <ArrowLeft size={14} />
                         <span>CSCosmos</span>
                     </Link>
-                    <Link href="/html-cosmos" className="flex items-center gap-3 group">
+                    <Link href={BASE} className="flex items-center gap-3 group">
                         <div className="w-10 h-10 rounded-xl bg-[#E34F26] flex items-center justify-center shadow-[0_0_20px_rgba(227,79,38,0.3)] group-hover:scale-105 transition-transform">
                             <Code2 className="text-slate-950" size={24} strokeWidth={2.5} />
                         </div>
@@ -74,9 +77,9 @@ export default function Navbar() {
 
                 {/* Desktop Nav Items */}
                 <div className="hidden md:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-full border border-slate-200 dark:border-slate-800/80">
-                    <NavLink href="/html-cosmos/learn" icon={BookOpen}>Learn</NavLink>
-                    <NavLink href="/html-cosmos/playground" icon={Terminal}>Playground</NavLink>
-                    <NavLink href="/html-cosmos/problems" icon={Trophy}>Problems</NavLink>
+                    <NavLink href={`${BASE}/learn`} icon={BookOpen}>Learn</NavLink>
+                    <NavLink href={`${BASE}/playground`} icon={Terminal}>Playground</NavLink>
+                    <NavLink href={`${BASE}/problems`} icon={Trophy}>Problems</NavLink>
                 </div>
 
                 {/* Theme Toggle & Mobile Menu */}
@@ -101,9 +104,9 @@ export default function Navbar() {
             {/* Mobile Dropdown */}
             {isMenuOpen && (
                 <div className="md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-col gap-2 animate-in slide-in-from-top-2">
-                    <NavLink href="/html-cosmos/learn" icon={BookOpen}>Learn</NavLink>
-                    <NavLink href="/html-cosmos/playground" icon={Terminal}>Playground</NavLink>
-                    <NavLink href="/html-cosmos/problems" icon={Trophy}>Problems</NavLink>
+                    <NavLink href={`${BASE}/learn`} icon={BookOpen}>Learn</NavLink>
+                    <NavLink href={`${BASE}/playground`} icon={Terminal}>Playground</NavLink>
+                    <NavLink href={`${BASE}/problems`} icon={Trophy}>Problems</NavLink>
                 </div>
             )}
         </nav>

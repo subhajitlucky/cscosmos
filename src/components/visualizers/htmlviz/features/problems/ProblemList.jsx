@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { problems } from '../../data/problems';
 import { Trophy } from 'lucide-react';
 import clsx from 'clsx';
+import { BASE } from '../../constants';
 
 export default function ProblemList() {
     const [filter, setFilter] = useState('All');
@@ -52,7 +53,7 @@ export default function ProblemList() {
                 {filteredProblems.map((problem) => (
                     <Link
                         key={problem.id}
-                        href={`/html-cosmos/problems/${problem.id}`}
+                        href={`${BASE}/problems/${problem.id}`}
                         className="flex items-center justify-between bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 p-5 rounded-xl hover:border-lime-500 dark:hover:border-lime-400/50 transition-all group shadow-sm hover:shadow-md"
                     >
                         <div className="flex items-center gap-4">

@@ -8,6 +8,7 @@ import CodeEditor from '../compiler/CodeEditor';
 import LivePreview from '../compiler/LivePreview';
 import { ArrowLeft, CheckCircle, XCircle, Play } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { BASE } from '../../constants';
 
 export default function ProblemSolver({ problemId: propProblemId }) {
     const params = useParams();
@@ -56,7 +57,7 @@ export default function ProblemSolver({ problemId: propProblemId }) {
     return (
         <div className="h-[calc(100vh-6rem)] flex flex-col pt-2 pb-6">
             <div className="flex items-center justify-between mb-4">
-                <Link href="/html-cosmos/problems" className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-medium">
+                <Link href={`${BASE}/problems`} className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-medium">
                     <ArrowLeft size={16} /> Back to Problems
                 </Link>
                 <button
