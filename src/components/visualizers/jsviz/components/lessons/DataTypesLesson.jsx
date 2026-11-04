@@ -14,17 +14,92 @@ import {
   Clock,
   Sparkles,
   ArrowRight,
+  ArrowLeft,
+  RotateCcw,
   HelpCircle,
   Info
 } from 'lucide-react';
 import CodeEditor from '../CodeEditor';
 import VisualizerCanvas from '../VisualizerCanvas';
 
+const QUIZ_QUESTIONS = [
+  {
+    id: 'q1',
+    category: 'Primitives',
+    badgeClass: 'text-emerald-700 dark:text-brand-lime bg-emerald-500/10 border-emerald-500/20',
+    title: 'What does this code print?',
+    code: `let x = 50;\nlet y = x;\ny = 100;\nconsole.log(x);`,
+    options: [
+      { 
+        letter: 'A',
+        label: '50', 
+        correct: true, 
+        why: 'Numbers are primitives copied by value. Changing y creates a separate stack slot and leaves x untouched at 50.' 
+      },
+      { 
+        letter: 'B',
+        label: '100', 
+        correct: false, 
+        why: 'x is untouched because y received an independent copy of 50 in memory.' 
+      }
+    ],
+    explanationCorrect: 'Correct! Numbers are primitives copied by value on the stack. Reassigning y has zero effect on x.',
+    explanationIncorrect: 'Incorrect. Numbers are primitives copied by value. When let y = x executes, y gets an independent copy of 50.'
+  },
+  {
+    id: 'q2',
+    category: 'Objects',
+    badgeClass: 'text-blue-700 dark:text-blue-400 bg-blue-500/10 border-blue-500/20',
+    title: 'What does this code print?',
+    code: `const a = { n: 1 };\nconst b = a;\nb.n = 5;\nconsole.log(a.n);`,
+    options: [
+      { 
+        letter: 'A',
+        label: '1', 
+        correct: false, 
+        why: 'Objects are stored in heap memory and copied by reference. Both variables point to the same object.' 
+      },
+      { 
+        letter: 'B',
+        label: '5', 
+        correct: true, 
+        why: 'Both a and b point to the exact same object in heap memory. Modifying b.n also alters a.n.' 
+      }
+    ],
+    explanationCorrect: 'Correct! Objects share the same memory pointer in the heap. Mutating b.n directly updates the shared object that a references.',
+    explanationIncorrect: 'Incorrect. Object variables only hold memory references. Assigning b = a copies the pointer, not the actual object.'
+  },
+  {
+    id: 'q3',
+    category: 'Type Types',
+    badgeClass: 'text-purple-700 dark:text-purple-400 bg-purple-500/10 border-purple-500/20',
+    title: 'Which of these is NOT a primitive?',
+    code: `// Which one is a Reference Type?`,
+    options: [
+      { 
+        letter: 'A',
+        label: 'Array [1, 2, 3]', 
+        correct: true, 
+        why: 'Arrays are objects (reference types) allocated in heap memory.' 
+      },
+      { 
+        letter: 'B',
+        label: 'Boolean (true)', 
+        correct: false, 
+        why: 'Boolean is one of JavaScript\'s 7 primitive types stored directly on the stack.' 
+      }
+    ],
+    explanationCorrect: 'Correct! In JavaScript, Arrays are Object reference types. Booleans, Numbers, Strings, and Symbols are primitives.',
+    explanationIncorrect: 'Incorrect. Booleans are primitives. Arrays are reference types that inherit from Array.prototype.'
+  }
+];
+
 export function DataTypesLesson({ topic, content }) {
   const [copiedId, setCopiedId] = useState(null);
 
   // Quick Quiz Answers state
   const [quizAnswers, setQuizAnswers] = useState({});
+  const [activeQuizIndex, setActiveQuizIndex] = useState(0);
 
   const [activePresetIndex, setActivePresetIndex] = useState(0);
 
@@ -91,6 +166,22 @@ console.log("userB:", userB.name); // "Bob"`
       [questionId]: optionIndex
     }));
   };
+
+  const handleQuizReset = () => {
+    setQuizAnswers({});
+    setActiveQuizIndex(0);
+  };
+
+  const totalQuizQuestions = QUIZ_QUESTIONS.length;
+  const answeredQuizCount = Object.keys(quizAnswers).length;
+  const correctQuizCount = QUIZ_QUESTIONS.filter(
+    (q) => quizAnswers[q.id] !== undefined && q.options[quizAnswers[q.id]]?.correct
+  ).length;
+
+  const currentQ = QUIZ_QUESTIONS[activeQuizIndex] || QUIZ_QUESTIONS[0];
+  const currentAnswer = quizAnswers[currentQ.id];
+  const isCurrentAnswered = currentAnswer !== undefined;
+  const isCurrentCorrect = isCurrentAnswered && currentQ.options[currentAnswer]?.correct;
 
   const handleRunCode = (newCode) => {
     setLiveCode(newCode);
@@ -447,173 +538,294 @@ console.log("userB:", userB.name); // "Bob"`
       </section>
 
       {/* =========================================================================
-          6. QUICK 3-QUESTION PRACTICE CHECK
+          6. QUICK 3-QUESTION PRACTICE CHECK (ONE-BY-ONE FOCUSED WITH FLEXIBILITY)
          ========================================================================= */}
       <section className="space-y-4">
-        <div className="flex items-center gap-2">
-          <HelpCircle className="w-5 h-5 text-emerald-700 dark:text-brand-lime" />
-          <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
-            Quick Knowledge Check (3 Questions)
-          </h2>
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-zinc-200 dark:border-zinc-800 pb-3">
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-brand-lime border border-emerald-500/20">
+              <HelpCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
+                Quick Knowledge Check
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
+                Test your understanding on these 3 simple questions (one by one):
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300">
+              Score: <strong className="text-emerald-700 dark:text-brand-lime">{correctQuizCount}</strong> / {totalQuizQuestions}
+            </span>
+            {answeredQuizCount > 0 && (
+              <button
+                type="button"
+                onClick={handleQuizReset}
+                title="Reset all questions"
+                className="flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset</span>
+              </button>
+            )}
+          </div>
         </div>
 
-        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
-          Test your understanding on these 3 simple questions:
-        </p>
+        {/* Question Selector Tabs (Flexibility to jump directly to any question) */}
+        <div className="grid grid-cols-3 gap-2">
+          {QUIZ_QUESTIONS.map((q, idx) => {
+            const isTabActive = activeQuizIndex === idx;
+            const tabAnswer = quizAnswers[q.id];
+            const isTabAnswered = tabAnswer !== undefined;
+            const isTabCorrect = isTabAnswered && q.options[tabAnswer]?.correct;
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          
-          {/* Question 1 */}
-          <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 space-y-3 flex flex-col justify-between shadow-xs">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase text-emerald-800 dark:text-brand-lime">
-                Question 1 &bull; Primitives
-              </span>
-              <p className="text-xs sm:text-sm font-semibold text-[var(--text-main)] mt-1">
-                What does this code print?
-              </p>
-              
-              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 font-mono text-xs text-slate-100 my-2">
-                <code>let x = 50;{'\n'}let y = x;{'\n'}y = 100;{'\n'}console.log(x);</code>
-              </div>
+            return (
+              <button
+                key={q.id}
+                type="button"
+                onClick={() => setActiveQuizIndex(idx)}
+                className={`flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
+                  isTabActive
+                    ? 'border-emerald-600 dark:border-brand-lime bg-emerald-50/70 dark:bg-emerald-950/30 text-[var(--text-main)] shadow-xs ring-1 ring-emerald-500/20'
+                    : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                }`}
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold shrink-0 ${
+                    isTabActive
+                      ? 'bg-emerald-600 text-white dark:bg-brand-lime dark:text-slate-950'
+                      : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                  }`}>
+                    {idx + 1}
+                  </span>
+                  <div className="truncate">
+                    <span className="block text-xs font-semibold truncate text-[var(--text-main)]">
+                      {q.category}
+                    </span>
+                    <span className="hidden sm:block text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+                      Question {idx + 1}
+                    </span>
+                  </div>
+                </div>
 
-              <div className="space-y-1.5 pt-1">
-                {[
-                  { label: "A) 50", correct: true, why: "Numbers are primitives copied by value. Changing y does not change x." },
-                  { label: "B) 100", correct: false, why: "x is untouched because y received an independent copy of 50." }
-                ].map((opt, idx) => {
-                  const isSelected = quizAnswers['q1'] === idx;
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => handleQuizSelect('q1', idx)}
-                      className={`w-full p-2 rounded-lg text-left text-xs font-mono font-medium border transition-colors ${
-                        isSelected
-                          ? opt.correct
-                            ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold'
-                            : 'border-rose-600 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-300 font-bold'
-                          : 'border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 hover:border-zinc-400'
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {quizAnswers['q1'] !== undefined && (
-              <div className={`p-2 rounded text-xs mt-2 border ${
-                quizAnswers['q1'] === 0
-                  ? 'border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-300'
-                  : 'border-rose-500/30 bg-rose-50 dark:bg-rose-950/30 text-rose-900 dark:text-rose-300'
-              }`}>
-                {quizAnswers['q1'] === 0 ? "Correct! Numbers are copied by value." : "Incorrect. Numbers are primitives copied by value."}
-              </div>
-            )}
-          </div>
-
-          {/* Question 2 */}
-          <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 space-y-3 flex flex-col justify-between shadow-xs">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase text-blue-800 dark:text-blue-400">
-                Question 2 &bull; Objects
-              </span>
-              <p className="text-xs sm:text-sm font-semibold text-[var(--text-main)] mt-1">
-                What does this code print?
-              </p>
-              
-              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 font-mono text-xs text-slate-100 my-2">
-                <code>const a = &#123; n: 1 &#125;;{'\n'}const b = a;{'\n'}b.n = 5;{'\n'}console.log(a.n);</code>
-              </div>
-
-              <div className="space-y-1.5 pt-1">
-                {[
-                  { label: "A) 1", correct: false, why: "Objects are copied by reference. Both point to the same object." },
-                  { label: "B) 5", correct: true, why: "Both a and b point to the exact same object in memory." }
-                ].map((opt, idx) => {
-                  const isSelected = quizAnswers['q2'] === idx;
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => handleQuizSelect('q2', idx)}
-                      className={`w-full p-2 rounded-lg text-left text-xs font-mono font-medium border transition-colors ${
-                        isSelected
-                          ? opt.correct
-                            ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold'
-                            : 'border-rose-600 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-300 font-bold'
-                          : 'border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 hover:border-zinc-400'
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {quizAnswers['q2'] !== undefined && (
-              <div className={`p-2 rounded text-xs mt-2 border ${
-                quizAnswers['q2'] === 1
-                  ? 'border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-300'
-                  : 'border-rose-500/30 bg-rose-50 dark:bg-rose-950/30 text-rose-900 dark:text-rose-300'
-              }`}>
-                {quizAnswers['q2'] === 1 ? "Correct! Objects share the same memory pointer." : "Incorrect. Object assignment copies the pointer, not the object."}
-              </div>
-            )}
-          </div>
-
-          {/* Question 3 */}
-          <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 space-y-3 flex flex-col justify-between shadow-xs">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase text-purple-700 dark:text-purple-400">
-                Question 3 &bull; Type Types
-              </span>
-              <p className="text-xs sm:text-sm font-semibold text-[var(--text-main)] mt-1">
-                Which of these is NOT a primitive?
-              </p>
-              
-              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 font-mono text-xs text-slate-100 my-2">
-                <code>// Which one is a Reference Type?</code>
-              </div>
-
-              <div className="space-y-1.5 pt-1">
-                {[
-                  { label: "A) Array [1, 2, 3]", correct: true, why: "Arrays are objects (reference types)." },
-                  { label: "B) Boolean (true)", correct: false, why: "Boolean is one of the 7 primitives." }
-                ].map((opt, idx) => {
-                  const isSelected = quizAnswers['q3'] === idx;
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => handleQuizSelect('q3', idx)}
-                      className={`w-full p-2 rounded-lg text-left text-xs font-mono font-medium border transition-colors ${
-                        isSelected
-                          ? opt.correct
-                            ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold'
-                            : 'border-rose-600 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-300 font-bold'
-                          : 'border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 hover:border-zinc-400'
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {quizAnswers['q3'] !== undefined && (
-              <div className={`p-2 rounded text-xs mt-2 border ${
-                quizAnswers['q3'] === 0
-                  ? 'border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-300'
-                  : 'border-rose-500/30 bg-rose-50 dark:bg-rose-950/30 text-rose-900 dark:text-rose-300'
-              }`}>
-                {quizAnswers['q3'] === 0 ? "Correct! Arrays and objects are reference types." : "Incorrect. Booleans are primitives; arrays are objects."}
-              </div>
-            )}
-          </div>
-
+                {isTabAnswered && (
+                  isTabCorrect ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 ml-1.5" />
+                  ) : (
+                    <XCircle className="w-4 h-4 text-rose-500 shrink-0 ml-1.5" />
+                  )
+                )}
+              </button>
+            );
+          })}
         </div>
+
+        {/* Focused Single Question Card */}
+        <div className="p-5 sm:p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 shadow-xs space-y-5">
+          {/* Top Question Status & Category */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className={`text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-md border ${currentQ.badgeClass}`}>
+                Question {activeQuizIndex + 1} of {totalQuizQuestions} &bull; {currentQ.category}
+              </span>
+            </div>
+
+            {isCurrentAnswered && (
+              <span className={`text-xs font-mono font-bold flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border ${
+                isCurrentCorrect
+                  ? 'border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'
+                  : 'border-rose-500/30 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400'
+              }`}>
+                {isCurrentCorrect ? (
+                  <>
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Correct Answer
+                  </>
+                ) : (
+                  <>
+                    <XCircle className="w-3.5 h-3.5" /> Incorrect
+                  </>
+                )}
+              </span>
+            )}
+          </div>
+
+          {/* Question Prompt */}
+          <h3 className="text-base sm:text-lg font-bold text-[var(--text-main)] leading-snug">
+            {currentQ.title}
+          </h3>
+
+          {/* Code Snippet Box */}
+          <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+            <pre className="whitespace-pre">
+              <code>{currentQ.code}</code>
+            </pre>
+          </div>
+
+          {/* Options */}
+          <div className="space-y-2.5">
+            <p className="text-xs font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold">
+              Select an answer:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {currentQ.options.map((opt, optIdx) => {
+                const isSelected = currentAnswer === optIdx;
+                let optionStyle = 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-900/60 text-zinc-800 dark:text-zinc-200 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/60';
+
+                if (isSelected) {
+                  if (opt.correct) {
+                    optionStyle = 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 ring-2 ring-emerald-500/30 shadow-xs font-bold';
+                  } else {
+                    optionStyle = 'border-rose-600 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 ring-2 ring-rose-500/30 shadow-xs font-bold';
+                  }
+                } else if (isCurrentAnswered && opt.correct) {
+                  optionStyle = 'border-emerald-500/50 bg-emerald-50/30 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300';
+                }
+
+                return (
+                  <button
+                    key={optIdx}
+                    type="button"
+                    onClick={() => handleQuizSelect(currentQ.id, optIdx)}
+                    className={`w-full p-3.5 rounded-xl text-left border transition-all flex flex-col justify-between gap-2 ${optionStyle}`}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2.5">
+                        <span className={`w-6 h-6 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 ${
+                          isSelected
+                            ? opt.correct
+                              ? 'bg-emerald-600 text-white dark:bg-emerald-400 dark:text-slate-950'
+                              : 'bg-rose-600 text-white dark:bg-rose-400 dark:text-slate-950'
+                            : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                        }`}>
+                          {opt.letter}
+                        </span>
+                        <span className="font-mono text-sm font-semibold">
+                          {opt.letter}) {opt.label}
+                        </span>
+                      </div>
+
+                      {isSelected && (
+                        opt.correct ? (
+                          <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        ) : (
+                          <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
+                        )
+                      )}
+                    </div>
+
+                    {isCurrentAnswered && (
+                      <p className="text-xs font-sans text-zinc-600 dark:text-zinc-300 pt-2 border-t border-zinc-200/60 dark:border-zinc-800/60 leading-relaxed">
+                        {opt.why}
+                      </p>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Explanation Banner (Revealed when answered) */}
+          {isCurrentAnswered && (
+            <div className={`p-4 rounded-xl border text-xs sm:text-sm flex items-start gap-3 transition-all ${
+              isCurrentCorrect
+                ? 'border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200'
+                : 'border-rose-500/30 bg-rose-50 dark:bg-rose-950/30 text-rose-900 dark:text-rose-200'
+            }`}>
+              <div className="p-1 rounded-md shrink-0 mt-0.5 bg-white/60 dark:bg-zinc-900/60">
+                {isCurrentCorrect ? (
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                ) : (
+                  <Info className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                )}
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold">
+                  {isCurrentCorrect ? 'Concept Verified' : 'Conceptual Clarification'}
+                </p>
+                <p className="leading-relaxed text-zinc-700 dark:text-zinc-300">
+                  {isCurrentCorrect ? currentQ.explanationCorrect : currentQ.explanationIncorrect}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Bottom Stepper & Flexibility Navigation */}
+          <div className="flex items-center justify-between pt-4 border-t border-zinc-200 dark:border-zinc-800">
+            <button
+              type="button"
+              disabled={activeQuizIndex === 0}
+              onClick={() => setActiveQuizIndex(prev => Math.max(0, prev - 1))}
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Previous</span>
+            </button>
+
+            {/* Clickable Step Indicator Dots */}
+            <div className="flex items-center gap-1.5">
+              {QUIZ_QUESTIONS.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setActiveQuizIndex(dotIdx)}
+                  title={`Jump to Question ${dotIdx + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    activeQuizIndex === dotIdx
+                      ? 'w-6 bg-emerald-600 dark:bg-brand-lime'
+                      : 'w-2 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400 dark:hover:bg-zinc-600'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {activeQuizIndex < totalQuizQuestions - 1 ? (
+              <button
+                type="button"
+                onClick={() => setActiveQuizIndex(prev => Math.min(totalQuizQuestions - 1, prev + 1))}
+                className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-brand-lime dark:text-slate-950 hover:brightness-105 transition-all shadow-xs"
+              >
+                <span>Next Question</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setActiveQuizIndex(0)}
+                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Back to Q1</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Completion Milestone Banner when all 3 questions answered */}
+        {answeredQuizCount === totalQuizQuestions && (
+          <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-50/60 dark:bg-emerald-950/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-emerald-900 dark:text-emerald-200">
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="w-5 h-5 text-emerald-600 dark:text-brand-lime shrink-0" />
+              <p className="text-xs sm:text-sm font-medium">
+                {correctQuizCount === totalQuizQuestions ? (
+                  <><strong>Perfect Score! 3 / 3 correct.</strong> You have solid intuition for JS primitive copies vs object references.</>
+                ) : (
+                  <><strong>Quiz Completed ({correctQuizCount}/{totalQuizQuestions} correct).</strong> Review any question above to master the stack vs heap distinction.</>
+                )}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleQuizReset}
+              className="text-xs font-semibold font-mono underline hover:no-underline shrink-0 text-emerald-700 dark:text-brand-lime"
+            >
+              Retake Quiz
+            </button>
+          </div>
+        )}
       </section>
 
       {/* =========================================================================
