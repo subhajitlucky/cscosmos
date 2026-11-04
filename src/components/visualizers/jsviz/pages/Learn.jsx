@@ -8,16 +8,16 @@ import useStore from '../store/useStore';
 
 const MODULE_SHORT_NAMES = [
     { id: 'all', label: 'All Modules (100)' },
-    { id: 'Module 01: Types & Values', label: '01: Types' },
-    { id: 'Module 02: Syntax, Operators & Control Flow', label: '02: Syntax' },
-    { id: 'Module 03: Functions & Execution Context', label: '03: Functions' },
-    { id: 'Module 04: Scopes, Closures & this Binding', label: '04: Closures' },
-    { id: 'Module 05: Objects & Prototypal Inheritance', label: '05: Objects & OOP' },
-    { id: 'Module 06: Collections & Binary Data', label: '06: Collections' },
-    { id: 'Module 07: Iteration & Metaprogramming', label: '07: Iteration' },
-    { id: 'Module 08: Asynchronous JavaScript & Event Loop', label: '08: Event Loop' },
-    { id: 'Module 09: Async Patterns & Browser Web APIs', label: '09: Web APIs' },
-    { id: 'Module 10: V8 Engine, Memory & Security', label: '10: V8 & Memory' },
+    { id: 'Module 01: JavaScript Foundations & Environment', label: '01: Foundations' },
+    { id: 'Module 02: Values, Operators & Control Flow', label: '02: Values & Flow' },
+    { id: 'Module 03: Data Structures & Programming Fundamentals', label: '03: Fundamentals' },
+    { id: 'Module 04: Functions & Execution Model', label: '04: Functions' },
+    { id: 'Module 05: Scope, Closures & this Binding', label: '05: Scopes & this' },
+    { id: 'Module 06: Objects & Prototypal Inheritance', label: '06: Objects & OOP' },
+    { id: 'Module 07: Collections, Iteration & Modules', label: '07: Collections' },
+    { id: 'Module 08: Advanced JavaScript & Metaprogramming', label: '08: Advanced' },
+    { id: 'Module 09: Asynchronous JavaScript & Browser APIs', label: '09: Async & APIs' },
+    { id: 'Module 10: JavaScript Engine, Memory, Performance & Security', label: '10: Engine & Memory' },
 ];
 
 const Learn = () => {
@@ -43,14 +43,17 @@ const Learn = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 border-b border-brand-border pb-6 gap-4">
                     <div>
                         <h1 className="text-3xl sm:text-4xl font-bold tracking-tighter mb-2" style={{ color: 'var(--text-main)' }}>
-                            CURRICULUM
+                            JAVASCRIPT MASTERY 2027
                         </h1>
                         <p className="font-mono text-xs sm:text-sm max-w-xl" style={{ color: 'var(--text-muted)' }}>
-                            Structured 100-concept master roadmap. Primitives, closures, asynchronous runtime, and V8 internals.
+                            Version 2.0 &bull; 100 Concepts &bull; 10 Modules &bull; 4 Difficulty Levels (Beginner to Expert).
                         </p>
-                        <div className="flex items-center gap-2.5 mt-3">
+                        <div className="flex flex-wrap items-center gap-2 mt-3">
                             <span className="text-xs font-mono px-2.5 py-1 rounded border border-emerald-300 dark:border-brand-lime/40 bg-emerald-50 dark:bg-brand-lime/10 text-emerald-800 dark:text-brand-lime font-bold">
                                 100 CONCEPTS
+                            </span>
+                            <span className="text-xs font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-semibold border border-zinc-200 dark:border-zinc-700">
+                                ECMAScript 2026/2027 Ready
                             </span>
                             <span className="text-xs sm:text-sm font-mono text-zinc-700 dark:text-zinc-300 font-medium">
                                 {progress.completedTopics ? progress.completedTopics.length : 0} / 100 COMPLETED
@@ -109,19 +112,37 @@ const Learn = () => {
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3">
                                 {category.items.map((topic, index) => {
                                     const isCompleted = progress.completedTopics.includes(topic.id);
+                                    const isReady = topic.id === 'primitive-vs-non-primitive-data-types' || topic.id === 'data-types';
+                                    const displayNum = topic.number || index + 1;
+
                                     return (
                                         <Link
                                             key={topic.id}
                                             href={`/jsviz/topic/${topic.id}`}
-                                            className="group neo-card p-3 sm:p-3.5 relative flex flex-col justify-between h-full min-h-[96px] hover:border-brand-lime transition-all duration-150"
+                                            className={`group neo-card p-3 sm:p-3.5 relative flex flex-col justify-between h-full min-h-[110px] transition-all duration-150 ${
+                                                isReady 
+                                                    ? 'border-emerald-500/50 dark:border-brand-lime/60 bg-emerald-50/20 dark:bg-brand-lime/5 hover:border-emerald-600 dark:hover:border-brand-lime' 
+                                                    : 'hover:border-brand-lime'
+                                            }`}
                                         >
                                             <div>
-                                                <div className="flex justify-between items-center mb-1.5">
-                                                    <span className="font-mono text-xs text-zinc-600 dark:text-zinc-400 font-bold">
-                                                        #{String(index + 1).padStart(2, '0')}
+                                                <div className="flex justify-between items-center mb-1.5 gap-1">
+                                                    <span className={`font-mono text-xs font-bold ${
+                                                        isReady ? 'text-emerald-700 dark:text-brand-lime' : 'text-zinc-600 dark:text-zinc-400'
+                                                    }`}>
+                                                        #{String(displayNum).padStart(2, '0')}
                                                     </span>
-                                                    {isCompleted && (
-                                                        <CheckSquare size={14} className="text-emerald-600 dark:text-brand-lime" />
+
+                                                    {isCompleted ? (
+                                                        <CheckSquare size={14} className="text-emerald-600 dark:text-brand-lime shrink-0" />
+                                                    ) : isReady ? (
+                                                        <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-800 dark:text-brand-lime border border-emerald-500/30">
+                                                            LIVE
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-zinc-200/60 dark:bg-zinc-800 text-zinc-500">
+                                                            SOON
+                                                        </span>
                                                     )}
                                                 </div>
 
@@ -130,7 +151,11 @@ const Learn = () => {
                                                 </h3>
                                             </div>
 
-                                            <div className="w-full h-0.5 bg-brand-border mt-2.5 group-hover:bg-emerald-600 dark:group-hover:bg-brand-lime transition-colors"></div>
+                                            <div className={`w-full h-0.5 mt-2.5 transition-colors ${
+                                                isReady 
+                                                    ? 'bg-emerald-600 dark:bg-brand-lime' 
+                                                    : 'bg-brand-border group-hover:bg-emerald-600 dark:group-hover:bg-brand-lime'
+                                            }`}></div>
                                         </Link>
                                     );
                                 })}

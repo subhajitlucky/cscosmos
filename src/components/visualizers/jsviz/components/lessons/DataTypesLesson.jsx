@@ -198,10 +198,10 @@ console.log("userB:", userB.name); // "Bob"`
       <header className="space-y-3 border-b border-zinc-200 dark:border-zinc-800 pb-6">
         <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-400">
           <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-800 dark:text-brand-lime font-bold border border-emerald-500/20">
-            Module 01: Types &amp; Values
+            Module 01: JavaScript Foundations &amp; Environment
           </span>
           <span>&bull;</span>
-          <span>Concept 01 of 100</span>
+          <span>Concept 08 of 100</span>
           <span>&bull;</span>
           <span className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" /> 5 min read
@@ -209,7 +209,7 @@ console.log("userB:", userB.name); // "Bob"`
         </div>
 
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--text-main)]">
-          Data Types &amp; Values
+          Primitive vs Non-Primitive Data Types
         </h1>
 
         <p className="text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">

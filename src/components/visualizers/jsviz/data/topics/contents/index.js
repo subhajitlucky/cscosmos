@@ -56,6 +56,7 @@ import additionalTopics from './additionalTopics.js';
 export const topicContents = {
     'variables-scope': variablesScope,
     'data-types': dataTypes,
+    'primitive-vs-non-primitive-data-types': dataTypes,
     'operators': operators,
     'control-flow': controlFlow,
     'functions-basics': functionsBasics,

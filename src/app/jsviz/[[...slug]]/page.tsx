@@ -21,6 +21,7 @@ export function generateStaticParams() {
         { slug: ['learn'] },
         { slug: ['practice'] },
         { slug: ['playground'] },
+        { slug: ['topic', 'data-types'] },
         ...topicParams,
         ...problemParams,
     ];

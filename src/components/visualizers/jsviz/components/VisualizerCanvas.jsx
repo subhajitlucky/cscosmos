@@ -43,7 +43,7 @@ const VisualizerCanvas = ({ topicId, code, isRunning, onCodeChange }) => {
                 setVisualization({ type: 'variables', variables });
             } 
             // Logic for Data Types (Stack vs Heap) & Memory Model
-            else if (['data-types', 'memory-model', 'typeof-detection', 'type-coercion', 'equality-comparison', 'truthy-falsy', 'numbers', 'bigint', 'strings', 'symbols', 'pass-by-value-reference', 'cloning-objects', 'symbols-registry'].includes(topicId)) {
+            else if (['data-types', 'primitive-vs-non-primitive-data-types', 'memory-model', 'typeof-detection', 'type-coercion', 'equality-comparison', 'truthy-falsy', 'numbers', 'bigint', 'strings', 'symbols', 'pass-by-value-reference', 'cloning-objects', 'symbols-registry'].includes(topicId)) {
                 const stackItems = [];
                 const heapItems = [];
 

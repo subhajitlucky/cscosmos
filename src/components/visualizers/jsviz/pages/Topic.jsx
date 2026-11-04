@@ -8,8 +8,7 @@ import { getTopicContent } from '../data/topics/contents';
 import Sidebar from '../components/Sidebar';
 import useStore from '../store/useStore';
 import { DataTypesLesson } from '../components/lessons/DataTypesLesson';
-import { TypeDetectionLesson } from '../components/lessons/TypeDetectionLesson';
-import { JsConceptLesson } from '../components/lessons/JsConceptLesson';
+import { JsConceptComingSoon } from '../components/lessons/JsConceptComingSoon';
 import { 
     CheckSquare, ArrowLeft, ArrowRight, Menu, X,
     SlidersHorizontal, CheckCheck
@@ -132,14 +131,11 @@ const Topic = ({ topicId: propTopicId }) => {
             {/* Main Content Workspace */}
             <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 space-y-6">
                 
-                {id === 'data-types' ? (
+                {id === 'data-types' || id === 'primitive-vs-non-primitive-data-types' ? (
                     <DataTypesLesson topic={topic} content={content} />
-                ) : id === 'typeof-detection' ? (
-                    <TypeDetectionLesson topic={topic} content={content} />
                 ) : (
-                    <JsConceptLesson
+                    <JsConceptComingSoon
                         topic={topic}
-                        content={content}
                         conceptNumber={currentIndex + 1}
                     />
                 )}
