@@ -94,15 +94,23 @@ export function JsConceptComingSoon({ topic, conceptNumber }) {
         </div>
 
         <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
-          We are building all 100 curriculum concepts using our beginner-friendly interactive lesson architecture. You can experience the completed lesson format, interactive stepper quiz, and live memory visualizer in <strong className="text-[var(--text-main)] font-semibold">Concept 08: Primitive vs Non-Primitive Data Types</strong>.
+          We are progressively rolling out all 100 curriculum concepts using our beginner-friendly interactive lesson architecture. You can experience the completed lesson format, interactive simulators, code comparators, and single-question stepper quizzes starting with <strong className="text-[var(--text-main)] font-semibold">Concept 01: What is JavaScript</strong> through <strong className="text-[var(--text-main)] font-semibold">Concept 04: Syntax & Expressions</strong>, as well as <strong className="text-[var(--text-main)] font-semibold">Concept 08: Primitive vs Non-Primitive Data Types</strong>.
         </p>
 
         <div className="pt-2 flex flex-wrap items-center gap-3">
           <Link
-            href="/jsviz/topic/primitive-vs-non-primitive-data-types"
+            href="/jsviz/topic/what-is-javascript-history-evolution-ecmascript"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-brand-lime dark:text-slate-950 font-mono text-xs font-bold transition-all shadow-xs"
           >
-            <span>Explore Concept 08: Data Types</span>
+            <span>Start with Concept 01</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+
+          <Link
+            href="/jsviz/topic/primitive-vs-non-primitive-data-types"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 font-mono text-xs font-semibold hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+          >
+            <span>Concept 08: Data Types</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
 

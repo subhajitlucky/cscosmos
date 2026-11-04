@@ -8,6 +8,10 @@ import { getTopicContent } from '../data/topics/contents';
 import Sidebar from '../components/Sidebar';
 import useStore from '../store/useStore';
 import { DataTypesLesson } from '../components/lessons/DataTypesLesson';
+import { WhatIsJsLesson } from '../components/lessons/WhatIsJsLesson';
+import { RuntimeEnvironmentsLesson } from '../components/lessons/RuntimeEnvironmentsLesson';
+import { EngineArchitectureLesson } from '../components/lessons/EngineArchitectureLesson';
+import { SyntaxExpressionsLesson } from '../components/lessons/SyntaxExpressionsLesson';
 import { JsConceptComingSoon } from '../components/lessons/JsConceptComingSoon';
 import { 
     CheckSquare, ArrowLeft, ArrowRight, Menu, X,
@@ -131,7 +135,15 @@ const Topic = ({ topicId: propTopicId }) => {
             {/* Main Content Workspace */}
             <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 space-y-6">
                 
-                {id === 'data-types' || id === 'primitive-vs-non-primitive-data-types' ? (
+                {id === 'what-is-javascript-history-evolution-ecmascript' ? (
+                    <WhatIsJsLesson topic={topic} />
+                ) : id === 'javascript-runtime-environments-browser-vs-nodejs' ? (
+                    <RuntimeEnvironmentsLesson topic={topic} />
+                ) : id === 'javascript-engine-architecture-execution' ? (
+                    <EngineArchitectureLesson topic={topic} />
+                ) : id === 'javascript-syntax-statements-expressions' ? (
+                    <SyntaxExpressionsLesson topic={topic} />
+                ) : id === 'data-types' || id === 'primitive-vs-non-primitive-data-types' ? (
                     <DataTypesLesson topic={topic} content={content} />
                 ) : (
                     <JsConceptComingSoon
