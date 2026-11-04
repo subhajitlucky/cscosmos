@@ -5,19 +5,10 @@ import Link from 'next/link';
 import {
     ArrowRight,
     BookOpen,
-    Code2,
     Layers,
     ShieldCheck,
     Terminal,
-    Trophy,
-    CheckCircle2,
-    XCircle,
-    ArrowUpRight,
-    Sparkles,
-    Boxes,
-    FileText,
-    MousePointer,
-    Layout
+    Trophy
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { htmlTags } from '../../data/html-tags';
@@ -38,12 +29,6 @@ const itemVariants = {
     hidden: { opacity: 0, y: 16 },
     show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } }
 };
-
-// Curated 5 foundational topics from htmlTags for the "Start Here" track
-const FOUNDATIONAL_TOPIC_IDS = ['box-model', 'semantics', 'accessibility', 'header', 'form'];
-const foundationalTopics = FOUNDATIONAL_TOPIC_IDS
-    .map(id => htmlTags.find(tag => tag.id === id))
-    .filter(Boolean);
 
 export default function Home() {
     const totalConcepts = htmlTags.length;
@@ -281,144 +266,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* 4. Foundational Curriculum Track ("Start With The Fundamentals") */}
-            <section className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                    <div>
-                        <h2 className="text-xs font-mono uppercase tracking-widest text-lime-600 dark:text-lime-400 font-bold">
-                            Curated Starter Path
-                        </h2>
-                        <p className="text-2xl font-display font-bold text-slate-900 dark:text-white mt-1">
-                            Start with these five fundamentals
-                        </p>
-                    </div>
-                    <Link
-                        href={`${BASE}/learn`}
-                        className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white inline-flex items-center gap-1 transition-colors"
-                    >
-                        <span>View all {totalConcepts} topics in Concept Galaxy</span>
-                        <ArrowRight size={14} />
-                    </Link>
-                </div>
-
-                <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-sm divide-y divide-slate-200 dark:divide-slate-800">
-                    {foundationalTopics.map((topic, index) => {
-                        const Icon = topic.icon || FileText;
-                        return (
-                            <Link
-                                key={topic.id}
-                                href={`${BASE}/learn/${topic.id}`}
-                                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
-                            >
-                                <div className="flex items-start sm:items-center gap-4">
-                                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 font-mono text-xs font-bold text-slate-700 dark:text-slate-300">
-                                        {String(index + 1).padStart(2, '0')}
-                                    </span>
-                                    <div className="space-y-1">
-                                        <div className="flex items-center gap-2.5">
-                                            <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors">
-                                                {topic.tag}
-                                            </h3>
-                                            <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold border border-slate-200 dark:border-slate-700">
-                                                {topic.category}
-                                            </span>
-                                        </div>
-                                        <p className="text-xs text-slate-600 dark:text-slate-400">
-                                            {topic.description}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors self-end sm:self-center">
-                                    <span>Open Lesson</span>
-                                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </div>
-            </section>
-
-            {/* 5. Code Comparison: Anti-Pattern vs Semantic Best Practice */}
-            <section className="space-y-6">
-                <div>
-                    <h2 className="text-xs font-mono uppercase tracking-widest text-slate-500 font-bold">
-                        Architectural Principles
-                    </h2>
-                    <p className="text-2xl font-display font-bold text-slate-900 dark:text-white mt-1">
-                        Semantic markup vs. Div soup
-                    </p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
-                        Native HTML elements provide keyboard focus management, accessibility tree names, and search ranking benefits automatically with zero JavaScript runtime overhead.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Non-semantic side */}
-                    <div className="rounded-2xl border border-red-200 dark:border-red-900/40 bg-red-50/30 dark:bg-red-950/10 p-6 space-y-4">
-                        <div className="flex items-center justify-between">
-                            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-red-600 dark:text-red-400">
-                                <XCircle size={14} />
-                                <span>Anti-Pattern: Generic Divs</span>
-                            </span>
-                            <span className="text-[11px] font-mono text-red-600/80 dark:text-red-400/80 bg-red-100 dark:bg-red-900/30 px-2 py-0.5 rounded">
-                                A11y Violations Detected
-                            </span>
-                        </div>
-
-                        <div className="bg-slate-950 text-slate-300 font-mono text-xs p-4 rounded-xl overflow-x-auto border border-slate-800">
-                            <pre className="space-y-1">
-                                <span className="text-slate-500">{`<!-- Non-semantic: Missing landmarks & keyboard access -->`}</span><br />
-                                <span className="text-red-400">{`<div class="header">`}</span><br />
-                                <span className="text-slate-400 pl-4">{`<div class="nav-bar">`}</span><br />
-                                <span className="text-red-400 pl-8">{`<div class="nav-item" onclick="navigate()">Home</div>`}</span><br />
-                                <span className="text-slate-400 pl-4">{`</div>`}</span><br />
-                                <span className="text-red-400">{`</div>`}</span><br />
-                                <span className="text-red-400">{`<div class="submit-btn" onclick="submit()">Submit</div>`}</span>
-                            </pre>
-                        </div>
-
-                        <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-                            <p>• Not keyboard focusable without manual <code className="text-[11px] font-mono px-1 rounded bg-red-100 dark:bg-red-900/30">tabindex</code></p>
-                            <p>• Zero landmark roles for screen-reader navigation</p>
-                            <p>• Missing accessibility tree button and navigation roles</p>
-                        </div>
-                    </div>
-
-                    {/* Semantic side */}
-                    <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/30 dark:bg-emerald-950/10 p-6 space-y-4">
-                        <div className="flex items-center justify-between">
-                            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                                <CheckCircle2 size={14} />
-                                <span>Best Practice: Native Semantics</span>
-                            </span>
-                            <span className="text-[11px] font-mono text-emerald-600/80 dark:text-emerald-400/80 bg-emerald-100 dark:bg-emerald-900/30 px-2 py-0.5 rounded">
-                                WCAG 2.2 Compliant
-                            </span>
-                        </div>
-
-                        <div className="bg-slate-950 text-slate-300 font-mono text-xs p-4 rounded-xl overflow-x-auto border border-slate-800">
-                            <pre className="space-y-1">
-                                <span className="text-slate-500">{`<!-- Native semantic landmarks & focusable controls -->`}</span><br />
-                                <span className="text-emerald-400">{`<header>`}</span><br />
-                                <span className="text-emerald-400 pl-4">{`<nav aria-label="Main Navigation">`}</span><br />
-                                <span className="text-slate-400 pl-8">{`<ul><li><a href="/">Home</a></li></ul>`}</span><br />
-                                <span className="text-emerald-400 pl-4">{`</nav>`}</span><br />
-                                <span className="text-emerald-400">{`</header>`}</span><br />
-                                <span className="text-emerald-400">{`<button type="submit">Submit</button>`}</span>
-                            </pre>
-                        </div>
-
-                        <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-                            <p>• Built-in keyboard accessibility (<kbd className="text-[10px] font-mono px-1 rounded bg-slate-200 dark:bg-slate-800">Tab</kbd> & <kbd className="text-[10px] font-mono px-1 rounded bg-slate-200 dark:bg-slate-800">Enter</kbd>)</p>
-                            <p>• Clear document hierarchy for screen reader navigation</p>
-                            <p>• Native browser form submission and validation handling</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 6. Challenge Track Summary & Practice Callout */}
+            {/* 4. Challenge Track Summary & Practice Callout */}
             <section className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 p-8 sm:p-12 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-8">
                 <div className="space-y-3 max-w-xl">
                     <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-600 dark:text-amber-400">
