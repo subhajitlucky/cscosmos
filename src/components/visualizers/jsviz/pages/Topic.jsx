@@ -8,6 +8,7 @@ import { getTopicContent } from '../data/topics/contents';
 import Sidebar from '../components/Sidebar';
 import useStore from '../store/useStore';
 import { DataTypesLesson } from '../components/lessons/DataTypesLesson';
+import { TypeDetectionLesson } from '../components/lessons/TypeDetectionLesson';
 import { JsConceptLesson } from '../components/lessons/JsConceptLesson';
 import { 
     CheckSquare, ArrowLeft, ArrowRight, Menu, X,
@@ -133,6 +134,8 @@ const Topic = ({ topicId: propTopicId }) => {
                 
                 {id === 'data-types' ? (
                     <DataTypesLesson topic={topic} content={content} />
+                ) : id === 'typeof-detection' ? (
+                    <TypeDetectionLesson topic={topic} content={content} />
                 ) : (
                     <JsConceptLesson
                         topic={topic}
