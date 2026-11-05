@@ -1,6 +1,69 @@
 const variablesScope = {
     definition: "var, let, and const all declare variables, but they differ in scope (where the name is visible), hoisting/TDZ behavior, and reassignment rules. Choosing the right one avoids leaks, surprises, and accidental globals.",
 
+    quiz: [
+        {
+            id: "q1",
+            category: "Block vs Function Scope",
+            question: "What is logged to the console when executing this block?",
+            code: `if (true) {
+  var a = 10;
+  let b = 20;
+}
+console.log(a);
+console.log(typeof b);`,
+            options: [
+                {
+                    text: "10 then 'undefined'",
+                    correct: true,
+                    explanation: "`var` is function-scoped so it leaks out of the `if` block, while `let` is block-scoped and does not exist outside the curly braces."
+                },
+                {
+                    text: "ReferenceError immediately on line 5",
+                    correct: false,
+                    explanation: "`var a` is fully accessible outside the block because `var` only respects function boundaries, not block boundaries."
+                }
+            ]
+        },
+        {
+            id: "q2",
+            category: "Temporal Dead Zone",
+            question: "What happens when accessing `x` before its declaration?",
+            code: `console.log(x);
+let x = 42;`,
+            options: [
+                {
+                    text: "ReferenceError: Cannot access 'x' before initialization",
+                    correct: true,
+                    explanation: "`let` and `const` variables are hoisted into memory but remain in the Temporal Dead Zone (TDZ) until execution reaches their declaration line."
+                },
+                {
+                    text: "Logs `undefined` without error",
+                    correct: false,
+                    explanation: "Only `var` is initialized to `undefined` upon hoisting. `let` and `const` remain uninitialized in the TDZ."
+                }
+            ]
+        },
+        {
+            id: "q3",
+            category: "Const Binding vs Value",
+            question: "Which of the following operations on a `const` variable will throw a TypeError?",
+            code: `const config = { port: 3000 };`,
+            options: [
+                {
+                    text: "config = { port: 8080 };",
+                    correct: true,
+                    explanation: "`const` creates an immutable binding — you cannot reassign the variable identifier itself to point to a new memory address."
+                },
+                {
+                    text: "config.port = 8080;",
+                    correct: false,
+                    explanation: "Mutating an object's properties is completely valid because the variable binding still points to the same object in the heap."
+                }
+            ]
+        }
+    ],
+
     syntax: `// Declarations
 var name1 = value;    // Function-scoped
 let name2 = value;    // Block-scoped

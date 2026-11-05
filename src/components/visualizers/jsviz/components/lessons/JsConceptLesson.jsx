@@ -171,18 +171,38 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
     const firstExample = content?.examples?.[0];
     const firstTrap = content?.goldenRules?.[0];
 
+    // Helper to get clean, complete syntax declarations without mid-construct cuts
+    const getCleanSyntaxSnippet = (syntax) => {
+      if (!syntax) return null;
+      const trimmed = syntax.trim();
+      const blocks = trimmed.split(/\n\s*\n/);
+      const firstBlock = blocks[0] || trimmed;
+      const lines = firstBlock.split('\n');
+      if (lines.length <= 6) return firstBlock;
+      return lines.slice(0, 6).join('\n');
+    };
+
+    // Helper to get clean example code without character-level cuts
+    const getCleanExampleSnippet = (code) => {
+      if (!code) return `// Executing ${topicTitle}\nconst result = true;`;
+      const trimmed = code.trim();
+      const lines = trimmed.split('\n');
+      if (lines.length <= 8) return trimmed;
+      return lines.slice(0, 8).join('\n');
+    };
+
     // Question 1: Purpose & Mental Model
     list.push({
       id: 'q1',
       category: 'Mental Model',
       badgeClass: 'text-emerald-700 dark:text-brand-lime bg-emerald-500/10 border-emerald-500/20',
       title: `What is the primary role of ${topicTitle}?`,
-      code: content?.syntax ? content.syntax.trim().split('\n').slice(0, 3).join('\n') : null,
+      code: getCleanSyntaxSnippet(content?.syntax),
       options: [
         {
           letter: 'A',
           label: content?.definition 
-            ? `${content.definition.replace(/`/g, '').slice(0, 95)}...` 
+            ? content.definition.replace(/`/g, '').trim()
             : `Provides deterministic ECMAScript runtime semantics for ${topicTitle}.`,
           correct: true,
           why: content?.definition || `Correct! This is the primary role of ${topicTitle}.`
@@ -202,11 +222,13 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
       category: 'Runtime Behavior',
       badgeClass: 'text-blue-700 dark:text-blue-400 bg-blue-500/10 border-blue-500/20',
       title: `How does JavaScript evaluate this code pattern?`,
-      code: firstExample?.code ? firstExample.code.trim().slice(0, 180) : `// Executing ${topicTitle}\nconst result = true;`,
+      code: getCleanExampleSnippet(firstExample?.code),
       options: [
         {
           letter: 'A',
-          label: `Executes predictably according to JavaScript engine specification rules.`,
+          label: firstExample?.explanation 
+            ? firstExample.explanation.replace(/[`*]/g, '').trim()
+            : `Executes predictably according to JavaScript engine specification rules.`,
           correct: true,
           why: firstExample?.explanation || `Correct! The JavaScript runtime handles this deterministically.`
         },
@@ -231,7 +253,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
           letter: 'A',
           label: firstTrap 
             ? `${firstTrap.title || 'Beware of subtle behavior differences and edge cases.'}`
-            : (content?.useCases?.[0] ? content.useCases[0].replace(/\*\*/g, '').slice(0, 90) : `Follow clean code principles and explicit typing conventions.`),
+            : (content?.useCases?.[0] ? content.useCases[0].replace(/\*\*/g, '').replace(/`/g, '').trim() : `Follow clean code principles and explicit typing conventions.`),
           correct: true,
           why: firstTrap?.why || `Correct! Adhering to this practice prevents bugs and improves code maintainability.`
         },
