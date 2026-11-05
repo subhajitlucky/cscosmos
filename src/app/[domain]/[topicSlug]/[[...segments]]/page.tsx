@@ -189,7 +189,7 @@ export default async function UniversalTopicPage({
 
     return (
       <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl space-y-2">
+        <div className="mx-auto max-w-7xl space-y-2">
           <TopicActionBar slug={learningSlug} name={learningName} domain={learningDomain} />
           <TopicNotes slug={learningSlug} name={learningName} domain={learningDomain} />
           <RelatedTopics slug={learningSlug} domain={learningDomain} />

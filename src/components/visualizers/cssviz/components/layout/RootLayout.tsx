@@ -19,7 +19,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       <div className="relative z-10 flex min-h-screen flex-col">
         <Navbar />
         <main className="flex-1">
-          <div className="mx-auto w-full max-w-6xl px-4 pb-14 pt-10 sm:px-6 lg:px-8">{children}</div>
+          <div className="mx-auto w-full max-w-7xl px-4 pb-14 pt-10 sm:px-6 lg:px-8">{children}</div>
         </main>
         <Footer />
       </div>

@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { problems } from '../data/problems';
 import { CheckSquare, Code, Filter, Search, Terminal } from 'lucide-react';
 import useStore from '../store/useStore';
 
 const Practice = () => {
+    const pathname = usePathname() || '';
+    const basePath = pathname.startsWith('/fullstack/jsviz') ? '/fullstack/jsviz' : '/jsviz';
     const { progress } = useStore();
     const [filter, setFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
@@ -79,7 +82,7 @@ const Practice = () => {
                             const isSolved = progress.solvedProblems.includes(problem.id);
                             return (
                                 <li key={problem.id} className="group transition-colors" style={{ backgroundColor: 'var(--bg-surface)' }}>
-                                    <Link href={`/jsviz/problem/${problem.id}`} className="grid grid-cols-12 p-4 items-center">
+                                    <Link href={`${basePath}/problem/${problem.id}`} className="grid grid-cols-12 p-4 items-center">
                                         <div className="col-span-1">
                                             {isSolved ? (
                                                 <CheckSquare size={20} className="text-brand-lime" />

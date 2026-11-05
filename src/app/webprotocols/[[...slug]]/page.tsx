@@ -194,7 +194,7 @@ export default async function WebProtocolsPage({ params }: { params: Promise<{ s
     return (
         <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
             <Navbar />
-            <div className="flex-1 px-4 sm:px-6 max-w-6xl mx-auto w-full pt-6">
+            <div className="flex-1 px-4 sm:px-6 max-w-7xl mx-auto w-full pt-6">
                 {jsonLd && (
                     <script
                         type="application/ld+json"

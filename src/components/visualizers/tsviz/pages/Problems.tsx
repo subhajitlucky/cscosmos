@@ -54,7 +54,7 @@ function ProblemsContent() {
     }, [search, difficulty, conceptFilter]);
 
     return (
-        <div className="container mx-auto px-4 py-10 space-y-6 max-w-5xl">
+        <div className="container mx-auto px-4 py-10 space-y-6 max-w-7xl">
             <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tight">TypeScript Problems</h1>
                 <p className="text-muted-foreground">
