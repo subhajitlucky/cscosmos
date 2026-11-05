@@ -3,14 +3,16 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  Globe,
-  Server,
   Layers,
+  Server,
+  Globe,
   Cpu,
   Brain,
   Workflow,
   ShieldCheck,
+  Database,
   Terminal,
+  Smartphone,
   ArrowRight,
   CalendarRange,
   Clock3,
@@ -26,14 +28,16 @@ import {
 } from "@/data/role-roadmaps";
 
 const ROLE_ICONS: Record<RoleRoadmap["icon"], React.ComponentType<{ className?: string }>> = {
-  Globe,
-  Server,
   Layers,
+  Server,
+  Globe,
   Cpu,
   Brain,
   Workflow,
   ShieldCheck,
+  Database,
   Terminal,
+  Smartphone,
 };
 
 const STAGE_BADGE_STYLES: Record<StageLevel, { border: string; bg: string; text: string; dot: string }> = {
@@ -67,7 +71,7 @@ const SPRINT_WEEKS = [4, 8, 12, 16];
 const SPRINT_HOURS = [5, 10, 15, 20];
 
 export function RoadmapGenerator() {
-  const [selectedRoleId, setSelectedRoleId] = useState<string>("frontend");
+  const [selectedRoleId, setSelectedRoleId] = useState<string>("fullstack");
   const [levelFilter, setLevelFilter] = useState<StageLevel | "all">("all");
   const [onlyInteractive, setOnlyInteractive] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<"stages" | "sprint">("stages");
@@ -134,22 +138,22 @@ export function RoadmapGenerator() {
     };
   }, [allRoleTopics, onlyInteractive, sprintWeeks, sprintWeeklyHours]);
 
-  const CurrentRoleIcon = ROLE_ICONS[selectedRole.icon] || Globe;
+  const CurrentRoleIcon = ROLE_ICONS[selectedRole.icon] || Layers;
 
   return (
     <div className="space-y-8">
-      {/* 1. Career Track Selector Grid */}
+      {/* 1. Top 10 Career Track Selector Grid */}
       <section className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
-            Select an Engineering Career Track
+            Top 10 Industry Engineering Roles
           </p>
           <span className="text-xs text-muted-foreground font-mono">
-            {ROLE_ROADMAPS.length} Roles available
+            {ROLE_ROADMAPS.length} Core Career Paths
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10">
           {ROLE_ROADMAPS.map((role) => {
             const Icon = ROLE_ICONS[role.icon];
             const isSelected = selectedRoleId === role.id;
@@ -161,13 +165,13 @@ export function RoadmapGenerator() {
                   setSelectedRoleId(role.id);
                   setLevelFilter("all");
                 }}
-                className={`group flex flex-col items-start justify-between rounded-xl border p-3 text-left transition-all duration-150 ${
+                className={`group flex flex-col items-start justify-between rounded-xl border p-2.5 text-left transition-all duration-150 ${
                   isSelected
                     ? "border-primary bg-primary/10 shadow-sm ring-1 ring-primary/40 dark:bg-primary/15"
                     : "border-border/80 bg-card hover:border-foreground/30 hover:bg-muted/40"
                 }`}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-lg border transition-colors ${
                       isSelected
@@ -175,18 +179,18 @@ export function RoadmapGenerator() {
                         : "border-border/60 bg-muted/60 text-muted-foreground group-hover:text-foreground"
                     }`}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3.5 w-3.5" />
                   </div>
                 </div>
-                <div className="mt-2.5">
+                <div className="mt-2 w-full">
                   <span
-                    className={`block text-xs font-bold tracking-tight ${
+                    className={`block text-xs font-bold tracking-tight truncate ${
                       isSelected ? "text-foreground" : "text-foreground/90 group-hover:text-foreground"
                     }`}
                   >
                     {role.shortTitle}
                   </span>
-                  <span className="mt-0.5 block text-[10px] text-muted-foreground line-clamp-1">
+                  <span className="mt-0.5 block text-[10px] text-muted-foreground font-mono">
                     {role.stages.reduce((acc, s) => acc + s.slugs.length, 0)} topics
                   </span>
                 </div>
@@ -435,7 +439,7 @@ export function RoadmapGenerator() {
                   </div>
                 </div>
 
-                {/* Topics Grid: 2 columns on medium/large screens to utilize wide space */}
+                {/* Topics Grid */}
                 <div className="p-4 sm:p-6">
                   <div className="grid gap-3.5 md:grid-cols-2">
                     {stage.topics.map((topic) => {
