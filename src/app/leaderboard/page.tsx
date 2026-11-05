@@ -43,7 +43,7 @@ export default async function LeaderboardPage() {
 
   return (
     <div className="py-16 md:py-24">
-      <div className="page-container max-w-4xl space-y-8">
+      <div className="page-container space-y-8">
         <header className="space-y-3">
           <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
             <Trophy className="h-3.5 w-3.5" aria-hidden="true" />

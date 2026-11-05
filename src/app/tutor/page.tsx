@@ -17,7 +17,7 @@ export default async function TutorPage({
 
   return (
     <div className="py-12">
-      <div className="page-container max-w-5xl space-y-8">
+      <div className="page-container space-y-8">
         <header className="space-y-3">
           <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
             <Bot className="h-3.5 w-3.5" aria-hidden="true" />

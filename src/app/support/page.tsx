@@ -51,7 +51,7 @@ const SUPPORT_LINKS = [
 export default function SupportPage() {
   return (
     <div className="py-16 md:py-24">
-      <div className="page-container max-w-4xl space-y-16">
+      <div className="page-container space-y-16">
         <section className="space-y-6 text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-secondary/40">
             <Heart className="h-7 w-7 fill-red-500 text-red-500" aria-hidden="true" />
@@ -84,7 +84,7 @@ export default function SupportPage() {
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {COSTS.map((cost) => (
               <div
                 key={cost.label}

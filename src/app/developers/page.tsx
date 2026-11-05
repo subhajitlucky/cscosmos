@@ -70,7 +70,7 @@ const ENDPOINTS = [
 export default function DevelopersPage() {
   return (
     <div className="py-16 md:py-24">
-      <div className="page-container max-w-5xl space-y-12">
+      <div className="page-container space-y-12">
         <header className="space-y-4">
           <p className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
             <Braces className="h-3.5 w-3.5" aria-hidden="true" />

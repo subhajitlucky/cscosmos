@@ -30,7 +30,7 @@ export default function AboutPage() {
 
   return (
     <div className="py-12 md:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-20">
+      <div className="page-container space-y-20">
         {/* 1. Hero Hook */}
         <section className="space-y-6 text-center max-w-4xl mx-auto">
           <p className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-mono font-medium text-primary uppercase tracking-wider">

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function BookmarksPage() {
   return (
     <div className="py-12">
-      <div className="page-container max-w-6xl space-y-8">
+      <div className="page-container space-y-8">
         <div className="space-y-3">
           <p className="text-sm uppercase tracking-[0.18em] text-primary/70">My Learning</p>
           <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">Bookmarks</h1>

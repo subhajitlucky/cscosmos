@@ -43,7 +43,7 @@ export default async function ProgressPage() {
 
   return (
     <div className="py-12">
-      <div className="page-container max-w-5xl space-y-6">
+      <div className="page-container space-y-6">
         <div className="space-y-3">
           <p className="text-sm uppercase tracking-[0.18em] text-primary/70">My Learning</p>
           <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">Progress</h1>

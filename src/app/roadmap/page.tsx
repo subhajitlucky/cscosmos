@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function RoadmapPage() {
   return (
     <div className="py-10 md:py-14">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+      <div className="page-container space-y-8">
         <header className="space-y-3">
           <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
             <Route className="h-3.5 w-3.5" aria-hidden="true" />

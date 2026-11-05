@@ -67,7 +67,7 @@ export default async function CertificatePage({
 
   return (
     <div className="py-12 print:py-0">
-      <div className="page-container max-w-4xl space-y-6">
+      <div className="page-container space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3 print:hidden">
           <Link href="/progress" className="text-sm text-muted-foreground hover:text-foreground">
             Back to progress
