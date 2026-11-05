@@ -281,7 +281,7 @@ server.listen(3000);`
         </div>
 
         {/* ASCII Architecture Comparison */}
-        <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
+        <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
           <div className="text-xs font-mono text-slate-400 mb-2 font-bold uppercase tracking-wider text-left">
             How The Runtimes Wrap the Same Engine:
           </div>
@@ -352,7 +352,7 @@ server.listen(3000);`
               <span className="text-xs font-mono font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
                 <Globe className="w-3.5 h-3.5" /> Inside Browser Runtime
               </span>
-              <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
+              <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
                 <pre className="whitespace-pre leading-relaxed">
                   <code>{runtimeScenarios[activeTab].browserCode}</code>
                 </pre>
@@ -364,7 +364,7 @@ server.listen(3000);`
               <span className="text-xs font-mono font-bold text-emerald-700 dark:text-brand-lime flex items-center gap-1.5">
                 <Server className="w-3.5 h-3.5" /> Inside Node.js Runtime
               </span>
-              <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
+              <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
                 <pre className="whitespace-pre leading-relaxed">
                   <code>{runtimeScenarios[activeTab].nodeCode}</code>
                 </pre>
@@ -549,7 +549,7 @@ server.listen(3000);`
             {currentQ.title}
           </h3>
 
-          <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+          <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
             <pre className="whitespace-pre">
               <code>{currentQ.code}</code>
             </pre>

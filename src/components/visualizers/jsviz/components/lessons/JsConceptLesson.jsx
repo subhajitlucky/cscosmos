@@ -322,7 +322,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                 <span>{copiedSyntax ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
-            <div className="p-3 bg-[#090d16] overflow-x-auto text-xs sm:text-sm">
+            <div className="p-3 bg-[#090d16] selection:bg-[#264f78] selection:text-white overflow-x-auto text-xs sm:text-sm">
               <SyntaxHighlighter
                 language="javascript"
                 style={vscDarkPlus}
@@ -471,7 +471,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-[#090d16] overflow-x-auto text-xs sm:text-sm">
+                  <div className="p-3 bg-[#090d16] selection:bg-[#264f78] selection:text-white overflow-x-auto text-xs sm:text-sm">
                     <SyntaxHighlighter
                       language="javascript"
                       style={vscDarkPlus}
@@ -576,7 +576,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                     {rule.title}
                   </h3>
                   {rule.trapCode && (
-                    <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 font-mono text-xs text-amber-200 my-2 overflow-x-auto">
+                    <div className="p-2.5 rounded-lg bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 font-mono text-xs text-amber-200 my-2 overflow-x-auto">
                       <code>{rule.trapCode}</code>
                     </div>
                   )}
@@ -707,7 +707,7 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
               </h3>
 
               {currentQ.code && (
-                <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+                <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
                   <pre className="whitespace-pre">
                     <code>{currentQ.code}</code>
                   </pre>

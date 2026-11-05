@@ -345,8 +345,46 @@
     letter-spacing: -0.01em;
   }
   ::selection {
-    background-color: hsl(var(--primary) / 0.18);
-    color: hsl(var(--foreground));
+    background-color: rgba(16, 185, 129, 0.22);
+  }
+  .dark ::selection {
+    background-color: rgba(16, 185, 129, 0.32);
+  }
+
+  /* Code blocks & preformatted code selection: high contrast VS Code dark selection blue with white text */
+  pre::selection,
+  pre *::selection,
+  code::selection,
+  code *::selection,
+  kbd::selection,
+  kbd *::selection,
+  samp::selection,
+  samp *::selection,
+  .syntaxhighlighter::selection,
+  .syntaxhighlighter *::selection,
+  [class*="language-"]::selection,
+  [class*="language-"] *::selection,
+  .bg-slate-950 ::selection,
+  .bg-slate-950::selection,
+  .bg-slate-900 ::selection,
+  .bg-slate-900::selection,
+  .bg-zinc-950 ::selection,
+  .bg-zinc-950::selection,
+  .bg-zinc-900 ::selection,
+  .bg-zinc-900::selection,
+  .bg-black ::selection,
+  .bg-black::selection,
+  [class*="bg-slate-950"] ::selection,
+  [class*="bg-zinc-950"] ::selection,
+  [class*="bg-[#090d16]"] ::selection,
+  [class*="bg-[#090d16]"]::selection,
+  [class*="bg-[#0d1117]"] ::selection,
+  [class*="bg-[#0d1117]"]::selection,
+  [class*="bg-[#0b0b0d]"] ::selection,
+  [class*="bg-[#0b0b0d]"]::selection {
+    background-color: #264f78 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
   }
 }
 

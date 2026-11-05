@@ -308,7 +308,7 @@ const common = setA.intersection(setB); // Set { 3 }`
         </div>
 
         {/* Clear ASCII Architecture Diagram */}
-        <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
+        <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
           <div className="text-xs font-mono text-slate-400 mb-2 font-bold uppercase tracking-wider text-left">
             How JavaScript Features Become Standard:
           </div>
@@ -396,7 +396,7 @@ const common = setA.intersection(setB); // Set { 3 }`
             {eras[activeTab].desc}
           </p>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+          <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
             <pre className="whitespace-pre leading-relaxed">
               <code>{eras[activeTab].code}</code>
             </pre>
@@ -573,7 +573,7 @@ const common = setA.intersection(setB); // Set { 3 }`
             {currentQ.title}
           </h3>
 
-          <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+          <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
             <pre className="whitespace-pre">
               <code>{currentQ.code}</code>
             </pre>

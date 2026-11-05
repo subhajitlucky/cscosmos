@@ -297,7 +297,7 @@ console.log("userB:", userB.name); // "Bob"`
         </div>
 
         {/* Clear ASCII Architecture Diagram */}
-        <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
+        <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
           <div className="text-xs font-mono text-slate-400 mb-2 font-bold uppercase tracking-wider text-left">
             How Data Is Organized:
           </div>
@@ -356,7 +356,7 @@ console.log("userB:", userB.name); // "Bob"`
               </button>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto">
+            <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">let</span> a = <span className="text-amber-300">10</span>;{'\n'}
@@ -388,7 +388,7 @@ console.log("userB:", userB.name); // "Bob"`
               </button>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto">
+            <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">let</span> user1 = &#123; name: <span className="text-emerald-300">&quot;Alice&quot;</span> &#125;;{'\n'}
@@ -431,7 +431,7 @@ console.log("userB:", userB.name); // "Bob"`
               <XCircle className="w-4 h-4" /> The Mistake (Shared Reference)
             </span>
 
-            <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 font-mono text-xs sm:text-sm text-slate-100">
+            <div className="rounded-lg border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-3 font-mono text-xs sm:text-sm text-slate-100">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">const</span> original = &#123; role: <span className="text-emerald-300">&quot;admin&quot;</span> &#125;;{'\n'}
@@ -453,7 +453,7 @@ console.log("userB:", userB.name); // "Bob"`
               <CheckCircle2 className="w-4 h-4" /> The Fix (Spread Operator &#123; ... &#125;)
             </span>
 
-            <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 font-mono text-xs sm:text-sm text-slate-100">
+            <div className="rounded-lg border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-3 font-mono text-xs sm:text-sm text-slate-100">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">const</span> original = &#123; role: <span className="text-emerald-300">&quot;admin&quot;</span> &#125;;{'\n'}
@@ -659,7 +659,7 @@ console.log("userB:", userB.name); // "Bob"`
           </h3>
 
           {/* Code Snippet Box */}
-          <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+          <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
             <pre className="whitespace-pre">
               <code>{currentQ.code}</code>
             </pre>

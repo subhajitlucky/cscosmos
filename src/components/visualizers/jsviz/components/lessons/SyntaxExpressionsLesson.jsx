@@ -288,7 +288,7 @@ console.log(makeUser()); // { name: "Dev" }`
         </div>
 
         {/* ASCII Architecture Comparison */}
-        <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
+        <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
           <div className="text-xs font-mono text-slate-400 mb-2 font-bold uppercase tracking-wider text-left">
             How The Parser Categorizes Code:
           </div>
@@ -361,7 +361,7 @@ console.log(makeUser()); // { name: "Dev" }`
               <span className="text-xs font-mono font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
                 <Terminal className="w-3.5 h-3.5" /> Statement Approach (Action)
               </span>
-              <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
+              <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
                 <pre className="whitespace-pre leading-relaxed">
                   <code>{comparisons[activeTab].statementCode}</code>
                 </pre>
@@ -373,7 +373,7 @@ console.log(makeUser()); // { name: "Dev" }`
               <span className="text-xs font-mono font-bold text-emerald-700 dark:text-brand-lime flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" /> Expression Approach (Value)
               </span>
-              <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
+              <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs text-slate-100 overflow-x-auto shadow-inner">
                 <pre className="whitespace-pre leading-relaxed">
                   <code>{comparisons[activeTab].expressionCode}</code>
                 </pre>
@@ -405,7 +405,7 @@ console.log(makeUser()); // { name: "Dev" }`
             <span className="text-xs font-mono font-bold uppercase text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
               <XCircle className="w-4 h-4" /> The Bug (Silent undefined)
             </span>
-            <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 font-mono text-xs sm:text-sm text-slate-100">
+            <div className="rounded-lg border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-3 font-mono text-xs sm:text-sm text-slate-100">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">function</span> <span className="text-sky-300">getProfile</span>() &#123;{'\n'}
@@ -427,7 +427,7 @@ console.log(makeUser()); // { name: "Dev" }`
             <span className="text-xs font-mono font-bold uppercase text-emerald-800 dark:text-brand-lime flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4" /> The Fix (Keep Opening Brace on Line)
             </span>
-            <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 font-mono text-xs sm:text-sm text-slate-100">
+            <div className="rounded-lg border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-3 font-mono text-xs sm:text-sm text-slate-100">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">function</span> <span className="text-sky-300">getProfile</span>() &#123;{'\n'}
@@ -564,7 +564,7 @@ console.log(makeUser()); // { name: "Dev" }`
             {currentQ.title}
           </h3>
 
-          <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+          <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
             <pre className="whitespace-pre">
               <code>{currentQ.code}</code>
             </pre>
