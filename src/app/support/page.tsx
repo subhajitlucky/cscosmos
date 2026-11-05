@@ -44,7 +44,7 @@ const SUPPORT_LINKS = [
   {
     label: "UPI",
     href: process.env.NEXT_PUBLIC_SUPPORT_UPI ?? "",
-    note: "Add NEXT_PUBLIC_SUPPORT_UPI to enable",
+    note: process.env.NEXT_PUBLIC_SUPPORT_UPI ? "Direct transfer" : "Coming soon",
   },
 ]
 
