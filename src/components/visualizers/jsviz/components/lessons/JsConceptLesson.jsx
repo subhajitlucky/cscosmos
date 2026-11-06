@@ -21,7 +21,8 @@ import {
   Lightbulb
 } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useTheme } from '@/context/useTheme';
 import CodeEditor from '../CodeEditor';
 import VisualizerCanvas from '../VisualizerCanvas';
 
@@ -37,12 +38,41 @@ import VisualizerCanvas from '../VisualizerCanvas';
  * - Interactive knowledge check quiz
  */
 export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted 
+    ? (resolvedTheme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark')))
+    : resolvedTheme === 'dark';
+
+  const syntaxTheme = isDark ? vscDarkPlus : vs;
+
   const [copiedSyntax, setCopiedSyntax] = useState(false);
   const [copiedExampleIndex, setCopiedExampleIndex] = useState(null);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [activeQuizIndex, setActiveQuizIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const studioRef = useRef(null);
+
+  // Extract unique categories across presets if available
+  const categories = useMemo(() => {
+    const rawExamples = content?.examples || [];
+    const set = new Set();
+    rawExamples.forEach((ex) => {
+      const cat = ex.category || ex.badge;
+      if (cat) set.add(cat);
+    });
+    if (set.size > 1) {
+      return ['All', ...Array.from(set)];
+    }
+    return [];
+  }, [content]);
+
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   // Build segmented presets from examples and syntax
   const presets = useMemo(() => {
@@ -59,12 +89,15 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
         }
       }
       const cleanTitle = title || `Pattern ${idx + 1}`;
-      const badge = cleanTitle.length > 18 ? `Pattern ${idx + 1}` : cleanTitle;
+      const badge = ex.badge || (cleanTitle.length > 18 ? `Pattern ${idx + 1}` : null);
+      const category = ex.category || ex.badge || null;
 
       items.push({
         id: `preset-${idx}`,
+        realIndex: idx,
         title: `${idx + 1}. ${cleanTitle}`,
         badge,
+        category,
         description: ex.explanation || `Interactive scenario demonstrating ${topic?.title || 'this JavaScript concept'}.`,
         code: ex.code || '// Write JavaScript code here...'
       });
@@ -73,8 +106,10 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
     if (items.length === 0 && content?.syntax) {
       items.push({
         id: 'preset-syntax',
+        realIndex: 0,
         title: '1. Syntax Reference',
         badge: 'Syntax',
+        category: null,
         description: 'Core syntax and declarations for this concept.',
         code: content.syntax
       });
@@ -344,10 +379,14 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                 <span>{copiedSyntax ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
-            <div className="p-3 bg-[#090d16] selection:bg-[#264f78] selection:text-white overflow-x-auto text-xs sm:text-sm">
+            <div className={`p-3 overflow-x-auto text-xs sm:text-sm border-t ${
+              isDark 
+                ? 'bg-[#090d16] border-zinc-800 selection:bg-[#264f78] selection:text-white' 
+                : 'bg-zinc-50 border-zinc-200 selection:bg-blue-100 selection:text-blue-900'
+            }`}>
               <SyntaxHighlighter
                 language="javascript"
-                style={vscDarkPlus}
+                style={syntaxTheme}
                 customStyle={{
                   margin: 0,
                   padding: 0,
@@ -376,32 +415,68 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
               </h2>
             </div>
 
-            {/* Segmented Preset Switcher */}
-            {presets.length > 0 && (
-              <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                {presets.map((preset, idx) => {
-                  const isActive = activePresetIndex === idx;
+            {/* Category Filter Pills (if multiple categories exist) */}
+            {categories.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-zinc-100/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800">
+                {categories.map((cat) => {
+                  const count = cat === 'All' ? presets.length : presets.filter(p => p.category === cat).length;
+                  const isCatActive = selectedCategory === cat;
                   return (
                     <button
-                      key={preset.id}
-                      onClick={() => handleSelectPreset(idx)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-                        isActive
+                      key={cat}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
+                        isCatActive
                           ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 shadow-xs font-bold border border-zinc-200 dark:border-zinc-700'
                           : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                       }`}
                     >
-                      <span>{preset.title}</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
-                        isActive 
+                      <span>{cat}</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                        isCatActive 
                           ? 'bg-emerald-100 dark:bg-brand-lime/20 text-emerald-800 dark:text-brand-lime font-bold'
                           : 'bg-zinc-200/70 dark:bg-zinc-800 text-zinc-500'
                       }`}>
-                        {preset.badge}
+                        {count}
                       </span>
                     </button>
                   );
                 })}
+              </div>
+            )}
+
+            {/* Segmented Preset Switcher */}
+            {presets.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                {presets
+                  .filter((preset) => selectedCategory === 'All' || preset.category === selectedCategory)
+                  .map((preset) => {
+                    const targetIdx = preset.realIndex !== undefined ? preset.realIndex : 0;
+                    const isActive = activePresetIndex === targetIdx;
+                    return (
+                      <button
+                        key={preset.id}
+                        onClick={() => handleSelectPreset(targetIdx)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                          isActive
+                            ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 shadow-xs font-bold border border-zinc-200 dark:border-zinc-700'
+                            : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                        }`}
+                      >
+                        <span>{preset.title}</span>
+                        {preset.badge && (
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                            isActive 
+                              ? 'bg-emerald-100 dark:bg-brand-lime/20 text-emerald-800 dark:text-brand-lime font-bold'
+                              : 'bg-zinc-200/70 dark:bg-zinc-800 text-zinc-500'
+                          }`}>
+                            {preset.badge}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
               </div>
             )}
           </div>
@@ -441,62 +516,112 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
          ========================================================================= */}
       {content?.examples && content.examples.length > 0 && (
         <section className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Terminal className="w-5 h-5 text-emerald-700 dark:text-brand-lime" />
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
-              Key Code Patterns in Action
-            </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Terminal className="w-5 h-5 text-emerald-700 dark:text-brand-lime" />
+              <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight">
+                Key Code Patterns in Action
+              </h2>
+            </div>
+
+            {categories.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-zinc-100/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800">
+                {categories.map((cat) => {
+                  const count = cat === 'All' ? content.examples.length : content.examples.filter(e => (e.category || e.badge) === cat).length;
+                  const isCatActive = selectedCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
+                        isCatActive
+                          ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 shadow-xs font-bold border border-zinc-200 dark:border-zinc-700'
+                          : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                        isCatActive 
+                          ? 'bg-emerald-100 dark:bg-brand-lime/20 text-emerald-800 dark:text-brand-lime font-bold'
+                          : 'bg-zinc-200/70 dark:bg-zinc-800 text-zinc-500'
+                      }`}>
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            {content.examples.map((ex, idx) => {
-              let exTitle = ex.title;
-              if (!exTitle && ex.code) {
-                const firstLine = ex.code.trim().split('\n')[0];
-                const match = firstLine.match(/^\/\/\s*(?:\d+[.:-]\s*)?(.+)$/);
-                if (match && match[1]) {
-                  exTitle = match[1].trim();
+            {content.examples
+              .map((ex, originalIdx) => ({ ex, originalIdx }))
+              .filter(({ ex }) => selectedCategory === 'All' || (ex.category || ex.badge) === selectedCategory)
+              .map(({ ex, originalIdx }) => {
+                let exTitle = ex.title;
+                if (!exTitle && ex.code) {
+                  const firstLine = ex.code.trim().split('\n')[0];
+                  const match = firstLine.match(/^\/\/\s*(?:\d+[.:-]\s*)?(.+)$/);
+                  if (match && match[1]) {
+                    exTitle = match[1].trim();
+                  }
                 }
-              }
-              const displayTitle = exTitle || `Pattern 0${idx + 1}`;
+                const displayTitle = exTitle || `Pattern ${String(originalIdx + 1).padStart(2, '0')}`;
 
-              return (
-                <div 
-                  key={idx} 
-                  className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 overflow-hidden shadow-xs"
-                >
-                  <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-brand-lime/20 text-emerald-800 dark:text-brand-lime">
-                        0{idx + 1}
-                      </span>
-                      <h3 className="text-sm font-bold text-zinc-950 dark:text-zinc-100">
-                        {displayTitle}
-                      </h3>
+                return (
+                  <div 
+                    key={originalIdx} 
+                    className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 overflow-hidden shadow-xs"
+                  >
+                    <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-brand-lime/20 text-emerald-800 dark:text-brand-lime">
+                          {String(originalIdx + 1).padStart(2, '0')}
+                        </span>
+                        <h3 className="text-sm font-bold text-zinc-950 dark:text-zinc-100">
+                          {displayTitle}
+                        </h3>
+                        {ex.badge && (
+                          <span className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase tracking-wider ${
+                            ex.badge.toLowerCase().includes('mutating') && !ex.badge.toLowerCase().includes('non')
+                              ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30'
+                              : ex.badge.toLowerCase().includes('es2023')
+                                ? 'bg-purple-100 dark:bg-purple-500/20 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-500/30'
+                                : 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30'
+                          }`}>
+                            {ex.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleCopyExample(ex.code, originalIdx)}
+                          className="p-1.5 rounded hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors cursor-pointer"
+                          title="Copy code"
+                        >
+                          {copiedExampleIndex === originalIdx ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
+                        </button>
+
+                        <button
+                          onClick={() => handleLoadIntoStudio(ex.code)}
+                          className="px-2.5 py-1 rounded bg-emerald-50 dark:bg-brand-lime/10 border border-emerald-300 dark:border-brand-lime/30 text-emerald-800 dark:text-brand-lime hover:bg-emerald-600 hover:text-white dark:hover:bg-brand-lime dark:hover:text-black font-mono text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
+                        >
+                          <Play size={11} /> Try in Studio
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleCopyExample(ex.code, idx)}
-                        className="p-1.5 rounded hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors"
-                        title="Copy code"
-                      >
-                        {copiedExampleIndex === idx ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
-                      </button>
-
-                      <button
-                        onClick={() => handleLoadIntoStudio(ex.code)}
-                        className="px-2.5 py-1 rounded bg-emerald-50 dark:bg-brand-lime/10 border border-emerald-300 dark:border-brand-lime/30 text-emerald-800 dark:text-brand-lime hover:bg-emerald-600 hover:text-white dark:hover:bg-brand-lime dark:hover:text-black font-mono text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
-                      >
-                        <Play size={11} /> Try in Studio
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-[#090d16] selection:bg-[#264f78] selection:text-white overflow-x-auto text-xs sm:text-sm">
+                  <div className={`p-3 overflow-x-auto text-xs sm:text-sm border-t ${
+                    isDark 
+                      ? 'bg-[#090d16] border-zinc-800 selection:bg-[#264f78] selection:text-white' 
+                      : 'bg-zinc-50 border-zinc-200 selection:bg-blue-100 selection:text-blue-900'
+                  }`}>
                     <SyntaxHighlighter
                       language="javascript"
-                      style={vscDarkPlus}
+                      style={syntaxTheme}
                       customStyle={{
                         margin: 0,
                         padding: 0,
@@ -598,7 +723,11 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                     {rule.title}
                   </h3>
                   {rule.trapCode && (
-                    <div className="p-2.5 rounded-lg bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 font-mono text-xs text-amber-200 my-2 overflow-x-auto">
+                    <div className={`p-2.5 rounded-lg font-mono text-xs my-2 overflow-x-auto border ${
+                      isDark 
+                        ? 'bg-slate-950 text-amber-200 border-slate-800 selection:bg-[#264f78] selection:text-white' 
+                        : 'bg-amber-50 text-amber-950 border-amber-200 selection:bg-amber-100 selection:text-amber-900'
+                    }`}>
                       <code>{rule.trapCode}</code>
                     </div>
                   )}
@@ -648,8 +777,8 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
             </div>
           </div>
 
-          {/* Question Selector Tabs */}
-          <div className="grid grid-cols-3 gap-2">
+          {/* Question Selector Tabs / Stepper */}
+          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl bg-zinc-100/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800">
             {quizList.map((q, idx) => {
               const isTabActive = activeQuizIndex === idx;
               const tabAnswer = quizAnswers[q.id];
@@ -661,35 +790,33 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                   key={q.id || idx}
                   type="button"
                   onClick={() => setActiveQuizIndex(idx)}
-                  className={`flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
                     isTabActive
-                      ? 'border-emerald-600 dark:border-brand-lime bg-emerald-50/70 dark:bg-emerald-950/30 text-[var(--text-main)] shadow-xs ring-1 ring-emerald-500/20'
-                      : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                      ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 shadow-xs font-bold border border-zinc-200 dark:border-zinc-700 ring-1 ring-emerald-500/30'
+                      : isTabAnswered
+                        ? isTabCorrect
+                          ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-brand-lime border border-emerald-300 dark:border-emerald-800'
+                          : 'bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-400 border border-rose-300 dark:border-rose-800'
+                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
                   }`}
                 >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold shrink-0 ${
-                      isTabActive
-                        ? 'bg-emerald-600 text-white dark:bg-brand-lime dark:text-slate-950'
-                        : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
-                    }`}>
-                      {idx + 1}
-                    </span>
-                    <div className="truncate">
-                      <span className="block text-xs font-semibold truncate text-[var(--text-main)]">
-                        {q.category}
-                      </span>
-                      <span className="hidden sm:block text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
-                        Question {idx + 1}
-                      </span>
-                    </div>
-                  </div>
-
+                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                    isTabActive
+                      ? 'bg-emerald-600 text-white dark:bg-brand-lime dark:text-slate-950'
+                      : isTabAnswered
+                        ? isTabCorrect ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
+                        : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300'
+                  }`}>
+                    {idx + 1}
+                  </span>
+                  <span className="font-semibold text-[11px] truncate max-w-[100px]">
+                    {q.category || `Q${idx + 1}`}
+                  </span>
                   {isTabAnswered && (
                     isTabCorrect ? (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 ml-1.5" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-lime shrink-0" />
                     ) : (
-                      <XCircle className="w-4 h-4 text-rose-500 shrink-0 ml-1.5" />
+                      <XCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
                     )
                   )}
                 </button>
@@ -729,7 +856,11 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
               </h3>
 
               {currentQ.code && (
-                <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+                <div className={`rounded-xl border p-4 font-mono text-xs sm:text-sm overflow-x-auto shadow-inner ${
+                  isDark 
+                    ? 'bg-slate-950 text-slate-100 border-slate-800 selection:bg-[#264f78] selection:text-white' 
+                    : 'bg-zinc-100 text-zinc-900 border-zinc-300 selection:bg-blue-100 selection:text-blue-900'
+                }`}>
                   <pre className="whitespace-pre">
                     <code>{currentQ.code}</code>
                   </pre>

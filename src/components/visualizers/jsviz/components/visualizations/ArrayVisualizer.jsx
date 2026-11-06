@@ -49,7 +49,8 @@ const ArrayVisualizer = ({ items }) => {
                     min-width: 68px;
                 }
                 .slot-box {
-                    width: 68px;
+                    min-width: 68px;
+                    padding: 0 10px;
                     height: 68px;
                     background: var(--bg-surface);
                     border: 3px solid #3b82f6;
@@ -58,11 +59,12 @@ const ArrayVisualizer = ({ items }) => {
                     align-items: center;
                     justify-content: center;
                     font-family: 'JetBrains Mono', monospace;
-                    font-weight: 900;
-                    font-size: 20px;
+                    font-weight: 800;
+                    font-size: 16px;
                     color: #3b82f6;
                     box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
                     position: relative;
+                    white-space: nowrap;
                 }
                 .slot-idx {
                     font-family: 'JetBrains Mono', monospace;
@@ -103,7 +105,7 @@ const ArrayVisualizer = ({ items }) => {
                     <div key={i} className="array-card">
                         <div className="slot-idx">idx[{i}]</div>
                         <div className="slot-box">
-                            {item}
+                            {typeof item === 'string' ? item.replace(/^['"]|['"]$/g, '') : item}
                         </div>
                         <div className="mem-ptr">0x{((i + 1) * 0x10).toString(16).toUpperCase()}</div>
                     </div>

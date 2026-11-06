@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   CheckCircle2, 
   XCircle, 
@@ -172,16 +172,23 @@ console.log("userB:", userB.name); // "Bob"`
     setActiveQuizIndex(0);
   };
 
-  const totalQuizQuestions = QUIZ_QUESTIONS.length;
+  const quizList = useMemo(() => {
+    if (content?.quiz && Array.isArray(content.quiz) && content.quiz.length > 0) {
+      return content.quiz;
+    }
+    return QUIZ_QUESTIONS;
+  }, [content]);
+
+  const totalQuizQuestions = quizList.length;
   const answeredQuizCount = Object.keys(quizAnswers).length;
-  const correctQuizCount = QUIZ_QUESTIONS.filter(
+  const correctQuizCount = quizList.filter(
     (q) => quizAnswers[q.id] !== undefined && q.options[quizAnswers[q.id]]?.correct
   ).length;
 
-  const currentQ = QUIZ_QUESTIONS[activeQuizIndex] || QUIZ_QUESTIONS[0];
-  const currentAnswer = quizAnswers[currentQ.id];
+  const currentQ = quizList[activeQuizIndex] || quizList[0];
+  const currentAnswer = quizAnswers[currentQ?.id];
   const isCurrentAnswered = currentAnswer !== undefined;
-  const isCurrentCorrect = isCurrentAnswered && currentQ.options[currentAnswer]?.correct;
+  const isCurrentCorrect = isCurrentAnswered && currentQ?.options?.[currentAnswer]?.correct;
 
   const handleRunCode = (newCode) => {
     setLiveCode(newCode);
@@ -297,7 +304,7 @@ console.log("userB:", userB.name); // "Bob"`
         </div>
 
         {/* Clear ASCII Architecture Diagram */}
-        <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
+        <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-4 sm:p-5 overflow-x-auto text-center shadow-xs">
           <div className="text-xs font-mono text-slate-400 mb-2 font-bold uppercase tracking-wider text-left">
             How Data Is Organized:
           </div>
@@ -356,7 +363,7 @@ console.log("userB:", userB.name); // "Bob"`
               </button>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto">
+            <div className="rounded-xl border border-zinc-200 dark:border-slate-800 bg-zinc-50 dark:bg-slate-950 p-4 font-mono text-xs sm:text-sm text-zinc-900 dark:text-slate-100 overflow-x-auto">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">let</span> a = <span className="text-amber-300">10</span>;{'\n'}
@@ -388,7 +395,7 @@ console.log("userB:", userB.name); // "Bob"`
               </button>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto">
+            <div className="rounded-xl border border-zinc-200 dark:border-slate-800 bg-zinc-50 dark:bg-slate-950 p-4 font-mono text-xs sm:text-sm text-zinc-900 dark:text-slate-100 overflow-x-auto">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">let</span> user1 = &#123; name: <span className="text-emerald-300">&quot;Alice&quot;</span> &#125;;{'\n'}
@@ -431,7 +438,7 @@ console.log("userB:", userB.name); // "Bob"`
               <XCircle className="w-4 h-4" /> The Mistake (Shared Reference)
             </span>
 
-            <div className="rounded-lg border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-3 font-mono text-xs sm:text-sm text-slate-100">
+            <div className="rounded-lg border border-zinc-200 dark:border-slate-800 bg-zinc-50 dark:bg-slate-950 p-3 font-mono text-xs sm:text-sm text-zinc-900 dark:text-slate-100">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">const</span> original = &#123; role: <span className="text-emerald-300">&quot;admin&quot;</span> &#125;;{'\n'}
@@ -453,7 +460,7 @@ console.log("userB:", userB.name); // "Bob"`
               <CheckCircle2 className="w-4 h-4" /> The Fix (Spread Operator &#123; ... &#125;)
             </span>
 
-            <div className="rounded-lg border border-slate-800 bg-slate-950 selection:bg-[#264f78] selection:text-white p-3 font-mono text-xs sm:text-sm text-slate-100">
+            <div className="rounded-lg border border-zinc-200 dark:border-slate-800 bg-zinc-50 dark:bg-slate-950 p-3 font-mono text-xs sm:text-sm text-zinc-900 dark:text-slate-100">
               <pre className="leading-relaxed">
                 <code>
                   <span className="text-pink-400">const</span> original = &#123; role: <span className="text-emerald-300">&quot;admin&quot;</span> &#125;;{'\n'}
@@ -576,8 +583,8 @@ console.log("userB:", userB.name); // "Bob"`
         </div>
 
         {/* Question Selector Tabs (Flexibility to jump directly to any question) */}
-        <div className="grid grid-cols-3 gap-2">
-          {QUIZ_QUESTIONS.map((q, idx) => {
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          {quizList.map((q, idx) => {
             const isTabActive = activeQuizIndex === idx;
             const tabAnswer = quizAnswers[q.id];
             const isTabAnswered = tabAnswer !== undefined;
@@ -585,38 +592,31 @@ console.log("userB:", userB.name); // "Bob"`
 
             return (
               <button
-                key={q.id}
+                key={q.id || idx}
                 type="button"
                 onClick={() => setActiveQuizIndex(idx)}
-                className={`flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl border text-left transition-all ${
                   isTabActive
                     ? 'border-emerald-600 dark:border-brand-lime bg-emerald-50/70 dark:bg-emerald-950/30 text-[var(--text-main)] shadow-xs ring-1 ring-emerald-500/20'
                     : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900'
                 }`}
               >
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold shrink-0 ${
-                    isTabActive
-                      ? 'bg-emerald-600 text-white dark:bg-brand-lime dark:text-slate-950'
-                      : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
-                  }`}>
-                    {idx + 1}
-                  </span>
-                  <div className="truncate">
-                    <span className="block text-xs font-semibold truncate text-[var(--text-main)]">
-                      {q.category}
-                    </span>
-                    <span className="hidden sm:block text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
-                      Question {idx + 1}
-                    </span>
-                  </div>
-                </div>
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold shrink-0 ${
+                  isTabActive
+                    ? 'bg-emerald-600 text-white dark:bg-brand-lime dark:text-slate-950'
+                    : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                }`}>
+                  {idx + 1}
+                </span>
+                <span className="text-xs font-semibold max-w-[80px] sm:max-w-[120px] truncate text-[var(--text-main)]">
+                  {q.category}
+                </span>
 
                 {isTabAnswered && (
                   isTabCorrect ? (
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 ml-1.5" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   ) : (
-                    <XCircle className="w-4 h-4 text-rose-500 shrink-0 ml-1.5" />
+                    <XCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
                   )
                 )}
               </button>
@@ -659,7 +659,7 @@ console.log("userB:", userB.name); // "Bob"`
           </h3>
 
           {/* Code Snippet Box */}
-          <div className="rounded-xl bg-slate-950 selection:bg-[#264f78] selection:text-white border border-slate-800 p-4 font-mono text-xs sm:text-sm text-slate-100 overflow-x-auto shadow-inner">
+          <div className="rounded-xl bg-zinc-50 dark:bg-slate-950 border border-zinc-200 dark:border-slate-800 p-4 font-mono text-xs sm:text-sm text-zinc-900 dark:text-slate-100 overflow-x-auto shadow-inner">
             <pre className="whitespace-pre">
               <code>{currentQ.code}</code>
             </pre>
@@ -747,7 +747,7 @@ console.log("userB:", userB.name); // "Bob"`
                   {isCurrentCorrect ? 'Concept Verified' : 'Conceptual Clarification'}
                 </p>
                 <p className="leading-relaxed text-zinc-700 dark:text-zinc-300">
-                  {isCurrentCorrect ? currentQ.explanationCorrect : currentQ.explanationIncorrect}
+                  {isCurrentCorrect ? (currentQ.explanationCorrect || currentQ.options?.find(o => o.correct)?.why || 'Correct!') : (currentQ.explanationIncorrect || currentQ.options?.[currentAnswer]?.why || 'Conceptual Clarification')}
                 </p>
               </div>
             </div>
@@ -767,7 +767,7 @@ console.log("userB:", userB.name); // "Bob"`
 
             {/* Clickable Step Indicator Dots */}
             <div className="flex items-center gap-1.5">
-              {QUIZ_QUESTIONS.map((_, dotIdx) => (
+              {quizList.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
                   type="button"

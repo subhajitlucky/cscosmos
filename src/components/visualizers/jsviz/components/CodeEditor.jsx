@@ -6,10 +6,15 @@ import { useTheme } from '@/context/useTheme';
 
 const CodeEditor = ({ initialCode = '', onRun, readOnly = false, className = '' }) => {
     const { theme, resolvedTheme } = useTheme();
-    const currentTheme = resolvedTheme || (theme === 'system'
-        ? (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-        : theme) || 'dark';
-    const isDark = currentTheme === 'dark';
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const isDark = mounted 
+        ? (resolvedTheme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark')))
+        : resolvedTheme === 'dark';
     const monacoTheme = isDark ? 'vs-dark' : 'vs';
 
     const [code, setCode] = useState(initialCode);
@@ -149,7 +154,7 @@ const CodeEditor = ({ initialCode = '', onRun, readOnly = false, className = '' 
                 {/* Monaco Editor Container with Absolute Pinning */}
                 <div 
                     className="flex-1 min-h-[220px] relative w-full overflow-hidden" 
-                    style={{ backgroundColor: isDark ? '#1e1e1e' : '#fffffe' }}
+                    style={{ backgroundColor: isDark ? '#1e1e1e' : '#ffffff' }}
                 >
                     <div className="absolute inset-0 w-full h-full">
                         <Editor

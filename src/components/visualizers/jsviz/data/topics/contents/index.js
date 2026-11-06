@@ -53,6 +53,7 @@ import security from './security.js';
 import legacy from './legacy.js';
 import additionalTopics from './additionalTopics.js';
 import { TOPIC_SLUG_MAP, SPECIALIZED_TOPICS_2027 } from './curriculum2027.js';
+import { CURRICULUM_EXTRA_EXAMPLES, CURRICULUM_QUIZZES } from '../curriculum100Bank.js';
 
 export const topicContents = {
     'variables-scope': variablesScope,
@@ -117,13 +118,35 @@ export const getTopicContent = (topicId) => {
     let raw = SPECIALIZED_TOPICS_2027[topicId] || topicContents[topicId];
     
     // 2. Mapped hit using the 2027 curriculum slug map
-    if (!raw && TOPIC_SLUG_MAP[topicId]) {
-        const mappedKey = TOPIC_SLUG_MAP[topicId];
+    const mappedKey = TOPIC_SLUG_MAP[topicId];
+    if (!raw && mappedKey) {
         raw = SPECIALIZED_TOPICS_2027[mappedKey] || topicContents[mappedKey];
     }
 
     if (!raw) return null;
-    return raw.default || raw;
+    const content = raw.default || raw;
+
+    // Attach 10-question curriculum quiz
+    const quiz = CURRICULUM_QUIZZES[topicId] || (mappedKey && CURRICULUM_QUIZZES[mappedKey]) || content.quiz;
+
+    // Merge extra clean short examples
+    const extraExamples = CURRICULUM_EXTRA_EXAMPLES[topicId] || (mappedKey && CURRICULUM_EXTRA_EXAMPLES[mappedKey]) || [];
+    let mergedExamples = Array.isArray(content.examples) ? [...content.examples] : [];
+
+    if (extraExamples.length > 0 && mergedExamples.length < 5) {
+        const existingTitles = new Set(mergedExamples.map(e => e.title || (e.code && e.code.slice(0, 30))));
+        for (const ex of extraExamples) {
+            if (!existingTitles.has(ex.title)) {
+                mergedExamples.push(ex);
+            }
+        }
+    }
+
+    return {
+        ...content,
+        examples: mergedExamples,
+        quiz: quiz || content.quiz
+    };
 };
 
 export default topicContents;

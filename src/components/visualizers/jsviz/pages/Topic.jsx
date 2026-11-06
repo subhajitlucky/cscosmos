@@ -137,13 +137,13 @@ const Topic = ({ topicId: propTopicId }) => {
             <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 space-y-6">
                 
                 {id === 'what-is-javascript-history-evolution-ecmascript' ? (
-                    <WhatIsJsLesson topic={topic} />
+                    <WhatIsJsLesson topic={topic} content={content} />
                 ) : id === 'javascript-runtime-environments-browser-vs-nodejs' ? (
-                    <RuntimeEnvironmentsLesson topic={topic} />
+                    <RuntimeEnvironmentsLesson topic={topic} content={content} />
                 ) : id === 'javascript-engine-architecture-execution' ? (
-                    <EngineArchitectureLesson topic={topic} />
+                    <EngineArchitectureLesson topic={topic} content={content} />
                 ) : id === 'javascript-syntax-statements-expressions' ? (
-                    <SyntaxExpressionsLesson topic={topic} />
+                    <SyntaxExpressionsLesson topic={topic} content={content} />
                 ) : id === 'data-types' || id === 'primitive-vs-non-primitive-data-types' ? (
                     <DataTypesLesson topic={topic} content={content} />
                 ) : id === 'type-detection-typeof-instanceof-tostring' || id === 'typeof-detection' ? (

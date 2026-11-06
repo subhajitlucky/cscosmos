@@ -461,14 +461,222 @@ export const additionalTopics = {
         "syntax": "// Mutating (In-place)\narr.push(); arr.pop(); arr.shift(); arr.unshift();\narr.splice(); arr.sort(); arr.reverse();\n\n// Non-Mutating (Pure)\narr.slice(); arr.concat(); arr.map(); arr.filter();\n\n// Modern ES2023 Non-Mutating Counterparts:\narr.toSorted(); arr.toReversed(); arr.toSpliced(); arr.with(index, val);",
         "examples": [
             {
-                "title": "Mutating vs ES2023 Non-Mutating Methods",
-                "code": "const list = [3, 1, 2];\n\n// Old Mutating sort():\n// list.sort(); // ⚠️ Modifies 'list' directly!\n\n// Modern ES2023 toSorted():\nconst sorted = list.toSorted();\n\nconsole.log(\"Original:\", list);   // [3, 1, 2] (Preserved!)\nconsole.log(\"Sorted:\", sorted);   // [1, 2, 3]\n\n// Replacing an element immutably with .with():\nconst replaced = list.with(0, 99);\nconsole.log(\"Replaced:\", replaced); // [99, 1, 2]",
-                "explanation": "`toSorted()`, `toReversed()`, and `toSpliced()` create and return a new array without mutating the caller."
+                "title": "arr.push()",
+                "badge": "Mutating",
+                "category": "Mutating (In-place)",
+                "code": "const fruits = ['apple', 'banana'];\n\n// push() appends one or more items to the END of the array in-place\nconst newLength = fruits.push('cherry', 'date');\n\nconsole.log(\"Returned (new length):\", newLength); // 4\nconsole.log(\"Original fruits (mutated):\", fruits);  // ['apple', 'banana', 'cherry', 'date']",
+                "explanation": "`push()` appends one or more elements to the end of the original array and mutates it in-place. Crucially, it returns the *new length* of the array, NOT the array itself."
             },
             {
-                "title": "The Danger of Array.prototype.sort()",
-                "code": "const scores = [10, 5, 40, 25, 100];\n// Default sort converts elements to strings!\nscores.sort();\nconsole.log(scores); // [10, 100, 25, 40, 5] ⚠️\n\n// Proper numeric comparator:\nscores.sort((a, b) => a - b);\nconsole.log(scores); // [5, 10, 25, 40, 100] ✅",
-                "explanation": "Always provide a comparator `(a, b) => a - b` when sorting numbers with `sort()`."
+                "title": "arr.pop()",
+                "badge": "Mutating",
+                "category": "Mutating (In-place)",
+                "code": "const stack = ['task 1', 'task 2', 'task 3'];\n\n// pop() removes the LAST element from the array in-place\nconst removedItem = stack.pop();\n\nconsole.log(\"Returned (removed item):\", removedItem); // 'task 3'\nconsole.log(\"Original stack (mutated):\", stack);       // ['task 1', 'task 2']",
+                "explanation": "`pop()` removes the last element from an array in-place and returns that element. If the array is already empty, it returns `undefined` without throwing an error."
+            },
+            {
+                "title": "arr.shift()",
+                "badge": "Mutating",
+                "category": "Mutating (In-place)",
+                "code": "const queue = ['customer A', 'customer B', 'customer C'];\n\n// shift() removes the FIRST element (index 0) in-place\nconst served = queue.shift();\n\nconsole.log(\"Returned (removed item):\", served); // 'customer A'\nconsole.log(\"Original queue (mutated):\", queue);  // ['customer B', 'customer C']",
+                "explanation": "`shift()` removes the element at index 0 and shifts all remaining elements down by one index. It mutates the array in-place with O(N) linear time complexity and returns the removed element."
+            },
+            {
+                "title": "arr.unshift()",
+                "badge": "Mutating",
+                "category": "Mutating (In-place)",
+                "code": "const queue = ['normal task', 'low task'];\n\n// unshift() prepends one or more elements to the BEGINNING (index 0)\nconst newLength = queue.unshift('URGENT task');\n\nconsole.log(\"Returned (new length):\", newLength); // 3\nconsole.log(\"Original queue (mutated):\", queue);    // ['URGENT task', 'normal task', 'low task']",
+                "explanation": "`unshift()` inserts one or more items at the beginning of the array in-place, shifting existing items forward. Like `push()`, it returns the *new array length*."
+            },
+            {
+                "title": "arr.splice()",
+                "badge": "Mutating",
+                "category": "Mutating (In-place)",
+                "code": "const items = ['a', 'b', 'c', 'd'];\n\n// splice(start, deleteCount, ...itemsToAdd)\n// Removes 2 items starting at index 1, and inserts 'X' & 'Y':\nconst deleted = items.splice(1, 2, 'X', 'Y');\n\nconsole.log(\"Returned (deleted items):\", deleted); // ['b', 'c']\nconsole.log(\"Original items (mutated):\", items);   // ['a', 'X', 'Y', 'd']",
+                "explanation": "`splice()` is the Swiss Army knife for in-place array modification. It can remove, insert, or replace elements at any index. It mutates the original array and returns an array of the deleted elements."
+            },
+            {
+                "title": "arr.sort()",
+                "badge": "Mutating",
+                "category": "Mutating (In-place)",
+                "code": "const scores = [40, 10, 100, 25, 5];\n\n// ⚠️ Default sort converts to strings (e.g., '100' comes before '25'):\n// scores.sort(); -> [10, 100, 25, 40, 5]\n\n// Proper numeric sort in-place:\nscores.sort((a, b) => a - b);\n\nconsole.log(\"Original scores (mutated):\", scores); // [5, 10, 25, 40, 100]",
+                "explanation": "`sort()` reorders array elements in-place and returns the same array reference. Always provide a comparator function `(a, b) => a - b` when sorting numbers to avoid lexicographical string sorting bugs."
+            },
+            {
+                "title": "arr.reverse()",
+                "badge": "Mutating",
+                "category": "Mutating (In-place)",
+                "code": "const letters = ['a', 'b', 'c', 'd'];\n\n// reverse() inverts element order directly in memory\nconst returnedRef = letters.reverse();\n\nconsole.log(\"Original letters (mutated):\", letters);     // ['d', 'c', 'b', 'a']\nconsole.log(\"Returns same array reference?:\", returnedRef === letters); // true",
+                "explanation": "`reverse()` flips the array elements in-place. The first becomes the last, and the last becomes the first. It mutates the array and returns the mutated array reference itself."
+            },
+            {
+                "title": "arr.slice()",
+                "badge": "Non-Mutating",
+                "category": "Non-Mutating (Pure)",
+                "code": "const animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];\n\n// slice(start, endExclusive) creates a shallow copy of a slice\nconst extracted = animals.slice(1, 4);\n\nconsole.log(\"Returned copy:\", extracted);           // ['bison', 'camel', 'duck']\nconsole.log(\"Original animals (pure/intact):\", animals); // ['ant', 'bison', 'camel', 'duck', 'elephant']",
+                "explanation": "`slice()` extracts a section of an array and returns a brand-new array. The original array is left completely untouched (non-mutating)."
+            },
+            {
+                "title": "arr.concat()",
+                "badge": "Non-Mutating",
+                "category": "Non-Mutating (Pure)",
+                "code": "const teamA = ['Alice', 'Bob'];\nconst teamB = ['Charlie', 'Dana'];\n\n// concat() joins arrays or values into a brand NEW array\nconst merged = teamA.concat(teamB, 'Eve');\n\nconsole.log(\"Returned merged copy:\", merged);   // ['Alice', 'Bob', 'Charlie', 'Dana', 'Eve']\nconsole.log(\"Original teamA (pure/intact):\", teamA); // ['Alice', 'Bob']\nconsole.log(\"Original teamB (pure/intact):\", teamB); // ['Charlie', 'Dana']",
+                "explanation": "`concat()` merges two or more arrays (or values) and returns a new combined array. None of the original input arrays are altered."
+            },
+            {
+                "title": "arr.map()",
+                "badge": "Non-Mutating",
+                "category": "Non-Mutating (Pure)",
+                "code": "const prices = [10, 20, 30];\n\n// map() transforms each element into a brand NEW array of identical length\nconst formatted = prices.map((p) => `$${p.toFixed(2)}`);\n\nconsole.log(\"Returned new array:\", formatted);   // ['$10.00', '$20.00', '$30.00']\nconsole.log(\"Original prices (pure/intact):\", prices); // [10, 20, 30]",
+                "explanation": "`map()` calls a transformer callback on each element and returns a newly constructed array containing the returned values, preserving the original array."
+            },
+            {
+                "title": "arr.filter()",
+                "badge": "Non-Mutating",
+                "category": "Non-Mutating (Pure)",
+                "code": "const numbers = [12, 5, 8, 130, 44];\n\n// filter() creates a NEW array with elements that pass the boolean test\nconst bigNumbers = numbers.filter((num) => num >= 10);\n\nconsole.log(\"Returned new array:\", bigNumbers);   // [12, 130, 44]\nconsole.log(\"Original numbers (pure/intact):\", numbers); // [12, 5, 8, 130, 44]",
+                "explanation": "`filter()` iterates through each element and evaluates a predicate function. It returns a new array with all elements that return a truthy value without mutating the source array."
+            },
+            {
+                "title": "arr.toSorted()",
+                "badge": "ES2023 Pure",
+                "category": "Modern ES2023 Counterparts",
+                "code": "const scores = [40, 10, 100, 25, 5];\n\n// ES2023 toSorted() sorts into a NEW array without mutating original!\nconst sortedScores = scores.toSorted((a, b) => a - b);\n\nconsole.log(\"Returned sorted copy:\", sortedScores); // [5, 10, 25, 40, 100]\nconsole.log(\"Original scores (pure/intact):\", scores);   // [40, 10, 100, 25, 5]",
+                "explanation": "Introduced in ES2023, `toSorted()` provides the immutable counterpart to `sort()`. It returns a sorted copy of the elements, keeping the source array intact."
+            },
+            {
+                "title": "arr.toReversed()",
+                "badge": "ES2023 Pure",
+                "category": "Modern ES2023 Counterparts",
+                "code": "const items = ['first', 'second', 'third'];\n\n// ES2023 toReversed() returns a REVERSED COPY without mutating original!\nconst reversed = items.toReversed();\n\nconsole.log(\"Returned reversed copy:\", reversed); // ['third', 'second', 'first']\nconsole.log(\"Original items (pure/intact):\", items);   // ['first', 'second', 'third']",
+                "explanation": "Introduced in ES2023, `toReversed()` is the immutable twin of `reverse()`. It produces a new array with items in reverse order while preserving the original array."
+            },
+            {
+                "title": "arr.toSpliced()",
+                "badge": "ES2023 Pure",
+                "category": "Modern ES2023 Counterparts",
+                "code": "const letters = ['a', 'b', 'c', 'd'];\n\n// ES2023 toSpliced(start, deleteCount, ...itemsToAdd)\n// ⚠️ Crucial difference: toSpliced() returns the RESULTING NEW ARRAY,\n// whereas splice() mutates original and returns deleted items!\nconst result = letters.toSpliced(1, 2, 'X', 'Y');\n\nconsole.log(\"Returned new array:\", result);        // ['a', 'X', 'Y', 'd']\nconsole.log(\"Original letters (pure/intact):\", letters); // ['a', 'b', 'c', 'd']",
+                "explanation": "Introduced in ES2023, `toSpliced()` performs slice-and-splice operations without mutating the original array. Note that `toSpliced()` returns the new modified array, whereas `splice()` returns the deleted items."
+            },
+            {
+                "title": "arr.with()",
+                "badge": "ES2023 Pure",
+                "category": "Modern ES2023 Counterparts",
+                "code": "const users = ['Alice', 'Bob', 'Charlie'];\n\n// ES2023 with(index, newValue) returns a copy with ONE element replaced:\nconst updated = users.with(1, 'Bobby');\nconsole.log(\"Updated copy with(1, 'Bobby'):\", updated); // ['Alice', 'Bobby', 'Charlie']\nconsole.log(\"Original users (pure/intact):\", users);     // ['Alice', 'Bob', 'Charlie']\n\n// Supports negative index (counts from the end):\nconst replacedLast = users.with(-1, 'Chuck');\nconsole.log(\"Replaced last with(-1, 'Chuck'):\", replacedLast); // ['Alice', 'Bob', 'Chuck']",
+                "explanation": "Introduced in ES2023, `arr.with(index, value)` replaces the value at the given index immutably, returning a new array. Negative indices count backward from the end (-1 is the last item)."
+            }
+        ],
+        "goldenRules": [
+            {
+                "title": "Never mutate state arrays directly in React, Redux, or Vue",
+                "trapCode": "// ⚠️ BUG IN REACT:\nconst [items, setItems] = useState([1, 2, 3]);\nitems.push(4); // Modifies original array in-place!\nsetItems(items); // React does Object.is(prev, next) -> SAME REFERENCE! -> NO RE-RENDER!",
+                "why": "React and modern reactive state frameworks detect changes via shallow reference equality. Because mutating methods modify the existing array at the same heap address, the reference is identical and re-rendering is skipped. Always use non-mutating methods (toSorted, toSpliced, with, filter, map) or spread clones `[...items, 4]`."
+            },
+            {
+                "title": "Beware: splice() returns deleted items, but toSpliced() returns the new array",
+                "trapCode": "const arr = [1, 2, 3];\nconst res1 = arr.splice(1, 1);   // res1 is [2] (the deleted items) ⚠️\nconst res2 = arr.toSpliced(1, 1); // res2 is [1, 3] (the resulting array) ✅",
+                "why": "This is one of the most common API signature traps in modern JavaScript. In-place `splice()` returns what was removed, whereas pure `toSpliced()` returns the newly constructed array with modifications applied."
+            }
+        ],
+        "quiz": [
+            {
+                "id": "q1",
+                "category": "Array Mutation",
+                "badgeClass": "text-amber-700 dark:text-amber-400 bg-amber-500/10 border-amber-500/20",
+                "title": "Which of the following array methods modifies the original array in-place?",
+                "code": "const list = [1, 2, 3];\n// Which call mutates list directly?",
+                "options": [
+                    {
+                        "letter": "A",
+                        "label": "list.concat(4)",
+                        "correct": false,
+                        "why": "concat() is non-mutating; it allocates and returns a brand-new array without altering the original list."
+                    },
+                    {
+                        "letter": "B",
+                        "label": "list.push(4)",
+                        "correct": true,
+                        "why": "Correct! push() modifies the backing array storage in-place and returns the new length."
+                    },
+                    {
+                        "letter": "C",
+                        "label": "list.slice(0, 2)",
+                        "correct": false,
+                        "why": "slice() returns a shallow copy of the requested segment and does not mutate the original array."
+                    },
+                    {
+                        "letter": "D",
+                        "label": "list.toSorted()",
+                        "correct": false,
+                        "why": "toSorted() is an ES2023 non-mutating method that returns a new sorted array."
+                    }
+                ]
+            },
+            {
+                "id": "q2",
+                "category": "ES2023 APIs",
+                "badgeClass": "text-purple-700 dark:text-purple-400 bg-purple-500/10 border-purple-500/20",
+                "title": "How does ES2023 toSpliced() differ fundamentally from traditional splice()?",
+                "code": "const arr = ['a', 'b', 'c'];\nconst x = arr.splice(1, 1);\nconst y = arr.toSpliced(1, 1);",
+                "options": [
+                    {
+                        "letter": "A",
+                        "label": "splice() mutates and returns deleted items, whereas toSpliced() preserves original and returns the resulting new array.",
+                        "correct": true,
+                        "why": "Correct! splice() returns deleted elements and mutates in-place; toSpliced() returns the new array without mutating."
+                    },
+                    {
+                        "letter": "B",
+                        "label": "toSpliced() only works with numbers, while splice() works with all types.",
+                        "correct": false,
+                        "why": "Both methods work with all JavaScript data types."
+                    },
+                    {
+                        "letter": "C",
+                        "label": "They are identical aliases; toSpliced() is just syntactic sugar for splice().",
+                        "correct": false,
+                        "why": "toSpliced() is pure and does not mutate the caller; splice() modifies the caller in-place."
+                    },
+                    {
+                        "letter": "D",
+                        "label": "toSpliced() returns a Promise that resolves asynchronously.",
+                        "correct": false,
+                        "why": "toSpliced() is a synchronous array method."
+                    }
+                ]
+            },
+            {
+                "id": "q3",
+                "category": "Modern Immutability",
+                "badgeClass": "text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+                "title": "How can you immutably update the item at index 2 of an array to 99?",
+                "code": "const arr = [10, 20, 30, 40];",
+                "options": [
+                    {
+                        "letter": "A",
+                        "label": "arr[2] = 99;",
+                        "correct": false,
+                        "why": "Direct index assignment directly mutates the original array in-place."
+                    },
+                    {
+                        "letter": "B",
+                        "label": "const updated = arr.with(2, 99);",
+                        "correct": true,
+                        "why": "Correct! ES2023 arr.with(index, value) returns a new array with the element at index replaced, leaving arr unmodified."
+                    },
+                    {
+                        "letter": "C",
+                        "label": "arr.splice(2, 1, 99);",
+                        "correct": false,
+                        "why": "splice() mutates arr in-place."
+                    },
+                    {
+                        "letter": "D",
+                        "label": "arr.push(99);",
+                        "correct": false,
+                        "why": "push() appends to the end of arr and mutates it."
+                    }
+                ]
             }
         ],
         "explanation": "Writing clean, predictable applications requires knowing whether a method mutates in-place. In modern React and state-driven apps, mutation leads to dropped re-renders and stale UI.",
