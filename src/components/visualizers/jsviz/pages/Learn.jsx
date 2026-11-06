@@ -175,8 +175,8 @@ const Learn = () => {
                                 </span>
                             </div>
 
-                            {/* Responsive 4-Column Card Grid */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-4">
+                            {/* Responsive Card Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-3.5">
                                 {category.items.map((topic, index) => {
                                     const isCompleted = progress.completedTopics.includes(topic.id);
                                     const displayNum = topic.number || index + 1;
@@ -186,44 +186,37 @@ const Learn = () => {
                                         <Link
                                             key={topic.id}
                                             href={`${basePath}/topic/${topic.id}`}
-                                            className={`group p-4 rounded-2xl border transition-all duration-200 flex flex-col justify-between gap-3 relative overflow-hidden ${
+                                            className={`group p-3.5 sm:p-4 rounded-xl border transition-all duration-200 flex flex-col justify-between min-h-[115px] gap-2.5 relative overflow-hidden ${
                                                 isCompleted
                                                     ? 'border-emerald-500/40 bg-emerald-50/30 dark:bg-emerald-950/20 dark:border-emerald-500/40 hover:border-emerald-600 dark:hover:border-emerald-400 shadow-xs'
                                                     : 'border-zinc-200/90 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/50 hover:border-emerald-500/60 dark:hover:border-brand-lime/60 hover:bg-zinc-50/80 dark:hover:bg-zinc-850/60 hover:shadow-md hover:-translate-y-0.5'
                                             }`}
                                         >
-                                            {/* Card Top Row: Number & Level Badge */}
-                                            <div className="space-y-2">
+                                            {/* Card Top: Number & Level Badge + Title */}
+                                            <div className="space-y-1.5">
                                                 <div className="flex items-center justify-between gap-2">
                                                     <span className="font-mono text-xs font-bold text-zinc-500 dark:text-zinc-400 group-hover:text-emerald-700 dark:group-hover:text-brand-lime transition-colors">
                                                         #{String(displayNum).padStart(2, '0')}
                                                     </span>
 
                                                     {badge && (
-                                                        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md border ${badge.className}`}>
+                                                        <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${badge.className}`}>
                                                             {badge.label}
                                                         </span>
                                                     )}
                                                 </div>
 
                                                 {/* Concept Title */}
-                                                <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-700 dark:group-hover:text-brand-lime transition-colors leading-snug line-clamp-2">
+                                                <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-700 dark:group-hover:text-brand-lime transition-colors leading-snug line-clamp-2">
                                                     {topic.title}
                                                 </h3>
-
-                                                {/* Concept Description Snippet */}
-                                                {topic.description && (
-                                                    <p className="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed font-sans">
-                                                        {topic.description}
-                                                    </p>
-                                                )}
                                             </div>
 
                                             {/* Card Bottom Row: Features & Action */}
-                                            <div className="flex items-center justify-between pt-3 border-t border-zinc-100 dark:border-zinc-800/60 text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+                                            <div className="flex items-center justify-between pt-2.5 border-t border-zinc-100 dark:border-zinc-800/60 text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
                                                 <span className="flex items-center gap-1.5">
                                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-lime"></span>
-                                                    10 MCQs &bull; Studio
+                                                    10 MCQs
                                                 </span>
 
                                                 <span className="flex items-center gap-1 font-semibold group-hover:text-emerald-700 dark:group-hover:text-brand-lime transition-colors">
