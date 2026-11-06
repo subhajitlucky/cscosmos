@@ -17,6 +17,7 @@ import {
 import { useTheme } from '@/context/useTheme';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { runInSandbox } from './sandboxRunner';
 
 const APPLICATIONS = [
   {
@@ -183,61 +184,26 @@ export default function RealWorldApplications() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const runCode = () => {
+  const runCode = async () => {
     setConsoleOutput([]);
     setIsRunning(true);
 
-    const logs = [];
-    const origLog = console.log;
-    const origWarn = console.warn;
-    const origError = console.error;
-
-    const capture = (type, args) => {
-      const formatted = args.map(arg => {
-        if (arg === null) return 'null';
-        if (arg === undefined) return 'undefined';
-        if (typeof arg === 'object') {
-          try {
-            return JSON.stringify(arg);
-          } catch {
-            return '[Object]';
-          }
-        }
-        return String(arg);
-      }).join(' ');
-
-      logs.push({ type, text: formatted });
-      setConsoleOutput([...logs]);
-    };
-
-    console.log = (...args) => capture('log', args);
-    console.warn = (...args) => capture('warn', args);
-    console.error = (...args) => capture('error', args);
-
     try {
-      const runner = new Function('console', `
-        "use strict";
-        try {
-          ${activeApp.code}
-        } catch(err) {
-          console.error(err.message);
-        }
-      `);
-
-      runner({
-        log: (...args) => capture('log', args),
-        warn: (...args) => capture('warn', args),
-        error: (...args) => capture('error', args)
-      });
+      const result = await runInSandbox(activeApp.code, { timeoutMs: 2500 });
+      if (result.error) {
+        setConsoleOutput([
+          ...result.logs,
+          { type: 'error', text: result.error }
+        ]);
+      } else if (result.logs.length === 0) {
+        setConsoleOutput([{ type: 'log', text: '// Code ran cleanly with no output.' }]);
+      } else {
+        setConsoleOutput(result.logs);
+      }
     } catch (err) {
-      capture('error', [err.message]);
+      setConsoleOutput([{ type: 'error', text: err.message || String(err) }]);
     } finally {
-      setTimeout(() => {
-        console.log = origLog;
-        console.warn = origWarn;
-        console.error = origError;
-        setIsRunning(false);
-      }, 350);
+      setIsRunning(false);
     }
   };
 

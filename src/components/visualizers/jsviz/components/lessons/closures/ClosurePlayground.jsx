@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Editor from '@monaco-editor/react';
 import { useTheme } from '@/context/useTheme';
+import { runInSandbox } from './sandboxRunner';
 
 const PLAYGROUND_PRESETS = [
   {
@@ -197,70 +198,42 @@ export default function ClosurePlayground() {
     setConsoleLogs([]);
   };
 
-  const runCode = () => {
+  const runCode = async () => {
     setConsoleLogs([]);
     setIsRunning(true);
 
-    const logs = [];
-    const originalLog = console.log;
-    const originalWarn = console.warn;
-    const originalError = console.error;
-
-    // Capture stdout
-    const capture = (type, args) => {
-      const formatted = args.map((arg) => {
-        if (arg === null) return 'null';
-        if (arg === undefined) return 'undefined';
-        if (typeof arg === 'object') {
-          try {
-            return JSON.stringify(arg, null, 2);
-          } catch {
-            return '[Object]';
-          }
-        }
-        return String(arg);
-      }).join(' ');
-
-      logs.push({
-        type,
-        text: formatted,
-        time: new Date().toLocaleTimeString().split(' ')[0]
-      });
-      setConsoleLogs([...logs]);
-    };
-
-    console.log = (...args) => capture('log', args);
-    console.warn = (...args) => capture('warn', args);
-    console.error = (...args) => capture('error', args);
-
     try {
-      // Execute within sandbox function wrapper with safety checks
-      // Disallow window modifications or DOM manipulation
-      const safeWrapper = new Function('console', `
-        "use strict";
-        try {
-          ${code}
-        } catch (err) {
-          console.error(err.name + ": " + err.message);
-        }
-      `);
+      const result = await runInSandbox(code, { timeoutMs: 2500 });
+      const currentTime = new Date().toLocaleTimeString().split(' ')[0];
 
-      safeWrapper({
-        log: (...args) => capture('log', args),
-        warn: (...args) => capture('warn', args),
-        error: (...args) => capture('error', args)
-      });
+      const formattedLogs = result.logs.map((log) => ({
+        ...log,
+        time: currentTime
+      }));
+
+      if (result.error) {
+        formattedLogs.push({
+          type: 'error',
+          text: result.error,
+          time: currentTime
+        });
+      } else if (formattedLogs.length === 0) {
+        formattedLogs.push({
+          type: 'log',
+          text: `// Code executed cleanly in ${result.executionTimeMs}ms (no console output).`,
+          time: currentTime
+        });
+      }
+
+      setConsoleLogs(formattedLogs);
     } catch (err) {
-      capture('error', [err.name + ': ' + err.message]);
+      setConsoleLogs([{
+        type: 'error',
+        text: 'Sandbox runner failure: ' + (err.message || String(err)),
+        time: new Date().toLocaleTimeString().split(' ')[0]
+      }]);
     } finally {
-      // Keep console captured slightly for async setTimeout callbacks
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        console.log = originalLog;
-        console.warn = originalWarn;
-        console.error = originalError;
-        setIsRunning(false);
-      }, 700);
+      setIsRunning(false);
     }
   };
 

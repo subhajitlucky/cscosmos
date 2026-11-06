@@ -38,7 +38,7 @@ const EXECUTION_STEPS = [
       closureEnv: null,
       innerFn: null
     },
-    insight: 'Execution begins at the top level. The JavaScript engine allocates the Global Execution Context on the Call Stack and records function definitions in the Global Environment Record.',
+    insight: 'Execution begins at the top level. The JavaScript engine pushes the Global Execution Context to the Call Stack and records top-level declarations in the abstract Global Environment Record.',
     activePhase: 'PARSE & GLOBAL SETUP'
   },
   {
@@ -130,7 +130,7 @@ const EXECUTION_STEPS = [
         code: 'count++; return count;'
       }
     },
-    insight: 'CRITICAL MECHANISM: The engine attaches the internal slot increment.[[Environment]] = createCounterEnv. This internal reference forms the closure backbone!',
+    insight: 'CRITICAL MECHANISM: The engine instantiates increment as a first-class function object and initializes its internal [[Environment]] slot to reference createCounter\'s Lexical Environment. This internal spec slot forms the closure backbone!',
     activePhase: 'FUNCTION CREATION & [[Environment]]'
   },
   {
@@ -168,9 +168,9 @@ const EXECUTION_STEPS = [
   },
   {
     step: 5,
-    title: 'createCounter() Stack Frame Pops & Destroys!',
+    title: 'createCounter() Context Pops from Call Stack',
     codeHighlightLine: 13,
-    action: 'createCounter() completes execution and its frame is REMOVED from the Call Stack. But its Lexical Environment stays on the Heap!',
+    action: 'createCounter() finishes executing and its Execution Context is popped from the Call Stack. However, its Lexical Environment remains alive and reachable via counter.[[Environment]].',
     callStack: [
       { name: 'Global Execution Context', type: 'global', status: 'running' }
     ],
@@ -196,8 +196,8 @@ const EXECUTION_STEPS = [
         code: 'count++; return count;'
       }
     },
-    insight: 'TECHNICAL CORE: The Call Stack frame is gone! But the Garbage Collector (GC) sees: Global -> counter -> increment -> [[Environment]] -> createCounterEnv. Since a path from the GC Root exists, it CANNOT be collected!',
-    activePhase: 'CALL STACK POP & HEAP RETENTION'
+    insight: 'TECHNICAL CORE: An execution context leaving the call stack is NOT the same as an environment being destroyed. Because Global -> counter -> increment -> [[Environment]] forms an active reference chain from the GC Root, the environment remains reachable and alive!',
+    activePhase: 'CONTEXT POP & REACHABILITY'
   },
   {
     step: 6,
@@ -474,7 +474,7 @@ export default function ClosureVisualizer() {
               PANEL A: EXECUTION TIMELINE
             </span>
             <span className="text-[10px] bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-500">
-              ECMAScript V8
+              ECMAScript Spec Model
             </span>
           </div>
 
@@ -581,10 +581,10 @@ export default function ClosureVisualizer() {
               <div className="p-2.5 rounded-lg border border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-mono animate-pulse">
                 <div className="flex items-center gap-1 font-bold">
                   <Trash2 size={12} />
-                  createCounter() POPPED!
+                  createCounter() CONTEXT POPPED!
                 </div>
                 <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
-                  Stack frame destroyed, but heap memory remains reachable.
+                  Context left Call Stack, but Lexical Environment remains reachable via reference.
                 </div>
               </div>
             )}
@@ -601,9 +601,9 @@ export default function ClosureVisualizer() {
           <div className="flex items-center justify-between text-xs font-mono font-bold text-zinc-500 dark:text-zinc-400">
             <span className="flex items-center gap-1.5">
               <Database size={14} className="text-purple-500" />
-              PANEL C: LEXICAL ENVIRONMENT & HEAP
+              PANEL C: LEXICAL ENVIRONMENT & REACHABILITY
             </span>
-            <span className="text-[10px] text-zinc-400">Garbage Collector Root</span>
+            <span className="text-[10px] text-zinc-400">GC Reachability Root</span>
           </div>
 
           <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 p-3 min-h-[300px] flex flex-col gap-3">
@@ -639,7 +639,7 @@ export default function ClosureVisualizer() {
                     </span>
                   </div>
                   <span className="px-1.5 py-0.5 rounded text-[9px] bg-emerald-500/10 text-emerald-700 dark:text-brand-lime font-bold border border-emerald-500/20">
-                    Heap Retained
+                    Reachable via [[Environment]]
                   </span>
                 </div>
 
@@ -668,7 +668,7 @@ export default function ClosureVisualizer() {
                 {step.heap.closureEnv.isOrphanFromStack && (
                   <div className="mt-2 pt-1 border-t border-emerald-500/20 text-[9.5px] font-mono text-emerald-700 dark:text-brand-lime flex items-center gap-1">
                     <Sparkles size={11} />
-                    <span>Alive on Heap via counter.[[Environment]] reference!</span>
+                    <span>Alive & Reachable via counter.[[Environment]] reference path from Root!</span>
                   </div>
                 )}
               </div>
@@ -712,7 +712,7 @@ export default function ClosureVisualizer() {
           </div>
           <div>
             <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400">
-              V8 Engine Runtime Insight
+              ECMAScript Specification & Engine Insight
             </span>
             <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 mt-0.5 leading-relaxed font-sans">
               {step.insight}

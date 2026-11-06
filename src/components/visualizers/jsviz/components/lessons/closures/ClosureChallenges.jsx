@@ -16,6 +16,7 @@ import {
 import { useTheme } from '@/context/useTheme';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { runInSandbox } from './sandboxRunner';
 
 const CHALLENGES = [
   {
@@ -138,28 +139,22 @@ export default function ClosureChallenges() {
     });
   };
 
-  const runCodeEmpirically = () => {
-    const logs = [];
-    const origLog = console.log;
-    console.log = (...args) => {
-      logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
-    };
-
+  const runCodeEmpirically = async () => {
+    setConsoleResult(null);
     try {
-      const runner = new Function('console', `
-        "use strict";
-        try {
-          ${selectedChallenge.code}
-        } catch(e) {
-          console.log("Error: " + e.message);
-        }
-      `);
-      runner(console);
-      setConsoleResult(logs);
+      const result = await runInSandbox(selectedChallenge.code, { timeoutMs: 2500 });
+      if (result.error) {
+        setConsoleResult([
+          ...result.logs.map(l => l.text),
+          'Error: ' + result.error
+        ]);
+      } else if (result.logs.length === 0) {
+        setConsoleResult(['(No console output)']);
+      } else {
+        setConsoleResult(result.logs.map(l => l.text));
+      }
     } catch (err) {
-      setConsoleResult([err.message]);
-    } finally {
-      console.log = origLog;
+      setConsoleResult(['Execution error: ' + (err.message || String(err))]);
     }
   };
 

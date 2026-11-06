@@ -66,9 +66,9 @@ const QUIZ_QUESTIONS = [
       },
       {
         letter: 'B',
-        label: 'It is completely popped and destroyed from the Call Stack; its Lexical Environment survives on the Heap.',
+        label: 'Its Execution Context is popped from the Call Stack; its Lexical Environment remains alive because it is still reachable.',
         correct: true,
-        why: 'Correct! Execution context is popped and discarded immediately upon return. However, the Lexical Environment is preserved on the Heap because fn maintains a reachable reference to it.'
+        why: 'Correct! An Execution Context leaving the Call Stack does NOT mean its Lexical Environment is destroyed. ECMAScript specifies that an environment lives as long as references to it exist (such as fn\'s [[Environment]] slot). In engines like V8, escaped variables are preserved in managed heap Contexts.'
       },
       {
         letter: 'C',
@@ -134,7 +134,7 @@ const QUIZ_QUESTIONS = [
         letter: 'B',
         label: '[[Environment]]',
         correct: true,
-        why: 'Correct! ECMA-262 specifies that every function object has an internal [[Environment]] slot referencing the Lexical Environment in which it was evaluated.'
+        why: 'Correct! ECMA-262 specifies that every function object has an internal [[Environment]] slot (denoted by [[...]] indicating an internal specification mechanism, not a runtime-accessible property) referencing the Lexical Environment in which it was created.'
       },
       {
         letter: 'C',
@@ -167,7 +167,7 @@ const QUIZ_QUESTIONS = [
         letter: 'B',
         label: 'No, every call to createCounter() creates a completely new, independent Lexical Environment Record.',
         correct: true,
-        why: 'Correct! Function invocations instantiate brand-new execution environments. c1 and c2 hold references to two distinct memory allocations on the heap.'
+        why: 'Correct! Each function invocation evaluates in a fresh Execution Context with its own distinct Lexical Environment Record. c1 and c2 maintain references to two separate environment instances.'
       },
       {
         letter: 'C',
@@ -200,7 +200,7 @@ const QUIZ_QUESTIONS = [
         letter: 'B',
         label: 'Because a reachability path exists from a GC Root (such as the Global Object) through the function reference.',
         correct: true,
-        why: 'Correct! Modern JS engines use Mark-and-Sweep garbage collection. As long as a reference chain exists from a root to the closure, its enclosed environment is reachable and cannot be purged.'
+        why: 'Correct! Modern engines employ tracing garbage collection (Mark-and-Sweep). Memory reclamation is strictly governed by reachability from GC Roots, not merely function execution completion. As long as the closure reference is reachable, its linked Lexical Environment cannot be collected.'
       },
       {
         letter: 'C',

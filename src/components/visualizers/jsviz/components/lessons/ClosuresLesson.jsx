@@ -40,6 +40,7 @@ import RealWorldApplications from './closures/RealWorldApplications';
 import CommonMistakes from './closures/CommonMistakes';
 import ClosureChallenges from './closures/ClosureChallenges';
 import ClosureQuiz from './closures/ClosureQuiz';
+import { runInSandbox } from './closures/sandboxRunner';
 
 const SECTIONS = [
   { id: 'overview', label: '1. Overview' },
@@ -176,24 +177,19 @@ export function ClosuresLesson({
     setTimeout(() => setCopiedCode(false), 2000);
   };
 
-  const runIntroCode = () => {
-    const logs = [];
-    const origLog = console.log;
-    console.log = (...args) => {
-      logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
-    };
-
+  const runIntroCode = async () => {
+    setIntroConsoleOutput(null);
     try {
-      const runner = new Function('console', `
-        "use strict";
-        ${INTRO_CODE}
-      `);
-      runner(console);
-      setIntroConsoleOutput(logs);
-    } catch (e) {
-      setIntroConsoleOutput([e.message]);
-    } finally {
-      console.log = origLog;
+      const result = await runInSandbox(INTRO_CODE, { timeoutMs: 2500 });
+      if (result.error) {
+        setIntroConsoleOutput([result.error]);
+      } else if (result.logs.length > 0) {
+        setIntroConsoleOutput(result.logs.map(l => l.text));
+      } else {
+        setIntroConsoleOutput(['(Code ran with no console output)']);
+      }
+    } catch (err) {
+      setIntroConsoleOutput(['Sandbox error: ' + (err.message || String(err))]);
     }
   };
 
@@ -312,13 +308,13 @@ export function ClosuresLesson({
           </div>
         </div>
 
-        {/* Intuitive Definition Banner */}
+        {/* Intuitive Definition Banner (Stage 1: Simple Language) */}
         <div className="p-5 sm:p-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/5 dark:bg-emerald-950/20 space-y-2">
           <p className="text-base sm:text-lg font-semibold text-zinc-900 dark:text-zinc-100 leading-relaxed font-sans">
-            A <strong className="text-emerald-700 dark:text-brand-lime font-bold">closure</strong> is the combination of a function bundled together with references to its surrounding lexical environment.
+            A <strong className="text-emerald-700 dark:text-brand-lime font-bold">closure</strong> happens when a JavaScript function retains access to variables from its surrounding scope, even after the outer function has finished executing.
           </p>
           <p className="text-sm text-zinc-600 dark:text-zinc-400 font-mono">
-            &ldquo;A function remembers the variables that were available where it was created, even when executed in a completely different scope.&rdquo;
+            &ldquo;Think of a closure as a function that carries an invisible memory backpack containing all the variables available where it was created.&rdquo;
           </p>
         </div>
 
@@ -427,11 +423,11 @@ export function ClosuresLesson({
           
           <div className="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10">
             <span className="text-[10px] font-mono font-bold uppercase text-blue-700 dark:text-blue-400 block mb-1">
-              01 · Function
+              01 · Function Object
             </span>
-            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">Executable Bytecode</h4>
+            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">First-Class Object</h4>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              A callable unit of code containing algorithmic logic and execution parameters.
+              A first-class ECMAScript object possessing internal slots (like [[Environment]]) and methods (like [[Call]]), along with properties.
             </p>
           </div>
 
@@ -439,9 +435,9 @@ export function ClosuresLesson({
             <span className="text-[10px] font-mono font-bold uppercase text-emerald-700 dark:text-brand-lime block mb-1">
               02 · Lexical Environment
             </span>
-            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">Memory Dictionary</h4>
+            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">Specification Mechanism</h4>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              An internal specification object storing variable identifier-to-value bindings.
+              An abstract ECMA-262 specification structure that maps identifiers to bindings and tracks outer scope references.
             </p>
           </div>
 
@@ -449,9 +445,9 @@ export function ClosuresLesson({
             <span className="text-[10px] font-mono font-bold uppercase text-purple-700 dark:text-purple-400 block mb-1">
               03 · The Closure
             </span>
-            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">The Live Link</h4>
+            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">Retained Scope Access</h4>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              The function combined with its persistent pointer to its birth environment.
+              The function combined with its persistent access to its outer lexical environment bindings across time.
             </p>
           </div>
 
@@ -459,9 +455,9 @@ export function ClosuresLesson({
             <span className="text-[10px] font-mono font-bold uppercase text-amber-700 dark:text-amber-400 block mb-1">
               04 · Execution Context
             </span>
-            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">Stack Frame</h4>
+            <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">Stack Execution State</h4>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              The ephemeral runtime wrapper pushed onto the Call Stack and discarded on return.
+              The runtime mechanism pushed and popped from the Call Stack; leaving the stack does not mean the environment becomes unreachable.
             </p>
           </div>
 
@@ -579,16 +575,16 @@ export function ClosuresLesson({
         <div className="rounded-2xl border border-purple-500/30 bg-purple-500/5 dark:bg-purple-950/20 p-5 sm:p-6 space-y-3">
           <div className="flex items-center gap-2 font-mono font-bold text-purple-700 dark:text-purple-300 text-xs uppercase tracking-wider">
             <Cpu size={16} />
-            Critical Technical Distinction: Call Stack vs Memory Heap
+            Critical Technical Distinction: Call Stack Popping vs Environment Reachability
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
             <div className="p-3 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-purple-500/20">
-              <strong className="text-zinc-900 dark:text-white block mb-1">1. The Stack Frame Dies:</strong>
-              The Call Stack frame for <code className="font-mono text-purple-600 dark:text-purple-300">createCounter()</code> is <em>completely destroyed and popped</em> when the function returns. The JavaScript single thread does not keep dead frames on the stack!
+              <strong className="text-zinc-900 dark:text-white block mb-1">1. The Execution Context Pops:</strong>
+              When <code className="font-mono text-purple-600 dark:text-purple-300">createCounter()</code> completes, its Execution Context is <em>popped from the Call Stack and discarded</em>. The single JavaScript thread never leaves finished execution contexts sitting on the stack.
             </div>
             <div className="p-3 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-purple-500/20">
-              <strong className="text-zinc-900 dark:text-white block mb-1">2. The Heap Record Survives:</strong>
-              The Lexical Environment was allocated on the <em>Memory Heap</em>. Because the returned <code className="font-mono text-emerald-600 dark:text-brand-lime">counter</code> object retains an internal <code className="font-mono text-emerald-600 dark:text-brand-lime">[[Environment]]</code> reference, the Garbage Collector cannot reclaim it.
+              <strong className="text-zinc-900 dark:text-white block mb-1">2. Reachability Governs Memory Retention:</strong>
+              In the ECMAScript specification, Lexical Environments are abstract semantic structures, not mandated physical heap layouts. Garbage collection follows <em>reachability</em> from GC Roots. Because <code className="font-mono text-emerald-600 dark:text-brand-lime">counter</code> maintains a reference to the environment via its internal <code className="font-mono text-emerald-600 dark:text-brand-lime">[[Environment]]</code> slot, the environment remains reachable.
             </div>
           </div>
         </div>

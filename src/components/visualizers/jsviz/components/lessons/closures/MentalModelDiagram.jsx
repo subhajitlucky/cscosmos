@@ -43,12 +43,12 @@ function country() {
     id: 'env-records',
     number: '02',
     title: 'Environment Records',
-    short: 'Memory Storage',
+    short: 'Specification Record',
     icon: Database,
-    badge: 'Spec: [[EnvironmentRecord]]',
-    summary: 'A concrete memory dictionary holding identifier-to-value bindings for a specific execution scope.',
-    detail: 'According to the ECMAScript specification (ECMA-262), every Lexical Environment consists of an Environment Record (storing variable/constant/function bindings) plus a reference to the outer environment. It is an internal object managed by the JavaScript engine.',
-    code: `// Conceptual engine structure:
+    badge: 'Spec: Environment Record',
+    summary: 'A formal specification mechanism in ECMA-262 that records identifier-to-binding associations for a specific lexical scope.',
+    detail: 'According to the ECMAScript specification (ECMA-262), every Lexical Environment consists of an Environment Record plus a reference to the outer environment. Environment Records define operations like HasBinding, GetBindingValue, and SetMutableBinding. How engines optimize these bindings (stack, registers, or context objects) is an engine implementation choice.',
+    code: `// Conceptual specification structure:
 LexicalEnvironment {
   EnvironmentRecord: {
     userName: "Alice",
@@ -79,12 +79,12 @@ Global Scope [[OuterEnv]] -> null`
     short: 'The [[Environment]] Slot',
     icon: Box,
     badge: 'Spec: [[Environment]] Slot',
-    summary: 'When a function is declared, the engine stamps it with an internal [[Environment]] reference to the current scope.',
-    detail: 'This is the secret sauce of closures! When function inner() is created, the engine sets inner.[[Environment]] = currentLexicalEnvironment. This reference is immutable and persists as long as inner survives anywhere in program memory.',
+    summary: 'Every function object is instantiated with an internal [[Environment]] slot referencing the Lexical Environment where it was evaluated.',
+    detail: 'The double brackets [[...]] denote an internal specification slot, NOT an accessible JavaScript property. You cannot access fn.[[Environment]] in source code. This internal link ensures the function retains access to its enclosing lexical scope.',
     code: `function outer() {
   let secret = 99;
   
-  // inner.[[Environment]] = outerLexicalEnv
+  // Spec internal slot: inner.[[Environment]] = outerLexicalEnv
   function inner() { return secret; }
   
   return inner;
@@ -97,25 +97,25 @@ Global Scope [[OuterEnv]] -> null`
     short: 'Passing Environments',
     icon: ArrowRight,
     badge: 'First-Class Citizen',
-    summary: 'In JavaScript, functions can be returned from other functions, assigned to variables, or passed as arguments.',
-    detail: 'Because functions are first-class values, returning an inner function exports both the executable bytecode AND its internal [[Environment]] reference out of the outer scope into the wider application.',
+    summary: 'Because JavaScript functions are first-class objects, returning an inner function allows its lexical scope access to escape its parent execution context.',
+    detail: 'A function object carries its internal [[Environment]] slot wherever it is passed. Returning a function from an outer scope creates a live pathway to the outer environment even after the outer execution context has popped from the call stack.',
     code: `function factory() {
   let counter = 0;
   return () => ++counter;
 }
 
-// factory() finished, but its returned closure
-// carries its lexical environment along with it!
+// factory() finished and popped from stack,
+// yet returned function retains its [[Environment]] link!
 const getNext = factory();`
   },
   {
     id: 'persistent-access',
     number: '06',
     title: 'Persistent Access',
-    short: 'Heap Retention',
+    short: 'Live Binding Access',
     icon: RotateCw,
     badge: 'Live Bindings',
-    summary: 'Variables retained by active closures are kept on the memory heap and remain live mutable bindings.',
+    summary: 'Closures retain access to live identifier bindings that persist as long as reachable from garbage collection roots.',
     detail: 'Closures do NOT capture static snapshots or freeze copies. If the enclosed variable changes in the future, all functions referencing that environment immediately read and write the exact same updated value.',
     code: `function createStore() {
   let value = 100;
@@ -218,7 +218,7 @@ export default function MentalModelDiagram() {
                 </p>
               </div>
               <div className="p-2.5 rounded-lg bg-white/90 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 font-mono text-xs border border-emerald-500/20 dark:border-zinc-800 shadow-xs">
-                <span className="text-zinc-500">// Hidden Spec Slot:</span><br />
+                <span className="text-zinc-500">// Spec Internal Slot (Not a JS property):</span><br />
                 <span className="text-purple-600 dark:text-purple-400 font-bold">inner.[[Environment]]</span><br />
                 <span className="text-emerald-600 dark:text-emerald-400 font-semibold">↳ points to outerEnv</span>
               </div>
