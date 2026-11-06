@@ -104,7 +104,7 @@ console.log("Ledger:", account.getHistory());`
     id: 'independent-instances',
     name: '3. Independent Environments',
     description: 'Demonstrating that every function call creates isolated memory.',
-    code: `// 3. Demonstrating Independent Heap Records
+    code: `// 3. Demonstrating Independent Environment Instances
 function makeCounter(label) {
   let current = 0;
   
@@ -115,7 +115,7 @@ function makeCounter(label) {
   };
 }
 
-// Two distinct lexical environment records are created in Heap memory:
+// Two distinct lexical environment records are instantiated:
 const counterAlpha = makeCounter("Alpha");
 const counterBeta = makeCounter("Beta");
 
@@ -204,6 +204,7 @@ export default function ClosurePlayground() {
 
     try {
       const result = await runInSandbox(code, { timeoutMs: 2500 });
+      if (result.superseded) return;
       const currentTime = new Date().toLocaleTimeString().split(' ')[0];
 
       const formattedLogs = result.logs.map((log) => ({

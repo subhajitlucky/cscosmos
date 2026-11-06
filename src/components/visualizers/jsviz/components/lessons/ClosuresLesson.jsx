@@ -97,11 +97,11 @@ const LINE_BY_LINE_EXPLANATION = [
 
 const LIFECYCLE_STEPS = [
   { step: 'STEP 1', title: 'Call createCounter()', desc: 'A new execution context is pushed to the Call Stack.' },
-  { step: 'STEP 2', title: 'Establish Environment', desc: 'A fresh Lexical Environment record is allocated on the Heap.' },
+  { step: 'STEP 2', title: 'Establish Environment', desc: 'A fresh Lexical Environment and its Environment Record are instantiated.' },
   { step: 'STEP 3', title: 'Initialize count = 0', desc: 'Identifier "count" is bound with initial value 0.' },
-  { step: 'STEP 4', title: 'Create increment()', desc: 'Function receives hidden internal slot [[Environment]] = createCounterEnv.' },
+  { step: 'STEP 4', title: 'Create increment()', desc: 'Function object receives internal specification slot [[Environment]] = createCounterEnv.' },
   { step: 'STEP 5', title: 'Return increment', desc: 'Function reference is returned to global variable "counter".' },
-  { step: 'STEP 6', title: 'Stack Frame Destroyed', desc: 'createCounter context pops from stack! But environment stays on Heap.' },
+  { step: 'STEP 6', title: 'Context Pops from Stack', desc: 'createCounter context pops from stack, but environment remains reachable via counter.[[Environment]].' },
   { step: 'STEP 7', title: 'First Call: counter()', desc: 'increment resolves "count" via [[Environment]], updates 0 -> 1, returns 1.' },
   { step: 'STEP 8', title: 'Second Call: counter()', desc: 'Accesses SAME live binding, updates 1 -> 2. State persists across calls.' }
 ];
@@ -181,6 +181,7 @@ export function ClosuresLesson({
     setIntroConsoleOutput(null);
     try {
       const result = await runInSandbox(INTRO_CODE, { timeoutMs: 2500 });
+      if (result.superseded) return;
       if (result.error) {
         setIntroConsoleOutput([result.error]);
       } else if (result.logs.length > 0) {
@@ -735,7 +736,7 @@ export function ClosuresLesson({
               You Have Mastered Closures!
             </h3>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 font-sans leading-relaxed">
-              You now understand how JavaScript engines manage lexical environments, call stacks, heap retention, and identifier resolution across all scopes.
+              You now understand how JavaScript engines manage lexical environments, call stacks, environment reachability, and identifier resolution across all scopes.
             </p>
           </div>
 

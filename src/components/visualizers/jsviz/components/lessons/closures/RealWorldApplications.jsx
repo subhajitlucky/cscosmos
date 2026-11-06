@@ -22,43 +22,52 @@ import { runInSandbox } from './sandboxRunner';
 const APPLICATIONS = [
   {
     id: 'privacy',
-    title: 'Data Privacy & Encapsulation',
+    title: 'Data Encapsulation & Invariants',
     category: 'Information Hiding',
     icon: ShieldCheck,
     badgeColor: 'border-blue-500/30 text-blue-700 dark:text-blue-400 bg-blue-500/10',
-    whyNeeded: 'JavaScript did not historically support private class fields (#). Even today, closures provide complete encapsulation that cannot be breached by prototype manipulation or Object.keys inspection.',
-    productionTip: 'Use closure factories when exposing sensitive credentials, tokens, or cryptographic keys where true immutability from outside tampering is paramount.',
-    code: `function createApiKeyManager(initialKey) {
-  // Completely private variable in closure scope
-  let activeKey = initialKey;
-  let usageCount = 0;
+    whyNeeded: 'Closures provide architectural encapsulation by keeping state inside lexical scope rather than public object properties. External code cannot bypass validation invariants or corrupt internal variables.',
+    productionTip: 'CRITICAL SECURITY DISTINCTION: Closures provide encapsulation, NOT a security boundary. Any same-origin code (such as third-party packages or XSS payloads) can inspect memory or monkeypatch functions. Never store client-side API secrets or keys inside closures under the assumption of cryptographic protection.',
+    code: `function createBankAccount(initialBalance) {
+  // Encapsulated state in lexical scope (not object properties)
+  let balance = initialBalance;
+  const ledger = [];
 
   return {
-    signRequest(endpoint) {
-      usageCount++;
-      const hash = btoa(\`\${activeKey}:\${endpoint}:\${Date.now()}\`);
-      return \`Bearer \${hash.slice(0, 16)}... (Call #\${usageCount})\`;
+    deposit(amount) {
+      if (amount <= 0) throw new Error("Deposit amount must be positive");
+      balance += amount;
+      ledger.push(\`+\$\${amount} (balance: \$\${balance})\`);
+      return balance;
     },
-    rotateKey(newKey) {
-      if (!newKey || newKey.length < 8) {
-        throw new Error("Invalid key length!");
+    withdraw(amount) {
+      if (amount <= 0 || amount > balance) {
+        console.warn("Withdrawal rejected: insufficient balance or invalid amount.");
+        return false;
       }
-      activeKey = newKey;
-      console.log("API Key safely rotated in closure.");
+      balance -= amount;
+      ledger.push(\`-\$\${amount} (balance: \$\${balance})\`);
+      return balance;
     },
-    getUsage() {
-      return usageCount;
+    getBalance() {
+      return balance; // Read-only value accessor
+    },
+    getLedger() {
+      return [...ledger]; // Return shallow copy to prevent external mutation
     }
   };
 }
 
-const client = createApiKeyManager("sk_live_99214AXYZ");
-console.log(client.signRequest("/users"));
-console.log(client.signRequest("/orders"));
-console.log("Total requests signed:", client.getUsage());
+const account = createBankAccount(500);
+account.deposit(200);
+account.withdraw(150);
 
-// Notice: activeKey is 100% inaccessible!
-console.log("Direct key probe:", client.activeKey); // undefined`
+console.log("Current Balance:", account.getBalance()); // 550
+console.log("Transaction Ledger:", account.getLedger());
+
+// Direct property access is undefined (encapsulated):
+console.log("account.balance:", account.balance); // undefined
+// State cannot be corrupted by accidental assignments like account.balance = -9999`
   },
   {
     id: 'factories',
@@ -190,6 +199,7 @@ export default function RealWorldApplications() {
 
     try {
       const result = await runInSandbox(activeApp.code, { timeoutMs: 2500 });
+      if (result.superseded) return;
       if (result.error) {
         setConsoleOutput([
           ...result.logs,

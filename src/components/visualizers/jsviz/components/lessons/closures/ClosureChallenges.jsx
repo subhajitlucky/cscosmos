@@ -81,8 +81,8 @@ console.log(acc2.get());`,
       { text: 'undefined and undefined', correct: false },
       { text: '100 and 100', correct: false }
     ],
-    hint: 'Every invocation of createAccount() creates a brand new, isolated Lexical Environment Record on the heap.',
-    explanation: 'Calling createAccount() twice allocates two distinct Lexical Environment records on the heap. acc1 modifies its own balance (100 + 50 = 150), while acc2 modifies its separate balance (100 - 20 = 80). The instances are completely decoupled.'
+    hint: 'Every invocation of createAccount() creates a brand new, isolated Lexical Environment Record.',
+    explanation: 'Calling createAccount() twice instantiates two distinct Lexical Environment records. acc1 modifies its own balance (100 + 50 = 150), while acc2 modifies its separate balance (100 - 20 = 80). The instances are completely decoupled.'
   },
   {
     id: 'ch-3',
@@ -143,6 +143,7 @@ export default function ClosureChallenges() {
     setConsoleResult(null);
     try {
       const result = await runInSandbox(selectedChallenge.code, { timeoutMs: 2500 });
+      if (result.superseded) return;
       if (result.error) {
         setConsoleResult([
           ...result.logs.map(l => l.text),

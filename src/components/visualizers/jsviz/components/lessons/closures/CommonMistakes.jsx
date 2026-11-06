@@ -38,8 +38,8 @@ say(); // Prints "Goodbye", NOT "Hello"!`,
   {
     id: 'callstack-myth',
     myth: 'Myth: The outer function\'s call-stack frame must remain paused on the stack for the closure to work.',
-    reality: 'Reality: The call stack frame is destroyed and popped immediately when the outer function returns.',
-    explanation: 'Beginners frequently confuse the Call Stack with the Memory Heap. The stack frame exists strictly for execution and is discarded upon return. The Lexical Environment Record is stored separately on the heap, kept alive solely by garbage collector reachability.',
+    reality: 'Reality: The execution context is popped from the Call Stack immediately upon return; reachability preserves the environment.',
+    explanation: 'Beginners frequently confuse Call Stack frames with Lexical Environments. Execution contexts exist strictly on the Call Stack for evaluating code and are popped immediately upon return. The Lexical Environment is a specification-level mechanism that persists as long as an active reference chain keeps it reachable from a GC Root. In engines like V8, escaped variables are stored in managed Context allocations.',
     badCode: `function parent() {
   const secret = 42;
   return () => secret;
@@ -47,10 +47,10 @@ say(); // Prints "Goodbye", NOT "Hello"!`,
 
 const child = parent();
 // At this exact line:
-// Call Stack contains ONLY Global Execution Context!
-// parent() is long gone from the stack.
-child(); // 42 is retrieved directly from Heap memory.`,
-    takeaway: 'Stack frames are ephemeral and LIFO. Closures survive because Lexical Environments live on the Heap.'
+// Call Stack contains ONLY the Global Execution Context!
+// parent() execution context was popped upon return.
+child(); // 42 is resolved via the surviving reachable Lexical Environment.`,
+    takeaway: 'Execution contexts on the Call Stack are ephemeral and LIFO. Closures survive because Lexical Environments remain reachable through reference chains.'
   },
   {
     id: 'memory-leak-myth',
@@ -72,36 +72,43 @@ function attachData() {
   },
   {
     id: 'engine-optimizations',
-    myth: 'Myth: The engine keeps every single variable in the outer function alive indefinitely.',
-    reality: 'Reality: Modern JIT engines (V8, JavaScriptCore) perform dead-variable elimination.',
-    explanation: 'If an outer function declares 100 variables, but the returned closure only mentions 1 of them, modern engines analyze the AST and garbage-collect the remaining 99 unreferenced variables to preserve memory.',
+    myth: 'Myth: Modern engines always eliminate all unused variables from closure memory automatically.',
+    reality: 'Reality: Dead-variable elimination is an implementation-dependent engine optimization, not an ECMAScript specification guarantee.',
+    explanation: 'Engines like V8 and JavaScriptCore analyze scopes to allocate only referenced variables into closure Context objects when possible. However, this is an engine-level heuristic. If another sibling closure in the same scope references a variable, or if eval() or debugger is present, engines may retain the entire lexical environment in memory. Never rely on JIT dead-variable elimination for critical memory or security guarantees; explicitly clean up or nullify large references when finished.',
     badCode: `function example() {
-  const massiveData = new Array(1000000); // ❌ NOT retained!
-  const targetId = 42;                     // ✅ Retained!
+  const massiveData = new Array(1_000_000); // 1M elements
+  const targetId = 42;
+
+  // Sibling closure: If any closure in this scope touches massiveData,
+  // or if scope analysis cannot prove complete isolation,
+  // the entire shared context may remain in memory!
+  function debugLogger() {
+    console.log(massiveData.length);
+  }
 
   return function() {
-    return targetId; // Engine detects massiveData is never used!
+    return targetId;
   };
 }`,
-    takeaway: 'Modern engines optimize closure environments so only referenced bindings stay in heap storage.'
+    takeaway: 'Variable pruning is an engine optimization, not a language guarantee. If guaranteed memory reclamation is required, set large variables to null or isolate them in distinct helper scopes.'
   },
   {
     id: 'loop-var-trap',
     myth: 'Myth: A "for (var i = 0...)" loop creates a separate closure for each iteration.',
-    reality: 'Reality: "var" is function-scoped; all iteration callbacks share the exact same single "i" binding.',
-    explanation: 'Before ES2015, all loop iterations shared a single variable slot. When the asynchronous callbacks finally ran on the Event Loop, the loop had already terminated and "i" had incremented to its terminal value.',
-    badCode: `// ❌ Broken with 'var':
+    reality: 'Reality: "var" shares a single mutable binding across all iterations, whereas "let" creates a per-iteration lexical binding.',
+    explanation: 'With "var", the declaration is hoisted to the enclosing function or global scope, so every iteration mutates the exact same variable. Closures created inside the loop capture this single shared binding. In contrast, ECMAScript specifies that a "let" declaration in a for-loop header creates a fresh Lexical Environment and identifier binding for every iteration step, initialized with the prior step\'s value.',
+    badCode: `// With 'var' (Single shared binding across loop):
 for (var i = 0; i < 3; i++) {
   setTimeout(() => console.log(i), 100); 
 }
-// Outputs: 3, 3, 3
+// Outputs: 3, 3, 3 (all callbacks read the single terminal 'i')
 
-// ✅ Fixed with 'let' (Block-scoped per-iteration binding):
+// With 'let' (Per-iteration lexical binding):
 for (let i = 0; i < 3; i++) {
   setTimeout(() => console.log(i), 100);
 }
-// Outputs: 0, 1, 2`,
-    takeaway: 'Always use "let" in loops. ES6 specifies that let in a for-loop header creates a fresh Lexical Environment for each iteration.'
+// Outputs: 0, 1, 2 (each callback holds a closure over its iteration's binding)`,
+    takeaway: 'Understand the semantic difference: "var" shares a single mutable binding for the entire loop, while "let" in for-loop headers specifies a distinct per-iteration lexical binding. Choose based on whether your callbacks need a shared state or individual iteration values.'
   }
 ];
 

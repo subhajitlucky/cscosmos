@@ -596,7 +596,7 @@ export default function ClosureVisualizer() {
           </div>
         </div>
 
-        {/* PANEL C: Heap & Lexical Environments (5 Cols) */}
+        {/* PANEL C: Lexical Environments & Reachability (5 Cols) */}
         <div className="lg:col-span-5 flex flex-col gap-3">
           <div className="flex items-center justify-between text-xs font-mono font-bold text-zinc-500 dark:text-zinc-400">
             <span className="flex items-center gap-1.5">
@@ -624,7 +624,7 @@ export default function ClosureVisualizer() {
               </div>
             </div>
 
-            {/* 2. createCounter Lexical Environment (Retained on Heap) */}
+            {/* 2. createCounter Lexical Environment (Reachable via Reference) */}
             {step.heap.closureEnv ? (
               <div className={`rounded-lg border transition-all duration-300 p-2.5 relative ${
                 step.heap.closureEnv.isOrphanFromStack
