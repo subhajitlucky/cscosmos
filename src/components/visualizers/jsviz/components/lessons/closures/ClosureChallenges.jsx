@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Award, 
   HelpCircle, 
@@ -13,6 +13,9 @@ import {
   Sparkles,
   ArrowRight
 } from 'lucide-react';
+import { useTheme } from '@/context/useTheme';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const CHALLENGES = [
   {
@@ -107,6 +110,19 @@ console.log(JSON.stringify(results));`,
 ];
 
 export default function ClosureChallenges() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted 
+    ? (resolvedTheme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark')))
+    : resolvedTheme === 'dark';
+
+  const syntaxTheme = isDark ? vscDarkPlus : vs;
+
   const [selectedChallenge, setSelectedChallenge] = useState(CHALLENGES[0]);
   const [userAnswers, setUserAnswers] = useState({});
   const [showHint, setShowHint] = useState(false);
@@ -219,27 +235,52 @@ export default function ClosureChallenges() {
         </div>
 
         {/* Code Block with Sandbox Run Trigger */}
-        <div className="rounded-xl border border-zinc-800 bg-[#0c1017] overflow-hidden">
-          <div className="p-2.5 px-4 bg-zinc-900/80 border-b border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>interview_code.js</span>
+        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0c1017] overflow-hidden shadow-xs">
+          <div className="p-2.5 px-4 bg-zinc-50 dark:bg-zinc-900/80 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-600 dark:text-zinc-400">
+            <span className="font-bold text-zinc-800 dark:text-zinc-200">interview_code.js</span>
             <button
               onClick={runCodeEmpirically}
-              className="p-1 px-2.5 rounded bg-purple-500/20 border border-purple-500/40 text-purple-300 hover:bg-purple-500/30 transition-all flex items-center gap-1.5 text-[11px] font-bold"
+              className="p-1 px-3 rounded-lg bg-purple-500/15 border border-purple-500/30 text-purple-700 dark:text-purple-300 hover:bg-purple-500/25 transition-all flex items-center gap-1.5 text-[11px] font-bold"
             >
               <Play size={11} />
               <span>Verify in Engine</span>
             </button>
           </div>
-          <pre className="p-4 text-xs font-mono text-zinc-200 leading-relaxed overflow-x-auto bg-[#090d16]">
-            <code>{selectedChallenge.code}</code>
-          </pre>
+          {/* Syntax Highlighted Code */}
+          <div className={`p-4 overflow-x-auto text-xs sm:text-sm ${
+            isDark 
+              ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+              : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
+          }`}>
+            <SyntaxHighlighter
+              language="javascript"
+              style={syntaxTheme}
+              customStyle={{
+                margin: 0,
+                padding: 0,
+                background: 'transparent',
+                border: 'none',
+                fontSize: '12.5px',
+                lineHeight: '1.65'
+              }}
+              codeTagProps={{
+                style: {
+                  background: 'transparent',
+                  border: 'none',
+                  boxShadow: 'none'
+                }
+              }}
+            >
+              {selectedChallenge.code}
+            </SyntaxHighlighter>
+          </div>
 
           {/* Sandbox Output if user ran it */}
           {consoleResult && (
-            <div className="border-t border-zinc-800 p-3 bg-zinc-950 font-mono text-xs text-purple-300">
+            <div className="border-t border-zinc-200 dark:border-zinc-800 p-3 bg-zinc-100/70 dark:bg-zinc-950 font-mono text-xs text-purple-800 dark:text-purple-300">
               <span className="text-zinc-500 text-[10px] block mb-1">Engine Actual Output:</span>
               {consoleResult.map((line, i) => (
-                <div key={i} className="text-emerald-400">&gt; {line}</div>
+                <div key={i} className="text-emerald-700 dark:text-emerald-400 font-bold">&gt; {line}</div>
               ))}
             </div>
           )}

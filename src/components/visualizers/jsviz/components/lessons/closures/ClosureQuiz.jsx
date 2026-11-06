@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   CheckCircle2, 
   XCircle, 
@@ -13,6 +13,9 @@ import {
   BookOpen
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useTheme } from '@/context/useTheme';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const QUIZ_QUESTIONS = [
   {
@@ -348,6 +351,19 @@ const QUIZ_QUESTIONS = [
 ];
 
 export default function ClosureQuiz() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted 
+    ? (resolvedTheme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark')))
+    : resolvedTheme === 'dark';
+
+  const syntaxTheme = isDark ? vscDarkPlus : vs;
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showSummary, setShowSummary] = useState(false);
@@ -492,10 +508,32 @@ export default function ClosureQuiz() {
 
           {/* Mini code snippet */}
           {currentQ.code && (
-            <div className="rounded-xl border border-zinc-800 bg-[#0c1017] p-3 text-zinc-200 font-mono text-xs overflow-x-auto shadow-inner">
-              <pre className="text-[11.5px] leading-relaxed whitespace-pre text-zinc-300">
+            <div className={`rounded-xl border border-zinc-200 dark:border-zinc-800 p-3 overflow-x-auto text-xs ${
+              isDark 
+                ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+                : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
+            }`}>
+              <SyntaxHighlighter
+                language="javascript"
+                style={syntaxTheme}
+                customStyle={{
+                  margin: 0,
+                  padding: 0,
+                  background: 'transparent',
+                  border: 'none',
+                  fontSize: '11.5px',
+                  lineHeight: '1.6'
+                }}
+                codeTagProps={{
+                  style: {
+                    background: 'transparent',
+                    border: 'none',
+                    boxShadow: 'none'
+                  }
+                }}
+              >
                 {currentQ.code}
-              </pre>
+              </SyntaxHighlighter>
             </div>
           )}
 

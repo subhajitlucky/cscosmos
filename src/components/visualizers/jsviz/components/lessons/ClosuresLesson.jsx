@@ -67,6 +67,23 @@ const INTRO_CODE = `function outer() {
 const myFunc = outer();
 myFunc(); // Outputs: "JavaScript"`;
 
+const UNDER_THE_HOOD_CODE = `function createCounter() {
+  let count = 0;
+
+  function increment() {
+    count++;
+    return count;
+  }
+
+  return increment;
+}
+
+const counter = createCounter();
+
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3`;
+
 const LINE_BY_LINE_EXPLANATION = [
   { line: '1', text: 'function outer() {', note: 'outer function declared in the global scope.' },
   { line: '2', text: '  let name = "JavaScript";', note: 'name is initialized inside outer\'s local Lexical Environment.' },
@@ -309,24 +326,24 @@ export function ClosuresLesson({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           
           {/* Left: Code Viewer & Runner (7 cols) */}
-          <div className="lg:col-span-7 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden bg-[#0c1017] flex flex-col justify-between shadow-sm">
+          <div className="lg:col-span-7 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden bg-white dark:bg-[#0c1017] flex flex-col justify-between shadow-sm">
             <div>
-              <div className="p-3 px-4 border-b border-zinc-800 bg-zinc-900/90 flex items-center justify-between text-xs font-mono text-zinc-400">
-                <span className="flex items-center gap-2">
-                  <FileCode size={14} className="text-emerald-400" />
+              <div className="p-3 px-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/90 dark:bg-zinc-900/90 flex items-center justify-between text-xs font-mono text-zinc-600 dark:text-zinc-400">
+                <span className="flex items-center gap-2 font-bold text-zinc-800 dark:text-zinc-200">
+                  <FileCode size={14} className="text-emerald-600 dark:text-brand-lime" />
                   closure_demo.js
                 </span>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handleCopyIntro}
-                    className="p-1 px-2 rounded bg-zinc-800 text-zinc-300 hover:text-white transition-colors flex items-center gap-1 text-[11px]"
+                    className="p-1 px-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700/60 transition-colors flex items-center gap-1 text-[11px] font-mono"
                   >
-                    {copiedCode ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                    {copiedCode ? <Check size={12} className="text-emerald-600 dark:text-brand-lime" /> : <Copy size={12} />}
                     <span>{copiedCode ? 'Copied' : 'Copy'}</span>
                   </button>
                   <button
                     onClick={runIntroCode}
-                    className="p-1 px-2.5 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 transition-all flex items-center gap-1.5 text-[11px] font-bold"
+                    className="p-1 px-3 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-brand-lime hover:bg-emerald-500/25 transition-all flex items-center gap-1.5 text-[11px] font-mono font-bold"
                   >
                     <Play size={12} />
                     <span>Run Snippet</span>
@@ -334,7 +351,11 @@ export function ClosuresLesson({
                 </div>
               </div>
 
-              <div className="p-4 overflow-x-auto text-xs sm:text-sm">
+              <div className={`p-4 overflow-x-auto text-xs sm:text-sm ${
+                isDark 
+                  ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+                  : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
+              }`}>
                 <SyntaxHighlighter
                   language="javascript"
                   style={syntaxTheme}
@@ -346,6 +367,13 @@ export function ClosuresLesson({
                     fontSize: '13px',
                     lineHeight: '1.65'
                   }}
+                  codeTagProps={{
+                    style: {
+                      background: 'transparent',
+                      border: 'none',
+                      boxShadow: 'none'
+                    }
+                  }}
                 >
                   {INTRO_CODE}
                 </SyntaxHighlighter>
@@ -353,17 +381,17 @@ export function ClosuresLesson({
             </div>
 
             {/* Console Output bar */}
-            <div className="border-t border-zinc-800 p-3 px-4 bg-zinc-950 font-mono text-xs">
-              <div className="flex items-center gap-1.5 text-zinc-500 text-[11px] mb-1">
-                <Terminal size={12} className="text-emerald-400" />
-                <span>Console Output</span>
+            <div className="border-t border-zinc-200 dark:border-zinc-800 p-3 px-4 bg-zinc-100/70 dark:bg-zinc-950 font-mono text-xs">
+              <div className="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400 text-[11px] mb-1">
+                <Terminal size={12} className="text-emerald-600 dark:text-brand-lime" />
+                <span className="font-bold">Console Output</span>
               </div>
               {introConsoleOutput ? (
-                <div className="text-emerald-400 text-xs">
+                <div className="text-emerald-700 dark:text-brand-lime font-bold text-xs space-y-0.5">
                   {introConsoleOutput.map((l, i) => <div key={i}>&gt; {l}</div>)}
                 </div>
               ) : (
-                <div className="text-zinc-600 text-[11px]">
+                <div className="text-zinc-500 dark:text-zinc-500 text-[11px]">
                   Click &quot;Run Snippet&quot; to test. Output appears here.
                 </div>
               )}
@@ -379,7 +407,7 @@ export function ClosuresLesson({
               </div>
               <div className="space-y-2.5">
                 {LINE_BY_LINE_EXPLANATION.map((item, idx) => (
-                  <div key={idx} className="p-2.5 rounded-lg bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-100 dark:border-zinc-800/80 text-xs">
+                  <div key={idx} className="p-2.5 rounded-lg bg-zinc-50/80 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800/80 text-xs">
                     <div className="font-mono text-emerald-700 dark:text-brand-lime font-bold text-[11px] mb-0.5">
                       Line {item.line}: <span className="text-zinc-800 dark:text-zinc-300 font-normal">{item.text}</span>
                     </div>
@@ -477,6 +505,46 @@ export function ClosuresLesson({
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100">
               Under the Hood: Execution and Memory
             </h2>
+          </div>
+        </div>
+
+        {/* Code Example Card */}
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0c1017] overflow-hidden shadow-xs">
+          <div className="p-3 px-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/90 flex items-center justify-between text-xs font-mono text-zinc-600 dark:text-zinc-400">
+            <span className="font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
+              <FileCode size={14} className="text-purple-600 dark:text-purple-400" />
+              counter_lifecycle.js
+            </span>
+            <span className="text-[10px] bg-purple-500/10 text-purple-700 dark:text-purple-400 px-2.5 py-0.5 rounded-full border border-purple-500/20 font-bold">
+              Memory Lifecycle Example
+            </span>
+          </div>
+          <div className={`p-4 overflow-x-auto text-xs sm:text-sm ${
+            isDark 
+              ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+              : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
+          }`}>
+            <SyntaxHighlighter
+              language="javascript"
+              style={syntaxTheme}
+              customStyle={{
+                margin: 0,
+                padding: 0,
+                background: 'transparent',
+                border: 'none',
+                fontSize: '13px',
+                lineHeight: '1.65'
+              }}
+              codeTagProps={{
+                style: {
+                  background: 'transparent',
+                  border: 'none',
+                  boxShadow: 'none'
+                }
+              }}
+            >
+              {UNDER_THE_HOOD_CODE}
+            </SyntaxHighlighter>
           </div>
         </div>
 

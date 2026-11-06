@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ShieldCheck, 
   Layers, 
@@ -14,6 +14,9 @@ import {
   ArrowRight,
   Code
 } from 'lucide-react';
+import { useTheme } from '@/context/useTheme';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const APPLICATIONS = [
   {
@@ -156,6 +159,19 @@ console.log("Run 2:", factorial(5)); // Instant cache hit!`
 ];
 
 export default function RealWorldApplications() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted 
+    ? (resolvedTheme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark')))
+    : resolvedTheme === 'dark';
+
+  const syntaxTheme = isDark ? vscDarkPlus : vs;
+
   const [activeApp, setActiveApp] = useState(APPLICATIONS[0]);
   const [consoleOutput, setConsoleOutput] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
@@ -295,26 +311,26 @@ export default function RealWorldApplications() {
         </div>
 
         {/* Code & Runner Workspace */}
-        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden bg-[#0c1017]">
+        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden bg-white dark:bg-[#0c1017] shadow-xs">
           
           {/* Action Bar */}
-          <div className="p-3 px-4 border-b border-zinc-800 bg-zinc-900/80 flex items-center justify-between text-xs font-mono text-zinc-400">
+          <div className="p-3 px-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex items-center justify-between text-xs font-mono text-zinc-600 dark:text-zinc-400">
             <div className="flex items-center gap-2">
-              <Code size={14} className="text-emerald-400" />
-              <span>{activeApp.id}.js</span>
+              <Code size={14} className="text-emerald-600 dark:text-brand-lime" />
+              <span className="font-bold text-zinc-800 dark:text-zinc-300">{activeApp.id}.js</span>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopy}
-                className="p-1.5 px-2 rounded bg-zinc-800 text-zinc-300 hover:text-white transition-colors flex items-center gap-1 text-[11px]"
+                className="p-1.5 px-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors flex items-center gap-1 text-[11px]"
               >
-                {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                {copied ? <Check size={12} className="text-emerald-600 dark:text-brand-lime" /> : <Copy size={12} />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
               <button
                 onClick={runCode}
                 disabled={isRunning}
-                className="p-1.5 px-3 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 transition-all flex items-center gap-1.5 text-[11px] font-bold"
+                className="p-1.5 px-3 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-brand-lime hover:bg-emerald-500/25 transition-all flex items-center gap-1.5 text-[11px] font-bold"
               >
                 <Play size={12} />
                 <span>{isRunning ? 'Running...' : 'Run Pattern'}</span>
@@ -322,25 +338,49 @@ export default function RealWorldApplications() {
             </div>
           </div>
 
-          {/* Pre code */}
-          <pre className="p-4 text-xs font-mono leading-relaxed text-zinc-200 overflow-x-auto bg-[#090d16]">
-            <code>{activeApp.code}</code>
-          </pre>
+          {/* Syntax Highlighted Code */}
+          <div className={`p-4 overflow-x-auto text-xs sm:text-sm ${
+            isDark 
+              ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+              : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
+          }`}>
+            <SyntaxHighlighter
+              language="javascript"
+              style={syntaxTheme}
+              customStyle={{
+                margin: 0,
+                padding: 0,
+                background: 'transparent',
+                border: 'none',
+                fontSize: '12.5px',
+                lineHeight: '1.65'
+              }}
+              codeTagProps={{
+                style: {
+                  background: 'transparent',
+                  border: 'none',
+                  boxShadow: 'none'
+                }
+              }}
+            >
+              {activeApp.code}
+            </SyntaxHighlighter>
+          </div>
 
           {/* Inline Console Output */}
-          <div className="border-t border-zinc-800 p-3 px-4 bg-zinc-950 text-xs font-mono">
-            <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 pb-1.5">
-              <Terminal size={12} className="text-emerald-400" />
-              <span>Output Console</span>
+          <div className="border-t border-zinc-200 dark:border-zinc-800 p-3 px-4 bg-zinc-100/70 dark:bg-zinc-950 text-xs font-mono">
+            <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400 pb-1.5">
+              <Terminal size={12} className="text-emerald-600 dark:text-brand-lime" />
+              <span className="font-bold">Output Console</span>
             </div>
             {consoleOutput.length === 0 ? (
-              <div className="text-zinc-600 text-[11px] py-1">
+              <div className="text-zinc-500 dark:text-zinc-600 text-[11px] py-1">
                 Click &quot;Run Pattern&quot; to execute this code live.
               </div>
             ) : (
               <div className="space-y-1">
                 {consoleOutput.map((log, i) => (
-                  <div key={i} className={log.type === 'error' ? 'text-red-400' : 'text-emerald-300 text-[11px]'}>
+                  <div key={i} className={log.type === 'error' ? 'text-red-600 dark:text-red-400 font-bold' : 'text-emerald-700 dark:text-emerald-300 text-[11px] font-bold'}>
                     &gt; {log.text}
                   </div>
                 ))}

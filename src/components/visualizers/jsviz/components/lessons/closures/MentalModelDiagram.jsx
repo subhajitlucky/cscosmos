@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Brain, 
   Layers, 
@@ -13,6 +13,9 @@ import {
   ArrowRight,
   ShieldAlert
 } from 'lucide-react';
+import { useTheme } from '@/context/useTheme';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const SPEC_PILLARS = [
   {
@@ -128,6 +131,19 @@ console.log(store.get()); // 500 (Live binding!)`
 ];
 
 export default function MentalModelDiagram() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted 
+    ? (resolvedTheme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark')))
+    : resolvedTheme === 'dark';
+
+  const syntaxTheme = isDark ? vscDarkPlus : vs;
+
   const [activePillar, setActivePillar] = useState(SPEC_PILLARS[0]);
 
   return (
@@ -176,9 +192,9 @@ export default function MentalModelDiagram() {
                   Declares and stores variables in its local Environment Record.
                 </p>
               </div>
-              <div className="p-2.5 rounded-lg bg-zinc-900 text-zinc-200 font-mono text-xs border border-zinc-800">
+              <div className="p-2.5 rounded-lg bg-white/90 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 font-mono text-xs border border-blue-500/20 dark:border-zinc-800 shadow-xs">
                 <span className="text-zinc-500">// Environment Record:</span><br />
-                <span className="text-emerald-400">let name</span> = <span className="text-amber-300">&quot;JavaScript&quot;</span>;
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">let name</span> = <span className="text-amber-600 dark:text-amber-300">&quot;JavaScript&quot;</span>;
               </div>
             </div>
 
@@ -201,10 +217,10 @@ export default function MentalModelDiagram() {
                   The inner function is created with an internal slot pointing directly to outer&apos;s environment.
                 </p>
               </div>
-              <div className="p-2.5 rounded-lg bg-zinc-900 text-zinc-200 font-mono text-xs border border-zinc-800">
+              <div className="p-2.5 rounded-lg bg-white/90 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 font-mono text-xs border border-emerald-500/20 dark:border-zinc-800 shadow-xs">
                 <span className="text-zinc-500">// Hidden Spec Slot:</span><br />
-                <span className="text-purple-400">inner.[[Environment]]</span><br />
-                <span className="text-emerald-400">↳ points to outerEnv</span>
+                <span className="text-purple-600 dark:text-purple-400 font-bold">inner.[[Environment]]</span><br />
+                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">↳ points to outerEnv</span>
               </div>
             </div>
 
@@ -227,9 +243,9 @@ export default function MentalModelDiagram() {
                   Even after outer() completes and pops from the call stack, the backpack stays reachable!
                 </p>
               </div>
-              <div className="p-2.5 rounded-lg bg-zinc-900 text-zinc-200 font-mono text-xs border border-zinc-800">
+              <div className="p-2.5 rounded-lg bg-white/90 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 font-mono text-xs border border-purple-500/20 dark:border-zinc-800 shadow-xs">
                 <span className="text-zinc-500">// Resolves via pointer:</span><br />
-                <span className="text-blue-400">console</span>.<span className="text-yellow-300">log</span>(name);<br />
+                <span className="text-blue-600 dark:text-blue-400">console</span>.<span className="text-amber-600 dark:text-yellow-300">log</span>(name);<br />
                 <span className="text-zinc-500">// Outputs: &quot;JavaScript&quot;</span>
               </div>
             </div>
@@ -308,14 +324,38 @@ export default function MentalModelDiagram() {
 
             {/* Right code demonstration */}
             <div className="lg:col-span-5">
-              <div className="rounded-xl border border-zinc-800 bg-[#0c1017] p-3 text-zinc-200 font-mono text-xs overflow-x-auto shadow-inner">
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800/80 text-[10px] text-zinc-400">
-                  <span>Engine Spec Representation</span>
-                  <span className="text-emerald-400 font-bold">JavaScript</span>
+              <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0c1017] overflow-hidden shadow-xs">
+                <div className="flex items-center justify-between p-2.5 px-3 border-b border-zinc-200 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-900 text-[10px] text-zinc-600 dark:text-zinc-400">
+                  <span className="font-bold text-zinc-800 dark:text-zinc-200">Engine Spec Representation</span>
+                  <span className="text-emerald-600 dark:text-brand-lime font-bold">JavaScript</span>
                 </div>
-                <pre className="leading-relaxed whitespace-pre-wrap font-mono text-[11.5px] text-zinc-300">
-                  {activePillar.code}
-                </pre>
+                <div className={`p-3 overflow-x-auto text-xs ${
+                  isDark 
+                    ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+                    : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
+                }`}>
+                  <SyntaxHighlighter
+                    language="javascript"
+                    style={syntaxTheme}
+                    customStyle={{
+                      margin: 0,
+                      padding: 0,
+                      background: 'transparent',
+                      border: 'none',
+                      fontSize: '11.5px',
+                      lineHeight: '1.6'
+                    }}
+                    codeTagProps={{
+                      style: {
+                        background: 'transparent',
+                        border: 'none',
+                        boxShadow: 'none'
+                      }
+                    }}
+                  >
+                    {activePillar.code}
+                  </SyntaxHighlighter>
+                </div>
               </div>
             </div>
 

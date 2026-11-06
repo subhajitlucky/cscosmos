@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   AlertTriangle, 
   CheckCircle2, 
@@ -11,6 +11,9 @@ import {
   Layers,
   Cpu
 } from 'lucide-react';
+import { useTheme } from '@/context/useTheme';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const MISTAKES = [
   {
@@ -103,6 +106,19 @@ for (let i = 0; i < 3; i++) {
 ];
 
 export default function CommonMistakes() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted 
+    ? (resolvedTheme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark')))
+    : resolvedTheme === 'dark';
+
+  const syntaxTheme = isDark ? vscDarkPlus : vs;
+
   const [activeTab, setActiveTab] = useState(0);
   const current = MISTAKES[activeTab];
 
@@ -190,14 +206,38 @@ export default function CommonMistakes() {
         </div>
 
         {/* Code Snippet */}
-        <div className="rounded-xl border border-zinc-800 bg-[#0c1017] p-4 font-mono text-xs overflow-x-auto shadow-inner">
-          <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800 text-[10px] text-zinc-500">
-            <span>JavaScript Behavioral Test</span>
-            <span className="text-amber-400">ECMA-262 Semantics</span>
+        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0c1017] overflow-hidden shadow-xs">
+          <div className="p-2.5 px-4 bg-zinc-50 dark:bg-zinc-900/80 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-600 dark:text-zinc-400">
+            <span className="font-bold text-zinc-800 dark:text-zinc-200">JavaScript Behavioral Test</span>
+            <span className="text-amber-600 dark:text-amber-400 font-bold">ECMA-262 Semantics</span>
           </div>
-          <pre className="text-zinc-300 leading-relaxed font-mono whitespace-pre text-[11.5px]">
-            {current.badCode}
-          </pre>
+          <div className={`p-4 overflow-x-auto text-xs sm:text-sm ${
+            isDark 
+              ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+              : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
+          }`}>
+            <SyntaxHighlighter
+              language="javascript"
+              style={syntaxTheme}
+              customStyle={{
+                margin: 0,
+                padding: 0,
+                background: 'transparent',
+                border: 'none',
+                fontSize: '12px',
+                lineHeight: '1.65'
+              }}
+              codeTagProps={{
+                style: {
+                  background: 'transparent',
+                  border: 'none',
+                  boxShadow: 'none'
+                }
+              }}
+            >
+              {current.badCode}
+            </SyntaxHighlighter>
+          </div>
         </div>
 
         {/* Golden Takeaway */}

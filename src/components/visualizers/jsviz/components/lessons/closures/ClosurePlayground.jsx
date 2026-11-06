@@ -346,7 +346,7 @@ export default function ClosurePlayground() {
             <span>index.js</span>
             <span className="text-emerald-500 text-[10px]">Editable Script</span>
           </div>
-          <div className="flex-1 min-h-[360px] bg-[#1e1e1e]">
+          <div className="flex-1 min-h-[360px] bg-white dark:bg-[#1e1e1e]">
             {mounted ? (
               <Editor
                 height="380px"
@@ -368,22 +368,22 @@ export default function ClosurePlayground() {
               <textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full h-[380px] p-4 bg-zinc-900 text-zinc-200 font-mono text-xs resize-none outline-none"
+                className="w-full h-[380px] p-4 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-200 font-mono text-xs resize-none outline-none border-none"
               />
             )}
           </div>
         </div>
 
         {/* Right: Console Output Terminal (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col bg-[#090d16] text-zinc-300 font-mono text-xs">
-          <div className="p-2.5 px-4 bg-zinc-900/90 border-b border-zinc-800 flex items-center justify-between">
+        <div className="lg:col-span-5 flex flex-col bg-zinc-50/80 dark:bg-[#090d16] text-zinc-800 dark:text-zinc-300 font-mono text-xs">
+          <div className="p-2.5 px-4 bg-zinc-100/90 dark:bg-zinc-900/90 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Terminal size={14} className="text-emerald-400" />
-              <span className="text-xs font-bold text-zinc-300">Terminal Output</span>
+              <Terminal size={14} className="text-emerald-600 dark:text-brand-lime" />
+              <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200">Terminal Output</span>
             </div>
             <button
               onClick={handleClearConsole}
-              className="p-1 rounded text-zinc-500 hover:text-zinc-300 transition-colors"
+              className="p-1 rounded text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors"
               title="Clear Console"
             >
               <Trash2 size={13} />
@@ -392,10 +392,10 @@ export default function ClosurePlayground() {
 
           <div className="flex-1 p-4 overflow-y-auto space-y-1.5 min-h-[300px] max-h-[420px]">
             {consoleLogs.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-center text-zinc-600 py-12">
+              <div className="h-full flex flex-col items-center justify-center text-center text-zinc-500 dark:text-zinc-600 py-12">
                 <Terminal size={24} className="opacity-40 mb-2" />
                 <p className="text-xs">Console is empty.</p>
-                <p className="text-[11px] text-zinc-600 mt-1">
+                <p className="text-[11px] text-zinc-500 dark:text-zinc-600 mt-1">
                   Click &quot;RUN CODE&quot; to execute this closure pattern.
                 </p>
               </div>
@@ -405,13 +405,13 @@ export default function ClosurePlayground() {
                   key={index}
                   className={`flex items-start gap-2 text-xs leading-relaxed font-mono ${
                     log.type === 'error'
-                      ? 'text-red-400 bg-red-950/20 p-1.5 rounded border border-red-900/30'
+                      ? 'text-red-700 dark:text-red-400 bg-red-500/10 dark:bg-red-950/20 p-1.5 rounded border border-red-500/20 dark:border-red-900/30'
                       : log.type === 'warn'
-                      ? 'text-amber-400 bg-amber-950/20 p-1.5 rounded border border-amber-900/30'
-                      : 'text-zinc-300'
+                      ? 'text-amber-800 dark:text-amber-400 bg-amber-500/10 dark:bg-amber-950/20 p-1.5 rounded border border-amber-500/20 dark:border-amber-900/30'
+                      : 'text-zinc-800 dark:text-zinc-300'
                   }`}
                 >
-                  <span className="text-zinc-600 select-none text-[10px] shrink-0 pt-0.5">
+                  <span className="text-zinc-400 dark:text-zinc-600 select-none text-[10px] shrink-0 pt-0.5">
                     {log.time} &gt;
                   </span>
                   <pre className="whitespace-pre-wrap font-mono flex-1 text-[11.5px]">
@@ -423,9 +423,9 @@ export default function ClosurePlayground() {
           </div>
 
           {/* Terminal Footer */}
-          <div className="p-2 px-4 border-t border-zinc-800/80 bg-zinc-900/40 text-[10.5px] text-zinc-500 flex items-center justify-between">
+          <div className="p-2 px-4 border-t border-zinc-200 dark:border-zinc-800/80 bg-zinc-100/70 dark:bg-zinc-900/40 text-[10.5px] text-zinc-600 dark:text-zinc-500 flex items-center justify-between">
             <span className="flex items-center gap-1">
-              <ShieldCheck size={12} className="text-emerald-500" />
+              <ShieldCheck size={12} className="text-emerald-600 dark:text-brand-lime" />
               Sandboxed Execution Safe
             </span>
             <span>{consoleLogs.length} events logged</span>

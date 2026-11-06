@@ -479,10 +479,10 @@ export default function ClosureVisualizer() {
           </div>
 
           {/* Code Viewer with active line highlight */}
-          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#090d16] p-3 font-mono text-xs shadow-inner overflow-hidden flex flex-col">
-            <div className="text-[10px] text-zinc-500 pb-2 mb-2 border-b border-zinc-800 flex items-center justify-between">
-              <span>closure_engine.js</span>
-              <span className="text-emerald-400">Live Active Frame</span>
+          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#090d16] p-3 font-mono text-xs shadow-xs overflow-hidden flex flex-col">
+            <div className="text-[10px] text-zinc-500 pb-2 mb-2 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+              <span className="font-bold text-zinc-800 dark:text-zinc-200">closure_engine.js</span>
+              <span className="text-emerald-700 dark:text-brand-lime font-bold">Live Active Frame</span>
             </div>
             <div className="space-y-0.5 overflow-x-auto text-[11.5px] leading-5">
               {CODE_LINES.map((line, idx) => {
@@ -493,11 +493,11 @@ export default function ClosureVisualizer() {
                     key={idx}
                     className={`flex items-start px-2 py-0.5 rounded transition-colors ${
                       isCurrent
-                        ? 'bg-emerald-500/20 text-emerald-300 font-bold border-l-2 border-emerald-400'
-                        : 'text-zinc-400 hover:text-zinc-300'
+                        ? 'bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-950 dark:text-emerald-300 font-bold border-l-2 border-emerald-500 dark:border-emerald-400'
+                        : 'text-zinc-700 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
                     }`}
                   >
-                    <span className="w-6 shrink-0 text-right pr-2 text-zinc-600 select-none text-[10px]">
+                    <span className="w-6 shrink-0 text-right pr-2 text-zinc-400 dark:text-zinc-600 select-none text-[10px]">
                       {lineNum}
                     </span>
                     <span className="whitespace-pre">
@@ -644,9 +644,9 @@ export default function ClosureVisualizer() {
                 </div>
 
                 <div className="space-y-1 font-mono text-xs">
-                  <div className="flex items-center justify-between text-[10.5px] text-zinc-400 pb-0.5">
+                  <div className="flex items-center justify-between text-[10.5px] text-zinc-500 dark:text-zinc-400 pb-0.5">
                     <span>[[OuterEnv]]:</span>
-                    <span className="text-zinc-300">{step.heap.closureEnv.outer}</span>
+                    <span className="text-zinc-700 dark:text-zinc-300 font-semibold">{step.heap.closureEnv.outer}</span>
                   </div>
                   {Object.entries(step.heap.closureEnv.record).map(([k, v]) => (
                     <div
