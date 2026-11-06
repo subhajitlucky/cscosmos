@@ -379,10 +379,10 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                 <span>{copiedSyntax ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
-            <div className={`p-3 overflow-x-auto text-xs sm:text-sm border-t ${
+            <div className={`p-3.5 overflow-x-auto text-xs sm:text-sm ${
               isDark 
-                ? 'bg-[#090d16] border-zinc-800 selection:bg-[#264f78] selection:text-white' 
-                : 'bg-zinc-50 border-zinc-200 selection:bg-blue-100 selection:text-blue-900'
+                ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+                : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
             }`}>
               <SyntaxHighlighter
                 language="javascript"
@@ -391,8 +391,17 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                   margin: 0,
                   padding: 0,
                   background: 'transparent',
-                  fontSize: '12px',
+                  border: 'none',
+                  boxShadow: 'none',
+                  fontSize: '12.5px',
                   lineHeight: '1.6'
+                }}
+                codeTagProps={{
+                  style: {
+                    background: 'transparent',
+                    border: 'none',
+                    boxShadow: 'none'
+                  }
                 }}
               >
                 {content.syntax}
@@ -614,10 +623,10 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                       </div>
                     </div>
 
-                  <div className={`p-3 overflow-x-auto text-xs sm:text-sm border-t ${
+                  <div className={`p-3.5 overflow-x-auto text-xs sm:text-sm ${
                     isDark 
-                      ? 'bg-[#090d16] border-zinc-800 selection:bg-[#264f78] selection:text-white' 
-                      : 'bg-zinc-50 border-zinc-200 selection:bg-blue-100 selection:text-blue-900'
+                      ? 'bg-[#090d16] selection:bg-[#264f78] selection:text-white' 
+                      : 'bg-zinc-50/70 selection:bg-blue-100 selection:text-blue-900'
                   }`}>
                     <SyntaxHighlighter
                       language="javascript"
@@ -626,8 +635,17 @@ export function JsConceptLesson({ topic, content, conceptNumber = 2 }) {
                         margin: 0,
                         padding: 0,
                         background: 'transparent',
-                        fontSize: '12px',
+                        border: 'none',
+                        boxShadow: 'none',
+                        fontSize: '12.5px',
                         lineHeight: '1.6'
+                      }}
+                      codeTagProps={{
+                        style: {
+                          background: 'transparent',
+                          border: 'none',
+                          boxShadow: 'none'
+                        }
                       }}
                     >
                       {ex.code}
