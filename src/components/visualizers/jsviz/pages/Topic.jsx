@@ -13,6 +13,7 @@ import { RuntimeEnvironmentsLesson } from '../components/lessons/RuntimeEnvironm
 import { EngineArchitectureLesson } from '../components/lessons/EngineArchitectureLesson';
 import { SyntaxExpressionsLesson } from '../components/lessons/SyntaxExpressionsLesson';
 import { TypeDetectionLesson } from '../components/lessons/TypeDetectionLesson';
+import { ClosuresLesson } from '../components/lessons/ClosuresLesson';
 import { JsConceptLesson } from '../components/lessons/JsConceptLesson';
 import { 
     CheckSquare, ArrowLeft, ArrowRight, Menu, X,
@@ -148,6 +149,14 @@ const Topic = ({ topicId: propTopicId }) => {
                     <DataTypesLesson topic={topic} content={content} />
                 ) : id === 'type-detection-typeof-instanceof-tostring' || id === 'typeof-detection' ? (
                     <TypeDetectionLesson topic={topic} content={content} />
+                ) : id === 'closures-lexical-environment' || id === 'closures' ? (
+                    <ClosuresLesson
+                        topic={topic}
+                        content={content}
+                        conceptNumber={currentIndex + 1}
+                        prevTopic={prevTopic}
+                        nextTopic={nextTopic}
+                    />
                 ) : (
                     <JsConceptLesson
                         topic={topic}
