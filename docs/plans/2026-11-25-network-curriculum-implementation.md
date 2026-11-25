@@ -32,7 +32,7 @@ describe('network concept catalog', () => {
   });
 
   it('covers all seven phases with the approved counts', () => {
-    expect(PHASES.map((p) => p.concepts.length)).toEqual([7, 8, 7, 9, 8, 6, 5]);
+    expect(PHASES.map((p) => p.concepts.length)).toEqual([7, 8, 7, 10, 8, 6, 4]);
   });
 
   it('every concept has complete lesson copy and a valid widget config', () => {
