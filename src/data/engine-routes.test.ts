@@ -1,15 +1,15 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { getAllModules } from '../lib/module-registry';
 import { engineRoutes } from './engine-routes';
 import { topics } from './topics';
 
-// Curriculum modules are registered in src/lib/module-registry.ts. They share the
-// AI engine's components but have their own canonical topic routes.
-const MODULE_TOPIC_SLUGS = new Set([
-  'ai-engineering-foundations',
-  'python-for-ai-engineering',
-]);
+// Curriculum modules are registered in src/lib/module-registry.ts. They own
+// their canonical topic routes without a corresponding engine route entry.
+const MODULE_TOPIC_SLUGS = new Set(
+  getAllModules().map((module) => module.topicSlug),
+);
 
 const activeTopics = topics.filter((topic) => topic.status === 'active');
 const activeBySlug = new Map(activeTopics.map((topic) => [topic.slug, topic]));

@@ -13,6 +13,13 @@ import { PythonAiTopic } from '@/components/visualizers/aicosmos/pages/PythonAiT
 import { PythonAiLab } from '@/components/visualizers/aicosmos/pages/PythonAiLab';
 import { PythonAiProblems } from '@/components/visualizers/aicosmos/pages/PythonAiProblems';
 
+import { CONCEPTS } from '@/components/visualizers/networkcosmos/data/concepts';
+import { NetworkHome } from '@/components/visualizers/networkcosmos/pages/NetworkHome';
+import { NetworkLearn } from '@/components/visualizers/networkcosmos/pages/NetworkLearn';
+import { NetworkTopic } from '@/components/visualizers/networkcosmos/pages/NetworkTopic';
+import { NetworkLab } from '@/components/visualizers/networkcosmos/pages/NetworkLab';
+import { NetworkProblems } from '@/components/visualizers/networkcosmos/pages/NetworkProblems';
+
 const modules = new Map<string, TopicModule>();
 
 export function registerModule(module: TopicModule): void {
@@ -68,4 +75,22 @@ registerModule({
   TopicPage: PythonAiTopic,
   LabPage: PythonAiLab,
   ProblemsPage: PythonAiProblems,
+});
+
+// Topic: Computer Networks Internals (TCP/IP)
+registerModule({
+  topicSlug: 'computer-networks-internals-tcpip',
+  title: 'Computer Networks Internals (TCP/IP)',
+  domain: 'corecs',
+  subtopics: CONCEPTS.map((c) => ({
+    slug: c.slug,
+    number: c.number,
+    title: c.title,
+    category: c.phase,
+  })),
+  HomePage: NetworkHome,
+  LearnPage: NetworkLearn,
+  TopicPage: NetworkTopic,
+  LabPage: NetworkLab,
+  ProblemsPage: NetworkProblems,
 });

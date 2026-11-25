@@ -3,7 +3,7 @@
 ## 📌 Overview
 CSCosmos is an interactive computer science visualizer hub and learning platform built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**, and **React 19**.
 
-The platform organizes 245 topics across 8 core domains and natively embeds interactive visualization engines directly into client-side routes.
+The platform organizes 257 catalog topics across 8 core domains and natively embeds interactive visualization engines directly into client-side routes.
 
 ---
 
@@ -30,16 +30,17 @@ The platform organizes 245 topics across 8 core domains and natively embeds inte
 
 ## 🌐 Routes & Engine Status
 
-Canonical topic URLs are always `/[domain]/[topicSlug]`. Each canonical URL is
-internally rewritten to the engine implementation at `/[enginePath]`; direct
-visits to the engine path 308-redirect back to the canonical URL.
+Canonical topic URLs are always `/[domain]/[topicSlug]`. Each engine-backed
+canonical URL is internally rewritten to the engine implementation at
+`/[enginePath]`; direct visits to the engine path 308-redirect back to the
+canonical URL. Module-backed topics are served directly by the universal route.
 
 | Route family | Status | Description |
 | :--- | :--- | :--- |
 | `/` | Live | Main landing page (hero, search, domain grid, featured engines) |
-| `/topics` | Live | Catalog of all 245 topics with domain, difficulty, and time filters |
+| `/topics` | Live | Catalog of all 257 topics with domain, difficulty, and time filters |
 | `/[domain]` | Live | Domain hub (e.g. `/fullstack`, `/ai`, `/dsa`, `/security`) |
-| `/[domain]/[topicSlug]` | **Canonical** | Topic page; 72 active topics today |
+| `/[domain]/[topicSlug]` | **Canonical** | Topic page; 73 active topics today |
 | `/[domain]/[topicSlug]/learn` | Live (modules) | Curriculum index for registered multi-view modules |
 | `/[domain]/[topicSlug]/learn/[subtopicSlug]` | Live (modules) | Module subtopic deep-dive |
 | `/[domain]/[topicSlug]/lab` | Live (modules) | Module interactive lab |
@@ -52,7 +53,12 @@ visits to the engine path 308-redirect back to the canonical URL.
 | `/embed/topic/[topicSlug]` | Live | Chrome-free visualizer embed |
 
 The authoritative mapping is `src/data/engine-routes.ts` (70 absorbed engines).
-The two AI curriculum modules are registered in `src/lib/module-registry.ts`.
+Three curriculum modules are registered in `src/lib/module-registry.ts`:
+`ai-engineering-foundations`, `python-for-ai-engineering`, and
+`computer-networks-internals-tcpip`. The Computer Networks module is module-backed
+(not an engine rewrite) at `/corecs/computer-networks-internals-tcpip`, with home,
+`/learn`, `/lab`, and `/problems` views plus 50 concept pages driven by a pure
+packet-journey simulator.
 
 ## 🎯 Interview Prep Section
 
@@ -70,12 +76,13 @@ A dedicated interview-preparation area, separate from the topic catalog.
 
 ### Current live inventory
 
-- **245 catalog topics** across 8 domains.
-- **72 active topics** = 70 absorbed engine routes + 2 registered curriculum modules.
+- **257 catalog topics** across 8 domains.
+- **73 active topics** = 70 absorbed engine routes + 3 registered curriculum modules.
 - **70 engine routes** in `src/data/engine-routes.ts`.
-- **2 curriculum modules** in `src/lib/module-registry.ts`:
+- **3 curriculum modules** in `src/lib/module-registry.ts`:
   - `ai-engineering-foundations`
   - `python-for-ai-engineering`
+  - `computer-networks-internals-tcpip` (50 concepts, 12 interactive widgets, pure packet-journey simulator; home, `/learn`, `/lab`, `/problems` views)
 - **25 interview questions** across 5 categories with data-driven animated walkthroughs.
 
 Engine folders live in `src/components/visualizers/<engineDir>/`. The folder name
@@ -86,8 +93,8 @@ is not always the same as the topic slug (for example `program-cosmos` uses the
 ### Still planned
 
 - Expand DSA (40 topics; 2 live).
-- Build the Advanced Engineering & Systems domain (10 topics; 0 live).
-- Deepen the two AI curriculum modules and add more multi-view modules.
+- Build the Advanced Engineering & Systems domain (18 topics; 8 live).
+- Deepen the three registered curriculum modules and add more multi-view modules.
 
 ## 🛠️ Verification & Quality Standards
 

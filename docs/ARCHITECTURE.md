@@ -1,15 +1,15 @@
 # CSCosmos Architecture
 
-CSCosmos is a visual computer science learning platform: 245 curated topics, 72 live
-interactive visualizer topics, interview walkthroughs, and a local-first learning layer
-with optional accounts.
+CSCosmos is a visual computer science learning platform: 257 catalog topics, 73 live
+interactive visualizer topics (70 absorbed engines + 3 curriculum modules), interview
+walkthroughs, and a local-first learning layer with optional accounts.
 
 ## System overview
 
 ```text
 src/data/
   domains.ts       8 domains
-  topics.ts        245 topics + metadata
+  topics.ts        257 topics + metadata
   topic-meta.ts    difficulty, time, tags, prerequisites, related topics
   engine-routes.ts 70 topicSlug -> engineDir mappings
   interview/       5 categories, questions, companies, animations
@@ -49,8 +49,16 @@ Postgres (optional)
 - graph metadata: prerequisites and related slugs
 
 `src/data/engine-routes.ts` maps each `topicSlug` to its `engineDir` and engine
-path. `src/lib/module-registry.ts` registers the multi-view curriculum modules.
-The universal route renders a module when registered, otherwise a development page.
+path. `src/lib/module-registry.ts` registers three multi-view curriculum modules:
+`ai-engineering-foundations`, `python-for-ai-engineering`, and
+`computer-networks-internals-tcpip`. The universal route renders a module when
+registered, otherwise a development page.
+
+The Computer Networks module is module-backed, not an engine rewrite: its canonical
+route is `/corecs/computer-networks-internals-tcpip`, with home, `/learn`, `/lab`, and
+`/problems` views plus 50 concept pages. Its interactive widgets run on a pure
+packet-journey simulator in `src/components/visualizers/networkcosmos/sim/`.
+
 See [`NAMING.md`](./NAMING.md) for the vocabulary used across the codebase.
 
 ## Rendering and SSG

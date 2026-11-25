@@ -73,7 +73,6 @@ export const engineRoutes: EngineRoute[] = [
   { domain: 'corecs', topicSlug: 'linkers-loaders-and-executables-elf-pe', engineDir: 'linkerviz' },
   { domain: 'corecs', topicSlug: 'java-and-jvm-internals-garbage-collection-bytecode', engineDir: 'jvmviz' },
   { domain: 'corecs', topicSlug: 'computer-architecture-cpu-caches', engineDir: 'cpuviz' },
-  { domain: 'corecs', topicSlug: 'computer-networks-internals-tcpip', engineDir: 'tcpviz' },
   { domain: 'corecs', topicSlug: 'database-internals-indexes-transactions', engineDir: 'dbviz' },
   { domain: 'corecs', topicSlug: 'compilers-and-runtime-internals-ast-bytecode', engineDir: 'compilerviz' },
   { domain: 'corecs', topicSlug: 'theory-of-computation-automata-languages-complexity', engineDir: 'tocviz' },

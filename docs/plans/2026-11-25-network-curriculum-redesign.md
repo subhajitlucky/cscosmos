@@ -34,10 +34,10 @@ Use the existing **curriculum module** pattern (`src/lib/module-registry.ts`) ra
 | 1. Signals & Link | 7 | bit encoding; bandwidth/Nyquist/Shannon; framing & CRC; MAC/Ethernet; switches & collision domains; error detection vs correction; stop-and-wait & sliding window |
 | 2. IP & Addressing | 8 | IP packet anatomy; IPv4→CIDR; subnetting/VLSM; aggregation; IPv6; ARP/ND; DHCP; ICMP |
 | 3. Routing & Forwarding | 7 | LPM forwarding table; RIP; OSPF/Dijkstra; BGP; static vs dynamic; metrics/ECMP; loops, TTL & convergence |
-| 4. Transport & Reliability | 9 | ports/mux; UDP; TCP segment & state; handshake/teardown; seq/ACK/retransmit; RTT & timers; flow control; slow start/congestion avoidance; fast retransmit/RTO/QUIC |
+| 4. Transport & Reliability | 10 | ports/mux; UDP; TCP segment & state; handshake/teardown; seq/ACK/retransmit; RTT & timers; flow control; slow start/congestion avoidance; fast retransmit/RTO; QUIC |
 | 5. Application on the Wire | 8 | DNS; HTTP/1→2→3; TLS; cookies/sessions; caching/CDN; WebSockets/SSE; SMTP/IMAP; NTP |
 | 6. Infrastructure | 6 | NAT; VLAN/STP; Wi-Fi/CSMA-CA; tunnels/VPN; SDN; QoS/queueing |
-| 7. Measurement & Failure | 5 | latency/jitter/loss/throughput; packet capture; ping/traceroute; troubleshooting/fault domains |
+| 7. Measurement & Failure | 4 | latency/jitter/loss/throughput; packet capture; ping/traceroute; troubleshooting/fault domains |
 
 ## Approaches considered for the simulator
 

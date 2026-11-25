@@ -1,6 +1,6 @@
 # CSCosmos
 
-CSCosmos is an interactive computer science visualizer hub and learning platform, organizing 245 curated topics across 8 core domains with natively absorbed interactive visualization engines.
+CSCosmos is an interactive computer science visualizer hub and learning platform, organizing 257 catalog topics across 8 core domains with natively absorbed interactive visualization engines.
 
 - Live: https://cscosmos.vercel.app
 - Repo: https://github.com/subhajitlucky/cscosmos
@@ -12,8 +12,8 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 
 ## Proof
 
-- 245 curated computer science learning modules.
-- 72 live visualizer topics powered by 70 natively absorbed interactive engines (zero externally linked).
+- 257 computer science catalog topics.
+- 73 live visualizer topics powered by 70 natively absorbed interactive engines (zero externally linked) and 3 registered curriculum modules.
 - 8 major domains with dedicated routes.
 - 2,500+ statically pre-rendered pages via Next.js SSG.
 - Interview Prep: 25 deep-dive questions across 5 categories with step-by-step animated walkthroughs.
@@ -39,22 +39,25 @@ The goal is not to publish a static list. The hub acts as an index for a growing
 
 ## Natively Absorbed Visualizers
 
-All 70 interactive visualizer engines are absorbed as native Next.js routes within CSCosmos. The authoritative topic-to-engine mapping lives in `src/data/engine-routes.ts`; the last static build produced 2,500+ pre-rendered pages. Canonical topic URLs are `/[domain]/[topicSlug]`; each engine is served from its `/[enginePath]` route and rewritten behind the canonical URL.
+All 70 interactive visualizer engines are absorbed as native Next.js routes within CSCosmos. The authoritative topic-to-engine mapping lives in `src/data/engine-routes.ts`; the last static build produced 2,500+ pre-rendered pages. Canonical topic URLs are `/[domain]/[topicSlug]`; each engine-backed topic is served from its `/[enginePath]` route and rewritten behind the canonical URL, while module-backed topics are served directly by the universal route.
 
 | Domain | Active topics | Example canonical URLs |
 |:-------|:--------------|:----------------------|
-| **Full Stack Development** | 32 | `/fullstack/program-cosmos`, `/fullstack/html-cosmos`, `/fullstack/jsviz`, `/fullstack/reactcosmos` |
+| **Full Stack Development** | 20 | `/fullstack/program-cosmos`, `/fullstack/html-cosmos`, `/fullstack/jsviz`, `/fullstack/reactcosmos` |
 | **Data Structures & Algorithms** | 2 | `/dsa/arrayviz`, `/dsa/stringalgoviz` |
 | **Web3 & Blockchain** | 8 | `/web3/blockchainviz`, `/web3/cryptviz`, `/web3/patriciatrie`, `/web3/solidityviz` |
-| **Cybersecurity & Ethical Hacking** | 8 | `/security/zero-trust-architecture-and-iam`, `/security/security-engineering-threat-models` |
-| **Artificial Intelligence** | 3 | `/ai/aimathviz`, `/ai/ai-engineering-foundations`, `/ai/python-for-ai-engineering` |
-| **Core Computer Science** | 15 | `/corecs/computer-architecture-cpu-caches`, `/corecs/operating-systems-internals-processes-memory` |
-| **DevOps, Cloud & Engineering** | 4 | `/devops/gitcosmos`, `/devops/k8scosmos`, `/devops/cloudcosmos`, `/devops/loadbalancing` |
-| **Advanced Engineering & Systems** | 0 | Planned |
+| **Cybersecurity & Ethical Hacking** | 10 | `/security/zero-trust-architecture-and-iam`, `/security/security-engineering-threat-models` |
+| **Artificial Intelligence** | 4 | `/ai/aimathviz`, `/ai/ai-engineering-foundations`, `/ai/python-for-ai-engineering` |
+| **Core Computer Science** | 16 | `/corecs/computer-architecture-cpu-caches`, `/corecs/operating-systems-internals-processes-memory`, `/corecs/computer-networks-internals-tcpip` |
+| **DevOps, Cloud & Engineering** | 5 | `/devops/gitcosmos`, `/devops/k8scosmos`, `/devops/cloudcosmos`, `/devops/loadbalancing` |
+| **Advanced Engineering & Systems** | 8 | `/advanced/wasmcosmos`, `/advanced/xrcosmos`, `/advanced/systemdesignviz` |
 
-The full 70-row engine mapping is in `src/data/engine-routes.ts`. The two
-curriculum modules (`ai-engineering-foundations`, `python-for-ai-engineering`)
-are registered in `src/lib/module-registry.ts`. The authoritative topic catalog is
+The full 70-row engine mapping is in `src/data/engine-routes.ts`. The three
+curriculum modules (`ai-engineering-foundations`, `python-for-ai-engineering`,
+`computer-networks-internals-tcpip`) are registered in `src/lib/module-registry.ts`.
+The Computer Networks module is module-backed rather than engine-backed: its canonical
+URL is `/corecs/computer-networks-internals-tcpip`, with home, `/learn`, `/lab`, and
+`/problems` views plus 50 concept pages. The authoritative topic catalog is
 `src/data/topics.ts`.
 
 
@@ -85,7 +88,7 @@ src/data/engine-routes.ts
   Authoritative topicSlug -> engineDir/enginePath mapping used by next.config.ts
 
 src/lib/module-registry.ts
-  Registered multi-view curriculum modules (currently the two AI modules)
+  Registered multi-view curriculum modules (two AI modules + Computer Networks)
 
 src/components/visualizers/
   Native visualizer engine implementations (jsviz, cssviz, reactcosmos, etc.)
@@ -132,8 +135,9 @@ To absorb an engine natively:
 ## Routing And Deployment
 
 CSCosmos uses the Next.js App Router for file-system based routing. The public URL is always
-the canonical topic URL `/[domain]/[topicSlug]`. Internally that URL is rewritten to the
-engine implementation at `/<enginePath>/[[...slug]]` (70 engine paths today):
+the canonical topic URL `/[domain]/[topicSlug]`. Each engine-backed canonical URL is rewritten
+to the engine implementation at `/<enginePath>/[[...slug]]` (70 engine paths today);
+module-backed topics are served directly by the universal route:
 
 - `/` — Home page
 - `/topics` — Full topic catalog
@@ -142,7 +146,7 @@ engine implementation at `/<enginePath>/[[...slug]]` (70 engine paths today):
 - `/interview/[category]` — Filterable question list (topic, difficulty, frequency, round, type)
 - `/interview/[category]/[questionSlug]` — Dedicated question page with step-by-step animated walkthrough
 - `/[domain]` — Domain-specific topic lists (e.g., `/fullstack`, `/ai`, `/dsa`)
-- `/[domain]/[topicSlug]` — Canonical topic URL (rewritten to the engine route)
+- `/[domain]/[topicSlug]` — Canonical topic URL (rewritten to the engine route for engine-backed topics; served directly for module-backed topics)
 - `/learn/[topicSlug]` — permanent redirect alias to the canonical topic URL
 - `/embed/topic/[topicSlug]` — chrome-free visualizer embed
 - `/<enginePath>/[[...slug]]` — engine implementation route (e.g. `/program-cosmos`, `/jsviz`)
@@ -231,10 +235,10 @@ npm run storage:check
 ## Roadmap
 
 - Expand the DSA domain (40 topics; 2 live today).
-- Build the Advanced Engineering & Systems domain (10 topics; 0 live today).
+- Build the Advanced Engineering & Systems domain (18 topics; 8 live today).
 - Add screenshots and short previews for live engines.
 - Add progress filters for active versus planned modules.
-- Deepen the two registered curriculum modules and add more multi-view modules.
+- Deepen the three registered curriculum modules and add more multi-view modules.
 
 ## Contributing
 
