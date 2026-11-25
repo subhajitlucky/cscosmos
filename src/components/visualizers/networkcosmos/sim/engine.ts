@@ -9,6 +9,9 @@ import type { Headers, JourneyState } from './types';
 export type { Headers, JourneyEvent, JourneyState } from './types';
 
 const INITIAL_TTL = 64;
+// A routing loop rewinds to the router on every pass, so use a short TTL only
+// for that fault: the ICMP Time Exceeded lesson lands in a handful of steps.
+const LOOP_INITIAL_TTL = 7;
 const EPHEMERAL_PORT = 49152;
 const BASE_RTT_MS = 20;
 const RTT_SPREAD_MS = 40;
@@ -114,7 +117,7 @@ export function createJourney(
     dstMac: GATEWAY_MAC,
     srcIp: CLIENT_IP,
     dstIp: destination.ip,
-    ipTtl: INITIAL_TTL,
+    ipTtl: fault === 'loop' ? LOOP_INITIAL_TTL : INITIAL_TTL,
     srcPort: destination.port === undefined ? undefined : EPHEMERAL_PORT,
     dstPort: destination.port,
     seq: scenarioId === 'http' ? 0 : undefined,

@@ -86,12 +86,24 @@ describe('packet journey engine', () => {
     expect(s.events.some((e) => e.note.includes('ICMP fragmentation-needed'))).toBe(true);
   });
 
-  it('loop fault expires TTL and emits ICMP time exceeded', () => {
+  it('loop fault expires its shortened TTL quickly and emits ICMP time exceeded', () => {
     let s = start('loop');
-    while (!s.done && s.events.length < 80) s = advance(s);
+    expect(s.headers.ipTtl).toBeLessThan(64);
+    let calls = 0;
+    while (!s.done && calls < 12) {
+      s = advance(s);
+      calls += 1;
+    }
+    expect(s.done).toBe(true);
+    expect(calls).toBeLessThanOrEqual(12);
     expect(s.events.some((e) => e.note.includes('TTL expired'))).toBe(true);
     expect(s.headers.ipTtl).toBe(0);
     expect(s.events.some((e) => e.note.includes('ICMP Time Exceeded'))).toBe(true);
+
+    // Every other fault keeps the full, realistic 64-hop TTL.
+    for (const fault of ['none', 'loss', 'arpSpoof', 'mtu'] as const) {
+      expect(createJourney('http', fault).headers.ipTtl).toBe(64);
+    }
   });
 
   it('loss on dns and ping uses timeout/retry instead of TCP ACKs', () => {

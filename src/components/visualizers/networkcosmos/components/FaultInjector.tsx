@@ -17,6 +17,13 @@ const FAULTS: { value: FaultKind; label: string; hint: string }[] = [
   { value: 'loop', label: 'Routing loop', hint: 'Cycle the packet until its TTL expires' },
 ];
 
+// Shared human-readable labels so other views (e.g. the deep-link banner in
+// the lab) never have to display the raw FaultKind enum. Derived from FAULTS
+// so the radios and the banner cannot drift apart.
+export const FAULT_LABELS: Record<FaultKind, string> = Object.fromEntries(
+  FAULTS.map(({ value, label }) => [value, label]),
+) as Record<FaultKind, string>;
+
 export function FaultInjector({ value, onChange, disabled = false }: FaultInjectorProps) {
   const groupId = useId();
 

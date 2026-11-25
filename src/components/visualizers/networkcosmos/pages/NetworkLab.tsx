@@ -11,7 +11,7 @@ import type { FaultKind } from '../data/concepts';
 import { getConcept } from '../data/concepts';
 import { SCENARIOS, type Scenario } from '../data/scenarios';
 import { advance, createJourney, type JourneyState } from '../sim/engine';
-import { FaultInjector } from '../components/FaultInjector';
+import { FAULT_LABELS, FaultInjector } from '../components/FaultInjector';
 import { HeaderInspector } from '../components/HeaderInspector';
 import { HopMap } from '../components/HopMap';
 import { JourneyMap } from '../components/JourneyMap';
@@ -110,7 +110,7 @@ export function NetworkLab({
         </p>
         {linkedConcept && linkedFault !== 'none' && (
           <p className="rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-900 dark:border-sky-800 dark:bg-sky-950 dark:text-sky-100">
-            Fault preselected from concept: {linkedConcept.title} ({linkedFault})
+            Fault preselected from concept: {linkedConcept.title} ({FAULT_LABELS[linkedFault]})
           </p>
         )}
       </header>
