@@ -307,6 +307,11 @@ export const topics: Topic[] = [
     createTopic("C & C++ Systems Programming (Memory, Pointers)", "corecs"),
     createTopic("Java & JVM Internals (Garbage Collection, Bytecode)", "corecs", { status: 'active', slug: 'java-and-jvm-internals-garbage-collection-bytecode' }),
     createTopic("Computer Architecture (CPU, Caches)", "corecs", { status: 'active', slug: 'computer-architecture-cpu-caches' }),
+    createTopic("Computer Organization & Block Diagram", "corecs", {
+      status: 'active',
+      slug: 'computer-organization',
+      curriculumTags: ['core', 'foundations'],
+    }),
     createTopic("Computer Networks Internals (TCP/IP)", "corecs", { status: 'active', slug: 'computer-networks-internals-tcpip' }),
     createTopic("Database Internals (Indexes, Transactions)", "corecs", { status: 'active', slug: 'database-internals-indexes-transactions' }),
     createTopic("Compilers & Runtime Internals (AST, Bytecode)", "corecs", { status: 'active', slug: 'compilers-and-runtime-internals-ast-bytecode' }),

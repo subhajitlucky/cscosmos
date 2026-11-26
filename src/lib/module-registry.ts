@@ -20,6 +20,8 @@ import { NetworkTopic } from '@/components/visualizers/networkcosmos/pages/Netwo
 import { NetworkLab } from '@/components/visualizers/networkcosmos/pages/NetworkLab';
 import { NetworkProblems } from '@/components/visualizers/networkcosmos/pages/NetworkProblems';
 
+import { computerOrganizationModule } from './modules/computerOrganization';
+
 const modules = new Map<string, TopicModule>();
 
 export function registerModule(module: TopicModule): void {
@@ -94,3 +96,6 @@ registerModule({
   LabPage: NetworkLab,
   ProblemsPage: NetworkProblems,
 });
+
+// Topic: Computer Organization & Block Diagram
+registerModule(computerOrganizationModule);
