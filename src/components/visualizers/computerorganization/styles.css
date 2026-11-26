@@ -11,6 +11,10 @@
   --co-wire: #78716c;
   --co-muted: #57534e;
   --co-panel: #ffffff;
+  --co-active-wash: #fff7ed;
+  --co-bus-address: #0f766e;
+  --co-bus-data: #b45309;
+  --co-bus-control: #6d28d9;
   --co-grid-line: rgba(180, 83, 9, 0.09);
   color: var(--co-ink);
   background: var(--co-surface);
@@ -26,6 +30,10 @@
   --co-wire: #a8a29e;
   --co-muted: #a8a29e;
   --co-panel: #292524;
+  --co-active-wash: #3a2c14;
+  --co-bus-address: #5eead4;
+  --co-bus-data: #fbbf24;
+  --co-bus-control: #c4b5fd;
   --co-grid-line: rgba(251, 191, 36, 0.12);
 }
 
@@ -35,7 +43,10 @@
   text-underline-offset: 3px;
 }
 
-.co-root a:focus-visible {
+.co-root a:focus-visible,
+.co-root button:focus-visible,
+.co-root select:focus-visible,
+.co-root input:focus-visible {
   outline: 2px solid var(--co-copper);
   outline-offset: 2px;
 }
@@ -142,9 +153,276 @@
   font-size: 14px;
 }
 
+/* Article chapter diagram: blocks as chips, flow as a wire-like list. */
+.co-topic-diagram {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.co-topic-flow {
+  list-style: none;
+  margin-left: 0.25rem;
+  border-left: 2px solid var(--co-line);
+  padding-left: 1rem;
+}
+
+.co-topic-flow li {
+  position: relative;
+  padding: 0.125rem 0;
+  font-size: 0.875rem;
+}
+
+.co-topic-flow li::before {
+  content: '';
+  position: absolute;
+  left: -1.25rem;
+  top: 0.55rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--co-copper);
+}
+
+/* Shared control shell used by the chapter interactives. */
+.co-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--co-copper);
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background: var(--co-panel);
+  color: var(--co-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.co-action:hover:not(:disabled) {
+  background: var(--co-active-wash);
+  border-color: var(--co-amber);
+}
+
+.co-action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.co-chip-active {
+  border-color: var(--co-copper);
+  background: var(--co-active-wash);
+}
+
+.co-bbd-controls {
+  border: 1px solid var(--co-line);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.co-bbd-fields {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .co-bbd-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.co-bbd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.co-bbd-field label {
+  font-weight: 600;
+}
+
+.co-bbd-field select,
+.co-bbd-field input {
+  min-height: 2.25rem;
+  border: 1px solid var(--co-line);
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  background: var(--co-panel);
+  color: var(--co-ink);
+}
+
+.co-bbd-actions,
+.co-bbd-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.co-bbd-list {
+  list-style: none;
+  border: 1px solid var(--co-line);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.co-bbd-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.co-bbd-list li + li {
+  border-top: 1px solid var(--co-line);
+}
+
+.co-bbd-swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: none;
+  border-radius: 999px;
+}
+
+.co-bbd-swatch-address {
+  background: var(--co-bus-address);
+}
+
+.co-bbd-swatch-data {
+  background: var(--co-bus-data);
+}
+
+.co-bbd-swatch-control {
+  background: var(--co-bus-control);
+}
+
+.co-bbd-remove {
+  margin-left: auto;
+  min-height: 24px;
+  border: 0;
+  background: none;
+  color: var(--co-copper);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+/* Block diagram builder: SVG wires use theme variables, never literal colours. */
+.co-bbd-canvas,
+.co-bwc-canvas {
+  padding: 0.5rem;
+}
+
+.co-bbd-node {
+  cursor: pointer;
+}
+
+.co-bbd-node:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.co-bbd-node:focus-visible .co-bbd-rect {
+  stroke: var(--co-amber);
+  stroke-width: 3.5;
+  stroke-dasharray: 6 3;
+}
+
+.co-bbd-rect {
+  fill: var(--co-panel);
+  stroke: var(--co-copper);
+  stroke-width: 1.5;
+  transition: fill 150ms ease, stroke-width 150ms ease;
+}
+
+.co-bbd-node:hover .co-bbd-rect,
+.co-bbd-node-active .co-bbd-rect {
+  fill: var(--co-active-wash);
+}
+
+.co-bbd-node-active .co-bbd-rect {
+  stroke-width: 3;
+}
+
+.co-bbd-wire {
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.co-bbd-wire-address {
+  stroke: var(--co-bus-address);
+}
+
+.co-bbd-wire-data {
+  stroke: var(--co-bus-data);
+}
+
+.co-bbd-wire-control {
+  stroke: var(--co-bus-control);
+}
+
+.co-bbd-arrow-address {
+  fill: var(--co-bus-address);
+}
+
+.co-bbd-arrow-data {
+  fill: var(--co-bus-data);
+}
+
+.co-bbd-arrow-control {
+  fill: var(--co-bus-control);
+}
+
+.co-bbd-bus-letter,
+.co-bbd-bus-address-text,
+.co-bbd-bus-data-text,
+.co-bbd-bus-control-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.co-bbd-bus-address-text {
+  fill: var(--co-bus-address);
+}
+
+.co-bbd-bus-data-text {
+  fill: var(--co-bus-data);
+}
+
+.co-bbd-bus-control-text {
+  fill: var(--co-bus-control);
+}
+
+/* Bus width calculator: lanes animate only when motion is allowed. */
+.co-bwc-results strong {
+  color: var(--co-copper);
+}
+
+.co-bwc-track {
+  fill: var(--co-active-wash);
+  stroke: var(--co-line);
+  stroke-width: 1;
+  transition: height 180ms ease, y 180ms ease;
+}
+
+.co-bwc-lane {
+  stroke: var(--co-copper);
+  stroke-width: 3;
+  opacity: 0.85;
+  transition: opacity 180ms ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .co-cta,
-  .co-chapter {
+  .co-chapter,
+  .co-action,
+  .co-bbd-rect,
+  .co-bwc-track,
+  .co-bwc-lane {
     transition: none;
   }
 
