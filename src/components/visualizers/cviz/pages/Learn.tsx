@@ -35,12 +35,12 @@ export function Learn() {
         <div className="space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ borderColor: 'var(--c-border)', color: 'var(--c-primary)', backgroundColor: 'var(--c-primary-soft)' }}>
             <BookOpen className="h-3.5 w-3.5" />
-            Annexure-XV curriculum
+            C Programming curriculum
           </div>
           <h1 className="text-3xl font-black tracking-tight sm:text-4xl">The C curriculum</h1>
           <p className="max-w-2xl text-sm leading-relaxed" style={{ color: 'var(--c-muted)' }}>
-            Thirty-five lessons, from the character set to dynamic memory. Each lesson carries the syllabus
-            concepts, worked examples, exam traps, and a quick check.
+            Thirty-five lessons, from the character set to dynamic memory. Each lesson carries the core
+            concepts, worked examples, common traps, and a quick check.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export function Learn() {
                     backgroundColor: chapter.examWeight === 'High' ? 'var(--c-accent-soft)' : 'var(--c-surface-2)',
                   }}
                 >
-                  {chapter.examWeight} weight
+                  {chapter.examWeight} focus
                 </span>
               </div>
 

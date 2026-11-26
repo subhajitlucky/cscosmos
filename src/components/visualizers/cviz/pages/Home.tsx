@@ -38,7 +38,7 @@ export function Home() {
               }}
             >
               <Terminal className="h-3.5 w-3.5" />
-              Annexure-XV · Computer Teacher Track
+              C Programming · Visual Workbench
             </div>
 
             <h1 className="max-w-2xl text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl">
@@ -49,8 +49,8 @@ export function Home() {
             </h1>
 
             <p className="max-w-xl text-base leading-relaxed sm:text-lg" style={{ color: 'var(--c-muted)' }}>
-              A visual, exam-focused C curriculum. Trace pointers, inspect structs, walk the heap, and predict
-              output — the 35 lessons from the Computer Teacher syllabus, rebuilt as one interactive workbench.
+              A visual C curriculum. Trace pointers, inspect structs, walk the heap, and predict
+              output — 35 lessons organized as one interactive workbench.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -80,7 +80,7 @@ export function Home() {
             <dl className="grid max-w-lg grid-cols-3 gap-3 pt-3">
               {[
                 { label: 'Chapters', value: CURRENT_CHAPTERS, icon: Layers },
-                { label: 'Exam drills', value: CURRENT_PROBLEMS, icon: Code2 },
+                { label: 'Practice drills', value: CURRENT_PROBLEMS, icon: Code2 },
                 { label: 'Lab modes', value: 2, icon: Cpu },
               ].map((stat) => {
                 const Icon = stat.icon;
@@ -154,8 +154,8 @@ printf("%d", **pp);  /* 42 */`}</code>
             },
             {
               icon: CheckCircle2,
-              title: 'Exam honest',
-              text: 'Every chapter is mapped to the Annexure-XV language, with output-prediction drills that mirror the paper.',
+              title: 'Practice honest',
+              text: 'Every chapter is mapped to the C language, with output-prediction drills that test real code reading.',
             },
             {
               icon: Braces,

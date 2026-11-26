@@ -4,7 +4,7 @@ import { cLessons } from './lessons';
 import { cProblems, getCProblem } from './problems';
 
 describe('cviz curriculum data', () => {
-  it('contains the 35-lesson Annexure-XV curriculum with unique ids and numbers', () => {
+  it('contains the 35-lesson C curriculum with unique ids and numbers', () => {
     expect(cChapters).toHaveLength(35);
     expect(new Set(cChapters.map((chapter) => chapter.id)).size).toBe(cChapters.length);
     expect(new Set(cChapters.map((chapter) => chapter.number)).size).toBe(cChapters.length);

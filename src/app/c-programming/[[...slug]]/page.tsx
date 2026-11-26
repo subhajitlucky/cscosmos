@@ -28,19 +28,19 @@ export async function generateMetadata({
 
   let title = 'C Programming (Fundamentals, Pointers, Files) - CSCosmos';
   let description =
-    'A visual, exam-focused C curriculum built from the Annexure-XV Computer Teacher syllabus: fundamentals, control flow, functions, arrays, pointers, structs, unions, file I/O, dynamic memory, and bitwise operators.';
+    'A visual C curriculum covering fundamentals, control flow, functions, arrays, pointers, structs, unions, file I/O, dynamic memory, and bitwise operators.';
   let suffix = '';
 
   if (first === 'learn' && second) {
     const chapter = getCChapter(second);
     if (chapter) {
       title = `${chapter.title} | C // Cosmos - CSCosmos`;
-      description = `${chapter.summary} Chapter ${chapter.number} of the C Programming Computer Teacher track.`;
+      description = `${chapter.summary} Chapter ${chapter.number} of the C Programming curriculum.`;
       suffix = `/learn/${chapter.id}`;
     }
   } else if (first === 'learn') {
     title = 'C Programming Curriculum (35 Lessons) - CSCosmos';
-    description = 'All 35 lessons of the Annexure-XV C Programming syllabus, with worked examples, exam traps, and quick checks.';
+    description = 'All 35 lessons of the C Programming curriculum, with worked examples, common traps, and quick checks.';
     suffix = '/learn';
   } else if (first === 'lab') {
     title = 'C Pointer & Bitwise Lab - CSCosmos';
@@ -54,8 +54,8 @@ export async function generateMetadata({
       suffix = `/problems/${problem.id}`;
     }
   } else if (first === 'problems') {
-    title = 'C Programming Exam Drills - CSCosmos';
-    description = 'Output-prediction and concept drills for every chapter of the Computer Teacher C syllabus.';
+    title = 'C Programming Practice Drills - CSCosmos';
+    description = 'Output-prediction and concept drills for every chapter of the C Programming curriculum.';
     suffix = '/problems';
   }
 

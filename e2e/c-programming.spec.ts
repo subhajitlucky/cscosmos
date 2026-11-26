@@ -5,7 +5,7 @@ test.describe('c-programming smoke', () => {
     await page.goto('/corecs/c-programming');
 
     await expect(page.getByRole('heading', { name: /C, from source/i })).toBeVisible();
-    await expect(page.getByText(/the 35 lessons from the Computer Teacher syllabus/i)).toBeVisible();
+    await expect(page.getByText(/35 lessons organized as one interactive workbench/i)).toBeVisible();
     await expect(page.getByRole('link', { name: /Start the curriculum/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /Open the memory lab/i })).toBeVisible();
   });

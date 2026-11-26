@@ -84,7 +84,7 @@ export function Topic({ chapterId }: { chapterId: string }) {
                 {chapter.difficulty}
               </span>
               <span className="rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-bold" style={{ borderColor: 'var(--c-accent)', color: 'var(--c-accent)', backgroundColor: 'var(--c-accent-soft)' }}>
-                {chapter.examWeight} exam weight
+                {chapter.examWeight} focus
               </span>
               <span className="font-mono text-[10px]" style={{ color: 'var(--c-muted)' }}>
                 ~{chapter.estimatedMinutes} min
@@ -129,7 +129,7 @@ export function Topic({ chapterId }: { chapterId: string }) {
                   bg: 'var(--c-danger-soft)',
                 },
                 {
-                  title: 'Exam focus',
+                  title: 'Key focus',
                   icon: GraduationCap,
                   items: lesson.examTips,
                   color: 'var(--c-accent)',
@@ -257,7 +257,7 @@ export function Topic({ chapterId }: { chapterId: string }) {
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-2xl border p-4" style={{ borderColor: 'var(--c-border)', backgroundColor: 'var(--c-surface)' }}>
             <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--c-muted)' }}>
-              Syllabus concepts
+              Concepts covered
             </h2>
             <ul className="space-y-2">
               {chapter.concepts.map((concept) => (

@@ -101,7 +101,7 @@ export function CShell({ children }: { children: React.ReactNode }) {
       <footer className="border-t px-4 py-6 sm:px-6" style={{ borderColor: 'var(--c-border)' }}>
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between" style={{ color: 'var(--c-muted)' }}>
           <p>
-            C // Cosmos — built from the <span style={{ color: 'var(--c-text)' }}>Annexure-XV Computer Teacher</span> syllabus.
+            C // Cosmos — pointers, memory, and the C standard library.
           </p>
           <div className="flex items-center gap-4">
             <Link href="/topics" className="cviz-link">

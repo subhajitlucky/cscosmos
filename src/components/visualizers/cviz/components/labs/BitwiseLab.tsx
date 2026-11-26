@@ -219,7 +219,7 @@ printf("%u", ${expression});  /* ${result} */`}
           />
 
           <div className="rounded-2xl border p-4 text-[11px] leading-relaxed" style={{ borderColor: 'var(--c-border)', backgroundColor: 'var(--c-surface-2)', color: 'var(--c-muted)' }}>
-            <strong style={{ color: 'var(--c-text)' }}>Exam note:</strong> bitwise operators work on each bit,
+            <strong style={{ color: 'var(--c-text)' }}>Note:</strong> bitwise operators work on each bit,
             while <span className="cviz-kbd">&amp;&amp;</span> and <span className="cviz-kbd">||</span> work on
             truth values. Do not mix them up in output-prediction questions.
           </div>

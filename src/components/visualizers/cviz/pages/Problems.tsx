@@ -38,11 +38,11 @@ export function Problems() {
         <div className="space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ borderColor: 'var(--c-border)', color: 'var(--c-accent)', backgroundColor: 'var(--c-accent-soft)' }}>
             <Target className="h-3.5 w-3.5" />
-            Exam drill arena
+            Practice arena
           </div>
           <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Output-prediction drills</h1>
           <p className="max-w-2xl text-sm leading-relaxed" style={{ color: 'var(--c-muted)' }}>
-            At least one exam-style question per chapter, plus deep-dive drills. Read the code, commit
+            At least one practice question per chapter, plus deep-dive drills. Read the code, commit
             to an answer, then check the explanation. No compiler needed.
           </p>
         </div>
