@@ -102,47 +102,17 @@ export function Learn() {
                 backgroundColor: 'var(--c-surface)',
               }}
             >
-              <div className="mb-3 flex items-center justify-between gap-2">
+              <div className="mb-2 flex items-center justify-between gap-2">
                 <span className="font-mono text-[10px] font-bold" style={{ color: 'var(--c-primary)' }}>
                   CHAPTER {String(chapter.number).padStart(2, '0')}
                 </span>
-                <span
-                  className="rounded-full border px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider"
-                  style={{
-                    borderColor: chapter.examWeight === 'High' ? 'var(--c-accent)' : 'var(--c-border)',
-                    color: chapter.examWeight === 'High' ? 'var(--c-accent)' : 'var(--c-muted)',
-                    backgroundColor: chapter.examWeight === 'High' ? 'var(--c-accent-soft)' : 'var(--c-surface-2)',
-                  }}
-                >
-                  {chapter.examWeight} focus
-                </span>
               </div>
 
-              <h2 className="text-base font-bold leading-snug group-hover:text-[var(--c-primary)]">
+              <h2 className="flex-1 text-base font-bold leading-snug group-hover:text-[var(--c-primary)]">
                 {chapter.title}
               </h2>
-              <p className="mt-2 line-clamp-3 text-xs leading-relaxed" style={{ color: 'var(--c-muted)' }}>
-                {chapter.summary}
-              </p>
 
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {chapter.concepts.slice(0, 3).map((concept) => (
-                  <span
-                    key={concept}
-                    className="rounded-md border px-1.5 py-0.5 text-[9px]"
-                    style={{ borderColor: 'var(--c-border)', color: 'var(--c-muted)', backgroundColor: 'var(--c-surface-2)' }}
-                  >
-                    {concept}
-                  </span>
-                ))}
-                {chapter.concepts.length > 3 && (
-                  <span className="px-1 py-0.5 font-mono text-[9px]" style={{ color: 'var(--c-muted)' }}>
-                    +{chapter.concepts.length - 3}
-                  </span>
-                )}
-              </div>
-
-              <div className="mt-4 flex items-center justify-between border-t pt-3" style={{ borderColor: 'var(--c-border)' }}>
+              <div className="mt-3 flex items-center justify-between border-t pt-3" style={{ borderColor: 'var(--c-border)' }}>
                 <span className="font-mono text-[10px]" style={{ color: 'var(--c-muted)' }}>
                   ~{chapter.estimatedMinutes} min · {chapter.difficulty}
                 </span>
