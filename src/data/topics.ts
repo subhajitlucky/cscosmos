@@ -304,7 +304,7 @@ export const topics: Topic[] = [
     createTopic("Operating Systems Internals (Processes, Memory)", "corecs", { slug: 'operating-systems-internals-processes-memory' }),
     createTopic("Memory Allocators & Virtual Memory (Malloc, Paging)", "corecs", { slug: 'memory-allocators-and-virtual-memory-malloc-paging' }),
     createTopic("Linkers, Loaders & Executables (ELF, PE)", "corecs", { slug: 'linkers-loaders-and-executables-elf-pe' }),
-    createTopic("C & C++ Systems Programming (Memory, Pointers)", "corecs"),
+    createTopic("C Programming (Fundamentals, Pointers, Files)", "corecs", { status: 'active', slug: 'c-programming' }),
     createTopic("Java & JVM Internals (Garbage Collection, Bytecode)", "corecs", { slug: 'java-and-jvm-internals-garbage-collection-bytecode' }),
     createTopic("Computer Architecture (CPU, Caches)", "corecs", { slug: 'computer-architecture-cpu-caches' }),
     createTopic("Computer Networks Internals (TCP/IP)", "corecs", { status: 'active', slug: 'computer-networks-internals-tcpip' }),

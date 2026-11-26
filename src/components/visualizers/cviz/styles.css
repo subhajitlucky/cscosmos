@@ -1,0 +1,102 @@
+.cviz-root {
+  --c-bg: #f7f5ef;
+  --c-surface: #ffffff;
+  --c-surface-2: #eeeae0;
+  --c-text: #16202a;
+  --c-muted: #5d6b78;
+  --c-border: #d8d2c4;
+  --c-border-strong: #b9b1a0;
+  --c-primary: #0b5cad;
+  --c-primary-hover: #084a8c;
+  --c-primary-soft: #e3eef9;
+  --c-accent: #b45309;
+  --c-accent-soft: #fdf0dc;
+  --c-code-bg: #111820;
+  --c-code-text: #d7e1ea;
+  --c-ok: #157347;
+  --c-ok-soft: #e4f4ea;
+  --c-danger: #b42318;
+  --c-danger-soft: #fbe9e7;
+  --c-grid: rgba(11, 92, 173, 0.08);
+  min-height: 100vh;
+  background-color: var(--c-bg);
+  color: var(--c-text);
+}
+
+.dark .cviz-root {
+  --c-bg: #0c1117;
+  --c-surface: #121a22;
+  --c-surface-2: #1a2530;
+  --c-text: #e7edf3;
+  --c-muted: #91a1b0;
+  --c-border: #253441;
+  --c-border-strong: #3a4c5d;
+  --c-primary: #63b3ed;
+  --c-primary-hover: #8bc7f3;
+  --c-primary-soft: #12283b;
+  --c-accent: #f6ad55;
+  --c-accent-soft: #2b2113;
+  --c-code-bg: #070b0f;
+  --c-code-text: #d7e1ea;
+  --c-ok: #6ee7a8;
+  --c-ok-soft: #10251a;
+  --c-danger: #f97066;
+  --c-danger-soft: #2a1212;
+  --c-grid: rgba(99, 179, 237, 0.08);
+}
+
+.cviz-grid {
+  background-image:
+    linear-gradient(var(--c-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.cviz-card {
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  border-radius: 0.9rem;
+}
+
+.cviz-code {
+  background: var(--c-code-bg);
+  color: var(--c-code-text);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+}
+
+.cviz-code code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.cviz-kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-2);
+  border-radius: 0.35rem;
+  padding: 0.08rem 0.35rem;
+  font-size: 0.75em;
+}
+
+.cviz-prose p {
+  color: var(--c-muted);
+  line-height: 1.8;
+}
+
+.cviz-prose strong {
+  color: var(--c-text);
+}
+
+.cviz-link {
+  color: var(--c-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cviz-link:hover {
+  color: var(--c-primary-hover);
+}

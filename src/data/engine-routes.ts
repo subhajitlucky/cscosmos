@@ -18,6 +18,7 @@ export interface EngineRoute {
 
 export const engineRoutes: EngineRoute[] = [
   { domain: 'corecs', topicSlug: 'program-cosmos', engineDir: 'programviz' },
+  { domain: 'corecs', topicSlug: 'c-programming', engineDir: 'cviz' },
   { domain: 'fullstack', topicSlug: 'webprotocols', engineDir: 'webprotocolsviz' },
   { domain: 'security', topicSlug: 'websecurity', engineDir: 'websecureviz', crossListedDomains: ['fullstack'] },
   { domain: 'fullstack', topicSlug: 'html-cosmos', engineDir: 'htmlviz' },

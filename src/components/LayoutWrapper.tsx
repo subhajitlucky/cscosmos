@@ -15,6 +15,7 @@ const SELF_CONTAINED_SUBSITE_ROUTES = new Set([
   '/authviz',
   '/blockchainviz',
   '/browseruniverse',
+  '/c-programming',
   '/cloudcosmos',
   '/consensusviz',
   '/crossplatformviz',

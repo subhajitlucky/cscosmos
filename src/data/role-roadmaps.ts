@@ -163,7 +163,7 @@ export const ROLE_ROADMAPS: RoleRoadmap[] = [
         level: 'Basic',
         name: 'Hardware Model, Assembly & Systems C',
         summary: 'Understand CPU execution cycles, silicon registers, C pointers, and machine assembly.',
-        slugs: ['program-cosmos', 'risc-v-and-custom-silicon-open-hardware', 'c-and-c-systems-programming-memory-pointers', 'reverse-engineering-and-assembly-low-level-code'],
+        slugs: ['program-cosmos', 'risc-v-and-custom-silicon-open-hardware', 'c-programming', 'reverse-engineering-and-assembly-low-level-code'],
       },
       {
         stageIndex: 2,
@@ -368,7 +368,7 @@ export const ROLE_ROADMAPS: RoleRoadmap[] = [
         level: 'Basic',
         name: 'Hardware Primitives & Assembly',
         summary: 'Understand CPU registers, C pointer arithmetic, binary formats, and low-level disassembly.',
-        slugs: ['program-cosmos', 'c-and-c-systems-programming-memory-pointers', 'risc-v-and-custom-silicon-open-hardware', 'reverse-engineering-and-assembly-low-level-code'],
+        slugs: ['program-cosmos', 'c-programming', 'risc-v-and-custom-silicon-open-hardware', 'reverse-engineering-and-assembly-low-level-code'],
       },
       {
         stageIndex: 2,

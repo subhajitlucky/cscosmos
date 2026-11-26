@@ -40,7 +40,7 @@ canonical URL. Module-backed topics are served directly by the universal route.
 | `/` | Live | Main landing page (hero, search, domain grid, featured engines) |
 | `/topics` | Live | Catalog of all 257 topics with domain, difficulty, and time filters |
 | `/[domain]` | Live | Domain hub (e.g. `/fullstack`, `/ai`, `/dsa`, `/security`) |
-| `/[domain]/[topicSlug]` | **Canonical** | Topic page; 49 active topics today |
+| `/[domain]/[topicSlug]` | **Canonical** | Topic page; 50 active topics today |
 | `/[domain]/[topicSlug]/learn` | Live (modules) | Curriculum index for registered multi-view modules |
 | `/[domain]/[topicSlug]/learn/[subtopicSlug]` | Live (modules) | Module subtopic deep-dive |
 | `/[domain]/[topicSlug]/lab` | Live (modules) | Module interactive lab |
@@ -52,7 +52,7 @@ canonical URL. Module-backed topics are served directly by the universal route.
 | `/learn/[topicSlug]` | Alias | Permanent redirect to the canonical topic URL |
 | `/embed/topic/[topicSlug]` | Live | Chrome-free visualizer embed |
 
-The authoritative mapping is `src/data/engine-routes.ts` (46 absorbed engines).
+The authoritative mapping is `src/data/engine-routes.ts` (47 absorbed engines).
 Three curriculum modules are registered in `src/lib/module-registry.ts`:
 `ai-engineering-foundations`, `python-for-ai-engineering`, and
 `computer-networks-internals-tcpip`. The Computer Networks module is module-backed
@@ -77,9 +77,9 @@ A dedicated interview-preparation area, separate from the topic catalog.
 ### Current live inventory
 
 - **257 catalog topics** across 8 domains.
-- **49 active topics** = 46 absorbed engine routes + 3 registered curriculum modules.
-- **46 engine routes** in `src/data/engine-routes.ts`.
-- **24 coming-soon topics** whose engines were retired for a from-scratch rebuild.
+- **50 active topics** = 47 absorbed engine routes + 3 registered curriculum modules.
+- **47 engine routes** in `src/data/engine-routes.ts`.
+- **23 coming-soon topics** whose engines were retired or are still awaiting a from-scratch rebuild.
 - **3 curriculum modules** in `src/lib/module-registry.ts`:
   - `ai-engineering-foundations`
   - `python-for-ai-engineering`
@@ -93,7 +93,7 @@ is not always the same as the topic slug (for example `program-cosmos` uses the
 
 ### Still planned
 
-- Rebuild the 24 retired engine topics from scratch.
+- Rebuild the remaining 23 retired engine topics from scratch (C Programming rebuilt first).
 - Expand DSA (40 topics; 2 live).
 - Build the Advanced Engineering & Systems domain (18 topics; 8 live).
 - Deepen the three registered curriculum modules and add more multi-view modules.
