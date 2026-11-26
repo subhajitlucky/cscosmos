@@ -1,0 +1,155 @@
+/* Scoped styles for the Computer Organization concept site.
+   Every class is co- prefixed so the universal route's aicosmos styles
+   cannot restyle this topic's block-diagram visual identity. */
+
+.co-root {
+  --co-copper: #b45309;
+  --co-amber: #d97706;
+  --co-ink: #1c1917;
+  --co-surface: #fffbeb;
+  --co-line: #d6d3d1;
+  --co-wire: #78716c;
+  --co-muted: #57534e;
+  --co-panel: #ffffff;
+  --co-grid-line: rgba(180, 83, 9, 0.09);
+  color: var(--co-ink);
+  background: var(--co-surface);
+}
+
+.dark .co-root,
+[data-theme='dark'] .co-root {
+  --co-copper: #fbbf24;
+  --co-amber: #f59e0b;
+  --co-ink: #f5f5f4;
+  --co-surface: #1c1917;
+  --co-line: #44403c;
+  --co-wire: #a8a29e;
+  --co-muted: #a8a29e;
+  --co-panel: #292524;
+  --co-grid-line: rgba(251, 191, 36, 0.12);
+}
+
+.co-root a {
+  color: var(--co-copper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.co-root a:focus-visible {
+  outline: 2px solid var(--co-copper);
+  outline-offset: 2px;
+}
+
+.co-root .co-cta {
+  text-decoration: none;
+}
+
+.co-card {
+  border: 1px solid var(--co-line);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.co-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--co-line);
+  border-radius: 999px;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Blueprint sheet that carries the hero block diagram. */
+.co-schematic {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--co-line);
+  border-radius: 1rem;
+  background-color: var(--co-panel);
+  background-image: linear-gradient(var(--co-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--co-grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.co-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-color: var(--co-copper);
+  background: var(--co-panel);
+  font-weight: 600;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.co-cta:hover {
+  border-color: var(--co-amber);
+  transform: translateY(-1px);
+}
+
+.co-muted {
+  color: var(--co-muted);
+}
+
+.co-num {
+  color: var(--co-copper);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+}
+
+.co-chapter {
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.co-chapter:hover {
+  border-color: var(--co-copper);
+  transform: translateY(-2px);
+}
+
+/* SVG diagram: lines are wires, rectangles are functional units. */
+.co-block {
+  fill: var(--co-panel);
+  stroke: var(--co-copper);
+  stroke-width: 1.5;
+}
+
+.co-wire {
+  fill: none;
+  stroke: var(--co-wire);
+  stroke-width: 2;
+}
+
+.co-arrow-head {
+  fill: var(--co-copper);
+}
+
+/* Font sizes are in viewBox units so labels stay legible when the SVG scales. */
+.co-diagram-label {
+  fill: var(--co-ink);
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.co-diagram-sub {
+  fill: var(--co-muted);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.co-bus-label {
+  fill: var(--co-copper);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .co-cta,
+  .co-chapter {
+    transition: none;
+  }
+
+  .co-cta:hover,
+  .co-chapter:hover {
+    transform: none;
+  }
+}
