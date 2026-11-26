@@ -72,6 +72,12 @@
   font-size: 0.75rem;
 }
 
+/* Revealed challenge answer: a quoted readout, themed entirely by co- variables. */
+.co-answer {
+  border-left: 3px solid var(--co-copper);
+  padding-left: 0.75rem;
+}
+
 /* Blueprint sheet that carries the hero block diagram. */
 .co-schematic {
   position: relative;
