@@ -28,15 +28,15 @@ describe("topic metadata", () => {
     }
   });
 
-  it("only references real active topics in prerequisites and related topics", () => {
-    const activeSlugs = new Set(
-      topics.filter((topic) => topic.status === "active").map((topic) => topic.slug),
-    );
+  it("only references real catalog topics in prerequisites and related topics", () => {
+    // Coming-soon topics still have canonical pages (the in-development view), so
+    // metadata may legitimately point at them while their engine is rebuilt.
+    const catalogSlugs = new Set(topics.map((topic) => topic.slug));
 
     for (const topic of topics) {
       const meta = getTopicMeta(topic.slug, topic.domain, topic.name);
       for (const slug of [...meta.prerequisites, ...meta.related]) {
-        expect(activeSlugs.has(slug), `${topic.slug} references unknown topic ${slug}`).toBe(true);
+        expect(catalogSlugs.has(slug), `${topic.slug} references unknown topic ${slug}`).toBe(true);
       }
     }
   });

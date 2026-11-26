@@ -10,7 +10,7 @@ import {
   Cpu,
   HardDrive,
   Layers,
-  Radio,
+  ShieldCheck,
   Sparkles,
   type LucideIcon,
 } from 'lucide-react';
@@ -86,13 +86,13 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
     icon: Boxes,
   },
   {
-    title: 'OS Internals & Virtual Memory',
+    title: 'Computer Networks & Packet Journey',
     badge: 'ENGINE // 05',
     domain: 'Core CS',
-    url: '/corecs/operating-systems-internals-processes-memory',
+    url: '/corecs/computer-networks-internals-tcpip',
     description:
-      'Inspect multi-level page tables, TLB cache translations, page faults, and kernel process memory layout with live address translation.',
-    topicsCovered: ['Virtual Paging', 'TLB Translation', 'Process Memory'],
+      'Follow a packet from browser to server through the TCP/IP stack: DNS resolution, TCP handshakes, routing, congestion control, and TLS.',
+    topicsCovered: ['TCP Handshake', 'OSI Layers', 'Packet Journey'],
     icon: Layers,
   },
   {
@@ -106,14 +106,14 @@ const FLAGSHIP_ENGINES: FlagshipEngine[] = [
     icon: Blocks,
   },
   {
-    title: 'SDR Signal Hacking & Spectrum',
+    title: 'Web Security & Browser Boundaries',
     badge: 'ENGINE // 07',
     domain: 'Security',
-    url: '/security/software-defined-radio-sdr-and-signal-hacking',
+    url: '/security/websecurity',
     description:
-      'Interactive radio frequency spectrum waterfall, I/Q constellation diagram, signal demodulation, and packet reverse-engineering.',
-    topicsCovered: ['RF Waterfall', 'I/Q Constellation', 'Packet Demod'],
-    icon: Radio,
+      'Attack and defend the browser security model: same-origin policy, CORS preflights, XSS/CSRF, CSP, cookies, and isolation boundaries.',
+    topicsCovered: ['Same-Origin Policy', 'CORS & CSP', 'XSS/CSRF'],
+    icon: ShieldCheck,
   },
   {
     title: 'JavaScript Runtime & Event Loop',

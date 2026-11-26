@@ -7,11 +7,11 @@ The goal is one unambiguous name per concept.
 
 | Term | Meaning | Example |
 | :--- | :--- | :--- |
-| `topicSlug` | Stable public identifier for a catalog topic. Used by URLs, storage, analytics, and the API. | `computer-architecture-cpu-caches` |
+| `topicSlug` | Stable public identifier for a catalog topic. Used by URLs, storage, analytics, and the API. | `program-cosmos` |
 | `catalogId` | Numeric internal id. Never appears in a URL. | `42` |
-| `engineDir` | Folder under `src/components/visualizers/`. | `cpuviz` |
-| `enginePath` | Top-level engine route segment. Currently equal to `topicSlug`. | `computer-architecture-cpu-caches` |
-| `canonicalPath` | Public topic URL: `/<domain>/<topicSlug>`. | `/corecs/computer-architecture-cpu-caches` |
+| `engineDir` | Folder under `src/components/visualizers/`. | `programviz` |
+| `enginePath` | Top-level engine route segment. Currently equal to `topicSlug`. | `program-cosmos` |
+| `canonicalPath` | Public topic URL: `/<domain>/<topicSlug>`. | `/corecs/program-cosmos` |
 | `module` | A multi-view curriculum package registered in `src/lib/module-registry.ts`. | `ai-engineering-foundations` |
 | `subtopicSlug` | A section inside a curriculum module. | `parameters` |
 | `crossListedDomains` | Extra domains a topic is listed under. Not URL aliases. | `dockercosmos` is also under `devops` |
@@ -53,8 +53,8 @@ explicit in `src/data/engine-routes.ts`:
 | `program-cosmos` | `programviz` | `program-cosmos` |
 | `html-cosmos` | `htmlviz` | `html-cosmos` |
 | `websecurity` | `websecureviz` | `websecurity` |
-| `computer-architecture-cpu-caches` | `cpuviz` | `computer-architecture-cpu-caches` |
-| `compilers-and-runtime-internals-ast-bytecode` | `compilerviz` | same |
+| `rustviz` | `rustviz` | `rustviz` |
+| `sqlcosmos` | `sqlcosmos` | `sqlcosmos` |
 
 The two AI curriculum modules (`ai-engineering-foundations` and
 `python-for-ai-engineering`) share the `aicosmos` component folder. They are

@@ -289,23 +289,7 @@ export const Home: React.FC = () => {
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             <Link
-              href="/corecs/computer-architecture-cpu-caches"
-              className="group p-4 rounded-xl border border-border/80 bg-card/60 hover:bg-card transition-all shadow-sm"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase text-muted-foreground font-bold">Deep Dive</span>
-                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:translate-x-0.5" />
-              </div>
-              <h3 className="mt-2 text-base font-bold text-foreground transition-colors">
-                Computer Architecture &amp; CPU Caches
-              </h3>
-              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-                Explore L1/L2 caches, cache lines, associativity, and the memory wall.
-              </p>
-            </Link>
-
-            <Link
-              href="/corecs/operating-systems-internals-processes-memory"
+              href="/corecs/computer-networks-internals-tcpip"
               className="group p-4 rounded-xl border border-border/80 bg-card/60 hover:bg-card transition-all shadow-sm"
             >
               <div className="flex items-center justify-between">
@@ -313,10 +297,26 @@ export const Home: React.FC = () => {
                 <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:translate-x-0.5" />
               </div>
               <h3 className="mt-2 text-base font-bold text-foreground transition-colors">
-                OS Internals: Processes &amp; Memory
+                Computer Networks Internals (TCP/IP)
               </h3>
               <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-                Step through CPU scheduling algorithms, page-table walks, and virtual memory.
+                Follow a packet through DNS, TCP handshakes, routing, and TLS.
+              </p>
+            </Link>
+
+            <Link
+              href="/advanced/wasmcosmos"
+              className="group p-4 rounded-xl border border-border/80 bg-card/60 hover:bg-card transition-all shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono uppercase text-muted-foreground font-bold">Deep Dive</span>
+                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:translate-x-0.5" />
+              </div>
+              <h3 className="mt-2 text-base font-bold text-foreground transition-colors">
+                WebAssembly Internals &amp; Linear Memory
+              </h3>
+              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                See how portable bytecode maps onto a linear memory model and native execution.
               </p>
             </Link>
           </div>

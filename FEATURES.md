@@ -15,13 +15,13 @@ and discoverability — not on catalog size or live cohorts.
 ## Current state (verified)
 
 - Next.js 16 App Router, React 19, TypeScript, Tailwind, SSG.
-- 245 topics across 8 domains; 72 active visualizer topics; 2,500+ pre-rendered pages.
+- 257 topics across 8 domains; 49 active visualizer topics; 2,500+ pre-rendered pages.
 - 25 interview questions across 5 categories with animated walkthroughs.
 - Global search, dark/light theme, sitemap, `robots.txt`, `llms.txt`.
 - Optional passwordless accounts, Postgres learning sync, and read-only public APIs are implemented. Payments are not.
 - Per-engine partials already exist (reuse these):
   - Flashcards: `apiviz`, `arrayviz`, `authviz`, `dockercosmos`, `golangviz`,
-    `nextjscosmos`, `nodecosmos`, `patriciatrie`, `redisviz`, `rustviz`,
+    `nextjscosmos`, `nodecosmos`, `patriciatrie`, `rustviz`,
     `sqlcosmos`, `systemdesignviz`.
   - Quizzes: `golangviz`, `websecureviz`.
   - Progress: `golangviz`, `nextjscosmos`, `patriciatrie`, `programviz`,
