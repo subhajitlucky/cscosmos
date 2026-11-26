@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('c-programming smoke', () => {
-  test('serves the canonical home with all 35 lessons', async ({ page }) => {
+  test('serves the canonical home', async ({ page }) => {
     await page.goto('/corecs/c-programming');
 
     await expect(page.getByRole('heading', { name: /C, from source/i })).toBeVisible();
-    await expect(page.getByText('the 35-lesson map')).toBeVisible();
-    await expect(page.getByRole('link', { name: /C Language Basics/ }).first()).toBeVisible();
-    await expect(page.getByText('Miscellaneous Library Functions', { exact: true })).toBeVisible();
+    await expect(page.getByText(/the 35 lessons from the Computer Teacher syllabus/i)).toBeVisible();
+    await expect(page.getByRole('link', { name: /Start the curriculum/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Open the memory lab/i })).toBeVisible();
   });
 
   test('opens the curriculum and a chapter lesson', async ({ page }) => {

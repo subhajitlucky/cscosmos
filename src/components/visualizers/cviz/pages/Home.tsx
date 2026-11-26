@@ -15,7 +15,7 @@ import {
   MemoryStick,
   Terminal,
 } from 'lucide-react';
-import { cCategories, cChapters, type CCategory } from '../data/curriculum';
+import { cChapters } from '../data/curriculum';
 import { useCBasePath } from '../components/CShell';
 
 const CURRENT_CHAPTERS = cChapters.length;
@@ -23,7 +23,6 @@ const CURRENT_PROBLEMS = 41;
 
 export function Home() {
   const basePath = useCBasePath();
-  const categories = cCategories.filter((category): category is CCategory => category !== 'All');
 
   return (
     <div className="cviz-grid">
@@ -143,57 +142,6 @@ printf("%d", **pp);  /* 42 */`}</code>
               Every chapter pairs the language rule with the memory picture, so syntax stops being
               something you memorise and becomes something you can see.
             </p>
-          </div>
-        </section>
-
-        <section className="mt-16 sm:mt-20">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: 'var(--c-accent)' }}>
-                the 35-lesson map
-              </p>
-              <h2 className="text-2xl font-black tracking-tight sm:text-3xl">Everything the syllabus asks for.</h2>
-            </div>
-            <Link href={`${basePath}/learn`} className="cviz-link text-sm font-semibold">
-              Open full curriculum →
-            </Link>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => {
-              const chapters = cChapters.filter((chapter) => chapter.category === category);
-              return (
-                <div
-                  key={category}
-                  className="rounded-2xl border p-4"
-                  style={{ borderColor: 'var(--c-border)', backgroundColor: 'var(--c-surface)' }}
-                >
-                  <div className="mb-3 flex items-center justify-between">
-                    <h3 className="text-sm font-bold">{category}</h3>
-                    <span className="font-mono text-[10px]" style={{ color: 'var(--c-muted)' }}>
-                      {chapters.length} ch
-                    </span>
-                  </div>
-                  <ul className="space-y-2">
-                    {chapters.map((chapter) => (
-                      <li key={chapter.id}>
-                        <Link
-                          href={`${basePath}/learn/${chapter.id}`}
-                          className="group flex items-start gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-[var(--c-surface-2)]"
-                        >
-                          <span className="mt-0.5 font-mono text-[10px] font-bold" style={{ color: 'var(--c-primary)' }}>
-                            {String(chapter.number).padStart(2, '0')}
-                          </span>
-                          <span className="text-xs font-semibold leading-snug group-hover:underline">
-                            {chapter.title}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
           </div>
         </section>
 
