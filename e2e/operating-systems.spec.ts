@@ -65,6 +65,18 @@ test.describe('operating-systems smoke', () => {
     await expect(page.getByText(/Step 2 of 6/)).toBeVisible();
   });
 
+  test('animates segmentation, indexed allocation, and external sorting', async ({ page }) => {
+    await page.goto('/corecs/operating-systems/learn/segmentation');
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 4/)).toBeVisible();
+
+    await page.goto('/corecs/operating-systems/learn/indexed-file-allocation');
+    await expect(page.getByText(/Step 1 of 4/)).toBeVisible();
+
+    await page.goto('/corecs/operating-systems/learn/file-sorting-merging');
+    await expect(page.getByText(/Step 1 of 6/)).toBeVisible();
+  });
+
   test('checks a practice answer', async ({ page }) => {
     await page.goto('/corecs/operating-systems/problems/turnaround-time');
 

@@ -41,6 +41,20 @@ test.describe('c-programming smoke', () => {
     await expect(page.getByText(/p does not contain 42/i)).toBeVisible();
   });
 
+  test('animates struct layout, heap, and bitwise examples', async ({ page }) => {
+    await page.goto('/corecs/c-programming/learn/struct-functions-layout');
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 5/)).toBeVisible();
+
+    await page.goto('/corecs/c-programming/learn/malloc-free');
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 5/)).toBeVisible();
+
+    await page.goto('/corecs/c-programming/learn/bitwise-operators');
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 7/)).toBeVisible();
+  });
+
   test('checks an answer in the drill arena', async ({ page }) => {
     await page.goto('/corecs/c-programming/problems/pointer-arithmetic');
 

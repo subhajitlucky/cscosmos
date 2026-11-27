@@ -1651,6 +1651,16 @@ printf("%d\n", first.next->value);  /* 2 */`,
 
   'struct-functions-layout': {
     chapterId: 'struct-functions-layout',
+    walkthrough: {
+      kind: 'struct-layout',
+      name: 'Example',
+      fields: [
+        { name: 'c', type: 'char', offset: 0, size: 1 },
+        { name: 'i', type: 'int', offset: 4, size: 4 },
+      ],
+      padding: [{ offset: 1, size: 3 }],
+      totalSize: 8,
+    },
     hook:
       'Structures can be passed and returned by value, but that copies every field. Pointers are cheaper. Layout and padding decide how many bytes a structure really occupies.',
     sections: [
@@ -1901,6 +1911,11 @@ v.value.point.y = 4;`,
 
   'file-pointer-modes': {
     chapterId: 'file-pointer-modes',
+    walkthrough: {
+      kind: 'file-lifecycle',
+      filename: 'data.txt',
+      line: 'hello file\n',
+    },
     hook:
       'Files turn a program into something that can remember. The FILE pointer is your handle, and the mode decides whether you read, write, or append.',
     sections: [
@@ -2059,6 +2074,11 @@ if (feof(fp)) {
 
   'malloc-free': {
     chapterId: 'malloc-free',
+    walkthrough: {
+      kind: 'heap',
+      bytes: 16,
+      values: [10, 20, 30, 40],
+    },
     hook:
       'The stack is automatic and bounded. The heap is manual and flexible. malloc gives you memory at runtime; free is the promise you make to give it back.',
     sections: [
@@ -2187,6 +2207,10 @@ if (p) {
 
   'bitwise-operators': {
     chapterId: 'bitwise-operators',
+    walkthrough: {
+      kind: 'bitwise',
+      mode: 'operators',
+    },
     hook:
       'Bitwise operators see the binary underneath every integer. They are how C talks to hardware registers, flags, permissions, and packed formats.',
     sections: [
@@ -2248,6 +2272,10 @@ unsigned flag = 1u << 3; /* 0000 1000 */`,
 
   'bitwise-masks': {
     chapterId: 'bitwise-masks',
+    walkthrough: {
+      kind: 'bitwise',
+      mode: 'masks',
+    },
     hook:
       'A mask is a value with ones where you care. Once you know the four mask idioms, flags and registers stop looking like magic.',
     sections: [
