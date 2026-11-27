@@ -308,7 +308,7 @@ export const topics: Topic[] = [
     createTopic("Java & JVM Internals (Garbage Collection, Bytecode)", "corecs", { slug: 'java-and-jvm-internals-garbage-collection-bytecode' }),
     createTopic("Computer Architecture (CPU, Caches)", "corecs", { slug: 'computer-architecture-cpu-caches' }),
     createTopic("Computer Networks Internals (TCP/IP)", "corecs", { status: 'active', slug: 'computer-networks-internals-tcpip' }),
-    createTopic("Database Internals (Indexes, Transactions)", "corecs", { slug: 'database-internals-indexes-transactions' }),
+    createTopic("DBMS Foundations (ERD, Normalization, Transactions)", "corecs", { status: 'active', slug: 'dbms' }),
     createTopic("Compilers & Runtime Internals (AST, Bytecode)", "corecs", { slug: 'compilers-and-runtime-internals-ast-bytecode' }),
     createTopic("Theory of Computation (Automata, Languages, Complexity)", "corecs", { slug: 'theory-of-computation-automata-languages-complexity' }),
     createTopic("Quantum Computing Internals (Qubits, Gates, Circuits)", "corecs", { slug: 'quantum-computing-internals-qubits-gates-circuits' }),

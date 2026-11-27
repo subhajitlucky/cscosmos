@@ -1,0 +1,92 @@
+.dbmsviz-root {
+  --db-bg: #f6f5fb;
+  --db-surface: #ffffff;
+  --db-surface-2: #eeecf8;
+  --db-text: #1b1730;
+  --db-muted: #655f7d;
+  --db-border: #dcd8ec;
+  --db-border-strong: #bab3d6;
+  --db-primary: #5b4bdb;
+  --db-primary-hover: #4938c4;
+  --db-primary-soft: #e8e4ff;
+  --db-accent: #b45309;
+  --db-accent-soft: #fdf0dc;
+  --db-code-bg: #14111f;
+  --db-code-text: #e6e2f5;
+  --db-ok: #157347;
+  --db-ok-soft: #e4f4ea;
+  --db-danger: #b42318;
+  --db-danger-soft: #fbe9e7;
+  --db-grid: rgba(91, 75, 219, 0.08);
+  min-height: 100vh;
+  background-color: var(--db-bg);
+  color: var(--db-text);
+}
+
+.dark .dbmsviz-root {
+  --db-bg: #0d0b17;
+  --db-surface: #151226;
+  --db-surface-2: #1e1935;
+  --db-text: #ece8ff;
+  --db-muted: #a39bc4;
+  --db-border: #2d2750;
+  --db-border-strong: #463d6b;
+  --db-primary: #a79bff;
+  --db-primary-hover: #c4bcff;
+  --db-primary-soft: #211b45;
+  --db-accent: #f6ad55;
+  --db-accent-soft: #2b2113;
+  --db-code-bg: #08060f;
+  --db-code-text: #e6e2f5;
+  --db-ok: #6ee7a8;
+  --db-ok-soft: #10251a;
+  --db-danger: #f97066;
+  --db-danger-soft: #2a1212;
+  --db-grid: rgba(167, 155, 255, 0.07);
+}
+
+.dbmsviz-grid {
+  background-image:
+    linear-gradient(var(--db-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--db-grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.dbmsviz-code {
+  background: var(--db-code-bg);
+  color: var(--db-code-text);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+}
+
+.dbmsviz-code code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.dbmsviz-kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: 1px solid var(--db-border-strong);
+  background: var(--db-surface-2);
+  border-radius: 0.35rem;
+  padding: 0.08rem 0.35rem;
+  font-size: 0.75em;
+}
+
+.dbmsviz-prose p {
+  color: var(--db-muted);
+  line-height: 1.8;
+}
+
+.dbmsviz-link {
+  color: var(--db-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.dbmsviz-link:hover {
+  color: var(--db-primary-hover);
+}

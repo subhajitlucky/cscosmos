@@ -20,6 +20,7 @@ export const engineRoutes: EngineRoute[] = [
   { domain: 'corecs', topicSlug: 'program-cosmos', engineDir: 'programviz' },
   { domain: 'corecs', topicSlug: 'c-programming', engineDir: 'cviz' },
   { domain: 'corecs', topicSlug: 'operating-systems', engineDir: 'osviz' },
+  { domain: 'corecs', topicSlug: 'dbms', engineDir: 'dbmsviz' },
   { domain: 'fullstack', topicSlug: 'webprotocols', engineDir: 'webprotocolsviz' },
   { domain: 'security', topicSlug: 'websecurity', engineDir: 'websecureviz', crossListedDomains: ['fullstack'] },
   { domain: 'fullstack', topicSlug: 'html-cosmos', engineDir: 'htmlviz' },

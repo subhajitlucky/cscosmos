@@ -88,7 +88,7 @@ export const ROLE_ROADMAPS: RoleRoadmap[] = [
         level: 'Intermediate',
         name: 'Data Architecture, Caching & Network Layers',
         summary: 'Design transactional storage, document models, in-memory caching, and robust security.',
-        slugs: ['database-internals-indexes-transactions', 'mongocosmos', 'redisviz', 'authviz', 'computer-networks-internals-tcpip', 'lldcosmos'],
+        slugs: ['dbms', 'mongocosmos', 'redisviz', 'authviz', 'computer-networks-internals-tcpip', 'lldcosmos'],
       },
       {
         stageIndex: 3,
@@ -334,7 +334,7 @@ export const ROLE_ROADMAPS: RoleRoadmap[] = [
         level: 'Intermediate',
         name: 'Storage Engines, Indexes & Schema Evolution',
         summary: 'Inspect B-tree indexes, ACID transactions, document stores, ORMs, and in-memory caches.',
-        slugs: ['database-internals-indexes-transactions', 'mongocosmos', 'redisviz', 'orm-migrations'],
+        slugs: ['dbms', 'mongocosmos', 'redisviz', 'orm-migrations'],
       },
       {
         stageIndex: 3,

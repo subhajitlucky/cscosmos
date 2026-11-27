@@ -107,14 +107,14 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     difficulty: 'intermediate',
     estimatedMinutes: 55,
     tags: ['sql', 'indexes', 'mvcc'],
-    related: ['database-internals-indexes-transactions', 'mongocosmos', 'systemdesignviz'],
+    related: ['dbms', 'mongocosmos', 'systemdesignviz'],
   },
   mongocosmos: {
     difficulty: 'intermediate',
     estimatedMinutes: 50,
     tags: ['mongodb', 'bson', 'replication'],
     prerequisites: ['sqlcosmos'],
-    related: ['sqlcosmos', 'database-internals-indexes-transactions', 'systemdesignviz'],
+    related: ['sqlcosmos', 'dbms', 'systemdesignviz'],
   },
   redisviz: {
     difficulty: 'intermediate',
@@ -243,7 +243,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     tags: ['os', 'processes', 'virtual-memory'],
     related: ['memory-allocators-and-virtual-memory-malloc-paging', 'computer-architecture-cpu-caches', 'dockercosmos'],
   },
-  'database-internals-indexes-transactions': {
+  'dbms': {
     difficulty: 'advanced',
     estimatedMinutes: 60,
     tags: ['database', 'btree', 'transactions'],

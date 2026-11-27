@@ -1,0 +1,506 @@
+export type DBMSProblemDifficulty = 'Easy' | 'Medium' | 'Hard';
+export type DBMSProblemType = 'mcq' | 'scenario';
+
+export interface DBMSProblem {
+  id: string;
+  number: number;
+  chapterId: string;
+  title: string;
+  difficulty: DBMSProblemDifficulty;
+  type: DBMSProblemType;
+  prompt: string;
+  context?: string;
+  options: string[];
+  answer: number;
+  explanation: string;
+  hint: string;
+}
+
+export const dbmsProblems: DBMSProblem[] = [
+  {
+    id: 'dbms-purpose',
+    number: 1,
+    chapterId: 'dbms-introduction',
+    title: 'Why Use a DBMS?',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which problem is a DBMS specifically designed to control?',
+    options: ['Redundant and inconsistent data', 'Slow compilers', 'Missing fonts', 'Network cables'],
+    answer: 0,
+    explanation:
+      'A DBMS centralizes data and enforces a schema to reduce redundancy and inconsistency.',
+    hint: 'Think about multiple applications sharing the same data.',
+  },
+  {
+    id: 'internal-schema',
+    number: 2,
+    chapterId: 'dbms-architecture',
+    title: 'Internal Schema',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which schema describes physical storage?',
+    options: ['External schema', 'Conceptual schema', 'Internal schema', 'View schema'],
+    answer: 2,
+    explanation:
+      'The internal schema describes files, pages, indexes, and physical organization.',
+    hint: 'It sits closest to the disk.',
+  },
+  {
+    id: 'hierarchical-structure',
+    number: 3,
+    chapterId: 'data-models-overview',
+    title: 'Hierarchical Structure',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which model organizes records as a tree?',
+    options: ['Relational', 'Hierarchical', 'Network', 'Document'],
+    answer: 1,
+    explanation:
+      'The hierarchical model uses parent-child trees, with one parent per record.',
+    hint: 'One parent, many children.',
+  },
+  {
+    id: 'derived-attribute',
+    number: 4,
+    chapterId: 'erd-fundamentals',
+    title: 'Derived Attribute',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What is a derived attribute?',
+    options: ['An attribute computed from other data', 'A key that appears twice', 'A multivalued attribute', 'A weak entity'],
+    answer: 0,
+    explanation:
+      'A derived attribute is calculated from stored data, such as age from a birth date.',
+    hint: 'It is not stored directly.',
+  },
+  {
+    id: 'many-to-many',
+    number: 5,
+    chapterId: 'erd-relationships',
+    title: 'Many-to-Many',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What does M:N mean in a relationship?',
+    options: ['Many entities on both sides', 'One entity on each side', 'No participation', 'A weak entity'],
+    answer: 0,
+    explanation:
+      'M:N means many entities of one set relate to many entities of the other set.',
+    hint: 'Students and courses are the classic example.',
+  },
+  {
+    id: 'hierarchical-parent',
+    number: 6,
+    chapterId: 'hierarchical-model',
+    title: 'Hierarchical Parent',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'How many parents can a record have in a pure hierarchical model?',
+    options: ['Zero', 'Exactly one', 'Two', 'Unlimited'],
+    answer: 1,
+    explanation:
+      'A hierarchical record has exactly one parent; multiple parents would break the tree.',
+    hint: 'It is a tree, not a graph.',
+  },
+  {
+    id: 'network-set',
+    number: 7,
+    chapterId: 'network-model',
+    title: 'Network Set',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is a set in the network model?',
+    options: [
+      'A relationship between an owner record and member records',
+      'A table of rows',
+      'A primary key',
+      'A file on disk',
+    ],
+    answer: 0,
+    explanation:
+      'A set defines a one-to-many link from an owner record type to member record types.',
+    hint: 'Owner and member records are the key terms.',
+  },
+  {
+    id: 'degree-cardinality',
+    number: 8,
+    chapterId: 'relational-model',
+    title: 'Degree vs Cardinality',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What is the degree of a relation?',
+    options: ['The number of rows', 'The number of attributes', 'The number of keys', 'The number of users'],
+    answer: 1,
+    explanation: 'Degree is the number of attributes (columns).',
+    hint: 'It describes the shape, not the row count.',
+  },
+  {
+    id: 'information-rule',
+    number: 9,
+    chapterId: 'codd-rules',
+    title: 'Codd Information Rule',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which rule says all data, including metadata, is stored in tables?',
+    options: ['Information rule', 'View rule', 'Non-subversion rule', 'Distribution rule'],
+    answer: 0,
+    explanation:
+      'The information rule requires all data and metadata to be represented as values in relations.',
+    hint: 'It is the first foundational rule.',
+  },
+  {
+    id: 'selection-projection',
+    number: 10,
+    chapterId: 'relational-algebra-selection',
+    title: 'Selection vs Projection',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which operator filters rows?',
+    options: ['Projection π', 'Selection σ', 'Union ∪', 'Join ⋈'],
+    answer: 1,
+    explanation: 'Selection σ keeps tuples that satisfy a predicate.',
+    hint: 'Sigma is for rows; pi is for columns.',
+  },
+  {
+    id: 'union-compatibility',
+    number: 11,
+    chapterId: 'relational-algebra-set-ops',
+    title: 'Union Compatibility',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is required for union compatibility?',
+    options: [
+      'Same degree and compatible domains',
+      'Same table name',
+      'Same primary key',
+      'Same number of rows',
+    ],
+    answer: 0,
+    explanation:
+      'The relations must have the same number of attributes with compatible domains.',
+    hint: 'Compare the shapes, not the names.',
+  },
+  {
+    id: 'cartesian-cardinality',
+    number: 12,
+    chapterId: 'relational-algebra-joins',
+    title: 'Cartesian Cardinality',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'If A has 3 tuples and B has 4, how many tuples does A × B have?',
+    options: ['7', '12', '3', '4'],
+    answer: 1,
+    explanation: 'The Cartesian product pairs every tuple, so 3 × 4 = 12.',
+    hint: 'Multiply the cardinalities.',
+  },
+  {
+    id: 'candidate-key',
+    number: 13,
+    chapterId: 'keys',
+    title: 'Candidate Key',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is a candidate key?',
+    options: ['A minimal superkey', 'Any index', 'A foreign key', 'A non-unique column'],
+    answer: 0,
+    explanation:
+      'A candidate key is a minimal set of attributes that uniquely identifies each tuple.',
+    hint: 'Minimal is the key word.',
+  },
+  {
+    id: 'entity-integrity',
+    number: 14,
+    chapterId: 'integrity-constraints',
+    title: 'Entity Integrity',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What does entity integrity require?',
+    options: ['A non-null primary key', 'A foreign key', 'A unique index', 'A CHECK on every column'],
+    answer: 0,
+    explanation:
+      'Entity integrity ensures every tuple can be uniquely identified by a non-null primary key.',
+    hint: 'Every row must be identifiable.',
+  },
+  {
+    id: 'before-trigger',
+    number: 15,
+    chapterId: 'assertions-triggers',
+    title: 'Before Trigger',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which trigger timing can modify the incoming row before it is stored?',
+    options: ['BEFORE', 'AFTER', 'INSTEAD OF only', 'No trigger can'],
+    answer: 0,
+    explanation:
+      'A BEFORE trigger runs before the row is written and can validate or adjust it.',
+    hint: 'It runs before the write.',
+  },
+  {
+    id: 'fd-meaning',
+    number: 16,
+    chapterId: 'functional-dependencies',
+    title: 'Functional Dependency',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What does X → Y mean?',
+    options: ['X determines Y', 'Y determines X', 'X and Y are equal', 'X is a foreign key'],
+    answer: 0,
+    explanation:
+      'Every pair of tuples that agree on X must also agree on Y.',
+    hint: 'The arrow points from determinant to dependent.',
+  },
+  {
+    id: 'update-anomaly',
+    number: 17,
+    chapterId: 'anomalies',
+    title: 'Update Anomaly',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What causes an update anomaly?',
+    options: [
+      'The same fact is stored in multiple rows',
+      'The table has too many indexes',
+      'The primary key is too short',
+      'The DBMS is slow',
+    ],
+    answer: 0,
+    explanation:
+      'When a fact is duplicated, updating one copy and not the others creates inconsistency.',
+    hint: 'Redundancy is the root cause.',
+  },
+  {
+    id: 'first-normal-form',
+    number: 18,
+    chapterId: 'first-normal-form',
+    title: 'First Normal Form',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What is required for 1NF?',
+    options: ['Atomic attribute values', 'No foreign keys', 'A single-column primary key', 'No NULL values'],
+    answer: 0,
+    explanation:
+      'Every attribute value must be atomic, with no repeating groups or lists.',
+    hint: 'No lists in a cell.',
+  },
+  {
+    id: 'second-normal-form',
+    number: 19,
+    chapterId: 'second-normal-form',
+    title: 'Second Normal Form',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What does 2NF remove?',
+    options: ['Partial dependencies on a composite key', 'Transitive dependencies', 'Multivalued attributes', 'Foreign keys'],
+    answer: 0,
+    explanation:
+      '2NF requires every non-key attribute to depend on the whole composite key.',
+    hint: 'It is about composite keys.',
+  },
+  {
+    id: 'third-normal-form',
+    number: 20,
+    chapterId: 'third-normal-form',
+    title: 'Third Normal Form',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What does 3NF remove?',
+    options: ['Transitive dependencies among non-key attributes', 'Partial dependencies', 'Multivalued attributes', 'Foreign keys'],
+    answer: 0,
+    explanation:
+      '3NF ensures non-key attributes do not depend on other non-key attributes.',
+    hint: 'A non-key attribute determines another non-key attribute.',
+  },
+  {
+    id: 'acid-durability',
+    number: 21,
+    chapterId: 'transactions-acid',
+    title: 'Durability',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which ACID property ensures a committed change survives a crash?',
+    options: ['Atomicity', 'Consistency', 'Isolation', 'Durability'],
+    answer: 3,
+    explanation: 'Durability writes committed changes to stable storage.',
+    hint: 'It survives a power loss.',
+  },
+  {
+    id: 'partially-committed',
+    number: 22,
+    chapterId: 'transaction-states',
+    title: 'Partially Committed',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which state means all operations are done but the commit is not yet durable?',
+    options: ['Active', 'Partially committed', 'Committed', 'Aborted'],
+    answer: 1,
+    explanation:
+      'Partially committed is the window between finishing operations and making the commit durable.',
+    hint: 'It is not yet committed.',
+  },
+  {
+    id: 'write-ahead',
+    number: 23,
+    chapterId: 'recovery-logs',
+    title: 'Write-Ahead Rule',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is the write-ahead rule?',
+    options: [
+      'Write the log record before the data page',
+      'Write the data page before the log',
+      'Never write a log',
+      'Write only at commit',
+    ],
+    answer: 0,
+    explanation:
+      'The log record must reach stable storage before the corresponding data page is written.',
+    hint: 'The log leads the data.',
+  },
+  {
+    id: 'shadow-table',
+    number: 24,
+    chapterId: 'shadow-paging',
+    title: 'Shadow Page Table',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What does the shadow page table represent?',
+    options: ['The last consistent state', 'The uncommitted state', 'The transaction log', 'The buffer pool'],
+    answer: 0,
+    explanation:
+      'The shadow table points to the old consistent pages until the commit switch.',
+    hint: 'It is the fallback state.',
+  },
+  {
+    id: 'dirty-read',
+    number: 25,
+    chapterId: 'concurrency-problems',
+    title: 'Dirty Read',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is a dirty read?',
+    options: ['Reading uncommitted data', 'Reading the same row twice', 'Overwriting an update', 'Seeing a new row'],
+    answer: 0,
+    explanation:
+      'A dirty read reads data written by a transaction that has not committed and may roll back.',
+    hint: 'The data is not yet committed.',
+  },
+  {
+    id: 'two-phase-locking',
+    number: 26,
+    chapterId: 'locking-2pl',
+    title: 'Two-Phase Locking',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is the defining rule of 2PL?',
+    options: [
+      'No lock acquisition after the first release',
+      'No locks at all',
+      'Only shared locks',
+      'Locks are released immediately',
+    ],
+    answer: 0,
+    explanation:
+      'Once a transaction releases a lock, it cannot acquire another; that is the shrinking phase.',
+    hint: 'Growing then shrinking.',
+  },
+  {
+    id: 'optimistic-validation',
+    number: 27,
+    chapterId: 'timestamp-optimistic',
+    title: 'Optimistic Validation',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'When does optimistic concurrency control validate a transaction?',
+    options: ['At commit', 'At the first read', 'At every write', 'Never'],
+    answer: 0,
+    explanation:
+      'Validation happens at commit, after the transaction has run without locks.',
+    hint: 'Validation happens at the end.',
+  },
+  {
+    id: 'cap-theorem',
+    number: 28,
+    chapterId: 'distributed-databases',
+    title: 'CAP Theorem',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What does CAP say a system must trade during a partition?',
+    options: ['Consistency or availability', 'Schema or data', 'Locks or timestamps', 'Indexes or views'],
+    answer: 0,
+    explanation:
+      'During a network partition, a system must choose between consistency and availability.',
+    hint: 'C and A are the trade-off.',
+  },
+  {
+    id: 'horizontal-fragmentation',
+    number: 29,
+    chapterId: 'fragmentation-replication',
+    title: 'Horizontal Fragmentation',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What does horizontal fragmentation split?',
+    options: ['Rows', 'Columns', 'Indexes', 'Transactions'],
+    answer: 0,
+    explanation:
+      'Horizontal fragmentation partitions rows, often by a predicate such as region.',
+    hint: 'A predicate selects rows.',
+  },
+  {
+    id: 'etl',
+    number: 30,
+    chapterId: 'data-warehousing',
+    title: 'ETL',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What does ETL stand for?',
+    options: ['Extract, Transform, Load', 'Evaluate, Test, Launch', 'Extend, Trace, Log', 'Export, Transfer, Link'],
+    answer: 0,
+    explanation:
+      'ETL moves data from sources, cleans and conforms it, and loads it into the warehouse.',
+    hint: 'The three stages of warehouse loading.',
+  },
+  {
+    id: 'clustering',
+    number: 31,
+    chapterId: 'data-mining',
+    title: 'Clustering',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which technique groups unlabeled records by similarity?',
+    options: ['Classification', 'Clustering', 'Regression', 'Association rules'],
+    answer: 1,
+    explanation: 'Clustering finds groups in data without predefined labels.',
+    hint: 'No labels are provided.',
+  },
+  {
+    id: 'model-comparison',
+    number: 32,
+    chapterId: 'comparison-and-review',
+    title: 'Model Comparison',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which model uses a tree with one parent per record?',
+    options: ['Hierarchical', 'Network', 'Relational', 'Document'],
+    answer: 0,
+    explanation:
+      'The hierarchical model is a tree with one parent per child record.',
+    hint: 'Tree, not graph or table.',
+  },
+];
+
+export const dbmsProblemById = new Map(dbmsProblems.map((problem) => [problem.id, problem]));
+
+export function getDBMSProblem(id: string | undefined): DBMSProblem | undefined {
+  return id ? dbmsProblemById.get(id) : undefined;
+}
+
+export function getAdjacentDBMSProblems(id: string): {
+  previous?: DBMSProblem;
+  next?: DBMSProblem;
+} {
+  const index = dbmsProblems.findIndex((problem) => problem.id === id);
+  if (index < 0) return {};
+  return {
+    previous: index > 0 ? dbmsProblems[index - 1] : undefined,
+    next: index < dbmsProblems.length - 1 ? dbmsProblems[index + 1] : undefined,
+  };
+}

@@ -1111,7 +1111,7 @@ EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'ada@example.com';
       { q: 'Are reads blocked by writers in Postgres or MySQL?', a: 'Not for plain reads: both use MVCC, so readers see a snapshot without waiting. Writers block only conflicting writers — and locking reads (FOR UPDATE) block, which is the whole point of taking a lock.' },
       { q: 'What is a deadlock and how do you prevent it?', a: 'Two transactions each hold a lock the other wants: the database detects the cycle and kills one victim (retriable). Prevent with consistent lock ordering, short transactions, and small batches — and always handle the victim error.' },
     ],
-    relatedEngine: { label: 'Explore Database Internals', href: '/corecs/database-internals-indexes-transactions' },
+    relatedEngine: { label: 'Explore DBMS Foundations', href: '/corecs/dbms' },
   },
   {
     slug: 'exactly-once-payment-retries',

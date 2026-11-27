@@ -21,6 +21,7 @@ const SELF_CONTAINED_SUBSITE_ROUTES = new Set([
   '/crossplatformviz',
   '/cryptviz',
   '/css-cosmos',
+  '/dbms',
   '/dockercosmos',
   '/evminternals',
   '/fastapicosmos',

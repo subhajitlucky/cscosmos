@@ -13,7 +13,7 @@ CSCosmos is an interactive computer science visualizer hub and learning platform
 ## Proof
 
 - 257 computer science catalog topics.
-- 51 live visualizer topics powered by 48 natively absorbed interactive engines (zero externally linked) and 3 registered curriculum modules. Another 22 topics are `coming-soon` while their engines are rebuilt.
+- 52 live visualizer topics powered by 49 natively absorbed interactive engines (zero externally linked) and 3 registered curriculum modules. Another 21 topics are `coming-soon` while their engines are rebuilt.
 - 8 major domains with dedicated routes.
 - 2,500+ statically pre-rendered pages via Next.js SSG.
 - Interview Prep: 25 deep-dive questions across 5 categories with step-by-step animated walkthroughs.
@@ -39,7 +39,7 @@ The goal is not to publish a static list. The hub acts as an index for a growing
 
 ## Natively Absorbed Visualizers
 
-All 48 interactive visualizer engines are absorbed as native Next.js routes within CSCosmos. The authoritative topic-to-engine mapping lives in `src/data/engine-routes.ts`; the last static build produced 2,500+ pre-rendered pages. Canonical topic URLs are `/[domain]/[topicSlug]`; each engine-backed topic is served from its `/[enginePath]` route and rewritten behind the canonical URL, while module-backed topics are served directly by the universal route.
+All 49 interactive visualizer engines are absorbed as native Next.js routes within CSCosmos. The authoritative topic-to-engine mapping lives in `src/data/engine-routes.ts`; the last static build produced 2,500+ pre-rendered pages. Canonical topic URLs are `/[domain]/[topicSlug]`; each engine-backed topic is served from its `/[enginePath]` route and rewritten behind the canonical URL, while module-backed topics are served directly by the universal route.
 
 | Domain | Active topics | Example canonical URLs |
 |:-------|:--------------|:----------------------|
@@ -48,11 +48,11 @@ All 48 interactive visualizer engines are absorbed as native Next.js routes with
 | **Web3 & Blockchain** | 8 | `/web3/blockchainviz`, `/web3/cryptviz`, `/web3/patriciatrie`, `/web3/solidityviz` |
 | **Cybersecurity & Ethical Hacking** | 2 | `/security/websecurity`, `/security/authviz` |
 | **Artificial Intelligence** | 4 | `/ai/aimathviz`, `/ai/ai-engineering-foundations`, `/ai/python-for-ai-engineering` |
-| **Core Computer Science** | 4 | `/corecs/program-cosmos`, `/corecs/c-programming`, `/corecs/operating-systems`, `/corecs/computer-networks-internals-tcpip` |
+| **Core Computer Science** | 5 | `/corecs/program-cosmos`, `/corecs/c-programming`, `/corecs/operating-systems`, `/corecs/dbms`, `/corecs/computer-networks-internals-tcpip` |
 | **DevOps, Cloud & Engineering** | 5 | `/devops/gitcosmos`, `/devops/k8scosmos`, `/devops/cloudcosmos`, `/devops/loadbalancing` |
 | **Advanced Engineering & Systems** | 8 | `/advanced/wasmcosmos`, `/advanced/xrcosmos`, `/advanced/systemdesignviz` |
 
-The full 48-row engine mapping is in `src/data/engine-routes.ts`. The three
+The full 49-row engine mapping is in `src/data/engine-routes.ts`. The three
 curriculum modules (`ai-engineering-foundations`, `python-for-ai-engineering`,
 `computer-networks-internals-tcpip`) are registered in `src/lib/module-registry.ts`.
 The Computer Networks module is module-backed rather than engine-backed: its canonical
@@ -136,7 +136,7 @@ To absorb an engine natively:
 
 CSCosmos uses the Next.js App Router for file-system based routing. The public URL is always
 the canonical topic URL `/[domain]/[topicSlug]`. Each engine-backed canonical URL is rewritten
-to the engine implementation at `/<enginePath>/[[...slug]]` (48 engine paths today);
+to the engine implementation at `/<enginePath>/[[...slug]]` (49 engine paths today);
 module-backed topics are served directly by the universal route:
 
 - `/` — Home page
