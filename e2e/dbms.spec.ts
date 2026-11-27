@@ -50,6 +50,28 @@ test.describe('dbms smoke', () => {
     await expect(page.getByText(/01 \/ 05/)).toBeVisible();
   });
 
+  test('paginates the thousand-question drill book', async ({ page }) => {
+    await page.goto('/corecs/dbms/problems');
+
+    await expect(page.getByText(/One thousand questions/i)).toBeVisible();
+    await expect(page.getByText(/Showing 0001/)).toBeVisible();
+    await page.getByRole('button', { name: 'Next page' }).click();
+    await expect(page.getByText(/Showing 0025/)).toBeVisible();
+
+    await page.getByLabel('Filter by chapter').selectOption('first-normal-form');
+    await expect(page.getByText(/Showing 0001/)).toBeVisible();
+    await expect(page.getByText(/of 0032/)).toBeVisible();
+  });
+
+  test('opens a chapter-filtered drill set from a lesson', async ({ page }) => {
+    await page.goto('/corecs/dbms/learn/first-normal-form');
+    await page.getByRole('link', { name: /Practice this chapter/ }).click();
+
+    await expect(page).toHaveURL(/chapter=first-normal-form/);
+    await expect(page.getByLabel('Filter by chapter')).toHaveValue('first-normal-form');
+    await expect(page.getByText(/of 0032/)).toBeVisible();
+  });
+
   test('checks a practice answer', async ({ page }) => {
     await page.goto('/corecs/dbms/problems/first-normal-form');
 

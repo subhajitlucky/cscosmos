@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight, Check, CheckCircle2, Minus } from 'lucide-react'
 import { getAdjacentDBMSChapters, getDBMSChapter } from '../data/curriculum';
 import { dbmsLessons } from '../data/lessons';
 import { getDBMSDeepDive } from '../data/deep-dives';
-import { dbmsProblems } from '../data/problems';
+import { DBMS_PROBLEM_COUNTS_BY_CHAPTER } from '../data/mcq/counts';
 import { useDBMSProgress } from '../lib/progress';
 import { useDBMSBasePath } from '../components/DBMSShell';
 import { CodeBlock } from '../components/CodeBlock';
@@ -22,7 +22,7 @@ export function Topic({ chapterId }: { chapterId: string }) {
   const { previous, next } = getAdjacentDBMSChapters(chapterId);
   const { progress, markChapterComplete } = useDBMSProgress();
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const practice = dbmsProblems.find((problem) => problem.chapterId === chapterId);
+  const practiceCount = DBMS_PROBLEM_COUNTS_BY_CHAPTER[chapterId] ?? 0;
 
   if (!chapter || !lesson || !deepDive) {
     return (
@@ -420,9 +420,9 @@ export function Topic({ chapterId }: { chapterId: string }) {
             )}
 
             <div className="mt-6 space-y-2 border-t pt-4" style={{ borderColor: 'var(--db-border)' }}>
-              {practice && (
-                <Link href={`${basePath}/problems/${practice.id}`} className="flex items-center justify-between text-[11px] font-semibold">
-                  <span>Practice this chapter</span>
+              {practiceCount > 0 && (
+                <Link href={`${basePath}/problems?chapter=${chapter.id}`} className="flex items-center justify-between text-[11px] font-semibold">
+                  <span>Practice this chapter · {practiceCount} questions</span>
                   <ArrowRight className="h-3.5 w-3.5" style={{ color: 'var(--db-primary)' }} />
                 </Link>
               )}

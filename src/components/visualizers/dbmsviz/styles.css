@@ -216,6 +216,29 @@
   border-bottom-color: var(--db-primary);
 }
 
+.db-select {
+  width: 100%;
+  appearance: none;
+  border: 0;
+  border-bottom: 1px solid var(--db-border-strong);
+  background: transparent;
+  padding: 0.7rem 1.4rem 0.7rem 0;
+  color: var(--db-text);
+  font-family: var(--db-font-mono);
+  font-size: 0.6875rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.db-select:focus {
+  border-bottom-color: var(--db-primary);
+}
+
+.db-select option {
+  background: var(--db-surface);
+  color: var(--db-text);
+}
+
 .db-panel {
   border: 1px solid var(--db-border);
   background: var(--db-surface);

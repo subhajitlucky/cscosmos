@@ -1,22 +1,16 @@
-export type DBMSProblemDifficulty = 'Easy' | 'Medium' | 'Hard';
-export type DBMSProblemType = 'mcq' | 'scenario';
+import { dbmsChapters } from './curriculum';
+import { dbmsProblemSeeds } from './mcq';
+import { DBMS_PROBLEM_COUNT, DBMS_PROBLEM_COUNTS_BY_CHAPTER } from './mcq/counts';
+import type {
+  DBMSProblem,
+  DBMSProblemDifficulty,
+  DBMSProblemSeed,
+  DBMSProblemType,
+} from './mcq/types';
 
-export interface DBMSProblem {
-  id: string;
-  number: number;
-  chapterId: string;
-  title: string;
-  difficulty: DBMSProblemDifficulty;
-  type: DBMSProblemType;
-  prompt: string;
-  context?: string;
-  options: string[];
-  answer: number;
-  explanation: string;
-  hint: string;
-}
+export type { DBMSProblem, DBMSProblemDifficulty, DBMSProblemType };
 
-export const dbmsProblems: DBMSProblem[] = [
+const curatedProblems: DBMSProblem[] = [
   {
     id: 'dbms-purpose',
     number: 1,
@@ -42,7 +36,7 @@ export const dbmsProblems: DBMSProblem[] = [
     options: ['External schema', 'Conceptual schema', 'Internal schema', 'View schema'],
     answer: 2,
     explanation:
-      'The internal schema describes files, pages, indexes, and physical organization.',
+      'The internal schema describes physical storage: files, pages, indexes, and how records are organized on disk.',
     hint: 'It sits closest to the disk.',
   },
   {
@@ -56,7 +50,7 @@ export const dbmsProblems: DBMSProblem[] = [
     options: ['Relational', 'Hierarchical', 'Network', 'Document'],
     answer: 1,
     explanation:
-      'The hierarchical model uses parent-child trees, with one parent per record.',
+      'The hierarchical model organizes records into parent-child trees, and each child record has exactly one parent.',
     hint: 'One parent, many children.',
   },
   {
@@ -130,7 +124,7 @@ export const dbmsProblems: DBMSProblem[] = [
     prompt: 'What is the degree of a relation?',
     options: ['The number of rows', 'The number of attributes', 'The number of keys', 'The number of users'],
     answer: 1,
-    explanation: 'Degree is the number of attributes (columns).',
+    explanation: 'Degree counts the attributes in a relation; cardinality counts the tuples or rows.',
     hint: 'It describes the shape, not the row count.',
   },
   {
@@ -157,7 +151,7 @@ export const dbmsProblems: DBMSProblem[] = [
     prompt: 'Which operator filters rows?',
     options: ['Projection π', 'Selection σ', 'Union ∪', 'Join ⋈'],
     answer: 1,
-    explanation: 'Selection σ keeps tuples that satisfy a predicate.',
+    explanation: 'Selection σ returns the tuples that satisfy a predicate, while projection π chooses attributes.',
     hint: 'Sigma is for rows; pi is for columns.',
   },
   {
@@ -306,7 +300,7 @@ export const dbmsProblems: DBMSProblem[] = [
     options: ['Transitive dependencies among non-key attributes', 'Partial dependencies', 'Multivalued attributes', 'Foreign keys'],
     answer: 0,
     explanation:
-      '3NF ensures non-key attributes do not depend on other non-key attributes.',
+      '3NF removes transitive dependencies, so a non-key attribute cannot determine another non-key attribute.',
     hint: 'A non-key attribute determines another non-key attribute.',
   },
   {
@@ -319,7 +313,7 @@ export const dbmsProblems: DBMSProblem[] = [
     prompt: 'Which ACID property ensures a committed change survives a crash?',
     options: ['Atomicity', 'Consistency', 'Isolation', 'Durability'],
     answer: 3,
-    explanation: 'Durability writes committed changes to stable storage.',
+    explanation: 'Durability guarantees that a committed transaction survives a crash because its changes reach stable storage.',
     hint: 'It survives a power loss.',
   },
   {
@@ -413,7 +407,7 @@ export const dbmsProblems: DBMSProblem[] = [
     options: ['At commit', 'At the first read', 'At every write', 'Never'],
     answer: 0,
     explanation:
-      'Validation happens at commit, after the transaction has run without locks.',
+      'Validation happens at commit time, after the transaction has run without locks, and aborts on a stale read set.',
     hint: 'Validation happens at the end.',
   },
   {
@@ -441,7 +435,7 @@ export const dbmsProblems: DBMSProblem[] = [
     options: ['Rows', 'Columns', 'Indexes', 'Transactions'],
     answer: 0,
     explanation:
-      'Horizontal fragmentation partitions rows, often by a predicate such as region.',
+      'Horizontal fragmentation partitions a relation by rows, often using a predicate such as region, so each site stores a row subset.',
     hint: 'A predicate selects rows.',
   },
   {
@@ -468,7 +462,7 @@ export const dbmsProblems: DBMSProblem[] = [
     prompt: 'Which technique groups unlabeled records by similarity?',
     options: ['Classification', 'Clustering', 'Regression', 'Association rules'],
     answer: 1,
-    explanation: 'Clustering finds groups in data without predefined labels.',
+    explanation: 'Clustering groups unlabeled records by similarity, discovering structure without a predefined target variable.',
     hint: 'No labels are provided.',
   },
   {
@@ -486,6 +480,55 @@ export const dbmsProblems: DBMSProblem[] = [
     hint: 'Tree, not graph or table.',
   },
 ];
+
+const seedsByChapter = new Map<string, DBMSProblemSeed[]>();
+for (const seed of dbmsProblemSeeds) {
+  const bucket = seedsByChapter.get(seed.chapterId);
+  if (bucket) bucket.push(seed);
+  else seedsByChapter.set(seed.chapterId, [seed]);
+}
+
+const knownChapterIds = new Set(dbmsChapters.map((chapter) => chapter.id));
+const unknownChapterIds = [...seedsByChapter.keys()].filter((chapterId) => !knownChapterIds.has(chapterId));
+if (unknownChapterIds.length > 0) {
+  throw new Error(`Unknown DBMS problem chapter ids: ${unknownChapterIds.join(', ')}`);
+}
+
+const mergedProblems: DBMSProblem[] = [];
+for (const chapter of dbmsChapters) {
+  const curated = curatedProblems.filter((problem) => problem.chapterId === chapter.id);
+  if (curated.length !== 1) {
+    throw new Error(`Expected one curated problem for ${chapter.id}, found ${curated.length}`);
+  }
+  mergedProblems.push(curated[0]);
+
+  const target = DBMS_PROBLEM_COUNTS_BY_CHAPTER[chapter.id];
+  if (!target) throw new Error(`Missing DBMS problem target for ${chapter.id}`);
+
+  const extras = (seedsByChapter.get(chapter.id) ?? []).slice(0, target - 1);
+  if (extras.length !== target - 1) {
+    throw new Error(
+      `Expected ${target - 1} generated problems for ${chapter.id}, found ${extras.length}`,
+    );
+  }
+
+  extras.forEach((seed, index) => {
+    mergedProblems.push({
+      ...seed,
+      id: `dbms-mcq-${chapter.id}-${String(index + 1).padStart(2, '0')}`,
+      number: 0,
+    });
+  });
+}
+
+if (mergedProblems.length !== DBMS_PROBLEM_COUNT) {
+  throw new Error(`Expected ${DBMS_PROBLEM_COUNT} DBMS problems, built ${mergedProblems.length}`);
+}
+
+export const dbmsProblems: DBMSProblem[] = mergedProblems.map((problem, index) => ({
+  ...problem,
+  number: index + 1,
+}));
 
 export const dbmsProblemById = new Map(dbmsProblems.map((problem) => [problem.id, problem]));
 

@@ -6,6 +6,8 @@ import { getDBMSChapter, dbmsChapters } from './curriculum';
 import { dbmsLessons } from './lessons';
 import { dbmsDeepDives, getDBMSDeepDive } from './deep-dives';
 import { getDBMSProblem, dbmsProblems } from './problems';
+import { DBMS_PROBLEM_COUNT, DBMS_PROBLEM_COUNTS_BY_CHAPTER } from './mcq/counts';
+import { dbmsProblemSeeds } from './mcq';
 
 describe('dbmsviz curriculum data', () => {
   it('contains 32 lessons with unique ids and numbers', () => {
@@ -79,27 +81,55 @@ describe('dbmsviz curriculum data', () => {
     }
   });
 
-  it('has one valid drill per lesson', () => {
-    expect(dbmsProblems).toHaveLength(32);
+  it('has a thousand valid drills spanning every chapter', () => {
+    expect(DBMS_PROBLEM_COUNT).toBe(1000);
+    expect(dbmsProblemSeeds).toHaveLength(968);
+    expect(
+      Object.values(DBMS_PROBLEM_COUNTS_BY_CHAPTER).reduce((total, count) => total + count, 0),
+    ).toBe(1000);
+    expect(dbmsProblems).toHaveLength(1000);
     expect(new Set(dbmsProblems.map((problem) => problem.id)).size).toBe(dbmsProblems.length);
     expect(new Set(dbmsProblems.map((problem) => problem.number)).size).toBe(dbmsProblems.length);
     expect(dbmsProblems.map((problem) => problem.number)).toEqual(
-      Array.from({ length: 32 }, (_, index) => index + 1),
+      Array.from({ length: 1000 }, (_, index) => index + 1),
     );
 
     for (const chapter of dbmsChapters) {
+      const chapterProblems = dbmsProblems.filter((problem) => problem.chapterId === chapter.id);
+      expect(DBMS_PROBLEM_COUNTS_BY_CHAPTER[chapter.id], `${chapter.id} count`).toBe(chapterProblems.length);
+      expect(chapterProblems.length, `${chapter.id} should have at least 30 drills`).toBeGreaterThanOrEqual(30);
       expect(
-        dbmsProblems.some((problem) => problem.chapterId === chapter.id),
-        `missing drill for ${chapter.id}`,
-      ).toBe(true);
+        new Set(chapterProblems.map((problem) => problem.title)).size,
+        `${chapter.id} should have unique titles`,
+      ).toBe(chapterProblems.length);
     }
 
+    expect(dbmsProblems.filter((problem) => problem.difficulty === 'Hard').length).toBeGreaterThanOrEqual(150);
+    expect(dbmsProblems.filter((problem) => problem.type === 'scenario').length).toBeGreaterThanOrEqual(300);
+
+    const answerCounts = [0, 0, 0, 0];
+    const prompts = new Set<string>();
     for (const problem of dbmsProblems) {
+      answerCounts[problem.answer] += 1;
       expect(getDBMSChapter(problem.chapterId), `${problem.id} chapter`).toBeDefined();
+      expect(problem.options).toHaveLength(4);
+      expect(new Set(problem.options).size).toBe(4);
       expect(problem.answer).toBeGreaterThanOrEqual(0);
       expect(problem.answer).toBeLessThan(problem.options.length);
       expect(problem.explanation.length).toBeGreaterThan(20);
+      expect(problem.hint.length).toBeGreaterThan(10);
+      expect(problem.title.length).toBeGreaterThan(2);
+      expect(problem.prompt).not.toMatch(/\bTODO\b|undefined|placeholder/i);
+
+
+      const normalizedPrompt = problem.prompt.trim().toLowerCase().replace(/\s+/g, ' ');
+      expect(prompts.has(normalizedPrompt), `duplicate prompt: ${problem.id}`).toBe(false);
+      prompts.add(normalizedPrompt);
       expect(getDBMSProblem(problem.id)).toBe(problem);
+    }
+
+    for (const count of answerCounts) {
+      expect(count).toBeGreaterThanOrEqual(100);
     }
   });
 });

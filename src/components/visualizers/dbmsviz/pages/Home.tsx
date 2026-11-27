@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, MoveRight } from 'lucide-react';
 import { dbmsCategories, dbmsChapters } from '../data/curriculum';
-import { dbmsProblems } from '../data/problems';
+import { DBMS_PROBLEM_COUNT } from '../data/mcq/counts';
 import { useDBMSBasePath } from '../components/DBMSShell';
 
 const MOVEMENTS = [
@@ -97,7 +97,7 @@ export function Home() {
             <p className="mt-7 max-w-[560px] text-[15px] leading-[1.8] sm:text-base" style={{ color: 'var(--db-muted)' }}>
               A rigorous, visual field manual for the database layer. Thirty-two chapters move from
               domain modeling to durable, concurrent, distributed data — with worked examples,
-              annotated schemas, and instruments you can operate.
+              annotated schemas, a thousand-question drill book, and instruments you can operate.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -114,7 +114,7 @@ export function Home() {
             <div className="db-stat-strip mt-12 max-w-[620px]">
               {[
                 { value: dbmsChapters.length, label: 'Chapters' },
-                { value: dbmsProblems.length, label: 'Drills' },
+                { value: DBMS_PROBLEM_COUNT, label: 'Drills' },
                 { value: 3, label: 'Instruments' },
                 { value: 8, label: 'Tracks' },
               ].map((stat) => (
