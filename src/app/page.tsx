@@ -1,15 +1,32 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import { domains, domainPath, type DomainKey } from '@/data/domains';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Boxes,
+  Blocks,
+  BrainCircuit,
+  Code2,
+  Cpu,
+  HardDrive,
+  Layers,
+  ShieldCheck,
+  Sparkles,
+  type LucideIcon,
+} from 'lucide-react';
+import { domains } from '@/data/domains';
 import { topics } from '@/data/topics';
+import { DomainCard } from '@/components/DomainCard';
+import { HomeSearchDeck } from '@/components/HomeSearchDeck';
+import { ContinueLearning } from '@/components/learning/ContinueLearning';
+import { DailyChallenge } from '@/components/learning/DailyChallenge';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'CSCosmos — A working library of computer science',
+  title: 'CSCosmos - Computer Science Learning Hub',
   description: siteConfig.description,
   openGraph: {
-    title: 'CSCosmos — A working library of computer science',
+    title: 'CSCosmos - Computer Science Learning Hub',
     description: siteConfig.description,
     url: '/',
     siteName: siteConfig.name,
@@ -17,245 +34,343 @@ export const metadata: Metadata = {
   },
 };
 
-const REBUILT_MODULES = [
-  {
-    number: '01',
-    title: 'IT Fundamentals',
-    href: '/corecs/fundamentals-of-it',
-    description:
-      'Computer organization, memory and storage, number systems, Boolean algebra, 8086 microprocessors, software, and MS Office.',
-    stats: '7 topics · 140 drills · 3 tools',
-    tag: 'Foundations',
-  },
-  {
-    number: '02',
-    title: 'C Programming',
-    href: '/corecs/c-programming',
-    description:
-      'From the character set and control flow to pointers, structures, dynamic memory, files, and bitwise masks.',
-    stats: '35 lessons · 41 drills · 2 labs',
-    tag: 'Programming',
-  },
-  {
-    number: '03',
-    title: 'Operating Systems',
-    href: '/corecs/operating-systems',
-    description:
-      'Processes, scheduling, virtual memory, paging, file systems, I/O, and the boundary between user programs and the kernel.',
-    stats: '39 lessons · 39 drills · 3 labs',
-    tag: 'Systems',
-  },
-  {
-    number: '04',
-    title: 'DBMS Foundations',
-    href: '/corecs/dbms',
-    description:
-      'ER modeling, relational algebra, keys, normalization, transactions, recovery, concurrency, and distributed data.',
-    stats: '32 lessons · 1,000 drills · 3 labs',
-    tag: 'Data',
-  },
-  {
-    number: '05',
-    title: 'Computer Networks',
-    href: '/corecs/computer-networks-internals-tcpip',
-    description:
-      'A packet’s journey through DNS, TCP, routing, congestion control, TLS, and the application layer.',
-    stats: '50 concepts · packet simulator',
-    tag: 'Networks',
-  },
-];
-
-const PRINCIPLES = [
-  {
-    number: '01',
-    title: 'Read the idea',
-    text: 'A short explanation with a worked example, not a wall of definitions.',
-  },
-  {
-    number: '02',
-    title: 'Operate the model',
-    text: 'Change an input in the lab and watch the system respond.',
-  },
-  {
-    number: '03',
-    title: 'Test the rule',
-    text: 'Answer questions that check the concept, then read the reasoning.',
-  },
-];
-
-function countDomain(domainKey: string) {
-  const domainTopics = topics.filter(
-    (topic) => topic.domain === domainKey || topic.crossListedDomains?.includes(domainKey as DomainKey),
-  );
-  return {
-    active: domainTopics.filter((topic) => topic.status === 'active').length,
-    total: domainTopics.length,
-  };
+interface FlagshipEngine {
+  title: string;
+  badge: string;
+  domain: string;
+  url: string;
+  description: string;
+  topicsCovered: string[];
+  icon: LucideIcon;
 }
 
+const FLAGSHIP_ENGINES: FlagshipEngine[] = [
+  {
+    title: 'Program Execution & CPU Cycle',
+    badge: 'ENGINE // 01',
+    domain: 'Core CS',
+    url: '/corecs/program-cosmos',
+    description:
+      'Step-by-step CPU instruction cycle: fetch, decode, execute, and writeback. Inspect registers, ALU operations, stack memory frames, and hardware I/O.',
+    topicsCovered: ['Fetch-Decode Cycle', 'Call Stack Frames', 'I/O Syscalls'],
+    icon: Cpu,
+  },
+  {
+    title: 'AI Engineering Foundations',
+    badge: 'ENGINE // 02',
+    domain: 'AI & Machine Learning',
+    url: '/ai/ai-engineering-foundations',
+    description:
+      'Master learned parameters, tensor transformations, continuous loss surfaces, and deterministic micro-model execution.',
+    topicsCovered: ['Parameter Space', 'Activation Functions', 'Decision Surfaces'],
+    icon: BrainCircuit,
+  },
+  {
+    title: 'Array & RAM Cache Locality',
+    badge: 'ENGINE // 03',
+    domain: 'DSA',
+    url: '/dsa/arrayviz',
+    description:
+      'Live CPU cache latency simulation. Observe L1/L2 hits vs RAM page misses across sequential and random memory stride access patterns.',
+    topicsCovered: ['Cache Locality', 'Sliding Window', 'KMP Strings'],
+    icon: HardDrive,
+  },
+  {
+    title: 'Docker & Linux Kernel Isolation',
+    badge: 'ENGINE // 04',
+    domain: 'DevOps',
+    url: '/devops/dockercosmos',
+    description:
+      'Deconstruct containers into Linux kernel primitives: PID/NET namespaces, cgroups v2 resource limits, and OverlayFS layered union filesystems.',
+    topicsCovered: ['Namespaces', 'Cgroups v2', 'OverlayFS Layers'],
+    icon: Boxes,
+  },
+  {
+    title: 'Computer Networks & Packet Journey',
+    badge: 'ENGINE // 05',
+    domain: 'Core CS',
+    url: '/corecs/computer-networks-internals-tcpip',
+    description:
+      'Follow a packet from browser to server through the TCP/IP stack: DNS resolution, TCP handshakes, routing, congestion control, and TLS.',
+    topicsCovered: ['TCP Handshake', 'OSI Layers', 'Packet Journey'],
+    icon: Layers,
+  },
+  {
+    title: 'Blockchain & Merkle State Storage',
+    badge: 'ENGINE // 06',
+    domain: 'Web3',
+    url: '/web3/blockchainviz',
+    description:
+      'Cryptographic state integrity visualizer: SHA-256 block mining, Merkle tree audit proofs, Patricia Trie state roots, and EVM stack execution.',
+    topicsCovered: ['Merkle Trees', 'Patricia Tries', 'EVM Opcode Stack'],
+    icon: Blocks,
+  },
+  {
+    title: 'Web Security & Browser Boundaries',
+    badge: 'ENGINE // 07',
+    domain: 'Security',
+    url: '/security/websecurity',
+    description:
+      'Attack and defend the browser security model: same-origin policy, CORS preflights, XSS/CSRF, CSP, cookies, and isolation boundaries.',
+    topicsCovered: ['Same-Origin Policy', 'CORS & CSP', 'XSS/CSRF'],
+    icon: ShieldCheck,
+  },
+  {
+    title: 'JavaScript Runtime & Event Loop',
+    badge: 'ENGINE // 08',
+    domain: 'Full Stack',
+    url: '/fullstack/jsviz',
+    description:
+      'Watch the call stack, microtask queue, and macrotask phases execute in real time — closures, scope chains, and V8 garbage collection without hand-waving.',
+    topicsCovered: ['Event Loop', 'Call Stack', 'Scope Chain'],
+    icon: Code2,
+  },
+];
+
 export default function HomePage() {
-  const liveTopics = topics.filter((topic) => topic.status === 'active').length;
+  const totalTopics = topics.length;
+  const liveTopics = topics.filter((t) => t.status === 'active').length;
 
   return (
-    <div className="pb-20">
-      <section className="page-container border-b border-border py-10 sm:py-14">
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-          CSCosmos / Computer science index
-        </p>
-        <div className="mt-5 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
-          <div>
-            <h1 className="max-w-[780px] font-serif text-[clamp(2.8rem,6vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-balance">
-              A working library of computer science.
+    <div className="space-y-24 pb-24">
+      {/* 1. Hero Section: Architectural Statement */}
+      <section className="page-container pt-10 md:pt-16">
+        <div className="space-y-8 max-w-4xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-1.5 text-xs font-mono text-muted-foreground shadow-sm">
+            <Sparkles className="h-3.5 w-3.5 text-foreground" aria-hidden="true" />
+            <span className="font-semibold text-foreground">{totalTopics} CURRICULUM MODULES</span>
+            <span className="opacity-40" aria-hidden="true">&bull;</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{liveTopics} LIVE ENGINES</span>
+          </div>
+
+          <div className="space-y-5">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-[1.02] font-display text-balance">
+              Explore the Universe of <br className="hidden sm:inline" />
+              <span className="text-muted-foreground">Computer Science.</span>
             </h1>
-            <p className="mt-5 max-w-[650px] font-serif text-[1.1rem] leading-[1.75] text-muted-foreground">
-              Each module starts with a question, builds the model, and lets you operate it. Read the
-              notes, run the instrument, then test the rule.
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-normal leading-relaxed max-w-3xl font-sans">
+              Deconstructing the digital universe. Visual, interactive deep-dives into the core of computing — designed for engineers who refuse to just use tools and choose to master them.
             </p>
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link
-                href="/topics"
-                className="inline-flex h-11 w-full items-center justify-between gap-2 bg-foreground px-5 text-[13px] font-semibold text-background transition-opacity hover:opacity-90 sm:w-auto sm:justify-center"
-              >
-                Browse live modules <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-              <Link
-                href="/corecs/fundamentals-of-it"
-                className="inline-flex h-11 w-full items-center justify-between gap-2 border border-border px-5 text-[13px] font-semibold text-foreground transition-colors hover:border-foreground/40 sm:w-auto sm:justify-center"
-              >
-                Start with IT Fundamentals <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
+
+            <div className="border-l-2 border-foreground/70 pl-4 py-1.5">
+              <p className="font-mono text-sm sm:text-base text-foreground font-medium italic tracking-wide">
+                &ldquo;{siteConfig.slogan}&rdquo;
+              </p>
             </div>
           </div>
 
-          <div className="border-t border-border pt-4 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              The catalog
-            </p>
-            <dl className="mt-3 grid grid-cols-3 gap-4">
-              <div>
-                <dt className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">Topics</dt>
-                <dd className="mt-1 font-serif text-3xl leading-none">{topics.length}</dd>
-              </div>
-              <div>
-                <dt className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">Live</dt>
-                <dd className="mt-1 font-serif text-3xl leading-none">{liveTopics}</dd>
-              </div>
-              <div>
-                <dt className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">Domains</dt>
-                <dd className="mt-1 font-serif text-3xl leading-none">{domains.length}</dd>
-              </div>
-            </dl>
-            <p className="mt-4 max-w-[320px] text-[13px] leading-relaxed text-muted-foreground">
-              Most of the catalog is still planned. The modules below are complete, reviewed, and open
-              to use.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="page-container border-b border-border py-10 sm:py-12">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              Rebuilt from scratch
-            </p>
-            <h2 className="mt-2 font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
-              Start with a module.
-            </h2>
-          </div>
-          <Link href="/topics" className="inline-flex items-center gap-1.5 text-[12px] font-semibold hover:text-primary">
-            See all live modules <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-
-        <div className="mt-7 border-t border-border">
-          {REBUILT_MODULES.map((module) => (
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
-              key={module.href}
-              href={module.href}
-              className="group grid gap-3 border-b border-border px-1 py-5 transition-colors hover:bg-secondary/30 sm:grid-cols-[46px_minmax(0,1fr)_200px_auto] sm:items-center sm:gap-5"
+              href="/topics"
+              className="inline-flex h-12 items-center justify-center rounded-xl bg-foreground px-7 text-sm font-semibold text-background transition-colors hover:bg-foreground/90 active:scale-95 shadow-sm"
             >
-              <span className="font-mono text-[11px] text-muted-foreground">{module.number}</span>
-              <span>
-                <span className="flex flex-wrap items-center gap-2">
-                  <span className="font-serif text-xl font-semibold group-hover:text-primary sm:text-2xl">
-                    {module.title}
-                  </span>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground">
-                    {module.tag}
-                  </span>
-                </span>
-                <span className="mt-1 block max-w-[720px] text-[13px] leading-relaxed text-muted-foreground">
-                  {module.description}
-                </span>
-              </span>
-              <span className="font-mono text-[10px] leading-snug text-muted-foreground sm:text-right">{module.stats}</span>
-              <ArrowRight className="hidden h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 sm:block" />
+              Explore {totalTopics} Topics <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
-          ))}
+            <Link
+              href="/interview"
+              className="inline-flex h-12 items-center justify-center rounded-xl border border-border/80 bg-secondary/30 px-6 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/70 hover:border-foreground/30 active:scale-95"
+            >
+              Interview Prep
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex h-12 items-center justify-center rounded-xl border border-transparent px-4 text-sm font-mono text-muted-foreground transition-colors hover:text-foreground focus-ring"
+            >
+              About CSCosmos &rarr;
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="page-container border-b border-border py-10 sm:py-12">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              The eight domains
-            </p>
-            <h2 className="mt-2 font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
-              Browse by discipline.
-            </h2>
-          </div>
-        </div>
-
-        <div className="mt-7 grid border-t border-border sm:grid-cols-2 lg:grid-cols-4">
-          {domains.map((domain, index) => {
-            const counts = countDomain(domain.domainKey);
-            return (
-              <Link
-                key={domain.domainKey}
-                href={domainPath(domain.domainKey)}
-                className={`group border-b border-border py-4 pr-4 transition-colors hover:bg-secondary/30 ${index % 2 === 0 ? 'sm:pr-6' : 'sm:border-l sm:pl-6'} ${index % 4 > 0 ? 'lg:border-l lg:pl-6' : ''}`}
-              >
-                <span className="font-mono text-[10px] text-muted-foreground">
-                  {String(index + 1).padStart(2, '0')} / {counts.active} live
-                </span>
-                <span className="mt-2 block font-serif text-lg font-semibold group-hover:text-primary">
-                  {domain.name}
-                </span>
-                <span className="mt-1 block text-[12px] leading-relaxed text-muted-foreground line-clamp-2">
-                  {domain.description}
-                </span>
-                <span className="mt-2 inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground">
-                  {counts.total} topics <ArrowRight className="h-3 w-3" />
-                </span>
-              </Link>
-            );
-          })}
-        </div>
+      <section className="page-container grid gap-3 md:grid-cols-2">
+        <ContinueLearning />
+        <DailyChallenge />
       </section>
 
-      <section className="page-container py-10 sm:py-12">
-        <div className="grid gap-8 md:grid-cols-[1fr_1.2fr] md:items-start">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              How it works
-            </p>
-            <h2 className="mt-2 max-w-[420px] font-serif text-3xl font-semibold tracking-[-0.03em]">
-              Read it. Operate it. Prove you know it.
-            </h2>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-3">
-            {PRINCIPLES.map((principle) => (
-              <div key={principle.number} className="border-t border-border pt-3">
-                <p className="font-mono text-[10px] text-muted-foreground">{principle.number}</p>
-                <h3 className="mt-2 font-serif text-lg font-semibold">{principle.title}</h3>
-                <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground">{principle.text}</p>
+      {/* 3-4. Interactive Command Deck & Search (+ conditional static sections) */}
+      <HomeSearchDeck totalTopics={totalTopics}>
+        <>
+          {/* 5. Flagship Visualizer Engines Showcase */}
+          <section className="page-container space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/80 pb-6">
+              <div className="space-y-2">
+                <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  CORE INTERACTIVE ENGINES // REPOSITORIES
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display text-balance">
+                  Featured Interactive Visualizers
+                </h2>
+                <p className="text-sm text-muted-foreground max-w-2xl">
+                  Dissect fundamental systems live. Inspect real memory allocations,
+                  registers, packets, and state transitions without abstraction layers.
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
+              <Link
+                href="/topics"
+                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap focus-ring"
+              >
+                Browse the full curriculum <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {FLAGSHIP_ENGINES.map((engine) => {
+                const Icon = engine.icon;
+                return (
+                  <Link
+                    key={engine.url}
+                    href={engine.url}
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-card p-6 transition-colors duration-200 hover:border-foreground/30 hover:bg-secondary/20 focus-ring"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-secondary/60 text-foreground group-hover:text-primary transition-colors">
+                          <Icon className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[10px] text-muted-foreground tracking-wider uppercase">
+                            {engine.domain}
+                          </span>
+                          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" aria-hidden="true" />
+                            LIVE
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <span className="font-mono text-[10px] font-semibold text-muted-foreground tracking-wider">
+                          {engine.badge}
+                        </span>
+                        <h3 className="text-lg font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                          {engine.title}
+                        </h3>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {engine.description}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {engine.topicsCovered.map((topic) => (
+                          <span
+                            key={topic}
+                            className="rounded border border-border/60 bg-secondary/40 px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+                          >
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-border/40 flex items-center justify-between text-xs font-mono font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                      <span className="text-[11px] text-muted-foreground">Interactive Workbench</span>
+                      <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        Launch Engine <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 6. The 8 Core Disciplines (Architectural Bento Grid) */}
+          <section className="page-container space-y-8">
+            <div className="border-b border-border/80 pb-6 space-y-2">
+              <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                DISCIPLINE DIRECTORY // 8 CORE PILLARS
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground font-display text-balance">
+                The Computer Science Matrix
+              </h2>
+              <p className="text-sm text-muted-foreground max-w-2xl">
+                Structured domain roadmaps spanning theoretical foundations, practical
+                kernel execution, distributed networks, and modern AI engineering.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {domains.map((domain) => (
+                <DomainCard key={domain.domainKey} domain={domain} />
+              ))}
+            </div>
+          </section>
+
+          {/* 7. Engineering Philosophy / Manifesto */}
+          <section className="page-container">
+            <div className="rounded-2xl border border-border/80 bg-card p-8 md:p-12 space-y-8">
+              <div className="space-y-2 max-w-2xl">
+                <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  THE FIRST-PRINCIPLES MANIFESTO
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground font-display text-balance">
+                  Why CSCosmos?
+                </h2>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Most online technical tutorials reduce computing to passive video streams or syntax memorization.
+                  CSCosmos is built on three uncompromising principles:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                <div className="space-y-2 rounded-xl border border-border/60 bg-secondary/20 p-5">
+                  <span className="font-mono text-xs font-bold text-foreground">
+                    01 // STATE OVER SYNTAX
+                  </span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    You don&apos;t understand CPU pipelining by reading paragraphs. You understand it by stalling the hazard register and watching instructions flush.
+                  </p>
+                </div>
+
+                <div className="space-y-2 rounded-xl border border-border/60 bg-secondary/20 p-5">
+                  <span className="font-mono text-xs font-bold text-foreground">
+                    02 // ZERO BLACK BOXES
+                  </span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Every abstraction layer is exposed: from hardware registers and POSIX syscalls to EVM opcodes, TCP sliding windows, and L1 cache hits.
+                  </p>
+                </div>
+
+                <div className="space-y-2 rounded-xl border border-border/60 bg-secondary/20 p-5">
+                  <span className="font-mono text-xs font-bold text-foreground">
+                    03 // CLIENT-SIDE &amp; FREE
+                  </span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Zero forced accounts, zero paywalled courses, zero telemetry trackers. Pure interactive software compiled directly into the web runtime.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-muted-foreground">
+                <span className="italic text-foreground font-medium">
+                  &ldquo;{siteConfig.slogan}&rdquo;
+                </span>
+                <span>CSCosmos &bull; Deconstructing the Digital Universe</span>
+              </div>
+            </div>
+          </section>
+
+          {/* 8. Bottom Keyboard Navigation Ribbon */}
+          <section className="page-container pt-4">
+            <div className="flex flex-wrap items-center gap-4 border-t border-border/60 pt-6 text-xs font-mono text-muted-foreground">
+              <span>SHORTCUTS:</span>
+              <span className="inline-flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">/</kbd>
+                Search
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">T</kbd>
+                Topics
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] text-foreground font-semibold">Esc</kbd>
+                Clear
+              </span>
+            </div>
+          </section>
+        </>
+      </HomeSearchDeck>
     </div>
   );
 }

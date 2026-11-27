@@ -1,190 +1,253 @@
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { domains, domainPath, type DomainKey } from '@/data/domains';
-import { topics, type Topic } from '@/data/topics';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { domains, domainPath, type DomainKey } from "@/data/domains";
+import { topics, type Topic } from "@/data/topics";
+import { TopicCard } from "@/components/TopicCard";
 
 const FULLSTACK_SECTIONS = [
-  { id: 'foundations', name: 'Foundations', description: 'The web platform: protocols, markup, styles, language, and the browser.' },
-  { id: 'frontend', name: 'Frontend Engineering', description: 'Building the interface: components, state, forms, performance, and tests.' },
-  { id: 'backend', name: 'Backend Engineering', description: 'Servers, APIs, data, jobs, and real-time communication.' },
-  { id: 'architecture', name: 'Architecture & Product', description: 'How the pieces fit together and connect to real product services.' },
+    {
+        id: "foundations",
+        name: "Foundations",
+        description: "The web platform: protocols, markup, styles, language, and the browser.",
+    },
+    {
+        id: "frontend",
+        name: "Frontend Engineering",
+        description: "Building the interface: components, state, forms, performance, and tests.",
+    },
+    {
+        id: "backend",
+        name: "Backend Engineering",
+        description: "Servers, APIs, data, jobs, and real-time communication.",
+    },
+    {
+        id: "architecture",
+        name: "Architecture & Product",
+        description: "How the pieces fit together and connect to real product services.",
+    },
 ] as const;
 
-const FULLSTACK_RELATED_DOMAINS: DomainKey[] = ['devops', 'security', 'advanced', 'ai', 'corecs'];
+const FULLSTACK_RELATED_DOMAINS: DomainKey[] = ["devops", "security", "advanced", "ai", "corecs"];
 
-function TopicRows({ items, currentDomain }: { items: Topic[]; currentDomain: DomainKey }) {
-  if (items.length === 0) return null;
-  return (
-    <div className="border-t border-border">
-      {items.map((topic) => {
-        const isLive = topic.status === 'active';
-        return (
-          <Link
-            key={topic.catalogId}
-            href={topic.canonicalPath}
-            className="group grid gap-2 border-b border-border py-3.5 transition-colors hover:bg-secondary/30 sm:grid-cols-[minmax(0,1fr)_200px_100px_20px] sm:items-center sm:gap-4"
-          >
-            <span className="min-w-0">
-              <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                <span className="font-sans text-[14px] font-semibold leading-snug group-hover:text-primary">
-                  {topic.name}
-                </span>
-                {topic.domain !== currentDomain && (
-                  <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-muted-foreground">
-                    also in {topic.domain}
-                  </span>
-                )}
-              </span>
-              {topic.tags.length > 0 && (
-                <span className="mt-0.5 block truncate font-mono text-[9px] text-muted-foreground">
-                  {topic.tags.slice(0, 4).join(' · ')}
-                </span>
-              )}
-            </span>
-            <span className="font-mono text-[9px] text-muted-foreground">
-              {topic.difficulty} · {topic.estimatedMinutes} min
-            </span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.08em]">
-              {isLive ? (
-                <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                  <span className="h-1.5 w-1.5 bg-emerald-500" /> Live
-                </span>
-              ) : (
-                <span className="text-muted-foreground">Planned</span>
-              )}
-            </span>
-            <span className="hidden justify-end sm:flex">
-              <span className="text-muted-foreground transition-transform group-hover:translate-x-1">→</span>
-            </span>
-          </Link>
-        );
-      })}
-    </div>
-  );
+function TopicGrid({ items, domainKey }: { items: Topic[]; domainKey: DomainKey }) {
+    return (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {items.map((topic) => (
+                <TopicCard
+                    key={topic.catalogId}
+                    topic={topic}
+                    alsoInDomain={
+                        topic.domain === domainKey
+                            ? undefined
+                            : domains.find((domain) => domain.domainKey === topic.domain)
+                    }
+                />
+            ))}
+        </div>
+    );
 }
 
-function SectionTitle({ eyebrow, title, description }: { eyebrow: string; title: string; description?: string }) {
-  return (
-    <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border pb-3">
-      <div>
-        <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">{eyebrow}</p>
-        <h2 className="mt-1 font-serif text-2xl font-semibold tracking-[-0.03em]">{title}</h2>
-        {description && <p className="mt-1 max-w-2xl text-[12px] leading-relaxed text-muted-foreground">{description}</p>}
-      </div>
-    </div>
-  );
+function SectionHeader({
+    eyebrow,
+    title,
+    description,
+    count,
+}: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    count: number;
+}) {
+    return (
+        <div className="flex flex-col justify-between gap-3 border-b border-border pb-4 sm:flex-row sm:items-end">
+            <div className="space-y-1">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {eyebrow}
+                </p>
+                <h2 className="text-2xl font-bold tracking-tight text-foreground">{title}</h2>
+                <p className="text-sm text-muted-foreground">{description}</p>
+            </div>
+            <span className="w-fit rounded-full border border-border bg-secondary/50 px-3 py-1 font-mono text-[10px] text-muted-foreground">
+                {count} topics
+            </span>
+        </div>
+    );
 }
 
 export function generateStaticParams() {
-  return domains.map((domain) => ({ domain: domain.domainKey }));
+    return domains.map((d) => ({
+        domain: d.domainKey,
+    }));
 }
 
 export default async function DomainPage({ params }: { params: Promise<{ domain: string }> }) {
-  const { domain: domainKey } = await params;
-  const domain = domains.find((item) => item.domainKey === domainKey);
-  if (!domain) notFound();
+    const { domain: domainKey } = await params;
+    const domain = domains.find((d) => d.domainKey === domainKey);
 
-  const domainTopics = topics.filter(
-    (topic) => topic.domain === domain.domainKey || topic.crossListedDomains?.includes(domain.domainKey),
-  );
-  const owned = domainTopics.filter((topic) => topic.domain === domain.domainKey);
-  const shared = domainTopics.filter((topic) => topic.domain !== domain.domainKey);
-  const liveOwned = owned.filter((topic) => topic.status === 'active');
-  const plannedOwned = owned.filter((topic) => topic.status === 'coming-soon');
-  const liveShared = shared.filter((topic) => topic.status === 'active');
-  const plannedShared = shared.filter((topic) => topic.status === 'coming-soon');
-  const isFullstack = domain.domainKey === 'fullstack';
-  const coreTopics = liveOwned.filter((topic) => !topic.curriculumTags?.includes('elective'));
-  const electiveTopics = liveOwned.filter((topic) => topic.curriculumTags?.includes('elective'));
+    if (!domain) {
+        notFound();
+    }
 
-  return (
-    <div className="page-container py-10 pb-20 sm:py-14">
-      <header className="border-b border-border pb-7">
-        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-          CSCosmos / {domain.name}
-        </p>
-        <div className="mt-3 grid gap-5 md:grid-cols-[1fr_220px] md:items-end">
-          <div>
-            <h1 className="font-serif text-[clamp(2.6rem,5vw,4.4rem)] font-semibold leading-none tracking-[-0.04em]">
-              {domain.name}
-            </h1>
-            <p className="mt-4 max-w-2xl font-serif text-[1rem] leading-relaxed text-muted-foreground">
-              {domain.description}
-            </p>
-          </div>
-          <div className="border-t border-border pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-0">
-            <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground">
-              {liveOwned.length} live / {owned.length} planned
-            </p>
-            <p className="mt-1 font-serif text-sm text-muted-foreground">
-              {shared.length > 0 ? `${shared.length} linked from other domains` : 'No cross-listed topics'}
-            </p>
-          </div>
+    // A topic belongs here if it calls this domain home OR is cross-listed via an alias tag.
+    const domainTopics = topics.filter(
+        (t) => t.domain === domain.domainKey || t.crossListedDomains?.includes(domain.domainKey),
+    );
+
+    const ownedTopics = domainTopics.filter((t) => t.domain === domain.domainKey);
+    const sharedTopics = domainTopics.filter((t) => t.domain !== domain.domainKey);
+    const coreTopics = ownedTopics.filter((t) => !t.curriculumTags?.includes("elective"));
+    const electiveTopics = ownedTopics.filter((t) => t.curriculumTags?.includes("elective"));
+    const isFullstack = domain.domainKey === "fullstack";
+
+    const coreSections = FULLSTACK_SECTIONS.map((section) => ({
+        ...section,
+        topics: coreTopics.filter((topic) => topic.curriculumTags?.includes(section.id)),
+    }));
+    const uncategorizedCore = coreTopics.filter(
+        (topic) =>
+            !topic.curriculumTags?.some((tag) =>
+                FULLSTACK_SECTIONS.some((section) => section.id === tag),
+            ),
+    );
+
+    return (
+        <div className="pb-16">
+            <section className="relative py-14 md:py-18">
+                <div className="page-container relative z-10">
+                    <div className="max-w-3xl space-y-4">
+                        <div className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                            Domain: {domain.name}
+                        </div>
+                        <h1 className="text-4xl font-black tracking-tight text-foreground md:text-5xl">
+                            {domain.name}
+                        </h1>
+                        <p className="text-xl font-normal text-muted-foreground">{domain.description}</p>
+                    </div>
+                </div>
+            </section>
+
+            <div className="page-container space-y-10">
+                <div className="glass-card flex flex-col justify-between gap-4 rounded-2xl p-4 sm:p-5 md:flex-row md:items-center">
+                    <div className="text-muted-foreground">
+                        {isFullstack ? (
+                            <>
+                                <span className="font-semibold text-foreground">{coreTopics.length} core</span>
+                                {" · "}
+                                <span>{electiveTopics.length} electives</span>
+                                {" · "}
+                                <span>{sharedTopics.length} shared</span>
+                            </>
+                        ) : (
+                            <>Showing {domainTopics.length} topics</>
+                        )}
+                    </div>
+                    {isFullstack && (
+                        <p className="max-w-xl text-xs text-muted-foreground">
+                            Core is the path. Electives are optional. Shared topics live in another
+                            domain and are linked here so you can open them from both.
+                        </p>
+                    )}
+                </div>
+
+                {isFullstack ? (
+                    <div className="space-y-14">
+                        <section className="space-y-8">
+                            <SectionHeader
+                                eyebrow="Core path"
+                                title="Full Stack Core"
+                                description="Everything you need to build and ship a web application end to end."
+                                count={coreTopics.length}
+                            />
+
+                            <div className="space-y-12">
+                                {coreSections.map((section, index) =>
+                                    section.topics.length > 0 ? (
+                                        <section key={section.id} className="space-y-4">
+                                            <SectionHeader
+                                                eyebrow={`Core 0${index + 1}`}
+                                                title={section.name}
+                                                description={section.description}
+                                                count={section.topics.length}
+                                            />
+                                            <TopicGrid items={section.topics} domainKey={domain.domainKey} />
+                                        </section>
+                                    ) : null,
+                                )}
+
+                                {uncategorizedCore.length > 0 && (
+                                    <section className="space-y-4">
+                                        <SectionHeader
+                                            eyebrow="Core"
+                                            title="More Core Topics"
+                                            description="Additional core fullstack material."
+                                            count={uncategorizedCore.length}
+                                        />
+                                        <TopicGrid items={uncategorizedCore} domainKey={domain.domainKey} />
+                                    </section>
+                                )}
+                            </div>
+                        </section>
+
+                        {electiveTopics.length > 0 && (
+                            <section className="space-y-4">
+                                <SectionHeader
+                                    eyebrow="Optional"
+                                    title="Electives"
+                                    description="Pick the tools that fit your stack. You do not need all of them."
+                                    count={electiveTopics.length}
+                                />
+                                <TopicGrid items={electiveTopics} domainKey={domain.domainKey} />
+                            </section>
+                        )}
+
+                        {sharedTopics.length > 0 && (
+                            <section className="space-y-4">
+                                <SectionHeader
+                                    eyebrow="Linked"
+                                    title="Shared from Other Domains"
+                                    description="These topics live in another domain. Open them here or at their home domain."
+                                    count={sharedTopics.length}
+                                />
+                                <TopicGrid items={sharedTopics} domainKey={domain.domainKey} />
+                            </section>
+                        )}
+
+                        <section className="glass-card space-y-4 rounded-2xl p-6">
+                            <div className="space-y-1">
+                                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                                    Go deeper
+                                </p>
+                                <h2 className="text-xl font-bold text-foreground">Related domains</h2>
+                                <p className="max-w-2xl text-sm text-muted-foreground">
+                                    Fullstack links out to these domains instead of duplicating their
+                                    specialized modules.
+                                </p>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {FULLSTACK_RELATED_DOMAINS.map((key) => {
+                                    const related = domains.find((item) => item.domainKey === key);
+                                    if (!related) return null;
+                                    return (
+                                        <Link
+                                            key={key}
+                                            href={domainPath(key)}
+                                            className="rounded-lg border border-border bg-secondary/40 px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+                                        >
+                                            {related.name}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </section>
+                    </div>
+                ) : domainTopics.length > 0 ? (
+                    <TopicGrid items={domainTopics} domainKey={domain.domainKey} />
+                ) : (
+                    <div className="glass-card rounded-2xl p-10 text-center text-muted-foreground">
+                        No topics found.
+                    </div>
+                )}
+            </div>
         </div>
-      </header>
-
-      <div className="mt-8 space-y-10">
-        {isFullstack ? (
-          <>
-            {FULLSTACK_SECTIONS.map((section, index) => {
-              const sectionTopics = coreTopics.filter((topic) => topic.curriculumTags?.includes(section.id));
-              if (sectionTopics.length === 0) return null;
-              return (
-                <section key={section.id} className="space-y-3">
-                  <SectionTitle eyebrow={`Core 0${index + 1}`} title={section.name} description={section.description} />
-                  <TopicRows items={sectionTopics} currentDomain={domain.domainKey} />
-                </section>
-              );
-            })}
-            {electiveTopics.length > 0 && (
-              <section className="space-y-3">
-                <SectionTitle eyebrow="Optional" title="Electives" description="Pick the tools that fit your stack. You do not need all of them." />
-                <TopicRows items={electiveTopics} currentDomain={domain.domainKey} />
-              </section>
-            )}
-          </>
-        ) : (
-          <section className="space-y-3">
-            <SectionTitle eyebrow="Live modules" title="Complete and open to use" description="These are built, reviewed, and available now." />
-            <TopicRows items={liveOwned} currentDomain={domain.domainKey} />
-          </section>
-        )}
-
-        {liveShared.length > 0 && (
-          <section className="space-y-3">
-            <SectionTitle eyebrow="Linked" title="Also available here" description="These topics live in another domain and are linked from this one." />
-            <TopicRows items={liveShared} currentDomain={domain.domainKey} />
-          </section>
-        )}
-
-        {plannedOwned.length + plannedShared.length > 0 && (
-          <details className="border border-border">
-            <summary className="cursor-pointer list-none px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:text-foreground">
-              Show {plannedOwned.length + plannedShared.length} planned topics
-            </summary>
-            <div className="border-t border-border px-4 pb-2">
-              <TopicRows items={[...plannedOwned, ...plannedShared]} currentDomain={domain.domainKey} />
-            </div>
-          </details>
-        )}
-
-        {isFullstack && (
-          <section className="border-t border-border pt-5">
-            <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">Related domains</p>
-            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-              {FULLSTACK_RELATED_DOMAINS.map((key) => {
-                const related = domains.find((item) => item.domainKey === key);
-                if (!related) return null;
-                return (
-                  <Link key={key} href={domainPath(key)} className="text-[12px] font-medium hover:text-primary">
-                    {related.name} →
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        )}
-      </div>
-    </div>
-  );
+    );
 }
