@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, CheckCircle2, Search, SlidersHorizontal } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle2, Play, Search, SlidersHorizontal } from 'lucide-react';
 import { osCategories, osChapters, type OSCategory } from '../data/curriculum';
 import { useOSProgress } from '../lib/progress';
 import { useOSBasePath } from '../components/OSShell';
@@ -28,6 +28,10 @@ export function Learn() {
 
   const completed = progress.completedChapters.length;
   const percent = Math.round((completed / osChapters.length) * 100);
+  const nextLesson =
+    osChapters.find((chapter) => !progress.completedChapters.includes(chapter.id)) ??
+    osChapters[0];
+  const hasStarted = completed > 0;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
@@ -39,8 +43,8 @@ export function Learn() {
           </div>
           <h1 className="text-3xl font-black tracking-tight sm:text-4xl">The kernel curriculum</h1>
           <p className="max-w-2xl text-sm leading-relaxed" style={{ color: 'var(--os-muted)' }}>
-            Twelve lessons from the resource manager to the file system. Each lesson carries the core
-            concepts, worked examples, common traps, and a quick check.
+            Thirty-nine lessons from the resource manager to the file system. Each lesson carries the
+            core concepts, worked examples, common traps, and a quick check.
           </p>
         </div>
 
@@ -56,6 +60,38 @@ export function Learn() {
           </div>
         </div>
       </div>
+
+      <Link
+        href={`${basePath}/learn/${nextLesson.id}`}
+        className="group mb-6 flex flex-col gap-3 rounded-2xl border p-4 transition-all hover:-translate-y-0.5 hover:shadow-md sm:flex-row sm:items-center sm:justify-between"
+        style={{
+          borderColor: 'var(--os-primary)',
+          backgroundColor: 'var(--os-primary-soft)',
+        }}
+      >
+        <div className="flex items-start gap-3">
+          <span
+            className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+            style={{ backgroundColor: 'var(--os-primary)', color: '#fff' }}
+          >
+            <Play className="h-4 w-4" />
+          </span>
+          <div>
+            <p className="font-mono text-[9px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--os-primary)' }}>
+              {hasStarted ? 'Continue where you left off' : 'Start here'}
+            </p>
+            <h2 className="mt-0.5 text-base font-bold">
+              Lesson {String(nextLesson.number).padStart(2, '0')} · {nextLesson.title}
+            </h2>
+            <p className="mt-0.5 text-[11px]" style={{ color: 'var(--os-muted)' }}>
+              ~{nextLesson.estimatedMinutes} min · {nextLesson.difficulty}
+            </p>
+          </div>
+        </div>
+        <span className="inline-flex items-center gap-1.5 text-xs font-bold" style={{ color: 'var(--os-primary)' }}>
+          {hasStarted ? 'Continue' : 'Begin'} <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+        </span>
+      </Link>
 
       <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div className="relative w-full lg:max-w-md">

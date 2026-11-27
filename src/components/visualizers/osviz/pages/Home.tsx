@@ -46,7 +46,7 @@ export function Home() {
             </h1>
 
             <p className="max-w-xl text-base leading-relaxed sm:text-lg" style={{ color: 'var(--os-muted)' }}>
-              Schedules, page tables, interrupts, and file chains. Twelve lessons and three labs that show
+              Schedules, page tables, interrupts, and file chains. Thirty-nine focused lessons and three labs that show
               what the operating system is actually doing between your program and the hardware.
             </p>
 

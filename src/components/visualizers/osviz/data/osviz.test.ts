@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { getOSChapter, osChapters } from './curriculum';
 import { osLessons } from './lessons';
 import { getOSProblem, osProblems } from './problems';
-import { runFCFS, runPriority, runRoundRobin, type OSProcess } from '../lib/scheduling';
+import { runFCFS, runPriority, runRoundRobin, runSJF, runSRTF, type OSProcess } from '../lib/scheduling';
 import { pageOffsetBits, translateAddress } from '../lib/paging';
 import { walkFAT } from '../lib/fat';
 
@@ -12,11 +12,11 @@ const processes: OSProcess[] = [
 ];
 
 describe('osviz curriculum data', () => {
-  it('contains 12 lessons with unique ids and numbers', () => {
-    expect(osChapters).toHaveLength(12);
+  it('contains 39 lessons with unique ids and numbers', () => {
+    expect(osChapters).toHaveLength(39);
     expect(new Set(osChapters.map((chapter) => chapter.id)).size).toBe(osChapters.length);
     expect(osChapters.map((chapter) => chapter.number)).toEqual(
-      Array.from({ length: 12 }, (_, index) => index + 1),
+      Array.from({ length: 39 }, (_, index) => index + 1),
     );
   });
 
@@ -38,7 +38,7 @@ describe('osviz curriculum data', () => {
   });
 
   it('has valid practice drills covering every lesson', () => {
-    expect(osProblems).toHaveLength(15);
+    expect(osProblems).toHaveLength(39);
     expect(new Set(osProblems.map((problem) => problem.id)).size).toBe(osProblems.length);
     expect(new Set(osProblems.map((problem) => problem.number)).size).toBe(osProblems.length);
 
@@ -82,6 +82,30 @@ describe('scheduling engine', () => {
     );
     expect(result.metrics.find((metric) => metric.id === 'P1')?.completion).toBe(9);
     expect(result.metrics.find((metric) => metric.id === 'P2')?.completion).toBe(8);
+    expect(result.metrics.find((metric) => metric.id === 'P3')?.completion).toBe(5);
+  });
+
+  it('runs the shortest ready job first under SJF', () => {
+    const result = runSJF([
+      { id: 'P1', arrival: 0, burst: 7, priority: 1 },
+      { id: 'P2', arrival: 2, burst: 4, priority: 1 },
+      { id: 'P3', arrival: 4, burst: 1, priority: 1 },
+      { id: 'P4', arrival: 5, burst: 4, priority: 1 },
+    ]);
+    expect(result.metrics.find((metric) => metric.id === 'P1')?.completion).toBe(7);
+    expect(result.metrics.find((metric) => metric.id === 'P3')?.completion).toBe(8);
+    expect(result.metrics.find((metric) => metric.id === 'P2')?.completion).toBe(12);
+    expect(result.metrics.find((metric) => metric.id === 'P4')?.completion).toBe(16);
+  });
+
+  it('preempts for a shorter remaining job under SRTF', () => {
+    const result = runSRTF([
+      { id: 'P1', arrival: 0, burst: 7, priority: 1 },
+      { id: 'P2', arrival: 2, burst: 4, priority: 1 },
+      { id: 'P3', arrival: 4, burst: 1, priority: 1 },
+    ]);
+    expect(result.metrics.find((metric) => metric.id === 'P1')?.completion).toBe(12);
+    expect(result.metrics.find((metric) => metric.id === 'P2')?.completion).toBe(7);
     expect(result.metrics.find((metric) => metric.id === 'P3')?.completion).toBe(5);
   });
 

@@ -39,8 +39,8 @@ export async function generateMetadata({
       suffix = `/learn/${chapter.id}`;
     }
   } else if (first === 'learn') {
-    title = 'Operating Systems Curriculum (12 Lessons) - CSCosmos';
-    description = 'All 12 lessons of the Operating Systems curriculum, with worked examples, common traps, and quick checks.';
+    title = 'Operating Systems Curriculum (39 Lessons) - CSCosmos';
+    description = 'All 39 lessons of the Operating Systems curriculum, with worked examples, common traps, and quick checks.';
     suffix = '/learn';
   } else if (first === 'lab') {
     title = 'Operating Systems Scheduler, Paging & File Labs - CSCosmos';

@@ -20,7 +20,7 @@ export interface ProcessMetrics {
   waiting: number;
 }
 
-export type SchedulingAlgorithm = 'fcfs' | 'round-robin' | 'priority';
+export type SchedulingAlgorithm = 'fcfs' | 'sjf' | 'srtf' | 'round-robin' | 'priority';
 
 export interface ScheduleResult {
   algorithm: SchedulingAlgorithm;
@@ -81,6 +81,92 @@ export function runFCFS(input: OSProcess[]): ScheduleResult {
   }
 
   return { ...finalizeMetrics(processes, completions, slices), algorithm: 'fcfs' };
+}
+
+
+function pushSlice(slices: GanttSlice[], processId: string, start: number, end: number) {
+  const last = slices[slices.length - 1];
+  if (last && last.processId === processId && last.end === start) {
+    last.end = end;
+    return;
+  }
+  slices.push({ processId, start, end });
+}
+
+export function runSJF(input: OSProcess[]): ScheduleResult {
+  const processes = [...input].sort((a, b) => a.arrival - b.arrival || a.id.localeCompare(b.id));
+  const remaining = new Set(processes.map((process) => process.id));
+  const completions = new Map<string, number>();
+  const slices: GanttSlice[] = [];
+  let time = 0;
+
+  while (remaining.size > 0) {
+    const ready = processes.filter(
+      (process) => remaining.has(process.id) && process.arrival <= time,
+    );
+
+    if (ready.length === 0) {
+      const next = processes
+        .filter((process) => remaining.has(process.id))
+        .sort((a, b) => a.arrival - b.arrival)[0];
+      if (!next) break;
+      pushIdle(slices, time, next.arrival);
+      time = next.arrival;
+      continue;
+    }
+
+    const chosen = ready.sort(
+      (a, b) => a.burst - b.burst || a.arrival - b.arrival || a.id.localeCompare(b.id),
+    )[0];
+
+    const start = time;
+    const end = start + chosen.burst;
+    slices.push({ processId: chosen.id, start, end });
+    completions.set(chosen.id, end);
+    remaining.delete(chosen.id);
+    time = end;
+  }
+
+  return { ...finalizeMetrics(processes, completions, slices), algorithm: 'sjf' };
+}
+
+export function runSRTF(input: OSProcess[]): ScheduleResult {
+  const processes = [...input].sort((a, b) => a.arrival - b.arrival || a.id.localeCompare(b.id));
+  const remaining = new Map(processes.map((process) => [process.id, process.burst]));
+  const completions = new Map<string, number>();
+  const slices: GanttSlice[] = [];
+  let time = 0;
+
+  while (completions.size < processes.length) {
+    const ready = processes.filter(
+      (process) => process.arrival <= time && (remaining.get(process.id) ?? 0) > 0,
+    );
+
+    if (ready.length === 0) {
+      const next = processes
+        .filter((process) => (remaining.get(process.id) ?? 0) > 0)
+        .sort((a, b) => a.arrival - b.arrival)[0];
+      if (!next) break;
+      pushIdle(slices, time, next.arrival);
+      time = next.arrival;
+      continue;
+    }
+
+    const chosen = ready.sort(
+      (a, b) =>
+        (remaining.get(a.id) ?? 0) - (remaining.get(b.id) ?? 0) ||
+        a.arrival - b.arrival ||
+        a.id.localeCompare(b.id),
+    )[0];
+
+    pushSlice(slices, chosen.id, time, time + 1);
+    const left = (remaining.get(chosen.id) ?? 0) - 1;
+    remaining.set(chosen.id, left);
+    time += 1;
+    if (left === 0) completions.set(chosen.id, time);
+  }
+
+  return { ...finalizeMetrics(processes, completions, slices), algorithm: 'srtf' };
 }
 
 export function runRoundRobin(input: OSProcess[], quantum: number): ScheduleResult {
@@ -187,6 +273,8 @@ export function schedule(
 ): ScheduleResult {
   if (algorithm === 'round-robin') return runRoundRobin(processes, quantum);
   if (algorithm === 'priority') return runPriority(processes);
+  if (algorithm === 'sjf') return runSJF(processes);
+  if (algorithm === 'srtf') return runSRTF(processes);
   return runFCFS(processes);
 }
 

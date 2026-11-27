@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   AlertTriangle,
   ArrowLeft,
@@ -14,17 +15,20 @@ import {
 } from 'lucide-react';
 import { getAdjacentOSChapters, getOSChapter } from '../data/curriculum';
 import { osLessons } from '../data/lessons';
+import { osProblems } from '../data/problems';
 import { useOSProgress } from '../lib/progress';
 import { useOSBasePath } from '../components/OSShell';
 import { CodeBlock } from '../components/CodeBlock';
 
 export function Topic({ chapterId }: { chapterId: string }) {
   const basePath = useOSBasePath();
+  const router = useRouter();
   const chapter = getOSChapter(chapterId);
   const lesson = osLessons[chapterId];
   const { previous, next } = getAdjacentOSChapters(chapterId);
   const { progress, markChapterComplete } = useOSProgress();
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  const practice = osProblems.find((problem) => problem.chapterId === chapterId);
 
   if (!chapter || !lesson) {
     return (
@@ -92,6 +96,20 @@ export function Topic({ chapterId }: { chapterId: string }) {
               {lesson.hook}
             </p>
           </header>
+
+          <div className="mb-8 rounded-2xl border p-4" style={{ borderColor: 'var(--os-border)', backgroundColor: 'var(--os-surface)' }}>
+            <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--os-muted)' }}>
+              By the end you will be able to
+            </h2>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {lesson.objectives.map((objective) => (
+                <li key={objective} className="flex gap-2 text-[11px] leading-relaxed" style={{ color: 'var(--os-muted)' }}>
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full" style={{ backgroundColor: 'var(--os-primary)' }} />
+                  {objective}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div className="space-y-8">
             {lesson.sections.map((section, index) => (
@@ -253,6 +271,21 @@ export function Topic({ chapterId }: { chapterId: string }) {
                 </Link>
               )}
             </div>
+
+            <div className="mt-4 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  markChapterComplete(chapter.id);
+                  router.push(next ? `${basePath}/learn/${next.id}` : `${basePath}/problems`);
+                }}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold text-white"
+                style={{ backgroundColor: 'var(--os-primary)' }}
+              >
+                {next ? 'Complete & continue' : 'Complete lesson'}
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </article>
 
@@ -290,6 +323,24 @@ export function Topic({ chapterId }: { chapterId: string }) {
             </div>
           )}
 
+          {practice && (
+            <div className="rounded-2xl border p-4" style={{ borderColor: 'var(--os-border)', backgroundColor: 'var(--os-surface)' }}>
+              <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--os-muted)' }}>
+                Practice this lesson
+              </h2>
+              <p className="mb-3 text-[11px] leading-relaxed" style={{ color: 'var(--os-muted)' }}>
+                Try the matching drill while the lesson is fresh.
+              </p>
+              <Link
+                href={`${basePath}/problems/${practice.id}`}
+                className="inline-flex items-center gap-1.5 text-xs font-bold"
+                style={{ color: 'var(--os-primary)' }}
+              >
+                Open the drill <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          )}
+
           <div className="rounded-2xl border p-4" style={{ borderColor: 'var(--os-border)', backgroundColor: 'var(--os-surface)' }}>
             <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--os-muted)' }}>
               Workbench
@@ -297,7 +348,11 @@ export function Topic({ chapterId }: { chapterId: string }) {
             <p className="mb-3 text-[11px] leading-relaxed" style={{ color: 'var(--os-muted)' }}>
               See the scheduler, page table, or file chain behind this lesson.
             </p>
-            <Link href={`${basePath}/lab`} className="inline-flex items-center gap-1.5 text-xs font-bold" style={{ color: 'var(--os-primary)' }}>
+            <Link
+              href={`${basePath}/lab${chapter.visualizerKey ? `?lab=${chapter.visualizerKey}` : ''}`}
+              className="inline-flex items-center gap-1.5 text-xs font-bold"
+              style={{ color: 'var(--os-primary)' }}
+            >
               Open the lab <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>

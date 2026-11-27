@@ -7,15 +7,15 @@ test.describe('operating-systems smoke', () => {
     await expect(page.getByRole('heading', { name: /The kernel/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /Start the curriculum/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /Open the kernel lab/i })).toBeVisible();
-    await expect(page.getByText(/Twelve lessons and three labs/i)).toBeVisible();
+    await expect(page.getByText(/Thirty-nine focused lessons and three labs/i)).toBeVisible();
   });
 
   test('opens the curriculum and a lesson', async ({ page }) => {
     await page.goto('/corecs/operating-systems/learn');
 
     await expect(page.getByRole('heading', { name: 'The kernel curriculum' })).toBeVisible();
-    await page.locator('a[href$="/learn/cpu-scheduling"]').click();
-    await expect(page.getByRole('heading', { name: /CPU Scheduling/i })).toBeVisible();
+    await page.locator('a[href$="/learn/fcfs-scheduling"]').click();
+    await expect(page.getByRole('heading', { name: 'FCFS Scheduling' })).toBeVisible();
     await expect(page.getByText('Quick check')).toBeVisible();
   });
 

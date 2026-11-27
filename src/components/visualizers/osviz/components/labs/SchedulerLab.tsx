@@ -19,6 +19,8 @@ const INITIAL_PROCESSES: OSProcess[] = [
 const COLORS = ['#0f766e', '#b45309', '#2563eb', '#9333ea', '#be123c', '#4d7c0f'];
 const ALGORITHMS: { id: SchedulingAlgorithm; label: string; note: string }[] = [
   { id: 'fcfs', label: 'FCFS', note: 'Runs in arrival order. Simple, but a long job can block everyone behind it.' },
+  { id: 'sjf', label: 'SJF', note: 'Runs the shortest ready burst to completion. Minimizes average waiting, but needs burst estimates.' },
+  { id: 'srtf', label: 'SRTF', note: 'Preemptive SJF: a shorter arrival can interrupt the running process.' },
   { id: 'round-robin', label: 'Round Robin', note: 'Rotates through the queue with a fixed quantum. Better response time.' },
   { id: 'priority', label: 'Priority', note: 'Runs the highest-priority ready process (lower number = higher priority).' },
 ];

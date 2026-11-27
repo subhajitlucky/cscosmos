@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Database, FlaskConical, Gauge, MemoryStick } from 'lucide-react';
 import { SchedulerLab } from '../components/labs/SchedulerLab';
 import { PagingLab } from '../components/labs/PagingLab';
@@ -31,6 +31,13 @@ const TABS: { id: LabTab; label: string; icon: React.ElementType; description: s
 
 export function Lab() {
   const [tab, setTab] = useState<LabTab>('scheduler');
+
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get('lab');
+    if (requested === 'scheduler' || requested === 'paging' || requested === 'files') {
+      setTab(requested);
+    }
+  }, []);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
