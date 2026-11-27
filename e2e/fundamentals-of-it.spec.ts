@@ -18,7 +18,7 @@ test.describe('IT Fundamentals smoke', () => {
     await expect(page.getByRole('heading', { name: 'IT Fundamentals', exact: true })).toBeVisible();
     await page.locator('a[href$="/learn/number-systems"]').first().click();
     await expect(page.getByRole('heading', { name: 'Number Systems & Data Representation' })).toBeVisible();
-    await expect(page.getByText('In plain English')).toBeVisible();
+    await expect(page.getByText('Exam points')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Quick check' })).toBeVisible();
   });
 

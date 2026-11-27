@@ -141,7 +141,7 @@ export function Problems() {
                   >
                     <span className="it-num text-lg" style={{ color: isSolved ? 'var(--it-ok)' : 'var(--it-primary)' }}>{String(problem.number).padStart(2, '0')}</span>
                     <span className="min-w-0">
-                      <span className="block truncate text-[14px] font-semibold">{problem.title}</span>
+                      <span className="block truncate text-[15px] font-semibold">{problem.title}</span>
                       <span className="it-label mt-0.5 block truncate text-[10px]" style={{ color: 'var(--it-muted)' }}>{problem.type === 'scenario' ? 'Scenario' : 'Concept check'}</span>
                     </span>
                     <span className="it-label hidden text-[10px] sm:block" style={{ color: 'var(--it-muted)' }}>{problem.difficulty}</span>

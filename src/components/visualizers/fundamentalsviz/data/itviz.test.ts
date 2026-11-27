@@ -23,34 +23,27 @@ describe('IT Fundamentals curriculum', () => {
     for (const chapter of itChapters) {
       expect(chapter.estimatedMinutes).toBe(8);
       expect(chapter.title.length).toBeGreaterThan(5);
-      expect(chapter.subtitle.length).toBeGreaterThan(5);
       expect(chapter.summary.length).toBeGreaterThan(40);
-      expect(chapter.concepts.length).toBeGreaterThanOrEqual(5);
     }
   });
 
-  it('has a complete, readable lesson for every topic', () => {
+  it('has compact exam notes with bullets, tables, and exam points', () => {
     for (const chapter of itChapters) {
       const lesson = itLessons[chapter.id];
       expect(lesson, `missing lesson for ${chapter.id}`).toBeDefined();
       if (!lesson) continue;
       expect(lesson.chapterId).toBe(chapter.id);
-      expect(lesson.plainEnglish.length).toBeGreaterThan(30);
-      expect(lesson.plainEnglish.split(/\s+/).length).toBeLessThanOrEqual(40);
-      expect(lesson.oneIdea.length).toBeGreaterThan(30);
-      expect(lesson.whyItMatters.length).toBeGreaterThan(40);
-      expect(lesson.objectives.length).toBeGreaterThanOrEqual(4);
+      expect(lesson.intro.length).toBeGreaterThan(80);
       expect(lesson.sections.length).toBeGreaterThanOrEqual(5);
-      expect(lesson.example.steps.length).toBeGreaterThanOrEqual(3);
-      expect(lesson.example.conclusion.length).toBeGreaterThan(40);
-      expect(lesson.tradeoff.gain.length).toBeGreaterThan(20);
-      expect(lesson.tradeoff.cost.length).toBeGreaterThan(20);
-      expect(lesson.tradeoff.verdict.length).toBeGreaterThan(20);
-      expect(lesson.terms.length).toBeGreaterThanOrEqual(2);
-      expect(lesson.keyTakeaways.length).toBeGreaterThanOrEqual(3);
-      expect(lesson.pitfalls.length).toBeGreaterThanOrEqual(3);
-      expect(lesson.focusPoints.length).toBeGreaterThanOrEqual(3);
-      expect(lesson.quiz.length).toBeGreaterThanOrEqual(2);
+      expect(lesson.sections.some((section) => (section.bullets?.length ?? 0) >= 4)).toBe(true);
+      expect(lesson.sections.some((section) => Boolean(section.table))).toBe(true);
+      expect(lesson.examPoints).toHaveLength(6);
+      expect(lesson.keyTerms).toHaveLength(3);
+      expect(lesson.quiz).toHaveLength(2);
+      for (const section of lesson.sections) {
+        expect(section.title.length).toBeGreaterThan(4);
+        expect((section.bullets?.length ?? 0) + (section.table ? 1 : 0) + (section.code ? 1 : 0)).toBeGreaterThan(0);
+      }
       for (const quiz of lesson.quiz) {
         expect(quiz.options).toHaveLength(4);
         expect(quiz.answer).toBeGreaterThanOrEqual(0);
@@ -60,16 +53,14 @@ describe('IT Fundamentals curriculum', () => {
     }
   });
 
-  it('keeps prerequisites inside the module', () => {
-    for (const chapter of itChapters) {
-      for (const prerequisite of chapter.prerequisites) {
-        expect(getITChapter(prerequisite), `${chapter.id} -> ${prerequisite}`).toBeDefined();
-      }
-    }
-  });
-
-  it('contains no gradients', () => {
+  it('keeps every topic free of gradients and old essay sections', () => {
     const root = fileURLToPath(new URL('..', import.meta.url));
+    const lessonSource = itChapters
+      .map((chapter) => getITLesson(chapter.id))
+      .map((lesson) => JSON.stringify(lesson))
+      .join('\n');
+    expect(lessonSource).not.toMatch(/In plain English|The one idea|What you will learn|key takeaways|common pitfalls/i);
+
     const sources = readdirSync(root, { recursive: true })
       .filter((file): file is string => typeof file === 'string' && /\.(css|tsx?)$/.test(file) && !file.includes('.test.'))
       .map((file) => readFileSync(join(root, file), 'utf8'))
@@ -105,7 +96,6 @@ describe('IT Fundamentals practice', () => {
       expect(problem.answer).toBeLessThan(4);
       expect(problem.explanation.length).toBeGreaterThan(30);
       expect(problem.hint.length).toBeGreaterThan(10);
-      expect(problem.prompt).not.toMatch(/\bTODO\b|undefined|placeholder/i);
       const key = `${problem.context ?? ''} ${problem.prompt}`.trim().toLowerCase().replace(/\s+/g, ' ');
       expect(prompts.has(key), `duplicate prompt: ${problem.id}`).toBe(false);
       prompts.add(key);

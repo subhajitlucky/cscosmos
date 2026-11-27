@@ -99,7 +99,7 @@ export function Home() {
                     )}
                   </span>
                   <span className="mt-0.5 block text-[12px] italic" style={{ color: 'var(--it-muted)' }}>{chapter.subtitle}</span>
-                  <span className="mt-2 block max-w-[720px] text-[14px] leading-relaxed" style={{ color: 'var(--it-muted)' }}>{chapter.summary}</span>
+                  <span className="mt-2 block max-w-[720px] text-[15px] leading-relaxed" style={{ color: 'var(--it-muted)' }}>{chapter.summary}</span>
                 </span>
                 <span className="flex items-start justify-between gap-2 sm:flex-col sm:items-end">
                   <span className="it-label text-[10px]" style={{ color: 'var(--it-muted)' }}>{chapter.estimatedMinutes} min read</span>

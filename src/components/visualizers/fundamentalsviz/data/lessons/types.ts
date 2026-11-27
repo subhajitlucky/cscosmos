@@ -1,30 +1,15 @@
-export interface ITLessonSection {
+export interface ITNoteTable {
+  caption?: string;
+  headers: string[];
+  rows: string[][];
+}
+
+export interface ITNoteSection {
   title: string;
-  body: string;
+  body?: string;
+  bullets?: string[];
+  table?: ITNoteTable;
   code?: string;
-}
-
-export interface ITExampleStep {
-  action: string;
-  result: string;
-}
-
-export interface ITLessonExample {
-  title: string;
-  scenario: string;
-  steps: ITExampleStep[];
-  conclusion: string;
-}
-
-export interface ITLessonTradeoff {
-  gain: string;
-  cost: string;
-  verdict: string;
-}
-
-export interface ITLessonTerm {
-  term: string;
-  definition: string;
 }
 
 export interface ITLessonQuiz {
@@ -36,17 +21,9 @@ export interface ITLessonQuiz {
 
 export interface ITLesson {
   chapterId: string;
-  hook: string;
-  plainEnglish: string;
-  oneIdea: string;
-  whyItMatters: string;
-  objectives: string[];
-  sections: ITLessonSection[];
-  example: ITLessonExample;
-  tradeoff: ITLessonTradeoff;
-  terms: ITLessonTerm[];
-  keyTakeaways: string[];
-  pitfalls: string[];
-  focusPoints: string[];
+  intro: string;
+  sections: ITNoteSection[];
+  examPoints: string[];
+  keyTerms: { term: string; definition: string }[];
   quiz: ITLessonQuiz[];
 }

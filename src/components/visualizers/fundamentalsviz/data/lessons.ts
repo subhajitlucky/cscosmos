@@ -13,4 +13,4 @@ export function getITLesson(chapterId: string | undefined): ITLesson | undefined
   return chapterId ? itLessons[chapterId] : undefined;
 }
 
-export type { ITLesson, ITLessonExample, ITLessonQuiz, ITLessonSection } from './lessons/types';
+export type { ITLesson, ITLessonQuiz, ITNoteSection, ITNoteTable } from './lessons/types';
