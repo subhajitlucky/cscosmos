@@ -254,7 +254,7 @@ export const VirtualMemoryCallout: React.FC = () => {
           Want to see multi-level page tables, TLB cache walks, and fork-exec COW (copy-on-write) in action?
         </div>
         <Link
-          href="/corecs/operating-systems-internals-processes-memory"
+          href="/corecs/operating-systems"
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-800 text-white text-xs font-bold transition shadow-md whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
         >
           <span>OS Internals &amp; Memory Topic</span>

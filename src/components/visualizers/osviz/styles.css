@@ -1,0 +1,98 @@
+.osviz-root {
+  --os-bg: #f4f7f5;
+  --os-surface: #ffffff;
+  --os-surface-2: #eaf0ec;
+  --os-text: #12211b;
+  --os-muted: #5b6d64;
+  --os-border: #d3ded8;
+  --os-border-strong: #aebfb6;
+  --os-primary: #0f766e;
+  --os-primary-hover: #0b5f59;
+  --os-primary-soft: #dff3ef;
+  --os-accent: #b45309;
+  --os-accent-soft: #fdf0dc;
+  --os-code-bg: #0c1512;
+  --os-code-text: #d7e7df;
+  --os-ok: #157347;
+  --os-ok-soft: #e4f4ea;
+  --os-danger: #b42318;
+  --os-danger-soft: #fbe9e7;
+  --os-grid: rgba(15, 118, 110, 0.08);
+  min-height: 100vh;
+  background-color: var(--os-bg);
+  color: var(--os-text);
+}
+
+.dark .osviz-root {
+  --os-bg: #0a1210;
+  --os-surface: #101c18;
+  --os-surface-2: #172722;
+  --os-text: #e6f0eb;
+  --os-muted: #90a79c;
+  --os-border: #243a33;
+  --os-border-strong: #3b554b;
+  --os-primary: #5eead4;
+  --os-primary-hover: #8ff5e5;
+  --os-primary-soft: #0f2f2a;
+  --os-accent: #f6ad55;
+  --os-accent-soft: #2b2113;
+  --os-code-bg: #060c0a;
+  --os-code-text: #d7e7df;
+  --os-ok: #6ee7a8;
+  --os-ok-soft: #10251a;
+  --os-danger: #f97066;
+  --os-danger-soft: #2a1212;
+  --os-grid: rgba(94, 234, 212, 0.07);
+}
+
+.osviz-grid {
+  background-image:
+    linear-gradient(var(--os-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--os-grid) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.osviz-card {
+  border: 1px solid var(--os-border);
+  background: var(--os-surface);
+  border-radius: 0.9rem;
+}
+
+.osviz-code {
+  background: var(--os-code-bg);
+  color: var(--os-code-text);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+}
+
+.osviz-code code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.osviz-kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: 1px solid var(--os-border-strong);
+  background: var(--os-surface-2);
+  border-radius: 0.35rem;
+  padding: 0.08rem 0.35rem;
+  font-size: 0.75em;
+}
+
+.osviz-prose p {
+  color: var(--os-muted);
+  line-height: 1.8;
+}
+
+.osviz-link {
+  color: var(--os-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.osviz-link:hover {
+  color: var(--os-primary-hover);
+}

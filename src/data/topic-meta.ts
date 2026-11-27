@@ -26,7 +26,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     difficulty: 'beginner',
     estimatedMinutes: 55,
     tags: ['cpu', 'memory', 'execution', 'binary', 'architecture'],
-    related: ['computer-architecture-cpu-caches', 'operating-systems-internals-processes-memory', 'compilers-and-runtime-internals-ast-bytecode'],
+    related: ['computer-architecture-cpu-caches', 'operating-systems', 'compilers-and-runtime-internals-ast-bytecode'],
   },
   'html-cosmos': {
     difficulty: 'beginner',
@@ -126,7 +126,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     difficulty: 'intermediate',
     estimatedMinutes: 55,
     tags: ['docker', 'namespaces', 'cgroups'],
-    prerequisites: ['operating-systems-internals-processes-memory'],
+    prerequisites: ['operating-systems'],
     related: ['k8scosmos', 'cloudcosmos', 'loadbalancing'],
   },
   k8scosmos: {
@@ -237,7 +237,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     tags: ['cpu', 'cache', 'architecture'],
     related: ['program-cosmos', 'memory-allocators-and-virtual-memory-malloc-paging', 'compilers-and-runtime-internals-ast-bytecode'],
   },
-  'operating-systems-internals-processes-memory': {
+  'operating-systems': {
     difficulty: 'advanced',
     estimatedMinutes: 65,
     tags: ['os', 'processes', 'virtual-memory'],

@@ -170,7 +170,7 @@ export const ROLE_ROADMAPS: RoleRoadmap[] = [
         level: 'Intermediate',
         name: 'Operating System Internals & Memory Architecture',
         summary: 'Master CPU caches, virtual memory paging, process scheduling algorithms, and binary linking.',
-        slugs: ['computer-architecture-cpu-caches', 'operating-systems-internals-processes-memory', 'memory-allocators-and-virtual-memory-malloc-paging', 'linkers-loaders-and-executables-elf-pe'],
+        slugs: ['computer-architecture-cpu-caches', 'operating-systems', 'memory-allocators-and-virtual-memory-malloc-paging', 'linkers-loaders-and-executables-elf-pe'],
       },
       {
         stageIndex: 3,
@@ -375,7 +375,7 @@ export const ROLE_ROADMAPS: RoleRoadmap[] = [
         level: 'Intermediate',
         name: 'Memory Hierarchy & Dynamic Linking',
         summary: 'Analyze CPU L1/L2/L3 cache line misses, page table walks, and ELF relocation tables.',
-        slugs: ['computer-architecture-cpu-caches', 'operating-systems-internals-processes-memory', 'memory-allocators-and-virtual-memory-malloc-paging', 'linkers-loaders-and-executables-elf-pe'],
+        slugs: ['computer-architecture-cpu-caches', 'operating-systems', 'memory-allocators-and-virtual-memory-malloc-paging', 'linkers-loaders-and-executables-elf-pe'],
       },
       {
         stageIndex: 3,

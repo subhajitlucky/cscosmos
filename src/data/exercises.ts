@@ -125,7 +125,7 @@ p { color: red; }`,
     answer: 0,
     explanation:
       'The Translation Lookaside Buffer caches page-table entries so most virtual address translations avoid walking the page table.',
-    topicSlug: 'operating-systems-internals-processes-memory',
+    topicSlug: 'operating-systems',
   },
   {
     id: 'tcp-handshake',

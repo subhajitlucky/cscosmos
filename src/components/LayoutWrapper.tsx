@@ -37,6 +37,7 @@ const SELF_CONTAINED_SUBSITE_ROUTES = new Set([
   '/mqviz',
   '/nextjscosmos',
   '/nodecosmos',
+  '/operating-systems',
   '/patriciatrie',
   '/program-cosmos',
   '/ptopblockchain',
