@@ -1,5 +1,15 @@
 import type { OSLesson } from './types';
 
+const FAT_DEMO = (() => {
+  const fat = Array.from({ length: 24 }, () => -2);
+  fat[5] = 9;
+  fat[9] = 2;
+  fat[2] = 14;
+  fat[14] = 20;
+  fat[20] = -1;
+  return fat;
+})();
+
 export const fileLessons: OSLesson[] = [
   {
     chapterId: 'file-concept-directories',
@@ -140,6 +150,12 @@ block 4 -> 24`,
 
   {
     chapterId: 'linked-allocation-fat',
+    walkthrough: {
+      kind: 'fat',
+      start: 5,
+      fat: FAT_DEMO,
+      totalBlocks: 24,
+    },
     hook:
       'Linked allocation spreads a file across blocks and stores a next pointer in each block. FAT moves those pointers into a table so the chain can be followed without reading every data block.',
     objectives: [

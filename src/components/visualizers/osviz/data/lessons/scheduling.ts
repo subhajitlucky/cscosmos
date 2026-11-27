@@ -72,6 +72,15 @@ average_waiting = sum(waiting) / n`,
 
   {
     chapterId: 'fcfs-scheduling',
+    walkthrough: {
+      kind: 'scheduler',
+      algorithm: 'fcfs',
+      processes: [
+        { id: 'P1', arrival: 0, burst: 5, priority: 1 },
+        { id: 'P2', arrival: 1, burst: 3, priority: 1 },
+        { id: 'P3', arrival: 2, burst: 1, priority: 1 },
+      ],
+    },
     hook:
       'FCFS is the simplest scheduler: whoever arrives first runs first. It is easy to implement and easy to regret when one long job blocks everyone behind it.',
     objectives: [
@@ -152,6 +161,16 @@ P3: completion 9, turnaround 7, waiting 6`,
 
   {
     chapterId: 'sjf-scheduling',
+    walkthrough: {
+      kind: 'scheduler',
+      algorithm: 'sjf',
+      processes: [
+        { id: 'P1', arrival: 0, burst: 7, priority: 1 },
+        { id: 'P2', arrival: 2, burst: 4, priority: 1 },
+        { id: 'P3', arrival: 4, burst: 1, priority: 1 },
+        { id: 'P4', arrival: 5, burst: 4, priority: 1 },
+      ],
+    },
     hook:
       'Shortest Job First is the policy that proves why scheduling matters: it can reduce average waiting time dramatically, but only if you know how long each job will run.',
     objectives: [
@@ -231,6 +250,15 @@ P4: wait 7, turnaround 11`,
 
   {
     chapterId: 'srtf-scheduling',
+    walkthrough: {
+      kind: 'scheduler',
+      algorithm: 'srtf',
+      processes: [
+        { id: 'P1', arrival: 0, burst: 7, priority: 1 },
+        { id: 'P2', arrival: 2, burst: 4, priority: 1 },
+        { id: 'P3', arrival: 4, burst: 1, priority: 1 },
+      ],
+    },
     hook:
       'SRTF is SJF with a stopwatch. When a shorter job arrives, the running job is paused and the shorter one takes the CPU.',
     objectives: [
@@ -310,6 +338,16 @@ P3: completion 5,  wait 0`,
 
   {
     chapterId: 'round-robin-scheduling',
+    walkthrough: {
+      kind: 'scheduler',
+      algorithm: 'round-robin',
+      quantum: 2,
+      processes: [
+        { id: 'P1', arrival: 0, burst: 5, priority: 1 },
+        { id: 'P2', arrival: 0, burst: 3, priority: 1 },
+        { id: 'P3', arrival: 0, burst: 1, priority: 1 },
+      ],
+    },
     hook:
       'Round Robin is the scheduler that makes a single CPU feel interactive. Every process gets a small slice, then goes to the back of the line.',
     objectives: [
@@ -381,6 +419,15 @@ while unfinished:
 
   {
     chapterId: 'priority-scheduling',
+    walkthrough: {
+      kind: 'scheduler',
+      algorithm: 'priority',
+      processes: [
+        { id: 'P1', arrival: 0, burst: 5, priority: 3 },
+        { id: 'P2', arrival: 0, burst: 3, priority: 1 },
+        { id: 'P3', arrival: 0, burst: 8, priority: 2 },
+      ],
+    },
     hook:
       'Priority scheduling encodes importance. The highest-priority ready process runs next — and low-priority processes may never run unless you add aging.',
     objectives: [

@@ -138,6 +138,12 @@ physical = 0x6000 + 0x0100 = 0x6100`,
 
   {
     chapterId: 'paging-page-tables',
+    walkthrough: {
+      kind: 'paging',
+      virtualAddress: 0x1a2b,
+      pageSize: 4096,
+      pageTable: [4, 7, -1, 2, 9, -1, 5, 1],
+    },
     hook:
       'Paging turns memory into fixed-size pages and frames. The page table is the map, and the offset is the part that never changes.',
     objectives: [
@@ -350,6 +356,12 @@ else:
 
   {
     chapterId: 'fifo-page-replacement',
+    walkthrough: {
+      kind: 'page-replacement',
+      references: [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5],
+      frameCount: 3,
+      defaultPolicy: 'FIFO',
+    },
     hook:
       'FIFO evicts the page that has been in memory the longest. It is easy to implement and surprisingly capable of making the wrong decision.',
     objectives: [
@@ -425,6 +437,12 @@ frames after each step are in the lab trace`,
 
   {
     chapterId: 'lru-optimal-page-replacement',
+    walkthrough: {
+      kind: 'page-replacement',
+      references: [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5],
+      frameCount: 3,
+      defaultPolicy: 'LRU',
+    },
     hook:
       'LRU uses the past as a predictor of the future. Optimal uses the future directly. Comparing them tells you how much a real policy gives up.',
     objectives: [

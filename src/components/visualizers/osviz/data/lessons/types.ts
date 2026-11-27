@@ -11,10 +11,13 @@ export interface OSLessonQuiz {
   explanation: string;
 }
 
+import type { OSWalkthrough } from '../walkthrough-types';
+
 export interface OSLesson {
   chapterId: string;
   hook: string;
   objectives: string[];
+  walkthrough?: OSWalkthrough;
   sections: OSLessonSection[];
   keyTakeaways: string[];
   pitfalls: string[];

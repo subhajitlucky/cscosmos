@@ -37,6 +37,22 @@ test.describe('operating-systems smoke', () => {
     await expect(page.getByText(/2 \/ 5 blocks read/)).toBeVisible();
   });
 
+  test('animates scheduling and page replacement examples', async ({ page }) => {
+    await page.goto('/corecs/operating-systems/learn/fcfs-scheduling');
+
+    await expect(page.getByRole('heading', { name: 'FCFS Scheduling' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 3/)).toBeVisible();
+    await page.getByRole('button', { name: 'Next step' }).click();
+    await expect(page.getByText(/Step 2 of 3/)).toBeVisible();
+
+    await page.goto('/corecs/operating-systems/learn/fifo-page-replacement');
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 12/)).toBeVisible();
+    await page.getByRole('button', { name: 'LRU', exact: true }).click();
+    await expect(page.getByText(/Step 1 of 12/)).toBeVisible();
+  });
+
   test('checks a practice answer', async ({ page }) => {
     await page.goto('/corecs/operating-systems/problems/turnaround-time');
 
