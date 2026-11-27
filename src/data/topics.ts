@@ -300,7 +300,7 @@ export const topics: Topic[] = [
     createTopic("AI Engineering Capstone", "ai"),
 
     // Core Computer Science
-    createTopic("Fundamentals of IT (Hardware, Data, Software, Networks)", "corecs", { status: 'active', slug: 'fundamentals-of-it' }),
+    createTopic("IT Fundamentals (Computer Organization, Boolean Algebra, MS Office)", "corecs", { status: 'active', slug: 'fundamentals-of-it' }),
     createTopic("How Programs Execute (CPU, Memory, I/O)", "corecs", { status: 'active', slug: 'program-cosmos' }),
     createTopic("Operating Systems (Processes, Memory, Files)", "corecs", { status: 'active', slug: 'operating-systems' }),
     createTopic("Memory Allocators & Virtual Memory (Malloc, Paging)", "corecs", { slug: 'memory-allocators-and-virtual-memory-malloc-paging' }),

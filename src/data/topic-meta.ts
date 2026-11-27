@@ -252,9 +252,9 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
   },
   'fundamentals-of-it': {
     difficulty: 'beginner',
-    estimatedMinutes: 45,
-    tags: ['it', 'hardware', 'networks', 'security', 'cloud'],
-    related: ['program-cosmos', 'operating-systems', 'dbms', 'computer-networks-internals-tcpip'],
+    estimatedMinutes: 56,
+    tags: ['it fundamentals', 'computer organization', 'number systems', 'boolean algebra', '8086', 'ms office'],
+    related: ['program-cosmos', 'operating-systems', 'dbms'],
   },
 };
 

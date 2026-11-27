@@ -26,36 +26,36 @@ export async function generateMetadata({
   const first = slug?.[0] || '';
   const second = slug?.[1] || '';
 
-  let title = 'Fundamentals of IT - CSCosmos';
+  let title = 'IT Fundamentals (Computer Organization, Boolean Algebra, MS Office) - CSCosmos';
   let description =
-    'A visual introduction to information technology: hardware, data, software, networks, security, and the business systems they enable.';
+    'A focused IT fundamentals curriculum: computer organization, memory and storage, number systems, Boolean algebra, 8086 microprocessors, software, and MS Office.';
   let suffix = '';
 
   if (first === 'learn' && second) {
     const chapter = getITChapter(second);
     if (chapter) {
-      title = `${chapter.title} | IT Atlas - CSCosmos`;
-      description = `${chapter.summary} Chapter ${chapter.number} of Fundamentals of IT.`;
+      title = `${chapter.title} | IT Fundamentals - CSCosmos`;
+      description = `${chapter.summary} Topic ${chapter.number} of IT Fundamentals.`;
       suffix = `/learn/${chapter.id}`;
     }
   } else if (first === 'learn') {
-    title = 'Fundamentals of IT (24 Chapters) - CSCosmos';
-    description = 'All 24 chapters of Fundamentals of IT: the machine, data representation, software, networks, security, and IT in practice.';
+    title = 'IT Fundamentals (7 Topics) - CSCosmos';
+    description = 'All seven IT Fundamentals topics: computer organization, memory and storage, number systems, Boolean algebra, microprocessors, software, and MS Office.';
     suffix = '/learn';
   } else if (first === 'lab') {
-    title = 'Fundamentals of IT Labs - CSCosmos';
-    description = 'Build a computer, flip a byte, and trace a web request through the IT stack.';
+    title = 'IT Fundamentals Tools - CSCosmos';
+    description = 'Study the computer block diagram, convert between number systems, and test Boolean logic gates.';
     suffix = '/lab';
   } else if (first === 'problems' && second) {
     const problem = getITProblem(second);
     if (problem) {
-      title = `${problem.title} | Fundamentals of IT Practice - CSCosmos`;
+      title = `${problem.title} | IT Fundamentals Practice - CSCosmos`;
       description = problem.prompt;
       suffix = `/problems/${problem.id}`;
     }
   } else if (first === 'problems') {
-    title = 'Fundamentals of IT Question Bank - CSCosmos';
-    description = 'Five hundred IT literacy questions covering hardware, data, software, networks, security, and business systems.';
+    title = 'IT Fundamentals Practice (140 Questions) - CSCosmos';
+    description = 'One hundred and forty questions covering computer organization, memory, number systems, Boolean algebra, microprocessors, software, and MS Office.';
     suffix = '/problems';
   }
 

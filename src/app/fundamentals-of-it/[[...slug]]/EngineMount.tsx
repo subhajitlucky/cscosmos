@@ -4,7 +4,6 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { ITShell } from '@/components/visualizers/fundamentalsviz/components/ITShell';
 import { Home } from '@/components/visualizers/fundamentalsviz/pages/Home';
-import { Learn } from '@/components/visualizers/fundamentalsviz/pages/Learn';
 import { Topic } from '@/components/visualizers/fundamentalsviz/pages/Topic';
 import { Lab } from '@/components/visualizers/fundamentalsviz/pages/Lab';
 import { Problems } from '@/components/visualizers/fundamentalsviz/pages/Problems';
@@ -19,7 +18,7 @@ export default function EngineMount({ slug }: { slug: string[] }) {
   if (first === '') {
     content = <Home />;
   } else if (first === 'learn') {
-    content = second ? <Topic key={second} chapterId={second} /> : <Learn />;
+    content = second ? <Topic key={second} chapterId={second} /> : <Home />;
   } else if (first === 'lab') {
     content = <Lab />;
   } else if (first === 'problems') {

@@ -1,15 +1,9 @@
 import type { ITLesson } from './lessons/types';
-import { group1Lessons } from './lessons/group1';
-import { group2Lessons } from './lessons/group2';
-import { group3Lessons } from './lessons/group3';
-import { group4Lessons } from './lessons/group4';
+import { part1Lessons } from './lessons/part1';
+import { part2Lessons } from './lessons/part2';
+import { part3Lessons } from './lessons/part3';
 
-const allLessons: ITLesson[] = [
-  ...group1Lessons,
-  ...group2Lessons,
-  ...group3Lessons,
-  ...group4Lessons,
-];
+const allLessons: ITLesson[] = [...part1Lessons, ...part2Lessons, ...part3Lessons];
 
 export const itLessons: Record<string, ITLesson> = Object.fromEntries(
   allLessons.map((lesson) => [lesson.chapterId, lesson]),

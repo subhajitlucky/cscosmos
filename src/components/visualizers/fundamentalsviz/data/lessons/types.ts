@@ -34,8 +34,6 @@ export interface ITLessonQuiz {
   explanation: string;
 }
 
-export type ITWalkthrough = 'system' | 'binary' | 'network';
-
 export interface ITLesson {
   chapterId: string;
   hook: string;
@@ -51,5 +49,4 @@ export interface ITLesson {
   pitfalls: string[];
   focusPoints: string[];
   quiz: ITLessonQuiz[];
-  walkthrough?: ITWalkthrough;
 }
