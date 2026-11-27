@@ -1,6 +1,10 @@
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { getDBMSChapter, dbmsChapters } from './curriculum';
 import { dbmsLessons } from './lessons';
+import { dbmsDeepDives, getDBMSDeepDive } from './deep-dives';
 import { getDBMSProblem, dbmsProblems } from './problems';
 
 describe('dbmsviz curriculum data', () => {
@@ -32,6 +36,45 @@ describe('dbmsviz curriculum data', () => {
       for (const quiz of lesson.quiz) {
         expect(quiz.answer).toBeGreaterThanOrEqual(0);
         expect(quiz.answer).toBeLessThan(quiz.options.length);
+      }
+    }
+  });
+
+  it('keeps every DBMS surface free of gradient fills', () => {
+    const root = fileURLToPath(new URL('..', import.meta.url));
+    const sources = readdirSync(root, { recursive: true })
+      .filter(
+        (file): file is string =>
+          typeof file === 'string' &&
+          /\.(css|tsx?)$/.test(file) &&
+          !file.includes('.test.'),
+      )
+      .map((file) => readFileSync(join(root, file), 'utf8'))
+      .join('\n');
+
+    expect(sources).not.toMatch(/(linear|radial|conic)-gradient/i);
+  });
+
+  it('has a deep dive with a worked example for every chapter', () => {
+    expect(Object.keys(dbmsDeepDives)).toHaveLength(dbmsChapters.length);
+
+    for (const chapter of dbmsChapters) {
+      const deepDive = getDBMSDeepDive(chapter.id);
+      expect(deepDive, `missing deep dive for ${chapter.id}`).toBeDefined();
+      if (!deepDive) continue;
+      expect(deepDive.oneIdea.length).toBeGreaterThan(40);
+      expect(deepDive.whyItMatters.length).toBeGreaterThan(40);
+      expect(deepDive.example.title.length).toBeGreaterThan(5);
+      expect(deepDive.example.scenario.length).toBeGreaterThan(40);
+      expect(deepDive.example.steps.length).toBeGreaterThanOrEqual(3);
+      expect(deepDive.example.conclusion.length).toBeGreaterThan(40);
+      expect(deepDive.tradeoff.gain.length).toBeGreaterThan(20);
+      expect(deepDive.tradeoff.cost.length).toBeGreaterThan(20);
+      expect(deepDive.tradeoff.verdict.length).toBeGreaterThan(20);
+      expect(deepDive.terms.length).toBeGreaterThanOrEqual(2);
+      for (const step of deepDive.example.steps) {
+        expect(step.action.length).toBeGreaterThan(10);
+        expect(step.result.length).toBeGreaterThan(10);
       }
     }
   });

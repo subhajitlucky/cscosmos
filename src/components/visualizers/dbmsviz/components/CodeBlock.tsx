@@ -17,29 +17,22 @@ export function CodeBlock({ code, caption }: { code: string; caption?: string })
   };
 
   return (
-    <div className="space-y-2">
-      {caption && (
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--db-muted)' }}>
-            {caption}
-          </span>
-          <span className="font-mono text-[10px]" style={{ color: 'var(--db-muted)' }}>SQL / relational</span>
-        </div>
-      )}
-      <div className="dbmsviz-code relative">
+    <div className="dbmsviz-code">
+      <div className="dbmsviz-code-header">
+        <span>{caption ?? 'Relation / SQL'}</span>
         <button
           type="button"
           onClick={copy}
-          className="absolute right-2.5 top-2.5 inline-flex items-center gap-1 rounded-md border border-white/15 bg-white/10 px-2 py-1 text-[10px] font-semibold text-white/80 hover:bg-white/20"
+          className="inline-flex items-center gap-1 border border-white/15 px-2 py-1 text-[9px] font-semibold text-white/70 hover:border-white/40 hover:text-white"
           aria-label="Copy code"
         >
           {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
           {copied ? 'Copied' : 'Copy'}
         </button>
-        <pre className="p-4 pr-20">
-          <code>{code}</code>
-        </pre>
       </div>
+      <pre>
+        <code>{code}</code>
+      </pre>
     </div>
   );
 }

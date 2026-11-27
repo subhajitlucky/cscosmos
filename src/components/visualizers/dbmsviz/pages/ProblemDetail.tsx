@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, CheckCircle2, Lightbulb, RotateCcw, XCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Lightbulb, RotateCcw, X } from 'lucide-react';
 import { getAdjacentDBMSProblems, getDBMSProblem } from '../data/problems';
 import { getDBMSChapter } from '../data/curriculum';
 import { useDBMSProgress } from '../lib/progress';
@@ -19,8 +19,10 @@ export function ProblemDetail({ problemId }: { problemId: string }) {
   if (!problem) {
     return (
       <div className="mx-auto flex min-h-[60vh] w-full max-w-3xl flex-col items-center justify-center gap-4 px-4 text-center">
-        <p className="font-mono text-sm font-bold" style={{ color: 'var(--db-danger)' }}>PROBLEM_NOT_FOUND</p>
-        <Link href={`${basePath}/problems`} className="dbmsviz-link text-sm font-semibold">Back to the practice arena</Link>
+        <p className="db-kicker" style={{ color: 'var(--db-danger)' }}>Drill not found</p>
+        <Link href={`${basePath}/problems`} className="db-link text-sm font-semibold">
+          Back to the drill book
+        </Link>
       </div>
     );
   }
@@ -42,52 +44,77 @@ export function ProblemDetail({ problemId }: { problemId: string }) {
   };
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b pb-4" style={{ borderColor: 'var(--db-border)' }}>
+    <div className="dbmsviz-frame mx-auto w-full max-w-[1240px]">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b px-5 py-3 sm:px-8" style={{ borderColor: 'var(--db-border)' }}>
         <div className="flex items-center gap-3">
-          <Link href={`${basePath}/problems`} className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'var(--db-border)', color: 'var(--db-muted)', backgroundColor: 'var(--db-surface)' }}>
-            <ArrowLeft className="h-3.5 w-3.5" /> Arena
+          <Link href={`${basePath}/problems`} className="db-label inline-flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--db-muted)' }}>
+            <ArrowLeft className="h-3 w-3" /> Drill book
           </Link>
-          {chapter && <Link href={`${basePath}/learn/${chapter.id}`} className="dbmsviz-link font-mono text-[10px] font-bold uppercase tracking-wider">{chapter.title}</Link>}
+          <span className="db-mono text-[9px]" style={{ color: 'var(--db-border-strong)' }}>/</span>
+          <span className="db-mono text-[9px]" style={{ color: 'var(--db-primary)' }}>
+            DRILL {String(problem.number).padStart(2, '0')}
+          </span>
         </div>
         <div className="flex items-center gap-2">
           {previous && (
-            <Link href={`${basePath}/problems/${previous.id}`} className="rounded-lg border px-2.5 py-1.5 font-mono text-[10px] font-bold" style={{ borderColor: 'var(--db-border)', color: 'var(--db-muted)' }}>← {String(previous.number).padStart(2, '0')}</Link>
+            <Link href={`${basePath}/problems/${previous.id}`} className="db-mono border px-2 py-1 text-[9px]" style={{ borderColor: 'var(--db-border)', color: 'var(--db-muted)' }}>
+              ← {String(previous.number).padStart(2, '0')}
+            </Link>
           )}
           {next && (
-            <Link href={`${basePath}/problems/${next.id}`} className="rounded-lg border px-2.5 py-1.5 font-mono text-[10px] font-bold" style={{ borderColor: 'var(--db-border)', color: 'var(--db-muted)' }}>{String(next.number).padStart(2, '0')} →</Link>
+            <Link href={`${basePath}/problems/${next.id}`} className="db-mono border px-2 py-1 text-[9px]" style={{ borderColor: 'var(--db-border)', color: 'var(--db-muted)' }}>
+              {String(next.number).padStart(2, '0')} →
+            </Link>
           )}
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="space-y-5">
-          <div className="rounded-2xl border p-5" style={{ borderColor: 'var(--db-border)', backgroundColor: 'var(--db-surface)' }}>
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="rounded-md border px-2 py-0.5 font-mono text-[10px] font-bold" style={{ borderColor: 'var(--db-primary)', color: 'var(--db-primary)', backgroundColor: 'var(--db-primary-soft)' }}>DRILL {String(problem.number).padStart(2, '0')}</span>
-              <span className="rounded-full border px-2 py-0.5 font-mono text-[9px] font-bold" style={{ borderColor: 'var(--db-border)', color: 'var(--db-muted)' }}>{problem.difficulty}</span>
-              {solved && <span className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[9px] font-bold" style={{ borderColor: 'var(--db-ok)', color: 'var(--db-ok)', backgroundColor: 'var(--db-ok-soft)' }}><CheckCircle2 className="h-3 w-3" /> solved</span>}
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_290px]">
+        <main className="min-w-0 px-5 py-8 sm:px-8 sm:py-12 lg:pr-10">
+          <header className="border-b pb-7" style={{ borderColor: 'var(--db-border)' }}>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="db-kicker" style={{ color: 'var(--db-primary)' }}>
+                {problem.difficulty}
+              </span>
+              <span className="db-mono text-[9px]" style={{ color: 'var(--db-border-strong)' }}>/</span>
+              <span className="db-mono text-[9px]" style={{ color: 'var(--db-muted)' }}>
+                {problem.type === 'scenario' ? 'Scenario reasoning' : 'Concept check'}
+              </span>
+              {solved && (
+                <span className="db-label inline-flex items-center gap-1 text-[8px]" style={{ color: 'var(--db-ok)' }}>
+                  <Check className="h-3 w-3" /> solved
+                </span>
+              )}
             </div>
-            <h1 className="text-2xl font-black tracking-tight">{problem.title}</h1>
-            <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--db-muted)' }}>{problem.prompt}</p>
-            {problem.context && (
-              <div className="mt-4 rounded-xl border p-3" style={{ borderColor: 'var(--db-border)', backgroundColor: 'var(--db-surface-2)' }}>
-                <div className="mb-1 font-mono text-[9px] font-bold uppercase tracking-wider" style={{ color: 'var(--db-muted)' }}>context</div>
-                <pre className="overflow-x-auto font-mono text-[11px] leading-relaxed" style={{ color: 'var(--db-text)' }}>{problem.context}</pre>
-              </div>
-            )}
-          </div>
+            <h1 className="db-display mt-4 text-[clamp(2.5rem,6vw,4.6rem)]">{problem.title}</h1>
+            <p className="mt-4 max-w-[760px] text-[15px] leading-[1.85]" style={{ color: 'var(--db-muted)' }}>
+              {problem.prompt}
+            </p>
+          </header>
 
-          <div className="rounded-2xl border p-5" style={{ borderColor: 'var(--db-border-strong)', backgroundColor: 'var(--db-surface)' }}>
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-sm font-bold">Choose an answer</h2>
+          {problem.context && (
+            <section className="border-b py-6" style={{ borderColor: 'var(--db-border)' }}>
+              <p className="db-kicker" style={{ color: 'var(--db-muted)' }}>Context</p>
+              <pre className="mt-3 overflow-x-auto border-l-2 py-1 pl-4 font-mono text-[12px] leading-[1.8]" style={{ borderColor: 'var(--db-primary)', backgroundColor: 'var(--db-surface)' }}>
+                {problem.context}
+              </pre>
+            </section>
+          )}
+
+          <section className="py-7">
+            <div className="flex items-end justify-between gap-3 border-b pb-3" style={{ borderColor: 'var(--db-border)' }}>
+              <div>
+                <p className="db-kicker" style={{ color: 'var(--db-primary)' }}>Commit to an answer</p>
+                <h2 className="db-display-tight mt-1 text-3xl">Choose one.</h2>
+              </div>
               {answered && (
-                <button type="button" onClick={reset} className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-[10px] font-bold" style={{ borderColor: 'var(--db-border)', color: 'var(--db-muted)' }}>
+                <button type="button" onClick={reset} className="db-label inline-flex items-center gap-1.5 text-[9px]" style={{ color: 'var(--db-muted)' }}>
                   <RotateCcw className="h-3 w-3" /> retry
                 </button>
               )}
             </div>
-            <div className="space-y-2">
+
+            <div className="mt-4 border" style={{ borderColor: 'var(--db-border)' }}>
               {problem.options.map((option, index) => {
                 const isSelected = selected === index;
                 const isCorrect = answered && index === problem.answer;
@@ -98,58 +125,81 @@ export function ProblemDetail({ problemId }: { problemId: string }) {
                     type="button"
                     onClick={() => choose(index)}
                     disabled={answered}
-                    className="flex w-full items-start gap-3 rounded-xl border px-3 py-2.5 text-left text-sm disabled:cursor-default"
+                    className="flex w-full items-start gap-3 border-b px-4 py-4 text-left text-sm last:border-b-0 disabled:cursor-default"
                     style={{
-                      borderColor: isCorrect ? 'var(--db-ok)' : isWrong ? 'var(--db-danger)' : isSelected ? 'var(--db-primary)' : 'var(--db-border)',
-                      backgroundColor: isCorrect ? 'var(--db-ok-soft)' : isWrong ? 'var(--db-danger-soft)' : isSelected ? 'var(--db-primary-soft)' : 'var(--db-surface-2)',
+                      borderColor: 'var(--db-border)',
+                      backgroundColor: isCorrect ? 'var(--db-ok-soft)' : isWrong ? 'var(--db-danger-soft)' : isSelected ? 'var(--db-primary-soft)' : 'transparent',
                       color: isCorrect ? 'var(--db-ok)' : isWrong ? 'var(--db-danger)' : 'var(--db-text)',
                     }}
                   >
-                    <span className="mt-0.5 font-mono text-[10px] font-bold">{String.fromCharCode(65 + index)}</span>
+                    <span className="db-mono mt-0.5 text-[10px] font-bold">{String.fromCharCode(65 + index)}</span>
                     <span className="font-medium">{option}</span>
                     {isCorrect && <CheckCircle2 className="ml-auto mt-0.5 h-4 w-4 shrink-0" />}
-                    {isWrong && <XCircle className="ml-auto mt-0.5 h-4 w-4 shrink-0" />}
+                    {isWrong && <X className="ml-auto mt-0.5 h-4 w-4 shrink-0" />}
                   </button>
                 );
               })}
             </div>
+
             {answered && (
-              <div className="mt-4 rounded-xl border p-3 text-xs leading-relaxed" style={{ borderColor: correct ? 'var(--db-ok)' : 'var(--db-danger)', backgroundColor: correct ? 'var(--db-ok-soft)' : 'var(--db-danger-soft)', color: correct ? 'var(--db-ok)' : 'var(--db-danger)' }}>
-                <p className="mb-1 font-bold">{correct ? 'Correct.' : 'Not quite.'}</p>
-                <p>{problem.explanation}</p>
+              <div className="mt-4 border-l-2 py-2 pl-4" style={{ borderColor: correct ? 'var(--db-ok)' : 'var(--db-danger)' }}>
+                <p className="db-kicker text-[8px]" style={{ color: correct ? 'var(--db-ok)' : 'var(--db-danger)' }}>
+                  {correct ? 'Correct' : 'Not quite'}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--db-muted)' }}>
+                  {problem.explanation}
+                </p>
               </div>
             )}
-            <div className="mt-4 border-t pt-3" style={{ borderColor: 'var(--db-border)' }}>
-              <button type="button" onClick={() => setShowHint((value) => !value)} className="inline-flex items-center gap-1.5 text-xs font-semibold" style={{ color: 'var(--db-accent)' }}>
+
+            <div className="mt-5 border-t pt-4" style={{ borderColor: 'var(--db-border)' }}>
+              <button type="button" onClick={() => setShowHint((value) => !value)} className="db-label inline-flex items-center gap-2 text-[9px]" style={{ color: 'var(--db-accent)' }}>
                 <Lightbulb className="h-3.5 w-3.5" /> {showHint ? 'Hide hint' : 'Show hint'}
               </button>
-              {showHint && <p className="mt-2 rounded-lg border px-3 py-2 text-[11px] leading-relaxed" style={{ borderColor: 'var(--db-border)', backgroundColor: 'var(--db-surface-2)', color: 'var(--db-muted)' }}>{problem.hint}</p>}
+              {showHint && (
+                <p className="mt-3 border-l-2 py-1 pl-4 text-[12px] leading-relaxed" style={{ borderColor: 'var(--db-accent)', color: 'var(--db-muted)' }}>
+                  {problem.hint}
+                </p>
+              )}
             </div>
-          </div>
-        </div>
+          </section>
+        </main>
 
-        <aside className="space-y-4">
-          <div className="rounded-2xl border p-4" style={{ borderColor: 'var(--db-border)', backgroundColor: 'var(--db-surface)' }}>
-            <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--db-muted)' }}>How to attack it</h2>
-            <ol className="space-y-2 text-[11px] leading-relaxed" style={{ color: 'var(--db-muted)' }}>
-              <li>1. Identify the model, dependency, or anomaly.</li>
-              <li>2. Write the relation or schedule explicitly.</li>
-              <li>3. Apply the rule before looking at the options.</li>
-              <li>4. Commit to an answer before reading the explanation.</li>
+        <aside className="border-t px-5 py-8 sm:px-8 lg:border-l lg:border-t-0 lg:px-6" style={{ borderColor: 'var(--db-border)' }}>
+          <div className="lg:sticky lg:top-24">
+            <p className="db-kicker text-[8px]" style={{ color: 'var(--db-muted)' }}>How to attack it</p>
+            <ol className="mt-3 space-y-3">
+              {[
+                'Identify the model, dependency, or anomaly.',
+                'Write the relation or schedule explicitly.',
+                'Apply the rule before looking at the options.',
+                'Commit to an answer, then read the explanation.',
+              ].map((step, index) => (
+                <li key={step} className="grid grid-cols-[20px_1fr] gap-2 text-[11px] leading-relaxed" style={{ color: 'var(--db-muted)' }}>
+                  <span className="db-mono text-[9px]" style={{ color: 'var(--db-primary)' }}>{String(index + 1).padStart(2, '0')}</span>
+                  {step}
+                </li>
+              ))}
             </ol>
-          </div>
-          <div className="rounded-2xl border p-4" style={{ borderColor: 'var(--db-border)', backgroundColor: 'var(--db-surface)' }}>
-            <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--db-muted)' }}>Related lesson</h2>
+
             {chapter && (
-              <Link href={`${basePath}/learn/${chapter.id}`} className="block rounded-lg border p-2.5 text-xs font-bold hover:border-[var(--db-primary)]" style={{ borderColor: 'var(--db-border)' }}>
-                {chapter.title}
-                <span className="mt-1 block font-mono text-[9px] font-normal" style={{ color: 'var(--db-muted)' }}>Lesson {String(chapter.number).padStart(2, '0')}</span>
-              </Link>
+              <div className="mt-6 border-t pt-4" style={{ borderColor: 'var(--db-border)' }}>
+                <p className="db-kicker text-[8px]" style={{ color: 'var(--db-muted)' }}>Related chapter</p>
+                <Link href={`${basePath}/learn/${chapter.id}`} className="mt-2 block text-sm font-semibold hover:text-[var(--db-primary)]">
+                  {chapter.title}
+                </Link>
+                <p className="db-mono mt-1 text-[9px]" style={{ color: 'var(--db-muted)' }}>
+                  CH {String(chapter.number).padStart(2, '0')} · {chapter.category}
+                </p>
+              </div>
             )}
-          </div>
-          <div className="rounded-2xl border p-4" style={{ borderColor: 'var(--db-border)', backgroundColor: 'var(--db-surface)' }}>
-            <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--db-muted)' }}>Need the workbench?</h2>
-            <Link href={`${basePath}/lab`} className="inline-flex items-center gap-1.5 text-xs font-bold" style={{ color: 'var(--db-primary)' }}>Open the lab <ArrowRight className="h-3.5 w-3.5" /></Link>
+
+            <div className="mt-6 border-t pt-4" style={{ borderColor: 'var(--db-border)' }}>
+              <Link href={`${basePath}/lab`} className="flex items-center justify-between text-[11px] font-semibold">
+                Open the workbench
+                <ArrowRight className="h-3.5 w-3.5" style={{ color: 'var(--db-primary)' }} />
+              </Link>
+            </div>
           </div>
         </aside>
       </div>
