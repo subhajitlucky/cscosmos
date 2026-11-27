@@ -11,9 +11,12 @@ export interface CLessonQuiz {
   explanation: string;
 }
 
+import type { CWalkthrough } from './walkthrough-types';
+
 export interface CLesson {
   chapterId: string;
   hook: string;
+  walkthrough?: CWalkthrough;
   sections: CLessonSection[];
   keyTakeaways: string[];
   pitfalls: string[];
@@ -658,6 +661,7 @@ extern int shared_value;`,
 
   'arrays-1d': {
     chapterId: 'arrays-1d',
+    walkthrough: { kind: 'array-walk' },
     hook:
       'An array is a contiguous block of same-typed elements. That layout is why indexing is fast and why an out-of-bounds index is dangerous.',
     sections: [
@@ -1178,6 +1182,7 @@ printf("%d\n", x);  /* 6 */`,
 
   'pointer-address': {
     chapterId: 'pointer-address',
+    walkthrough: { kind: 'pointer-chain' },
     hook:
       'A pointer is just an address with a type. That type tells the compiler how many bytes to read and how far to move when you add one.',
     sections: [
@@ -1239,6 +1244,7 @@ if (ip != NULL) {
 
   'pointer-arithmetic': {
     chapterId: 'pointer-arithmetic',
+    walkthrough: { kind: 'array-walk' },
     hook:
       'Pointer arithmetic is scaled by the pointed-to type. If p points to an int and int is four bytes, p + 1 advances by four bytes.',
     sections: [

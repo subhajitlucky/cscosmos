@@ -31,6 +31,16 @@ test.describe('c-programming smoke', () => {
     await expect(page.getByText(/p is NULL/)).toBeVisible();
   });
 
+  test('animates pointer memory changes', async ({ page }) => {
+    await page.goto('/corecs/c-programming/learn/pointer-address');
+
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 6/)).toBeVisible();
+    await page.getByRole('button', { name: 'Next step' }).click();
+    await expect(page.getByText(/Step 2 of 6/)).toBeVisible();
+    await expect(page.getByText(/p does not contain 42/i)).toBeVisible();
+  });
+
   test('checks an answer in the drill arena', async ({ page }) => {
     await page.goto('/corecs/c-programming/problems/pointer-arithmetic');
 

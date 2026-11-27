@@ -69,6 +69,16 @@ worst_fit(212K) -> 600K hole, remainder 388K`,
 
   {
     chapterId: 'segmentation',
+    walkthrough: {
+      kind: 'segmentation',
+      segmentIndex: 1,
+      offset: 0x100,
+      segments: [
+        { name: 'code', base: 0x4000, limit: 0x1200 },
+        { name: 'data', base: 0x6000, limit: 0x0800 },
+        { name: 'stack', base: 0x9000, limit: 0x1000 },
+      ],
+    },
     hook:
       'Segmentation lets a program be divided by meaning: code, data, stack, and heap. Each segment has a base and a limit, and the hardware checks every access.',
     objectives: [
@@ -212,6 +222,12 @@ paddr = 7 * 0x1000 + 0xA2B = 0x7A2B`,
 
   {
     chapterId: 'tlb-translation',
+    walkthrough: {
+      kind: 'tlb',
+      virtualAddress: 0x1a2b,
+      pageSize: 4096,
+      pageTable: [4, 7, -1, 2, 9, -1, 5, 1],
+    },
     hook:
       'A page table lives in memory, so every translation could mean an extra memory access. The TLB is a tiny cache that makes the common case fast.',
     objectives: [

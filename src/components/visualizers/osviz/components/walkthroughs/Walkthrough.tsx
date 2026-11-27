@@ -6,6 +6,11 @@ import { SchedulerWalkthrough } from './SchedulerWalkthrough';
 import { PageReplacementWalkthrough } from './PageReplacementWalkthrough';
 import { PagingWalkthrough } from './PagingWalkthrough';
 import { FatWalkthrough } from './FatWalkthrough';
+import { ProcessStateWalkthrough } from './ProcessStateWalkthrough';
+import { TlbWalkthrough } from './TlbWalkthrough';
+import { SegmentationWalkthrough } from './SegmentationWalkthrough';
+import { IndexedAllocationWalkthrough } from './IndexedAllocationWalkthrough';
+import { ExternalSortWalkthrough } from './ExternalSortWalkthrough';
 
 export function Walkthrough({ config }: { config: OSWalkthrough }) {
   if (config.kind === 'scheduler') {
@@ -36,6 +41,44 @@ export function Walkthrough({ config }: { config: OSWalkthrough }) {
         pageTable={config.pageTable}
       />
     );
+  }
+
+  if (config.kind === 'process-states') {
+    return <ProcessStateWalkthrough processId={config.processId} />;
+  }
+
+  if (config.kind === 'tlb') {
+    return (
+      <TlbWalkthrough
+        virtualAddress={config.virtualAddress}
+        pageSize={config.pageSize}
+        pageTable={config.pageTable}
+      />
+    );
+  }
+
+  if (config.kind === 'segmentation') {
+    return (
+      <SegmentationWalkthrough
+        segments={config.segments}
+        segmentIndex={config.segmentIndex}
+        offset={config.offset}
+      />
+    );
+  }
+
+  if (config.kind === 'indexed') {
+    return (
+      <IndexedAllocationWalkthrough
+        indexBlock={config.indexBlock}
+        pointers={config.pointers}
+        requestedBlock={config.requestedBlock}
+      />
+    );
+  }
+
+  if (config.kind === 'external-sort') {
+    return <ExternalSortWalkthrough chunks={config.chunks} />;
   }
 
   return <FatWalkthrough start={config.start} fat={config.fat} totalBlocks={config.totalBlocks} />;

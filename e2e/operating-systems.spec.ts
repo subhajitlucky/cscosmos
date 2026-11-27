@@ -53,6 +53,18 @@ test.describe('operating-systems smoke', () => {
     await expect(page.getByText(/Step 1 of 12/)).toBeVisible();
   });
 
+  test('animates process states and TLB translation', async ({ page }) => {
+    await page.goto('/corecs/operating-systems/learn/process-concept-states');
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 7/)).toBeVisible();
+
+    await page.goto('/corecs/operating-systems/learn/tlb-translation');
+    await expect(page.getByRole('heading', { name: 'Watch it happen' })).toBeVisible();
+    await expect(page.getByText(/Step 1 of 6/)).toBeVisible();
+    await page.getByRole('button', { name: 'Next step' }).click();
+    await expect(page.getByText(/Step 2 of 6/)).toBeVisible();
+  });
+
   test('checks a practice answer', async ({ page }) => {
     await page.goto('/corecs/operating-systems/problems/turnaround-time');
 

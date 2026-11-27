@@ -26,4 +26,30 @@ export type OSWalkthrough =
       start: number;
       fat: number[];
       totalBlocks?: number;
+    }
+  | {
+      kind: 'process-states';
+      processId?: string;
+    }
+  | {
+      kind: 'tlb';
+      virtualAddress: number;
+      pageSize: number;
+      pageTable: number[];
+    }
+  | {
+      kind: 'segmentation';
+      segmentIndex: number;
+      offset: number;
+      segments: { name: string; base: number; limit: number }[];
+    }
+  | {
+      kind: 'indexed';
+      indexBlock: number;
+      pointers: number[];
+      requestedBlock: number;
+    }
+  | {
+      kind: 'external-sort';
+      chunks: number[][];
     };

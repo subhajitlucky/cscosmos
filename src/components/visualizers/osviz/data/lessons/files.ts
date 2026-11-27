@@ -228,6 +228,12 @@ FAT[20] = FREE`,
 
   {
     chapterId: 'indexed-file-allocation',
+    walkthrough: {
+      kind: 'indexed',
+      indexBlock: 3,
+      pointers: [7, 11, 18, 21],
+      requestedBlock: 2,
+    },
     hook:
       'Indexed allocation puts every block pointer in one index block. Direct access becomes fast, at the cost of an extra block and a limit on file size.',
     objectives: [
@@ -505,6 +511,14 @@ if collision: follow overflow chain`,
 
   {
     chapterId: 'file-sorting-merging',
+    walkthrough: {
+      kind: 'external-sort',
+      chunks: [
+        [5, 1, 4],
+        [3, 8, 2],
+        [7, 6, 9],
+      ],
+    },
     hook:
       'A file may be larger than memory, so sorting must be external. The trick is to create sorted runs, then merge them without loading the whole file.',
     objectives: [

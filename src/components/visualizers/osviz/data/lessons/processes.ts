@@ -3,6 +3,10 @@ import type { OSLesson } from './types';
 export const processLessons: OSLesson[] = [
   {
     chapterId: 'process-concept-states',
+    walkthrough: {
+      kind: 'process-states',
+      processId: 'P1',
+    },
     hook:
       'A program on disk is passive. A process is that program in motion, with a stack, a heap, registers, and an identity the OS can schedule.',
     objectives: [

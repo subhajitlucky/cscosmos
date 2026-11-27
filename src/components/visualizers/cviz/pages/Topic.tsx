@@ -10,6 +10,7 @@ import {
   GraduationCap,
   Lightbulb,
   ListChecks,
+  Play,
   Target,
 } from 'lucide-react';
 import { getAdjacentCChapters, getCChapter } from '../data/curriculum';
@@ -17,6 +18,7 @@ import { cLessons } from '../data/lessons';
 import { useCProgress } from '../lib/progress';
 import { useCBasePath } from '../components/CShell';
 import { CodeBlock } from '../components/CodeBlock';
+import { Walkthrough } from '../components/walkthroughs/Walkthrough';
 
 export function Topic({ chapterId }: { chapterId: string }) {
   const basePath = useCBasePath();
@@ -111,6 +113,26 @@ export function Topic({ chapterId }: { chapterId: string }) {
                 {section.code && <CodeBlock code={section.code} caption={`chapter-${String(chapter.number).padStart(2, '0')}.c`} />}
               </section>
             ))}
+
+            {lesson.walkthrough && (
+              <section className="space-y-3">
+                <div className="flex items-center gap-2.5">
+                  <span
+                    className="flex h-7 w-7 items-center justify-center rounded-lg border"
+                    style={{ borderColor: 'var(--c-border)', color: 'var(--c-accent)', backgroundColor: 'var(--c-accent-soft)' }}
+                  >
+                    <Play className="h-3.5 w-3.5" />
+                  </span>
+                  <div>
+                    <h2 className="text-lg font-bold tracking-tight">Watch it happen</h2>
+                    <p className="text-[11px]" style={{ color: 'var(--c-muted)' }}>
+                      Step through the memory changes one instruction at a time.
+                    </p>
+                  </div>
+                </div>
+                <Walkthrough config={lesson.walkthrough} />
+              </section>
+            )}
 
             <section className="grid gap-4 pt-4 md:grid-cols-3">
               {[
