@@ -1,0 +1,2161 @@
+import type { ITProblemSeed } from '../types';
+
+export const group1Seeds: ITProblemSeed[] = [
+  // Chapter 1: What Is Information Technology?
+  {
+    chapterId: 'what-is-it',
+    title: 'Defining Information Technology',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which description best matches information technology as a field?',
+    options: [
+      'Designing new programming languages and proving their properties',
+      'Applying computers, networks, and software to store, process, and share information',
+      'Studying the theory of computation without concern for users',
+      'Writing laws that regulate how companies collect data',
+    ],
+    answer: 1,
+    explanation:
+      'IT focuses on putting computing systems to practical use for organizations and users, not on proving theories or writing laws.',
+    hint: 'Think about what most IT staff do during a normal working day.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Computer Science or IT',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt:
+      'A student wants to research algorithm complexity and design a new programming language. Which field is the closest match?',
+    options: [
+      'Information technology',
+      'Business administration',
+      'Computer science',
+      'Data entry',
+    ],
+    answer: 2,
+    explanation:
+      'Computer science studies computation itself, including algorithms and language design, while IT applies existing systems to practical problems.',
+    hint: 'Ask whether the work creates new computing theory or operates existing systems.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Service Desk Request',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'An employee cannot sign in after a password reset and calls the internal support line.',
+    prompt: 'Which IT role most directly helps this employee?',
+    options: [
+      'Support technician',
+      'Software architect',
+      'Database designer',
+      'Network researcher',
+    ],
+    answer: 0,
+    explanation:
+      'Support technicians handle user-facing incidents such as sign-in problems, while architects and designers usually build or change systems.',
+    hint: 'Consider who staffs a typical help desk.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Information Systems Perspective',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which combination best describes an information system?',
+    options: [
+      'Hardware alone',
+      'A single database file',
+      'A programming language and its compiler',
+      'Technology, people, and processes working together',
+    ],
+    answer: 3,
+    explanation:
+      'An information system includes technology plus the people and procedures that collect, process, and use information to support decisions.',
+    hint: 'The answer must include more than equipment.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'First Point of Contact',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A marketing team needs a shared calendar and asks the IT department for help.',
+    prompt: 'How should IT begin handling the calendar request?',
+    options: [
+      'Replace the computers used by the team immediately',
+      'Clarify the need and check approved collaboration tools',
+      'Rewrite the calendar application from scratch',
+      'Ignore the request because it is not technical',
+    ],
+    answer: 1,
+    explanation:
+      'IT starts by understanding the requirement and matching it to supported tools, which is cheaper and safer than custom development.',
+    hint: 'Good service starts with understanding the request before choosing a solution.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Core of IT Service',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which outcome shows that IT is serving the organization well?',
+    options: [
+      'Maximizing the number of servers owned',
+      'Avoiding all contact with business staff',
+      'Keeping technology useful, secure, and available for its users',
+      'Replacing every manual process with code',
+    ],
+    answer: 2,
+    explanation:
+      'IT exists to enable users and the organization, so service quality, security, and availability matter more than simply owning more equipment.',
+    hint: 'Focus on the outcome users need, not the amount of hardware.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'IT in a New Office',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A small firm opens a new office and needs laptops, accounts, Wi-Fi, and printing.',
+    prompt: 'Which set of tasks belongs most clearly to IT operations?',
+    options: [
+      'Hiring staff and setting salaries',
+      'Writing the marketing strategy of the firm',
+      'Auditing the tax returns of the firm',
+      'Preparing devices, accounts, and network access',
+    ],
+    answer: 3,
+    explanation:
+      'Providing and supporting devices, identities, and connectivity is core IT operations; hiring, marketing, and tax work belong to other functions.',
+    hint: 'Which tasks involve making technology ready for employees?',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Builder or Administrator',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which task best represents the builder role rather than the administrator role?',
+    options: [
+      'Writing a new inventory application',
+      'Resetting a locked account',
+      'Monitoring disk usage',
+      'Replacing a failed keyboard',
+    ],
+    answer: 0,
+    explanation:
+      'Builders create or substantially change systems, while administrators keep existing systems running through account resets, monitoring, and hardware replacement.',
+    hint: 'Decide which task creates something new.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Two Related Fields',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which statement best captures the difference between IT and computer science?',
+    options: [
+      'IT studies computation theory, while computer science runs help desks',
+      'They are identical in every respect',
+      'IT applies and supports systems for users, while computer science studies computation and algorithms',
+      'Computer science only repairs hardware, while IT only writes code',
+    ],
+    answer: 2,
+    explanation:
+      'IT is practical and service-oriented, deploying and supporting systems, while computer science focuses on the theory and design of computation.',
+    hint: 'One field asks how computation works; the other asks how to use it well.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Why Standards Matter',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A manager asks why IT will not let the team install an unapproved file-sharing app.',
+    prompt: 'Which reason is most consistent with the responsibilities of IT?',
+    options: [
+      'Unapproved tools can create security, privacy, and support risks',
+      'IT wants to reduce the number of employees',
+      'Approved software is always cheaper',
+      'File sharing is never useful at work',
+    ],
+    answer: 0,
+    explanation:
+      'IT must protect data and keep systems supportable; unsupported tools can expose information or fail without a recovery plan.',
+    hint: 'Think beyond cost to risk and accountability.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'The Service Mindset',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Why is IT often described as a service discipline?',
+    options: [
+      'Its main product is physical hardware',
+      'It avoids measurement and planning',
+      'It operates independently of organizational goals',
+      'Its success depends on enabling users and business activities safely',
+    ],
+    answer: 3,
+    explanation:
+      'IT is judged by how well it helps people work and how reliably it protects the organization, not merely by the equipment it installs.',
+    hint: 'Who benefits when IT does its job well?',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Outage Priorities',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A payroll system fails on payday, and staff cannot view their payslips.',
+    prompt: 'What should IT do first while the payroll system is down?',
+    options: [
+      'Redesigning the payroll database schema',
+      'Restoring service and communicating status to affected staff',
+      'Purchasing new monitors for the finance team',
+      'Waiting for the next scheduled maintenance window',
+    ],
+    answer: 1,
+    explanation:
+      'Restoring service and keeping users informed limits business impact; redesign and hardware purchases can wait until the incident is resolved.',
+    hint: 'Ask what reduces harm right now.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Why Layers Help',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is the main benefit of viewing an IT system as layers?',
+    options: [
+      'It lets one layer change behind a defined interface without rebuilding everything',
+      'It removes the need for documentation',
+      'It guarantees that failures never occur',
+      'It makes all components equally fast',
+    ],
+    answer: 0,
+    explanation:
+      'Layering hides complexity and limits the impact of change, because components interact through agreed interfaces rather than internal details.',
+    hint: 'Think about replacing one part without touching every other part.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Requirements and Build',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A company wants a new leave-management system. HR knows the rules, while IT knows the platforms.',
+    prompt: 'Which split of duties plays to the strengths of each team?',
+    options: [
+      'HR should configure servers, and IT should write policy',
+      'Only IT should decide how leave works',
+      'HR should define leave rules and needs, while IT designs and supports the solution',
+      'Neither team needs to document requirements',
+    ],
+    answer: 2,
+    explanation:
+      'Business users own the rules and requirements, while IT owns technical design, delivery, and support; both perspectives are needed.',
+    hint: 'Match each team to the knowledge it actually holds.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Collaboration in Practice',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A research group needs a faster route-planning algorithm, and the campus IT team must deploy it for students.',
+    prompt: 'Who should design the algorithm and who should run it for students?',
+    options: [
+      'IT should invent the algorithm alone',
+      'Researchers should design and test the algorithm, while IT deploys and operates it securely',
+      'Students should maintain the servers',
+      'The algorithm should never be deployed outside a laptop',
+    ],
+    answer: 1,
+    explanation:
+      'Computer science contributes algorithm design and analysis, while IT contributes deployment, access control, monitoring, and support for real users.',
+    hint: 'Separate invention from operation.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'A Startup Without a Plan',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A startup asks IT to support every tool employees want, with no budget or policy.',
+    prompt: 'How should IT handle the requests without budget or policy?',
+    options: [
+      'Approve every request to keep employees happy',
+      'Refuse all requests until next year',
+      'Tell employees to use personal accounts for company data',
+      'Assess needs and risks, then propose a supported set with clear trade-offs',
+    ],
+    answer: 3,
+    explanation:
+      'A good IT response balances user needs, security, cost, and support capacity instead of giving blanket approval or refusal.',
+    hint: 'Look for an option that manages trade-offs instead of avoiding them.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Shadow IT Risk',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt:
+      'Staff use an unsupported cloud app to share customer files. What is the main concern for IT?',
+    options: [
+      'The app may use too much desk space',
+      'The app will automatically improve productivity',
+      'Company data may be exposed or lost without IT visibility or control',
+      'The files will become physical documents',
+    ],
+    answer: 2,
+    explanation:
+      'Shadow IT creates unmanaged copies of sensitive data, weak access control, and no backup path, even when the tool feels convenient.',
+    hint: 'Ask who can see the data and who can recover it.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Build or Buy',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A department can buy a standard scheduling tool or pay a team to build a custom one.',
+    prompt: 'What is the key trade-off between the standard tool and the custom build?',
+    options: [
+      'Custom software offers fit and control but costs more to build and maintain',
+      'Custom software is always cheaper over time',
+      'Standard software always fits every process perfectly',
+      'The decision should ignore support costs',
+    ],
+    answer: 0,
+    explanation:
+      'Custom systems can match unusual needs, but demand development and maintenance; standard products are quicker but may require process changes.',
+    hint: 'Compare initial speed with long-term ownership.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Beyond Hardware',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which statement best explains why IT is more than computer hardware?',
+    options: [
+      'Hardware is irrelevant to IT',
+      'Only programmers matter in IT',
+      'IT ends once a device is switched on',
+      'IT also includes software, data, networks, people, and procedures',
+    ],
+    answer: 3,
+    explanation:
+      'A working IT capability combines equipment with software, data, connectivity, skilled people, and documented processes.',
+    hint: 'List everything needed before a user can complete a task.',
+  },
+  {
+    chapterId: 'what-is-it',
+    title: 'Writing It Down',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A technician solves a recurring printer problem and adds the fix to the team knowledge base.',
+    prompt: 'Why is this a valuable IT practice?',
+    options: [
+      'It hides the solution from colleagues',
+      'It helps others resolve the same issue consistently and faster',
+      'It replaces the need for backups',
+      'It guarantees the printer will never fail again',
+    ],
+    answer: 1,
+    explanation:
+      'Documented fixes turn individual experience into shared knowledge, reducing repeat effort and improving consistency across the support team.',
+    hint: 'Think about what happens when the same problem returns.',
+  },
+
+  // Chapter 2: The Computer System
+  {
+    chapterId: 'computer-system',
+    title: 'Input, Processing, Output',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt:
+      'A cashier scans a barcode, the register looks up the price, and a receipt prints. Which mapping is correct?',
+    options: [
+      'Scan is input, price lookup is processing, printing is output',
+      'Scan is processing, lookup is output, printing is input',
+      'Scan is output, lookup is input, printing is processing',
+      'All three steps are storage',
+    ],
+    answer: 0,
+    explanation:
+      'Scanning supplies data, the lookup transforms it into a price, and printing presents the result, matching input, processing, and output.',
+    hint: 'Identify where data enters, changes, and leaves the system.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Input Device Choice',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which of these devices converts sound into input data?',
+    options: ['Monitor', 'Microphone', 'Printer', 'Speaker'],
+    answer: 1,
+    explanation:
+      'A microphone captures sound as input; monitors, printers, and speakers present output to the user.',
+    hint: 'Which device brings data into the computer?',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Output Device Choice',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which of these devices presents visual output on a wall or screen?',
+    options: ['Scanner', 'Keyboard', 'Projector', 'Microphone'],
+    answer: 2,
+    explanation:
+      'A projector turns processed data into visible output, while scanners, keyboards, and microphones are designed to accept input instead.',
+    hint: 'Which device presents a result to the user?',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Photo Processing',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A phone captures a photo and saves it as an image file.',
+    prompt: 'Which component performs the processing that turns sensor data into an image file?',
+    options: ['The screen', 'The battery', 'The speaker', 'The CPU'],
+    answer: 3,
+    explanation:
+      'The CPU processes sensor data into an image file; the screen, battery, and speaker do not perform that computation.',
+    hint: 'Which part executes instructions?',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Stored-Program Idea',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What does the stored-program concept mean?',
+    options: [
+      'Instructions and data are held in memory and can be changed without rewiring the machine',
+      'Programs are stored only on paper',
+      'Data is stored outside the computer',
+      'The CPU stores programs permanently in its registers',
+    ],
+    answer: 0,
+    explanation:
+      'The stored-program idea means instructions and data share memory and can be changed without physically rewiring the machine.',
+    hint: 'Think about how a general-purpose computer runs different software.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'First Software at Power-On',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context: 'A desktop computer is switched on.',
+    prompt: 'What runs before the operating system during a cold boot?',
+    options: [
+      'The web browser',
+      'Firmware that initializes the hardware',
+      'The word processor',
+      'The spreadsheet opened by the user',
+    ],
+    answer: 1,
+    explanation:
+      'Firmware runs first to initialize hardware and find a boot device before the operating system starts.',
+    hint: 'The operating system is not yet running.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Firmware Location',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Where is firmware usually stored?',
+    options: [
+      'On the hard disk only',
+      'In a printed manual',
+      'In nonvolatile memory on the device',
+      'In the monitor cable',
+    ],
+    answer: 2,
+    explanation:
+      'Firmware lives in nonvolatile memory on the device so it remains available when power is off.',
+    hint: 'It must survive when the computer is unplugged.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Startup Sequence',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A laptop powers on, checks its hardware, loads the operating system, and then starts the user applications.',
+    prompt: 'In what order do these startup stages occur?',
+    options: [
+      'Applications, operating system, firmware, hardware check',
+      'Operating system, firmware, applications, hardware check',
+      'Hardware check, applications, operating system, firmware',
+      'Firmware and hardware check, operating system, applications',
+    ],
+    answer: 3,
+    explanation:
+      'Startup begins with firmware and hardware checks, then loads the operating system, and finally launches user applications.',
+    hint: 'The operating system cannot start before the hardware is ready.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Why Storage Belongs',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Why does the input-processing-output model usually include storage?',
+    options: [
+      'To keep data available after processing and between runs',
+      'To replace the CPU',
+      'To make input devices unnecessary',
+      'To slow down the system deliberately',
+    ],
+    answer: 0,
+    explanation:
+      'Storage keeps data after processing ends and between runs, so results are not lost when memory is cleared.',
+    hint: 'Think about what happens after the power is switched off.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'System Boundary',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A team is documenting a smart thermostat that contains a sensor, a microcontroller, a display, and a Wi-Fi module.',
+    prompt: 'Which item is best treated as part of the environment rather than the thermostat itself?',
+    options: ['Temperature sensor', 'Home Wi-Fi router', 'Microcontroller', 'Display panel'],
+    answer: 1,
+    explanation:
+      'The router connects the thermostat to the outside world but is not part of the thermostat; the sensor, controller, and display are inside.',
+    hint: 'Ask what the team would deliver as the product.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Control Unit Role',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is the main job of the control unit in a computer?',
+    options: [
+      'Store files permanently',
+      'Display images on the screen',
+      'Coordinate and direct other components to carry out instructions',
+      'Convert AC power to DC power',
+    ],
+    answer: 2,
+    explanation:
+      'The control unit directs the flow of instructions and coordinates the arithmetic, memory, and input-output components.',
+    hint: 'Think about who directs traffic inside the processor.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Startup Beep',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A PC beeps during startup and never reaches the login screen.',
+    prompt: 'Why does the PC beep before anything appears on screen?',
+    options: [
+      'Loading the web browser profile',
+      'Connecting to the printer',
+      'Downloading an operating system update',
+      'Running a power-on self-test and reporting a hardware fault',
+    ],
+    answer: 3,
+    explanation:
+      'A beep with no display often means the power-on self-test found a hardware fault before the operating system could load.',
+    hint: 'The beep happens before any operating system is available.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'What an Interface Is',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'In a computer system, what is an interface?',
+    options: [
+      'A shared boundary where two components exchange data or control',
+      'A type of permanent storage',
+      'A programming error',
+      'A physical case fan',
+    ],
+    answer: 0,
+    explanation:
+      'An interface is the agreed boundary through which components exchange data or control without knowing internal details.',
+    hint: 'Think about where two parts meet and agree how to communicate.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Offline Sales Queue',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A shop card terminal keeps working during an internet outage and uploads sales later.',
+    prompt: 'Which part of the input-processing-output model does the local queue represent?',
+    options: ['Input only', 'Storage', 'Output only', 'Control only'],
+    answer: 1,
+    explanation:
+      'The terminal stores sales locally and sends them later, so the queue provides persistence rather than input or display.',
+    hint: 'The sales are being kept somewhere until the network returns.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Embedded vs General Purpose',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Which feature best distinguishes an embedded computer from a general-purpose PC?',
+    options: [
+      'It has no processor',
+      'It always has a keyboard',
+      'It is designed for a dedicated function with fixed software',
+      'It cannot connect to any network',
+    ],
+    answer: 2,
+    explanation:
+      'Embedded computers run fixed, dedicated functions inside larger products, unlike general-purpose PCs that run varied software.',
+    hint: 'Think about a washing machine controller versus a laptop.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Incompatible CPU',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A technician installs a newer CPU, but the motherboard will not start.',
+    prompt: 'Why does the machine fail to start after the processor swap?',
+    options: [
+      'The CPU is too cold',
+      'The monitor is unplugged',
+      'The keyboard is missing',
+      'The motherboard does not support that CPU socket or firmware',
+    ],
+    answer: 3,
+    explanation:
+      'CPU sockets and firmware support specific processor models; an unsupported chip will not start even if it fits physically.',
+    hint: 'Physical fit alone does not guarantee electrical and firmware support.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Drawing a Boundary',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Why can a system boundary be difficult to draw?',
+    options: [
+      'Components may be shared or remote, so the boundary depends on purpose and ownership',
+      'Boundaries are always physical',
+      'Every system has exactly one owner',
+      'Software never has interfaces',
+    ],
+    answer: 0,
+    explanation:
+      'Boundaries depend on purpose and ownership; shared services, remote components, and overlapping responsibilities make them a design choice.',
+    hint: 'Consider where one team responsibility ends and another begins.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Memory Test Failure',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A workstation fails its memory test during startup and will not boot.',
+    prompt: 'What should the technician do after the memory test fails?',
+    options: [
+      'Replace the monitor',
+      'Reseat or replace the memory module and retest',
+      'Reinstall the web browser',
+      'Delete temporary files',
+    ],
+    answer: 1,
+    explanation:
+      'A failed memory test points to faulty or poorly seated RAM, so reseating or replacing the module is the logical next step.',
+    hint: 'Follow the component that the test actually named.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'System Software',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Which item is system software rather than application software?',
+    options: ['Spreadsheet', 'Photo editor', 'Operating system', 'Web browser'],
+    answer: 2,
+    explanation:
+      'An operating system is system software that manages hardware and provides services; spreadsheets, editors, and browsers are applications.',
+    hint: 'Which program manages the machine rather than a user task?',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Unsaved Work',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A laptop battery dies before a document is saved.',
+    prompt: 'Which component lost the unsaved work?',
+    options: ['SSD', 'Firmware chip', 'Power supply', 'RAM'],
+    answer: 3,
+    explanation:
+      'Unsaved work lives in volatile RAM, which loses its contents immediately when power is cut.',
+    hint: 'The work was never written to permanent storage.',
+  },
+  {
+    chapterId: 'computer-system',
+    title: 'Restaurant Tablets',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A restaurant gives waiters tablets for taking orders at tables.',
+    prompt: 'Why add a central server instead of keeping orders only on each tablet?',
+    options: [
+      'To make each tablet heavier',
+      'To share orders and protect them if a tablet is lost',
+      'To remove the need for Wi-Fi',
+      'To increase battery use',
+    ],
+    answer: 1,
+    explanation:
+      'A central server lets all tablets share one order state and preserves orders if a device is lost or damaged.',
+    hint: 'Think about what happens when one waiter drops a tablet.',
+  },
+
+  // Chapter 3: Hardware vs Software
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Hardware Defined',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which best describes computer hardware?',
+    options: [
+      'Instructions stored in files',
+      'Data entered by users',
+      'The physical parts you can touch',
+      'The rules for using a network',
+    ],
+    answer: 2,
+    explanation:
+      'Hardware refers to the physical components of a computer, such as the case, keyboard, and screen, which can be touched.',
+    hint: 'Which option is physical?',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Software Defined',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which best describes software?',
+    options: [
+      'Programs and instructions that tell hardware what to do',
+      'The case and power supply',
+      'A type of cable',
+      'The physical keyboard',
+    ],
+    answer: 0,
+    explanation:
+      'Software is the set of programs and instructions that direct hardware; it is logical rather than physical.',
+    hint: 'Which option is not something you can touch?',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Software Identification',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which item is software?',
+    options: ['SSD', 'Monitor', 'Keyboard', 'Web browser'],
+    answer: 3,
+    explanation:
+      'A web browser is a program, so it is software; the drive, monitor, and keyboard are physical hardware.',
+    hint: 'Find the item that consists of instructions rather than parts.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Printer Driver',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A new printer is connected, but the computer sends jobs that never print.',
+    prompt: 'What must be installed before the printer can accept jobs?',
+    options: [
+      'A larger monitor',
+      'A driver that lets the operating system communicate with the printer',
+      'A second keyboard',
+      'A faster internet connection',
+    ],
+    answer: 1,
+    explanation:
+      'A driver translates between the operating system and a device; without the right one, print jobs cannot reach the printer.',
+    hint: 'The two sides need a translator.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'What Firmware Is',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What is firmware?',
+    options: [
+      'A purely physical connector',
+      'A temporary file',
+      'Software stored on a device to control its basic operation',
+      'A personal document',
+    ],
+    answer: 2,
+    explanation:
+      'Firmware is software embedded in a device, stored in nonvolatile memory, that controls its basic startup and operation.',
+    hint: 'It is software, but it comes with the hardware.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Smart TV Update',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A smart TV receives an update that improves how its remote control works.',
+    prompt: 'Which part of the TV received the change?',
+    options: [
+      'The HDMI cable',
+      'The wall socket',
+      'The phone belonging to the user',
+      'Embedded software in the TV',
+    ],
+    answer: 3,
+    explanation:
+      'The TV downloaded new embedded software, often called firmware, which controls features such as remote input.',
+    hint: 'The change arrived over the network and affected device behavior.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Hardware Interface',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which is an example of a hardware interface standard?',
+    options: ['USB', 'A spreadsheet formula', 'A folder name', 'A personal password'],
+    answer: 0,
+    explanation:
+      'USB is a standard connector and protocol that lets many devices communicate; formulas, folders, and passwords are not interfaces.',
+    hint: 'Which option defines how physical devices connect?',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'USB File System',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A user copies files to a USB drive formatted for a different operating system and cannot open them.',
+    prompt: 'What kind of compatibility problem is the USB drive showing?',
+    options: [
+      'A broken monitor',
+      'A compatibility issue with the file system',
+      'A CPU overheating issue',
+      'A printer queue problem',
+    ],
+    answer: 1,
+    explanation:
+      'Different operating systems support different file systems, so a drive formatted for one may not be readable on another.',
+    hint: 'The files exist, but the current system cannot interpret the drive format.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'One App, Many Machines',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Why can the same application run on computers from different manufacturers?',
+    options: [
+      'All hardware is identical inside',
+      'Applications contain every possible driver',
+      'The monitor translates the code',
+      'Operating systems and drivers provide a common layer',
+    ],
+    answer: 3,
+    explanation:
+      'Operating systems and drivers hide hardware differences behind common interfaces, letting one application run on varied machines.',
+    hint: 'Something between the app and the metal makes them look similar.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Graphics Driver Error',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A newly installed game reports that the graphics driver is too old.',
+    prompt: 'What is the direct fix for the reported graphics problem?',
+    options: [
+      'Update the graphics driver',
+      'Buy a new mouse',
+      'Delete the game save files',
+      'Turn up the volume',
+    ],
+    answer: 0,
+    explanation:
+      'The error names the graphics driver as too old, so updating that driver is the direct fix for this interface mismatch.',
+    hint: 'The message identifies the component that needs attention.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Agreeing on an Interface',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What does it mean that hardware and software must agree on an interface?',
+    options: [
+      'They must be made by one company',
+      'They must use the same color',
+      'They must follow the same rules for exchanging data and commands',
+      'They must never be updated',
+    ],
+    answer: 2,
+    explanation:
+      'An interface is a contract: both sides must follow the same rules for data formats, commands, and timing.',
+    hint: 'Think about a shared language rather than shared parts.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Browser Difference',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A company intranet page looks broken in one browser but fine in another.',
+    prompt: 'Why does the intranet page render differently in the second browser?',
+    options: [
+      'The keyboard is faulty',
+      'Differences in how browsers implement web standards',
+      'The server has no power',
+      'The monitor is too large',
+    ],
+    answer: 1,
+    explanation:
+      'Browsers interpret web standards differently, so a page can render correctly in one and break in another.',
+    hint: 'The same page and network work, so compare the programs rendering it.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'What an API Does',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is an API in software?',
+    options: [
+      'A defined way for one program to request services from another',
+      'A physical port for a monitor',
+      'A type of backup disk',
+      'A license for a keyboard',
+    ],
+    answer: 0,
+    explanation:
+      'An API defines how software components request services and exchange data without depending on internal implementation.',
+    hint: 'It is an interface, but between programs rather than devices.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'OS Upgrade Failure',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'After an operating system upgrade, an old payroll program fails to start.',
+    prompt: 'Why does the payroll program stop launching after the upgrade?',
+    options: [
+      'The payroll data was deleted automatically',
+      'The monitor is incompatible',
+      'The keyboard layout changed',
+      'The application is not compatible with the new operating system version',
+    ],
+    answer: 3,
+    explanation:
+      'Operating system upgrades can change interfaces and remove support, leaving older applications unable to run until updated.',
+    hint: 'The failure appeared immediately after a platform change.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'A Blurry Boundary',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Why is the boundary between hardware and software sometimes blurry?',
+    options: [
+      'Because software has no purpose',
+      'Because firmware and programmable chips contain software-like behavior inside hardware',
+      'Because hardware never changes',
+      'Because users cannot see software',
+    ],
+    answer: 1,
+    explanation:
+      'Firmware and programmable chips place software-like behavior inside hardware, so the practical boundary is not always sharp.',
+    hint: 'Think about instructions that ship inside a physical device.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Unpatchable Controller',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'An industrial controller runs fixed firmware that the vendor no longer updates.',
+    prompt: 'How should the team reduce risk from an unpatchable controller?',
+    options: [
+      'Connect it directly to the internet',
+      'Ignore it because it still works',
+      'Isolate it on a restricted network and add compensating controls',
+      'Replace it with a consumer laptop',
+    ],
+    answer: 2,
+    explanation:
+      'If the controller cannot be patched, isolating it limits exposure while other controls compensate for the missing updates.',
+    hint: 'You cannot fix the firmware, so reduce what can reach it.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Abstraction at Work',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'How does abstraction help when software talks to hardware?',
+    options: [
+      'Software can use a standard interface without knowing the internal details of the device',
+      'It makes every device identical',
+      'It removes the need for drivers',
+      'It guarantees perfect security',
+    ],
+    answer: 0,
+    explanation:
+      'Abstraction lets software call a standard interface while drivers handle device-specific details behind the scenes.',
+    hint: 'The software sees a simplified view, not the circuitry.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Printer Purchase Check',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A finance team wants a printer that has no driver for the operating system used by the company.',
+    prompt: 'What check should IT complete before approving the purchase?',
+    options: [
+      'Buy it and hope it works',
+      'Install it without a driver',
+      'Check for a supported driver or choose a compatible model',
+      'Replace the computers used by the finance team',
+    ],
+    answer: 2,
+    explanation:
+      'Checking driver support before purchase avoids buying hardware that cannot work with the operating system used by the company.',
+    hint: 'The missing piece is what lets the operating system use the device.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'Headphone Troubleshooting',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A user plugs in headphones, but the laptop still plays sound through its speakers.',
+    prompt: 'What is a sensible order for diagnosing the audio problem?',
+    options: [
+      'Reinstall the entire operating system first',
+      'Replace the motherboard immediately',
+      'Ignore the problem',
+      'Check the connection, then the audio driver and settings',
+    ],
+    answer: 3,
+    explanation:
+      'Start with the physical connection, then check driver and settings; reinstalling the operating system or replacing the motherboard is premature.',
+    hint: 'Check the simplest and cheapest causes first.',
+  },
+  {
+    chapterId: 'hardware-and-software',
+    title: 'App Rejected by Phone',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A phone refuses to install an app that worked on an older model.',
+    prompt: 'Why can the newer phone not install this older app?',
+    options: [
+      'The app is too small',
+      'The app does not support the newer operating system or hardware of the phone',
+      'The phone has no battery',
+      'The app store is closed forever',
+    ],
+    answer: 1,
+    explanation:
+      'Apps declare supported operating system versions and hardware, so a newer phone may be incompatible with an older app.',
+    hint: 'Compatibility can run in both directions.',
+  },
+
+  // Chapter 4: Data, Information & Knowledge
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'From Number to Information',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'A reading of 72 by itself becomes useful information when what is added?',
+    options: [
+      'More copies of the number',
+      'A faster processor',
+      'A larger screen',
+      'Context such as unit, place, and time',
+    ],
+    answer: 3,
+    explanation:
+      'A bare number has no meaning until context supplies what is measured, the unit, the place, and the time.',
+    hint: 'Ask what the number actually measures.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Metadata Defined',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What is metadata?',
+    options: [
+      'The main content of a photo',
+      'A backup copy of a file',
+      'Data that describes other data',
+      'A type of computer virus',
+    ],
+    answer: 2,
+    explanation:
+      'Metadata describes other data, such as the date, location, and camera settings of a photo, making content easier to interpret.',
+    hint: 'Think about information about a file rather than its contents.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Scores Without Units',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A spreadsheet column is labeled Score and contains values such as 8, 15, and 23.',
+    prompt: 'Why are these score values hard to interpret?',
+    options: [
+      'More rows',
+      'Units or a definition of what the score measures',
+      'A larger font',
+      'A different spreadsheet app',
+    ],
+    answer: 1,
+    explanation:
+      'Without units or a definition, readers cannot tell whether 23 is a percentage, a count, or something else.',
+    hint: 'A label alone may not explain the scale.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Knowledge in Action',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which example best shows knowledge rather than raw data?',
+    options: [
+      'Staff schedule extra cover when rain is forecast because past sales rose on wet days',
+      'A list of daily rainfall totals',
+      'The number 18.5',
+      'A column named Temperature',
+    ],
+    answer: 0,
+    explanation:
+      'Knowledge combines information with experience and judgment, as when staff act on a pattern between rain and sales.',
+    hint: 'Look for understanding that leads to an action.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Summarizing Orders',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A manager sees 5,000 order rows and asks for a useful summary.',
+    prompt: 'How can the manager make the order rows useful for a decision?',
+    options: [
+      'Deleting half the rows',
+      'Printing every row',
+      'Renaming the file',
+      'Aggregating and interpreting the rows in context',
+    ],
+    answer: 3,
+    explanation:
+      'Aggregation and interpretation turn many raw rows into a summary that supports a decision, such as totals by region.',
+    hint: 'Information is data that has been organized for a purpose.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Current Enough',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which information quality dimension asks whether information is current enough for the decision?',
+    options: ['Completeness', 'Accuracy', 'Timeliness', 'Accessibility'],
+    answer: 2,
+    explanation:
+      'Timeliness asks whether information reflects the current situation closely enough for the decision being made.',
+    hint: 'Think about how old the information is.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Same Customer Twice',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'The same customer appears twice in a database with different address spellings.',
+    prompt: 'What is wrong with having two versions of the same customer record?',
+    options: [
+      'The data is too timely',
+      'The records are inconsistent',
+      'The data is encrypted',
+      'The screen is too bright',
+    ],
+    answer: 1,
+    explanation:
+      'The same customer recorded with different spellings creates inconsistent records, which can cause duplicate mailings and reporting errors.',
+    hint: 'Both records describe one person but do not agree.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Testing Relevance',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What should a manager ask to judge whether a report is relevant?',
+    options: [
+      'Does it help answer the decision at hand?',
+      'Is it stored on a fast disk?',
+      'Is it written in a large font?',
+      'Was it entered by a manager?',
+    ],
+    answer: 0,
+    explanation:
+      'Relevance asks whether information actually bears on the decision, not whether it is fast, large, or entered by a manager.',
+    hint: 'Focus on the connection to the decision being made.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'The Average Trap',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Why can an average response time mislead managers?',
+    options: [
+      'Averages cannot be calculated',
+      'Averages are always too high',
+      'Averages ignore the number of staff',
+      'A few very slow cases can be hidden by many fast ones',
+    ],
+    answer: 3,
+    explanation:
+      'An average can conceal a wide spread, so a few very slow cases may disappear behind many fast ones.',
+    hint: 'Think about what an average does to extreme values.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Ticket Resolution',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A dashboard reports a two-hour average ticket resolution, but many tickets stay open for days.',
+    prompt: 'How can the average be two hours when many tickets stay open for days?',
+    options: [
+      'The dashboard has no data',
+      'The average is illegal to use',
+      'A small number of very fast tickets pull the average down',
+      'All tickets take exactly two hours',
+    ],
+    answer: 2,
+    explanation:
+      'A small number of very fast resolutions can pull the mean down while many tickets still wait for days.',
+    hint: 'The mean is sensitive to values at both ends of the range.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Why Context Matters',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Two reports both show the value 10, but one means minutes and the other means items. What does this illustrate?',
+    options: [
+      'Numbers are always wrong',
+      'Its meaning depends on what is measured, the unit, and the time',
+      'Computers cannot store numbers',
+      'Context makes files larger',
+    ],
+    answer: 1,
+    explanation:
+      'The same value can mean different things depending on what is measured, the unit, and when it was recorded.',
+    hint: 'Consider whether 10 means minutes, items, or degrees.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Five-Star Survey',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A satisfaction survey is sent only to customers who recently gave five-star reviews.',
+    prompt: 'Why is the survey result not representative of all customers?',
+    options: [
+      'The sample is biased and does not represent all customers',
+      'The report is too short',
+      'The data is encrypted',
+      'The survey used too many questions',
+    ],
+    answer: 0,
+    explanation:
+      'Surveying only happy customers produces a biased sample, so the report cannot represent the wider customer base.',
+    hint: 'Ask who had no chance to respond.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Complete and Correct',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'A customer record has every required field filled in, but the phone number is wrong. Which quality dimension is affected?',
+    options: [
+      'Completeness',
+      'Timeliness',
+      'Relevance',
+      'Accuracy',
+    ],
+    answer: 3,
+    explanation:
+      'The record is complete because the fields are present, but accuracy concerns whether the recorded values are correct.',
+    hint: 'A filled-in field can still contain the wrong value.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Outdated Stock Report',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A store uses the stock report from last week and over-orders popular items.',
+    prompt: 'Why did the stock report from last week lead to over-ordering?',
+    options: ['Relevance', 'Accessibility', 'Timeliness', 'Formatting'],
+    answer: 2,
+    explanation:
+      'The report described the stock position from last week, so it was not current enough; timeliness is the quality dimension that failed.',
+    hint: 'The data was correct when collected but not when used.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Shared Knowledge Base',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Why should a support team record solutions in a shared knowledge base?',
+    options: [
+      'To increase paperwork',
+      'To turn individual experience into reusable organizational knowledge',
+      'To prevent anyone from solving problems',
+      'To replace all training',
+    ],
+    answer: 1,
+    explanation:
+      'A shared knowledge base preserves solutions beyond one person, so the team can reuse them and improve consistency.',
+    hint: 'Think about what is lost when one expert leaves.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Counting Active Users',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'Sales and support report different active-user counts because each team defines active differently.',
+    prompt: 'Why do the two departments report different active-user totals?',
+    options: [
+      'Inconsistent definitions and metadata for the metric',
+      'A slow network',
+      'Too much storage',
+      'A broken monitor',
+    ],
+    answer: 0,
+    explanation:
+      'Different definitions for the same metric produce different counts; agreed definitions and metadata are needed for consistency.',
+    hint: 'Both teams are measuring something, but perhaps not the same thing.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Truncated Axis',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'How can starting the axis at 95 distort the chart?',
+    options: [
+      'The chart cannot load',
+      'The data becomes encrypted',
+      'The colors will be wrong',
+      'Small changes can look dramatic and mislead viewers',
+    ],
+    answer: 3,
+    explanation:
+      'Truncating the axis compresses the visible range, so small changes look large and can exaggerate a trend.',
+    hint: 'Compare the visual size of the change with the actual values.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Missing Regions',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'An analyst must report one company-wide number, but 30 percent of regional data is missing.',
+    prompt: 'How should the analyst handle the incomplete regional data?',
+    options: [
+      'Invent values for the missing regions',
+      'Ignore the missing regions without saying so',
+      'Report the number with a clear caveat about the missing data',
+      'Delay all reporting forever',
+    ],
+    answer: 2,
+    explanation:
+      'Reporting the number with a clear caveat preserves honesty; inventing or hiding missing data would mislead decision makers.',
+    hint: 'Accuracy includes being transparent about limitations.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'From Facts to Action',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Which sequence best describes the path from raw facts to action?',
+    options: [
+      'Knowledge, data, information, decision',
+      'Data, information, knowledge, decision',
+      'Decision, data, knowledge, information',
+      'Information, decision, data, knowledge',
+    ],
+    answer: 1,
+    explanation:
+      'Raw data is processed into information, interpreted into knowledge, and then applied to make a decision.',
+    hint: 'Start with unprocessed facts and finish with a choice.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Ranking by Throughput',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A hospital ranks staff by the number of patients seen per hour.',
+    prompt: 'How could ranking staff by patients per hour change behavior?',
+    options: [
+      'Staff may rush patients to improve the metric',
+      'Waiting times will always fall',
+      'Data quality will improve automatically',
+      'Patients will need no follow-up',
+    ],
+    answer: 0,
+    explanation:
+      'When a single number becomes the target, staff may optimize for it in ways that harm care, such as rushing appointments.',
+    hint: 'People tend to manage what is measured.',
+  },
+  {
+    chapterId: 'data-information-knowledge',
+    title: 'Library Catalogue',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A library record lists title, author, year, genre, and shelf location.',
+    prompt: 'What role do title, author, and shelf location play in the catalogue record?',
+    options: [
+      'Raw sensor readings',
+      'A backup file',
+      'Metadata describing the book',
+      'A network protocol',
+    ],
+    answer: 2,
+    explanation:
+      'Title, author, and shelf location describe the book rather than being its full contents, so they are metadata.',
+    hint: 'They tell you about the item rather than reproduce it.',
+  },
+
+  // Chapter 5: CPU & the Instruction Cycle
+  {
+    chapterId: 'cpu',
+    title: 'Instruction Cycle Order',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which order matches the basic instruction cycle?',
+    options: [
+      'Decode, fetch, execute, store',
+      'Fetch, decode, execute, write back',
+      'Execute, fetch, decode, write back',
+      'Write back, decode, fetch, execute',
+    ],
+    answer: 1,
+    explanation:
+      'The CPU fetches an instruction, decodes its meaning, executes it, and writes the result back before continuing.',
+    hint: 'The CPU must get the instruction before it can understand it.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Program Counter',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What does the program counter hold?',
+    options: [
+      'The number of programs installed',
+      'The current time',
+      'The amount of free memory',
+      'The address of the next instruction to fetch',
+    ],
+    answer: 3,
+    explanation:
+      'The program counter stores the address of the next instruction, allowing the CPU to fetch instructions in sequence.',
+    hint: 'It keeps the CPU moving through the program.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Photo Filter Work',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context: 'An older laptop takes a long time to apply photo filters.',
+    prompt: 'Which component is doing most of that work?',
+    options: ['The CPU', 'The monitor', 'The keyboard', 'The power cable'],
+    answer: 0,
+    explanation:
+      'Photo filters are arithmetic operations performed by the CPU; the monitor, keyboard, and power cable do not compute them.',
+    hint: 'Which component executes instructions?',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Clock Speed Meaning',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What does a CPU clock speed of 3.0 GHz mean?',
+    options: [
+      'Three billion instructions per second exactly',
+      'Three gigabytes of memory',
+      'About three billion cycles per second',
+      'Three cores are active',
+    ],
+    answer: 2,
+    explanation:
+      'GHz measures clock cycles per second, not instructions; one instruction may take several cycles or several may complete per cycle.',
+    hint: 'A cycle is a timing beat, not necessarily a completed instruction.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Cores or Clock',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A buyer compares a 3.4 GHz dual-core laptop with a 2.6 GHz quad-core laptop.',
+    prompt: 'Which conclusion about the two laptops is justified?',
+    options: [
+      'The dual-core is always faster',
+      'Neither is automatically faster; it depends on the workload',
+      'The quad-core is always faster',
+      'Clock speed is unrelated to performance',
+    ],
+    answer: 1,
+    explanation:
+      'Core count and clock speed affect different workloads, so neither machine is automatically faster without knowing the task.',
+    hint: 'Different programs use the processor in different ways.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'What a Core Is',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What is a CPU core?',
+    options: [
+      'A type of power supply',
+      'A storage partition',
+      'A screen resolution',
+      'An independent processing unit on the chip',
+    ],
+    answer: 3,
+    explanation:
+      'A core is a complete processing unit on the chip, capable of executing instructions; modern CPUs often contain several.',
+    hint: 'Think of it as a worker inside the processor.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Parallel Video Export',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A video editor exports a project faster on a machine with more cores.',
+    prompt: 'What allows the export to finish sooner on this machine?',
+    options: [
+      'The export work can be split across cores in parallel',
+      'More cores reduce the file size',
+      'Cores replace the need for memory',
+      'Each core runs at a higher voltage',
+    ],
+    answer: 0,
+    explanation:
+      'Video export can divide frames or effects across cores, so more cores reduce elapsed time when the software supports parallelism.',
+    hint: 'Think about several workers sharing one large job.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Cache Purpose',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is the purpose of CPU cache?',
+    options: [
+      'To store files permanently',
+      'To connect to the internet',
+      'To hold frequently used data close to the CPU for fast access',
+      'To cool the processor',
+    ],
+    answer: 2,
+    explanation:
+      'Cache holds recently or frequently used data close to the CPU, reducing the time spent waiting for slower memory.',
+    hint: 'Think about keeping often-used items within easy reach.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Repeated Lookup Table',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt:
+      'A program repeatedly reads the same small lookup table and runs quickly. Which principle explains this?',
+    options: ['Random access', 'Locality of reference', 'Lossy compression', 'Virtual memory'],
+    answer: 1,
+    explanation:
+      'Locality of reference means programs tend to reuse recently accessed data, which caches are designed to exploit.',
+    hint: 'Recent and repeated access is the clue.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Spreadsheet Slowdown',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A spreadsheet slows sharply once its working data grows much larger than the CPU cache.',
+    prompt: 'Why does performance fall when the dataset outgrows the cache?',
+    options: [
+      'The keyboard is failing',
+      'The monitor has too many pixels',
+      'The spreadsheet has no formulas',
+      'More data must come from slower memory',
+    ],
+    answer: 3,
+    explanation:
+      'When working data exceeds the cache, more requests go to slower main memory, so performance drops.',
+    hint: 'The cache can no longer hold the active data.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Pipelining Benefit',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is the main benefit of pipelining in a CPU?',
+    options: [
+      'It overlaps stages of different instructions to increase throughput',
+      'It makes each instruction finish instantly',
+      'It removes the need for registers',
+      'It lowers the clock speed',
+    ],
+    answer: 0,
+    explanation:
+      'Pipelining overlaps stages from different instructions, increasing the number of instructions completed per unit time.',
+    hint: 'Think about an assembly line rather than one worker doing everything.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Unpredictable Branches',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A program with many unpredictable branches gains less than expected from a deep pipeline.',
+    prompt: 'Why do unpredictable branches reduce the pipeline benefit here?',
+    options: [
+      'Branches delete data',
+      'The CPU cannot execute branches',
+      'Wrong guesses force the pipeline to stall and discard work',
+      'Branches reduce clock speed permanently',
+    ],
+    answer: 2,
+    explanation:
+      'When the CPU mispredicts a branch, it must discard speculative work and refill the pipeline, reducing the expected gain.',
+    hint: 'The processor has prepared work that may turn out to be useless.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Registers vs RAM',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'How do CPU registers compare with RAM?',
+    options: [
+      'Registers are larger and slower',
+      'Registers are smaller and faster',
+      'They are identical',
+      'Registers store files permanently',
+    ],
+    answer: 1,
+    explanation:
+      'Registers sit inside the CPU and are extremely fast but tiny; RAM is larger and slower but still volatile.',
+    hint: 'The closest storage to the execution units is tiny.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Updating the Counter',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context: 'After fetching an instruction, the CPU updates the program counter.',
+    prompt: 'Why does the CPU change the program counter after a fetch?',
+    options: [
+      'It deletes the instruction',
+      'It increases the clock speed',
+      'It saves the instruction to disk',
+      'It points to the next instruction to fetch',
+    ],
+    answer: 3,
+    explanation:
+      'Updating the program counter moves execution to the next instruction, unless a branch changes the address.',
+    hint: 'The CPU needs to know where to go next.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Eight Logical Processors',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A laptop reports eight logical processors but has four physical cores.',
+    prompt: 'Why does the laptop list eight logical processors when it has four cores?',
+    options: [
+      'Each core can run two threads through simultaneous multithreading',
+      'The laptop has eight separate chips',
+      'The extra processors are virtual memory',
+      'The operating system invented fake cores',
+    ],
+    answer: 0,
+    explanation:
+      'Simultaneous multithreading lets each physical core present two logical processors, sharing execution resources rather than doubling capacity.',
+    hint: 'One physical core can advertise more than one logical worker.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Single-Threaded Game',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context: 'A game engine runs most of its work on one thread.',
+    prompt: 'Which hardware change would most improve this single-threaded game?',
+    options: [
+      'More storage capacity',
+      'A larger monitor',
+      'A CPU with a higher clock speed',
+      'More USB ports',
+    ],
+    answer: 2,
+    explanation:
+      'Single-threaded work cannot spread across many cores, so higher clock speed usually helps more than extra cores.',
+    hint: 'The workload cannot be divided among many workers.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Doubling Cores',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Why does doubling the number of cores usually fail to double application performance?',
+    options: [
+      'Cores cannot run in parallel',
+      'Part of the work is serial and coordination adds overhead',
+      'Extra cores lower the clock to zero',
+      'Software cannot use more than one core',
+    ],
+    answer: 1,
+    explanation:
+      'Some work must run serially, and coordinating many cores adds overhead, so gains fall short of the core count increase.',
+    hint: 'Not every task can be split evenly.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Busy Web Server',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context: 'A server handles thousands of independent short requests.',
+    prompt: 'Which processor design suits thousands of independent requests?',
+    options: [
+      'One very fast core with no cache',
+      'A single-core CPU with a high clock',
+      'More storage instead of CPU',
+      'Many cores to handle requests in parallel',
+    ],
+    answer: 3,
+    explanation:
+      'Independent requests can run concurrently, so many cores usually serve this workload better than one very fast core.',
+    hint: 'The requests do not depend on one another.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Speculative Execution',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Why do modern CPUs execute instructions speculatively?',
+    options: [
+      'To keep the pipeline busy while a branch outcome is uncertain',
+      'To reduce the number of registers',
+      'To avoid using cache',
+      'To make programs easier to write',
+    ],
+    answer: 0,
+    explanation:
+      'Speculative execution lets the CPU work ahead on a likely path, keeping the pipeline busy while a branch is resolved.',
+    hint: 'Idle pipeline stages waste potential performance.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'Thermal Throttling',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A laptop slows down during long video calls and its fan runs constantly.',
+    prompt: 'Why does the laptop slow down as the call continues?',
+    options: [
+      'The SSD is full',
+      'The Wi-Fi password is wrong',
+      'The CPU is throttling to stay within temperature limits',
+      'The screen brightness is too low',
+    ],
+    answer: 2,
+    explanation:
+      'Sustained heat forces the CPU to lower its clock to stay within safe limits, which reduces performance during long tasks.',
+    hint: 'The fan and the slowdown are related clues.',
+  },
+  {
+    chapterId: 'cpu',
+    title: 'CPU at Full Load',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'Task Manager shows the CPU at 100 percent while an app is frozen.',
+    prompt: 'What can be concluded from the CPU reading?',
+    options: [
+      'The monitor is broken',
+      'The computer has no storage',
+      'The network cable is unplugged',
+      'The processor is fully busy and may be the bottleneck',
+    ],
+    answer: 3,
+    explanation:
+      'Full CPU usage means the processor is busy, which can make the app wait; it does not by itself prove hardware failure.',
+    hint: 'Distinguish a busy component from a broken one.',
+  },
+
+  // Chapter 6: Memory, Storage & the Hierarchy
+  {
+    chapterId: 'memory-storage',
+    title: 'Losing Contents',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What kind of memory holds a running program and loses its contents at shutdown?',
+    options: ['RAM', 'SSD', 'Hard disk', 'USB flash drive'],
+    answer: 0,
+    explanation:
+      'RAM is volatile, so its contents disappear when power is removed; SSDs, hard disks, and USB drives retain data.',
+    hint: 'Think about temporary working memory.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Power-Free Storage',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which of these can hold files safely after the computer is switched off?',
+    options: ['CPU registers', 'RAM', 'SSD', 'Cache'],
+    answer: 2,
+    explanation:
+      'An SSD stores data in flash memory that retains it without power, unlike registers, RAM, and cache.',
+    hint: 'Which option is persistent storage?',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Fastest to Slowest',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'Which list orders storage from fastest to slowest?',
+    options: [
+      'SSD, RAM, cache, registers',
+      'RAM, cache, registers, SSD',
+      'Registers, RAM, SSD, cache',
+      'Registers, cache, RAM, SSD',
+    ],
+    answer: 3,
+    explanation:
+      'Registers are fastest and smallest, followed by cache, RAM, and SSD, with capacity growing and speed falling down the hierarchy.',
+    hint: 'The hierarchy runs from tiny and close to large and distant.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Power Cut Report',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A desktop loses power while a report is open and unsaved.',
+    prompt: 'Where was the report stored before the power failed?',
+    options: [
+      'The SSD was too fast',
+      'The unsaved content was in volatile RAM',
+      'The monitor lost its settings',
+      'The keyboard buffer was full',
+    ],
+    answer: 1,
+    explanation:
+      'The unsaved report existed only in volatile RAM, which loses its contents when power is interrupted.',
+    hint: 'The document had not yet reached persistent storage.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'RAM vs SSD',
+    difficulty: 'Easy',
+    type: 'mcq',
+    prompt: 'What is the main difference between RAM and an SSD?',
+    options: [
+      'RAM is temporary working memory, while an SSD keeps data without power',
+      'RAM stores files permanently, while an SSD is temporary',
+      'They are both nonvolatile',
+      'An SSD is faster than registers',
+    ],
+    answer: 0,
+    explanation:
+      'RAM holds active programs and data temporarily, while an SSD provides persistent storage that survives shutdown.',
+    hint: 'One is for active work, the other for keeping files.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Phone Storage Full',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A phone warns that storage is full, and new photos cannot be saved.',
+    prompt: 'What has run out on the phone?',
+    options: [
+      'CPU cache',
+      'RAM',
+      'Persistent storage',
+      'Screen brightness',
+    ],
+    answer: 2,
+    explanation:
+      'Photos are saved to persistent storage; a full-storage warning means there is no room left in the flash memory of the device.',
+    hint: 'Photos must survive a restart.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Film Archive',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A film studio keeps years of finished footage that is rarely accessed.',
+    prompt: 'Which storage is the best fit for low cost and long-term retention?',
+    options: ['CPU registers', 'RAM', 'Cache', 'Tape archive'],
+    answer: 3,
+    explanation:
+      'Tape offers high capacity at low cost for rarely accessed archives, though retrieving individual files is slow.',
+    hint: 'The footage is cold data, not active working data.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Second Launch',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'An app opens slowly the first time and quickly the second time.',
+    prompt: 'Why is the second launch faster than the first?',
+    options: [
+      'The CPU gained more cores',
+      'The operating system cached frequently used data',
+      'The app deleted its files',
+      'The monitor warmed up',
+    ],
+    answer: 1,
+    explanation:
+      'The operating system caches recently used program data, so the second launch avoids much slower storage access.',
+    hint: 'The second run reuses something saved from the first.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Why Fast Memory Is Small',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'Why does the memory hierarchy place small, fast memory near the CPU?',
+    options: [
+      'Fast memory is expensive, so a small amount is used as a cache',
+      'Fast memory is always cheaper',
+      'Large memory is always faster',
+      'The CPU cannot access RAM',
+    ],
+    answer: 0,
+    explanation:
+      'Fast memory is expensive and physically limited, so a small cache near the CPU complements larger, cheaper memory below.',
+    hint: 'Consider cost per gigabyte at the top of the hierarchy.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Many Browser Tabs',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A user keeps many browser tabs open, and the computer constantly reads from disk.',
+    prompt: 'What should the user add to reduce the disk swapping?',
+    options: ['A larger monitor', 'A faster printer', 'More RAM', 'A new keyboard'],
+    answer: 2,
+    explanation:
+      'Many open tabs consume RAM; when it runs out, the system swaps to disk, and adding RAM reduces that slowdown.',
+    hint: 'The disk activity suggests the system is short of working memory.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Virtual Memory',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is virtual memory?',
+    options: [
+      'A second physical CPU',
+      'A permanent cloud backup',
+      'A type of cache inside the CPU',
+      'Disk space used as extra memory when RAM is full',
+    ],
+    answer: 3,
+    explanation:
+      'Virtual memory uses disk space as an extension of RAM when physical memory is full, at a significant speed cost.',
+    hint: 'It borrows space from storage when RAM runs short.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Heavy Swapping',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A PC with 8 GB of RAM runs several virtual machines and its disk light stays on.',
+    prompt: 'Why does the virtual-machine host keep reading from disk?',
+    options: [
+      'The monitor is too small',
+      'The system is swapping heavily because RAM is exhausted',
+      'The keyboard layout is wrong',
+      'The GPU has too many fans',
+    ],
+    answer: 1,
+    explanation:
+      'With too little RAM for the virtual machines, the system swaps pages to disk constantly, causing heavy slowdown.',
+    hint: 'Each virtual machine needs its own memory.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Delay vs Throughput',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is the difference between latency and bandwidth?',
+    options: [
+      'Latency is delay per operation, while bandwidth is the amount transferred per unit time',
+      'Latency is capacity, while bandwidth is delay',
+      'They are the same measurement',
+      'Bandwidth is measured only in seconds',
+    ],
+    answer: 0,
+    explanation:
+      'Latency measures delay per operation, while bandwidth measures how much data moves in a given time.',
+    hint: 'One is about waiting, the other about volume.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Thousands of Small Files',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'Copying thousands of small files is slow even on a fast SSD.',
+    prompt: 'Why is the copy slow when the total size is modest?',
+    options: [
+      'The SSD has no capacity',
+      'The files are encrypted automatically',
+      'Per-file overhead and latency add up',
+      'The monitor refreshes too slowly',
+    ],
+    answer: 2,
+    explanation:
+      'Each small file carries per-file overhead, so latency and metadata operations dominate even on fast storage.',
+    hint: 'The total data may be small, but the number of operations is large.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Working Set',
+    difficulty: 'Medium',
+    type: 'mcq',
+    prompt: 'What is a process working set?',
+    options: [
+      'The set of files it will never use',
+      'The amount of screen space it occupies',
+      'The number of users logged in',
+      'The memory pages it is actively using',
+    ],
+    answer: 3,
+    explanation:
+      'The working set is the set of memory pages a process is actively using, which should ideally fit in RAM.',
+    hint: 'Think about the pages needed during current execution.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Random Reads',
+    difficulty: 'Medium',
+    type: 'scenario',
+    context:
+      'A database performs many random reads of small records.',
+    prompt: 'Why is an SSD usually better than a hard disk here?',
+    options: [
+      'SSDs have spinning platters',
+      'SSDs have no moving read head, so random access is faster',
+      'Hard disks use less power',
+      'SSDs store data only in RAM',
+    ],
+    answer: 1,
+    explanation:
+      'An SSD has no moving head, so it finds random records quickly; a hard disk must physically seek, adding delay.',
+    hint: 'Compare mechanical movement with electronic access.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'SSD Write Limits',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Why do SSDs have a limited number of writes per cell?',
+    options: [
+      'Each flash cell tolerates a limited number of erase cycles, so controllers spread writes',
+      'Writing physically scratches a disk',
+      'SSDs cannot be rewritten at all',
+      'The CPU limits write speed',
+    ],
+    answer: 0,
+    explanation:
+      'Each flash cell tolerates a limited number of erase cycles, so controllers spread writes to extend drive life.',
+    hint: 'Wear leveling exists for a reason.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Backup Plan',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A small business wants a safer backup plan.',
+    prompt: 'Which plan best matches the 3-2-1 rule?',
+    options: [
+      'Three copies on the same laptop',
+      'Two copies in the same room',
+      'Three copies, on two media types, with one offsite',
+      'One copy in the cloud only',
+    ],
+    answer: 2,
+    explanation:
+      'The 3-2-1 rule means three copies, on two different media types, with at least one copy stored offsite.',
+    hint: 'The rule counts copies, media types, and locations.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'All-Cache Computer',
+    difficulty: 'Hard',
+    type: 'mcq',
+    prompt: 'Why not build a computer using only the fastest cache memory?',
+    options: [
+      'Cache is too slow',
+      'Cache cannot store data',
+      'Cache is nonvolatile',
+      'Fast memory is costly and takes space, so a hierarchy is more economical',
+    ],
+    answer: 3,
+    explanation:
+      'Cache is fast but expensive and small, so an all-cache machine would cost far more and hold far less data.',
+    hint: 'Consider cost and capacity, not just speed.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'Archive and Database',
+    difficulty: 'Hard',
+    type: 'scenario',
+    context:
+      'A team must store a large video archive and a small, heavily used transaction database.',
+    prompt: 'How should the team divide the archive and the database across storage types?',
+    options: [
+      'Put both on tape',
+      'Use high-capacity cheaper storage for the archive and fast SSD for the database',
+      'Use tape for the database and cache for the archive',
+      'Use RAM for both permanently',
+    ],
+    answer: 1,
+    explanation:
+      'Cheap high-capacity storage suits the archive, while fast SSD storage serves the frequently accessed database.',
+    hint: 'Match each dataset to its access pattern and budget.',
+  },
+  {
+    chapterId: 'memory-storage',
+    title: 'USB Removal',
+    difficulty: 'Easy',
+    type: 'scenario',
+    context:
+      'A user pulls out a USB drive while a file is still copying.',
+    prompt: 'What can happen to the file being copied when the drive is pulled?',
+    options: [
+      'The file may be corrupted or incomplete',
+      'The CPU will overheat',
+      'The monitor will lose color',
+      'The keyboard will stop working',
+    ],
+    answer: 0,
+    explanation:
+      'Removing a drive during a write can leave the file incomplete or corrupt its file system structures.',
+    hint: 'The write operation has not finished.',
+  },
+];

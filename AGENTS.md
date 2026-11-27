@@ -7,7 +7,7 @@ Welcome agent! This file defines the guidelines, architecture conventions, and v
 ## 📌 Project Overview
 - **Repository**: CSCosmos (Computer Science Learning & Visualizer Hub)
 - **Tech Stack**: Next.js 16 (App Router), TypeScript, React 19, Tailwind CSS, Radix UI, Lucide Icons, Framer Motion, Monaco Editor, Anime.js, D3.js.
-- **Main Goal**: Maintain 52 live computer science topics (49 absorbed engines + 3 curriculum modules) as native Next.js routes within CSCosmos, with full dark/light theme support, SSG pre-rendering, and seamless client-side routing. The other 21 catalog topics are `coming-soon` while their engines are rebuilt from scratch.
+- **Main Goal**: Maintain 53 live computer science topics (50 absorbed engines + 3 curriculum modules) as native Next.js routes within CSCosmos, with full dark/light theme support, SSG pre-rendering, and seamless client-side routing. Another 205 catalog topics are `coming-soon`; 21 of those are retired engines awaiting a from-scratch rebuild.
 
 ---
 

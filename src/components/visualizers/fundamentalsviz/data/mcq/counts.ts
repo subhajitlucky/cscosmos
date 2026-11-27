@@ -1,0 +1,28 @@
+export const IT_PROBLEM_COUNT = 500;
+
+export const IT_PROBLEM_COUNTS_BY_CHAPTER: Record<string, number> = {
+  'what-is-it': 20,
+  'computer-system': 21,
+  'hardware-and-software': 20,
+  'data-information-knowledge': 21,
+  cpu: 21,
+  'memory-storage': 21,
+  'input-output': 21,
+  'motherboard-buses': 21,
+  'buying-maintaining': 21,
+  'binary-number-systems': 21,
+  'integers-floating-point': 21,
+  'character-encoding': 21,
+  'multimedia-compression': 21,
+  'operating-systems': 20,
+  'files-storage': 21,
+  applications: 21,
+  'programming-web': 21,
+  'virtualization-cloud': 21,
+  'networks-internet': 21,
+  'web-email-cloud': 21,
+  cybersecurity: 21,
+  'databases-information-systems': 21,
+  'business-systems': 20,
+  'ethics-ai-careers': 21,
+};

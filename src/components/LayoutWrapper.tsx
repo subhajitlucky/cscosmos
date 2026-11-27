@@ -22,6 +22,7 @@ const SELF_CONTAINED_SUBSITE_ROUTES = new Set([
   '/cryptviz',
   '/css-cosmos',
   '/dbms',
+  '/fundamentals-of-it',
   '/dockercosmos',
   '/evminternals',
   '/fastapicosmos',

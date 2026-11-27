@@ -15,7 +15,7 @@ and discoverability — not on catalog size or live cohorts.
 ## Current state (verified)
 
 - Next.js 16 App Router, React 19, TypeScript, Tailwind, SSG.
-- 257 topics across 8 domains; 52 active visualizer topics; 2,500+ pre-rendered pages.
+- 258 topics across 8 domains; 53 active visualizer topics; 2,500+ pre-rendered pages.
 - 25 interview questions across 5 categories with animated walkthroughs.
 - Global search, dark/light theme, sitemap, `robots.txt`, `llms.txt`.
 - Optional passwordless accounts, Postgres learning sync, and read-only public APIs are implemented. Payments are not.

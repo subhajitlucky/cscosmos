@@ -1,16 +1,16 @@
 # CSCosmos Architecture
 
-CSCosmos is a visual computer science learning platform: 257 catalog topics, 52 live
-interactive visualizer topics (49 absorbed engines + 3 curriculum modules), interview
-walkthroughs, and a local-first learning layer with optional accounts. Another 21
-catalog topics are `coming-soon` while their engines are rebuilt from scratch.
+CSCosmos is a visual computer science learning platform: 258 catalog topics, 53 live
+interactive visualizer topics (50 absorbed engines + 3 curriculum modules), interview
+walkthroughs, and a local-first learning layer with optional accounts. Another 205
+catalog topics are `coming-soon`; 21 of those are retired engines awaiting a rebuild.
 
 ## System overview
 
 ```text
 src/data/
   domains.ts       8 domains
-  topics.ts        257 topics + metadata
+  topics.ts        258 topics + metadata
   topic-meta.ts    difficulty, time, tags, prerequisites, related topics
   engine-routes.ts 47 topicSlug -> engineDir mappings
   interview/       5 categories, questions, companies, animations

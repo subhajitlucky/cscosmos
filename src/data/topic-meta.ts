@@ -250,6 +250,12 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicMeta>> = {
     prerequisites: ['sqlcosmos'],
     related: ['sqlcosmos', 'systemdesignviz', 'mongocosmos'],
   },
+  'fundamentals-of-it': {
+    difficulty: 'beginner',
+    estimatedMinutes: 45,
+    tags: ['it', 'hardware', 'networks', 'security', 'cloud'],
+    related: ['program-cosmos', 'operating-systems', 'dbms', 'computer-networks-internals-tcpip'],
+  },
 };
 
 const STOP_WORDS = new Set(['with', 'from', 'into', 'your', 'that', 'this', 'and', 'the', 'for']);
