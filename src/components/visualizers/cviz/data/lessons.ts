@@ -16,6 +16,7 @@ import type { CWalkthrough } from './walkthrough-types';
 export interface CLesson {
   chapterId: string;
   hook: string;
+  plainEnglish: string;
   walkthrough?: CWalkthrough;
   sections: CLessonSection[];
   keyTakeaways: string[];
@@ -27,6 +28,7 @@ export interface CLesson {
 export const cLessons: Record<string, CLesson> = {
   'c-language-basics': {
     chapterId: 'c-language-basics',
+    plainEnglish: 'A C program is a recipe. The ingredients are variables, the steps are statements, and main is the first step.',
     hook:
       'C is small enough to learn completely and close enough to the machine that every line has a cost. Start with the shape of a source file.',
     sections: [
@@ -90,6 +92,7 @@ int player2_score;
 
   'c-data-types': {
     chapterId: 'c-data-types',
+    plainEnglish: 'A data type is the size of the box and the shape of what goes inside it.',
     hook:
       'A type tells the compiler how many bytes to reserve and how to interpret the bit pattern. Qualifiers adjust range and signedness.',
     sections: [
@@ -160,6 +163,7 @@ printf("octal A=\101 hex A=\x41\n");`,
 
   'operators-and-expressions': {
     chapterId: 'operators-and-expressions',
+    plainEnglish: 'Operators are tools. Precedence is the rule for which tool to use first, like multiplication before addition.',
     hook:
       'Expressions combine values with operators. Precedence decides what binds first, and integer division decides whether you get a fraction or a truncation.',
     sections: [
@@ -220,6 +224,7 @@ int main(void) {
 
   'console-output-input': {
     chapterId: 'console-output-input',
+    plainEnglish: 'printf is your mouth and scanf is your ears. The format string tells both what kind of thing to expect.',
     hook:
       'printf writes formatted text, scanf reads formatted input. The format string is a contract: get it wrong and the program misreads memory.',
     sections: [
@@ -279,6 +284,7 @@ printf("next year: %d\n", age + 1);`,
 
   'character-string-io': {
     chapterId: 'character-string-io',
+    plainEnglish: 'Reading characters is like sipping soup one spoon at a time. A string is a whole bowl, with a special end marker.',
     hook:
       'Character input is the lowest-level console tool in C. String input adds buffer sizes, terminators, and one famous unsafe function.',
     sections: [
@@ -338,6 +344,7 @@ if (fgets(line, sizeof line, stdin) != NULL) {
 
   'if-else-logic': {
     chapterId: 'if-else-logic',
+    plainEnglish: 'An if is a fork in the road. Zero means no, and any other number means yes.',
     hook:
       'C treats zero as false and every non-zero value as true. Relational and logical operators turn that rule into decisions.',
     sections: [
@@ -406,6 +413,7 @@ if (score < 0 || score > 100) {
 
   'switch-ternary': {
     chapterId: 'switch-ternary',
+    plainEnglish: 'switch is a row of labeled doors. The ternary is a shortcut that picks one of two paths in a single step.',
     hook:
       'switch is a jump table for integer cases; the ternary operator is a compact if-else expression. Both are easy to misuse.',
     sections: [
@@ -471,6 +479,7 @@ int larger = (a > b) ? a : b;`,
 
   'for-while-loops': {
     chapterId: 'for-while-loops',
+    plainEnglish: 'A loop is a treadmill. A for loop counts the steps, and a while loop runs until you say stop.',
     hook:
       'Loops repeat work. The interesting part is whether the condition is checked before the body, and what happens when loops are nested.',
     sections: [
@@ -537,6 +546,7 @@ for (int row = 1; row <= 3; row++) {
 
   'do-while-break-continue': {
     chapterId: 'do-while-break-continue',
+    plainEnglish: 'do-while is a ride that always goes once. break gets off, and continue skips to the next turn.',
     hook:
       'A do-while loop always runs at least once. break and continue change the flow inside a loop, and choosing the right loop shape prevents off-by-one bugs.',
     sections: [
@@ -600,6 +610,7 @@ do {
 
   'storage-classes': {
     chapterId: 'storage-classes',
+    plainEnglish: 'Storage classes decide where a variable lives, how long it stays, and who can see it.',
     hook:
       'Two variables with the same name can behave completely differently depending on where they live, how long they live, and which file can see them.',
     sections: [
@@ -611,7 +622,7 @@ do {
       {
         title: 'auto, register, static, and extern',
         body:
-          'auto is the default for local variables. register is a hint that a variable should be kept in a CPU register if possible; modern compilers ignore it when they have better information, and you cannot take the address of a register variable. A static local keeps its value between calls while remaining invisible outside the function. A static global is private to its file. extern declares a name defined elsewhere.',
+          'auto is the default for local variables. register is a hint that a variable should be kept in a CPU register if possible. Modern compilers ignore it when they have better information. You cannot take the address of a register variable. A static local keeps its value between calls while remaining invisible outside the function. A static global is private to its file. extern declares a name defined elsewhere.',
         code: String.raw`int next_id(void) {
     static int id = 0;   /* initialized once */
     return ++id;
@@ -661,6 +672,7 @@ extern int shared_value;`,
 
   'arrays-1d': {
     chapterId: 'arrays-1d',
+    plainEnglish: 'An array is a row of numbered lockers. The index is the locker number.',
     walkthrough: { kind: 'array-walk' },
     hook:
       'An array is a contiguous block of same-typed elements. That layout is why indexing is fast and why an out-of-bounds index is dangerous.',
@@ -740,6 +752,7 @@ int inferred[] = {1, 2, 3};                     /* size 3 */`,
 
   'array-init-bounds': {
     chapterId: 'array-init-bounds',
+    plainEnglish: 'An array is a shelf with a fixed number of slots. C does not stop your hand from reaching past the last slot, so you must be careful.',
     hook:
       'Initializer lists fill an array, but C will not stop you from reading past the end. Bounds are your responsibility.',
     sections: [
@@ -797,6 +810,7 @@ printf("%d\n", a[2]);  /* valid */
 
   'arrays-2d': {
     chapterId: 'arrays-2d',
+    plainEnglish: 'A 2D array is a grid of lockers. Rows and columns are labels, but the lockers still sit in one long row in memory.',
     hook:
       'A two-dimensional array is an array of arrays. Rows and columns are a mental model; memory is still one contiguous block.',
     sections: [
@@ -858,6 +872,7 @@ void print_grid(int rows, int cols, int g[][4]);`,
 
   'strings-representation': {
     chapterId: 'strings-representation',
+    plainEnglish: 'A C string is a row of letters with a tiny stop sign at the end.',
     hook:
       'There is no string type in C. There is only a char array with a null byte at the end, and a library that trusts you to keep it there.',
     sections: [
@@ -913,6 +928,7 @@ printf("%zu\n", strlen(s));  /* 3 */`,
 
   'string-library': {
     chapterId: 'string-library',
+    plainEnglish: 'The string library gives you tools, but none of them check whether the box is big enough.',
     hook:
       'The string library is small, fast, and trusting. Every function assumes you have already made room for the result.',
     sections: [
@@ -974,6 +990,7 @@ if (fgets(line, sizeof line, stdin)) {
 
   'function-interface': {
     chapterId: 'function-interface',
+    plainEnglish: 'A function is a small machine. You put values in, it does a job, and it may hand a value back.',
     hook:
       'A function is C\'s unit of reuse and its unit of testing. A good interface hides the implementation and makes the contract obvious.',
     sections: [
@@ -1053,6 +1070,7 @@ int square(int x) {
 
   recursion: {
     chapterId: 'recursion',
+    plainEnglish: 'Recursion is a set of nesting dolls. Each doll opens a smaller doll, and the smallest one stops.',
     hook:
       'Recursion solves a problem by calling itself on a smaller input. Every recursive function needs a base case and enough stack space.',
     sections: [
@@ -1119,6 +1137,7 @@ int square(int x) {
 
   'call-by-value-reference': {
     chapterId: 'call-by-value-reference',
+    plainEnglish: 'C hands a function a copy, not the original. To let it change the original, you give it the address.',
     hook:
       'C always passes by value. To let a function modify the caller\'s variable, pass its address. That is how C simulates call by reference.',
     sections: [
@@ -1182,6 +1201,7 @@ printf("%d\n", x);  /* 6 */`,
 
   'pointer-address': {
     chapterId: 'pointer-address',
+    plainEnglish: 'A pointer is a street address. The type tells you what kind of building is at that address.',
     walkthrough: { kind: 'pointer-chain' },
     hook:
       'A pointer is just an address with a type. That type tells the compiler how many bytes to read and how far to move when you add one.',
@@ -1244,6 +1264,7 @@ if (ip != NULL) {
 
   'pointer-arithmetic': {
     chapterId: 'pointer-arithmetic',
+    plainEnglish: 'Pointer arithmetic is walking down a street in steps the size of one house.',
     walkthrough: { kind: 'array-walk' },
     hook:
       'Pointer arithmetic is scaled by the pointed-to type. If p points to an int and int is four bytes, p + 1 advances by four bytes.',
@@ -1306,6 +1327,7 @@ printf("%d\n", *++p);  /* p moves to a[2], prints 15 */`,
 
   'array-of-pointers': {
     chapterId: 'array-of-pointers',
+    plainEnglish: 'An array of pointers is a list of addresses, like a row of signs pointing to different houses.',
     hook:
       'An array of pointers stores several addresses. It is how C represents an array of strings and how main receives command-line arguments.',
     sections: [
@@ -1365,6 +1387,7 @@ for (int i = 0; i < 3; i++) {
 
   'pointers-to-pointers': {
     chapterId: 'pointers-to-pointers',
+    plainEnglish: 'A pointer to a pointer is a sign that points to another sign, which points to the house.',
     hook:
       'A pointer to a pointer adds one more hop. It is how functions modify a caller\'s pointer and how dynamic arrays of strings are managed.',
     sections: [
@@ -1431,6 +1454,7 @@ int (*fp)(int);  /* pointer to function taking int, returning int */`,
 
   'struct-declaration': {
     chapterId: 'struct-declaration',
+    plainEnglish: 'A struct is a form with labeled boxes. Each box holds one fact about the same thing.',
     hook:
       'A structure is a blueprint for a record. It groups fields of different types into one object.',
     sections: [
@@ -1497,6 +1521,7 @@ printf("%s has %d seats\n", room.label, room.seats);`,
 
   'struct-arrays-nesting': {
     chapterId: 'struct-arrays-nesting',
+    plainEnglish: 'Nesting structs is putting a small form inside a bigger form. An array of structs is a stack of forms.',
     hook:
       'Structures become powerful when you combine them: an array of records, a record inside a record, or a record with an anonymous inner structure.',
     sections: [
@@ -1577,6 +1602,7 @@ for (int i = 0; i < 3; i++) {
 
   'struct-pointers': {
     chapterId: 'struct-pointers',
+    plainEnglish: 'A struct pointer is a note with the form\'s address, so you can edit the form without copying it.',
     hook:
       'Most real C code passes structures by pointer. The arrow operator is the shorthand that makes this readable.',
     sections: [
@@ -1651,6 +1677,7 @@ printf("%d\n", first.next->value);  /* 2 */`,
 
   'struct-functions-layout': {
     chapterId: 'struct-functions-layout',
+    plainEnglish: 'The compiler packs struct fields like a suitcase. It sometimes leaves gaps so each item starts at a tidy boundary.',
     walkthrough: {
       kind: 'struct-layout',
       name: 'Example',
@@ -1732,6 +1759,7 @@ printf("%zu\n", sizeof(struct Example)); /* often 8, not 5 */`,
 
   'union-syntax': {
     chapterId: 'union-syntax',
+    plainEnglish: 'A union is one box that different labels can use, but only one label is true at a time.',
     hook:
       'A union lets several types share one block of memory. Only one member is valid at a time, and the size is the size of the largest member.',
     sections: [
@@ -1817,6 +1845,7 @@ strcpy(b.text, "hello");   /* text is active */
 
   'tagged-anonymous-unions': {
     chapterId: 'tagged-anonymous-unions',
+    plainEnglish: 'A tagged union is a box with a label that says which item is inside.',
     hook:
       'A raw union does not remember which member is active. A tag fixes that. An anonymous union removes one layer of names.',
     sections: [
@@ -1911,6 +1940,7 @@ v.value.point.y = 4;`,
 
   'file-pointer-modes': {
     chapterId: 'file-pointer-modes',
+    plainEnglish: 'A FILE pointer is a bookmark in a notebook. The mode says whether you may read, write, or both.',
     walkthrough: {
       kind: 'file-lifecycle',
       filename: 'data.txt',
@@ -2001,6 +2031,7 @@ if (fp) {
 
   'file-read-write': {
     chapterId: 'file-read-write',
+    plainEnglish: 'Reading a file is like reading a book line by line. Always check that the page was actually read.',
     hook:
       'Reading and writing files uses the same ideas as console I/O, with one extra rule: test the read function, not feof.',
     sections: [
@@ -2074,6 +2105,7 @@ if (feof(fp)) {
 
   'malloc-free': {
     chapterId: 'malloc-free',
+    plainEnglish: 'malloc borrows a box from the heap, and free returns it. Forget to return it and the pile grows.',
     walkthrough: {
       kind: 'heap',
       bytes: 16,
@@ -2139,6 +2171,7 @@ numbers = NULL;   /* avoid a dangling pointer */`,
 
   'calloc-realloc': {
     chapterId: 'calloc-realloc',
+    plainEnglish: 'calloc gives you a clean box, and realloc asks for a bigger or smaller one.',
     hook:
       'calloc zeroes memory, realloc resizes it, and both can fail. Handle failure before you overwrite your only pointer.',
     sections: [
@@ -2207,6 +2240,7 @@ if (p) {
 
   'bitwise-operators': {
     chapterId: 'bitwise-operators',
+    plainEnglish: 'Bits are tiny switches. Bitwise operators flip, combine, or inspect them.',
     walkthrough: {
       kind: 'bitwise',
       mode: 'operators',
@@ -2272,6 +2306,7 @@ unsigned flag = 1u << 3; /* 0000 1000 */`,
 
   'bitwise-masks': {
     chapterId: 'bitwise-masks',
+    plainEnglish: 'A mask is a stencil. It lets you paint or check only the bits you care about.',
     walkthrough: {
       kind: 'bitwise',
       mode: 'masks',
@@ -2368,6 +2403,7 @@ if ((perms & EXEC) == 0) {
 
   'misc-functions': {
     chapterId: 'misc-functions',
+    plainEnglish: 'This chapter is a toolbox of small helpers, like a ruler, a converter, and a label maker.',
     hook:
       'The last chapter is a toolbox: small standard-library functions that convert text to numbers, classify characters, change case, and end a program cleanly.',
     sections: [

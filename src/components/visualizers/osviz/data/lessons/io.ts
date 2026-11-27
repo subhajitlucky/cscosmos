@@ -3,6 +3,7 @@ import type { OSLesson } from './types';
 export const ioLessons: OSLesson[] = [
   {
     chapterId: 'io-ports-memory-mapped',
+    plainEnglish: 'I/O ports are special mailboxes. Memory-mapped I/O gives devices regular addresses in the same neighborhood as memory.',
     hook:
       'The CPU needs to talk to device registers. It can use a separate port address space or map those registers into normal memory. The choice changes the instructions and the protection model.',
     objectives: [
@@ -72,6 +73,7 @@ uint32_t value = *status;`,
 
   {
     chapterId: 'polling-interrupts-dma',
+    plainEnglish: 'Polling is asking are we there yet. An interrupt is the driver telling you. DMA is a helper carrying the bags while you do other work.',
     hook:
       'A device may be slower than the CPU by orders of magnitude. The question is who waits: the CPU, an interrupt handler, or a DMA controller.',
     objectives: [
@@ -147,6 +149,7 @@ on DMA_complete_interrupt():
 
   {
     chapterId: 'buffering-device-drivers',
+    plainEnglish: 'A buffer is a waiting room where fast and slow workers can hand things off.',
     hook:
       'Devices and the CPU run at different speeds. Buffers absorb the mismatch, and drivers hide the hardware behind a stable interface.',
     objectives: [

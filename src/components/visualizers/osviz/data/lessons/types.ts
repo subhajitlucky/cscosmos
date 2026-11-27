@@ -16,6 +16,7 @@ import type { OSWalkthrough } from '../walkthrough-types';
 export interface OSLesson {
   chapterId: string;
   hook: string;
+  plainEnglish: string;
   objectives: string[];
   walkthrough?: OSWalkthrough;
   sections: OSLessonSection[];

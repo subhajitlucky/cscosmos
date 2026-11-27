@@ -16,6 +16,7 @@ import type { DBMSWalkthrough } from '../walkthrough-types';
 export interface DBMSLesson {
   chapterId: string;
   hook: string;
+  plainEnglish: string;
   objectives: string[];
   walkthrough?: DBMSWalkthrough;
   sections: DBMSLessonSection[];

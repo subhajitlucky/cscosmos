@@ -3,6 +3,7 @@ import type { OSLesson } from './types';
 export const processLessons: OSLesson[] = [
   {
     chapterId: 'process-concept-states',
+    plainEnglish: 'A process is a recipe being cooked. It can be ready, running, waiting, or finished.',
     walkthrough: {
       kind: 'process-states',
       processId: 'P1',
@@ -78,6 +79,7 @@ export const processLessons: OSLesson[] = [
 
   {
     chapterId: 'pcb',
+    plainEnglish: 'The PCB is a process\'s ID card and backpack: who it is, what it has, and where it stopped.',
     hook:
       'The kernel cannot keep a process in its head. The PCB is the record that survives a context switch and tells the kernel everything it needs.',
     objectives: [
@@ -154,6 +156,7 @@ export const processLessons: OSLesson[] = [
 
   {
     chapterId: 'context-switching',
+    plainEnglish: 'A context switch is putting a book down with a bookmark and picking up another.',
     hook:
       'A context switch is a controlled save-and-restore. It makes multitasking possible, but it is pure overhead: no user work happens during the switch.',
     objectives: [

@@ -3,6 +3,7 @@ import type { DBMSLesson } from './types';
 export const foundationLessons: DBMSLesson[] = [
   {
     chapterId: 'dbms-introduction',
+    plainEnglish: 'A DBMS is like a librarian for data: it keeps the books safe, tracks who borrowed them, and stops two people from scribbling on the same page.',
     hook:
       'A file can store data. A DBMS stores data, protects it, lets many users share it, and answers questions without rewriting the program.',
     objectives: [
@@ -75,6 +76,7 @@ DBMS:        all apps -> one schema -> one source of truth`,
 
   {
     chapterId: 'dbms-architecture',
+    plainEnglish: 'Think of a restaurant: the menu is what you see, the kitchen is the logical database, and the pantry is the physical storage.',
     hook:
       'A DBMS hides physical storage behind layers. That layering is why you can change a disk or add an index without rewriting every query.',
     objectives: [
@@ -145,6 +147,7 @@ internal schema  -> files, pages, indexes, compression`,
 
   {
     chapterId: 'data-models-overview',
+    plainEnglish: 'A data model is a map. A tree map, a road map, and a grid map can all describe the same city.',
     hook:
       'A data model is a way of seeing the world. Hierarchical, network, relational, and object models differ in what they make easy and what they make awkward.',
     objectives: [

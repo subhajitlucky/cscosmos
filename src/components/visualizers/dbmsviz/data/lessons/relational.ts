@@ -3,6 +3,7 @@ import type { DBMSLesson } from './types';
 export const relationalLessons: DBMSLesson[] = [
   {
     chapterId: 'relational-model',
+    plainEnglish: 'A table is a sheet of graph paper: columns are labels and rows are records.',
     hook:
       'The relational model is deceptively simple: data lives in tables, and queries describe the result instead of the navigation path.',
     objectives: [
@@ -72,6 +73,7 @@ cardinality = 4
 
   {
     chapterId: 'codd-rules',
+    plainEnglish: 'Codd\'s rules are a checklist for what counts as a proper table-based database.',
     hook:
       'Codd\'s rules are a checklist for what "relational" really means. Real systems follow some rules fully and bend others.',
     objectives: [
@@ -85,6 +87,11 @@ cardinality = 4
         title: 'The foundation rules',
         body:
           'Rule 0 says the system must qualify as relational. The information rule says all data, including metadata, is stored in tables. The guaranteed-access rule says every value must be addressable by table name, primary key, and column. Systematic null handling says nulls must be distinct from any actual value.',
+        code: String.raw`SELECT table_name, column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'Student';
+
+/* metadata such as column names and types is itself stored in tables */`,
       },
       {
         title: 'Catalog, views, and independence',
@@ -139,6 +146,7 @@ cardinality = 4
 
   {
     chapterId: 'relational-algebra-selection',
+    plainEnglish: 'Selection picks rows; projection picks columns. It is like choosing which students to show and which facts about them.',
     walkthrough: { kind: 'algebra', operation: 'selection' },
     hook:
       'Selection chooses rows; projection chooses columns. They are the first two moves in almost every query plan.',
@@ -210,6 +218,7 @@ cardinality = 4
 
   {
     chapterId: 'relational-algebra-set-ops',
+    plainEnglish: 'Combine two name lists: union is everyone, intersection is people on both lists, and difference is people only on the first list.',
     hook:
       'Set operations combine whole relations. The catch is union compatibility: the two inputs must have the same shape.',
     objectives: [
@@ -284,6 +293,7 @@ A - B = {1,2}`,
 
   {
     chapterId: 'relational-algebra-joins',
+    plainEnglish: 'A join matches two lists by a shared ID, like pairing students with their course cards.',
     walkthrough: { kind: 'algebra', operation: 'join' },
     hook:
       'A join is a Cartesian product followed by a filter. That one sentence explains both why joins are powerful and why they can explode in size.',
@@ -357,6 +367,7 @@ Student ⋈ Enroll  /* matches on id, keeps one id */`,
 
   {
     chapterId: 'keys',
+    plainEnglish: 'A key is a name tag that no one else in the room can have.',
     hook:
       'A key is a promise: no two rows share this value, and the database will enforce it.',
     objectives: [
@@ -426,6 +437,7 @@ alternate key: email`,
 
   {
     chapterId: 'integrity-constraints',
+    plainEnglish: 'These are house rules: every room needs a number, and every key must open a real door.',
     hook:
       'Constraints are the database\'s promises. If the data violates them, the DBMS rejects the change instead of letting the application decide.',
     objectives: [
@@ -448,7 +460,7 @@ alternate key: email`,
       {
         title: 'Referential integrity',
         body:
-          'A foreign key must match an existing referenced key or be NULL. When a referenced row is deleted or updated, the database must choose an action: RESTRICT blocks the change, CASCADE propagates it, SET NULL clears the reference, and SET DEFAULT assigns a default. The right action depends on the business rule, not on convenience.',
+          'A foreign key must match an existing referenced key or be NULL. When a referenced row is deleted or updated, the database must choose an action. RESTRICT blocks the change. CASCADE propagates it. SET NULL clears the reference, and SET DEFAULT assigns a default. The right action depends on the business rule, not on convenience.',
       },
       {
         title: 'Column versus table constraints',
@@ -498,6 +510,7 @@ alternate key: email`,
 
   {
     chapterId: 'assertions-triggers',
+    plainEnglish: 'An assertion is a house rule; a trigger is an alarm that rings when something changes.',
     hook:
       'Some rules span tables or need procedural logic. Assertions and triggers let the database enforce behavior that a simple constraint cannot.',
     objectives: [

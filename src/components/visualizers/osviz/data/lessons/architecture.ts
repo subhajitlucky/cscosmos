@@ -3,6 +3,7 @@ import type { OSLesson } from './types';
 export const architectureLessons: OSLesson[] = [
   {
     chapterId: 'instruction-cycle',
+    plainEnglish: 'The CPU is a cook: fetch the recipe line, decode it, do the step, and put the result on the plate.',
     hook:
       'Every instruction follows the same rhythm: fetch, decode, execute, write back. Interrupts are checked between beats, not in the middle of one.',
     objectives: [
@@ -74,6 +75,7 @@ write(result, destination)`,
 
   {
     chapterId: 'addressing-modes',
+    plainEnglish: 'Addressing modes are different ways to tell the CPU where an ingredient is: in the bowl, in the fridge, or through a note.',
     hook:
       'The instruction says what to do; the addressing mode says where the operand is. Direct, indirect, relative, indexed, and paging each compute a different effective address.',
     objectives: [

@@ -3,6 +3,7 @@ import type { OSLesson } from './types';
 export const foundationLessons: OSLesson[] = [
   {
     chapterId: 'os-fundamentals',
+    plainEnglish: 'An operating system is the school principal. It decides who uses the playground, when, and for how long.',
     hook:
       'An operating system is the layer between programs and hardware. It decides who gets the CPU, which memory is valid, and how bytes reach a disk.',
     objectives: [
@@ -74,6 +75,7 @@ FILE *fp = fopen("data.txt", "r");
 
   {
     chapterId: 'kernel-user-system-calls',
+    plainEnglish: 'User programs ask the kernel for help the way a student asks the office: through a controlled window called a system call.',
     hook:
       'A user program cannot touch the disk controller directly. It asks the kernel, and the kernel decides whether the request is valid.',
     objectives: [
@@ -153,6 +155,7 @@ user:   continue with result`,
 
   {
     chapterId: 'os-types',
+    plainEnglish: 'Batch, time-sharing, and real-time systems are different schedules for the same school day.',
     hook:
       'Every operating system optimizes something. Batch systems optimize throughput, time-sharing systems optimize response, and real-time systems optimize determinism.',
     objectives: [
@@ -220,6 +223,7 @@ while (system running) {
 
   {
     chapterId: 'interrupts',
+    plainEnglish: 'An interrupt is a tap on the shoulder: stop, handle this now, then go back.',
     hook:
       'Interrupts are how the outside world gets the CPU\'s attention. A timer, a disk, or a bad instruction can all force the kernel to run.',
     objectives: [

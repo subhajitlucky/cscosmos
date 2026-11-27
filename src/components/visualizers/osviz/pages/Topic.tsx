@@ -99,6 +99,11 @@ export function Topic({ chapterId }: { chapterId: string }) {
             </p>
           </header>
 
+          <div className="mb-4 rounded-2xl border p-4" style={{ borderColor: 'var(--os-primary)', backgroundColor: 'var(--os-primary-soft)' }}>
+            <h2 className="mb-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--os-primary)' }}>In plain English</h2>
+            <p className="text-sm leading-relaxed">{lesson.plainEnglish}</p>
+          </div>
+
           <div className="mb-8 rounded-2xl border p-4" style={{ borderColor: 'var(--os-border)', backgroundColor: 'var(--os-surface)' }}>
             <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--os-muted)' }}>
               By the end you will be able to

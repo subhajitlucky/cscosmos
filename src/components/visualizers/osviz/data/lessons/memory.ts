@@ -3,6 +3,7 @@ import type { OSLesson } from './types';
 export const memoryLessons: OSLesson[] = [
   {
     chapterId: 'contiguous-allocation',
+    plainEnglish: 'Contiguous memory is one long row of seats for a group. If the group grows, it may not fit.',
     hook:
       'The simplest memory manager gives each process one contiguous block. It is fast and easy to explain, but free memory slowly turns into a patchwork of holes.',
     objectives: [
@@ -69,6 +70,7 @@ worst_fit(212K) -> 600K hole, remainder 388K`,
 
   {
     chapterId: 'segmentation',
+    plainEnglish: 'Segmentation cuts memory into logical pieces, like chapters in a book.',
     walkthrough: {
       kind: 'segmentation',
       segmentIndex: 1,
@@ -148,6 +150,7 @@ physical = 0x6000 + 0x0100 = 0x6100`,
 
   {
     chapterId: 'paging-page-tables',
+    plainEnglish: 'Paging cuts memory into equal pages and frames. The page table is the map from page to frame.',
     walkthrough: {
       kind: 'paging',
       virtualAddress: 0x1a2b,
@@ -222,6 +225,7 @@ paddr = 7 * 0x1000 + 0xA2B = 0x7A2B`,
 
   {
     chapterId: 'tlb-translation',
+    plainEnglish: 'The TLB is a sticky note of recent address translations, so the CPU does not reread the whole map.',
     walkthrough: {
       kind: 'tlb',
       virtualAddress: 0x1a2b,
@@ -298,6 +302,7 @@ else:
 
   {
     chapterId: 'virtual-memory-demand-paging',
+    plainEnglish: 'Virtual memory is a bookshelf bigger than your desk. You keep only the pages you are reading on the desk.',
     hook:
       'Virtual memory lets a process use an address space larger than RAM. The trick is simple: load a page only when it is actually needed.',
     objectives: [
@@ -372,6 +377,7 @@ else:
 
   {
     chapterId: 'fifo-page-replacement',
+    plainEnglish: 'FIFO evicts the page that has been on the desk the longest, like clearing the oldest note first.',
     walkthrough: {
       kind: 'page-replacement',
       references: [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5],
@@ -400,7 +406,7 @@ else:
       {
         title: 'Worked reference string',
         body:
-          'Use three frames and the reference string 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5. The first three references fault and fill the frames. Reference 4 evicts 1, reference 1 evicts 2, reference 2 evicts 3, reference 5 evicts 4, references 1 and 2 hit, reference 3 evicts 1, reference 4 evicts 2, and reference 5 hits. FIFO produces 9 faults.',
+          'Use three frames and the reference string 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5. The first three references fault and fill the frames. Reference 4 evicts 1. Reference 1 evicts 2. Reference 2 evicts 3. Reference 5 evicts 4. References 1 and 2 hit. Reference 3 evicts 1. Reference 4 evicts 2, and reference 5 hits. FIFO produces 9 faults.',
         code: String.raw`ref: 1 2 3 4 1 2 5 1 2 3 4 5
 faults: F F F F F F F . . F F .
 frames after each step are in the lab trace`,
@@ -453,6 +459,7 @@ frames after each step are in the lab trace`,
 
   {
     chapterId: 'lru-optimal-page-replacement',
+    plainEnglish: 'LRU guesses the future from the past. Optimal peeks at the future.',
     walkthrough: {
       kind: 'page-replacement',
       references: [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5],
@@ -488,7 +495,7 @@ on fault:
       {
         title: 'Comparing the policies',
         body:
-          'For the classic reference string 7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1 with three frames, FIFO gives 15 faults, LRU gives 12, and Optimal gives 9. The exact counts depend on the string, but the pattern is typical: Optimal is best, LRU is close, and FIFO can be noticeably worse.',
+          'Use the classic reference string 7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1 with three frames. FIFO gives 15 faults. LRU gives 12, and Optimal gives 9. The exact counts depend on the string, but the pattern is typical: Optimal is best, LRU is close, and FIFO can be noticeably worse.',
         code: String.raw`same reference string, 3 frames:
 FIFO    -> 15 faults
 LRU     -> 12 faults
@@ -532,6 +539,7 @@ Optimal ->  9 faults`,
 
   {
     chapterId: 'thrashing-working-set',
+    plainEnglish: 'Thrashing is running between the desk and the shelf so much that no reading gets done.',
     hook:
       'When the working sets of running processes do not fit in memory, the system spends its life paging. That is thrashing: the CPU is busy, but no useful work is happening.',
     objectives: [

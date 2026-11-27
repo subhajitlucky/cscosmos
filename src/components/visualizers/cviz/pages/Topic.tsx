@@ -98,6 +98,11 @@ export function Topic({ chapterId }: { chapterId: string }) {
             </p>
           </header>
 
+          <div className="mb-4 rounded-2xl border p-4" style={{ borderColor: 'var(--c-primary)', backgroundColor: 'var(--c-primary-soft)' }}>
+            <h2 className="mb-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--c-primary)' }}>In plain English</h2>
+            <p className="text-sm leading-relaxed">{lesson.plainEnglish}</p>
+          </div>
+
           <div className="space-y-8">
             {lesson.sections.map((section, index) => (
               <section key={section.title} className="space-y-3">

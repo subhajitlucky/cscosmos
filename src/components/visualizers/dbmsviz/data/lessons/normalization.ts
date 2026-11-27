@@ -3,6 +3,7 @@ import type { DBMSLesson } from './types';
 export const normalizationLessons: DBMSLesson[] = [
   {
     chapterId: 'functional-dependencies',
+    plainEnglish: 'If you know a student\'s ID, you know their name. That is a functional dependency.',
     hook:
       'A functional dependency is a rule about the data: if you know X, you can determine Y. Normalization is the process of organizing tables so those rules do not create redundancy.',
     objectives: [
@@ -81,6 +82,7 @@ A is not a key unless D is also determined.`,
 
   {
     chapterId: 'anomalies',
+    plainEnglish: 'It is writing the same fact in many places: change one copy and forget another, and the notebook disagrees with itself.',
     hook:
       'A badly designed table can be internally consistent today and impossible to update correctly tomorrow. Anomalies are the symptoms.',
     objectives: [
@@ -152,6 +154,7 @@ A is not a key unless D is also determined.`,
 
   {
     chapterId: 'first-normal-form',
+    plainEnglish: 'One fact per box. Do not stuff a whole shopping list into one cell.',
     walkthrough: { kind: 'normalization', form: '1NF' },
     hook:
       'First normal form is simple: every value must be atomic. No lists, no repeating groups, no hidden multiple values in one cell.',
@@ -224,6 +227,7 @@ StudentPhone(student_id, phone)
 
   {
     chapterId: 'second-normal-form',
+    plainEnglish: 'If a fact belongs to only half of a two-part key, give it its own table.',
     walkthrough: { kind: 'normalization', form: '2NF' },
     hook:
       'Second normal form removes dependencies on only part of a composite key. If a non-key attribute depends on half the key, it belongs in another table.',
@@ -293,6 +297,7 @@ Enrollment(student_id, course_id, grade)`,
 
   {
     chapterId: 'third-normal-form',
+    plainEnglish: 'If A tells you B, and B tells you C, do not store C next to A.',
     walkthrough: { kind: 'normalization', form: '3NF' },
     hook:
       'Third normal form removes the chain: a non-key attribute should not determine another non-key attribute.',

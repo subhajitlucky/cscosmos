@@ -3,6 +3,7 @@ import type { OSLesson } from './types';
 export const familyLessons: OSLesson[] = [
   {
     chapterId: 'msdos',
+    plainEnglish: 'MS-DOS is a small house with no locked doors: simple and fast, but anyone can wander in.',
     hook:
       'MS-DOS was small, direct, and completely trusting. Programs could touch hardware and each other, which made it fast and fragile.',
     objectives: [
@@ -67,6 +68,7 @@ example: 0x1000:0x0020 -> 0x10020`,
 
   {
     chapterId: 'unix',
+    plainEnglish: 'UNIX is a toolbox of small tools that connect like pipe pieces.',
     hook:
       'UNIX turned small tools and a uniform file model into an operating system philosophy. The kernel stays small; the shell composes everything else.',
     objectives: [
@@ -141,6 +143,7 @@ if (pid == 0) {
 
   {
     chapterId: 'windows-comparison',
+    plainEnglish: 'Windows, UNIX, and MS-DOS are three house designs: one protects rooms, one favors small tools, one keeps everything open.',
     hook:
       'Windows NT combined protected memory, a hardware abstraction layer, and a hybrid kernel. Comparing it with MS-DOS and UNIX shows how OS design converged.',
     objectives: [

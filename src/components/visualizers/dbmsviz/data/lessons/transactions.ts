@@ -3,6 +3,7 @@ import type { DBMSLesson } from './types';
 export const transactionLessons: DBMSLesson[] = [
   {
     chapterId: 'transactions-acid',
+    plainEnglish: 'A bank transfer is all-or-nothing: the money leaves one account and arrives in the other, even after a crash.',
     hook:
       'A transaction is a unit of work that either happens completely or not at all. ACID is the promise that keeps a database trustworthy.',
     objectives: [
@@ -67,6 +68,7 @@ COMMIT;`,
 
   {
     chapterId: 'transaction-states',
+    plainEnglish: 'A transaction is like a parcel: packed, ready, shipped, delivered, or returned.',
     walkthrough: { kind: 'transaction-states' },
     hook:
       'A transaction is not simply "running" or "done." It passes through states, and the DBMS makes different guarantees at each one.',
@@ -133,6 +135,7 @@ COMMIT;`,
 
   {
     chapterId: 'recovery-logs',
+    plainEnglish: 'The log is a diary of changes. If the power goes out, replay the diary.',
     hook:
       'The log is the database\'s memory of what happened. After a crash, redo and undo use that memory to rebuild a consistent state.',
     objectives: [
@@ -203,6 +206,7 @@ COMMIT;`,
 
   {
     chapterId: 'shadow-paging',
+    plainEnglish: 'Write the new version on a fresh page, then switch the bookmark.',
     hook:
       'Shadow paging avoids a log by never overwriting the live page table. It switches pointers atomically and keeps the old version as a shadow.',
     objectives: [

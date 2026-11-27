@@ -16,6 +16,8 @@ test.describe('dbms smoke', () => {
     await expect(page.getByRole('heading', { name: 'The database curriculum' })).toBeVisible();
     await page.locator('a[href$="/learn/first-normal-form"]').click();
     await expect(page.getByRole('heading', { name: 'Normalization: 1NF' })).toBeVisible();
+    await expect(page.getByText('In plain English')).toBeVisible();
+    await expect(page.getByText(/One fact per box/i)).toBeVisible();
     await expect(page.getByText('Quick check')).toBeVisible();
   });
 

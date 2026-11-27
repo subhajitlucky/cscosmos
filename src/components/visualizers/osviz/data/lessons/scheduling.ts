@@ -3,6 +3,7 @@ import type { OSLesson } from './types';
 export const schedulingLessons: OSLesson[] = [
   {
     chapterId: 'scheduling-metrics',
+    plainEnglish: 'Scheduling metrics are report-card scores: how long people wait, how fast work finishes, and how busy the CPU stays.',
     hook:
       'Every scheduling policy is judged by the same numbers. Learn the vocabulary once, and every algorithm becomes a comparison instead of a memorization exercise.',
     objectives: [
@@ -72,6 +73,7 @@ average_waiting = sum(waiting) / n`,
 
   {
     chapterId: 'fcfs-scheduling',
+    plainEnglish: 'FCFS is a queue at a shop: first come, first served, even if a quick customer is stuck behind a big order.',
     walkthrough: {
       kind: 'scheduler',
       algorithm: 'fcfs',
@@ -161,6 +163,7 @@ P3: completion 9, turnaround 7, waiting 6`,
 
   {
     chapterId: 'sjf-scheduling',
+    plainEnglish: 'SJF serves the shortest order first, like an express lane for small baskets.',
     walkthrough: {
       kind: 'scheduler',
       algorithm: 'sjf',
@@ -250,6 +253,7 @@ P4: wait 7, turnaround 11`,
 
   {
     chapterId: 'srtf-scheduling',
+    plainEnglish: 'SRTF is SJF with a pause button. If a shorter job arrives, it goes first.',
     walkthrough: {
       kind: 'scheduler',
       algorithm: 'srtf',
@@ -338,6 +342,7 @@ P3: completion 5,  wait 0`,
 
   {
     chapterId: 'round-robin-scheduling',
+    plainEnglish: 'Round robin gives everyone a turn, like dealing cards around a table.',
     walkthrough: {
       kind: 'scheduler',
       algorithm: 'round-robin',
@@ -419,6 +424,7 @@ while unfinished:
 
   {
     chapterId: 'priority-scheduling',
+    plainEnglish: 'Priority scheduling is a VIP line. The most important job goes first.',
     walkthrough: {
       kind: 'scheduler',
       algorithm: 'priority',
@@ -499,6 +505,7 @@ while unfinished:
 
   {
     chapterId: 'preemptive-vs-nonpreemptive',
+    plainEnglish: 'Preemptive means the scheduler can tap you on the shoulder and take the CPU. Nonpreemptive means you finish first.',
     hook:
       'The scheduler has two very different powers: wait for a process to yield, or take the CPU away. The choice changes responsiveness, overhead, and correctness.',
     objectives: [

@@ -16,6 +16,8 @@ test.describe('operating-systems smoke', () => {
     await expect(page.getByRole('heading', { name: 'The kernel curriculum' })).toBeVisible();
     await page.locator('a[href$="/learn/fcfs-scheduling"]').click();
     await expect(page.getByRole('heading', { name: 'FCFS Scheduling' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'In plain English' })).toBeVisible();
+    await expect(page.getByText(/first come, first served/i)).toBeVisible();
     await expect(page.getByText('Quick check')).toBeVisible();
   });
 

@@ -17,8 +17,14 @@ describe('dbmsviz curriculum data', () => {
       const lesson = dbmsLessons[chapter.id];
       expect(lesson, `missing lesson for ${chapter.id}`).toBeDefined();
       expect(lesson.chapterId).toBe(chapter.id);
+      expect(lesson.plainEnglish.length).toBeGreaterThan(20);
+      expect(lesson.plainEnglish.split(/\s+/).length).toBeLessThanOrEqual(40);
       expect(lesson.objectives.length).toBeGreaterThan(0);
       expect(lesson.sections.length).toBeGreaterThanOrEqual(2);
+      expect(
+        lesson.sections.some((section) => Boolean(section.code)),
+        `missing worked example for ${chapter.id}`,
+      ).toBe(true);
       expect(lesson.keyTakeaways.length).toBeGreaterThan(0);
       expect(lesson.pitfalls.length).toBeGreaterThan(0);
       expect(lesson.focusPoints.length).toBeGreaterThan(0);

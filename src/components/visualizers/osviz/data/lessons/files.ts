@@ -13,6 +13,7 @@ const FAT_DEMO = (() => {
 export const fileLessons: OSLesson[] = [
   {
     chapterId: 'file-concept-directories',
+    plainEnglish: 'A file is a labeled envelope. A directory is the filing cabinet that holds it.',
     hook:
       'A file is more than bytes. It is a name, a set of attributes, a location, and a set of operations the OS promises to perform safely.',
     objectives: [
@@ -85,6 +86,7 @@ relative from /home/ada: report.txt`,
 
   {
     chapterId: 'contiguous-file-allocation',
+    plainEnglish: 'Contiguous file allocation puts a file in one long row of blocks, like a train with no gaps.',
     hook:
       'Contiguous allocation gives a file one run of blocks. It is the fastest layout for sequential and direct access, but it is brittle when files grow.',
     objectives: [
@@ -150,6 +152,7 @@ block 4 -> 24`,
 
   {
     chapterId: 'linked-allocation-fat',
+    plainEnglish: 'Linked allocation is a treasure hunt: each block holds a clue to the next. FAT keeps all the clues in one table.',
     walkthrough: {
       kind: 'fat',
       start: 5,
@@ -228,6 +231,7 @@ FAT[20] = FREE`,
 
   {
     chapterId: 'indexed-file-allocation',
+    plainEnglish: 'Indexed allocation is a table of contents that points to every block of the file.',
     walkthrough: {
       kind: 'indexed',
       indexBlock: 3,
@@ -303,6 +307,7 @@ read file block 2 -> read index[2] -> read block 18`,
 
   {
     chapterId: 'sequential-file-organization',
+    plainEnglish: 'Sequential files are a stack of index cards in order. Finding one means flipping from the start.',
     hook:
       'Sequential organization is the simplest record layout: records sit one after another in key order. It is perfect for scans and painful for random inserts.',
     objectives: [
@@ -368,6 +373,7 @@ delete 30 -> 10 20 25 40 50     (shift or leave a hole)`,
 
   {
     chapterId: 'indexed-file-organization',
+    plainEnglish: 'An index is a bookmark that jumps you near the record you want.',
     hook:
       'An index adds a shortcut: instead of scanning records, look up the key and jump to the block. The price is extra space and maintenance.',
     objectives: [
@@ -441,6 +447,7 @@ lookup(20) -> index -> block 4 -> record`,
 
   {
     chapterId: 'line-hashed-file-organization',
+    plainEnglish: 'Hashing is a locker number computed from the key, so you go straight to the right locker.',
     hook:
       'Line-sequential files handle variable-length text; hashed files turn a key into a bucket address. One is flexible, the other is fast for exact matches.',
     objectives: [
@@ -511,6 +518,7 @@ if collision: follow overflow chain`,
 
   {
     chapterId: 'file-sorting-merging',
+    plainEnglish: 'External sorting is sorting a huge pile of cards by making small sorted piles, then merging them.',
     walkthrough: {
       kind: 'external-sort',
       chunks: [
@@ -593,6 +601,7 @@ chunk 3 -> sort -> run3`,
 
   {
     chapterId: 'file-indexing-updating',
+    plainEnglish: 'An index is a map. When a street changes, every map that shows it must be updated.',
     hook:
       'An index is only useful if it stays correct. Updates must change the data and every index that points to it, and a crash in the middle must not leave the file inconsistent.',
     objectives: [

@@ -3,6 +3,7 @@ import type { DBMSLesson } from './types';
 export const concurrencyLessons: DBMSLesson[] = [
   {
     chapterId: 'concurrency-problems',
+    plainEnglish: 'It is two people editing the same shared document without seeing each other\'s changes.',
     hook:
       'Concurrent transactions are supposed to behave as if they ran one at a time. Interleavings can break that promise in four classic ways.',
     objectives: [
@@ -78,6 +79,7 @@ T1: rollback      /* T2 read a value that never existed */`,
 
   {
     chapterId: 'locking-2pl',
+    plainEnglish: 'One key to the bathroom. Others wait. If two people each hold one key and wait for the other, that is a deadlock.',
     walkthrough: { kind: 'locking' },
     hook:
       'Locks are the classic way to enforce isolation. Two-phase locking makes the schedule serializable, and deadlocks are the price.',
@@ -152,6 +154,7 @@ wait-for graph: T1 -> T2 -> T1  (cycle)`,
 
   {
     chapterId: 'timestamp-optimistic',
+    plainEnglish: 'Let everyone work, then check at the end whether their edits clashed.',
     hook:
       'Not every system wants to wait for locks. Timestamps and optimistic validation let transactions run and check for conflicts later.',
     objectives: [

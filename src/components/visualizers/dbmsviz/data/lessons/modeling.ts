@@ -3,6 +3,7 @@ import type { DBMSLesson } from './types';
 export const modelingLessons: DBMSLesson[] = [
   {
     chapterId: 'erd-fundamentals',
+    plainEnglish: 'An ERD is a simple sketch of the things you care about and the facts you need to remember about them.',
     walkthrough: { kind: 'erd', cardinality: '1:N' },
     hook:
       'Before tables, there is a domain. An ERD is the bridge between a real-world problem and a relational schema.',
@@ -77,6 +78,7 @@ export const modelingLessons: DBMSLesson[] = [
 
   {
     chapterId: 'erd-relationships',
+    plainEnglish: 'A relationship is a sentence like "a student takes a course." Cardinality says how many students and courses can fit in that sentence.',
     walkthrough: { kind: 'erd', cardinality: 'M:N' },
     hook:
       'Relationships are where ERDs get interesting. Cardinality and participation decide whether a schema is faithful or subtly wrong.',
@@ -90,7 +92,7 @@ export const modelingLessons: DBMSLesson[] = [
       {
         title: 'Relationships and degree',
         body:
-          'A relationship connects entities. Its degree is the number of entity sets involved: unary (recursive), binary, or ternary. A binary relationship between Student and Course might be "enrolls." A recursive relationship connects an entity to another entity of the same set, such as an employee managing other employees.',
+          'A relationship connects entities. Its degree is the number of entity sets involved: unary (recursive), binary, or ternary. Student and Course have a binary relationship called "enrolls." A recursive relationship connects an entity to another entity of the same set. For example, an employee can manage other employees.',
         code: String.raw`[Student] --enrolls-- [Course]      binary
 [Employee] --manages--> [Employee]   unary
 [Supplier] --supplies-- [Part] --to-- [Project]  ternary`,
@@ -148,6 +150,7 @@ export const modelingLessons: DBMSLesson[] = [
 
   {
     chapterId: 'hierarchical-model',
+    plainEnglish: 'It is a family tree: each child has one parent, and you follow the branches down.',
     hook:
       'The hierarchical model is a tree. It is fast when your data is a tree and painful when it is not.',
     objectives: [
@@ -216,6 +219,7 @@ export const modelingLessons: DBMSLesson[] = [
 
   {
     chapterId: 'network-model',
+    plainEnglish: 'It is a road map: a city can be reached by many roads, not just one parent road.',
     hook:
       'The network model turns the tree into a graph. Many-to-many becomes possible, but the program now has to navigate a web of sets.',
     objectives: [

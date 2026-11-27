@@ -82,6 +82,11 @@ export function Topic({ chapterId }: { chapterId: string }) {
             <p className="max-w-3xl text-base leading-relaxed" style={{ color: 'var(--db-muted)' }}>{lesson.hook}</p>
           </header>
 
+          <div className="mb-4 rounded-2xl border p-4" style={{ borderColor: 'var(--db-primary)', backgroundColor: 'var(--db-primary-soft)' }}>
+            <h2 className="mb-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--db-primary)' }}>In plain English</h2>
+            <p className="text-sm leading-relaxed">{lesson.plainEnglish}</p>
+          </div>
+
           <div className="mb-8 rounded-2xl border p-4" style={{ borderColor: 'var(--db-border)', backgroundColor: 'var(--db-surface)' }}>
             <h2 className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--db-muted)' }}>By the end you will be able to</h2>
             <ul className="grid gap-2 sm:grid-cols-2">

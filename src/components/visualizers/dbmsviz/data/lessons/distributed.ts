@@ -3,6 +3,7 @@ import type { DBMSLesson } from './types';
 export const distributedLessons: DBMSLesson[] = [
   {
     chapterId: 'distributed-databases',
+    plainEnglish: 'Many libraries, one catalog. You do not care which building holds the book.',
     hook:
       'A distributed database looks like one system but stores data across many sites. Transparency hides the network; CAP theory explains why it cannot hide everything.',
     objectives: [
@@ -68,6 +69,7 @@ A + P: serve potentially stale data`,
 
   {
     chapterId: 'fragmentation-replication',
+    plainEnglish: 'Split the books by city, or keep copies of the popular ones everywhere.',
     hook:
       'Distribution has two basic moves: split the data or copy it. Fragmentation improves locality; replication improves availability.',
     objectives: [
@@ -137,6 +139,7 @@ site B: customer_id, profile_blob`,
 
   {
     chapterId: 'data-warehousing',
+    plainEnglish: 'A report card for the whole school, built from many teachers\' grade books.',
     hook:
       'Operational databases are tuned for many small transactions. A warehouse is tuned for large analytical questions over history.',
     objectives: [
@@ -205,6 +208,7 @@ DimProduct -> DimCategory -> DimDepartment`,
 
   {
     chapterId: 'data-mining',
+    plainEnglish: 'It is looking for patterns in a big box of receipts, not just finding one receipt.',
     hook:
       'Data mining is not just a big query. It is the search for patterns that were not explicitly requested.',
     objectives: [
@@ -217,7 +221,7 @@ DimProduct -> DimCategory -> DimDepartment`,
       {
         title: 'What mining adds',
         body:
-          'A normal query answers a known question: "How many orders in March?" Data mining looks for hidden structure: "Which customers are likely to churn?" It combines statistics, machine learning, and database techniques on large datasets.',
+          'A normal query answers a known question, such as "How many orders in March?" Data mining looks for hidden structure. It might ask, "Which customers are likely to churn?" It combines statistics, machine learning, and database techniques on large datasets.',
       },
       {
         title: 'Core techniques',
@@ -277,6 +281,7 @@ anomaly:      unusual transaction`,
 
   {
     chapterId: 'comparison-and-review',
+    plainEnglish: 'A tree, a road map, and a spreadsheet are each good for a different question.',
     hook:
       'The three classic models are not just history. Each one answers a different question about how data should be structured and accessed.',
     objectives: [
@@ -297,7 +302,7 @@ RDB: tables, declarative, set-based`,
       {
         title: 'Data mining versus normal query',
         body:
-          'A normal query retrieves known data with a precise predicate: "orders over 100 in March." A mining query searches for patterns or predictions: "which customers are likely to churn?" The first is deterministic and often aggregate; the second is statistical and evaluated on held-out data.',
+          'A normal query retrieves known data with a precise predicate, such as "orders over 100 in March." A mining query searches for patterns or predictions, such as "which customers are likely to churn?" The first is deterministic and often aggregate. The second is statistical and evaluated on held-out data.',
       },
       {
         title: 'Choosing a model',

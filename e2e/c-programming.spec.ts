@@ -19,6 +19,8 @@ test.describe('c-programming smoke', () => {
     await page.locator('a[href$="/learn/pointer-address"]').click();
     await expect(page.getByRole('heading', { name: 'Pointers, Address & Dereference', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Addresses, declaration, and dereference' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'In plain English' })).toBeVisible();
+    await expect(page.getByText(/A pointer is a street address/i)).toBeVisible();
     await expect(page.getByText('Quick check')).toBeVisible();
   });
 
