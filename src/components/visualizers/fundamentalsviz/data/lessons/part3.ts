@@ -151,7 +151,7 @@ export const part3Lessons: ITLesson[] = [
         code: 'SYSTEM SOFTWARE                      APPLICATION SOFTWARE\nOperating system: Windows, Linux      Word processor: Word, Writer\nDevice drivers: printer, graphics     Spreadsheet: Excel, Calc\nUtilities: backup, antivirus          Browser: Chrome, Firefox\nTranslators: compiler, assembler      Media player, games',
       },
       {
-        title: 'The operating system and utility programs',
+        title: 'System software and utility programs',
         body: 'An operating system is the master control program. It schedules processes on the CPU, allocates memory, organizes files, talks to devices through drivers, and provides a user interface. A process is a running program with its own memory and state; a driver is software that lets the operating system control a specific device. The operating system also enforces access rights and reports errors. Those functions are enough for this chapter; detailed scheduling and virtual memory, where disk space extends RAM, belong to a dedicated operating-system course. Utility programs are small tools that maintain, protect, or repair a system. Examples include backup software, antivirus scanners, disk cleanup tools, file compression, partition managers, and password managers. Some utilities ship with the operating system; others are separate products. A utility differs from an application because its job is to keep the computer healthy or its data safe, not to produce a letter or a budget. A disk defragmenter, for instance, rearranges file blocks on a magnetic disk to reduce seeking; it is not a tool for writing documents. Keep utilities updated, because they often run with high privilege.',
       },
       {
